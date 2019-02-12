@@ -21,7 +21,7 @@ void State::_preload()
 	player->addEventListener(new Controller(player));
 	gameObjects_.push_back(new GameObject(game_->getTextures()[FIRST_BATTLE], vector2d{ 400.0, 300.0 }, vector2d{ 800.0, 600.0 }));
 	gameObjects_.push_back(player);
-	gameObjects_.push_back(new Board(game_->getTextures()[CELL_FRAME], 8, 12, 40));
+	gameObjects_.push_back(new Board(game_->getTextures()[CELL_FRAME], 8, 12, 50));
 }
 
 void State::run()

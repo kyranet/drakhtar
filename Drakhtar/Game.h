@@ -23,7 +23,7 @@ enum Textures {
 };
 
 const TextureInfo TEXTURES[NUMBER_TEXTURES] {
-	TextureInfo{"../images/BlueArcher.png", 1, 1},
+	TextureInfo{"../images/BlueArcher.png", 2, 1},
 	TextureInfo{"../images/FirstBattle.png", 1, 1},
 	TextureInfo{"../images/UI/cellFrame.png", 1, 1}
 };
