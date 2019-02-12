@@ -1,6 +1,5 @@
 #pragma once
 
-#include "checkML.h"
 #include "Font.h"
 #include "GameObject.h"
 
@@ -14,10 +13,10 @@ private:
 	int width, height;
 
 public:
-	Text(Font *font, int x, int y, int width, int height, const SDL_Color &color, const string &text);
+	Text(Font* font, int x, int y, int width, int height, SDL_Color &color, string &text);
 	~Text();
 	void setText(string newText);
-	SDL_Color setColor(const SDL_Color &color);
+	SDL_Color setColor(SDL_Color &color);
 	SDL_Rect getDestRect() const;
 	void render() const;
 };
