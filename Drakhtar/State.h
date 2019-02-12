@@ -3,6 +3,7 @@
 #include "SDL.h"
 #include <list>
 #include "GameObject.h"
+#include "Board.h"
 #include "Game.h"
 
 using namespace std;

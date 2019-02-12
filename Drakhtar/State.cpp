@@ -20,6 +20,7 @@ void State::run()
 	// Hardcoded stuff so this works
 	gameObjects_.push_back(new GameObject(game_->getTextures()[1], 0.0, 0.0, 800.0, 600.0));
 	gameObjects_.push_back(new GameObject(game_->getTextures()[0], 400.0, 300.0, 50.0, 50.0));
+	gameObjects_.push_back(new Board(game_->getTextures()[2], 8, 12, 40));
 
 	// The event loop follows this scheme:
 	// → Create all pending-to-create game objects

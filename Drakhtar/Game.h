@@ -6,7 +6,7 @@
 
 using uint = unsigned int;
 
-const uint NUMBER_TEXTURES = 2;
+const uint NUMBER_TEXTURES = 3;
 
 struct TextureInfo
 {
@@ -17,7 +17,8 @@ struct TextureInfo
 
 const TextureInfo TEXTURES[NUMBER_TEXTURES] {
 	TextureInfo{"../images/BlueArcher.png", 1, 1},
-	TextureInfo{"../images/FirstBattle.png", 1, 1}
+	TextureInfo{"../images/FirstBattle.png", 1, 1},
+	TextureInfo{"../images/UI/cellFrame.png", 1, 1}
 };
 
 class State;
