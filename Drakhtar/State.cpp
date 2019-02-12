@@ -17,11 +17,11 @@ State::~State()
 
 void State::_preload()
 {
-	auto player = new GameObject(game_->getTextures()[0], vector2d{ 400.0, 300.0 }, vector2d{ 50.0, 50.0 });
+	auto player = new GameObject(game_->getTextures()[BLUE_ARCHER], vector2d{ 400.0, 300.0 }, vector2d{ 50.0, 50.0 });
 	player->addEventListener(new Controller(player));
-	gameObjects_.push_back(new GameObject(game_->getTextures()[1], vector2d{ 400.0, 300.0 }, vector2d{ 800.0, 600.0 }));
+	gameObjects_.push_back(new GameObject(game_->getTextures()[FIRST_BATTLE], vector2d{ 400.0, 300.0 }, vector2d{ 800.0, 600.0 }));
 	gameObjects_.push_back(player);
-	gameObjects_.push_back(new Board(game_->getTextures()[2], 8, 12, 40));
+	gameObjects_.push_back(new Board(game_->getTextures()[CELL_FRAME], 8, 12, 40));
 }
 
 void State::run()

@@ -16,6 +16,12 @@ struct TextureInfo
 	uint rows;
 };
 
+enum Textures {
+	BLUE_ARCHER,
+	FIRST_BATTLE,
+	CELL_FRAME
+};
+
 const TextureInfo TEXTURES[NUMBER_TEXTURES] {
 	TextureInfo{"../images/BlueArcher.png", 1, 1},
 	TextureInfo{"../images/FirstBattle.png", 1, 1},
