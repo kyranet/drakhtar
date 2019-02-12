@@ -71,12 +71,16 @@
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="Controller.cpp" />
+    <ClCompile Include="Dialog.cpp" />
+    <ClCompile Include="DialogScene.cpp" />
+    <ClCompile Include="Font.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameStateMachine.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="Team.cpp" />
+    <ClCompile Include="Text.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="Vector2D.cpp" />
@@ -87,8 +91,11 @@
     <ClInclude Include="checkML.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Controller.h" />
+    <ClInclude Include="Dialog.h" />
+    <ClInclude Include="DialogScene.h" />
     <ClInclude Include="DrakhtarError.h" />
     <ClInclude Include="EventListener.h" />
+    <ClInclude Include="Font.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameStateMachine.h" />
@@ -96,6 +103,7 @@
     <ClInclude Include="State.h" />
     <ClInclude Include="Team.h" />
     <ClInclude Include="TeamedUnitError.h" />
+    <ClInclude Include="Text.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="Vector2D.h" />
