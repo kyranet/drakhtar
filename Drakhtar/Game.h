@@ -3,6 +3,7 @@
 #include "SDL.h"
 #include "State.h"
 #include "Texture.h"
+#include "GameStateMachine.h"
 
 using uint = unsigned int;
 
@@ -22,6 +23,7 @@ const TextureInfo TEXTURES[NUMBER_TEXTURES] {
 };
 
 class State;
+class GameStateMachine;
 
 class Game
 {
@@ -29,6 +31,7 @@ private:
 	SDL_Window* window_ = nullptr;
 	SDL_Renderer* renderer_ = nullptr;
 	Texture** textures_ = nullptr;
+	GameStateMachine * stateMachine = nullptr;
 	State* state_ = nullptr;
 public:
 	Game();
