@@ -18,6 +18,7 @@ private:
 	Game* game_ = nullptr;
 protected:
 	SDL_Renderer *renderer_ = nullptr;
+	void _preload();
 	void _create();
 	void _render() const;
 	void _update();

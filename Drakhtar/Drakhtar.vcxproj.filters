@@ -31,15 +31,21 @@
     <Filter Include="Archivos de encabezado\Components\EventListeners">
       <UniqueIdentifier>{4b91afd1-70cc-42c0-90bc-8913dc7fece4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de código fuente\States">
+      <UniqueIdentifier>{67068c2f-e4b1-4c55-8ebc-7eeccbdbf147}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\States">
+      <UniqueIdentifier>{a1dc3a50-e022-40cd-ad74-87fbb9a09aa5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Exceptions">
+      <UniqueIdentifier>{b1567475-c06b-4b6b-af39-e2ff9434971c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="State.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
     <ClCompile Include="Texture.cpp">
@@ -57,18 +63,12 @@
     <ClCompile Include="Controller.cpp">
       <Filter>Archivos de código fuente\Components\EventListeners</Filter>
     </ClCompile>
+    <ClCompile Include="State.cpp">
+      <Filter>Archivos de código fuente\States</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="DrakhtarError.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="SDLError.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="State.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
@@ -94,6 +94,15 @@
     </ClInclude>
     <ClInclude Include="EventListener.h">
       <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>Archivos de encabezado\States</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLError.h">
+      <Filter>Archivos de encabezado\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="DrakhtarError.h">
+      <Filter>Archivos de encabezado\Exceptions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

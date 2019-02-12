@@ -14,4 +14,3 @@ public:
 	virtual ~EventListener() { gameObject_ = nullptr; };
 	virtual void run(SDL_Event event) = 0;
 };
-
