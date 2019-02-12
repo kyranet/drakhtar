@@ -10,7 +10,7 @@ GameObject::GameObject(Texture* texture, double pos_x, double pos_y, double size
 
 GameObject::~GameObject()
 {
-	delete texture_;
+	texture_ = nullptr;
 }
 
 void GameObject::render() const

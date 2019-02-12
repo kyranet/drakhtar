@@ -1,4 +1,0 @@
-﻿  main.cpp
-c:\windows kits\10\include\10.0.16299.0\ucrt\crtdbg.h(302): warning C4005: '_malloca': macro redefinition
-  c:\windows kits\10\include\10.0.16299.0\ucrt\malloc.h(121): note: see previous definition of '_malloca'
-  Drakhtar.vcxproj -> C:\Users\usuario_local\Documents\Downloads\ProyectosSDL\bin\DrakhtarDebug.exe
