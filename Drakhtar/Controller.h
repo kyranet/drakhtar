@@ -3,21 +3,16 @@
 #include "SDL.h"
 #include "GameObject.h"
 
-struct Keybinds {
-	SDL_Keycode up;
-	SDL_Keycode down;
-	SDL_Keycode left;
-	SDL_Keycode right;
-};
-
 class Controller
 {
 private:
 	GameObject* gameObject_;
-	Keybinds keybinds_;
+	bool mouseOn = false;
 public:
-	Controller(GameObject* gameObject, Keybinds keybinds);
+	Controller(GameObject* gameObject);
 	virtual ~Controller();
 	void handleEvents(SDL_Event event);
+	void onHover(bool mouseOn);
+	void onClick(bool mouseOn);
 };
 

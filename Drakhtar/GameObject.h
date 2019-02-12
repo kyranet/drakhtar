@@ -22,5 +22,6 @@ public:
 	~GameObject();
 	virtual void render() const;
 	virtual void handleEvents(SDL_Event event);
+	SDL_Rect getRect() const;
 };
 
