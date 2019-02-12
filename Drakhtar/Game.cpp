@@ -18,12 +18,15 @@ Game::Game()
 	for (uint i = 0; i < NUMBER_TEXTURES; i++)
 		textures_[i] = new Texture(renderer_, TEXTURES[i].path, TEXTURES[i].rows, TEXTURES[i].columns);
 
-	state_ = new State(this, renderer_);
+	stateMachine = new GameStateMachine();
+	state_ = new State(this, renderer_); 
+	stateMachine->pushState(state_);
+
 }
 
 void Game::run()
 {
-	state_->run();
+	stateMachine->getCurrentState()->run();
 }
 
 Game::~Game()
