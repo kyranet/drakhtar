@@ -5,6 +5,9 @@
 GameObject::~GameObject()
 {
 	texture_ = nullptr;
+	for (auto listener : eventListeners_)
+		delete listener;
+	eventListeners_.clear();
 }
 
 void GameObject::render() const
