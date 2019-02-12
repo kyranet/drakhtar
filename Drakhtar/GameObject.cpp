@@ -36,3 +36,14 @@ SDL_Rect GameObject::getRect() const
 		size_.getY()
 	};
 }
+
+bool GameObject::returnTurn()
+{
+	return actualTurn;
+}
+
+void GameObject::modifyRect(SDL_Point p)
+{
+	pos_.x = p.x;
+	pos_.y = p.y;
+}

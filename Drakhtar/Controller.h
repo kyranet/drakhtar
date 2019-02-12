@@ -10,6 +10,6 @@ public:
 	Controller(GameObject* gameObject)
 		: EventListener(gameObject) {};
 	virtual void run(SDL_Event event);
-	void onHover(bool mouseOn);
-	void onClick(bool mouseOn);
+	void onHover(bool onTop);
+	void onClick(bool onTop, SDL_Point p);
 };
