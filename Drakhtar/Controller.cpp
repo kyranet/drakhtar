@@ -1,18 +1,5 @@
 #include "Controller.h"
 
-
-
-Controller::Controller(GameObject* gameObject)
-	: gameObject_(gameObject)
-{
-}
-
-
-Controller::~Controller()
-{
-	gameObject_ = nullptr;
-}
-
 void Controller::handleEvents(SDL_Event event)
 {
 	SDL_Point p;

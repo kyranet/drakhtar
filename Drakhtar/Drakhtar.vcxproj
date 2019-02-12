@@ -82,6 +82,7 @@
     <ClInclude Include="checkML.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="DrakhtarError.h" />
+    <ClInclude Include="EventListener.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameStateMachine.h" />

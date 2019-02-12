@@ -2,16 +2,16 @@
 
 #include "SDL.h"
 #include "GameObject.h"
+#include "EventListener.h"
 
-class Controller
+class Controller : public EventListener
 {
 private:
-	GameObject* gameObject_;
 	bool mouseOn = false;
 public:
-	Controller(GameObject* gameObject);
-	virtual ~Controller();
-	void handleEvents(SDL_Event event);
+	Controller(GameObject* gameObject)
+		: EventListener(gameObject) {};
+	virtual void handleEvents(SDL_Event event);
 	void onHover(bool mouseOn);
 	void onClick(bool mouseOn);
 };

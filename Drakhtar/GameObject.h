@@ -16,7 +16,7 @@ private:
 public:
 	GameObject(Texture* texture, vector2d pos, vector2d size)
 		: texture_(texture), pos_(pos), size_(size) {}
-	// TODO: Remove this after the States are finished
+	// TODO: Remove this after all operations use the vector2d approach
 	GameObject(Texture* texture, float pos_x, float pos_y, float size_x, float size_y)
 		: texture_(texture), pos_(vector2d{ pos_x, pos_y }), size_(vector2d{ size_x, size_y }) {};
 	~GameObject();
