@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "State.h"
-
+#include "Controller.h"
 
 State::State(Game* game, SDL_Renderer* renderer)
 	: game_(game), renderer_(renderer)
@@ -18,7 +18,9 @@ State::~State()
 void State::run()
 {
 	// Hardcoded stuff so this works
-	gameObjects_.push_back(new GameObject(game_->getTextures()[1], vector2d{ 0.0, 0.0 }, vector2d{ 800.0, 600.0 }));
+	auto player = new GameObject(game_->getTextures()[1], vector2d{ 0.0, 0.0 }, vector2d{ 800.0, 600.0 });
+	player->addEventListener(new Controller(player));
+	gameObjects_.push_back(player);
 	gameObjects_.push_back(new GameObject(game_->getTextures()[0], vector2d{ 400.0, 300.0 }, vector2d{ 50.0, 50.0 }));
 	gameObjects_.push_back(new Board(game_->getTextures()[2], 8, 12, 40));
 

@@ -1,6 +1,6 @@
 #include "Controller.h"
 
-void Controller::handleEvents(SDL_Event event)
+void Controller::run(SDL_Event event)
 {
 	SDL_Point p;
 	switch (event.type)

@@ -1,5 +1,9 @@
 #pragma once
 
+#include "GameObject.h"
+
+class GameObject;
+
 class EventListener
 {
 protected:
@@ -8,6 +12,6 @@ public:
 	EventListener(GameObject* gameObject)
 		: gameObject_(gameObject) {};
 	virtual ~EventListener() { gameObject_ = nullptr; };
-	virtual void handleEvents(SDL_Event event) = 0;
+	virtual void run(SDL_Event event) = 0;
 };
 
