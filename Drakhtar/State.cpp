@@ -60,6 +60,7 @@ void State::_render() const
 	// Render the new frame
 	SDL_RenderPresent(renderer_);
 };
+
 void State::_update() {};
 void State::_handleEvents()
 {
@@ -75,8 +76,8 @@ void State::_handleEvents()
 		}
 
 		// For each game object, run the event handler
-		// for (auto gameObject : _gameObjects)
-		// 	gameObject->handleEvents(event);
+		for (auto gameObject : gameObjects_)
+			gameObject->handleEvents(event);
 	}
 };
 void State::_afterUpdate() {};

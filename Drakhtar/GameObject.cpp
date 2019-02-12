@@ -17,3 +17,7 @@ void GameObject::render() const
 {
 	texture_->render({ (int)pos_x - (int)size_x / 2, (int)pos_y - (int)size_y / 2, (int)size_x, (int)size_y });
 }
+
+void GameObject::handleEvents(SDL_Event event)
+{
+}

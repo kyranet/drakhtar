@@ -14,5 +14,6 @@ public:
 	GameObject(Texture* texture, double pos_x, double pos_y, double size_x, double size_y);
 	~GameObject();
 	virtual void render() const;
+	virtual void handleEvents(SDL_Event event);
 };
 
