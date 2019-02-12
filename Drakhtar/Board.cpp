@@ -5,13 +5,13 @@ Board::Board(Texture* cf, int r, int c, int cs) : GameObject(cf, (800 - (cs * c)
 	cols = c;
 	cellSize = cs;
 	cellFrame = cf;
-
+	
 	// Crea el tablero
 	board = new GameObject**[rows];
 	for (int i = 0; i < rows; i++) {
 		board[i] = new GameObject*[cols];
 	}
-
+	
 	// Rellena el tablero de nullptrs
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
