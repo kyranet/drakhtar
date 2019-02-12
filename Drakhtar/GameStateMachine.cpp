@@ -9,6 +9,7 @@ GameStateMachine::GameStateMachine()
 
 GameStateMachine::~GameStateMachine()
 {
+	while (!stateStack.empty()) stateStack.pop();
 	currentState = nullptr;
 }
 

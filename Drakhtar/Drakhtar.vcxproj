@@ -69,6 +69,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Board.cpp" />
+    <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameStateMachine.cpp" />
@@ -79,7 +80,9 @@
   <ItemGroup>
     <ClInclude Include="Board.h" />
     <ClInclude Include="checkML.h" />
+    <ClInclude Include="Controller.h" />
     <ClInclude Include="DrakhtarError.h" />
+    <ClInclude Include="EventListener.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameStateMachine.h" />

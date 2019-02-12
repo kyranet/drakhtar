@@ -38,6 +38,7 @@ Game::~Game()
 	for (int i = 0; i < NUMBER_TEXTURES; i++) delete textures_[i];
 	delete[] textures_;
 	delete state_;
+	delete stateMachine;
 }
 
 Texture** Game::getTextures() {
