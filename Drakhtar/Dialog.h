@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameObject.h"
+#include "Text.h"
 #include <iostream>
 
 class Dialog
@@ -11,8 +12,8 @@ private:
 
 	GameObject* dialogBlockSprite = nullptr;
 	GameObject* characterPortraitSprite = nullptr;
-	GameObject* characterNameSprite = nullptr;
-	GameObject* dialogTextSprite = nullptr;
+	Text* characterNameSprite = nullptr;
+	Text* dialogTextSprite = nullptr;
 public:
 	Dialog(string charName, string diagText);
 	~Dialog();
