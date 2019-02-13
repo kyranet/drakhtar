@@ -30,9 +30,9 @@ GameObject* GameObject::addEventListener(EventListener* eventListener)
 SDL_Rect GameObject::getRect() const
 {
 	return {
-		(int)floor(pos_.x),
-		(int)floor(pos_.y),
-		(int)floor(size_.x),
-		(int)floor(size_.y)
+		pos_.x,
+		pos_.y,
+		size_.x,
+		size_.y
 	};
 }

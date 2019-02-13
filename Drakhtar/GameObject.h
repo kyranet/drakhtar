@@ -5,19 +5,18 @@
 #include <list>
 
 struct vector2d {
-	float x;
-	float y;
+	int x;
+	int y;
 };
 
 class EventListener;
 
 class GameObject
 {
-private:
+protected:
 	vector2d pos_;
 	vector2d size_;
 	Texture* texture_;
-protected:
 	list<EventListener*> eventListeners_;
 public:
 	GameObject(Texture* texture, vector2d pos, vector2d size)

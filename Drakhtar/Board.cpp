@@ -1,12 +1,12 @@
 #include "Board.h"
 
-Board::Board(Texture* cellTexture, int r, int c, float cellSize) : GameObject(nullptr, vector2d{ 0, 0 }, vector2d{ 0, 0 }) {
+Board::Board(Texture* cellTexture, int r, int c, int cellSize) : GameObject(nullptr, vector2d{ 0, 0 }, vector2d{ 0, 0 }) {
 	rows = r;
 	cols = c;
 
 	// Calcula los márgenes horizontales y verticales
-	float marginX = (800 - (cellSize * (cols - 1))) / 2;
-	float marginY = (600 - (cellSize * (rows - 1))) / 2;
+	float marginX = (800 - (cellSize * (cols - 1))) / 2.f;
+	float marginY = (600 - (cellSize * (rows - 1))) / 2.f;
 
 	// Crea el tablero
 	board = new Box**[rows];
@@ -17,7 +17,7 @@ Board::Board(Texture* cellTexture, int r, int c, float cellSize) : GameObject(nu
 	// Rellena el tablero de cajas vacías
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
-			vector2d pos = { marginX + j * cellSize, marginY + i * cellSize };
+			vector2d pos = { (int)floor(marginX + j * cellSize), (int)floor(marginY + i * cellSize) };
 			vector2d size = { cellSize, cellSize };
 			board[i][j] = new Box(cellTexture, pos, size, nullptr);
 		}
