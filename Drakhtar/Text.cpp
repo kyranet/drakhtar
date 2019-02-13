@@ -1,21 +1,34 @@
 #include "Text.h"
 
 Text::Text(Font* font, vector2d pos, vector2d size, SDL_Color &color, string &text)
-	: GameObject(nullptr, pos, size), font(font), color(color), text(text)
+	: GameObject(nullptr, pos, size), font_(font), color_(color)
 {
+	setText(text);
 }
 
 Text::~Text()
 {
+	delete texture_;
 }
 
-void Text::setText(string newText) {}
-void Text::setColor(SDL_Color &color) {}
-SDL_Rect Text::getDestRect() const
+void Text::setText(const string newText)
 {
-	return {
-		width,
-		height
-	};
+	text_ = newText;
+	TTF_SizeText(font_->getFont(), newText.c_str(), &size_.x, &size_.y);
+	SDL_Surface *textSurface = TTF_RenderText_Solid(font_->getFont(), newText.c_str(), color_);
+	texture_->setTexture(SDL_CreateTextureFromSurface(font_->getRenderer(), textSurface));
+	SDL_FreeSurface(textSurface);
 }
-void Text::render() const {}
+
+void Text::setColor(const SDL_Color &color)
+{
+	SDL_Surface *textSurface = TTF_RenderText_Solid(font_->getFont(), text_.c_str(), color);
+	texture_->setTexture(SDL_CreateTextureFromSurface(font_->getRenderer(), textSurface));
+	SDL_FreeSurface(textSurface);
+	color_ = color;
+}
+
+void Text::render() const
+{
+	SDL_RenderCopy(font_->getRenderer(), texture_->getTexture(), nullptr, &getRect());
+}

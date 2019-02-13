@@ -6,17 +6,15 @@
 class Text : public GameObject
 {
 private:
-	Font *font;
-	Texture *texture;
-	string text;
-	SDL_Color color;
-	int width, height;
+	Font* font_;
+	Texture* texture_;
+	string text_;
+	SDL_Color color_;
 
 public:
 	Text(Font* font, vector2d pos, vector2d size, SDL_Color &color, string &text);
 	~Text();
-	void setText(string newText);
-	void setColor(SDL_Color &color);
-	SDL_Rect getDestRect() const;
+	void setText(const string newText);
+	void setColor(const SDL_Color &color);
 	void render() const;
 };

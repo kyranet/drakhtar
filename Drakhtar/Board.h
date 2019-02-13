@@ -9,7 +9,7 @@ protected:
 	int rows, cols;
 	Box*** board;
 public:
-	Board(Texture* cf, int r, int c, float cs);
+	Board(Texture* cf, int r, int c, int cs);
 	virtual ~Board();
 
 	virtual void render() const;
