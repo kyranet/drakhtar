@@ -1,21 +1,25 @@
 #include "Board.h"
 
-Board::Board(Texture* cf, int r, int c, int cs) : GameObject(cf, (800 - (cs * c)) / 2, (600 - (cs * r)) / 2, cs * c, cs * r) {
+Board::Board(Texture* cellTexture, int r, int c, float cellSize) : GameObject(nullptr, 0, 0, 0, 0) {
 	rows = r;
 	cols = c;
-	cellSize = cs;
-	cellFrame = cf;
+
+	// Calcula los márgenes horizontales y verticales
+	float marginX = (800 - (cellSize * (cols - 1))) / 2;
+	float marginY = (600 - (cellSize * (rows - 1))) / 2;
 
 	// Crea el tablero
-	board = new GameObject**[rows];
+	board = new Box**[rows];
 	for (int i = 0; i < rows; i++) {
-		board[i] = new GameObject*[cols];
+		board[i] = new Box*[cols];
 	}
 
-	// Rellena el tablero de nullptrs
+	// Rellena el tablero de cajas vacías
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
-			board[i][j] = nullptr;
+			vector2d pos = { marginX + j * cellSize, marginY + i * cellSize };
+			vector2d size = { cellSize, cellSize };
+			board[i][j] = new Box(cellTexture, pos, size, nullptr);
 		}
 	}
 }
@@ -35,11 +39,8 @@ Board::~Board() {
 }
 
 void Board::render() const {
-	int marginX = (800 - (cellSize * cols)) / 2;
-	int marginY = (600 - (cellSize * rows)) / 2;
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
-			cellFrame->render({ marginX + j * cellSize, marginY + i * cellSize, cellSize, cellSize });
 			if (board[i][j] != nullptr) {
 				board[i][j]->render();
 			}
