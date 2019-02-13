@@ -5,12 +5,12 @@
   <PropertyGroup>
     <OutDir>$(SolutionDir)bin\</OutDir>
     <TargetName>$(ProjectName)$(Configuration)</TargetName>
-    <IncludePath>$(SolutionDir)SDL2-2.0.4\include;$(SolutionDir)SDL2_image-2.0.1\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)SDL2-2.0.4\lib\x86;$(SolutionDir)SDL2_image-2.0.1\lib\x86;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)Dependencies\SDL2-2.0.4\include;$(SolutionDir)Dependencies\SDL2_image-2.0.1\include;$(SolutionDir)Dependencies\SDL2_ttf-2.0.14\include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(SolutionDir)Dependencies\SDL2-2.0.4\lib\x86;$(SolutionDir)Dependencies\SDL2_image-2.0.1\lib\x86;$(SolutionDir)Dependencies\SDL2_ttf-2.0.14\lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <Link>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2_ttf.lib;SDL2_image.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>

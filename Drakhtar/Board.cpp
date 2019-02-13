@@ -1,6 +1,6 @@
 #include "Board.h"
 
-Board::Board(Texture* cellTexture, int r, int c, float cellSize) : GameObject(nullptr, 0, 0, 0, 0) {
+Board::Board(Texture* cellTexture, int r, int c, float cellSize) : GameObject(nullptr, vector2d{ 0, 0 }, vector2d{ 0, 0 }) {
 	rows = r;
 	cols = c;
 

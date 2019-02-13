@@ -12,7 +12,6 @@ private:
 	uint size = 8;
 
 public:
-	Font() {};
 	Font(SDL_Renderer* renderer, string filename, int size);
 	~Font();
 	TTF_Font* getFont() const;
