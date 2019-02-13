@@ -13,6 +13,33 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Archivos de código fuente\Components">
+      <UniqueIdentifier>{8afb92ed-0da8-466d-8ca5-8bd704dd6eda}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Components">
+      <UniqueIdentifier>{339b3a20-e600-4807-948e-6a2963729c36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\GameObjects">
+      <UniqueIdentifier>{f8259d18-cb73-401c-a1e5-0fbad1925a1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\GameObjects">
+      <UniqueIdentifier>{0f2c7146-00c8-4b62-83a0-5d344124e6cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\Components\EventListeners">
+      <UniqueIdentifier>{a6b6bbc7-0818-420e-a4db-201726ad3321}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Components\EventListeners">
+      <UniqueIdentifier>{4b91afd1-70cc-42c0-90bc-8913dc7fece4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\States">
+      <UniqueIdentifier>{67068c2f-e4b1-4c55-8ebc-7eeccbdbf147}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\States">
+      <UniqueIdentifier>{a1dc3a50-e022-40cd-ad74-87fbb9a09aa5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de encabezado\Exceptions">
+      <UniqueIdentifier>{b1567475-c06b-4b6b-af39-e2ff9434971c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -21,36 +48,30 @@
     <ClCompile Include="Game.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
-    <ClCompile Include="State.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
     <ClCompile Include="Texture.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
     <ClCompile Include="Board.cpp">
       <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStateMachine.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Archivos de código fuente\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Controller.cpp">
+      <Filter>Archivos de código fuente\Components\EventListeners</Filter>
+    </ClCompile>
+    <ClCompile Include="State.cpp">
+      <Filter>Archivos de código fuente\States</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="DrakhtarError.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="SDLError.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="State.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="Texture.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="Unit.h">
@@ -58,6 +79,30 @@
     </ClInclude>
     <ClInclude Include="Board.h">
       <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStateMachine.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="checkML.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Archivos de encabezado\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller.h">
+      <Filter>Archivos de encabezado\Components\EventListeners</Filter>
+    </ClInclude>
+    <ClInclude Include="EventListener.h">
+      <Filter>Archivos de encabezado\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="State.h">
+      <Filter>Archivos de encabezado\States</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLError.h">
+      <Filter>Archivos de encabezado\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="DrakhtarError.h">
+      <Filter>Archivos de encabezado\Exceptions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

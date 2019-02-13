@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "State.h"
-
+#include "Controller.h"
 
 State::State(Game* game, SDL_Renderer* renderer)
 	: game_(game), renderer_(renderer)
@@ -15,12 +15,19 @@ State::~State()
 	game_ = nullptr;
 }
 
+void State::_preload()
+{
+	auto player = new GameObject(game_->getTextures()[BLUE_ARCHER], vector2d{ 400.0, 300.0 }, vector2d{ 50.0, 50.0 });
+	player->addEventListener(new Controller(player));
+	gameObjects_.push_back(new GameObject(game_->getTextures()[FIRST_BATTLE], vector2d{ 400.0, 300.0 }, vector2d{ 800.0, 600.0 }));
+	gameObjects_.push_back(player);
+	gameObjects_.push_back(new Board(game_->getTextures()[CELL_FRAME], 8, 12, 50));
+}
+
 void State::run()
 {
-	// Hardcoded stuff so this works
-	gameObjects_.push_back(new GameObject(game_->getTextures()[1], 400, 300, 800.0, 600.0));
-	gameObjects_.push_back(new GameObject(game_->getTextures()[0], 400.0, 300.0, 50.0, 50.0));
-	gameObjects_.push_back(new Board(game_->getTextures()[2], 8, 12, 50));
+	// Preload the state before running
+	_preload();
 
 	// The event loop follows this scheme:
 	// → Create all pending-to-create game objects
@@ -60,6 +67,7 @@ void State::_render() const
 	// Render the new frame
 	SDL_RenderPresent(renderer_);
 };
+
 void State::_update() {};
 void State::_handleEvents()
 {
@@ -75,8 +83,8 @@ void State::_handleEvents()
 		}
 
 		// For each game object, run the event handler
-		// for (auto gameObject : _gameObjects)
-		// 	gameObject->handleEvents(event);
+		for (auto gameObject : gameObjects_)
+			gameObject->handleEvents(event);
 	}
 };
 void State::_afterUpdate() {};
