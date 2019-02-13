@@ -8,6 +8,7 @@ Box::~Box() {
 }
 
 void Box::render() const {
+	GameObject::render();
 	if (content != nullptr) {
 		content->render();
 	}

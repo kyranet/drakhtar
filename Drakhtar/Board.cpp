@@ -1,13 +1,12 @@
 #include "Board.h"
 
-// El constructor calcula la posición de la cuadrícula en función del número de casillas y la centra en la ventana
-Board::Board(Texture* cellTexture, int r, int c, float cellSize) : GameObject(cellTexture, (800 - (cellSize * c)) / 2, (600 - (cellSize * r)) / 2, cellSize * c, cellSize * r) {
+Board::Board(Texture* cellTexture, int r, int c, float cellSize) : GameObject(nullptr, 0, 0, 0, 0) {
 	rows = r;
 	cols = c;
 
 	// Calcula los márgenes horizontales y verticales
-	float marginX = (800 - (cellSize * cols)) / 2;
-	float marginY = (600 - (cellSize * rows)) / 2;
+	float marginX = (800 - (cellSize * (cols - 1))) / 2;
+	float marginY = (600 - (cellSize * (rows - 1))) / 2;
 
 	// Crea el tablero
 	board = new Box**[rows];
