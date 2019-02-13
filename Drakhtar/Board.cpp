@@ -4,7 +4,7 @@ Board::Board(Texture* cellTexture, int r, int c, float cellSize) : GameObject(nu
 	rows = r;
 	cols = c;
 
-	// Calcula los m·rgenes horizontales y verticales
+	// Calcula los m√°rgenes horizontales y verticales
 	float marginX = (800 - (cellSize * (cols - 1))) / 2;
 	float marginY = (600 - (cellSize * (rows - 1))) / 2;
 
@@ -14,11 +14,12 @@ Board::Board(Texture* cellTexture, int r, int c, float cellSize) : GameObject(nu
 		board[i] = new Box*[cols];
 	}
 
-	// Rellena el tablero de cajas vacÌas
+	// Rellena el tablero de cajas vac√≠as
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
 			vector2d pos = { marginX + j * cellSize, marginY + i * cellSize };
-			board[i][j] = new Box(cellTexture, pos, { cellSize, cellSize }, nullptr);
+			vector2d size = { cellSize, cellSize };
+			board[i][j] = new Box(cellTexture, pos, size, nullptr);
 		}
 	}
 }
