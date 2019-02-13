@@ -1,7 +1,5 @@
 #include "Font.h"
 
-
-
 Font::Font(SDL_Renderer* renderer, string filename, int size) : renderer(renderer), size(size)
 {
 	load(filename);
