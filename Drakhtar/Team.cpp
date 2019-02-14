@@ -39,7 +39,7 @@ Unit* Team::pickUnit() const
 	{
 		if (!unit->getMoved())
 		{
-			unit->setMoved(true);
+			unit->setMoving(true);
 			return unit;
 		}
 	}
@@ -47,7 +47,9 @@ Unit* Team::pickUnit() const
 	for (auto unit : units_)
 		unit->setMoved(false);
 
-	return units_.front();
+	auto unit = units_.front();
+	unit->setMoving(true);
+	return unit;
 }
 
 list<Unit*>::iterator Team::findInsertPosition(Unit* unit)

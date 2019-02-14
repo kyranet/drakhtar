@@ -26,6 +26,7 @@ void Unit::setBoxPosition(vector2d position)
 	// the coordinates in pixels of the box, or maybe
 	// make this method take two arguments and pass both
 	// together.
+	setMoved(true);
 }
 
 void Unit::setTeam(Team* team)
