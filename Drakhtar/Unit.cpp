@@ -18,3 +18,12 @@ void Unit::setMoved(bool moved)
 {
 	moved_ = moved;
 }
+
+void Unit::setBoxPosition(vector2d position)
+{
+	boxPosition_ = position;
+	// FIXME: Set the GameObject's position by calculating
+	// the coordinates in pixels of the box, or maybe
+	// make this method take two arguments and pass both
+	// together.
+}
