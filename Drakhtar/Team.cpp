@@ -31,6 +31,25 @@ void Team::removeUnit(Unit* unit)
 	units_.remove(unit);
 }
 
+Unit* Team::pickUnit() const
+{
+	if (units_.size() == 0) return nullptr;
+
+	for (auto unit : units_)
+	{
+		if (!unit->getMoved())
+		{
+			unit->setMoved(true);
+			return unit;
+		}
+	}
+
+	for (auto unit : units_)
+		unit->setMoved(false);
+
+	return units_.front();
+}
+
 list<Unit*>::iterator Team::findInsertPosition(Unit* unit)
 {
 	int i = 0;

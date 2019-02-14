@@ -20,4 +20,5 @@ public:
 	Board* getBoard() { return board_; }
 	void addUnit(Unit* unit);
 	void removeUnit(Unit* unit);
+	Unit* pickUnit() const;
 };
