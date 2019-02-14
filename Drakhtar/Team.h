@@ -6,7 +6,6 @@
 
 class Unit;
 
-// TODO: Replace GameObject with Unit once they are done
 // TODO: Implement turns logic
 
 class Team
