@@ -27,3 +27,8 @@ void Unit::setBoxPosition(vector2d position)
 	// make this method take two arguments and pass both
 	// together.
 }
+
+void Unit::setTeam(Team* team)
+{
+	team_ = team;
+}

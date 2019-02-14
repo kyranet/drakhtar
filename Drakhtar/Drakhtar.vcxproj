@@ -76,6 +76,7 @@
     <ClCompile Include="GameStateMachine.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="State.cpp" />
+    <ClCompile Include="Team.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Unit.cpp" />
   </ItemGroup>
@@ -91,6 +92,8 @@
     <ClInclude Include="GameStateMachine.h" />
     <ClInclude Include="SDLError.h" />
     <ClInclude Include="State.h" />
+    <ClInclude Include="Team.h" />
+    <ClInclude Include="TeamedUnitError.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Unit.h" />
   </ItemGroup>
