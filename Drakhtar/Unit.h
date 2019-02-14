@@ -1,50 +1,29 @@
-#include <vector>
-using namespace std;
+#pragma once
 
-enum Bando {
-	Jugador,
-	Enemigo
-};
+#include "GameObject.h"
 
-
-enum TipoAccion;
-
-class Unit {
-
-	// Estadísticas. Cada tipo de unidad tiene unas estadísticas fijas/o variables si se añade experiencia
-
-	int ATQ;
-	int DEF;
-	int MAG;
-	int VIT_MAX;
-	short dist;
-	short rango;
-
-	
-	// Estado fijo que depende de cada unidad individualmente
-
-	Bando bando;
-
-	// Estado de la unidad, variable cada turno
-
-	bool puedeMover;
-	bool puedeActuar;
-	int x_map;
-	int y_map;
-	int VIT;
-
+class Unit : public GameObject
+{
+private:
+	int attack_;
+	int health_;
+	int attackRange_;
+	int moveRange_;
+	bool moving_ = false;
+	bool moved_ = false;
+	// TODO: Add `Team* team_;`
 public:
-
-int update(int time);
-int render();
-
-
-// Cada unidad tiene un switch para cada una de las acciones disponibles. En caso de poder actuarse, aplicará cada acción con los datos pertinentes.
-int accion(TipoAccion accion, Unit * unidad);
-int avanzar(vector < pair<int, int>> * path);
-
-// 
-
-	
-
+	Unit(Texture* texture, vector2d pos, vector2d size, int attack, int health, int attackRange, int moveRange)
+		: GameObject(texture, pos, size), attack_(attack), health_(health), attackRange_(attackRange), moveRange_(moveRange) {}
+	virtual ~Unit() {};
+	int getAttack() const { return attack_; }
+	int getAttackRange() const { return attackRange_; }
+	int getMoveRange() const { return moveRange_; }
+	int getHealth() const { return health_; }
+	bool getMoving() const { return moving_; }
+	bool getMoved() const { return moved_; }
+	void moveTowards(vector2d pos);
+	void setMoving(bool moving);
+	void setMoved(bool moved);
 };
+
