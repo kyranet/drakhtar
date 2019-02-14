@@ -13,6 +13,7 @@ class Team
 private:
 	list<Unit*> units_;
 	Board* board_ = nullptr;
+	list<Unit*>::iterator findInsertPosition(Unit* unit);
 public:
 	Team(Board* board);
 	virtual ~Team();

@@ -18,14 +18,29 @@ void Team::addUnit(Unit* unit)
 	}
 	unit->setTeam(this);
 
-	// TODO: Once Unit has been done, find the first
-	// slower unit relative to the unit trying to add
-	// and insert at that index. This is so units_ do
-	// not need to be re-sorted.
-	units_.push_back(unit);
+	// Gets the sorted position. If it does not find an unit
+	// with lower speed, it gets pushed to the end, otherwise
+	// it gets pushed right before the first slower one.
+	auto index = findInsertPosition(unit);
+	if (index == units_.end()) units_.push_back(unit);
+	else units_.insert(index, unit);
 }
 
 void Team::removeUnit(Unit* unit)
 {
 	units_.remove(unit);
+}
+
+list<Unit*>::iterator Team::findInsertPosition(Unit* unit)
+{
+	int i = 0;
+	auto it = units_.begin();
+	auto end = units_.end();
+	while (it != end)
+	{
+		if (unit->getSpeed() > (*it)->getSpeed()) return it;
+		i++;
+	}
+
+	return end;
 }
