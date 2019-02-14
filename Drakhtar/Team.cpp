@@ -11,14 +11,12 @@ Team::~Team()
 	board_ = nullptr;
 }
 
-void Team::addUnit(GameObject* unit)
+void Team::addUnit(Unit* unit)
 {
-	// TODO: Uncomment this once Unit has merged with
-	// team support.
-	// if (unit->team != nullptr) {
-	// 	throw new TeamedUnitError("This unit already has a team.");
-	// }
-	// unit->setTeam(this);
+	if (unit->getTeam() != nullptr) {
+		throw new TeamedUnitError("This unit already has a team.");
+	}
+	unit->setTeam(this);
 
 	// TODO: Once Unit has been done, find the first
 	// slower unit relative to the unit trying to add
@@ -27,7 +25,7 @@ void Team::addUnit(GameObject* unit)
 	units_.push_back(unit);
 }
 
-void Team::removeUnit(GameObject* unit)
+void Team::removeUnit(Unit* unit)
 {
 	units_.remove(unit);
 }
