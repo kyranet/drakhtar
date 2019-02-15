@@ -12,7 +12,7 @@ GameObject::~GameObject()
 
 void GameObject::render() const
 {
-	texture_->render({ (int)pos_.x - (int)size_.x / 2, (int)pos_.y - (int)size_.y / 2, (int)size_.x, (int)size_.y });
+	texture_->render({ pos_.getX() - size_.getX() / 2, pos_.getY() - size_.getY() / 2, size_.getX(), size_.getY() });
 }
 
 void GameObject::handleEvents(SDL_Event event)
@@ -30,9 +30,9 @@ GameObject* GameObject::addEventListener(EventListener* eventListener)
 SDL_Rect GameObject::getRect() const
 {
 	return {
-		(int)floor(pos_.x),
-		(int)floor(pos_.y),
-		(int)floor(size_.x),
-		(int)floor(size_.y)
+		pos_.getX(),
+		pos_.getY(),
+		size_.getX(),
+		size_.getY()
 	};
 }
