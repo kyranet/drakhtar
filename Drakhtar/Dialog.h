@@ -2,22 +2,25 @@
 
 #include "GameObject.h"
 #include "Text.h"
+#include "Game.h"
 #include <iostream>
+#include <fstream>
+
 
 class Dialog
 {
 private:
 	string characterName;
+	string spriteText;
 	string dialogText;
 
-	GameObject* dialogBlockSprite = nullptr;
 	GameObject* characterPortraitSprite = nullptr;
 	Text* characterNameSprite = nullptr;
 	Text* dialogTextSprite = nullptr;
 public:
-	Dialog(string charName, string diagText);
+	Dialog(Game* game, ifstream& file);
 	~Dialog();
 	virtual void render() const;
-	void readFromFile();
+	void readFromFile(ifstream& file);
 };
 

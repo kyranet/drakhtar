@@ -2,17 +2,17 @@
 
 
 
-Dialog::Dialog(string charName, string diagText)
+Dialog::Dialog(Game* game, ifstream& file)
 {
-	characterName = charName;
-	dialogText = diagText;
+	readFromFile(file);
+	characterPortraitSprite = new GameObject(game->getTextures[spriteText] , vector2d{ 220, 350 }, vector2d{ 70, 70 });
+	//characterNameSprite = new Text(COGER FUENTE, vector2d{ 220, 370 }, vector2d{ 50, 50 }, COGER COLOR, characterName);
+	//dialogTextSprite = new Text(COGER FUENTE, vector2d{ 400, 400 }, vector2d{ 50, 50 }, COGER COLOR, dialogText);
 }
 
 
 Dialog::~Dialog()
 {
-	delete dialogBlockSprite;
-	dialogBlockSprite = nullptr;
 	delete characterPortraitSprite;
 	characterPortraitSprite = nullptr;
 	delete characterNameSprite;
@@ -23,12 +23,23 @@ Dialog::~Dialog()
 
 void Dialog::render() const
 {
-	dialogBlockSprite->render();
 	characterPortraitSprite->render();
 	characterNameSprite->render();
 	dialogTextSprite->render();
 }
 
-void Dialog::readFromFile()
+void Dialog::readFromFile(ifstream& file)
 {
+	file >> characterName;
+	file >> spriteText;
+
+	string text; // full dialog text
+	string word = ""; // word added to text each iteration
+	while (word != ".")
+	{
+		file >> word;
+		if (word != ".")
+			text += word + " ";
+	}
+	dialogText = text;
 }
