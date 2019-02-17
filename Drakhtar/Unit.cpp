@@ -1,6 +1,6 @@
 #include "Unit.h"
 
-void Unit::moveTowards(vector2d pos)
+void Unit::moveTowards(Vector2D<int> pos)
 {
 	// If it's not the unit's turn, cancel any action
 	if (!moving_) return;
@@ -19,7 +19,7 @@ void Unit::setMoved(bool moved)
 	moved_ = moved;
 }
 
-void Unit::setBoxPosition(vector2d position)
+void Unit::setBoxPosition(Vector2D<int> position)
 {
 	boxPosition_ = position;
 	// FIXME: Set the GameObject's position by calculating

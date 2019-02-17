@@ -79,6 +79,7 @@
     <ClCompile Include="Team.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Unit.cpp" />
+    <ClCompile Include="Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Board.h" />
@@ -96,6 +97,7 @@
     <ClInclude Include="TeamedUnitError.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Unit.h" />
+    <ClInclude Include="Vector2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

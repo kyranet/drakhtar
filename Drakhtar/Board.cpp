@@ -17,8 +17,8 @@ Board::Board(Texture* cellTexture, int r, int c, float cellSize) : GameObject(nu
 	// Rellena el tablero de cajas vacías
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
-			vector2d pos = { marginX + j * cellSize, marginY + i * cellSize };
-			vector2d size = { cellSize, cellSize };
+			Vector2D<int> pos((int)floor(marginX + j * cellSize), (int)floor(marginY + i * cellSize));
+			Vector2D<int> size((int)floor(cellSize), (int)floor(cellSize));
 			board[i][j] = new Box(cellTexture, pos, size, nullptr);
 		}
 	}

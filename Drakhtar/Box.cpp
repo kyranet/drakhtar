@@ -1,6 +1,8 @@
 #include "Box.h"
 
-Box::Box(Texture* t, vector2d pos, vector2d size, GameObject* go) : GameObject(t, pos, size), content(go) {
+Box::Box(Texture* t, Vector2D<int> pos, Vector2D<int> size, GameObject* go)
+	: GameObject(t, pos, size), content(go)
+{
 }
 
 Box::~Box() {
