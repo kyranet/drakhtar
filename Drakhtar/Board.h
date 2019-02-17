@@ -12,7 +12,7 @@ public:
 	virtual ~Board();
 
 	virtual void render() const;
-	bool isInRange(vector2d from, vector2d to, int range);
+	bool isInRange(Vector2D<int> from, Vector2D<int> to, int range);
 	Box* getBoxAt(int x, int y);
 	int** getCellsInRange(Box box, int range);
 	//Box** findPath(Box* start, Box* end, int steps);
