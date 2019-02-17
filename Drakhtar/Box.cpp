@@ -1,4 +1,5 @@
 #include "Box.h"
+#include "Unit.h"
 
 Box::Box(Texture* t, Vector2D<int> pos, Vector2D<int> size, Unit* go)
 	: GameObject(t, pos, size), content(go)

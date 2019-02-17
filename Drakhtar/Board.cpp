@@ -1,4 +1,5 @@
 #include "Board.h"
+#include "Unit.h"
 
 Board::Board(Texture* cellTexture, int r, int c, float cellSize) : GameObject(nullptr, 0, 0, 0, 0), rows(r), cols(c) {
 	// Calculates margins to center the board on screen
