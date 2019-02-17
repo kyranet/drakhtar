@@ -1,7 +1,9 @@
 #pragma once
 
-//#include "GameObject.h"
-#include "Unit.h"
+#include "GameObject.h"
+//#include "Unit.h"
+
+class Unit;
 
 class Box : public GameObject {
 protected:
