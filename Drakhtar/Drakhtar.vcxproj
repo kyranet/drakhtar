@@ -69,6 +69,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AudioManager.cpp" />
+    <ClCompile Include="Battalion.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="Controller.cpp" />
@@ -91,6 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AudioManager.h" />
+    <ClInclude Include="Battalion.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="checkML.h" />
