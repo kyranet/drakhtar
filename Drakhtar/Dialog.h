@@ -18,7 +18,7 @@ private:
 	Text* characterNameSprite = nullptr;
 	Text* dialogTextSprite = nullptr;
 public:
-	Dialog(Game* game, ifstream& file);
+	Dialog(Game* game, ifstream& file, Font* textfont);
 	~Dialog();
 	virtual void render() const;
 	void readFromFile(ifstream& file);

@@ -2,10 +2,11 @@
 
 
 
-DialogScene::DialogScene(Game* game, string filename)
+DialogScene::DialogScene(Game* game, string filename, string fontfile)
 {
 	//dialogBlockSprite = new GameObject(game->getTextures()[AÑADIR TEXTURA AL ENUM], vector2d{ 400, 400 }, vector2d{ 200, 80 });
-	readFromFile(game, filename);
+	textFont = new Font(game->getRenderer(), fontfile, 8);
+	readFromFile(game, filename, textFont);
 }
 
 
@@ -13,6 +14,8 @@ DialogScene::~DialogScene()
 {
 	delete dialogBlockSprite;
 	dialogBlockSprite = nullptr;
+	delete textFont;
+	textFont = nullptr;
 }
 
 void DialogScene::render()
@@ -33,7 +36,7 @@ void DialogScene::handleEvents(SDL_Event event)
 	}
 }
 
-void DialogScene::readFromFile(Game* game, string filename)
+void DialogScene::readFromFile(Game* game, string filename, Font* textFont)
 {
 	ifstream file;
 	file.open(filename + ".txt");
@@ -45,7 +48,7 @@ void DialogScene::readFromFile(Game* game, string filename)
 
 		for (int i = 0;i < dialogChainSize;i++)
 		{
-			dialogChain[i] = new Dialog(game, file);
+			dialogChain[i] = new Dialog(game, file, textFont);
 		}
 		
 	}

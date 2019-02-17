@@ -44,3 +44,8 @@ Game::~Game()
 Texture** Game::getTextures() {
 	return textures_;
 }
+
+SDL_Renderer* Game::getRenderer()
+{
+	return renderer_;
+}

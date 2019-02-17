@@ -44,5 +44,6 @@ public:
 	void run();
 	virtual ~Game();
 	Texture** getTextures();
+	SDL_Renderer* getRenderer();
 };
 
