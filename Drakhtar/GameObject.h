@@ -14,6 +14,7 @@ protected:
 	Vector2D<int> size_;
 	Texture* texture_;
 	list<EventListener*> eventListeners_;
+	void setPos(int x, int y);
 public:
 	GameObject(Texture* texture, Vector2D<int> pos, Vector2D<int> size)
 		: texture_(texture), pos_(pos), size_(size) {}

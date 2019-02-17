@@ -27,10 +27,13 @@ void Unit::setMoved(bool moved) {
 
 void Unit::setBoxPosition(Vector2D<int> position) {
 	boxPosition_ = position;
-	// FIXME: Set the GameObject's position by calculating
-	// the coordinates in pixels of the box, or maybe
-	// make this method take two arguments and pass both
-	// together.
+	Vector2D<int> boxSize;
+	boxSize.setX(team_->getBoard()->getBoxAt(0, 0)->getRect().w);
+	boxSize.setY(team_->getBoard()->getBoxAt(0, 0)->getRect().h);
+
+	this->setPos(boxSize.getX(), boxSize.getY());
+	// Now it sets the gameObject position too. 
+	// FIXME: The new position will change gradually each frame to show movement visually.
 	setMoved(true);
 }
 
