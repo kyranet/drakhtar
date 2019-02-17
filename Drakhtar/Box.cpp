@@ -1,6 +1,6 @@
 #include "Box.h"
 
-Box::Box(Texture* t, vector2d pos, vector2d size, int bx, int by, GameObject* go) : 
+Box::Box(Texture* t, vector2d pos, vector2d size, int bx, int by, Unit* go) :
 	GameObject(t, pos, size), boardX(bx), boardY(by), content(go) {}
 
 Box::~Box() {
@@ -15,7 +15,7 @@ void Box::render() const {
 	}
 }
 
-GameObject * Box::getContent() {
+Unit * Box::getContent() {
 	return content;
 }
 
@@ -23,6 +23,6 @@ vector2d Box::getIndex() {
 	return { (float)boardX, (float)boardY };
 }
 
-void Box::setContent(GameObject* object) {
+void Box::setContent(Unit* object) {
 	content = object;
 }
