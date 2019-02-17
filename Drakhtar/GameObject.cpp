@@ -54,3 +54,9 @@ void GameObject::setPos(int x, int y)
 	pos_.setX(x);
 	pos_.setY(y);
 }
+
+void GameObject::setPos(int x, int y)
+{
+	pos_.setX(x);
+	pos_.setY(y);
+}
