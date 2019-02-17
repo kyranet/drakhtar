@@ -14,7 +14,16 @@ public:
 	virtual void render() const;
 	bool isInRange(vector2d from, vector2d to, int range);
 	Box* getBoxAt(int x, int y);
-	Box** findPath(Box* start, Box* end, int steps);
-	void step(Box * start, bool dirX, bool dirY, Box** &path, int i);
+	int** getCellsInRange(Box box, int range);
+	//Box** findPath(Box* start, Box* end, int steps);
+	//void step(Box * start, bool dirX, bool dirY, Box** &path, int i);
+
+	const enum objectType {
+		outOfBoard,
+		outOfRange,
+		empty,
+		ally,
+		enemy
+	};
 };
 

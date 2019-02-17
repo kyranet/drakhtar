@@ -56,6 +56,47 @@ bool Board::isInRange(vector2d from, vector2d to, int range) {
 Box* Board::getBoxAt(int x, int y) {
 	return board[x][y];
 }
+
+int ** Board::getCellsInRange(Box box, int range) {
+	int size = range * 2 + 1;
+	int startX = box.getIndex().x - range;
+	int startY = box.getIndex().y - range;
+
+	// Creates the array
+	int** cellsInRange = new int*[size];
+	for (int i = 0; i < rows; i++) {
+		cellsInRange[i] = new int[size];
+	}
+
+	// Fills the array
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size; j++) {
+			// Current cell is out of the board
+			if (i + startX < 0 || j + startY < 0) {
+				cellsInRange[i][j] = outOfBoard;
+
+			// Current cell is out of the movement range
+			} else if(abs(box.getIndex().x - i + startX) + abs(box.getIndex().y - j + startY) > range) {
+				cellsInRange[i][j] = outOfRange;
+
+			// Current cell is in the board and in range
+			} else {
+				Unit* unit = board[i + startX][j + startY]->getContent();
+
+				// Current cell is empty
+				if (unit == nullptr) { cellsInRange[i][j] = empty; }
+
+				// Current cell is occupied
+				else {
+					if (unit->getTeam() == box.getContent()->getTeam()) { cellsInRange[i][j] = ally; }	// Ally
+					else { cellsInRange[i][j] = enemy; }	// Enemy
+				}
+			}
+		}
+	}
+
+	return cellsInRange;
+}
 /*
 Box ** Board::findPath(Box * start, Box * end, int steps) {
 	Box** path = new Box*[steps];
