@@ -13,7 +13,6 @@ public:
 	virtual ~Box();
 
 	virtual void render() const;
-	GameObject* getContent();
 	Unit* getContent();
 	vector2d getIndex();
 	void setContent(Unit* object);
