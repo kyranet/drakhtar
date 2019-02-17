@@ -12,7 +12,7 @@ public:
 	virtual ~Battalion();
 
 	int getBattalionSize() const { return battalionSize_; }
-	void setBattalionSize(int battalionSize);
+	int setBattalionSize(int battalionSize);
 
 	virtual int getAttack() const;
 	virtual int getDefense() const;
