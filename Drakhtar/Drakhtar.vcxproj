@@ -85,6 +85,7 @@
     <ClInclude Include="Board.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="checkML.h" />
+    <ClInclude Include="Constants.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="DrakhtarError.h" />
     <ClInclude Include="EventListener.h" />
