@@ -8,14 +8,15 @@ class Unit;
 class Box : public GameObject {
 protected:
 	int boardX, boardY;
-	vector2d boardIndex;
+	Vector2D<int> boardIndex;
 	Unit* content;
 public:
-	Box(Texture* t, vector2d pos, vector2d size, int boardX, int boardY, Unit* go);
+	Box(Texture* t, Vector2D<int> pos, Vector2D<int> size, int boardX, int boardY, Unit* go);
 	virtual ~Box();
 
 	virtual void render() const;
 	Unit* getContent();
-	vector2d getIndex();
+	Vector2D<int> getIndex();
 	void setContent(Unit* object);
+
 };

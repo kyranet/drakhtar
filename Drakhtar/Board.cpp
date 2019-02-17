@@ -15,8 +15,8 @@ Board::Board(Texture* cellTexture, int r, int c, float cellSize) : GameObject(nu
 	// Fills the board with empty boxes
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
-			vector2d pos = { marginX + j * cellSize, marginY + i * cellSize };
-			board[i][j] = new Box(cellTexture, pos, { cellSize, cellSize }, i, j, nullptr);
+			Vector2D<int> pos = Vector2D<int>(marginX + j * cellSize, marginY + i * cellSize);
+			board[i][j] = new Box(cellTexture, pos, Vector2D<int>(cellSize, cellSize), i, j, nullptr);
 		}
 	}
 }
@@ -44,8 +44,8 @@ void Board::render() const {
 	}
 }
 
-bool Board::isInRange(vector2d from, vector2d to, int range) {
-	int distance = abs((to.x - from.x) + (to.y - to.y));
+bool Board::isInRange(Vector2D<int> from, Vector2D<int> to, int range) {
+	int distance = abs((to.getX() - from.getX()) + (to.getY() - to.getY()));
 	if (range >= distance) {
 		return true;
 	} else {
@@ -59,8 +59,8 @@ Box* Board::getBoxAt(int x, int y) {
 
 int ** Board::getCellsInRange(Box box, int range) {
 	int size = range * 2 + 1;
-	int startX = box.getIndex().x - range;
-	int startY = box.getIndex().y - range;
+	int startX = box.getIndex().getX() - range;
+	int startY = box.getIndex().getY() - range;
 
 	// Creates the array
 	int** cellsInRange = new int*[size];
@@ -76,7 +76,7 @@ int ** Board::getCellsInRange(Box box, int range) {
 				cellsInRange[i][j] = outOfBoard;
 
 			// Current cell is out of the movement range
-			} else if(abs(box.getIndex().x - i + startX) + abs(box.getIndex().y - j + startY) > range) {
+			} else if(abs(box.getIndex().getX() - i + startX) + abs(box.getIndex().getY() - j + startY) > range) {
 				cellsInRange[i][j] = outOfRange;
 
 			// Current cell is in the board and in range
