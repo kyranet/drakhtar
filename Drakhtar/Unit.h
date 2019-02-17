@@ -10,7 +10,9 @@ class Unit : public GameObject
 {
 private:
 	int attack_;
+	int defense_;
 	int health_;
+	int maxHealth_;
 	int attackRange_;
 	int moveRange_;
 	int speed_;
@@ -20,12 +22,15 @@ private:
 	Team* team_;
 	Box* box_;
 public:
-	Unit(Texture* texture, Box * box, int attack, int health, int speed, int attackRange, int moveRange);
+	Unit(Texture* texture, Vector2D<int> pos, Vector2D<int> size, int attack, int defense, int maxHealth, int speed, int attackRange, int moveRange)
+		: GameObject(texture, pos, size), attack_(attack), defense_(defense), maxHealth_(maxHealth), health_(maxHealth), speed_(speed), attackRange_(attackRange), moveRange_(moveRange) {}
 	virtual ~Unit() {};
-	int getAttack() const { return attack_; }
+	virtual int getAttack() const { return attack_; }
+	virtual int getDefense() const { return defense_; }
 	int getAttackRange() const { return attackRange_; }
 	int getMoveRange() const { return moveRange_; }
 	int getHealth() const { return health_; }
+	virtual int getMaxHealth() const { return maxHealth_; }
 	bool getMoving() const { return moving_; }
 	bool getMoved() const { return moved_; }
 	bool getSpeed() const { return speed_; }
@@ -37,5 +42,6 @@ public:
 	void setBoxPosition(Vector2D<int> position);
 	void setTeam(Team* team);
 	void moveToBox(Box * box);
+	virtual void loseHealth(int healt);
 };
 

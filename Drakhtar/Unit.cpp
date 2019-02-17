@@ -46,3 +46,9 @@ void Unit::moveToBox(Box * newBox) {
 	pos_ = Vector2D<int>(newBox->getRect().x, newBox->getRect().y);
 	newBox->setContent(this);
 }
+
+void Unit::loseHealth(int health)
+{
+	health_ -= health;
+	// TODO: Send "Unit killed" event if health_ <= 0;
+}
