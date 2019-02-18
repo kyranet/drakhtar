@@ -5,6 +5,7 @@
 #include <iostream>
 #include <vector>
 #include <fstream>
+#include "checkML.h"
 
 class Game;
 class Dialog;
