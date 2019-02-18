@@ -18,18 +18,18 @@ private:
 	Game* game_ = nullptr;
 protected:
 	SDL_Renderer *renderer_ = nullptr;
-	void _preload();
-	void _create();
-	void _render() const;
-	void _update();
-	void _handleEvents();
-	void _afterUpdate();
-	void _events();
+	virtual void _preload();
+	virtual void _create();
+	virtual void _render() const;
+	virtual void _update();
+	virtual void _handleEvents();
+	virtual void _afterUpdate();
+	virtual void _events();
 	virtual void _destroy() {};
 	virtual void _end() {};
 public:
 	State(Game* game, SDL_Renderer* renderer);
 	virtual ~State();
-	void run();
+	virtual void run();
 };
 
