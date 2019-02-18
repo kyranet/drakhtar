@@ -1,8 +1,8 @@
 #include "Text.h"
 
-Text::Text(Font* font, vector2d pos, vector2d size, SDL_Color &color, string &text)
+Text::Text(Texture* texture, Font* font, vector2d pos, vector2d size, SDL_Color &color, string &text)
 // fix nullptr
-	: GameObject(nullptr, pos, size), font_(font), color_(color)
+	: GameObject(texture, pos, size), font_(font), color_(color), texture_(texture)
 {
 	setText(text);
 }

@@ -13,8 +13,8 @@ Dialog::Dialog(Game* game, ifstream& file, Font* textFont)
 	textColor.b = 0;
 	textColor.a = 1;
 
-	characterNameSprite = new Text(textFont, vector2d{ 220, 370 }, vector2d{ 50, 50 }, textColor, characterName);
-	dialogTextSprite = new Text(textFont, vector2d{ 400, 400 }, vector2d{ 50, 50 }, textColor, dialogText);
+	characterNameSprite = new Text(game->getTextures()[CELL_FRAME], textFont, vector2d{ 220, 370 }, vector2d{ 50, 50 }, textColor, characterName);
+	dialogTextSprite = new Text(game->getTextures()[CELL_FRAME], textFont, vector2d{ 400, 400 }, vector2d{ 50, 50 }, textColor, dialogText);
 }
 
 
