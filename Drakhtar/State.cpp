@@ -19,7 +19,7 @@ void State::_preload()
 {
 	auto player = new GameObject(game_->getTextures()[BLUE_ARCHER], Vector2D<int>(400, 300), Vector2D<int>(50, 50));
 	player->addEventListener(new Controller(player));
-	gameObjects_.push_back(new GameObject(game_->getTextures()[FIRST_BATTLE], Vector2D<int>(400, 300), Vector2D<int>(800, 600)));
+	gameObjects_.push_back(new GameObject(game_->getTextures()[FIRST_BATTLE], Vector2D<int>(400, 300), Vector2D<int>(WIN_WIDTH, WIN_HEIGHT)));
 	gameObjects_.push_back(player);
 	gameObjects_.push_back(new Board(game_->getTextures()[CELL_FRAME], 8, 12, 50));
 }
