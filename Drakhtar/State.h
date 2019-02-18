@@ -6,6 +6,7 @@
 #include "Board.h"
 #include "Game.h"
 #include "DialogScene.h"
+#include "Unit.h"
 
 using namespace std;
 

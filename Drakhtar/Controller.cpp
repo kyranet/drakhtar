@@ -29,7 +29,6 @@ void Controller::onClick(bool onTop, SDL_Point p)
 {
 	if (onTop) // if true, mouse position = gameobject position
 	{
-
 		std::cout << "clickado";
 	}
 		// Mover/Atacar

@@ -18,13 +18,18 @@ State::~State()
 
 void State::_preload()
 {
-	auto player = new GameObject(game_->getTextures()[RED], Vector2D<int>(225, 325), Vector2D<int>(50, 50));
-	player->addEventListener(new Controller(player));
-	gameObjects_.push_back(new GameObject(game_->getTextures()[FIRST_BATTLE], Vector2D<int>(400, 300), Vector2D<int>(WIN_WIDTH, WIN_HEIGHT)));
-	gameObjects_.push_back(player);
-	gameObjects_.push_back(new Board(game_->getTextures()[CELL_FRAME], 8, 12, 50));
-
-	exampleDialog_ = new DialogScene(game_, "dialog1_start", "Retron2000");
+	auto Tablero = new Board(game_->getTextures()[CELL_FRAME], 8, 12, 50);
+	//auto player = new GameObject(game_->getTextures()[RED], Vector2D<int>(225, 325), Vector2D<int>(50, 50));
+	//player->addEventListener(new Controller(player));
+	gameObjects_.push_back(new GameObject(game_->getTextures()[FIRST_BATTLE], Vector2D<int>(400, 300), Vector2D<int>(800, 600)));
+	//gameObjects_.push_back(player);
+	gameObjects_.push_back(Tablero);
+	auto box = Tablero->getBoxAt(0, 0);
+	auto test = new Unit(game_->getTextures()[RED], Vector2D<int>(box->getRect().x + box->getRect().w/2, box->getRect().y + box->getRect().h/2), Vector2D<int>(box->getRect().w, box->getRect().h), 2, 10, 5, 5, 5);
+	test->addEventListener(new Controller(test));
+	gameObjects_.push_back(test);
+	Tablero->getBoxAt(0, 0)->setContent(test);
+	
 }
 
 void State::run()
