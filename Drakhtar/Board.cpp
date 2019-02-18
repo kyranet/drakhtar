@@ -3,8 +3,8 @@
 
 Board::Board(Texture* cellTexture, int r, int c, float cellSize) : GameObject(nullptr, 0, 0, 0, 0), rows(r), cols(c) {
 	// Calculates margins to center the board on screen
-	float marginX = (800 - (cellSize * (cols - 1))) / 2;
-	float marginY = (600 - (cellSize * (rows - 1))) / 2;
+	float marginX = (WIN_WIDTH - (cellSize * (cols - 1))) / 2;
+	float marginY = (WIN_HEIGHT - (cellSize * (rows - 1))) / 2;
 
 	// Creates the board matrix
 	board = new Box**[rows];

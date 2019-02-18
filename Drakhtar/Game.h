@@ -4,6 +4,7 @@
 #include "State.h"
 #include "Texture.h"
 #include "GameStateMachine.h"
+#include "Constants.h"
 
 using uint = unsigned int;
 
