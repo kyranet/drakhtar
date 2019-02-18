@@ -6,12 +6,13 @@
 #include <iostream>
 #include <fstream>
 
+class Game;
 
 class Dialog
 {
 private:
 	string characterName;
-	string spriteText;
+	int spriteText;
 	string dialogText;
 
 	GameObject* characterPortraitSprite = nullptr;
