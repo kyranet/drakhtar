@@ -1,11 +1,13 @@
 #pragma once
 
-#include "State.h"
 #include "Dialog.h"
-#include "Game.h"
+#include "Font.h"
 #include <iostream>
 #include <vector>
 #include <fstream>
+
+class Game;
+class Dialog;
 
 class DialogScene
 {

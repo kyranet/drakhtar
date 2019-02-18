@@ -1,0 +1,21 @@
+
+19
+Narrador 4 Mientras Thassa y su mano derecha, Valar, se encuentran de vuelta al reino de Drakhtar, al llegar a la frontera con el reino vecino de Crihendrath, notan en la lejanía que la ciudad está rodeada por una neblina que parece sospechosa .
+Thassa 5 ¿Qué es eso? .
+Valar 6 Desconozco que puede ser, en cualquier caso, debemos aproximar el ejército con cuidado .
+Narrador 4 El ejército sigue con cautela a su líder. Una vez están ya cerca de la ciudad descubren que se encuentra sitiada .
+Thassa 5 ¿Qué está ocurriendo? .
+Valar 6 Nos están sitiando... unos... ¿esqueletos...? .
+Thassa 5 Debemos atacar ahora que no nos esperan .
+Valar 6 ¡No! hay que organizar un plan de batalla .
+Thassa 5  No tenemos tiempo, Valar .
+Thassa 5 ¡Preparaos para el ataque! ¡Avanzad! .
+Narrador 4 En el ejército enemigo se vislumbra una silueta que destaca por encima de todos .
+Narrador 4 Es un esqueleto más grande que los demás que porta un arco .
+Valar 6 Mueve las unidades haciendo click izquierdo en una casilla de terreno que está disponible .
+Valar 6 las unidades tienen distintos rangos, dependiendo de la unidad podrás atacar a mayor o menor distancia. Para atacar haz click izquierdo en la unidad enemiga que está al alcance .
+Valar 6 Para ganar la batalla tendremos que derrotar al líder enemigo, procura no morir o estaremos perdidos .
+Valar 6 ¡Acaba con él! .
+Valar 6 Los soldados registrarán las unidades enemigas que han caído en combate y obtendremos su oro que podemos usar para reabastecer las nuestras .
+Valar 6 Ahora podemos reclutar nuevas unidades .
+Valar 6 Aquí se encuentra el oro disponible. Cada unidad cuesta una cantidad de oro, haz click en las unidades que quieras reclutar .
