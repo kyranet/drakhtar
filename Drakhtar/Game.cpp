@@ -16,7 +16,7 @@ Game::Game()
 	textures_ = new Texture*[NUMBER_TEXTURES];
 	// Create the textures
 	for (uint i = 0; i < NUMBER_TEXTURES; i++)
-		textures_[i] = new Texture(renderer_, TEXTURES[i].path, TEXTURES[i].rows, TEXTURES[i].columns);
+		textures_[i] = (new Texture(renderer_))->loadFromImage(TEXTURES[i].path, TEXTURES[i].rows, TEXTURES[i].columns);
 
 	stateMachine = new GameStateMachine();
 	state_ = new State(this, renderer_); 

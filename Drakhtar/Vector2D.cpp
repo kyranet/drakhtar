@@ -8,28 +8,6 @@
 #endif
 
 template <typename T>
-void Vector2D<T>::setX(T x) {
-	x_ = x;
-}
-
-template <typename T>
-void Vector2D<T>::setY(T y) {
-	y_ = y;
-}
-
-template <typename T>
-void Vector2D<T>::set(const Vector2D& v) {
-	x_ = v.getX();
-	y_ = v.getY();
-}
-
-template <typename T>
-void Vector2D<T>::set(T x, T y) {
-	x_ = x;
-	y_ = y;
-}
-
-template <typename T>
 T Vector2D<T>::magnitude() const {
 	return sqrt(pow(x_, 2) + pow(y_, 2));
 }
