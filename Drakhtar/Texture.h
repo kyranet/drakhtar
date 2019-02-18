@@ -3,47 +3,44 @@
 #include "checkML.h"
 #include "SDL.h"       // Windows
 #include "SDL_image.h" // Windows
+#include "Vector2D.h"
 
 #include <string>
 
 using namespace std;
 
 typedef unsigned int uint;
+typedef unsigned short ushort;
 
 class Texture
 {
 private:
-	SDL_Texture *_texture = nullptr;
-	SDL_Renderer *_renderer = nullptr;
-	uint _w = 0;
-	uint _h = 0;
-	uint _fw = 0; // Frame width
-	uint _fh = 0; // Frame height
-	uint _numCols = 1;
-	uint _numRows = 1;
+	SDL_Texture *texture_ = nullptr;
+	SDL_Renderer *renderer_ = nullptr;
+	Vector2D<ushort> size_;
+	Vector2D<ushort> frameSize_;
+	uint columnAmount_ = 1;
+	uint rowAmount_ = 1;
 
 public:
-	Texture(SDL_Renderer *r) : _renderer(r) {};
-	Texture(SDL_Renderer *r, string filename, uint numRows = 1, uint numCols = 1) : _renderer(r) { load(filename, numRows, numCols); };
-	Texture(SDL_Texture *texture, SDL_Renderer *renderer, uint w, uint h, uint fw, uint fh, uint numRows, uint numCols);
-	~Texture() { liberate(); };
-	void liberate();
+	Texture() {};
+	Texture(SDL_Renderer *r) : renderer_(r) {};
+	virtual ~Texture();
 
-	int getW() const { return _w; };
-	int getH() const { return _h; };
-	uint getNumCols() const { return _numCols; };
-	uint getNumRows() const { return _numRows; };
-	void setTexture(SDL_Texture *texture)
-	{
-		if (texture != _texture)
-		{
-			SDL_DestroyTexture(_texture);
-			_texture = texture;
-		}
-	}
-	SDL_Texture *getTexture() const { return _texture; };
+	ushort getColumnAmount() const { return columnAmount_; }
+	ushort getRowAmount() const { return rowAmount_; }
+	Vector2D<ushort> getSize() const { return size_; }
+	Vector2D<ushort> getFrameSize() const { return frameSize_; }
+	Vector2D<ushort> getFramePosition(ushort frame) const { return Vector2D<ushort>(frame % columnAmount_, (ushort)floor(frame / columnAmount_)); };
+	SDL_Texture* getTexture() const { return texture_; }
 
-	void load(string filename, uint numRows = 1, uint numCols = 1);
-	void render(const SDL_Rect &rect, SDL_RendererFlip flip = SDL_FLIP_NONE) const;
-	void renderFrame(const SDL_Rect &destRect, int row, int col, int angle = 0, SDL_RendererFlip flip = SDL_FLIP_NONE) const;
+	Texture* setTexture(SDL_Texture* texture);
+	Texture* setColumnAmount(ushort columns);
+	Texture* setRowAmount(ushort rows);
+	Texture* setFrameSize(Vector2D<ushort> frameSize);
+	Texture* loadFromImage(string filename, ushort rowAmount = 1, ushort columnAmount = 1);
+	void render(Vector2D<int> position) const;
+	void render(SDL_Rect const& dest, double angle = 0, SDL_Rect* clip = nullptr) const;
+	void renderFrame(SDL_Rect const& dest, ushort frame, double angle = 0, SDL_RendererFlip flip = SDL_FLIP_NONE) const;
+	void close();
 };

@@ -15,10 +15,10 @@ public:
 	virtual ~Vector2D() {};
 	T getX() const { return x_; };
 	T getY() const { return y_; };
-	void setX(T x);
-	void setY(T y);
-	void set(const Vector2D<T> &v);
-	void set(T x, T y);
+	void setX(T x) { x_ = x; };
+	void setY(T y) { y_ = y; };
+	void set(const Vector2D<T> &v) { x_ = v.getX(), y_ = v.getY() };
+	void set(T x, T y) { x_ = x; y_ = y; };
 	T magnitude() const;
 	Vector2D<T> rotate(double degrees);
 	T angle(const Vector2D<T> &v) const;
