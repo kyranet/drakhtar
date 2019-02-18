@@ -3,6 +3,7 @@
 #include "SDL.h"
 #include "GameObject.h"
 #include "EventListener.h"
+#include "Board.h"
 
 class Controller : public EventListener
 {

@@ -9,7 +9,7 @@
 
 using uint = unsigned int;
 
-const uint NUMBER_TEXTURES = 7;
+const uint NUMBER_TEXTURES = 10;
 
 struct TextureInfo
 {
@@ -20,22 +20,28 @@ struct TextureInfo
 
 enum Textures {
 	BLUE_ARCHER,
+	BLUE_CAVALRY,
 	FIRST_BATTLE,
 	CELL_FRAME,
 	DIALOG_BLOCK,
 	NARRATOR,
 	THASSA,
-	VALAR
+	VALAR,
+	RED,
+	CELL_FRAME
 };
 
 const TextureInfo TEXTURES[NUMBER_TEXTURES] {
 	TextureInfo{"../images/Units/BlueArcher.png", 2, 1},
+	TextureInfo{"../images/BlueCavalry.png", 1, 1},
 	TextureInfo{"../images/Maps/FirstBattle.png", 1, 1},
 	TextureInfo{"../images/UI/cellFrame.png", 1, 1},
 	TextureInfo{"../images/UI/dialogueBackground.png", 1, 1},
 	TextureInfo{"../images/Portraits/characterPlaceholder.png", 1, 1},
 	TextureInfo{"../images/Portraits/characterPlaceholder.png", 1, 1},
-	TextureInfo{"../images/Portraits/characterPlaceholder.png", 1, 1}
+	TextureInfo{"../images/Portraits/characterPlaceholder.png", 1, 1},
+	TextureInfo{"../images/red.JPG", 1, 1},
+	TextureInfo{"../images/UI/cellFrame.png", 1, 1}
 };
 
 class State;

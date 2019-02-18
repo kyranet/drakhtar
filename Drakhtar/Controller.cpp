@@ -11,6 +11,7 @@ void Controller::run(SDL_Event event)
 		//onHover(SDL_PointInRect(&p,&gameObject_->getRect()));			
 	case SDL_MOUSEBUTTONDOWN:
 		if (event.button.button == SDL_BUTTON_LEFT) {
+			
 			onClick(SDL_PointInRect(&p, &gameObject_->getRect()), p);
 		}
 		break;
@@ -28,13 +29,8 @@ void Controller::onClick(bool onTop, SDL_Point p)
 {
 	if (onTop) // if true, mouse position = gameobject position
 	{
-		if (gameObject_->returnTurn()) // true means the player can pick it up
-		{
-			//gameObject_->modifyRect(p);
-			std::cout << "clickado";
-		}
-		// Mover/Atacar
-			
-		
+
+		std::cout << "clickado";
 	}
+		// Mover/Atacar
 }
