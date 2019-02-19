@@ -13,10 +13,8 @@ Dialog::Dialog(Game* game, ifstream& file, Font* textFont)
 	textColor.b = 0;
 	textColor.a = 1;
 
-	int fontsize = textFont->getSize();
-
-	characterNameSprite = new Text(game->getRenderer(), textFont, Vector2D<int>(600, 370), Vector2D<int>(fontsize*characterName.length(), 50), textColor, characterName);
-	dialogTextSprite = new Text(game->getRenderer(), textFont, Vector2D<int>(110, 450), Vector2D<int>(fontsize*dialogText.length(), 20), textColor, dialogText);
+	characterNameSprite = new Text(game->getRenderer(), textFont, Vector2D<int>(600, 370), textColor, characterName);
+	dialogTextSprite = new Text(game->getRenderer(), textFont, Vector2D<int>(110, 450), textColor, dialogText);
 }
 
 

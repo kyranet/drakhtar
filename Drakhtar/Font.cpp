@@ -1,11 +1,9 @@
 #include "Font.h"
 #include "SDLError.h"
 
-Font::Font()
-	: font_(nullptr)
-{}
+Font::Font(): font_(nullptr) {}
 
-Font::Font(string filename, int size): size_(size)
+Font::Font(string filename, int size)
 {
 	load(filename, size);
 }
@@ -38,6 +36,5 @@ Font* Font::load(string filename, int size)
 SDL_Surface* Font::renderText(string text, SDL_Color color) const
 {
 	if (font_ == nullptr) return nullptr;
-	return TTF_RenderText_Blended_Wrapped(font_, text.c_str(), color, 300);
-
+	return TTF_RenderText_Blended(font_, text.c_str(), color);
 }
