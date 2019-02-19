@@ -1,10 +1,10 @@
 #include "Board.h"
 #include "Unit.h"
 
-Board::Board(Texture* cellTexture, int r, int c, float cellSize) : GameObject(nullptr, 0, 0, 0, 0), rows(r), cols(c) {
+Board::Board(Texture* cellTexture, int r, int c, float cs) : GameObject(nullptr, 0, 0, 0, 0), rows(r), cols(c), cellSize(cs) {
 	// Calculates margins to center the board on screen
-	float marginX = (800 - (cellSize * (cols - 1))) / 2;
-	float marginY = (600 - (cellSize * (rows - 1))) / 2;
+	marginX = (800 - (cellSize * (cols - 1))) / 2;
+	marginY = (600 - (cellSize * (rows - 1))) / 2;
 
 	// Creates the board matrix
 	board = new Box**[rows];
@@ -97,6 +97,20 @@ int ** Board::getCellsInRange(Box box, int range) {
 
 	return cellsInRange;
 }
+
+Vector2D<int> Board::getCellIndexFromCoordinates(Vector2D<int> coordinates) {
+	// Coordinates are out of the board
+	if (coordinates.getX() < marginX || coordinates.getY() < marginY ||
+		coordinates.getX() > marginX + this->getRect().w || coordinates.getY() > marginY + this->getRect().h) {
+		return Vector2D<int>(-1, -1);
+	// Coordinates are inside the board
+	} else {
+		int x = floor((coordinates.getX() - marginX) / cellSize);
+		int y = floor((coordinates.getY() - marginY) / cellSize);
+		return Vector2D<int>(x, y);
+	}
+}
+
 /*
 Box ** Board::findPath(Box * start, Box * end, int steps) {
 	Box** path = new Box*[steps];
