@@ -1,7 +1,9 @@
 #include "Board.h"
 #include "Unit.h"
 
-Board::Board(Texture* cellTexture, int r, int c, float cellSize) : GameObject(nullptr, 0, 0, 0, 0), rows(r), cols(c) {
+Board::Board(Texture* cellTexture, int r, int c, float cellSize)
+	: GameObject(nullptr, Vector2D<int>(0, 0), Vector2D < int>(0, 0)), rows(r), cols(c)
+{
 	// Calculates margins to center the board on screen
 	float marginX = (WIN_WIDTH - (cellSize * (cols - 1))) / 2;
 	float marginY = (WIN_HEIGHT - (cellSize * (rows - 1))) / 2;

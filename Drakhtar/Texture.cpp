@@ -59,6 +59,27 @@ Texture* Texture::loadFromImage(string filename, ushort rowAmount, ushort column
 	return this;
 }
 
+Texture* Texture::loadFromText(Font* font, string text, SDL_Color const color)
+{
+	SDL_Surface* surface = font->renderText(text, color);
+	if (surface == nullptr)
+	{
+		throw new SDLError("Error loading text: " + text);
+	}
+
+	close();
+	texture_ = SDL_CreateTextureFromSurface(renderer_, surface);
+	if (texture_ != nullptr)
+	{
+		size_.set(surface->w, surface->h);
+		frameSize_.set(surface->w, surface->h);
+		columnAmount_ = 1;
+		rowAmount_ = 1;
+	}
+	SDL_FreeSurface(surface);
+	return this;
+}
+
 void Texture::render(Vector2D<int> position) const
 {
 	SDL_Rect dest{ position.getX(), position.getY(), size_.getX(), size_.getY() };

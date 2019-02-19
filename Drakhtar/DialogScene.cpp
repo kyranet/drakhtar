@@ -1,14 +1,11 @@
 #include "DialogScene.h"
 
-
-
 DialogScene::DialogScene(Game* game, string filename, string fontfile)
 {
-	dialogBlockSprite = new GameObject(game->getTextures()[DIALOG_BLOCK], vector2d{ 400, 500 }, vector2d{ 600, 160 });
-	textFont = new Font(game->getRenderer(), "../fonts/" + fontfile + ".ttf", 8);
+	dialogBlockSprite = new GameObject(game->getTextures()[DIALOG_BLOCK], Vector2D<int>(400, 500), Vector2D<int>(600, 160));
+	textFont = new Font("../fonts/" + fontfile + ".ttf", 8);
 	readFromFile(game, "../dialog/" + filename + ".txt",+ textFont);
 }
-
 
 DialogScene::~DialogScene()
 {
