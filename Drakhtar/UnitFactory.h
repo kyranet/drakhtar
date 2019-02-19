@@ -1,15 +1,20 @@
 #pragma once
 #include <vector>
-#include "Unit.h"
+#include "Battalion.h"
+
 using namespace std;
 
 class UnitFactory
 {
 private:
-	vector<Unit*> unitPool;
 
 public:
-	UnitFactory();
+	UnitFactory() {};
 	~UnitFactory();
+	Unit * newSoldier(Team * team);
+	Unit * newArcher(Team * team);
+	Unit * newKnight(Team * team);
+	Unit * newWizard(Team * team);
+	Unit * newMonster(Team * team);
 };
 
