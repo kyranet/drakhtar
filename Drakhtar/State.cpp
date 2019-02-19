@@ -29,7 +29,7 @@ void State::_preload()
 	test->addEventListener(new Controller(test));
 	gameObjects_.push_back(test);
 	Tablero->getBoxAt(0, 0)->setContent(test);
-	
+	exampleDialog_ = new DialogScene(game_, "dialog1_start", "Retron2000");
 }
 
 void State::run()
