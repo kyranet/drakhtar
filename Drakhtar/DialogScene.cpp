@@ -1,9 +1,9 @@
 #include "DialogScene.h"
 
-DialogScene::DialogScene(Game* game, string filename, string fontfile)
+DialogScene::DialogScene(Game* game, string filename, string fontfile): GameObject(nullptr, Vector2D<int>(0,0), Vector2D<int>(1,1)) // default position and size(adjust it to move DialogScene)
 {
-	dialogBlockSprite = new GameObject(TextureManager::get("UI-dialogueBackground"), Vector2D<int>(400, 500), Vector2D<int>(600, 160));
-	textFont = new Font("../fonts/" + fontfile + ".ttf", 8);
+	dialogBlockSprite = new GameObject(TextureManager::get("UI-dialogueBackground"), Vector2D<int>(getRect().x + WIN_WIDTH - 400, getRect().y + WIN_HEIGHT - 100), Vector2D<int>(getRect().w*600, getRect().h*160));
+	textFont = new Font("../fonts/" + fontfile + ".ttf", 8, dialogBlockSprite->getRect().x + 150);
 	readFromFile(game, "../dialog/" + filename + ".txt",+ textFont);
 }
 
@@ -17,7 +17,7 @@ DialogScene::~DialogScene()
 	textFont = nullptr;
 }
 
-void DialogScene::render()
+void DialogScene::render() const
 {
 	dialogBlockSprite->render();
 	dialogChain[currentDialogIndex]->render();
@@ -47,7 +47,7 @@ void DialogScene::readFromFile(Game* game, string filename, Font* textFont)
 
 		for (int i = 0;i < dialogChainSize;i++)
 		{
-			dialogChain[i] = new Dialog(game, file, textFont);
+			dialogChain[i] = new Dialog(game, file, textFont, getRect());
 		}
 		
 	//}
@@ -64,7 +64,8 @@ void DialogScene::nextDialog()
 
 void DialogScene::endOfDialog()
 {
+	// close dialog and go to next event(for now it just now restarts the whole dialog)
 	currentDialogIndex = 0;
-	// close dialog and go to next event
+	delete this;
 }
 

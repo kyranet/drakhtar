@@ -8,6 +8,7 @@ GameObject::~GameObject()
 	for (auto listener : eventListeners_)
 		delete listener;
 	eventListeners_.clear();
+	setDestroyed(true);
 }
 
 void GameObject::render() const

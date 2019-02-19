@@ -10,7 +10,7 @@
 class Game;
 class Dialog;
 
-class DialogScene
+class DialogScene: public GameObject
 {
 private:
 	GameObject* dialogBlockSprite = nullptr;
@@ -21,8 +21,8 @@ private:
 public:
 	DialogScene(Game* game, string filename, string fontfile);
 	~DialogScene();
-	void render();
-	void handleEvents(SDL_Event event);
+	virtual void render() const;
+	virtual void handleEvents(SDL_Event event);
 	void readFromFile(Game* game, string filename, Font* textFont);
 	void nextDialog();
 	void endOfDialog();

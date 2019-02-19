@@ -12,7 +12,6 @@ State::~State()
 {
 	for (auto gameObject : gameObjects_)
 		delete gameObject;
-	delete exampleDialog_;
 	game_ = nullptr;
 }
 
@@ -27,15 +26,9 @@ void State::_preload()
 	auto box = Tablero->getBoxAt(0, 0);
 	auto box2 = Tablero->getBoxAt(5, 5);
 
-	auto test = new Unit(TextureManager::get("Units-BlueArcher"), box, 2, 10, 5, 5, 5);
-	test->addEventListener(new Controller(test));
-	gameObjects_.push_back(test);
+	auto exampleDialog = new DialogScene(game_, "dialog1_start", "Retron2000");
+	gameObjects_.push_back(exampleDialog);
 
-	auto test2 = new Unit(TextureManager::get("Units-BlueArcher"), box2, 2, 10, 5, 5, 5);
-	test2->addEventListener(new Controller(test2));
-	gameObjects_.push_back(test2);
-
-	exampleDialog_ = new DialogScene(game_, "dialog1_start", "Retron2000");
 }
 
 void State::run()
@@ -76,11 +69,8 @@ void State::_render() const
 
 	// Render each game object
 	for (auto gameObject : gameObjects_)
-	 	gameObject->render();
-
-	//exampleDialog_->render();
-
-	
+		if(gameObject->getDestroyed() == false)
+	 		gameObject->render();
 
 	// Render the new frame
 	SDL_RenderPresent(renderer_);
@@ -102,10 +92,8 @@ void State::_handleEvents()
 
 		// For each game object, run the event handler
 		for (auto gameObject : gameObjects_)
-			gameObject->handleEvents(event);
-
-		//exampleDialog_->handleEvents(event);
-
+			if(gameObject->getDestroyed() == false)
+				gameObject->handleEvents(event);
 	}
 }
 
