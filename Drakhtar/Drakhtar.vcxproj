@@ -82,6 +82,7 @@
     <ClCompile Include="Team.cpp" />
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="Vector2D.cpp" />
   </ItemGroup>
@@ -99,12 +100,14 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameStateMachine.h" />
+    <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SDLError.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="Team.h" />
     <ClInclude Include="TeamedUnitError.h" />
     <ClInclude Include="Text.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="Vector2D.h" />
   </ItemGroup>

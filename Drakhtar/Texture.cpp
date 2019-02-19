@@ -43,7 +43,8 @@ Texture* Texture::loadFromImage(string filename, ushort rowAmount, ushort column
 	SDL_Surface* surface = IMG_Load(filename.c_str());
 	if (surface == nullptr)
 	{
-		throw new SDLError("Error loading surface from " + filename);
+		string message = "Error loading surface from " + filename + "\nReason: " + SDL_GetError();
+		throw new SDLError(message);
 	}
 
 	close();
@@ -64,7 +65,8 @@ Texture* Texture::loadFromText(Font* font, string text, SDL_Color const color)
 	SDL_Surface* surface = font->renderText(text, color);
 	if (surface == nullptr)
 	{
-		throw new SDLError("Error loading text: " + text);
+		string message = "Error loading text: " + text + "\nReason: " + TTF_GetError();
+		throw new SDLError(message);
 	}
 
 	close();

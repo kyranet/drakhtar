@@ -40,6 +40,12 @@
     <Filter Include="Archivos de encabezado\Exceptions">
       <UniqueIdentifier>{b1567475-c06b-4b6b-af39-e2ff9434971c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de encabezado\Managers">
+      <UniqueIdentifier>{141361b9-0926-4c45-99aa-ed9bcd484db9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Archivos de código fuente\Managers">
+      <UniqueIdentifier>{2f18c1eb-76f9-4106-b920-b246061b5f4f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -89,6 +95,9 @@
     </ClCompile>
     <ClCompile Include="Font.cpp">
       <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Archivos de código fuente\Managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +163,12 @@
     </ClInclude>
     <ClInclude Include="Font.h">
       <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Archivos de encabezado\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Archivos de encabezado\Managers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
