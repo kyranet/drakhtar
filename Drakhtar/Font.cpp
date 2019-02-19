@@ -1,32 +1,42 @@
 #include "Font.h"
+#include "SDLError.h"
 
-Font::Font(SDL_Renderer* renderer, string filename, int size) : renderer(renderer), size(size)
+Font::Font()
+	: font_(nullptr)
+{}
+
+Font::Font(string filename, int size)
 {
-	load(filename);
+	load(filename, size);
 }
 
 Font::~Font()
 {
-	liberate();
+	close();
 }
 
-TTF_Font *Font::getFont() const
+void Font::close()
 {
-	return font;
+	if (font_)
+	{
+		TTF_CloseFont(font_);
+		font_ = nullptr;
+	}
 }
 
-SDL_Renderer *Font::getRenderer() const
+Font* Font::load(string filename, int size)
 {
-	return renderer;
+	font_ = TTF_OpenFont(filename.c_str(), size);
+	if (font_ == nullptr)
+	{
+		string message = "Error loading font from " + filename + "\nReason: " + TTF_GetError();
+		throw new SDLError(message);
+	}
+	return this;
 }
 
-void Font::liberate()
+SDL_Surface* Font::renderText(string text, SDL_Color color) const
 {
-	TTF_CloseFont(font);
-	font = nullptr;
-}
-
-void Font::load(string filename)
-{
-	font = TTF_OpenFont(filename.c_str(), size);
+	if (font_ == nullptr) return nullptr;
+	return TTF_RenderText_Solid(font_, text.c_str(), color);
 }

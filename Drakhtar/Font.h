@@ -1,24 +1,23 @@
 #pragma once
 
-#include "SDL.h"
 #include "SDL_ttf.h"
-#include "Texture.h"
+#include <string>
 #include "checkML.h"
+
+using namespace std;
 
 class Font
 {
 private:
-	TTF_Font* font = nullptr;
-	SDL_Renderer* renderer;
-	uint size = 8;
+	TTF_Font* font_;
 
 public:
-	Font(SDL_Renderer* renderer, string filename, int size);
+	Font();
+	Font(string filename, int size);
 	~Font();
-	TTF_Font* getFont() const;
-	SDL_Renderer* getRenderer() const;
-	void liberate();
-	void load(string filename);
 
-
+	TTF_Font* getFont() const { return font_; }
+	Font* load(string filename, int size);
+	void close();
+	SDL_Surface* renderText(string text, SDL_Color color) const;
 };

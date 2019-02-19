@@ -1,12 +1,19 @@
 #include "Game.h"
 #include "SDLError.h"
-#include "SDL.h"
 
 Game::Game()
 	: window_(nullptr), renderer_(nullptr)
 {
+	SDL_Init(SDL_INIT_EVERYTHING);
+	
+	if (TTF_Init() == -1)
+	{
+		string message = string("Error loading TTF.\nReason: ") + TTF_GetError();
+		throw new SDLError(message);
+	}
+
 	// Create the window and renderer
-	window_ = SDL_CreateWindow("Drakhtar", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_SHOWN);
+	window_ = SDL_CreateWindow("Drakhtar", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIN_WIDTH, WIN_HEIGHT, SDL_WINDOW_SHOWN);
 	renderer_ = SDL_CreateRenderer(window_, -1, SDL_RENDERER_ACCELERATED);
 
 	// If window or renderer is a null pointer, throw a SDLError
@@ -16,7 +23,7 @@ Game::Game()
 	textures_ = new Texture*[NUMBER_TEXTURES];
 	// Create the textures
 	for (uint i = 0; i < NUMBER_TEXTURES; i++)
-		textures_[i] = new Texture(renderer_, TEXTURES[i].path, TEXTURES[i].rows, TEXTURES[i].columns);
+		textures_[i] = (new Texture(renderer_))->loadFromImage(TEXTURES[i].path, TEXTURES[i].rows, TEXTURES[i].columns);
 
 	stateMachine = new GameStateMachine();
 	state_ = new State(this, renderer_); 

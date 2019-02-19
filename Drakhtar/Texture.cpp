@@ -4,60 +4,120 @@
 
 using namespace std;
 
-/// Public
-// Constructor
-Texture::Texture(SDL_Texture *texture, SDL_Renderer *renderer, uint w, uint h, uint fw, uint fh, uint numRows, uint numCols)
-	: _renderer(renderer), _texture(texture), _w(w), _h(h), _fw(fw), _fh(fh), _numRows(numRows), _numCols(numCols) {}
-
-/// Public
-// Loads a texture by its file name
-void Texture::load(string filename, uint nRows, uint nCols)
+Texture::~Texture()
 {
-	SDL_Surface *tempSurface = IMG_Load(filename.c_str());
-	if (tempSurface == nullptr)
-		throw new (SDLError)("Error loading surface from " + filename);
-	liberate();
-	_texture = SDL_CreateTextureFromSurface(_renderer, tempSurface);
-	if (_texture == nullptr)
-		throw new (SDLError)("Error loading texture from " + filename);
-	_numRows = nRows;
-	_numCols = nCols;
-	_w = tempSurface->w;
-	_h = tempSurface->h;
-	_fw = _w / _numCols;
-	_fh = _h / _numRows;
-	SDL_FreeSurface(tempSurface);
+	close();
 }
 
-/// Public
-// Frees memory
-void Texture::liberate()
+Texture* Texture::setTexture(SDL_Texture* texture)
 {
-	SDL_DestroyTexture(_texture);
-	_texture = nullptr;
-	_w = _h = 0;
+	if (texture != texture_)
+	{
+		if (texture_ != nullptr) SDL_DestroyTexture(texture_);
+		texture_ = texture;
+	}
+
+	return this;
 }
 
-/// Public
-// Defines the render behaviour
-void Texture::render(const SDL_Rect &destRect, SDL_RendererFlip flip) const
+Texture* Texture::setColumnAmount(ushort columns)
 {
-	SDL_Rect srcRect;
-	srcRect.x = 0;
-	srcRect.y = 0;
-	srcRect.w = _w;
-	srcRect.h = _h;
-	SDL_RenderCopyEx(_renderer, _texture, &srcRect, &destRect, 0, 0, flip);
+	columnAmount_ = columns;
+	return this;
 }
 
-/// Public
-// Renders the current frame
-void Texture::renderFrame(const SDL_Rect &destRect, int row, int col, int angle, SDL_RendererFlip flip) const
+Texture* Texture::setRowAmount(ushort rows)
 {
-	SDL_Rect srcRect;
-	srcRect.x = _fw * col;
-	srcRect.y = _fh * row;
-	srcRect.w = _fw;
-	srcRect.h = _fh;
-	SDL_RenderCopyEx(_renderer, _texture, &srcRect, &destRect, angle, 0, flip);
+	rowAmount_ = rows;
+	return this;
+}
+
+Texture* Texture::setFrameSize(Vector2D<ushort> frameSize)
+{
+	frameSize_ = frameSize;
+	return this;
+}
+
+Texture* Texture::loadFromImage(string filename, ushort rowAmount, ushort columnAmount)
+{
+	SDL_Surface* surface = IMG_Load(filename.c_str());
+	if (surface == nullptr)
+	{
+		throw new SDLError("Error loading surface from " + filename);
+	}
+
+	close();
+	texture_ = SDL_CreateTextureFromSurface(renderer_, surface);
+	if (texture_ != nullptr)
+	{
+		size_.set(surface->w, surface->h);
+		frameSize_.set(surface->w / columnAmount, surface->h / rowAmount);
+		columnAmount_ = columnAmount;
+		rowAmount_ = rowAmount;
+	}
+	SDL_FreeSurface(surface);
+	return this;
+}
+
+Texture* Texture::loadFromText(Font* font, string text, SDL_Color const color)
+{
+	SDL_Surface* surface = font->renderText(text, color);
+	if (surface == nullptr)
+	{
+		throw new SDLError("Error loading text: " + text);
+	}
+
+	close();
+	texture_ = SDL_CreateTextureFromSurface(renderer_, surface);
+	if (texture_ != nullptr)
+	{
+		size_.set(surface->w, surface->h);
+		frameSize_.set(surface->w, surface->h);
+		columnAmount_ = 1;
+		rowAmount_ = 1;
+	}
+	SDL_FreeSurface(surface);
+	return this;
+}
+
+void Texture::render(Vector2D<int> position) const
+{
+	SDL_Rect dest{ position.getX(), position.getY(), size_.getX(), size_.getY() };
+	render(dest);
+}
+
+void Texture::render(SDL_Rect const& dest, double angle, SDL_Rect* clip) const
+{
+	if (texture_ != nullptr)
+	{
+		if (clip == nullptr) {
+			SDL_Rect default_clip = { 0, 0, size_.getX(), size_.getY() };
+			clip = &default_clip;
+		}
+		SDL_RenderCopy(renderer_, texture_, clip, &dest);
+	}
+}
+
+void Texture::renderFrame(SDL_Rect const& dest, ushort frame, double angle, SDL_RendererFlip flip) const
+{
+	auto framePosition = getFramePosition(frame);
+	ushort width = frameSize_.getX();
+	ushort heigth = frameSize_.getY();
+	SDL_Rect src{
+		width * framePosition.getX(),
+		heigth * framePosition.getY(),
+		width,
+		heigth
+	};
+	SDL_RenderCopyEx(renderer_, texture_, &src, &dest, angle, 0, flip);
+}
+
+void Texture::close()
+{
+	if (texture_ != nullptr)
+	{
+		SDL_DestroyTexture(texture_);
+		texture_ = nullptr;
+		size_.set(0, 0);
+	}
 }
