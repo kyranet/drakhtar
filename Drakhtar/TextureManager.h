@@ -15,18 +15,14 @@ struct TextureInfo
 class TextureManager : public ResourceManager<Texture*>
 {
 private:
+	static TextureManager* instance;
+	TextureManager();
 	stack<TextureInfo> stack_;
 public:
-	TextureManager() = delete;
-	void operator=(TextureManager* const) = delete;
 	virtual ~TextureManager();
 	void add(string name, string path, ushort columns, ushort rows);
 	void init(SDL_Renderer* renderer);
 	static Texture* get(string name);
 
-	static TextureManager* getInstance()
-	{
-		static TextureManager* instance;
-		return instance;
-	}
+	static TextureManager* getInstance();
 };

@@ -1,9 +1,29 @@
 #include "TextureManager.h"
 #include "DrakhtarError.h"
 
+TextureManager* TextureManager::instance = nullptr;
+
+TextureManager* TextureManager::getInstance()
+{
+	if (instance == nullptr)
+	{
+		instance = new TextureManager();
+	}
+
+	return instance;
+}
+
+TextureManager::TextureManager()
+	: stack_(stack<TextureInfo>())
+{
+}
+
 TextureManager::~TextureManager()
 {
 	while (!stack_.empty()) stack_.pop();
+	for (auto pair : (*this))
+		delete pair.second;
+	clear();
 }
 
 void TextureManager::add(string name, string path, ushort columns, ushort rows)

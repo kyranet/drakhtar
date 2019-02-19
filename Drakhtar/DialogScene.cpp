@@ -2,7 +2,7 @@
 
 DialogScene::DialogScene(Game* game, string filename, string fontfile)
 {
-	dialogBlockSprite = new GameObject(TextureManager::get("dialogueBackground"), Vector2D<int>(400, 500), Vector2D<int>(600, 160));
+	dialogBlockSprite = new GameObject(TextureManager::get("UI-dialogueBackground"), Vector2D<int>(400, 500), Vector2D<int>(600, 160));
 	textFont = new Font("../fonts/" + fontfile + ".ttf", 8);
 	readFromFile(game, "../dialog/" + filename + ".txt",+ textFont);
 }

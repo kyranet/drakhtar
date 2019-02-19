@@ -51,11 +51,11 @@ Game::Game()
 	textureManager_->add("Maps-FirstBattle", "../images/Maps/FirstBattle.png", 1, 1);
 	textureManager_->add("Maps-SecondBattle", "../images/Maps/SecondBattle.png", 1, 1);
 
-	textureManager_->init(renderer_);
 
 	// Create the window and renderer
 	window_ = SDL_CreateWindow("Drakhtar", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIN_WIDTH, WIN_HEIGHT, SDL_WINDOW_SHOWN);
 	renderer_ = SDL_CreateRenderer(window_, -1, SDL_RENDERER_ACCELERATED);
+	textureManager_->init(renderer_);
 
 	// If window or renderer is a null pointer, throw a SDLError
 	if (window_ == nullptr || renderer_ == nullptr)
