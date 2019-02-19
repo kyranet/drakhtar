@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SDL.h"
+#include "SDL_ttf.h"
 #include "State.h"
 #include "Texture.h"
 #include "GameStateMachine.h"
@@ -8,7 +9,7 @@
 
 using uint = unsigned int;
 
-const uint NUMBER_TEXTURES = 3;
+const uint NUMBER_TEXTURES = 7;
 
 struct TextureInfo
 {
@@ -20,13 +21,21 @@ struct TextureInfo
 enum Textures {
 	BLUE_ARCHER,
 	FIRST_BATTLE,
-	CELL_FRAME
+	CELL_FRAME,
+	DIALOG_BLOCK,
+	NARRATOR,
+	THASSA,
+	VALAR
 };
 
 const TextureInfo TEXTURES[NUMBER_TEXTURES] {
 	TextureInfo{"../images/Units/BlueArcher.png", 2, 1},
 	TextureInfo{"../images/Maps/FirstBattle.png", 1, 1},
-	TextureInfo{"../images/UI/cellFrame.png", 1, 1}
+	TextureInfo{"../images/UI/cellFrame.png", 1, 1},
+	TextureInfo{"../images/UI/dialogueBackground.png", 1, 1},
+	TextureInfo{"../images/Portraits/characterPlaceholder.png", 1, 1},
+	TextureInfo{"../images/Portraits/characterPlaceholder.png", 1, 1},
+	TextureInfo{"../images/Portraits/characterPlaceholder.png", 1, 1}
 };
 
 class State;
@@ -45,5 +54,6 @@ public:
 	void run();
 	virtual ~Game();
 	Texture** getTextures();
+	SDL_Renderer* getRenderer();
 };
 

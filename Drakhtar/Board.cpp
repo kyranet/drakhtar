@@ -2,9 +2,10 @@
 #include "Unit.h"
 #include "Controller.h"
 
-Board::Board(Texture* cellTexture, int r, int c, float cs) : GameObject(nullptr, 0, 0, 0, 0), rows(r), cols(c), cellSize(cs) {
+Board::Board(Texture* cellTexture, int r, int c, float cellSize)
+	: GameObject(nullptr, Vector2D<int>(0, 0), Vector2D < int>(0, 0)), rows(r), cols(c)
+{
 	// Calculates margins to center the board on screen
-
 	marginX = (WIN_WIDTH - (cellSize * (cols - 1))) / 2;
 	marginY = (WIN_HEIGHT - (cellSize * (rows - 1))) / 2;
 
@@ -108,8 +109,9 @@ Vector2D<int> Board::getCellIndexFromCoordinates(Vector2D<int> coordinates) {
 	if (coordinates.getX() < marginX || coordinates.getY() < marginY ||
 		coordinates.getX() > marginX + this->getRect().w || coordinates.getY() > marginY + this->getRect().h) {
 		return Vector2D<int>(-1, -1);
-	// Coordinates are inside the board
-	} else {
+		// Coordinates are inside the board
+	}
+	else {
 		int x = (int)floor((coordinates.getX() - marginX) / cellSize);
 		int y = (int)floor((coordinates.getY() - marginY) / cellSize);
 		return Vector2D<int>(x, y);

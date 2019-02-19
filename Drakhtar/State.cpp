@@ -12,6 +12,7 @@ State::~State()
 {
 	for (auto gameObject : gameObjects_)
 		delete gameObject;
+	delete exampleDialog_;
 	game_ = nullptr;
 }
 
@@ -22,6 +23,8 @@ void State::_preload()
 	gameObjects_.push_back(new GameObject(game_->getTextures()[FIRST_BATTLE], Vector2D<int>(400, 300), Vector2D<int>(WIN_WIDTH, WIN_HEIGHT)));
 	gameObjects_.push_back(player);
 	gameObjects_.push_back(new Board(game_->getTextures()[CELL_FRAME], 8, 12, 50));
+
+	exampleDialog_ = new DialogScene(game_, "dialog1_start", "Retron2000");
 }
 
 void State::run()
@@ -64,6 +67,10 @@ void State::_render() const
 	for (auto gameObject : gameObjects_)
 	 	gameObject->render();
 
+	exampleDialog_->render();
+
+	
+
 	// Render the new frame
 	SDL_RenderPresent(renderer_);
 };
@@ -85,6 +92,9 @@ void State::_handleEvents()
 		// For each game object, run the event handler
 		for (auto gameObject : gameObjects_)
 			gameObject->handleEvents(event);
+
+		exampleDialog_->handleEvents(event);
+
 	}
 };
 void State::_afterUpdate() {};

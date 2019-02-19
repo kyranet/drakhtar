@@ -10,7 +10,7 @@ protected:
 	float marginX, marginY, cellSize;
 	Box*** board;
 public:
-	Board(Texture* cf, int r, int c, float cs);
+	Board(Texture * cellTexture, int r, int c, float cellSize);
 	virtual ~Board();
 
 	virtual void render() const;

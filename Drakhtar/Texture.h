@@ -1,10 +1,10 @@
 #pragma once
 
 #include "checkML.h"
-#include "SDL.h"       // Windows
-#include "SDL_image.h" // Windows
+#include "SDL.h"
+#include "SDL_image.h"
 #include "Vector2D.h"
-
+#include "Font.h"
 #include <string>
 
 using namespace std;
@@ -33,12 +33,14 @@ public:
 	Vector2D<ushort> getFrameSize() const { return frameSize_; }
 	Vector2D<ushort> getFramePosition(ushort frame) const { return Vector2D<ushort>(frame % columnAmount_, (ushort)floor(frame / columnAmount_)); };
 	SDL_Texture* getTexture() const { return texture_; }
+	SDL_Renderer* getRenderer() const { return renderer_; }
 
 	Texture* setTexture(SDL_Texture* texture);
 	Texture* setColumnAmount(ushort columns);
 	Texture* setRowAmount(ushort rows);
 	Texture* setFrameSize(Vector2D<ushort> frameSize);
 	Texture* loadFromImage(string filename, ushort rowAmount = 1, ushort columnAmount = 1);
+	Texture* loadFromText(Font* font, string text, SDL_Color const color = { 0, 0, 0, 255 });
 	void render(Vector2D<int> position) const;
 	void render(SDL_Rect const& dest, double angle = 0, SDL_Rect* clip = nullptr) const;
 	void renderFrame(SDL_Rect const& dest, ushort frame, double angle = 0, SDL_RendererFlip flip = SDL_FLIP_NONE) const;
