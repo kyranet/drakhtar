@@ -2,6 +2,7 @@
 
 #include "GameObject.h"
 #include "Box.h"
+#include "Constants.h"
 
 class Board : public GameObject{
 protected:

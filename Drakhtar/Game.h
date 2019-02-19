@@ -4,6 +4,7 @@
 #include "State.h"
 #include "Texture.h"
 #include "GameStateMachine.h"
+#include "Constants.h"
 
 using uint = unsigned int;
 
@@ -23,7 +24,7 @@ enum Textures {
 };
 
 const TextureInfo TEXTURES[NUMBER_TEXTURES] {
-	TextureInfo{"../images/BlueArcher.png", 2, 1},
+	TextureInfo{"../images/Units/BlueArcher.png", 2, 1},
 	TextureInfo{"../images/Maps/FirstBattle.png", 1, 1},
 	TextureInfo{"../images/UI/cellFrame.png", 1, 1}
 };

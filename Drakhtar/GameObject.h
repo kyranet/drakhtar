@@ -9,11 +9,10 @@ class EventListener;
 
 class GameObject
 {
-private:
+protected:
 	Vector2D<int> pos_;
 	Vector2D<int> size_;
 	Texture* texture_;
-protected:
 	list<EventListener*> eventListeners_;
 public:
 	GameObject(Texture* texture, Vector2D<int> pos, Vector2D<int> size)
