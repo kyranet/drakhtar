@@ -5,16 +5,19 @@
 #include "GameObject.h"
 #include "Board.h"
 #include "Game.h"
+#include "DialogScene.h"
 
 using namespace std;
 
 class Game;
+class DialogScene;
 
 class State
 {
 private:
 	bool _exit = false;
 	list<GameObject*> gameObjects_;
+	DialogScene* exampleDialog_;
 	Game* game_ = nullptr;
 protected:
 	SDL_Renderer *renderer_ = nullptr;
