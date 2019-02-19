@@ -17,7 +17,38 @@ void Unit::moveTowards(Vector2D<int> pos) {
 	// TODO: Maybe Unit->Team->Board?
 }
 
-void Unit::setMoving(bool moving) {
+void Unit::setAttack(int attack)
+{
+	attack_ = attack;
+}
+
+void Unit::setDefense(int defense)
+{
+	defense_ = defense;
+}
+
+void Unit::setAttackRange(int attackRange)
+{
+	attackRange_ = attackRange;
+}
+
+void Unit::setMoveRange(int moveRange)
+{
+	moveRange_ = moveRange;
+}
+
+void Unit::setMaxHealth(int health)
+{
+	health_ = maxHealth_ = health;
+}
+
+void Unit::setSpeed(int speed)
+{
+	speed_ = speed;
+}
+
+void Unit::setMoving(bool moving)
+{
 	moving_ = moving;
 }
 

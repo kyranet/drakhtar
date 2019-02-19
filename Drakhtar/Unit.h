@@ -22,6 +22,7 @@ private:
 	Team* team_;
 	Box* box_;
 public:
+	Unit() : GameObject(nullptr, Vector2D<int>(), Vector2D<int>()) {}
 	Unit(Texture* texture, Vector2D<int> pos, Vector2D<int> size, int attack, int defense, int maxHealth, int speed, int attackRange, int moveRange)
 		: GameObject(texture, pos, size), attack_(attack), defense_(defense), maxHealth_(maxHealth), health_(maxHealth), speed_(speed), attackRange_(attackRange), moveRange_(moveRange) {}
 	virtual ~Unit() {};
@@ -37,6 +38,13 @@ public:
 	Team* getTeam() const { return team_; }
 	Vector2D<int> getBoxPosition() const { return boxPosition_; }
 	void moveTowards(Vector2D<int> pos);
+
+	void setAttack(int attack);
+	void setDefense(int defense);
+	void setAttackRange(int attackRange);
+	void setMoveRange(int moveRange);
+	void setMaxHealth(int health);
+	void setSpeed(int speed);
 	void setMoving(bool moving);
 	void setMoved(bool moved);
 	void setBoxPosition(Vector2D<int> position);

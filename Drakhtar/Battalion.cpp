@@ -6,7 +6,7 @@ Battalion::~Battalion()
 {
 }
 
-int Battalion::setBattalionSize(int battalionSize)
+void Battalion::setBattalionSize(int battalionSize)
 {
 	battalionSize_ = battalionSize;
 }
