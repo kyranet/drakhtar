@@ -11,7 +11,8 @@ State::State(Game* game, SDL_Renderer* renderer)
 State::~State()
 {
 	for (auto gameObject : gameObjects_)
-		delete gameObject;
+		if (!gameObject->isDestroyed())
+			delete gameObject;
 	game_ = nullptr;
 }
 
@@ -69,7 +70,7 @@ void State::_render() const
 
 	// Render each game object
 	for (auto gameObject : gameObjects_)
-		if(gameObject->getDestroyed() == false)
+		if (!gameObject->isDestroyed())
 	 		gameObject->render();
 
 	// Render the new frame
@@ -92,7 +93,7 @@ void State::_handleEvents()
 
 		// For each game object, run the event handler
 		for (auto gameObject : gameObjects_)
-			if(gameObject->getDestroyed() == false)
+			if (!gameObject->isDestroyed())
 				gameObject->handleEvents(event);
 	}
 }
