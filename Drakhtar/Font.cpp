@@ -29,7 +29,8 @@ Font* Font::load(string filename, int size)
 	font_ = TTF_OpenFont(filename.c_str(), size);
 	if (font_ == nullptr)
 	{
-		throw new SDLError("Error loading font from " + filename);
+		string message = "Error loading font from " + filename + "\nReason: " + TTF_GetError();
+		throw new SDLError(message);
 	}
 	return this;
 }

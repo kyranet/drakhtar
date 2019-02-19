@@ -1,10 +1,17 @@
 #include "Game.h"
 #include "SDLError.h"
-#include "SDL.h"
 
 Game::Game()
 	: window_(nullptr), renderer_(nullptr)
 {
+	SDL_Init(SDL_INIT_EVERYTHING);
+	
+	if (TTF_Init() == -1)
+	{
+		string message = string("Error loading TTF.\nReason: ") + TTF_GetError();
+		throw new SDLError(message);
+	}
+
 	// Create the window and renderer
 	window_ = SDL_CreateWindow("Drakhtar", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WIN_WIDTH, WIN_HEIGHT, SDL_WINDOW_SHOWN);
 	renderer_ = SDL_CreateRenderer(window_, -1, SDL_RENDERER_ACCELERATED);
