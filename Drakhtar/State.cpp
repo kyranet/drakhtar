@@ -18,10 +18,10 @@ State::~State()
 
 void State::_preload()
 {
-	auto Tablero = new Board(game_->getTextures()[CELL_FRAME], 8, 12, 50);
-	//auto player = new GameObject(game_->getTextures()[RED], Vector2D<int>(225, 325), Vector2D<int>(50, 50));
+	auto Tablero = new Board(TextureManager::get("UI-cellFrame"), 8, 12, 50);
+	//auto player = new GameObject(TextureManager::get("Units-BlueArcher"), Vector2D<int>(225, 325), Vector2D<int>(50, 50));
 	//player->addEventListener(new Controller(player));
-	gameObjects_.push_back(new GameObject(game_->getTextures()[FIRST_BATTLE], Vector2D<int>(WIN_WIDTH/2, WIN_HEIGHT/2), Vector2D<int>(WIN_WIDTH, WIN_HEIGHT)));
+	gameObjects_.push_back(new GameObject(TextureManager::get("Maps-FirstBattle"), Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2), Vector2D<int>(WIN_WIDTH, WIN_HEIGHT)));
 	//gameObjects_.push_back(player);
 	gameObjects_.push_back(Tablero);
 	auto box = Tablero->getBoxAt(0, 0);

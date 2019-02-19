@@ -13,7 +13,7 @@ class Dialog
 {
 private:
 	string characterName;
-	int spriteText;
+	string spriteText;
 	string dialogText;
 
 	GameObject* characterPortraitSprite = nullptr;
