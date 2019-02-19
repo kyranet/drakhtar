@@ -1,5 +1,6 @@
 #include "Board.h"
 #include "Unit.h"
+#include "Controller.h"
 
 Board::Board(Texture* cellTexture, int r, int c, float cs) : GameObject(nullptr, 0, 0, 0, 0), rows(r), cols(c), cellSize(cs) {
 	// Calculates margins to center the board on screen
@@ -16,7 +17,9 @@ Board::Board(Texture* cellTexture, int r, int c, float cs) : GameObject(nullptr,
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
 			Vector2D<int> pos = Vector2D<int>(marginX + j * cellSize, marginY + i * cellSize);
-			board[i][j] = new Box(cellTexture, pos, Vector2D<int>(cellSize, cellSize), Vector2D<int>(i, j), nullptr);
+			Box* box = new Box(cellTexture, pos, Vector2D<int>(cellSize, cellSize), Vector2D<int>(i, j), nullptr);
+			box->addEventListener(new Controller(box));
+			board[i][j] = box;
 		}
 	}
 }
