@@ -56,7 +56,7 @@ void DialogScene::readFromFile(Game* game, string filename, Font* textFont)
 
 void DialogScene::nextDialog()
 {
-	if (currentDialogIndex < dialogChainSize)
+	if (currentDialogIndex < dialogChainSize - 1)
 		currentDialogIndex++;
 	else
 		endOfDialog();

@@ -10,6 +10,7 @@ class Font
 {
 private:
 	TTF_Font* font_;
+	int size_;
 
 public:
 	Font();
@@ -17,6 +18,7 @@ public:
 	~Font();
 
 	TTF_Font* getFont() const { return font_; }
+	int getSize() const { return size_; }
 	Font* load(string filename, int size);
 	void close();
 	SDL_Surface* renderText(string text, SDL_Color color) const;
