@@ -4,8 +4,8 @@
 
 Board::Board(Texture* cellTexture, int r, int c, float cs) : GameObject(nullptr, 0, 0, 0, 0), rows(r), cols(c), cellSize(cs) {
 	// Calculates margins to center the board on screen
-	marginX = (800 - (WIN_WIDTH * (cols - 1))) / 2;
-	marginY = (600 - (WIN_HEIGHT * (rows - 1))) / 2;
+	marginX = (WIN_WIDTH - (cellSize * (cols - 1))) / 2;
+	marginY = (WIN_HEIGHT - (cellSize * (rows - 1))) / 2;
 
 	// Creates the board matrix
 	board = new Box**[rows];
@@ -16,7 +16,7 @@ Board::Board(Texture* cellTexture, int r, int c, float cs) : GameObject(nullptr,
 	// Fills the board with empty boxes
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
-			Vector2D<int> pos = Vector2D<int>(marginX + j * cellSize, marginY + i * cellSize);
+			Vector2D<int> pos = Vector2D<int>((int)floor(marginX + j * cellSize), (int)floor(marginY + i * cellSize));
 			Vector2D<int> size = Vector2D<int>((int)floor(cellSize), (int)floor(cellSize));
 			Box* box = new Box(cellTexture, pos, size, Vector2D<int>(i, j), nullptr);
 			box->addEventListener(new Controller(box));
@@ -109,8 +109,8 @@ Vector2D<int> Board::getCellIndexFromCoordinates(Vector2D<int> coordinates) {
 		return Vector2D<int>(-1, -1);
 	// Coordinates are inside the board
 	} else {
-		int x = floor((coordinates.getX() - marginX) / cellSize);
-		int y = floor((coordinates.getY() - marginY) / cellSize);
+		int x = (int)floor((coordinates.getX() - marginX) / cellSize);
+		int y = (int)floor((coordinates.getY() - marginY) / cellSize);
 		return Vector2D<int>(x, y);
 	}
 }
