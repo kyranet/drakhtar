@@ -9,6 +9,8 @@ DialogScene::DialogScene(Game* game, string filename, string fontfile)
 
 DialogScene::~DialogScene()
 {
+	for (auto dialog : dialogChain)
+		delete dialog;
 	delete dialogBlockSprite;
 	dialogBlockSprite = nullptr;
 	delete textFont;

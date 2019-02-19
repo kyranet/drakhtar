@@ -12,6 +12,7 @@ State::~State()
 {
 	for (auto gameObject : gameObjects_)
 		delete gameObject;
+	delete exampleDialog_;
 	game_ = nullptr;
 }
 
