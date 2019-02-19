@@ -27,11 +27,11 @@ void State::_preload()
 	auto box = Tablero->getBoxAt(0, 0);
 	auto box2 = Tablero->getBoxAt(5, 5);
 
-	auto test = new Unit(game_->getTextures()[RED],box, 2, 10, 5, 5, 5);
+	auto test = new Unit(TextureManager::get("Units-BlueArcher"), box, 2, 10, 5, 5, 5);
 	test->addEventListener(new Controller(test));
 	gameObjects_.push_back(test);
 
-	auto test2 = new Unit(game_->getTextures()[RED], box2, 2, 10, 5, 5, 5);
+	auto test2 = new Unit(TextureManager::get("Units-BlueArcher"), box2, 2, 10, 5, 5, 5);
 	test2->addEventListener(new Controller(test2));
 	gameObjects_.push_back(test2);
 
