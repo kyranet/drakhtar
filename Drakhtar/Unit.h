@@ -2,6 +2,7 @@
 
 #include "GameObject.h"
 #include "Team.h"
+#include "Box.h"
 
 class Team;
 
@@ -17,9 +18,9 @@ private:
 	bool moved_ = false;
 	Vector2D<int> boxPosition_;
 	Team* team_;
+	Box* box_;
 public:
-	Unit(Texture* texture, Vector2D<int> pos, Vector2D<int> size, int attack, int health, int speed, int attackRange, int moveRange)
-		: GameObject(texture, pos, size), attack_(attack), health_(health), speed_(speed), attackRange_(attackRange), moveRange_(moveRange) {}
+	Unit(Texture* texture, Box * box, int attack, int health, int speed, int attackRange, int moveRange);
 	virtual ~Unit() {};
 	int getAttack() const { return attack_; }
 	int getAttackRange() const { return attackRange_; }
@@ -35,5 +36,6 @@ public:
 	void setMoved(bool moved);
 	void setBoxPosition(Vector2D<int> position);
 	void setTeam(Team* team);
+	void moveToBox(Box * box);
 };
 
