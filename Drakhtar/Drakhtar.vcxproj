@@ -72,6 +72,7 @@
     <ClCompile Include="Battalion.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Box.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Dialog.cpp" />
     <ClCompile Include="DialogScene.cpp" />
@@ -96,6 +97,7 @@
     <ClInclude Include="Battalion.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="Box.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="checkML.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Controller.h" />
