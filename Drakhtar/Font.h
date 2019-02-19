@@ -19,4 +19,6 @@ public:
 	SDL_Renderer* getRenderer() const;
 	void liberate();
 	void load(string filename);
+
+
 };

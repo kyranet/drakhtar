@@ -3,6 +3,7 @@
 #include "Font.h"
 #include "GameObject.h"
 #include "checkML.h"
+#include <iostream>
 
 class Text : public GameObject
 {
@@ -13,7 +14,7 @@ private:
 	SDL_Color color_;
 
 public:
-	Text(Texture* texture, Font* font, vector2d pos, vector2d size, SDL_Color &color, string &text);
+	Text(SDL_Renderer* renderer, Font* font, vector2d pos, vector2d size, SDL_Color &color, string &text);
 	~Text();
 	void setText(const string newText);
 	void setColor(const SDL_Color &color);

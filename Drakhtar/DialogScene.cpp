@@ -4,7 +4,7 @@
 
 DialogScene::DialogScene(Game* game, string filename, string fontfile)
 {
-	dialogBlockSprite = new GameObject(game->getTextures()[DIALOG_BLOCK], vector2d{ 400, 400 }, vector2d{ 200, 80 });
+	dialogBlockSprite = new GameObject(game->getTextures()[DIALOG_BLOCK], vector2d{ 400, 500 }, vector2d{ 600, 160 });
 	textFont = new Font(game->getRenderer(), "../fonts/" + fontfile + ".ttf", 8);
 	readFromFile(game, "../dialog/" + filename + ".txt",+ textFont);
 }
@@ -44,7 +44,7 @@ void DialogScene::readFromFile(Game* game, string filename, Font* textFont)
 	else
 	{*/
 		file >> dialogChainSize;
-		dialogChain.reserve(dialogChainSize);
+		dialogChain.resize(dialogChainSize);
 
 		for (int i = 0;i < dialogChainSize;i++)
 		{
@@ -65,6 +65,7 @@ void DialogScene::nextDialog()
 
 void DialogScene::endOfDialog()
 {
+	currentDialogIndex = 0;
 	// close dialog and go to next event
 }
 
