@@ -48,9 +48,9 @@ public:
 	Texture* setFrameSize(Vector2D<ushort> frameSize);
 	Texture* loadFromImage(string filename, ushort rowAmount = 1, ushort columnAmount = 1);
 	Texture* loadFromText(Font* font, string text, SDL_Color const color = { 0, 0, 0, 255 });
-	void addAnimation(string name, vector<ushort> frames);
-	void setAnimation(string name);
-	bool hasAnimation(string name);
+	void addAnimation(string const& name, vector<ushort> const& frames);
+	void setAnimation(string const& name);
+	bool hasAnimation(string const& name);
 	void tick();
 	void render(Vector2D<int> position) const;
 	void render(SDL_Rect const& dest, double angle = 0, SDL_Rect* clip = nullptr) const;

@@ -83,18 +83,18 @@ Texture* Texture::loadFromText(Font* font, string text, SDL_Color const color)
 	return this;
 }
 
-void Texture::addAnimation(string name, vector<ushort> frames)
+void Texture::addAnimation(string const& name, vector<ushort> const& frames)
 {
 	animations_[name] = frames;
 }
 
-void Texture::setAnimation(string name)
+void Texture::setAnimation(string const& name)
 {
 	if (hasAnimation(name)) animation_ = animations_[name];
 	else throw new DrakhtarError("Cannot set an animation that has not been previously added.");
 }
 
-bool Texture::hasAnimation(string name)
+bool Texture::hasAnimation(string const& name)
 {
 	return animations_.count(name) != 0;
 }
