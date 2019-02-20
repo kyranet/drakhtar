@@ -43,7 +43,7 @@ Game::Game()
 	textureManager_->add("Portraits-KnightEnemy", "../images/Portraits/KnightEnemy.png", 1, 1);
 	textureManager_->add("Portraits-Mage", "../images/Portraits/Mage.png", 1, 1);
 	textureManager_->add("Portraits-MageEnemy", "../images/Portraits/MageEnemy.png", 1, 1);
-	textureManager_->add("Portraits-MagueEnemyTwo", "../images/Portraits/MagueEnemyTwo.png", 1, 1);
+	textureManager_->add("Portraits-Narrator", "../images/Portraits/Narrator.png", 1, 1);
 	textureManager_->add("Portraits-SoldierEnemy", "../images/Portraits/SoldierEnemy.png", 1, 1);
 	textureManager_->add("Portraits-Thassa", "../images/Portraits/Thassa.png", 3, 3);
 

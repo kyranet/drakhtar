@@ -1,17 +1,17 @@
 
 19
-Narrador Portraits-characterPlaceholder Mientras Thassa y su mano derecha, Valar, se encuentran de vuelta al reino de Drakhtar, al llegar a la frontera con el reino vecino de Crihendrath, notan en la lejanía que la ciudad está rodeada por una neblina que parece sospechosa .
+Narrador Portraits-Narrator Mientras Thassa y su mano derecha, Valar, se encuentran de vuelta al reino de Drakhtar, al llegar a la frontera con el reino vecino de Crihendrath, notan en la lejanía que la ciudad está rodeada por una neblina que parece sospechosa .
 Thassa Portraits-Thassa ¿Qué es eso? .
 Valar Portraits-characterPlaceholder Desconozco que puede ser, en cualquier caso, debemos aproximar el ejército con cuidado .
-Narrador Portraits-characterPlaceholder El ejército sigue con cautela a su líder. Una vez están ya cerca de la ciudad descubren que se encuentra sitiada .
+Narrador Portraits-Narrator El ejército sigue con cautela a su líder. Una vez están ya cerca de la ciudad descubren que se encuentra sitiada .
 Thassa Portraits-Thassa ¿Qué está ocurriendo? .
 Valar Portraits-characterPlaceholder Nos están sitiando... unos... ¿esqueletos...? .
 Thassa Portraits-Thassa Debemos atacar ahora que no nos esperan .
 Valar Portraits-characterPlaceholder ¡No! hay que organizar un plan de batalla .
 Thassa Portraits-Thassa No tenemos tiempo, Valar .
 Thassa Portraits-Thassa ¡Preparaos para el ataque! ¡Avanzad! .
-Narrador Portraits-characterPlaceholder En el ejército enemigo se vislumbra una silueta que destaca por encima de todos .
-Narrador Portraits-characterPlaceholder Es un esqueleto más grande que los demás que porta un arco .
+Narrador Portraits-Narrator En el ejército enemigo se vislumbra una silueta que destaca por encima de todos .
+Narrador Portraits-Narrator Es un esqueleto más grande que los demás que porta un arco .
 Valar Portraits-characterPlaceholder Mueve las unidades haciendo click izquierdo en una casilla de terreno que está disponible .
 Valar Portraits-characterPlaceholder las unidades tienen distintos rangos, dependiendo de la unidad podrás atacar a mayor o menor distancia. Para atacar haz click izquierdo en la unidad enemiga que está al alcance .
 Valar Portraits-characterPlaceholder Para ganar la batalla tendremos que derrotar al líder enemigo, procura no morir o estaremos perdidos .
