@@ -17,15 +17,22 @@ State::~State()
 
 void State::_preload()
 {
-	auto Tablero = new Board(TextureManager::get("UI-cellFrame"), 8, 12, 50);
-	//auto player = new GameObject(TextureManager::get("Units-BlueArcher"), Vector2D<int>(225, 325), Vector2D<int>(50, 50));
-	//player->addEventListener(new Controller(player));
+	// TextureManager
 	gameObjects_.push_back(new GameObject(TextureManager::get("Maps-FirstBattle"), Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2), Vector2D<int>(WIN_WIDTH, WIN_HEIGHT)));
-	//gameObjects_.push_back(player);
-	gameObjects_.push_back(Tablero);
-	auto box = Tablero->getBoxAt(0, 0);
-	auto box2 = Tablero->getBoxAt(5, 5);
 
+	// Board
+	Board * Tablero = new Board(TextureManager::get("UI-cellFrame"), 8, 12, 50);
+	gameObjects_.push_back(Tablero);
+	
+	// Test units
+	Box * box = Tablero->getBoxAt(0, 0);
+	Box * box2 = Tablero->getBoxAt(5, 5);
+	Unit * test = new Unit(TextureManager::get("Units-BlueArcher"), box, 2, 10, 5, 5, 5);
+	Unit * test2 = new Unit(TextureManager::get("Units-BlueArcher"), box2, 2, 10, 5, 5, 5);
+	gameObjects_.push_back(test);
+	gameObjects_.push_back(test2);
+
+	// Dialog
 	auto exampleDialog = new DialogScene(game_, "dialog1_start", "Retron2000");
 	gameObjects_.push_back(exampleDialog);
 
