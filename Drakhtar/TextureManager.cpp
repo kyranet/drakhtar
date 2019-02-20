@@ -44,7 +44,7 @@ void TextureManager::init(SDL_Renderer* renderer)
 		texture->setAnimation("default");
 
 		// Insert the texture to the map, pop the stack, and delete the temporary information
-		insert(pair<string, Texture*>(info->name, texture));
+		map_.insert(pair<string, Texture*>(info->name, texture));
 		stack_.pop();
 		delete info;
 	}
@@ -53,7 +53,7 @@ void TextureManager::init(SDL_Renderer* renderer)
 void TextureManager::tick()
 {
 	if (instance == nullptr) return;
-	for (auto pair : (*this))
+	for (auto pair : map_)
 	{
 		pair.second->tick();
 	}
@@ -61,17 +61,22 @@ void TextureManager::tick()
 
 Texture* TextureManager::get(string name)
 {
-	return (*getInstance())[name];
+	return getInstance()->map_[name];
+}
+
+TextureManager::~TextureManager()
+{
+	while (!stack_.empty()) stack_.pop();
+	for (auto pair : map_)
+		delete pair.second;
+	map_.clear();
 }
 
 void TextureManager::destroy()
 {
 	if (instance != nullptr)
 	{
-		// while (!instance->stack_.empty()) instance->stack_.pop();
-		for (auto pair : (*instance))
-			delete pair.second;
-		instance->clear();
+		delete instance;
 		instance = nullptr;
 	}
 }

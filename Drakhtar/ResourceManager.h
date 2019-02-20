@@ -6,8 +6,10 @@
 using namespace std;
 
 template<class V>
-class ResourceManager : public map<string, V>
+class ResourceManager
 {
+protected:
+	map<string, V> map_;
 public:
 	ResourceManager() {};
 	virtual ~ResourceManager() {};

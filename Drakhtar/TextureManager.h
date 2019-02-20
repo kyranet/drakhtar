@@ -33,6 +33,7 @@ class TextureManager : public ResourceManager<Texture*>
 private:
 	static TextureManager* instance;
 	TextureManager();
+	~TextureManager();
 	stack<TextureInfo*> stack_;
 public:
 	TextureInfo* add(string name, string path, ushort columns, ushort rows);

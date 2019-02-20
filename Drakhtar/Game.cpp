@@ -91,7 +91,6 @@ Game::~Game()
 	SDL_DestroyWindow(window_);
 	SDL_Quit();
 
-	delete textureManager_;
 	delete state_;
 	delete stateMachine;
 }
