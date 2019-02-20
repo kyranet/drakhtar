@@ -35,5 +35,7 @@ public:
 	State(Game* game, SDL_Renderer* renderer);
 	virtual ~State();
 	virtual void run();
+	virtual void addGameObject(GameObject* gameObject);
+	virtual void removeGameObject(GameObject* gameObject);
 };
 
