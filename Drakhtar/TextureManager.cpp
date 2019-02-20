@@ -13,10 +13,7 @@ TextureManager* TextureManager::getInstance()
 	return instance;
 }
 
-TextureManager::TextureManager()
-	: stack_(stack<TextureInfo>())
-{
-}
+TextureManager::TextureManager() {}
 
 TextureManager::~TextureManager()
 {
@@ -26,9 +23,11 @@ TextureManager::~TextureManager()
 	clear();
 }
 
-void TextureManager::add(string name, string path, ushort columns, ushort rows)
+TextureInfo* TextureManager::add(string name, string path, ushort columns, ushort rows)
 {
-	stack_.push(TextureInfo{ name, path, columns, rows });
+	auto info = new TextureInfo(name, path, columns, rows);
+	stack_.push(info);
+	return info;
 }
 
 void TextureManager::init(SDL_Renderer* renderer)
@@ -36,9 +35,10 @@ void TextureManager::init(SDL_Renderer* renderer)
 	while (!stack_.empty())
 	{
 		auto info = stack_.top();
-		auto texture = (new Texture(renderer))->loadFromImage(info.path, info.rows, info.columns);
-		insert(pair<string, Texture*>(info.name, texture));
+		auto texture = (new Texture(renderer))->loadFromImage(info->path, info->rows, info->columns);
+		insert(pair<string, Texture*>(info->name, texture));
 		stack_.pop();
+		delete info;
 	}
 }
 

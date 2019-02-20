@@ -3,24 +3,40 @@
 #include "ResourceManager.h"
 #include "Texture.h"
 #include <stack>
+#include <vector>
 
-struct TextureInfo
+struct AnimationTextureInfo
 {
 	string name;
+	vector<ushort> frames;
+};
+
+class TextureInfo
+{
+public:
+	TextureInfo(string name, string path, ushort columns, ushort rows, vector<AnimationTextureInfo> animations = {})
+		: name(name), path(path), columns(columns), rows(rows), animations(animations) {}
+	string name;
 	string path;
-	uint columns;
-	uint rows;
+	ushort columns;
+	ushort rows;
+	vector<AnimationTextureInfo> animations;
+	void addAnimation(string name, vector<ushort> frames)
+	{
+		animations.push_back({ name, frames });
+	}
 };
 
 class TextureManager : public ResourceManager<Texture*>
 {
 private:
+
 	static TextureManager* instance;
 	TextureManager();
-	stack<TextureInfo> stack_;
+	stack<TextureInfo*> stack_;
 public:
 	virtual ~TextureManager();
-	void add(string name, string path, ushort columns, ushort rows);
+	TextureInfo* add(string name, string path, ushort columns, ushort rows);
 	void init(SDL_Renderer* renderer);
 	static Texture* get(string name);
 
