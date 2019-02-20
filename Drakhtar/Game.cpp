@@ -1,6 +1,18 @@
 #include "Game.h"
 #include "SDLError.h"
 
+Game* Game::instance = nullptr;
+
+Game* Game::getInstance()
+{
+	if (instance == nullptr)
+	{
+		instance = new Game();
+	}
+
+	return instance;
+}
+
 Game::Game()
 	: window_(nullptr), renderer_(nullptr)
 {
