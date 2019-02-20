@@ -6,6 +6,8 @@
 #include "Vector2D.h"
 #include "Font.h"
 #include <string>
+#include <vector>
+#include <map>
 
 using namespace std;
 
@@ -21,6 +23,7 @@ private:
 	Vector2D<ushort> frameSize_;
 	uint columnAmount_ = 1;
 	uint rowAmount_ = 1;
+	map<string, vector<ushort>> animations_;
 
 public:
 	Texture() {};
@@ -41,6 +44,8 @@ public:
 	Texture* setFrameSize(Vector2D<ushort> frameSize);
 	Texture* loadFromImage(string filename, ushort rowAmount = 1, ushort columnAmount = 1);
 	Texture* loadFromText(Font* font, string text, SDL_Color const color = { 0, 0, 0, 255 });
+	void addAnimation(string name, vector<ushort> frames);
+	bool hasAnimation(string name);
 	void render(Vector2D<int> position) const;
 	void render(SDL_Rect const& dest, double angle = 0, SDL_Rect* clip = nullptr) const;
 	void renderFrame(SDL_Rect const& dest, ushort frame, double angle = 0, SDL_RendererFlip flip = SDL_FLIP_NONE) const;

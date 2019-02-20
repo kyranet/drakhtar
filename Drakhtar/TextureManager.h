@@ -3,7 +3,6 @@
 #include "ResourceManager.h"
 #include "Texture.h"
 #include <stack>
-#include <vector>
 
 struct AnimationTextureInfo
 {
@@ -16,6 +15,7 @@ class TextureInfo
 public:
 	TextureInfo(string name, string path, ushort columns, ushort rows, vector<AnimationTextureInfo> animations = {})
 		: name(name), path(path), columns(columns), rows(rows), animations(animations) {}
+	~TextureInfo() { animations.clear(); }
 	string name;
 	string path;
 	ushort columns;
@@ -31,7 +31,6 @@ public:
 class TextureManager : public ResourceManager<Texture*>
 {
 private:
-
 	static TextureManager* instance;
 	TextureManager();
 	stack<TextureInfo*> stack_;

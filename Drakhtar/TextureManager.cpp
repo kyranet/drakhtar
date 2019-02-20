@@ -36,6 +36,20 @@ void TextureManager::init(SDL_Renderer* renderer)
 	{
 		auto info = stack_.top();
 		auto texture = (new Texture(renderer))->loadFromImage(info->path, info->rows, info->columns);
+
+		// Add all the queued animations
+		for (auto animation : info->animations) texture->addAnimation(animation.name, animation.frames);
+
+		// If there was no default animation override, add it
+		if (!texture->hasAnimation("default"))
+		{
+			ushort frames = texture->getColumnAmount() * texture->getRowAmount();
+			vector<ushort> animation(frames);
+			for (ushort i = 0; i < frames; i++) animation[i] = i;
+			texture->addAnimation("default", animation);
+		}
+
+		// Insert the texture to the map, pop the stack, and delete the temporary information
 		insert(pair<string, Texture*>(info->name, texture));
 		stack_.pop();
 		delete info;

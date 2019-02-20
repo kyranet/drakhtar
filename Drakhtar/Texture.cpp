@@ -82,6 +82,16 @@ Texture* Texture::loadFromText(Font* font, string text, SDL_Color const color)
 	return this;
 }
 
+void Texture::addAnimation(string name, vector<ushort> frames)
+{
+	animations_[name] = frames;
+}
+
+bool Texture::hasAnimation(string name)
+{
+	return animations_.count(name) != 0;
+}
+
 void Texture::render(Vector2D<int> position) const
 {
 	SDL_Rect dest{ position.getX(), position.getY(), size_.getX(), size_.getY() };
