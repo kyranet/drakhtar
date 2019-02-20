@@ -14,6 +14,7 @@ int main(int argc, char* argv[]){
 		Game *game = Game::getInstance();
 		game->run();
 		delete game;
+		TextureManager::destroy();
 		return 0;
 	}
 	catch (exception e)

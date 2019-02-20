@@ -35,10 +35,10 @@ private:
 	TextureManager();
 	stack<TextureInfo*> stack_;
 public:
-	virtual ~TextureManager();
 	TextureInfo* add(string name, string path, ushort columns, ushort rows);
 	void init(SDL_Renderer* renderer);
+	void tick();
 	static Texture* get(string name);
-
 	static TextureManager* getInstance();
+	static void destroy();
 };

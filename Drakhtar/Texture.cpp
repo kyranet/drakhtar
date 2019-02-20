@@ -7,6 +7,7 @@ using namespace std;
 Texture::~Texture()
 {
 	close();
+	animations_.clear();
 }
 
 Texture* Texture::setTexture(SDL_Texture* texture)
@@ -87,9 +88,23 @@ void Texture::addAnimation(string name, vector<ushort> frames)
 	animations_[name] = frames;
 }
 
+void Texture::setAnimation(string name)
+{
+	if (hasAnimation(name)) animation_ = animations_[name];
+	else throw new DrakhtarError("Cannot set an animation that has not been previously added.");
+}
+
 bool Texture::hasAnimation(string name)
 {
 	return animations_.count(name) != 0;
+}
+
+void Texture::tick()
+{
+	auto size = animation_.size();
+	if (size == 0) return;
+	if (frame_ == size - 1) frame_ = 0;
+	else frame_++;
 }
 
 void Texture::render(Vector2D<int> position) const
