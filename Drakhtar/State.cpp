@@ -107,6 +107,25 @@ void State::_handleEvents()
 		//exampleDialog_->handleEvents(event);
 
 	}
-};
-void State::_afterUpdate() {};
-void State::_events() {};
+}
+
+void State::_afterUpdate() {}
+
+void State::_events() {}
+
+void State::addGameObject(GameObject* gameObject)
+{
+	gameObjects_.push_back(gameObject);
+}
+
+void State::removeGameObject(GameObject* gameObject)
+{
+	auto it = gameObjects_.begin();
+	while (it != gameObjects_.end())
+	{
+		if ((*it) == gameObject) break;
+		it++;
+	}
+
+	if (it != gameObjects_.end()) gameObjects_.erase(it);
+}
