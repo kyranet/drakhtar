@@ -18,7 +18,7 @@ class State
 private:
 	bool _exit = false;
 	list<GameObject*> gameObjects_;
-	DialogScene* exampleDialog_;
+	list<GameObject*> pendingOnDestroy_;
 	Game* game_ = nullptr;
 protected:
 	SDL_Renderer *renderer_ = nullptr;
@@ -29,7 +29,7 @@ protected:
 	virtual void _handleEvents();
 	virtual void _afterUpdate();
 	virtual void _events();
-	virtual void _destroy() {};
+	virtual void _destroy();
 	virtual void _end() {};
 public:
 	State(Game* game, SDL_Renderer* renderer);

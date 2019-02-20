@@ -10,10 +10,11 @@ class Font
 {
 private:
 	TTF_Font* font_;
+	int lineJumpLimit_;
 
 public:
 	Font();
-	Font(string filename, int size);
+	Font(string filename, int size, int lineJumpLimit);
 	~Font();
 
 	TTF_Font* getFont() const { return font_; }

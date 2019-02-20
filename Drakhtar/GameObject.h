@@ -22,4 +22,5 @@ public:
 	virtual void handleEvents(SDL_Event event);
 	GameObject* addEventListener(EventListener* eventListener);
 	SDL_Rect getRect() const;
+	void destroy();
 };

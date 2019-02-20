@@ -87,3 +87,20 @@ SDL_Renderer* Game::getRenderer()
 {
 	return renderer_;
 }
+
+Game* Game::instance = nullptr;
+
+Game* Game::getInstance()
+{
+	if (instance == nullptr)
+	{
+		instance = new Game();
+	}
+
+	return instance;
+}
+
+State* Game::currentState()
+{
+	return getInstance()->state_;
+}

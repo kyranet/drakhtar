@@ -12,7 +12,6 @@ State::~State()
 {
 	for (auto gameObject : gameObjects_)
 		delete gameObject;
-	delete exampleDialog_;
 	game_ = nullptr;
 }
 
@@ -27,15 +26,9 @@ void State::_preload()
 	auto box = Tablero->getBoxAt(0, 0);
 	auto box2 = Tablero->getBoxAt(5, 5);
 
-	auto test = new Unit(TextureManager::get("Units-BlueArcher"), box, 2, 10, 5, 5, 5);
-	test->addEventListener(new Controller(test));
-	gameObjects_.push_back(test);
+	auto exampleDialog = new DialogScene(game_, "dialog1_start", "Retron2000");
+	gameObjects_.push_back(exampleDialog);
 
-	auto test2 = new Unit(TextureManager::get("Units-BlueArcher"), box2, 2, 10, 5, 5, 5);
-	test2->addEventListener(new Controller(test2));
-	gameObjects_.push_back(test2);
-
-	exampleDialog_ = new DialogScene(game_, "dialog1_start", "Retron2000");
 }
 
 void State::run()
@@ -78,10 +71,6 @@ void State::_render() const
 	for (auto gameObject : gameObjects_)
 	 	gameObject->render();
 
-	//exampleDialog_->render();
-
-	
-
 	// Render the new frame
 	SDL_RenderPresent(renderer_);
 };
@@ -103,15 +92,36 @@ void State::_handleEvents()
 		// For each game object, run the event handler
 		for (auto gameObject : gameObjects_)
 			gameObject->handleEvents(event);
-
-		//exampleDialog_->handleEvents(event);
-
 	}
 }
 
 void State::_afterUpdate() {}
 
 void State::_events() {}
+
+void State::_destroy()
+{
+	for (auto gameObject : pendingOnDestroy_)
+	{
+		// If the gameObject was already deleted from memory,
+		// skip this search
+		if (gameObject == nullptr) continue;
+
+		auto it = gameObjects_.begin();
+		while (it != gameObjects_.end())
+		{
+			if (*it == gameObject)
+			{
+				gameObjects_.erase(it);
+				delete gameObject;
+				break;
+			}
+			it++;
+		}
+	}
+
+	pendingOnDestroy_.clear();
+}
 
 void State::addGameObject(GameObject* gameObject)
 {
@@ -120,12 +130,6 @@ void State::addGameObject(GameObject* gameObject)
 
 void State::removeGameObject(GameObject* gameObject)
 {
-	auto it = gameObjects_.begin();
-	while (it != gameObjects_.end())
-	{
-		if ((*it) == gameObject) break;
-		it++;
-	}
-
-	if (it != gameObjects_.end()) gameObjects_.erase(it);
+	pendingOnDestroy_.push_back(gameObject);
+	
 }

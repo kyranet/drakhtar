@@ -19,8 +19,10 @@ private:
 	GameObject* characterPortraitSprite = nullptr;
 	Text* characterNameSprite = nullptr;
 	Text* dialogTextSprite = nullptr;
+
+	SDL_Rect dialogRect_;
 public:
-	Dialog(Game* game, ifstream& file, Font* textfont);
+	Dialog(Game* game, ifstream& file, Font* textfont, SDL_Rect dialogRect);
 	~Dialog();
 	virtual void render() const;
 	void readFromFile(ifstream& file);

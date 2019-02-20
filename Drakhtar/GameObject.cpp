@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameObject.h"
+#include "Game.h"
 
 GameObject::~GameObject()
 {
@@ -37,3 +38,7 @@ SDL_Rect GameObject::getRect() const
 	};
 }
 
+void GameObject::destroy()
+{
+	Game::currentState()->removeGameObject(this);
+}
