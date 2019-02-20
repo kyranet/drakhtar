@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameObject.h"
+#include "Game.h"
 
 GameObject::~GameObject()
 {
@@ -8,7 +9,6 @@ GameObject::~GameObject()
 	for (auto listener : eventListeners_)
 		delete listener;
 	eventListeners_.clear();
-	setDestroyed(true);
 }
 
 void GameObject::render() const
@@ -38,3 +38,7 @@ SDL_Rect GameObject::getRect() const
 	};
 }
 
+void GameObject::destroy()
+{
+	Game::currentState()->removeGameObject(this);
+}

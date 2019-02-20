@@ -11,8 +11,7 @@ State::State(Game* game, SDL_Renderer* renderer)
 State::~State()
 {
 	for (auto gameObject : gameObjects_)
-		if (!gameObject->isDestroyed())
-			delete gameObject;
+		delete gameObject;
 	game_ = nullptr;
 }
 
@@ -70,8 +69,7 @@ void State::_render() const
 
 	// Render each game object
 	for (auto gameObject : gameObjects_)
-		if (!gameObject->isDestroyed())
-	 		gameObject->render();
+	 	gameObject->render();
 
 	// Render the new frame
 	SDL_RenderPresent(renderer_);
@@ -93,14 +91,37 @@ void State::_handleEvents()
 
 		// For each game object, run the event handler
 		for (auto gameObject : gameObjects_)
-			if (!gameObject->isDestroyed())
-				gameObject->handleEvents(event);
+			gameObject->handleEvents(event);
 	}
 }
 
 void State::_afterUpdate() {}
 
 void State::_events() {}
+
+void State::_destroy()
+{
+	for (auto gameObject : pendingOnDestroy_)
+	{
+		// If the gameObject was already deleted from memory,
+		// skip this search
+		if (gameObject == nullptr) continue;
+
+		auto it = gameObjects_.begin();
+		while (it != gameObjects_.end())
+		{
+			if (*it == gameObject)
+			{
+				gameObjects_.erase(it);
+				delete gameObject;
+				break;
+			}
+			it++;
+		}
+	}
+
+	pendingOnDestroy_.clear();
+}
 
 void State::addGameObject(GameObject* gameObject)
 {
@@ -109,12 +130,6 @@ void State::addGameObject(GameObject* gameObject)
 
 void State::removeGameObject(GameObject* gameObject)
 {
-	auto it = gameObjects_.begin();
-	while (it != gameObjects_.end())
-	{
-		if ((*it) == gameObject) break;
-		it++;
-	}
-
-	if (it != gameObjects_.end()) gameObjects_.erase(it);
+	pendingOnDestroy_.push_back(gameObject);
+	
 }
