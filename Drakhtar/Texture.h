@@ -6,6 +6,8 @@
 #include "Vector2D.h"
 #include "Font.h"
 #include <string>
+#include <vector>
+#include <map>
 
 using namespace std;
 
@@ -21,6 +23,9 @@ private:
 	Vector2D<ushort> frameSize_;
 	uint columnAmount_ = 1;
 	uint rowAmount_ = 1;
+	map<string, vector<ushort>> animations_;
+	vector<ushort> animation_;
+	ushort frame_ = 0;
 
 public:
 	Texture() {};
@@ -29,9 +34,11 @@ public:
 
 	ushort getColumnAmount() const { return columnAmount_; }
 	ushort getRowAmount() const { return rowAmount_; }
+	ushort getFrame() const { return frame_; }
 	Vector2D<ushort> getSize() const { return size_; }
 	Vector2D<ushort> getFrameSize() const { return frameSize_; }
 	Vector2D<ushort> getFramePosition(ushort frame) const { return Vector2D<ushort>(frame % columnAmount_, (ushort)floor(frame / columnAmount_)); };
+	vector<ushort> getAnimation() const { return animation_; }
 	SDL_Texture* getTexture() const { return texture_; }
 	SDL_Renderer* getRenderer() const { return renderer_; }
 
@@ -41,6 +48,10 @@ public:
 	Texture* setFrameSize(Vector2D<ushort> frameSize);
 	Texture* loadFromImage(string filename, ushort rowAmount = 1, ushort columnAmount = 1);
 	Texture* loadFromText(Font* font, string text, SDL_Color const color = { 0, 0, 0, 255 });
+	void addAnimation(string const& name, vector<ushort> const& frames);
+	void setAnimation(string const& name);
+	bool hasAnimation(string const& name);
+	void tick();
 	void render(Vector2D<int> position) const;
 	void render(SDL_Rect const& dest, double angle = 0, SDL_Rect* clip = nullptr) const;
 	void renderFrame(SDL_Rect const& dest, ushort frame, double angle = 0, SDL_RendererFlip flip = SDL_FLIP_NONE) const;

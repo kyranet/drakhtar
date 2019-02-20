@@ -5,7 +5,7 @@ Game::Game()
 	: window_(nullptr), renderer_(nullptr)
 {
 	// TODO: Add audio support: SDL_INIT_EVENTS | SDL_INIT_AUDIO
-	if (SDL_Init(SDL_INIT_EVENTS) != 0)
+	if (SDL_Init(SDL_INIT_EVENTS | SDL_INIT_TIMER) != 0)
 	{
 		string message = string("Error initializing SDL.\nReason: ") + SDL_GetError();
 		throw new SDLError(message);
@@ -50,7 +50,14 @@ Game::Game()
 	textureManager_->add("Portraits-MageEnemy", "../images/Portraits/MageEnemy.png", 1, 1);
 	textureManager_->add("Portraits-Narrator", "../images/Portraits/Narrator.png", 1, 1);
 	textureManager_->add("Portraits-SoldierEnemy", "../images/Portraits/SoldierEnemy.png", 1, 1);
-	textureManager_->add("Portraits-Thassa", "../images/Portraits/Thassa.png", 3, 3);
+	textureManager_->add("Portraits-Thassa", "../images/Portraits/Thassa.png", 3, 3)
+		->addAnimation("default", { 0 })
+		->addAnimation("angry", { 1 })
+		->addAnimation("pray", { 2 })
+		->addAnimation("courage", { 3 })
+		->addAnimation("shout", { 4 })
+		->addAnimation("surprise", { 5 })
+		->addAnimation("sad", { 6 });
 
 	// Maps
 	textureManager_->add("Maps-FirstBattle", "../images/Maps/FirstBattle.png", 1, 1);
@@ -83,7 +90,6 @@ Game::~Game()
 	SDL_DestroyWindow(window_);
 	SDL_Quit();
 
-	delete textureManager_;
 	delete state_;
 	delete stateMachine;
 }

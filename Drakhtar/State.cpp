@@ -45,11 +45,22 @@ void State::run()
 	// → Run all the pending events of this tick from the stack
 	// → Destroy all the elements that are pending to destroy
 	// Once all tasks are done, exit loop, perform cleanup, and finish
+
+	uint lastTick = SDL_GetTicks();
+	uint elapsedTicks = 0;
+	uint requiredTicks = 1000 / ANIMATION_TICKS_PER_SECOND;
 	while (!_exit)
 	{
 		_create();
 		_handleEvents();
 		_update();
+
+		elapsedTicks = SDL_GetTicks() - lastTick;
+		if (elapsedTicks >= requiredTicks)
+		{
+			lastTick += elapsedTicks;
+			TextureManager::getInstance()->tick();
+		}
 		_afterUpdate();
 		_render();
 		_events();
