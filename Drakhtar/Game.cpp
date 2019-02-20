@@ -51,8 +51,7 @@ Game::Game()
 	textureManager_->add("Portraits-Narrator", "../images/Portraits/Narrator.png", 1, 1);
 	textureManager_->add("Portraits-SoldierEnemy", "../images/Portraits/SoldierEnemy.png", 1, 1);
 	textureManager_->add("Portraits-Thassa", "../images/Portraits/Thassa.png", 3, 3)
-		// ->addAnimation("default", { 0 })
-		->addAnimation("default", { 4, 5 })
+		->addAnimation("default", { 0 })
 		->addAnimation("angry", { 1 })
 		->addAnimation("pray", { 2 })
 		->addAnimation("courage", { 3 })
