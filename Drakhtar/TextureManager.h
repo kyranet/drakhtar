@@ -21,9 +21,10 @@ public:
 	ushort columns;
 	ushort rows;
 	vector<AnimationTextureInfo> animations;
-	void addAnimation(string name, vector<ushort> frames)
+	TextureInfo* addAnimation(string name, vector<ushort> frames)
 	{
 		animations.push_back({ name, frames });
+		return this;
 	}
 };
 
