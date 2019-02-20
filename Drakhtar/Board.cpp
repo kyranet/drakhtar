@@ -27,6 +27,7 @@ Board::Board(Texture* cellTexture, int r, int c, float cellSize)
 	}
 }
 
+
 Board::~Board() {
 	if (board != nullptr) {
 		for (int r = 0; r < rows; r++) {
@@ -115,6 +116,14 @@ Vector2D<int> Board::getCellIndexFromCoordinates(Vector2D<int> coordinates) {
 		int x = (int)floor((coordinates.getX() - marginX) / cellSize);
 		int y = (int)floor((coordinates.getY() - marginY) / cellSize);
 		return Vector2D<int>(x, y);
+	}
+}
+
+void Board::handleEvents(SDL_Event event) {
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < cols; j++) {
+			board[i][j]->handleEvents(event);
+		}
 	}
 }
 
