@@ -4,11 +4,16 @@
 Game::Game()
 	: window_(nullptr), renderer_(nullptr)
 {
-	SDL_Init(SDL_INIT_EVERYTHING);
-	
-	if (TTF_Init() == -1)
+	// TODO: Add audio support: SDL_INIT_EVENTS | SDL_INIT_AUDIO
+	if (SDL_Init(SDL_INIT_EVENTS) != 0)
 	{
-		string message = string("Error loading TTF.\nReason: ") + TTF_GetError();
+		string message = string("Error initializing SDL.\nReason: ") + SDL_GetError();
+		throw new SDLError(message);
+	}
+	
+	if (TTF_Init() != 0)
+	{
+		string message = string("Error initializing TTF.\nReason: ") + TTF_GetError();
 		throw new SDLError(message);
 	}
 
