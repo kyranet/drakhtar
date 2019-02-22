@@ -83,6 +83,7 @@
     <ClCompile Include="Text.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="TurnBar.cpp" />
     <ClCompile Include="Unit.cpp" />
     <ClCompile Include="Vector2D.cpp" />
   </ItemGroup>
@@ -108,6 +109,7 @@
     <ClInclude Include="Text.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureManager.h" />
+    <ClInclude Include="TurnBar.h" />
     <ClInclude Include="Unit.h" />
     <ClInclude Include="Vector2D.h" />
   </ItemGroup>

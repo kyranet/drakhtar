@@ -99,6 +99,9 @@
     <ClCompile Include="TextureManager.cpp">
       <Filter>Archivos de código fuente\Managers</Filter>
     </ClCompile>
+    <ClCompile Include="TurnBar.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -169,6 +172,9 @@
     </ClInclude>
     <ClInclude Include="TextureManager.h">
       <Filter>Archivos de encabezado\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="TurnBar.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
