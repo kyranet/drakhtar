@@ -31,6 +31,9 @@ void DialogScene::handleEvents(SDL_Event event)
 		case SDLK_e:
 			nextDialog();
 			break;
+		case SDLK_s:
+			endOfDialog();
+			break;
 		}
 	}
 }
