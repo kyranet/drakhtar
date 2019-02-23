@@ -14,7 +14,7 @@ Dialog::Dialog(Game* game, ifstream& file, Font* textFont, SDL_Rect dialogRect):
 	textColor.a = 1;
 
 	characterNameSprite = new Text(game->getRenderer(), textFont, Vector2D<int>(dialogRect_.x + 600, dialogRect_.y + 400), textColor, characterName);
-	dialogTextSprite = new Text(game->getRenderer(), textFont, Vector2D<int>(dialogRect_.x + 120, dialogRect_.y + 450), textColor, dialogText);
+	dialogTextSprite = new Text(game->getRenderer(), textFont, Vector2D<int>(dialogRect_.x + 375, dialogRect_.y + 480), textColor, dialogText);
 }
 
 
