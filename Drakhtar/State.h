@@ -7,6 +7,7 @@
 #include "Game.h"
 #include "DialogScene.h"
 #include "Unit.h"
+#include "Button.h"
 
 using namespace std;
 
@@ -21,6 +22,7 @@ private:
 	list<GameObject*> pendingOnDestroy_;
 	Game* game_ = nullptr;
 protected:
+	Button *Prueba;
 	SDL_Renderer *renderer_ = nullptr;
 	virtual void _preload();
 	virtual void _create();
@@ -31,11 +33,13 @@ protected:
 	virtual void _events();
 	virtual void _destroy();
 	virtual void _end() {};
+	void boton() { cout << "boton"; }
 public:
 	State(Game* game, SDL_Renderer* renderer);
 	virtual ~State();
 	virtual void run();
 	virtual void addGameObject(GameObject* gameObject);
 	virtual void removeGameObject(GameObject* gameObject);
+	static void startGame(Game* game);
 };
 

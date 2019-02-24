@@ -9,6 +9,7 @@
 #include "Constants.h"
 #include "TextureManager.h"
 
+
 typedef unsigned int uint;
 
 class State;

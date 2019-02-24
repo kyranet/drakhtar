@@ -2,22 +2,28 @@
 
 #include "checkML.h"
 #include <functional>
-#include "Text.h"
-#include "Game.h"
+#include "Texture.h"
+#include "GameObject.h"
 
-class Button : public Text
+class Game;
+
+using CallBackOnClick = void(Game* game);
+
+class Button : public GameObject
 {
-private:
-	SDL_Color _inColor;
-	SDL_Color _outColor;
-	bool _mouseIn = false;
-	function<void()> _callback;
+protected:
+	int x, y, w, h;	
+	Texture* texture;
+	Game *game;
+	CallBackOnClick *cb;
 
 public:
-	Button(Font * font, int x, int y, int width, int height,
-		SDL_Color inColor, SDL_Color outColor, string text, function<void()> callback)
-		: Text(renderer, font, (x, y), outColor, text), _inColor(inColor), _outColor(outColor), _callback(callback) {};
-	~Button() {};
-	virtual void handleEvents(SDL_Event event);
+	Button(Texture* t, int x, int y, int w, int h, void(*callback)(Game* game), Game* game);
+	~Button(){}
+	
+	void render() {};
+	
+	bool handleEvents(SDL_Event& e);
+	void update() {};
 };
 

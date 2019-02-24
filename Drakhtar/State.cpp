@@ -37,6 +37,10 @@ void State::_preload()
 	gameObjects_.push_back(exampleDialog);
 }
 
+void State::startGame(Game* game) {
+	cout << "Boton on";
+}
+
 void State::run()
 {
 	// Preload the state before running
