@@ -2,8 +2,25 @@
 
 
 
-TurnBar::TurnBar()
+TurnBar::TurnBar(list<Unit*> allyList, list<Unit*> enemyList)
 {
+	auto allyIt = allyList.begin();
+	auto enemyIt = enemyList.begin();
+	int unitCount = 0;
+
+	while (allyIt != allyList.end() && enemyIt != enemyList.end())
+	{
+		if (unitCount % 2 == 0 && allyIt != allyList.end())
+		{
+			unitTurnBar.push(*allyIt);
+			allyIt++;
+		}
+		else if(enemyIt != enemyList.end())
+		{
+			unitTurnBar.push(*enemyIt);
+			enemyIt++;
+		}
+	}
 }
 
 
