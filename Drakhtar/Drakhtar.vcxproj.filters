@@ -117,6 +117,9 @@
     <ClCompile Include="Button.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
+    <ClCompile Include="GameState.cpp">
+      <Filter>Archivos de código fuente\States</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -205,6 +208,9 @@
     </ClInclude>
     <ClInclude Include="Button.h">
       <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState.h">
+      <Filter>Archivos de encabezado\States</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

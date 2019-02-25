@@ -3,19 +3,19 @@
 #include <vector>
 #include "State.h"
 using namespace std;
-class State;
+class GameState;
 class GameStateMachine
 {
 protected:
-	stack <State*> stateStack;
-	State * currentState = nullptr;
+	stack <GameState*> stateStack;
+	GameState * currentState = nullptr;
 
 public:
 	GameStateMachine();
 	virtual ~GameStateMachine(); 
-	void pushState(State* state);
-	void changeState(State* state);
+	void pushState(GameState* state);
+	void changeState(GameState* state);
 	void popState();
-	State* getCurrentState();
+	GameState* getCurrentState();
 };
 

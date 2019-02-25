@@ -4,7 +4,7 @@
 #include "Controller.h"
 
 State::State(Game* game, SDL_Renderer* renderer)
-	: game_(game), renderer_(renderer)
+	: GameState(game), game_(game), renderer_(renderer)
 {
 }
 
