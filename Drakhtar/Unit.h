@@ -22,7 +22,7 @@ private:
 	Team* team_;
 	Box* box_;
 public:
-	Unit(Texture* texture, Box * box, int attack, int defense, int health, int speed, int attackRange, int moveRange);
+	Unit(Texture* texture, Box * box, int attack, int health, int speed, int attackRange, int moveRange);
 	virtual ~Unit() {};
 	int getAttack() const { return attack_; }
 	int getDefense() const { return defense_; }
