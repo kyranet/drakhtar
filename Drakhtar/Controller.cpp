@@ -1,13 +1,10 @@
 #include "Controller.h"
 #include <iostream>
 
-void Controller::run(SDL_Event event)
-{
+void Controller::run(SDL_Event event) {
 	SDL_Point p= { event.motion.x, event.motion.y };
-	switch (event.type)
-	{
+	switch (event.type) {
 	case SDL_MOUSEMOTION:
-		
 		//std::cout << event.motion.x << " " << event.motion.y << endl;
 		//onHover(SDL_PointInRect(&p,&gameObject_->getRect()));		
 	case SDL_MOUSEBUTTONDOWN:
@@ -20,22 +17,21 @@ void Controller::run(SDL_Event event)
 	}
 }
 
-void Controller::onHover(bool onTop)	
-{
+void Controller::onHover(bool onTop) {
 	// ilumina
 	std::cout << "clickado2 ";
 }
 
-void Controller::onClick(bool onTop, SDL_Point p) // cambiar el nombre de este metodo para su funcion, mas adelante
-{
+// cambiar el nombre de este metodo para su funcion, mas adelante
+void Controller::onClick(bool onTop, SDL_Point p) {
 	if (onTop) // if true, mouse position = gameobject position
 	{
 		Box * box = static_cast<Box*>(gameObject_);
 		if (box->getContent() == nullptr) {
-			// Check movement range first
+			// TODO Check movement range here
 			std::cout << "Moving to cell (" << box->getIndex().getX() << ", " << box->getIndex().getY() << ")" << endl;
 		} else {
-			/*
+			/* TODO
 			if(occupied by an ally) {
 				// Do nothing unless de unit is a healer
 			} else if(occupied by an enemy) {
@@ -44,8 +40,5 @@ void Controller::onClick(bool onTop, SDL_Point p) // cambiar el nombre de este m
 			*/
 			std::cout << "Cell (" << box->getIndex().getX() << ", " << box->getIndex().getY() << ") is occupied" << endl;
 		}
-		//idea para implementacion, hacer un metodo en unit o board? para que se seleccione la unidad clickada, o deseleccionar si se vuelve a clickar en ella
-		//una vez seleccionada, podremos moverlo mirando el mousemotion y cuando clicka en una casilla se mira si se tiene una unidad seleccionada y si da true, mirara si la unidad puede moverse,
-		// tambien comprueba si donde clicka hay obstaculo o un enemigo o aliado, en caso de curar a una unidad
 	}
 }
