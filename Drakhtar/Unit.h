@@ -11,8 +11,8 @@ class Unit : public GameObject
 private:
 	int attack_;
 	int defense_;
-	int health_;
 	int maxHealth_;
+	int health_;
 	int attackRange_;
 	int moveRange_;
 	int speed_;
@@ -22,34 +22,24 @@ private:
 	Team* team_;
 	Box* box_;
 public:
-	Unit() : GameObject(nullptr, Vector2D<int>(), Vector2D<int>()) {}
-	Unit(Texture* texture, Vector2D<int> pos, Vector2D<int> size, int attack, int defense, int maxHealth, int speed, int attackRange, int moveRange)
-		: GameObject(texture, pos, size), attack_(attack), defense_(defense), maxHealth_(maxHealth), health_(maxHealth), speed_(speed), attackRange_(attackRange), moveRange_(moveRange) {}
+	Unit(Texture* texture, Box * box, int attack, int defense, int health, int speed, int attackRange, int moveRange);
 	virtual ~Unit() {};
-	virtual int getAttack() const { return attack_; }
-	virtual int getDefense() const { return defense_; }
+	int getAttack() const { return attack_; }
+	int getDefense() const { return defense_; }
 	int getAttackRange() const { return attackRange_; }
 	int getMoveRange() const { return moveRange_; }
+	int getMaxHealth() const { return maxHealth_; }
 	int getHealth() const { return health_; }
-	virtual int getMaxHealth() const { return maxHealth_; }
 	bool getMoving() const { return moving_; }
 	bool getMoved() const { return moved_; }
 	bool getSpeed() const { return speed_; }
 	Team* getTeam() const { return team_; }
 	Vector2D<int> getBoxPosition() const { return boxPosition_; }
 	void moveTowards(Vector2D<int> pos);
-
-	void setAttack(int attack);
-	void setDefense(int defense);
-	void setAttackRange(int attackRange);
-	void setMoveRange(int moveRange);
-	void setMaxHealth(int health);
-	void setSpeed(int speed);
 	void setMoving(bool moving);
 	void setMoved(bool moved);
 	void setBoxPosition(Vector2D<int> position);
 	void setTeam(Team* team);
 	void moveToBox(Box * box);
-	virtual void loseHealth(int healt);
+	void loseHealth(int health);
 };
-

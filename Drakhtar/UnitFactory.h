@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include "Battalion.h"
+#include "Box.h"
 
 using namespace std;
 
@@ -11,10 +12,10 @@ private:
 public:
 	UnitFactory() {};
 	~UnitFactory();
-	Unit * newSoldier(Team * team);
-	Unit * newArcher(Team * team);
-	Unit * newKnight(Team * team);
-	Unit * newWizard(Team * team);
-	Unit * newMonster(Team * team);
+	Unit * newSoldier(Team * team, Box * box);
+	Unit * newArcher(Team * team, Box * box);
+	Unit * newKnight(Team * team, Box * box);
+	Unit * newWizard(Team * team, Box * box);
+	Unit * newMonster(Team * team, Box * box);
 };
 

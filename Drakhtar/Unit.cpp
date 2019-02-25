@@ -17,38 +17,7 @@ void Unit::moveTowards(Vector2D<int> pos) {
 	// TODO: Maybe Unit->Team->Board?
 }
 
-void Unit::setAttack(int attack)
-{
-	attack_ = attack;
-}
-
-void Unit::setDefense(int defense)
-{
-	defense_ = defense;
-}
-
-void Unit::setAttackRange(int attackRange)
-{
-	attackRange_ = attackRange;
-}
-
-void Unit::setMoveRange(int moveRange)
-{
-	moveRange_ = moveRange;
-}
-
-void Unit::setMaxHealth(int health)
-{
-	health_ = maxHealth_ = health;
-}
-
-void Unit::setSpeed(int speed)
-{
-	speed_ = speed;
-}
-
-void Unit::setMoving(bool moving)
-{
+void Unit::setMoving(bool moving) {
 	moving_ = moving;
 }
 
@@ -68,14 +37,21 @@ void Unit::setBoxPosition(Vector2D<int> position) {
 	setMoved(true);
 }
 
-void Unit::setTeam(Team* team) {
+void Unit::setTeam(Team* team)
+{
 	team_ = team;
 }
 
-void Unit::moveToBox(Box * newBox) {
+void Unit::moveToBox(Box * newBox)
+{
+	// If it's not the unit's turn, cancel any action
+	if (!moving_) return;
+
 	box_->setContent(nullptr);
 	pos_ = Vector2D<int>(newBox->getRect().x, newBox->getRect().y);
 	newBox->setContent(this);
+	this->setMoved(true);
+	this->setMoving(false);
 }
 
 void Unit::loseHealth(int health)

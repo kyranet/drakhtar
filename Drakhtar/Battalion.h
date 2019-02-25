@@ -7,8 +7,8 @@ private:
 	int battalionSize_;
 
 public:
-	Battalion(Texture* texture, Vector2D<int> pos, Vector2D<int> size, int attack, int defense, int maxHealth, int speed, int attackRange, int moveRange, int battalionSize)
-		: Unit(texture, pos, size, attack, defense, maxHealth, speed, attackRange, moveRange), battalionSize_(battalionSize) {}
+	Battalion(Texture* texture, Box * box, int attack, int defense, int health, int speed, int attackRange, int moveRange, int battalionSize)
+		: Unit(texture, box, attack, defense, health, speed, attackRange, moveRange), battalionSize_(battalionSize) {}
 	virtual ~Battalion();
 
 	int getBattalionSize() const { return battalionSize_; }

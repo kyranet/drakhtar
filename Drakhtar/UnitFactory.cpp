@@ -7,77 +7,78 @@ UnitFactory::~UnitFactory()
 {
 }
 
-Unit * UnitFactory::newSoldier(Team * team)
+Unit * UnitFactory::newSoldier(Team * team, Box * box)
 {
-	int soldierAttack = 0;
-	int soldierDefense = 0;
-	int soldierHealth = 0;
+	int soldierAttack = 5;
+	int soldierDefense = 4;
+	int soldierHealth = 10;
 	int soldierAttackRange = 1;
 	int soldierMoveRange = 3;
-	int soldierSpeed = 0;
-	Unit * unit = (Unit*) new Battalion(&Texture(), soldierAttack, soldierDefense, soldierHealth, soldierSpeed, soldierAttackRange, soldierMoveRange, 0);
+	int soldierSpeed = 3;
+
+	Unit * unit = (Unit*) new Battalion(&Texture(), box, soldierAttack, soldierDefense, soldierHealth, soldierSpeed, soldierAttackRange, soldierMoveRange, 0);
 	unit->setTeam(team);
 	return unit;
 
 	
 }
 
-Unit * UnitFactory::newArcher(Team * team)
+Unit * UnitFactory::newArcher(Team * team, Box * box)
 {
-	int archerAttack = 0;
-	int archerDefense = 0;
-	int archerHealth = 0;
+	int archerAttack = 6;
+	int archerDefense = 2;
+	int archerHealth = 10;
 	int archerAttackRange = 3;
 	int archerMoveRange = 1;
-	int archerSpeed = 0;
+	int archerSpeed = 3;
 
 
-	Unit * unit = (Unit*) new Battalion(&Texture(), archerAttack, archerDefense, archerHealth, archerSpeed, archerAttackRange, archerMoveRange, 0);
+	Unit * unit = new Battalion(&Texture(), box, archerAttack, archerDefense, archerHealth, archerSpeed, archerAttackRange, archerMoveRange, 0);
 	unit->setTeam(team);
 	return unit;
 }
 
-Unit * UnitFactory::newKnight(Team * team)
+Unit * UnitFactory::newKnight(Team * team, Box * box)
 {
-	int knightAttack = 0;
-	int knightDefense = 0;
-	int knightHealth = 0;
+	int knightAttack = 8;
+	int knightDefense = 7;
+	int knightHealth = 15;
 	int knightAttackRange = 1;
 	int knightMoveRange = 5;
-	int knightSpeed = 0;
+	int knightSpeed = 5;
 
 
-	Unit * unit = (Unit*) new Battalion(&Texture(), knightAttack, knightDefense, knightHealth, knightSpeed, knightAttackRange, knightMoveRange, 0);
+	Unit * unit = new Battalion(&Texture(), box, knightAttack, knightDefense, knightHealth, knightSpeed, knightAttackRange, knightMoveRange, 0);
 	unit->setTeam(team);
 	return unit;
 }
 
-Unit * UnitFactory::newWizard(Team * team)
+Unit * UnitFactory::newWizard(Team * team, Box * box)
 {
-	int wizardAttack = 0;
-	int wizardDefense = 0;
-	int wizardHealth = 0;
+	int wizardAttack = 4;
+	int wizardDefense = 4;
+	int wizardHealth = 7;
 	int wizardAttackRange = 2;
 	int wizardMoveRange = 1;
-	int wizardSpeed = 0;
+	int wizardSpeed = 2;
 
 
-	Unit * unit = (Unit*) new Battalion(&Texture(), wizardAttack, wizardDefense, wizardHealth, wizardSpeed, wizardAttackRange, wizardMoveRange, 0);
+	Unit * unit = new Battalion(&Texture(), box, wizardAttack, wizardDefense, wizardHealth, wizardSpeed, wizardAttackRange, wizardMoveRange, 0);
 	unit->setTeam(team);
 	return unit;
 }
 
-Unit * UnitFactory::newMonster(Team * team)
+Unit * UnitFactory::newMonster(Team * team, Box * box)
 {
-	int monsterAttack = 0;
-	int monsterDefense = 0;
-	int monsterHealth = 0;
+	int monsterAttack = 9;
+	int monsterDefense = 10;
+	int monsterHealth = 15;
 	int monsterAttackRange = 1;
 	int monsterMoveRange = 5;
-	int monsterSpeed = 0;
+	int monsterSpeed = 1;
 
 
-	Unit * unit = (Unit*) new Battalion(&Texture(), monsterAttack, monsterDefense, monsterHealth, monsterSpeed, monsterAttackRange, monsterMoveRange, 0);
+	Unit * unit =  new Battalion(&Texture(), box, monsterAttack, monsterDefense, monsterHealth, monsterSpeed, monsterAttackRange, monsterMoveRange, 0);
 	unit->setTeam(team);
 	return unit;
 }
