@@ -20,6 +20,7 @@ TurnBar::TurnBar(list<Unit*> allyList, list<Unit*> enemyList)
 			unitTurnBar.push(*enemyIt);
 			enemyIt++;
 		}
+		unitCount++;
 	}
 }
 
