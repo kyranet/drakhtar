@@ -4,8 +4,7 @@
 Game::Game()
 	: window_(nullptr), renderer_(nullptr)
 {
-	// TODO: Add audio support: SDL_INIT_EVENTS | SDL_INIT_AUDIO
-	if (SDL_Init(SDL_INIT_EVENTS | SDL_INIT_TIMER) != 0)
+	if (SDL_Init(SDL_INIT_EVENTS | SDL_INIT_TIMER | SDL_INIT_AUDIO) != 0)
 	{
 		string message = string("Error initializing SDL.\nReason: ") + SDL_GetError();
 		throw new SDLError(message);
@@ -14,6 +13,12 @@ Game::Game()
 	if (TTF_Init() != 0)
 	{
 		string message = string("Error initializing TTF.\nReason: ") + TTF_GetError();
+		throw new SDLError(message);
+	}
+
+	if (Mix_Init(MIX_INIT_MP3 | MIX_INIT_OGG) == 0)
+	{
+		string message = string("Error initializing MIX.\nReason: ") + Mix_GetError();
 		throw new SDLError(message);
 	}
 
@@ -76,7 +81,6 @@ Game::Game()
 	stateMachine = new GameStateMachine();
 	state_ = new State(this, renderer_); 
 	stateMachine->pushState(state_);
-
 }
 
 void Game::run()
@@ -88,10 +92,13 @@ Game::~Game()
 {
 	SDL_DestroyRenderer(renderer_);
 	SDL_DestroyWindow(window_);
-	SDL_Quit();
 
 	delete state_;
 	delete stateMachine;
+
+	SDL_Quit();
+	TTF_Quit();
+	Mix_Quit();
 }
 
 SDL_Renderer* Game::getRenderer()

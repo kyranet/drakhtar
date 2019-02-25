@@ -2,6 +2,7 @@
 
 #include "SDL.h"
 #include "SDL_ttf.h"
+#include "SDL_mixer.h"
 #include "State.h"
 #include "Texture.h"
 #include "GameStateMachine.h"
