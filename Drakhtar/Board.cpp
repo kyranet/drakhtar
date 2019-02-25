@@ -118,38 +118,10 @@ Vector2D<int> Board::getCellIndexFromCoordinates(Vector2D<int> coordinates) {
 	}
 }
 
-/*
-Box ** Board::findPath(Box * start, Box * end, int steps) {
-	Box** path = new Box*[steps];
-
-	// Determines axis direction: true positive, false negative
-	bool dirX, dirY;
-	if (start->getIndex().x - end->getIndex().x < 0) { dirX = true; }
-	if (start->getIndex().x - end->getIndex().x > 0) { dirX = false; }
-	if (start->getIndex().y - end->getIndex().y < 0) { dirY = true; }
-	if (start->getIndex().y - end->getIndex().y > 0) { dirY = false; }
-
-	step(start, dirX, dirY, path, 0);
-
-	return path;
-}
-
-void Board::step(Box * start, bool dirX, bool dirY, Box **& path, int i) {
-	Box* nextStep;
-	vector2d startIndex = start->getIndex();
-
-	// Try right
-	if (dirX && startIndex.x + 1 < cols) {
-		if (getBoxAt(startIndex.x + 1, startIndex.y)->getContent() == nullptr) {
-			nextStep = getBoxAt(startIndex.x + 1, startIndex.y);
-		}
-	}
-
-	// Try left
-	if (!dirX && startIndex.x + 1 < cols) {
-		if (getBoxAt(startIndex.x + 1, startIndex.y)->getContent() == nullptr) {
-			nextStep = getBoxAt(startIndex.x + 1, startIndex.y);
+void Board::handleEvents(SDL_Event event) {
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < cols; j++) {
+			board[i][j]->handleEvents(event);
 		}
 	}
 }
-*/

@@ -18,8 +18,7 @@ public:
 	Box* getBoxAt(int x, int y);
 	int** getCellsInRange(Box box, int range);
 	Vector2D<int> getCellIndexFromCoordinates(Vector2D<int> coordinates);
-	//Box** findPath(Box* start, Box* end, int steps);
-	//void step(Box * start, bool dirX, bool dirY, Box** &path, int i);
+	virtual void handleEvents(SDL_Event event);
 
 	const enum objectType {
 		outOfBoard,
