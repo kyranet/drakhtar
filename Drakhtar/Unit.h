@@ -10,6 +10,7 @@ class Unit : public GameObject
 {
 private:
 	int attack_;
+	int maxHealth_;
 	int health_;
 	int attackRange_;
 	int moveRange_;
@@ -25,6 +26,7 @@ public:
 	int getAttack() const { return attack_; }
 	int getAttackRange() const { return attackRange_; }
 	int getMoveRange() const { return moveRange_; }
+	int getMaxHealth() const { return maxHealth_; }
 	int getHealth() const { return health_; }
 	bool getMoving() const { return moving_; }
 	bool getMoved() const { return moved_; }
@@ -34,8 +36,7 @@ public:
 	void moveTowards(Vector2D<int> pos);
 	void setMoving(bool moving);
 	void setMoved(bool moved);
-	void setBoxPosition(Vector2D<int> position);
 	void setTeam(Team* team);
 	void moveToBox(Box * box);
+	void loseHealth(int health);
 };
-

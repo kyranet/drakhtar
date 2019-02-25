@@ -25,21 +25,25 @@ void Unit::setMoved(bool moved) {
 	moved_ = moved;
 }
 
-void Unit::setBoxPosition(Vector2D<int> position) {
-	boxPosition_ = position;
-	// FIXME: Set the GameObject's position by calculating
-	// the coordinates in pixels of the box, or maybe
-	// make this method take two arguments and pass both
-	// together.
-	setMoved(true);
-}
-
-void Unit::setTeam(Team* team) {
+void Unit::setTeam(Team* team)
+{
 	team_ = team;
 }
 
-void Unit::moveToBox(Box * newBox) {
+void Unit::moveToBox(Box * newBox)
+{
+	// If it's not the unit's turn, cancel any action
+	if (!moving_) return;
+
 	box_->setContent(nullptr);
 	pos_ = Vector2D<int>(newBox->getRect().x, newBox->getRect().y);
 	newBox->setContent(this);
+	this->setMoved(true);
+	this->setMoving(false);
+}
+
+void Unit::loseHealth(int health)
+{
+	health_ -= health;
+	// TODO: Send "Unit killed" event if health_ <= 0;
 }
