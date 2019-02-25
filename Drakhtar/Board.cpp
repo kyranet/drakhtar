@@ -27,7 +27,6 @@ Board::Board(Texture* cellTexture, int r, int c, float cellSize)
 	}
 }
 
-
 Board::~Board() {
 	if (board != nullptr) {
 		for (int r = 0; r < rows; r++) {
@@ -126,39 +125,3 @@ void Board::handleEvents(SDL_Event event) {
 		}
 	}
 }
-
-/*
-Box ** Board::findPath(Box * start, Box * end, int steps) {
-	Box** path = new Box*[steps];
-
-	// Determines axis direction: true positive, false negative
-	bool dirX, dirY;
-	if (start->getIndex().x - end->getIndex().x < 0) { dirX = true; }
-	if (start->getIndex().x - end->getIndex().x > 0) { dirX = false; }
-	if (start->getIndex().y - end->getIndex().y < 0) { dirY = true; }
-	if (start->getIndex().y - end->getIndex().y > 0) { dirY = false; }
-
-	step(start, dirX, dirY, path, 0);
-
-	return path;
-}
-
-void Board::step(Box * start, bool dirX, bool dirY, Box **& path, int i) {
-	Box* nextStep;
-	vector2d startIndex = start->getIndex();
-
-	// Try right
-	if (dirX && startIndex.x + 1 < cols) {
-		if (getBoxAt(startIndex.x + 1, startIndex.y)->getContent() == nullptr) {
-			nextStep = getBoxAt(startIndex.x + 1, startIndex.y);
-		}
-	}
-
-	// Try left
-	if (!dirX && startIndex.x + 1 < cols) {
-		if (getBoxAt(startIndex.x + 1, startIndex.y)->getContent() == nullptr) {
-			nextStep = getBoxAt(startIndex.x + 1, startIndex.y);
-		}
-	}
-}
-*/
