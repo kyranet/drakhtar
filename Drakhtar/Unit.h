@@ -36,7 +36,6 @@ public:
 	void moveTowards(Vector2D<int> pos);
 	void setMoving(bool moving);
 	void setMoved(bool moved);
-	void setBoxPosition(Vector2D<int> position);
 	void setTeam(Team* team);
 	void moveToBox(Box * box);
 	void loseHealth(int health);

@@ -48,9 +48,3 @@ void GameObject::destroy()
 {
 	Game::currentState()->removeGameObject(this);
 }
-
-void GameObject::setPos(int x, int y)
-{
-	pos_.setX(x);
-	pos_.setY(y);
-}
