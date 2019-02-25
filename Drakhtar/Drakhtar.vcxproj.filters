@@ -102,6 +102,12 @@
     <ClCompile Include="TurnBar.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
+    <ClCompile Include="AudioManager.cpp">
+      <Filter>Archivos de código fuente\Managers</Filter>
+    </ClCompile>
+    <ClCompile Include="SDLAudioManager.cpp">
+      <Filter>Archivos de código fuente\Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -175,6 +181,12 @@
     </ClInclude>
     <ClInclude Include="TurnBar.h">
       <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioManager.h">
+      <Filter>Archivos de encabezado\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="SDLAudioManager.h">
+      <Filter>Archivos de encabezado\Managers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
