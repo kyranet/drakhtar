@@ -15,7 +15,6 @@ public:
 	void setBattalionSize(int battalionSize);
 
 	virtual int getAttack() const;
-	virtual int getDefense() const;
 	virtual int getMaxHealth() const;
 
 	virtual void loseHealth(int health);

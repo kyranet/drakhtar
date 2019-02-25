@@ -16,11 +16,6 @@ int Battalion::getAttack() const
 	return Unit::getAttack() * battalionSize_;
 }
 
-int Battalion::getDefense() const
-{
-	return Unit::getDefense() * battalionSize_;
-}
-
 int Battalion::getMaxHealth() const
 {
 	return Unit::getMaxHealth() * battalionSize_;

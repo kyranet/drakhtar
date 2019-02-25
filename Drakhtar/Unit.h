@@ -10,7 +10,6 @@ class Unit : public GameObject
 {
 private:
 	int attack_;
-	int defense_;
 	int maxHealth_;
 	int health_;
 	int attackRange_;
@@ -25,7 +24,6 @@ public:
 	Unit(Texture* texture, Box * box, int attack, int health, int speed, int attackRange, int moveRange);
 	virtual ~Unit() {};
 	int getAttack() const { return attack_; }
-	int getDefense() const { return defense_; }
 	int getAttackRange() const { return attackRange_; }
 	int getMoveRange() const { return moveRange_; }
 	int getMaxHealth() const { return maxHealth_; }
