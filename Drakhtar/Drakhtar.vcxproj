@@ -68,6 +68,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="Controller.cpp" />
@@ -78,6 +79,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameStateMachine.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SDLAudioManager.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="Team.cpp" />
     <ClCompile Include="Text.cpp" />
@@ -88,6 +90,7 @@
     <ClCompile Include="Vector2D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AudioManager.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="checkML.h" />
@@ -102,6 +105,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameStateMachine.h" />
     <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="SDLAudioManager.h" />
     <ClInclude Include="SDLError.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="Team.h" />
