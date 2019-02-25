@@ -34,8 +34,7 @@ void State::_preload()
 	gameObjects_.push_back(test2);
 
 	// Dialog
-	auto exampleDialog = new DialogScene(game_, "dialog1_start", "Retron2000");
-	gameObjects_.push_back(exampleDialog);
+	exampleDialog_ = new DialogScene(game_, "dialog1_start", "Retron2000");
 }
 
 void State::run()
