@@ -27,7 +27,6 @@ Board::Board(Texture* cellTexture, int r, int c, float cellSize)
 	}
 }
 
-
 Board::~Board() {
 	if (board != nullptr) {
 		for (int r = 0; r < rows; r++) {
