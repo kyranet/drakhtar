@@ -7,7 +7,7 @@
 #include "Game.h"
 #include "DialogScene.h"
 #include "Unit.h"
-#include "Button.h"
+//#include "Button.h"
 
 using namespace std;
 
@@ -22,7 +22,7 @@ private:
 	list<GameObject*> pendingOnDestroy_;
 	Game* game_ = nullptr;
 protected:
-	Button *Prueba;
+	//Button *Prueba;
 	SDL_Renderer *renderer_ = nullptr;
 	virtual void _preload();
 	virtual void _create();
