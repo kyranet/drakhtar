@@ -83,6 +83,7 @@
     <ClCompile Include="GameStateMachine.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SDLAudioManager.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="Team.cpp" />
     <ClCompile Include="Text.cpp" />
@@ -111,6 +112,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameState.h" />
     <ClInclude Include="GameStateMachine.h" />
+    <ClInclude Include="MainMenu.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SDLAudioManager.h" />
     <ClInclude Include="SDLError.h" />

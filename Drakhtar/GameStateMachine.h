@@ -2,6 +2,7 @@
 #include <stack>
 #include <vector>
 #include "State.h"
+#include "MainMenu.h"
 using namespace std;
 class GameState;
 class GameStateMachine

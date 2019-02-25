@@ -79,7 +79,7 @@ Game::Game()
 		throw new SDLError("Error loading the SDL window or renderer");
 
 	stateMachine = new GameStateMachine();
-	stateMachine->pushState(new State(this,renderer_));
+	stateMachine->pushState(new MainMenu(this, renderer_));
 }
 
 void Game::run()
