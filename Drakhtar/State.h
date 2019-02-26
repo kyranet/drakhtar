@@ -23,10 +23,11 @@ protected:
 	Button *Prueba;
 	//SDL_Renderer *renderer_ = nullptr;
 	void _preload();
+	void _handleEvents(SDL_Event& e);
 	/*virtual void _create();
 	virtual void _render() const;
 	virtual void _update();
-	virtual void _handleEvents();
+	
 	virtual void _afterUpdate();
 	virtual void _events();
 	virtual void _destroy();

@@ -43,6 +43,22 @@ void State::startGame(Game* game) {
 	cout << "Boton on";
 }
 
+void State::_handleEvents(SDL_Event& e)
+{
+	GameState::_handleEvents(e);
+	while (SDL_PollEvent(&e))
+	{
+		switch (e.key.keysym.sym )
+		{
+		case  SDL_KEYDOWN:
+			if(SDLK_ESCAPE)
+			cout << "Pasar";
+			else if(SDLK_s) cout << "save";
+			break;
+		}
+	}	
+}
+
 /*void State::_create()
 {
 	
@@ -50,26 +66,7 @@ void State::startGame(Game* game) {
 
 
 void State::_update() {};
-void State::_handleEvents()
-{
-	// Listen to SDL events
-	SDL_Event event;
-	while (!_exit && SDL_PollEvent(&event))
-	{
-		// If the event type is quit, change state to GAMEOVER for cleanup
-		if (event.type == SDL_QUIT)
-		{
-			_exit = true;
-			// TODO: Change State
-		}
 
-		// For each game object, run the event handler
-		for (auto gameObject : gameObjects_)
-			gameObject->handleEvents(event);
-
-		Prueba->handleEvents(event);
-	}
-}
 
 void State::_afterUpdate() {}
 

@@ -26,21 +26,20 @@ void GameState::_update() {
 	
 }
 
-void GameState::_handleEvents() {
+void GameState::_handleEvents(SDL_Event& e) {
 	// Listen to SDL events
-	SDL_Event event;
-	while (!_exit && SDL_PollEvent(&event))
+	while (!_exit && SDL_PollEvent(&e))
 	{
 		// If the event type is quit, change state to GAMEOVER for cleanup
-		if (event.type == SDL_QUIT)
+		if (e.type == SDL_QUIT)
 		{
 			_exit = true;
 			// TODO: Change State
-		}
+		}	
 
 		// For each game object, run the event handler
 		for (auto gameObject : gameObjects_)
-			gameObject->handleEvents(event);
+			gameObject->handleEvents(e);
 	}
 }
 
@@ -103,7 +102,7 @@ void GameState::run() {
 	while (!_exit)
 	{
 		_create();
-		_handleEvents();
+		_handleEvents(event);
 		_update();
 
 		elapsedTicks = SDL_GetTicks() - lastTick;

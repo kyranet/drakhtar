@@ -20,6 +20,7 @@ protected:
 	list<GameObject*> pendingOnDestroy_;
 	Game* game_ = nullptr;
 	SDL_Renderer *renderer_ = nullptr;
+	SDL_Event event;
 
 public:
 	GameState(Game* game,SDL_Renderer* renderer) : game_(game),renderer_(renderer) {};
@@ -31,7 +32,7 @@ public:
 	virtual void _create();
 	virtual void _update();
 	virtual void _render();
-	virtual void _handleEvents();
+	virtual void _handleEvents(SDL_Event& e);
 	virtual void _afterUpdate();
 	virtual void _events();
 	virtual void _destroy();
