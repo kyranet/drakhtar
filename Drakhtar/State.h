@@ -7,6 +7,7 @@
 #include "Game.h"
 #include "DialogScene.h"
 #include "Unit.h"
+#include "TurnBar.h"
 
 using namespace std;
 
