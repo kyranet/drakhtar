@@ -19,10 +19,7 @@ void MainMenu::run()
 	{
 		
 		_handleEvents();
-		_update();
-
-		
-		
+		_update();		
 		_render();
 		
 	}

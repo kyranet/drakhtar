@@ -22,7 +22,8 @@ void State::_preload()
 
 	// Board
 	Board * Tablero = new Board(TextureManager::get("UI-cellFrame"), 8, 12, 50);
-	gameObjects_.push_back(Tablero);
+	gameObjects_.push_back(new GameObject(TextureManager::get("Maps-FirstBattle"), Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2), Vector2D<int>(WIN_WIDTH, WIN_HEIGHT)));
+    gameObjects_.push_back(Tablero);
 	
 	// Test units
 	Box * box = Tablero->getBoxAt(0, 0);
@@ -32,7 +33,8 @@ void State::_preload()
 	gameObjects_.push_back(test);
 	gameObjects_.push_back(test2);
 
-	// Dialog
+	Prueba = new Button(TextureManager::get("Units-Abeizhul"), 200, 200, 200, 200, startGame, game_);
+	gameObjects_.push_back(Prueba);
 	auto exampleDialog = new DialogScene(game_, "dialog1_start", "Retron2000");
 	gameObjects_.push_back(exampleDialog);
 }
@@ -113,6 +115,8 @@ void State::_handleEvents()
 		// For each game object, run the event handler
 		for (auto gameObject : gameObjects_)
 			gameObject->handleEvents(event);
+
+		Prueba->handleEvents(event);
 	}
 }
 
@@ -151,6 +155,5 @@ void State::addGameObject(GameObject* gameObject)
 
 void State::removeGameObject(GameObject* gameObject)
 {
-	pendingOnDestroy_.push_back(gameObject);
-	
+	pendingOnDestroy_.push_back(gameObject);	
 }
