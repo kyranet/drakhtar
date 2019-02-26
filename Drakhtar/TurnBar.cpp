@@ -2,7 +2,7 @@
 
 
 
-TurnBar::TurnBar(list<Unit*> allyList, list<Unit*> enemyList)
+TurnBar::TurnBar(list<Unit*> allyList, list<Unit*> enemyList): GameObject(nullptr, Vector2D<int>(0,0), Vector2D<int>(0, 0))
 {
 	auto allyIt = allyList.begin();
 	auto enemyIt = enemyList.begin();
@@ -12,12 +12,12 @@ TurnBar::TurnBar(list<Unit*> allyList, list<Unit*> enemyList)
 	{
 		if (unitCount % 2 == 0 && allyIt != allyList.end())
 		{
-			unitTurnBar.push(*allyIt);
+			unitTurnBar.push_back(*allyIt);
 			allyIt++;
 		}
 		else if(enemyIt != enemyList.end())
 		{
-			unitTurnBar.push(*enemyIt);
+			unitTurnBar.push_back(*enemyIt);
 			enemyIt++;
 		}
 		unitCount++;
@@ -33,6 +33,14 @@ TurnBar::~TurnBar()
 void TurnBar::advanceTurn()
 {
 	Unit* frontUnit = unitTurnBar.front();
-	unitTurnBar.pop();
-	unitTurnBar.push(frontUnit);
+	unitTurnBar.pop_front();
+	unitTurnBar.push_back(frontUnit);
+}
+
+void TurnBar::render()
+{
+}
+
+void TurnBar::handleEvents(SDL_Event event)
+{
 }

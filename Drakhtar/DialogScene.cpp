@@ -3,6 +3,7 @@
 DialogScene::DialogScene(Game* game, string filename, string fontfile): GameObject(nullptr, Vector2D<int>(0,0), Vector2D<int>(1,1)) // default position and size(adjust it to move DialogScene)
 {
 	dialogBlockSprite = new GameObject(TextureManager::get("UI-dialogueBackground"), Vector2D<int>(getRect().x + WIN_WIDTH - 400, getRect().y + WIN_HEIGHT - 100), Vector2D<int>(getRect().w*600, getRect().h*160));
+	characterBlockSprite = new GameObject(TextureManager::get("UI-dialogueBackground"), Vector2D<int>(getRect().x + WIN_WIDTH - 197, getRect().y + WIN_HEIGHT - 190), Vector2D<int>(getRect().w * 120, getRect().h * 32));
 	textFont = new Font("../fonts/" + fontfile + ".ttf", 12, dialogBlockSprite->getRect().x + 400);
 	readFromFile(game, "../dialog/" + filename + ".txt",+ textFont);
 }
@@ -13,12 +14,15 @@ DialogScene::~DialogScene()
 		delete dialog;
 	delete dialogBlockSprite;
 	dialogBlockSprite = nullptr;
+	delete characterBlockSprite;
+	characterBlockSprite = nullptr;
 	delete textFont;
 	textFont = nullptr;
 }
 
 void DialogScene::render() const
 {
+	characterBlockSprite->render();
 	dialogBlockSprite->render();
 	dialogChain[currentDialogIndex]->render();
 }
