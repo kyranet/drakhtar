@@ -43,6 +43,7 @@ Game::Game()
 	// UI
 	textureManager_->add("UI-cellFrame", "../images/UI/cellFrame.png", 1, 1);
 	textureManager_->add("UI-dialogueBackground", "../images/UI/dialogueBackground.png", 1, 1);
+	textureManager_->add("UI-turnBar", "../images/UI/turnBar.png", 1, 1);
 
 	// Portraits
 	textureManager_->add("Portraits-Archer", "../images/Portraits/Archer.png", 1, 1);

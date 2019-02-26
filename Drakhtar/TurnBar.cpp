@@ -2,7 +2,11 @@
 
 
 
-TurnBar::TurnBar(list<Unit*> allyList, list<Unit*> enemyList): GameObject(nullptr, Vector2D<int>(0,0), Vector2D<int>(0, 0))
+TurnBar::TurnBar() : GameObject(TextureManager::get("UI-turnBar"), Vector2D<int>(WIN_WIDTH - 215, WIN_HEIGHT - 30), Vector2D<int>(400, 50))
+{
+}
+
+TurnBar::TurnBar(list<Unit*> allyList, list<Unit*> enemyList): GameObject(TextureManager::get("UI-turnBar"), Vector2D<int>(100,100), Vector2D<int>(100, 100))
 {
 	auto allyIt = allyList.begin();
 	auto enemyIt = enemyList.begin();
