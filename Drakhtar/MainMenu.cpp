@@ -2,7 +2,7 @@
 
 
 
-MainMenu::MainMenu(Game* game, SDL_Renderer* renderer) : GameState(game), game_(game), renderer_(renderer)
+MainMenu::MainMenu(Game* game, SDL_Renderer* renderer) : GameState(game,renderer), game_(game), renderer_(renderer)
 {
 }
 

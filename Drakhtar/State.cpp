@@ -4,7 +4,7 @@
 #include "Controller.h"
 
 State::State(Game* game, SDL_Renderer* renderer)
-	: GameState(game), game_(game), renderer_(renderer)
+	: GameState(game,renderer), game_(game)
 {
 }
 
@@ -43,60 +43,11 @@ void State::startGame(Game* game) {
 	cout << "Boton on";
 }
 
-void State::run()
-{
-	// Preload the state before running
-	_preload();
-
-	// The event loop follows this scheme:
-	// → Create all pending-to-create game objects
-	// → Handle SDL events (provided by SDL's event poll)
-	// → Handle updates (updates all game objects of the game)
-	// → Handle after updates (called after all the updates have run)
-	// → Render all the game objects from the scene
-	// → Run all the pending events of this tick from the stack
-	// → Destroy all the elements that are pending to destroy
-	// Once all tasks are done, exit loop, perform cleanup, and finish
-
-	uint lastTick = SDL_GetTicks();
-	uint elapsedTicks = 0;
-	uint requiredTicks = 1000 / ANIMATION_TICKS_PER_SECOND;
-	while (!_exit)
-	{
-		_create();
-		_handleEvents();
-		_update();
-
-		elapsedTicks = SDL_GetTicks() - lastTick;
-		if (elapsedTicks >= requiredTicks)
-		{
-			lastTick += elapsedTicks;
-			TextureManager::getInstance()->tick();
-		}
-		_afterUpdate();
-		_render();
-		_events();
-		_destroy();
-	}
-	_end();
-}
-
-void State::_create()
+/*void State::_create()
 {
 	
 };
-void State::_render() const
-{
-	// Clear the screen
-	SDL_RenderClear(renderer_);
 
-	// Render each game object
-	for (auto gameObject : gameObjects_)
-	 	gameObject->render();
-
-	// Render the new frame
-	SDL_RenderPresent(renderer_);
-};
 
 void State::_update() {};
 void State::_handleEvents()
@@ -147,7 +98,7 @@ void State::_destroy()
 
 	pendingOnDestroy_.clear();
 }
-
+*/
 void State::addGameObject(GameObject* gameObject)
 {
 	gameObjects_.push_back(gameObject);
