@@ -35,12 +35,9 @@ void GameState::_handleEvents(SDL_Event& e) {
 		{
 			_exit = true;
 			// TODO: Change State
-		}	
-
-		// For each game object, run the event handler
-		for (auto gameObject : gameObjects_)
-			gameObject->handleEvents(e);
+		}
 	}
+
 }
 
 void GameState::_afterUpdate()

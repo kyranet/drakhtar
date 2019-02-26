@@ -45,57 +45,40 @@ void State::startGame(Game* game) {
 
 void State::_handleEvents(SDL_Event& e)
 {
-	GameState::_handleEvents(e);
-	while (SDL_PollEvent(&e))
+	/*if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_ESCAPE || event.key.keysym.sym == SDLK_s))
+		while (!SDL_PollEvent(&e)) {
+			Prueba->handleEvents(e);
+			if (event.type == SDL_KEYDOWN) {
+				switch (event.key.keysym.sym)
+				{
+				case SDLK_ESCAPE:
+					cout << "save";
+					break;
+				}
+			}
+			GameState::_handleEvents(e);
+		}	*/
+	while (!_exit && SDL_PollEvent(&e))
 	{
-		switch (e.key.keysym.sym )
-		{
-		case  SDL_KEYDOWN:
-			if(SDLK_ESCAPE)
-			cout << "Pasar";
-			else if(SDLK_s) cout << "save";
-			break;
-		}
-	}	
-}
+		Prueba->handleEvents(e);
 
-/*void State::_create()
-{
-	
-};
-
-
-void State::_update() {};
-
-
-void State::_afterUpdate() {}
-
-void State::_events() {}
-
-void State::_destroy()
-{
-	for (auto gameObject : pendingOnDestroy_)
-	{
-		// If the gameObject was already deleted from memory,
-		// skip this search
-		if (gameObject == nullptr) continue;
-
-		auto it = gameObjects_.begin();
-		while (it != gameObjects_.end())
-		{
-			if (*it == gameObject)
+		if (event.type == SDL_KEYDOWN) {
+			switch (event.key.keysym.sym)
 			{
-				gameObjects_.erase(it);
-				delete gameObject;
+			case SDLK_e:
+				cout << "Pause";
 				break;
 			}
-			it++;
 		}
-	}
 
-	pendingOnDestroy_.clear();
+		// For each game object, run the event handler
+		for (auto gameObject : gameObjects_)
+			gameObject->handleEvents(e);
+
+		GameState::_handleEvents(e);
+	}
 }
-*/
+
 void State::addGameObject(GameObject* gameObject)
 {
 	gameObjects_.push_back(gameObject);
