@@ -6,7 +6,8 @@
 #include "Board.h"
 #include "Game.h"
 #include "DialogScene.h"
-#include "Unit.h"
+#include "Battalion.h"
+#include "TurnBar.h"
 
 using namespace std;
 
@@ -20,6 +21,7 @@ private:
 	list<GameObject*> gameObjects_;
 	list<GameObject*> pendingOnDestroy_;
 	Game* game_ = nullptr;
+	TurnBar* turnBar_;
 protected:
 	SDL_Renderer *renderer_ = nullptr;
 	virtual void _preload();
