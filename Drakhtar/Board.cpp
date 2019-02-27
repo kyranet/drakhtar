@@ -60,7 +60,7 @@ bool Board::isInRange(Vector2D<int> from, Vector2D<int> to, int range) {
 }
 
 Box* Board::getBoxAt(int x, int y) {
-	return board[x][y];
+	return board[y][x];
 }
 
 int ** Board::getCellsInRange(Box box, int range) {

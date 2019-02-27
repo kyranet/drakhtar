@@ -12,10 +12,10 @@ private:
 public:
 	UnitFactory() {};
 	~UnitFactory();
-	Unit * newSoldier(Team * team, Box * box);
-	Unit * newArcher(Team * team, Box * box);
-	Unit * newKnight(Team * team, Box * box);
-	Unit * newWizard(Team * team, Box * box);
-	Unit * newMonster(Team * team, Box * box);
+	Unit * newSoldier(Team * team, Box * box, int size);
+	Unit * newArcher(Team * team, Box * box, int size);
+	Unit * newKnight(Team * team, Box * box, int size);
+	Unit * newWizard(Team * team, Box * box, int size);
+	Unit * newMonster(Team * team, Box * box, int size);
 };
 
