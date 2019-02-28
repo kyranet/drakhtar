@@ -19,5 +19,6 @@ void BoardController::onClick(SDL_Point p) {
 
 	if (boxClicked != nullptr) {
 		turnBar_->getFrontUnit()->moveToBox(boxClicked);
+		turnBar_->advanceTurn();
 	}
 }
