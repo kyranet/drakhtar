@@ -22,6 +22,7 @@ private:
 	bool _exit = false;
 	Game* game_ = nullptr;
 	TurnBar* turnBar_;
+	Board* board_;
 protected:
 	void _preload();
 	void _handleEvents(SDL_Event& e);

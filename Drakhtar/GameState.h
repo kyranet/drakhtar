@@ -18,6 +18,7 @@ private:
 protected:
 	list<GameObject*> gameObjects_;
 	list<GameObject*> pendingOnDestroy_;
+	list<EventListener*> eventListeners_;
 	Game* game_ = nullptr;
 	SDL_Renderer *renderer_ = nullptr;
 	SDL_Event event;
@@ -38,5 +39,6 @@ public:
 	virtual void _destroy();
 	virtual void _end() {};
 
+	GameState* addEventListener(EventListener* eventListener);
 };
 
