@@ -33,35 +33,14 @@ void State::_preload()
 	gameObjects_.push_back(test);
 	gameObjects_.push_back(test2);
 
-	Prueba = new Button(TextureManager::get("Units-Abeizhul"), 200, 200, 200, 200, startGame, game_);
-	gameObjects_.push_back(Prueba);
 	auto exampleDialog = new DialogScene(game_, "dialog1_start", "Retron2000");
 	gameObjects_.push_back(exampleDialog);
 }
 
-void State::startGame(Game* game) {
-	cout << "Boton on";
-}
-
 void State::_handleEvents(SDL_Event& e)
 {
-	/*if (event.type == SDL_KEYDOWN && (event.key.keysym.sym == SDLK_ESCAPE || event.key.keysym.sym == SDLK_s))
-		while (!SDL_PollEvent(&e)) {
-			Prueba->handleEvents(e);
-			if (event.type == SDL_KEYDOWN) {
-				switch (event.key.keysym.sym)
-				{
-				case SDLK_ESCAPE:
-					cout << "save";
-					break;
-				}
-			}
-			GameState::_handleEvents(e);
-		}	*/
 	while (!_exit && SDL_PollEvent(&e))
 	{
-		Prueba->handleEvents(e);
-
 		if (event.type == SDL_KEYDOWN) {
 			switch (event.key.keysym.sym)
 			{

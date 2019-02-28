@@ -20,8 +20,6 @@ private:
 	bool _exit = false;
 	Game* game_ = nullptr;
 protected:
-	Button *Prueba;
-	
 	void _preload();
 	void _handleEvents(SDL_Event& e);
 	
@@ -31,6 +29,5 @@ public:
 	virtual ~State();
 	virtual void addGameObject(GameObject* gameObject);
 	virtual void removeGameObject(GameObject* gameObject);
-	static void startGame(Game* game);
 };
 
