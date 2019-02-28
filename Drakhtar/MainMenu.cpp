@@ -1,65 +1,24 @@
 #include "MainMenu.h"
 
-
-
-MainMenu::MainMenu(Game* game, SDL_Renderer* renderer) : GameState(game,renderer), game_(game), renderer_(renderer)
+MainMenu::MainMenu(Game* game, SDL_Renderer* renderer) : GameState(game,renderer), game_(game)
 {
 }
 
 
 MainMenu::~MainMenu()
 {
+	for (auto gameObject : gameObjects_)
+		delete gameObject;
+	game_ = nullptr;
 }
 
-void MainMenu::run()
+void MainMenu::_preload()
 {
-	// Preload the state before running
-	
-	while (!_exit)
-	{
-		
-		_handleEvents();
-		_update();		
-		_render();
-		
-	}
+	Play = new Button(TextureManager::get("Button-Play"), 200, 200, 150, 50, Play_game, game_);
+	gameObjects_.push_back(Play);
 }
 
-
-void MainMenu::_render() const
+void MainMenu::Play_game(Game * game)
 {
-	// Clear the screen
-	SDL_RenderClear(renderer_);
-
-	// Render each game object
-	
-
-	// Render the new frame
-	SDL_RenderPresent(renderer_);
-};
-
-void MainMenu::_update() {};
-void MainMenu::_handleEvents()
-{
-	// Listen to SDL events
-	SDL_Event event;
-	while (!_exit && SDL_PollEvent(&event))
-	{
-		// If the event type is quit, change state to GAMEOVER for cleanup
-		if (event.type == SDL_QUIT)
-		{
-			_exit = true;
-			// TODO: Change State
-		}
-		switch (event.key.keysym.sym)
-		{
-		case SDLK_ESCAPE:
-			cout << "Pasar";
-			
-			break;
-		case SDLK_s:
-			cout << "save";
-			break;
-		}
-	}
+	cout << "Play";
 }

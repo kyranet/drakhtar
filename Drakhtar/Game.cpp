@@ -44,6 +44,9 @@ Game::Game()
 	textureManager_->add("UI-cellFrame", "../images/UI/cellFrame.png", 1, 1);
 	textureManager_->add("UI-dialogueBackground", "../images/UI/dialogueBackground.png", 1, 1);
 
+	//Button
+	textureManager_->add("Button-Play", "../images/MainMenu/Play_Button.png", 1, 1);
+
 	// Portraits
 	textureManager_->add("Portraits-Archer", "../images/Portraits/Archer.png", 1, 1);
 	textureManager_->add("Portraits-ArcherEnemy", "../images/Portraits/ArcherEnemy.png", 1, 1);
@@ -79,7 +82,7 @@ Game::Game()
 		throw new SDLError("Error loading the SDL window or renderer");
 
 	stateMachine = new GameStateMachine();
-	stateMachine->pushState(new State(this, renderer_));
+	stateMachine->pushState(new MainMenu(this, renderer_));
 }
 
 void Game::run()
