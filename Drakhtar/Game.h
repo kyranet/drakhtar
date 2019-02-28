@@ -31,5 +31,6 @@ public:
 	virtual ~Game();
 	SDL_Renderer* getRenderer();
 	static Game* getInstance();
+	GameStateMachine* getStateMachine();
 	//static State* currentState();
 };

@@ -46,6 +46,7 @@ Game::Game()
 
 	//Button
 	textureManager_->add("Button-Play", "../images/MainMenu/Play_Button.png", 1, 1);
+	textureManager_->add("Button-Options", "../images/MainMenu/Options_Button.png", 1, 1);
 
 	// Portraits
 	textureManager_->add("Portraits-Archer", "../images/Portraits/Archer.png", 1, 1);
@@ -68,6 +69,7 @@ Game::Game()
 		->addAnimation("sad", { 6 });
 
 	// Maps
+	textureManager_->add("Maps-Test", "../images/Maps/TestMap.png", 1, 1);
 	textureManager_->add("Maps-FirstBattle", "../images/Maps/FirstBattle.png", 1, 1);
 	textureManager_->add("Maps-SecondBattle", "../images/Maps/SecondBattle.png", 1, 1);
 
@@ -118,6 +120,10 @@ Game* Game::getInstance()
 	}
 
 	return instance;
+}
+
+GameStateMachine* Game::getStateMachine() {
+	return stateMachine;
 }
 
 /*State* Game::currentState()
