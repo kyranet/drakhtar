@@ -18,8 +18,8 @@ private:
 	bool moving_ = false;
 	bool moved_ = false;
 	Vector2D<int> boxPosition_;
-	Team* team_;
-	Box* box_;
+	Team* team_ = nullptr;
+	Box* box_ = nullptr;
 public:
 	Unit(Texture* texture, Box * box, int attack, int health, int speed, int attackRange, int moveRange);
 	virtual ~Unit() {};

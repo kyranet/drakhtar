@@ -38,6 +38,8 @@ void GameState::_handleEvents(SDL_Event& e) {
 		}
 	}
 
+	for (auto listener : eventListeners_)
+		listener->run(e);
 }
 
 void GameState::_afterUpdate()
@@ -115,3 +117,9 @@ void GameState::run() {
 	}
 	_end();
 }
+
+GameState* GameState::addEventListener(EventListener* eventListener)
+{
+	eventListeners_.push_back(eventListener);
+	return this;
+};

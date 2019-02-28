@@ -57,11 +57,12 @@ list<Unit*>::iterator Team::findInsertPosition(Unit* unit)
 	int i = 0;
 	auto it = units_.begin();
 	auto end = units_.end();
+	/*
 	while (it != end)
 	{
 		if (unit->getSpeed() > (*it)->getSpeed()) return it;
 		i++;
 	}
-
+	*/
 	return end;
 }
