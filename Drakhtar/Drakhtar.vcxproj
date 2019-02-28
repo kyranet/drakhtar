@@ -72,15 +72,18 @@
     <ClCompile Include="Battalion.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="Box.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="Dialog.cpp" />
     <ClCompile Include="DialogScene.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="GameState.cpp" />
     <ClCompile Include="GameStateMachine.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SDLAudioManager.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="Team.cpp" />
     <ClCompile Include="Text.cpp" />
@@ -96,6 +99,7 @@
     <ClInclude Include="Battalion.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="Box.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="checkML.h" />
     <ClInclude Include="Constants.h" />
     <ClInclude Include="Controller.h" />
@@ -106,7 +110,9 @@
     <ClInclude Include="Font.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GameState.h" />
     <ClInclude Include="GameStateMachine.h" />
+    <ClInclude Include="MainMenu.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SDLAudioManager.h" />
     <ClInclude Include="SDLError.h" />

@@ -2,6 +2,7 @@
 
 #include "SDL.h"
 #include "SDL_ttf.h"
+#include "GameState.h"
 #include "SDL_mixer.h"
 #include "State.h"
 #include "Texture.h"
@@ -9,9 +10,10 @@
 #include "Constants.h"
 #include "TextureManager.h"
 
+
 typedef unsigned int uint;
 
-class State;
+class GameState;
 class GameStateMachine;
 
 class Game
@@ -22,12 +24,12 @@ private:
 	SDL_Renderer* renderer_ = nullptr;
 	TextureManager* textureManager_ = TextureManager::getInstance();
 	GameStateMachine* stateMachine = nullptr;
-	State* state_ = nullptr;
+	GameState* state_ = nullptr;
 	Game();
 public:
 	void run();
 	virtual ~Game();
 	SDL_Renderer* getRenderer();
 	static Game* getInstance();
-	static State* currentState();
+	//static State* currentState();
 };

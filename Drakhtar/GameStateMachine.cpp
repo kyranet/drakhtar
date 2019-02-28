@@ -13,11 +13,11 @@ GameStateMachine::~GameStateMachine()
 	currentState = nullptr;
 }
 
-void GameStateMachine::pushState(State* state) {
+void GameStateMachine::pushState(GameState* state) {
 	stateStack.push(state);// error de lectura
 	currentState = stateStack.top();
 }
-void GameStateMachine::changeState(State* state) {
+void GameStateMachine::changeState(GameState* state) {
 	popState();
 	pushState(state);
 }
@@ -28,6 +28,6 @@ void GameStateMachine::popState() {
 		currentState = stateStack.top();
 	}
 }
-State * GameStateMachine::getCurrentState() {
+GameState * GameStateMachine::getCurrentState() {
 	return currentState;
 }

@@ -46,5 +46,5 @@ SDL_Rect GameObject::getRect() const
 
 void GameObject::destroy()
 {
-	Game::currentState()->removeGameObject(this);
+	//Game::currentState()->removeGameObject(this);
 }
