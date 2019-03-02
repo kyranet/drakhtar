@@ -44,6 +44,16 @@ SDL_Rect GameObject::getRect() const
 	};
 }
 
+Texture * GameObject::getTexture() const
+{
+	return texture_;
+}
+
+void GameObject::setTexture(Texture * texture)
+{
+	texture_ = texture;
+}
+
 void GameObject::destroy()
 {
 	Game::currentState()->removeGameObject(this);
