@@ -80,6 +80,12 @@ GameState::~GameState()
 {
 	for (auto gameObject : gameObjects_)
 		delete gameObject;
+	while (!eventListeners_.empty()) {
+		EventListener * eventListener = eventListeners_.back();
+		eventListeners_.pop_back();
+		delete eventListener;
+	}
+
 	game_ = nullptr;
 }
 GameState* GameState::addEventListener(EventListener* eventListener)

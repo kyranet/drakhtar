@@ -2,7 +2,6 @@
 
 #include "State.h"
 #include "BoardController.h"
-#include "UnitFactory.h"
 
 State::State(Game* game, SDL_Renderer* renderer)
 	: GameState(game,renderer), game_(game)
@@ -11,11 +10,11 @@ State::State(Game* game, SDL_Renderer* renderer)
 
 State::~State()
 {
-	for (auto gameObject : gameObjects_)
-		delete gameObject;
 	game_ = nullptr;
 	delete team1;
 	delete team2;
+	delete factory;
+	delete turnBar_;
 }
 
 void State::_preload()
@@ -33,7 +32,7 @@ void State::_preload()
 	Team * team2 = new Team(board_);
 
 	// Test Factory
-	UnitFactory * factory = new UnitFactory();
+	factory = new UnitFactory();
 	gameObjects_.push_back(factory->newSoldier(team1, board_->getBoxAt(0, 0), 10));
 	gameObjects_.push_back(factory->newArcher(team1, board_->getBoxAt(0, 1), 10));
 	gameObjects_.push_back(factory->newWizard(team1, board_->getBoxAt(0, 2), 10));

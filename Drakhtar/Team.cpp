@@ -6,6 +6,7 @@ Team::Team(Board* board, Color color)
 {
 }
 
+
 Team::~Team()
 {
 	board_ = nullptr;
@@ -29,7 +30,9 @@ void Team::addUnit(Unit* unit)
 void Team::removeUnit(Unit* unit)
 {
 	units_.remove(unit);
+	delete unit;
 }
+
 
 Unit* Team::pickUnit() const
 {
