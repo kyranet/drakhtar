@@ -11,10 +11,6 @@ State::State(Game* game, SDL_Renderer* renderer)
 State::~State()
 {
 	game_ = nullptr;
-	delete team1;
-	delete team2;
-	delete factory;
-	delete turnBar_;
 }
 
 void State::_preload()
@@ -28,9 +24,9 @@ void State::_preload()
     gameObjects_.push_back(board_);
 	
 	// Test Teams
-	Team * team1 = new Team(board_);
-	Team * team2 = new Team(board_);
-
+	team1 = new Team(board_);
+	team2 = new Team(board_);
+	
 	// Test Factory
 	factory = new UnitFactory();
 	gameObjects_.push_back(factory->newSoldier(team1, board_->getBoxAt(0, 0), 10));
@@ -114,3 +110,7 @@ void State::playASound(int tag, int loop, int channel)
 			gameObject->handleEvents(e);
 
 		GameState::_handleEvents(e);
+	delete team1;
+	delete team2;
+	delete factory;
+	delete turnBar_;
