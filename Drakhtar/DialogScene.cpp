@@ -71,8 +71,6 @@ void DialogScene::nextDialog()
 
 void DialogScene::endOfDialog()
 {
-	// close dialog and go to next event(for now it just now restarts the whole dialog)
-	currentDialogIndex = 0;
 	destroy();
 }
 

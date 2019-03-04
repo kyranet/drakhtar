@@ -18,13 +18,13 @@ TurnBar::TurnBar() : GameObject(TextureManager::get("UI-turnBar"), Vector2D<int>
 	visibleUnits[8] = new GameObject(TextureManager::get("Portraits-SoldierEnemy"), Vector2D<int>(WIN_WIDTH - 432 + 9 * 44, WIN_HEIGHT - 30), Vector2D<int>(30, 30));
 }
 
-TurnBar::TurnBar(list<Unit*> allyList, list<Unit*> enemyList): GameObject(TextureManager::get("UI-turnBar"), Vector2D<int>(100,100), Vector2D<int>(100, 100))
+TurnBar::TurnBar(list<Unit*> allyList, list<Unit*> enemyList): GameObject(TextureManager::get("UI-turnBar"), Vector2D<int>(WIN_WIDTH - 215, WIN_HEIGHT - 30), Vector2D<int>(400, 50))
 {
 	auto allyIt = allyList.begin();
 	auto enemyIt = enemyList.begin();
 	int unitCount = 0;
 
-	while (allyIt != allyList.end() && enemyIt != enemyList.end())
+	while (allyIt != allyList.end() || enemyIt != enemyList.end())
 	{
 		if (unitCount % 2 == 0 && allyIt != allyList.end())
 		{

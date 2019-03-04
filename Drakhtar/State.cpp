@@ -45,14 +45,13 @@ void State::_preload()
 	gameObjects_.push_back(factory->newArcher(team2, board_->getBoxAt(11, 5), 10));
 	gameObjects_.push_back(factory->newArcher(team2, board_->getBoxAt(11, 6), 10));
 
-	// Turn Bar
-	turnBar_ = new TurnBar(team1->getUnitList(), team2->getUnitList());
-	gameObjects_.push_back(turnBar_);
-
-
 	// Dialog
 	auto exampleDialog = new DialogScene(game_, "dialog1_start", "Retron2000");
 	gameObjects_.push_back(exampleDialog);
+
+	// Turn Bar
+	turnBar_ = new TurnBar(team1->getUnitList(), team2->getUnitList());
+	gameObjects_.push_back(turnBar_);
 
 
 	// Controller
