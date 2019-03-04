@@ -24,6 +24,8 @@ private:
 	Game* game_ = nullptr;
 	TurnBar* turnBar_;
 	Board* board_;
+	Team* team1;
+	Team* team2;
 protected:
 	void _preload();
 	void _handleEvents(SDL_Event& e);

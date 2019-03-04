@@ -14,21 +14,23 @@ State::~State()
 	for (auto gameObject : gameObjects_)
 		delete gameObject;
 	game_ = nullptr;
+	delete team1;
+	delete team2;
 }
 
 void State::_preload()
 {
 	// TextureManager
 	gameObjects_.push_back(new GameObject(TextureManager::get("Maps-FirstBattle"), Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2), Vector2D<int>(WIN_WIDTH, WIN_HEIGHT)));
-
+	
 	// Board
 	board_ = new Board(TextureManager::get("UI-cellFrame"), 8, 12, 50);
 	gameObjects_.push_back(new GameObject(TextureManager::get("Maps-FirstBattle"), Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2), Vector2D<int>(WIN_WIDTH, WIN_HEIGHT)));
     gameObjects_.push_back(board_);
 	
 	// Test Teams
-	Team * team1 = new Team(board_, Color::BLUE);
-	Team * team2 = new Team(board_, Color::RED);
+	Team * team1 = new Team(board_);
+	Team * team2 = new Team(board_);
 
 	// Test Factory
 	UnitFactory * factory = new UnitFactory();
@@ -113,3 +115,5 @@ void State::playASound(int tag, int loop, int channel)
 			gameObject->handleEvents(e);
 
 		GameState::_handleEvents(e);
+		team1 = new Team(board_, Color::BLUE);
+    	Team * team2 = new Team(board_, Color::RED);
