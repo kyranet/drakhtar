@@ -27,8 +27,8 @@ protected:
 	void _preload();
 	void _handleEvents(SDL_Event& e);
 
-	static void Play_game(Game* game);
-	static void Options_game(Game* game);
+	static void Play_game(Game* game, SDL_Renderer* renderer);
+	static void Options_game(Game* game, SDL_Renderer* renderer);
 
 public:
 	MainMenu(Game* game, SDL_Renderer* renderer);

@@ -1,4 +1,4 @@
-#include "Game.h"
+﻿#include "Game.h"
 #include "SDLError.h"
 
 Game::Game()
@@ -84,12 +84,49 @@ Game::Game()
 		throw new SDLError("Error loading the SDL window or renderer");
 
 	stateMachine = new GameStateMachine();
-	stateMachine->pushState(new MainMenu(this, renderer_));
+	state_ = new MainMenu(this, renderer_);
+	stateMachine->pushState(state_);
 }
 
 void Game::run()
 {
-	stateMachine->getCurrentState()->run();
+	while (!stateMachine->getCurrentState()->getexit()) {
+		// Preload the state before running
+		actualstate_ = stateMachine->getCurrentState();
+		stateMachine->getCurrentState()->_preload();
+
+		// The event loop follows this scheme:
+		// → Create all pending-to-create game objects
+		// → Handle SDL events (provided by SDL's event poll)
+		// → Handle updates (updates all game objects of the game)
+		// → Handle after updates (called after all the updates have run)
+		// → Render all the game objects from the scene
+		// → Run all the pending events of this tick from the stack
+		// → Destroy all the elements that are pending to destroy
+		// Once all tasks are done, exit loop, perform cleanup, and finish
+
+		uint lastTick = SDL_GetTicks();
+		uint elapsedTicks = 0;
+		uint requiredTicks = 1000 / ANIMATION_TICKS_PER_SECOND;
+		while (stateMachine->getCurrentState()==actualstate_ && !stateMachine->getCurrentState()->getexit())
+		{
+			stateMachine->getCurrentState()->_create();
+			stateMachine->getCurrentState()->_handleEvents(event);
+			stateMachine->getCurrentState()->_update();
+
+			elapsedTicks = SDL_GetTicks() - lastTick;
+			if (elapsedTicks >= requiredTicks)
+			{
+				lastTick += elapsedTicks;
+				TextureManager::getInstance()->tick();
+			}
+			stateMachine->getCurrentState()->_afterUpdate();
+			stateMachine->getCurrentState()->_render();
+			stateMachine->getCurrentState()->_events();
+			stateMachine->getCurrentState()->_destroy();
+		}
+		stateMachine->getCurrentState()->_end();
+	}
 }
 
 Game::~Game()
@@ -98,6 +135,8 @@ Game::~Game()
 	SDL_DestroyWindow(window_);
 
 	delete state_;
+	if(state_!=actualstate_)
+		delete actualstate_;
 	delete stateMachine;
 
 	SDL_Quit();
@@ -109,6 +148,8 @@ SDL_Renderer* Game::getRenderer()
 {
 	return renderer_;
 }
+
+
 
 Game* Game::instance = nullptr;
 
