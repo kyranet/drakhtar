@@ -27,3 +27,11 @@ Unit * Box::getContent() {
 void Box::setContent(Unit* object) {
 	content = object;
 }
+
+bool Box::getHovered() {
+	return hovered;
+}
+
+void Box::setHovered(bool hover) {
+	hovered = hover;
+}

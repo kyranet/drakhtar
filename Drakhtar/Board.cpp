@@ -64,14 +64,12 @@ Box* Board::getBoxAtCoordinates(Vector2D<int> coordinates) {
 	// Coordinates are out of the board
 	if (coordinates.getX() < marginX - cellSize/2 || coordinates.getY() < marginY - cellSize/2
 		|| coordinates.getX() > marginX + cols * cellSize - cellSize/2 || coordinates.getY() > marginY + rows * cellSize - cellSize/2) {
-		cout << "fuera" << endl;
 		return nullptr;
 	}
 	// Coordinates are inside the board
 	else {
 		int x = (int)floor((coordinates.getX() - marginX + cellSize/2) / cellSize);
 		int y = (int)floor((coordinates.getY() - marginY + cellSize/2) / cellSize);
-		cout << "(" << x << ", " << y << ")" << endl;
 		return getBoxAt(x, y);
 	}
 }
