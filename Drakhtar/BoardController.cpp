@@ -21,8 +21,10 @@ void BoardController::onClick(SDL_Point p) {
 	Box * boxClicked = board_->getBoxAtCoordinates(Vector2D<int>(p.x, p.y));
 
 	if (boxClicked != nullptr) {
-		turnBar_->getFrontUnit()->moveToBox(boxClicked);
-		turnBar_->advanceTurn();
+		if (boxClicked->getContent() == nullptr) {
+			turnBar_->getFrontUnit()->moveToBox(boxClicked);
+			turnBar_->advanceTurn();
+		}
 	}
 }
 
