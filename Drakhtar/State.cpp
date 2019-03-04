@@ -51,10 +51,6 @@ void State::_preload()
 	// Dialog
 	auto exampleDialog = new DialogScene(game_, "dialog1_start", "Retron2000");
 	gameObjects_.push_back(exampleDialog);
-
-	// Turn bar
-	auto turnBar = new TurnBar();
-	gameObjects_.push_back(turnBar);
 }
 
 	// Controller
