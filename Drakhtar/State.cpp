@@ -52,6 +52,8 @@ void State::_preload()
 	auto exampleDialog = new DialogScene(game_, "dialog1_start", "Retron2000");
 	gameObjects_.push_back(exampleDialog);
 
+	//sounds
+	audioManager->loadMusic(0, "Smash Mouth - All Star _Official Music Video_.mp3");	audioManager->playMusic(0, 1);
 	// Controller
 	addEventListener(new BoardController(board_, turnBar_));
 }

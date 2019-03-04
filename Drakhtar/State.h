@@ -11,6 +11,7 @@
 #include "Button.h"
 #include "Battalion.h"
 #include "TurnBar.h"
+#include "SDLAudioManager.h"
 
 using namespace std;
 
@@ -23,6 +24,7 @@ private:
 	Game* game_ = nullptr;
 	TurnBar* turnBar_;
 	Board* board_;
+	SDLAudioManager * audioManager;
 protected:
 	void _preload();
 	void _handleEvents(SDL_Event& e);
