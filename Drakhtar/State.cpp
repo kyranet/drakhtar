@@ -114,5 +114,3 @@ void State::playASound(int tag, int loop, int channel)
 			gameObject->handleEvents(e);
 
 		GameState::_handleEvents(e);
-		team1 = new Team(board_, Color::BLUE);
-    	Team * team2 = new Team(board_, Color::RED);

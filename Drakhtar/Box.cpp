@@ -28,6 +28,7 @@ void Box::render() {
 		};
 		textureHover->render(dest, texture_->getAnimation()[texture_->getFrame()]); 
 	}
+	setHovered(false);
 	if (content != nullptr) {
 		content->render();
 	}
