@@ -8,7 +8,7 @@ class Box : public GameObject {
 protected:
 	Vector2D<int> boardIndex;
 	Unit* content;
-	bool hovered;
+	bool hovered = false;
 	Texture * textureHover;
 public:
 	Box(Texture* t, Vector2D<int> pos, Vector2D<int> size, Vector2D<int> boardIndex, Unit* go);

@@ -11,6 +11,9 @@ void BoardController::run(SDL_Event event) {
 		case SDL_MOUSEBUTTONUP:
 			onClick(p);
 			break;
+		case SDL_MOUSEMOTION:
+			onHover(p);
+			break;
 	}
 }
 
@@ -22,5 +25,13 @@ void BoardController::onClick(SDL_Point p) {
 			turnBar_->getFrontUnit()->moveToBox(boxClicked);
 			turnBar_->advanceTurn();
 		}
+	}
+}
+
+void BoardController::onHover(SDL_Point p) {
+	Box * boxHovered = board_->getBoxAtCoordinates(Vector2D<int>(p.x, p.y));
+
+	if (boxHovered != nullptr) {
+		boxHovered->setHovered(true);
 	}
 }

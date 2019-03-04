@@ -15,4 +15,5 @@ public:
 	BoardController(Board * board, TurnBar * turnBar);
 	virtual void run(SDL_Event event);
 	void onClick(SDL_Point p);
+	void onHover(SDL_Point p);
 };
