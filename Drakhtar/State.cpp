@@ -11,6 +11,10 @@ State::State(Game* game, SDL_Renderer* renderer)
 State::~State()
 {
 	game_ = nullptr;
+	delete team1;
+	delete team2;
+	delete factory;
+	delete turnBar_;
 }
 
 void State::_preload()
@@ -29,11 +33,11 @@ void State::_preload()
 	
 	// Test Factory
 	factory = new UnitFactory();
-	gameObjects_.push_back(factory->newSoldier(team1, board_->getBoxAt(0, 0), 10));
-	gameObjects_.push_back(factory->newArcher(team1, board_->getBoxAt(0, 1), 10));
-	gameObjects_.push_back(factory->newWizard(team1, board_->getBoxAt(0, 2), 10));
-	gameObjects_.push_back(factory->newKnight(team1, board_->getBoxAt(1, 0), 10));
-	gameObjects_.push_back(factory->newMonster(team1, board_->getBoxAt(1, 1), 10));
+	gameObjects_.push_back(factory->newSoldier(team1, board_->getBoxAt(0, 2), 10));
+	gameObjects_.push_back(factory->newArcher(team1, board_->getBoxAt(0, 3), 10));
+	gameObjects_.push_back(factory->newWizard(team1, board_->getBoxAt(0, 4), 10));
+	gameObjects_.push_back(factory->newKnight(team1, board_->getBoxAt(0, 5), 10));
+	gameObjects_.push_back(factory->newMonster(team1, board_->getBoxAt(0, 6), 10));
 
 
 	gameObjects_.push_back(factory->newSoldier(team2, board_->getBoxAt(11, 0), 10));

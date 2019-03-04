@@ -13,6 +13,7 @@
 #include "TurnBar.h"
 #include "UnitFactory.h"
 #include "SDLAudioManager.h"
+#include "UnitFactory.h"
 
 using namespace std;
 
