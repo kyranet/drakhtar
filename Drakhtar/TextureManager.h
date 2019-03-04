@@ -13,13 +13,14 @@ struct AnimationTextureInfo
 class TextureInfo
 {
 public:
-	TextureInfo(string name, string path, ushort columns, ushort rows, vector<AnimationTextureInfo> animations = {})
-		: name(name), path(path), columns(columns), rows(rows), animations(animations) {}
+	TextureInfo(string name, string path, ushort columns, ushort rows, SDL_RendererFlip flip = SDL_FLIP_NONE)
+		: name(name), path(path), columns(columns), rows(rows), flip(flip) {}
 	~TextureInfo() { animations.clear(); }
 	string name;
 	string path;
 	ushort columns;
 	ushort rows;
+	SDL_RendererFlip flip;
 	vector<AnimationTextureInfo> animations;
 	TextureInfo* addAnimation(string name, vector<ushort> frames)
 	{
@@ -36,7 +37,7 @@ private:
 	~TextureManager();
 	stack<TextureInfo*> stack_;
 public:
-	TextureInfo* add(string name, string path, ushort columns, ushort rows);
+	TextureInfo* add(string name, string path, ushort columns, ushort rows, SDL_RendererFlip flip = SDL_FLIP_NONE);
 	void init(SDL_Renderer* renderer);
 	void tick();
 	static Texture* get(string name);

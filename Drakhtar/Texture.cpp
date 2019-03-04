@@ -10,7 +10,7 @@ Texture::~Texture()
 	animations_.clear();
 }
 
-Texture* Texture::setTexture(SDL_Texture* texture)
+Texture* Texture::setTexture(SDL_Texture* const& texture)
 {
 	if (texture != texture_)
 	{
@@ -21,21 +21,27 @@ Texture* Texture::setTexture(SDL_Texture* texture)
 	return this;
 }
 
-Texture* Texture::setColumnAmount(ushort columns)
+Texture* Texture::setColumnAmount(ushort const& columns)
 {
 	columnAmount_ = columns;
 	return this;
 }
 
-Texture* Texture::setRowAmount(ushort rows)
+Texture* Texture::setRowAmount(ushort const& rows)
 {
 	rowAmount_ = rows;
 	return this;
 }
 
-Texture* Texture::setFrameSize(Vector2D<ushort> frameSize)
+Texture* Texture::setFrameSize(Vector2D<ushort> const& frameSize)
 {
 	frameSize_ = frameSize;
+	return this;
+}
+
+Texture* Texture::setFlip(SDL_RendererFlip const& flip)
+{
+	flip_ = flip;
 	return this;
 }
 
@@ -125,7 +131,7 @@ void Texture::render(SDL_Rect const& dest, double angle, SDL_Rect* clip) const
 	}
 }
 
-void Texture::renderFrame(SDL_Rect const& dest, ushort frame, double angle, SDL_RendererFlip flip) const
+void Texture::renderFrame(SDL_Rect const& dest, ushort frame, double angle) const
 {
 	auto framePosition = getFramePosition(frame);
 	ushort width = frameSize_.getX();
@@ -136,7 +142,7 @@ void Texture::renderFrame(SDL_Rect const& dest, ushort frame, double angle, SDL_
 		width,
 		heigth
 	};
-	SDL_RenderCopyEx(renderer_, texture_, &src, &dest, angle, 0, flip);
+	SDL_RenderCopyEx(renderer_, texture_, &src, &dest, angle, 0, flip_);
 }
 
 void Texture::close()
