@@ -11,7 +11,14 @@ Unit * UnitFactory::newSoldier(Team * team, Box * box, int size)
 	int soldierMoveRange = 3;
 	int soldierSpeed = 3;
 
-	Unit * unit = (Unit*) new Battalion(TextureManager::get("Units-BlueSoldier"), box, soldierAttack, soldierHealth, soldierSpeed, soldierAttackRange, soldierMoveRange, size);
+	string textureName;
+
+	if (team->getColor() == Color::BLUE)
+		textureName = "Units-BlueSoldier";
+	else
+		textureName = "Units-RedSoldier";
+
+	Unit * unit = (Unit*) new Battalion(TextureManager::get(textureName), box, soldierAttack, soldierHealth, soldierSpeed, soldierAttackRange, soldierMoveRange, size);
 	team->addUnit(unit);
 	return unit;
 }
@@ -24,7 +31,14 @@ Unit * UnitFactory::newArcher(Team * team, Box * box, int size)
 	int archerMoveRange = 1;
 	int archerSpeed = 3;
 
-	Unit * unit = new Battalion(TextureManager::get("Units-BlueArcher"), box, archerAttack, archerHealth, archerSpeed, archerAttackRange, archerMoveRange, size);
+	string textureName;
+
+	if (team->getColor() == Color::BLUE)
+		textureName = "Units-BlueArcher";
+	else
+		textureName = "Units-RedArcher";
+
+	Unit * unit = new Battalion(TextureManager::get(textureName), box, archerAttack, archerHealth, archerSpeed, archerAttackRange, archerMoveRange, size);
 	team->addUnit(unit);
 	return unit;
 }
@@ -37,7 +51,14 @@ Unit * UnitFactory::newKnight(Team * team, Box * box, int size)
 	int knightMoveRange = 5;
 	int knightSpeed = 5;
 
-	Unit * unit = new Battalion(TextureManager::get("Units-BlueKnight"), box, knightAttack, knightHealth, knightSpeed, knightAttackRange, knightMoveRange, size);
+	string textureName;
+
+	if (team->getColor() == Color::BLUE)
+		textureName = "Units-BlueKnight";
+	else
+		textureName = "Units-RedKnight";
+
+	Unit * unit = new Battalion(TextureManager::get(textureName), box, knightAttack, knightHealth, knightSpeed, knightAttackRange, knightMoveRange, size);
 	team->addUnit(unit);
 	return unit;
 }
@@ -63,7 +84,14 @@ Unit * UnitFactory::newMonster(Team * team, Box * box, int size)
 	int monsterMoveRange = 5;
 	int monsterSpeed = 1;
 
-	Unit * unit =  new Battalion(TextureManager::get("Units-BlueMonster"), box, monsterAttack, monsterHealth, monsterSpeed, monsterAttackRange, monsterMoveRange, size);
+	string textureName;
+
+	if (team->getColor() == Color::BLUE)
+		textureName = "Units-BlueMonster";
+	else
+		textureName = "Units-RedMonster";
+
+	Unit * unit =  new Battalion(TextureManager::get(textureName), box, monsterAttack, monsterHealth, monsterSpeed, monsterAttackRange, monsterMoveRange, size);
 	team->addUnit(unit);
 	return unit;
 }

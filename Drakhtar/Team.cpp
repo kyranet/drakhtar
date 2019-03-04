@@ -1,8 +1,8 @@
 #include "Team.h"
 #include "TeamedUnitError.h"
 
-Team::Team(Board* board)
-	: board_(board)
+Team::Team(Board* board, Color color)
+	: board_(board), color_(color)
 {
 }
 
@@ -50,6 +50,11 @@ Unit* Team::pickUnit() const
 	auto unit = units_.front();
 	unit->setMoving(true);
 	return unit;
+}
+
+Color Team::getColor()
+{
+	return color_;
 }
 
 list<Unit*>::iterator Team::findInsertPosition(Unit* unit)
