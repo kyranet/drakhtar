@@ -13,6 +13,7 @@ public:
 	// sound effects
 	virtual bool loadSound(int tag, string fileName) = 0;
 	virtual int playChannel(int tag, int loops, int channel = -1) = 0;
+	virtual int playChannelTimed(int tag, int loops, int channel , int ticks) = 0;
 	virtual void pauseChannel(int channel = -1) = 0;
 	virtual void resumeChanne(int channel = -1) = 0;
 	virtual void haltChannel(int channel = -1) = 0;
@@ -26,5 +27,6 @@ public:
 	virtual void haltMusic() = 0;
 	virtual void pauseMusic() = 0;
 	virtual void resumeMusic() = 0;
+
 };
 
