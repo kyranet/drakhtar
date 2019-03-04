@@ -1,16 +1,34 @@
 #include "Box.h"
 #include "Unit.h"
+#include"TextureManager.h"
 
 Box::Box(Texture* t, Vector2D<int> pos, Vector2D<int> size, Vector2D<int> bi, Unit* go) :
-	GameObject(t, pos, size), boardIndex(bi), content(go) {}
+	GameObject(t, pos, size), boardIndex(bi), content(go) 
+{
+	textureHover = TextureManager::get("Maps-FirstBattle");
+	hovered = false;
+}
 
 Box::~Box() {
 	content = nullptr;
 }
 
 // Renders itself and its content
-void Box::render() const {
-	GameObject::render();
+void Box::render() {
+	if (!hovered) {
+		GameObject::render();
+	}
+	else 
+	{ 
+		SDL_Rect dest{
+		pos_.getX() - size_.getX() / 2,
+		pos_.getY() - size_.getY() / 2,
+		size_.getX(),
+		size_.getY()
+		};
+		textureHover->render(dest, texture_->getAnimation()[texture_->getFrame()]); 
+	}
+	setHovered(false);
 	if (content != nullptr) {
 		content->render();
 	}

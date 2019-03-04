@@ -70,14 +70,11 @@ void State::_handleEvents(SDL_Event& e)
 {
 	while (!_exit && SDL_PollEvent(&e))
 	{
-		if (e.type == SDL_KEYDOWN) {
-			switch (e.key.keysym.sym)
+		if (event.type == SDL_KEYDOWN) {
+			switch (event.key.keysym.sym)
 			{
 			case SDLK_e:
-				playASound(1, 2, 2);
-				break;
-			case SDLK_ESCAPE:
-				game_->getStateMachine()->pushState(new MainMenu(game_, renderer_));
+				cout << "Pause";
 				break;
 			}
 		}
@@ -96,3 +93,23 @@ void State::playASound(int tag, int loop, int channel)
 	audioManager.FadeOutChannel(1, 3000);
 }
 
+
+	while (!_exit && SDL_PollEvent(&e))
+	{
+		if (e.type == SDL_KEYDOWN) {
+			switch (e.key.keysym.sym)
+			{
+			case SDLK_e:
+				playASound(1, 2, 2);
+				break;
+			case SDLK_ESCAPE:
+				game_->getStateMachine()->pushState(new MainMenu(game_, renderer_));
+				break;
+			}
+		}
+
+		// For each game object, run the event handler
+		for (auto gameObject : gameObjects_)
+			gameObject->handleEvents(e);
+
+		GameState::_handleEvents(e);
