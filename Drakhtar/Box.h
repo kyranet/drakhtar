@@ -15,6 +15,7 @@ public:
 	virtual ~Box();
 
 	virtual void render();
+	virtual void handleEvents(SDL_Event event);
 	Unit* getContent();
 	Vector2D<int> getIndex();
 	void setContent(Unit* object);

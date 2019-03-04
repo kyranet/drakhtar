@@ -28,10 +28,18 @@ void Box::render() {
 		};
 		textureHover->render(dest, texture_->getAnimation()[texture_->getFrame()]); 
 	}
-	setHovered(false);
 	if (content != nullptr) {
 		content->render();
 	}
+}
+
+void Box::handleEvents(SDL_Event event)
+{
+	SDL_Point p = { event.motion.x, event.motion.y };
+	if (SDL_PointInRect(&p, &this->getRect())) {
+		hovered = true;
+	}
+	else { hovered = false; }
 }
 
 Vector2D<int> Box::getIndex() {
