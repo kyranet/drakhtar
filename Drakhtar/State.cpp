@@ -47,15 +47,13 @@ void State::_preload()
 
 	// Turn Bar
 	turnBar_ = new TurnBar(team1->getUnitList(), team2->getUnitList());
+	gameObjects_.push_back(turnBar_);
+
 
 	// Dialog
 	auto exampleDialog = new DialogScene(game_, "dialog1_start", "Retron2000");
 	gameObjects_.push_back(exampleDialog);
 
-	// Turn bar
-	auto turnBar = new TurnBar();
-	gameObjects_.push_back(turnBar);
-}
 
 	// Controller
 	addEventListener(new BoardController(board_, turnBar_));
