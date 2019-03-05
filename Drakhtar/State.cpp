@@ -79,12 +79,4 @@ void State::_handleEvents(SDL_Event& e)
 	}
 }
 
-void State::addGameObject(GameObject* gameObject)
-{
-	gameObjects_.push_back(gameObject);
-}
 
-void State::removeGameObject(GameObject* gameObject)
-{
-	pendingOnDestroy_.push_back(gameObject);	
-}

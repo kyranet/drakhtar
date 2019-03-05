@@ -56,5 +56,5 @@ void GameObject::setTexture(Texture * texture)
 
 void GameObject::destroy()
 {
-	//Game::currentState()->removeGameObject(this);
+	Game::currentState()->removeGameObject(this);
 }
