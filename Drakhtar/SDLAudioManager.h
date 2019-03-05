@@ -6,7 +6,7 @@
 class SDLAudioManager : public AudioManager
 {
 //IMPORTANT NOTES:
-	//Channel means one sound, meaning for example a footstep
+// Channel means one sound, meaning for example a footstep
 	//Music means a background sound or a song
 public:
 	SDLAudioManager();
