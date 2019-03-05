@@ -87,3 +87,13 @@ GameState* GameState::addEventListener(EventListener* eventListener)
 	eventListeners_.push_back(eventListener);
 	return this;
 };
+
+void GameState::addGameObject(GameObject* gameObject)
+{
+	gameObjects_.push_back(gameObject);
+}
+
+void GameState::removeGameObject(GameObject* gameObject)
+{
+	pendingOnDestroy_.push_back(gameObject);
+}

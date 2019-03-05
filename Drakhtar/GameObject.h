@@ -22,5 +22,7 @@ public:
 	virtual void handleEvents(SDL_Event event);
 	GameObject* addEventListener(EventListener* eventListener);
 	SDL_Rect getRect() const;
+	Texture* getTexture() const;
+	void setTexture(Texture* texture);
 	void destroy();
 };

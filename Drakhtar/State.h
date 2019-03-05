@@ -37,5 +37,6 @@ public:
 
 	//temporal
 	void playASound(int tag, int loop, int channels);
+
 };
 

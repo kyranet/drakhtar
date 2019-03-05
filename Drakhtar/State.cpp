@@ -45,12 +45,10 @@ void State::_preload()
 	gameObjects_.push_back(factory->newArcher(team2, board_->getBoxAt(11, 5), 10));
 	gameObjects_.push_back(factory->newArcher(team2, board_->getBoxAt(11, 6), 10));
 
-	// Turn Bar
-	turnBar_ = new TurnBar(team1->getUnitList(), team2->getUnitList());
-
 	// Dialog
 	auto exampleDialog = new DialogScene(game_, "dialog1_start", "Retron2000");
 	gameObjects_.push_back(exampleDialog);
+
 
 	//sounds
 	audioManager.init();
@@ -58,6 +56,11 @@ void State::_preload()
 	audioManager.loadSound(1, "../audio/sound/Glass_Running.mp3");
 	//audioManager.playMusic(0, 1);
 	audioManager.setMusicVolume(2);
+  
+	// Turn Bar
+	turnBar_ = new TurnBar(team1->getUnitList(), team2->getUnitList());
+	gameObjects_.push_back(turnBar_);
+
 
 	// Controller
 	addEventListener(new BoardController(board_, turnBar_));
@@ -87,11 +90,6 @@ void State::_handleEvents(SDL_Event& e)
 	}
 }
 
-void State::addGameObject(GameObject* gameObject)
-{
-	gameObjects_.push_back(gameObject);
-}
-
 void State::removeGameObject(GameObject* gameObject)
 {
 	pendingOnDestroy_.push_back(gameObject);	
@@ -102,3 +100,4 @@ void State::playASound(int tag, int loop, int channel)
 	audioManager.playChannelTimed(tag, loop, channel,3000);
 	audioManager.FadeOutChannel(1, 3000);
 }
+
