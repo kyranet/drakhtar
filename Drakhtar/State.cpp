@@ -62,11 +62,11 @@ void State::_handleEvents(SDL_Event& e)
 {
 	while (!_exit && SDL_PollEvent(&e))
 	{
-		if (event.type == SDL_KEYDOWN) {
-			switch (event.key.keysym.sym)
+		if (e.type == SDL_KEYDOWN) {
+			switch (e.key.keysym.sym)
 			{
-			case SDLK_e:
-				cout << "Pause";
+			case SDLK_ESCAPE:
+				game_->getStateMachine()->pushState(new MainMenu(game_, renderer_));
 				break;
 			}
 		}

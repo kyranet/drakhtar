@@ -1,4 +1,4 @@
-#include "Game.h"
+﻿#include "Game.h"
 #include "SDLError.h"
 
 Game::Game()
@@ -23,27 +23,30 @@ Game::Game()
 	}
 
 	// Units
+	textureManager_->add("Units-BlueArcher", "../images/Units/BlueArcher.png", 2, 1, SDL_FLIP_HORIZONTAL);
+	textureManager_->add("Units-BlueKnight", "../images/Units/BlueKnight.png", 2, 1, SDL_FLIP_HORIZONTAL);
+	textureManager_->add("Units-BlueMage", "../images/Units/BlueMage.png", 2, 1, SDL_FLIP_HORIZONTAL);
+	textureManager_->add("Units-BlueMonster", "../images/Units/BlueMonster.png", 2, 1, SDL_FLIP_HORIZONTAL);
+	textureManager_->add("Units-BlueSoldier", "../images/Units/BlueSoldier.png", 2, 1, SDL_FLIP_HORIZONTAL);
+	textureManager_->add("Units-BlueValar", "../images/Units/BlueValar.png", 2, 1, SDL_FLIP_HORIZONTAL);
+	textureManager_->add("Units-Thassa", "../images/Units/Thassa.png", 2, 1, SDL_FLIP_HORIZONTAL);
 	textureManager_->add("Units-Abeizhul", "../images/Units/Abeizhul.png", 2, 1);
-	textureManager_->add("Units-BlueArcher", "../images/Units/BlueArcher.png", 2, 1);
-	textureManager_->add("Units-BlueKnight", "../images/Units/BlueKnight.png", 2, 1);
-	textureManager_->add("Units-BlueMage", "../images/Units/BlueMage.png", 2, 1);
-	textureManager_->add("Units-BlueMonster", "../images/Units/BlueMonster.png", 2, 1);
-	textureManager_->add("Units-BlueSoldier", "../images/Units/BlueSoldier.png", 2, 1);
-	textureManager_->add("Units-BlueValar", "../images/Units/BlueValar.png", 2, 1);
 	textureManager_->add("Units-Dreilay", "../images/Units/Dreilay.png", 2, 1);
 	textureManager_->add("Units-RedArcher", "../images/Units/RedArcher.png", 2, 1);
 	textureManager_->add("Units-RedKnight", "../images/Units/RedKnight.png", 2, 1);
 	textureManager_->add("Units-RedMonster", "../images/Units/RedMonster.png", 2, 1);
 	textureManager_->add("Units-RedSoldier", "../images/Units/RedSoldier.png", 2, 1);
 	textureManager_->add("Units-Sheissa", "../images/Units/Sheissa.png", 2, 1);
-	textureManager_->add("Units-Thassa", "../images/Units/Thassa.png", 2, 1);
 	textureManager_->add("Units-Valar", "../images/Units/Valar.png", 2, 1);
 	textureManager_->add("Units-Zamdran", "../images/Units/Zamdran.png", 2, 1);
 
 	// UI
 	textureManager_->add("UI-cellFrame", "../images/UI/cellFrame.png", 1, 1);
 	textureManager_->add("UI-dialogueBackground", "../images/UI/dialogueBackground.png", 1, 1);
-	textureManager_->add("UI-turnBar", "../images/UI/turnBar.png", 1, 1);
+
+	//Button
+	textureManager_->add("Button-Play", "../images/MainMenu/Play_Button.png", 1, 1);
+	textureManager_->add("Button-Options", "../images/MainMenu/Options_Button.png", 1, 1);
 
 	// Portraits
 	textureManager_->add("Portraits-Archer", "../images/Portraits/Archer.png", 1, 1);
@@ -66,6 +69,7 @@ Game::Game()
 		->addAnimation("sad", { 6 });
 
 	// Maps
+	textureManager_->add("Maps-Test", "../images/Maps/TestMap.png", 1, 1);
 	textureManager_->add("Maps-FirstBattle", "../images/Maps/FirstBattle.png", 1, 1);
 	textureManager_->add("Maps-SecondBattle", "../images/Maps/SecondBattle.png", 1, 1);
 
@@ -86,7 +90,43 @@ Game::Game()
 
 void Game::run()
 {
-	stateMachine->getCurrentState()->run();
+	while (!stateMachine->getCurrentState()->getexit()) {
+		// Preload the state before running
+		actualstate_ = stateMachine->getCurrentState();
+		stateMachine->getCurrentState()->_preload();
+
+		// The event loop follows this scheme:
+		// → Create all pending-to-create game objects
+		// → Handle SDL events (provided by SDL's event poll)
+		// → Handle updates (updates all game objects of the game)
+		// → Handle after updates (called after all the updates have run)
+		// → Render all the game objects from the scene
+		// → Run all the pending events of this tick from the stack
+		// → Destroy all the elements that are pending to destroy
+		// Once all tasks are done, exit loop, perform cleanup, and finish
+
+		uint lastTick = SDL_GetTicks();
+		uint elapsedTicks = 0;
+		uint requiredTicks = 1000 / ANIMATION_TICKS_PER_SECOND;
+		while (stateMachine->getCurrentState()==actualstate_ && !stateMachine->getCurrentState()->getexit())
+		{
+			stateMachine->getCurrentState()->_create();
+			stateMachine->getCurrentState()->_handleEvents(event);
+			stateMachine->getCurrentState()->_update();
+
+			elapsedTicks = SDL_GetTicks() - lastTick;
+			if (elapsedTicks >= requiredTicks)
+			{
+				lastTick += elapsedTicks;
+				TextureManager::getInstance()->tick();
+			}
+			stateMachine->getCurrentState()->_afterUpdate();
+			stateMachine->getCurrentState()->_render();
+			stateMachine->getCurrentState()->_events();
+			stateMachine->getCurrentState()->_destroy();
+		}
+		stateMachine->getCurrentState()->_end();
+	}
 }
 
 Game::~Game()
@@ -95,6 +135,8 @@ Game::~Game()
 	SDL_DestroyWindow(window_);
 
 	delete state_;
+	if(state_!=actualstate_)
+		delete actualstate_;
 	delete stateMachine;
 
 	SDL_Quit();
@@ -107,6 +149,8 @@ SDL_Renderer* Game::getRenderer()
 	return renderer_;
 }
 
+
+
 Game* Game::instance = nullptr;
 
 Game* Game::getInstance()
@@ -118,6 +162,11 @@ Game* Game::getInstance()
 
 	return instance;
 }
+
+GameStateMachine* Game::getStateMachine() {
+	return stateMachine;
+}
+
 
 GameState* Game::currentState()
 {

@@ -22,14 +22,20 @@ private:
 	static Game* instance;
 	SDL_Window* window_ = nullptr;
 	SDL_Renderer* renderer_ = nullptr;
+	SDL_Event event;
+	bool _exit = false;
 	TextureManager* textureManager_ = TextureManager::getInstance();
 	GameStateMachine* stateMachine = nullptr;
 	GameState* state_ = nullptr;
+	GameState* actualstate_ = nullptr;
 	Game();
 public:
 	void run();
 	virtual ~Game();
-	SDL_Renderer* getRenderer();
+	SDL_Renderer* getRenderer();	
 	static Game* getInstance();
 	static GameState* currentState();
+	GameStateMachine* getStateMachine();
+	
+
 };

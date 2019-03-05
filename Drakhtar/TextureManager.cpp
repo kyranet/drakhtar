@@ -15,9 +15,9 @@ TextureManager* TextureManager::getInstance()
 
 TextureManager::TextureManager() {}
 
-TextureInfo* TextureManager::add(string name, string path, ushort columns, ushort rows)
+TextureInfo* TextureManager::add(string name, string path, ushort columns, ushort rows, SDL_RendererFlip flip)
 {
-	auto info = new TextureInfo(name, path, columns, rows);
+	auto info = new TextureInfo(name, path, columns, rows, flip);
 	stack_.push(info);
 	return info;
 }
@@ -28,6 +28,7 @@ void TextureManager::init(SDL_Renderer* renderer)
 	{
 		auto info = stack_.top();
 		auto texture = (new Texture(renderer))->loadFromImage(info->path, info->rows, info->columns);
+		texture->setFlip(info->flip);
 
 		// Add all the queued animations
 		for (auto animation : info->animations) texture->addAnimation(animation.name, animation.frames);
