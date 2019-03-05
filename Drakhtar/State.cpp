@@ -58,6 +58,7 @@ void State::_preload()
 	audioManager.loadSound(1, "../audio/sound/Glass_Running.mp3");
 	//audioManager.playMusic(0, 1);
 	audioManager.setMusicVolume(2);
+
 	// Controller
 	addEventListener(new BoardController(board_, turnBar_));
 }
