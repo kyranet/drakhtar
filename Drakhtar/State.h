@@ -35,7 +35,7 @@ public:
 	virtual void addGameObject(GameObject* gameObject);
 	virtual void removeGameObject(GameObject* gameObject);
 
-	//temporal
+	// temporary
 	void playASound(int tag, int loop, int channels);
 
 };
