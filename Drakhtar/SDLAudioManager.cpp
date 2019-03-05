@@ -152,7 +152,7 @@ void SDLAudioManager::FadeOutChannel(int channel, int ticks)
 	Mix_FadeOutChannel(channel, ticks);
 }
 
-void SDLAudioManager::FadeOutMusic( int ticks)
+void SDLAudioManager::FadeOutMusic(int ticks)
 {
 	Mix_FadeOutMusic(ticks);
 }
