@@ -5,7 +5,7 @@
 Box::Box(Texture* t, Vector2D<int> pos, Vector2D<int> size, Vector2D<int> bi, Unit* go) :
 	GameObject(t, pos, size), boardIndex(bi), content(go) 
 {
-	textureHover = TextureManager::get("Maps-FirstBattle");
+	textureHover = TextureManager::get("UI-cellHover");
 	hovered = false;
 }
 
