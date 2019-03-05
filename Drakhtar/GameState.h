@@ -37,7 +37,10 @@ public:
 	virtual void _events();
 	virtual void _destroy();
 	virtual void _end() {};
+	virtual void addGameObject(GameObject* gameObject);
+	virtual void removeGameObject(GameObject* gameObject);
 
 	GameState* addEventListener(EventListener* eventListener);
+
 };
 
