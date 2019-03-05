@@ -26,7 +26,6 @@ public:
 	virtual int setChannelVolume(int volume, int channel);
 	virtual int channels();
 
-
 	// music
 	virtual bool loadMusic(int tag, string fileName);
 	virtual void playMusic(int tag, int loops);
