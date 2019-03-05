@@ -16,4 +16,5 @@ public:
 	Unit* getContent();
 	Vector2D<int> getIndex();
 	void setContent(Unit* object);
+	bool isEmpty();
 };

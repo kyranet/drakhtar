@@ -64,25 +64,25 @@ Box* Board::getBoxAtCoordinates(Vector2D<int> coordinates) {
 	// Coordinates are out of the board
 	if (coordinates.getX() < marginX - cellSize/2 || coordinates.getY() < marginY - cellSize/2
 		|| coordinates.getX() > marginX + cols * cellSize - cellSize/2 || coordinates.getY() > marginY + rows * cellSize - cellSize/2) {
-		cout << "fuera" << endl;
 		return nullptr;
 	}
 	// Coordinates are inside the board
 	else {
 		int x = (int)floor((coordinates.getX() - marginX + cellSize/2) / cellSize);
 		int y = (int)floor((coordinates.getY() - marginY + cellSize/2) / cellSize);
-		cout << "(" << x << ", " << y << ")" << endl;
 		return getBoxAt(x, y);
 	}
 }
 
-bool Board::isInRange(Vector2D<int> from, Vector2D<int> to, int range) {
-	int distance = abs((to.getX() - from.getX()) + (to.getY() - to.getY()));
-	if (range >= distance) {
-		return true;
-	} else {
-		return false;
-	}
+bool Board::isInRange(Box* from, Box* to, int range) {
+	Vector2D<int> fromCoords = from->getIndex();
+	Vector2D<int> toCoords = to->getIndex();
+
+	int distanceX = abs((toCoords.getX() - fromCoords.getX()));
+	int distanceY = abs((toCoords.getY() - fromCoords.getY()));
+	int toalDistance = distanceX + distanceY;
+
+	return range >= toalDistance;
 }
 
 int ** Board::getCellsInRange(Box box, int range) {

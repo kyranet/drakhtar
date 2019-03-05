@@ -27,3 +27,7 @@ Unit * Box::getContent() {
 void Box::setContent(Unit* object) {
 	content = object;
 }
+
+bool Box::isEmpty() {
+	return content == nullptr;
+}
