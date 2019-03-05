@@ -18,7 +18,7 @@ public:
 
 	Box* getBoxAt(int x, int y);
 	Box* getBoxAtCoordinates(Vector2D<int> coordinates);
-	bool isInRange(Vector2D<int> from, Vector2D<int> to, int range);
+	bool isInRange(Box* from, Box* to, int range);
 	int** getCellsInRange(Box box, int range);
 
 	const enum objectType {

@@ -49,6 +49,10 @@ void Box::setContent(Unit* object) {
 	content = object;
 }
 
+bool Box::isEmpty() {
+	return content == nullptr;
+}
+
 bool Box::getHovered() const {
 	return hovered;
 }

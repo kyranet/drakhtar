@@ -32,6 +32,7 @@ public:
 	bool getMoved() const { return moved_; }
 	bool getSpeed() const { return speed_; }
 	Team* getTeam() const { return team_; }
+	Box* getBox() const { return box_; }
 	Vector2D<int> getBoxPosition() const { return boxPosition_; }
 	void moveTowards(Vector2D<int> pos);
 	void setMoving(bool moving);

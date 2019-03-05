@@ -17,10 +17,13 @@ void BoardController::run(SDL_Event event) {
 void BoardController::onClick(SDL_Point p) {
 	Box * boxClicked = board_->getBoxAtCoordinates(Vector2D<int>(p.x, p.y));
 
-	if (boxClicked != nullptr) {
-		if (boxClicked->getContent() == nullptr) {
-			turnBar_->getFrontUnit()->moveToBox(boxClicked);
+	// Checks if the box clicked exists and is empty
+	if (boxClicked != nullptr && boxClicked->isEmpty()) {
+		Unit* activeUnit = turnBar_->getFrontUnit();
+		if (board_->isInRange(activeUnit->getBox(), boxClicked, activeUnit->getMoveRange())) {
+			activeUnit->moveToBox(boxClicked);
 			turnBar_->advanceTurn();
 		}
+		else { cout << "Out of movement range!" << endl; }
 	}
 }
