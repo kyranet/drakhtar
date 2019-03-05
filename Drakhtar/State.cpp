@@ -53,7 +53,11 @@ void State::_preload()
 	gameObjects_.push_back(exampleDialog);
 
 	//sounds
-	audioManager->loadMusic(0, "Smash Mouth - All Star _Official Music Video_.mp3");	audioManager->playMusic(0, 1);
+	audioManager.init();
+	audioManager.loadMusic(0, "../audio/background/Smash Mouth - All Star _Official Music Video_.mp3");
+	audioManager.loadSound(1, "../audio/sound/Glass_Running.mp3");
+	//audioManager.playMusic(0, 1);
+	audioManager.setMusicVolume(2);
 	// Controller
 	addEventListener(new BoardController(board_, turnBar_));
 }
@@ -65,6 +69,9 @@ void State::_handleEvents(SDL_Event& e)
 		if (e.type == SDL_KEYDOWN) {
 			switch (e.key.keysym.sym)
 			{
+			case SDLK_e:
+				playASound(1, 2, 2);
+				break;
 			case SDLK_ESCAPE:
 				game_->getStateMachine()->pushState(new MainMenu(game_, renderer_));
 				break;
@@ -87,4 +94,10 @@ void State::addGameObject(GameObject* gameObject)
 void State::removeGameObject(GameObject* gameObject)
 {
 	pendingOnDestroy_.push_back(gameObject);	
+}
+
+void State::playASound(int tag, int loop, int channel)
+{
+	audioManager.playChannelTimed(tag, loop, channel,3000);
+	audioManager.FadeOutChannel(1, 3000);
 }

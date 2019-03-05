@@ -24,16 +24,18 @@ private:
 	Game* game_ = nullptr;
 	TurnBar* turnBar_;
 	Board* board_;
-	SDLAudioManager * audioManager;
 protected:
 	void _preload();
 	void _handleEvents(SDL_Event& e);
-	
 	void boton() { cout << "boton"; }
+	SDLAudioManager audioManager;
 public:
 	State(Game* game, SDL_Renderer* renderer);
 	virtual ~State();
 	virtual void addGameObject(GameObject* gameObject);
 	virtual void removeGameObject(GameObject* gameObject);
+
+	//temporal
+	void playASound(int tag, int loop, int channels);
 };
 
