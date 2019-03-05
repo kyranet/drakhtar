@@ -1,13 +1,12 @@
 #include "Board.h"
 #include "Unit.h"
-#include "Controller.h"
 
-Board::Board(Texture* cellTexture, int r, int c, float cellSize)
-	: GameObject(nullptr, Vector2D<int>(0, 0), Vector2D < int>(0, 0)), rows(r), cols(c)
+Board::Board(Texture* cellTexture, int r, int c, float cs)
+	: GameObject(nullptr, Vector2D<int>(0, 0), Vector2D < int>(0, 0)), rows(r), cols(c), cellSize(cs)
 {
 	// Calculates margins to center the board on screen
-	marginX = (WIN_WIDTH - (cellSize * (cols - 1))) / 2;
-	marginY = (WIN_HEIGHT - (cellSize * (rows - 1))) / 2;
+	marginX = (WIN_WIDTH - (cs * (cols - 1))) / 2;
+	marginY = (WIN_HEIGHT - (cs * (rows - 1))) / 2;
 
 	// Creates the board matrix
 	board = new Box**[rows];
@@ -18,10 +17,9 @@ Board::Board(Texture* cellTexture, int r, int c, float cellSize)
 	// Fills the board with empty boxes
 	for (int i = 0; i < rows; i++) {
 		for (int j = 0; j < cols; j++) {
-			Vector2D<int> pos = Vector2D<int>((int)floor(marginX + j * cellSize), (int)floor(marginY + i * cellSize));
-			Vector2D<int> size = Vector2D<int>((int)floor(cellSize), (int)floor(cellSize));
+			Vector2D<int> pos = Vector2D<int>((int)floor(marginX + j * cs), (int)floor(marginY + i * cs));
+			Vector2D<int> size = Vector2D<int>((int)floor(cs), (int)floor(cs));
 			Box* box = new Box(cellTexture, pos, size, Vector2D<int>(i, j), nullptr);
-			box->addEventListener(new Controller(box));
 			board[i][j] = box;
 		}
 	}
@@ -50,6 +48,34 @@ void Board::render() const {
 	}
 }
 
+void Board::handleEvents(SDL_Event event) {
+	for (int i = 0; i < rows; i++) {
+		for (int j = 0; j < cols; j++) {
+			board[i][j]->handleEvents(event);
+		}
+	}
+}
+
+Box* Board::getBoxAt(int x, int y) {
+	return board[y][x];
+}
+
+Box* Board::getBoxAtCoordinates(Vector2D<int> coordinates) {
+	// Coordinates are out of the board
+	if (coordinates.getX() < marginX - cellSize/2 || coordinates.getY() < marginY - cellSize/2
+		|| coordinates.getX() > marginX + cols * cellSize - cellSize/2 || coordinates.getY() > marginY + rows * cellSize - cellSize/2) {
+		cout << "fuera" << endl;
+		return nullptr;
+	}
+	// Coordinates are inside the board
+	else {
+		int x = (int)floor((coordinates.getX() - marginX + cellSize/2) / cellSize);
+		int y = (int)floor((coordinates.getY() - marginY + cellSize/2) / cellSize);
+		cout << "(" << x << ", " << y << ")" << endl;
+		return getBoxAt(x, y);
+	}
+}
+
 bool Board::isInRange(Vector2D<int> from, Vector2D<int> to, int range) {
 	int distance = abs((to.getX() - from.getX()) + (to.getY() - to.getY()));
 	if (range >= distance) {
@@ -57,10 +83,6 @@ bool Board::isInRange(Vector2D<int> from, Vector2D<int> to, int range) {
 	} else {
 		return false;
 	}
-}
-
-Box* Board::getBoxAt(int x, int y) {
-	return board[x][y];
 }
 
 int ** Board::getCellsInRange(Box box, int range) {
@@ -102,26 +124,4 @@ int ** Board::getCellsInRange(Box box, int range) {
 	}
 
 	return cellsInRange;
-}
-
-Vector2D<int> Board::getCellIndexFromCoordinates(Vector2D<int> coordinates) {
-	// Coordinates are out of the board
-	if (coordinates.getX() < marginX || coordinates.getY() < marginY ||
-		coordinates.getX() > marginX + this->getRect().w || coordinates.getY() > marginY + this->getRect().h) {
-		return Vector2D<int>(-1, -1);
-		// Coordinates are inside the board
-	}
-	else {
-		int x = (int)floor((coordinates.getX() - marginX) / cellSize);
-		int y = (int)floor((coordinates.getY() - marginY) / cellSize);
-		return Vector2D<int>(x, y);
-	}
-}
-
-void Board::handleEvents(SDL_Event event) {
-	for (int i = 0; i < rows; i++) {
-		for (int j = 0; j < cols; j++) {
-			board[i][j]->handleEvents(event);
-		}
-	}
 }

@@ -26,6 +26,7 @@ private:
 	map<string, vector<ushort>> animations_;
 	vector<ushort> animation_;
 	ushort frame_ = 0;
+	SDL_RendererFlip flip_ = SDL_FLIP_NONE;
 
 public:
 	Texture() {};
@@ -41,11 +42,13 @@ public:
 	vector<ushort> getAnimation() const { return animation_; }
 	SDL_Texture* getTexture() const { return texture_; }
 	SDL_Renderer* getRenderer() const { return renderer_; }
+	SDL_RendererFlip getFlip() const { return flip_; }
 
-	Texture* setTexture(SDL_Texture* texture);
-	Texture* setColumnAmount(ushort columns);
-	Texture* setRowAmount(ushort rows);
-	Texture* setFrameSize(Vector2D<ushort> frameSize);
+	Texture* setTexture(SDL_Texture* const& texture);
+	Texture* setColumnAmount(ushort const& columns);
+	Texture* setRowAmount(ushort const& rows);
+	Texture* setFrameSize(Vector2D<ushort> const& frameSize);
+	Texture* setFlip(SDL_RendererFlip const& flip);
 	Texture* loadFromImage(string filename, ushort rowAmount = 1, ushort columnAmount = 1);
 	Texture* loadFromText(Font* font, string text, SDL_Color const color = { 0, 0, 0, 255 });
 	void addAnimation(string const& name, vector<ushort> const& frames);
@@ -54,6 +57,6 @@ public:
 	void tick();
 	void render(Vector2D<int> position) const;
 	void render(SDL_Rect const& dest, double angle = 0, SDL_Rect* clip = nullptr) const;
-	void renderFrame(SDL_Rect const& dest, ushort frame, double angle = 0, SDL_RendererFlip flip = SDL_FLIP_NONE) const;
+	void renderFrame(SDL_Rect const& dest, ushort frame, double angle = 0) const;
 	void close();
 };

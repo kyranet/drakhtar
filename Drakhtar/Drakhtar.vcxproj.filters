@@ -63,9 +63,6 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Archivos de código fuente\GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Controller.cpp">
-      <Filter>Archivos de código fuente\Components\EventListeners</Filter>
-    </ClCompile>
     <ClCompile Include="State.cpp">
       <Filter>Archivos de código fuente\States</Filter>
     </ClCompile>
@@ -123,6 +120,9 @@
     <ClCompile Include="MainMenu.cpp">
       <Filter>Archivos de código fuente\States</Filter>
     </ClCompile>
+    <ClCompile Include="BoardController.cpp">
+      <Filter>Archivos de código fuente\Components\EventListeners</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -139,9 +139,6 @@
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Archivos de encabezado\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Controller.h">
-      <Filter>Archivos de encabezado\Components\EventListeners</Filter>
     </ClInclude>
     <ClInclude Include="EventListener.h">
       <Filter>Archivos de encabezado\Components</Filter>
@@ -217,6 +214,9 @@
     </ClInclude>
     <ClInclude Include="MainMenu.h">
       <Filter>Archivos de encabezado\States</Filter>
+    </ClInclude>
+    <ClInclude Include="BoardController.h">
+      <Filter>Archivos de encabezado\Components\EventListeners</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

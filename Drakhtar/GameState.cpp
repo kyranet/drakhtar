@@ -4,7 +4,7 @@
 void GameState::_render() {
 	// Clear the screen
 	SDL_RenderClear(renderer_);
-
+  
 	// Render each game object
 	for (auto gameObject : gameObjects_)
 		gameObject->render();
@@ -82,3 +82,8 @@ GameState::~GameState()
 		delete gameObject;
 	game_ = nullptr;
 }
+GameState* GameState::addEventListener(EventListener* eventListener)
+{
+	eventListeners_.push_back(eventListener);
+	return this;
+};

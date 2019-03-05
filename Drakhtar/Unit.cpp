@@ -33,10 +33,10 @@ void Unit::setTeam(Team* team)
 void Unit::moveToBox(Box * newBox)
 {
 	// If it's not the unit's turn, cancel any action
-	if (!moving_) return;
+	//if (!moving_) return;
 
 	box_->setContent(nullptr);
-	pos_ = Vector2D<int>(newBox->getRect().x, newBox->getRect().y);
+	pos_ = Vector2D<int>(newBox->getRect().x + newBox->getRect().w/2, newBox->getRect().y + newBox->getRect().h/2);
 	newBox->setContent(this);
 	this->setMoved(true);
 	this->setMoving(false);

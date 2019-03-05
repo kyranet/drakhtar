@@ -14,11 +14,12 @@ public:
 	virtual ~Board();
 
 	virtual void render() const;
-	bool isInRange(Vector2D<int> from, Vector2D<int> to, int range);
-	Box* getBoxAt(int x, int y);
-	int** getCellsInRange(Box box, int range);
-	Vector2D<int> getCellIndexFromCoordinates(Vector2D<int> coordinates);
 	virtual void handleEvents(SDL_Event event);
+
+	Box* getBoxAt(int x, int y);
+	Box* getBoxAtCoordinates(Vector2D<int> coordinates);
+	bool isInRange(Vector2D<int> from, Vector2D<int> to, int range);
+	int** getCellsInRange(Box box, int range);
 
 	const enum objectType {
 		outOfBoard,
