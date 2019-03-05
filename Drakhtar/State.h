@@ -11,6 +11,7 @@
 #include "Button.h"
 #include "Battalion.h"
 #include "TurnBar.h"
+#include "SDLAudioManager.h"
 
 using namespace std;
 
@@ -26,10 +27,16 @@ private:
 protected:
 	void _preload();
 	void _handleEvents(SDL_Event& e);
-	
 	void boton() { cout << "boton"; }
+	SDLAudioManager audioManager;
 public:
 	State(Game* game, SDL_Renderer* renderer);
 	virtual ~State();
+	virtual void addGameObject(GameObject* gameObject);
+	virtual void removeGameObject(GameObject* gameObject);
+
+	// temporary
+	void playASound(int tag, int loop, int channels);
+
 };
 

@@ -75,6 +75,17 @@ int SDLAudioManager::playChannel(int tag, int loops, int channel) {
 	}
 }
 
+int SDLAudioManager::playChannelTimed(int tag, int loops, int channel,int ticks)
+{
+	Mix_Chunk* chunk = chunks_[tag];
+	if (chunk != nullptr) {
+		return Mix_PlayChannelTimed(channel, chunk, loops, ticks);
+	}
+	else {
+		return -1;
+	}
+}
+
 void SDLAudioManager::pauseChannel(int channel) {
 	Mix_Pause(channel);
 }
@@ -120,7 +131,7 @@ void SDLAudioManager::playMusic(int tag, int loops) {
 	}
 }
 
-int SDLAudioManager::setMusicVolume(int volume) {
+int SDLAudioManager::setMusicVolume(int volume) { // volume = 2 is quite low already, play with that number 
 	return Mix_VolumeMusic(volume);
 }
 
@@ -134,4 +145,14 @@ void SDLAudioManager::pauseMusic() {
 
 void SDLAudioManager::resumeMusic() {
 	Mix_ResumeMusic();
+}
+
+void SDLAudioManager::FadeOutChannel(int channel, int ticks)
+{
+	Mix_FadeOutChannel(channel, ticks);
+}
+
+void SDLAudioManager::FadeOutMusic(int ticks)
+{
+	Mix_FadeOutMusic(ticks);
 }

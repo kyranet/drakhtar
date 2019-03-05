@@ -4,6 +4,7 @@
 #include "EventListener.h"
 #include "Board.h"
 #include "TurnBar.h"
+#include "State.h"
 
 class BoardController : public EventListener
 {

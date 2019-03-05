@@ -49,6 +49,14 @@ void State::_preload()
 	auto exampleDialog = new DialogScene(game_, "dialog1_start", "Retron2000");
 	gameObjects_.push_back(exampleDialog);
 
+
+	//sounds
+	audioManager.init();
+	audioManager.loadMusic(0, "../audio/background/Smash Mouth - All Star _Official Music Video_.mp3");
+	audioManager.loadSound(1, "../audio/sound/Glass_Running.mp3");
+	//audioManager.playMusic(0, 1);
+	audioManager.setMusicVolume(2);
+  
 	// Turn Bar
 	turnBar_ = new TurnBar(team1->getUnitList(), team2->getUnitList());
 	gameObjects_.push_back(turnBar_);
@@ -65,6 +73,9 @@ void State::_handleEvents(SDL_Event& e)
 		if (e.type == SDL_KEYDOWN) {
 			switch (e.key.keysym.sym)
 			{
+			case SDLK_e:
+				playASound(1, 2, 2);
+				break;
 			case SDLK_ESCAPE:
 				game_->getStateMachine()->pushState(new MainMenu(game_, renderer_));
 				break;
@@ -79,4 +90,14 @@ void State::_handleEvents(SDL_Event& e)
 	}
 }
 
+void State::removeGameObject(GameObject* gameObject)
+{
+	pendingOnDestroy_.push_back(gameObject);	
+}
+
+void State::playASound(int tag, int loop, int channel)
+{
+	audioManager.playChannelTimed(tag, loop, channel,3000);
+	audioManager.FadeOutChannel(1, 3000);
+}
 
