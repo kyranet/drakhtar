@@ -1,7 +1,5 @@
 #include "MainMenu.h"
 
-
-
 MainMenu::MainMenu(Game* game, SDL_Renderer* renderer) : GameState(game,renderer), game_(game), renderer_(renderer)
 {
 }
@@ -9,57 +7,51 @@ MainMenu::MainMenu(Game* game, SDL_Renderer* renderer) : GameState(game,renderer
 
 MainMenu::~MainMenu()
 {
+	for (auto gameObject : gameObjects_)
+		delete gameObject;
+	game_ = nullptr;
 }
 
-void MainMenu::run()
+void MainMenu::_preload()
 {
-	// Preload the state before running
-	
-	while (!_exit)
-	{
-		
-		_handleEvents();
-		_update();		
-		_render();
-		
-	}
+	gameObjects_.push_back(new GameObject(TextureManager::get("Maps-Test"), Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2), Vector2D<int>(WIN_WIDTH, WIN_HEIGHT)));
+	Play = new Button(TextureManager::get("Button-Play"), WIN_WIDTH / 2, 250, 200, 75, Play_game, game_, renderer_);
+	gameObjects_.push_back(Play);
+	Options = new Button(TextureManager::get("Button-Options"), WIN_WIDTH / 2, 350, 200, 75, Options_game, game_, renderer_);
+	gameObjects_.push_back(Options);
 }
 
-
-void MainMenu::_render() const
+void MainMenu::Play_game(Game * game, SDL_Renderer* renderer)
 {
-	// Clear the screen
-	SDL_RenderClear(renderer_);
-
-	// Render each game object
+	cout << "Play";
+	game->getStateMachine()->pushState(new State(game, renderer));
 	
+}
 
-	// Render the new frame
-	SDL_RenderPresent(renderer_);
-};
-
-void MainMenu::_update() {};
-void MainMenu::_handleEvents()
+void MainMenu::Options_game(Game * game, SDL_Renderer* renderer)
 {
-	// Listen to SDL events
-	SDL_Event event;
-	while (!_exit && SDL_PollEvent(&event))
+	cout << "Options";
+}
+
+void MainMenu::_handleEvents(SDL_Event& e)
+{	
+	while (!_exit && SDL_PollEvent(&e))
 	{
-		// If the event type is quit, change state to GAMEOVER for cleanup
-		if (event.type == SDL_QUIT)
-		{
-			_exit = true;
-			// TODO: Change State
+		Play->handleEvents(e);
+		Options->handleEvents(e);
+		if (event.type == SDL_KEYDOWN) {
+			switch (event.key.keysym.sym)
+			{
+			case SDLK_e:
+				//game_->getStateMachine()->pushState(new State(game_, renderer_));
+				break;
+			}
 		}
-		switch (event.key.keysym.sym)
-		{
-		case SDLK_ESCAPE:
-			cout << "Pasar";
-			
-			break;
-		case SDLK_s:
-			cout << "save";
-			break;
-		}
+
+		// For each game object, run the event handler
+		for (auto gameObject : gameObjects_)
+			gameObject->handleEvents(e);
+
+		GameState::_handleEvents(e);
 	}
 }

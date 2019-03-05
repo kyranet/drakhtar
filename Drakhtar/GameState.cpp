@@ -4,13 +4,18 @@
 void GameState::_render() {
 	// Clear the screen
 	SDL_RenderClear(renderer_);
-
+  
 	// Render each game object
 	for (auto gameObject : gameObjects_)
 		gameObject->render();
 
 	// Render the new frame
 	SDL_RenderPresent(renderer_);
+}
+
+bool GameState::getexit()
+{
+	return _exit;
 }
 
 void GameState::_preload()
@@ -37,9 +42,6 @@ void GameState::_handleEvents(SDL_Event& e) {
 			// TODO: Change State
 		}
 	}
-
-	for (auto listener : eventListeners_)
-		listener->run(e);
 }
 
 void GameState::_afterUpdate()
@@ -80,44 +82,6 @@ GameState::~GameState()
 		delete gameObject;
 	game_ = nullptr;
 }
-
-void GameState::run() {
-	// Preload the state before running
-	_preload();
-
-	// The event loop follows this scheme:
-	// → Create all pending-to-create game objects
-	// → Handle SDL events (provided by SDL's event poll)
-	// → Handle updates (updates all game objects of the game)
-	// → Handle after updates (called after all the updates have run)
-	// → Render all the game objects from the scene
-	// → Run all the pending events of this tick from the stack
-	// → Destroy all the elements that are pending to destroy
-	// Once all tasks are done, exit loop, perform cleanup, and finish
-
-	uint lastTick = SDL_GetTicks();
-	uint elapsedTicks = 0;
-	uint requiredTicks = 1000 / ANIMATION_TICKS_PER_SECOND;
-	while (!_exit)
-	{
-		_create();
-		_handleEvents(event);
-		_update();
-
-		elapsedTicks = SDL_GetTicks() - lastTick;
-		if (elapsedTicks >= requiredTicks)
-		{
-			lastTick += elapsedTicks;
-			TextureManager::getInstance()->tick();
-		}
-		_afterUpdate();
-		_render();
-		_events();
-		_destroy();
-	}
-	_end();
-}
-
 GameState* GameState::addEventListener(EventListener* eventListener)
 {
 	eventListeners_.push_back(eventListener);

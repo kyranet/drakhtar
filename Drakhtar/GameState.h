@@ -26,9 +26,8 @@ protected:
 public:
 	GameState(Game* game,SDL_Renderer* renderer) : game_(game),renderer_(renderer) {};
 	~GameState();
-
-	virtual void run();
-
+	
+	bool getexit();
 	virtual void _preload();
 	virtual void _create();
 	virtual void _update();
