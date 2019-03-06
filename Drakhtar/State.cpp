@@ -62,7 +62,6 @@ void State::_preload()
 	turnBar_ = new TurnBar(team1->getUnitList(), team2->getUnitList());
 	gameObjects_.push_back(turnBar_);
 
-
 	// Controller
 	addEventListener(new BoardController(board_, turnBar_));
 }
