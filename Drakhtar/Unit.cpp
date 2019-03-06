@@ -45,6 +45,8 @@ void Unit::moveToBox(Box * newBox)
 
 void Unit::loseHealth(int health)
 {
+	cout << "Health: " << health_ << " Damage: " << health;
 	health_ -= health;
+	cout << " Remaining: " << health_ << endl;
 	// TODO: Send "Unit killed" event if health_ <= 0;
 }

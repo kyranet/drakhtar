@@ -120,9 +120,7 @@ int ** Board::getCellsInRange(Box* box, int range) {
 					else { cellsInRange[j][i] = enemy; }	// Enemy
 				}
 			}
-			cout << cellsInRange[j][i] << " ";
 		}
-		cout << endl;
 	}
 	return cellsInRange;
 }
