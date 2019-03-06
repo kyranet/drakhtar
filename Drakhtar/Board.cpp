@@ -19,7 +19,7 @@ Board::Board(Texture* cellTexture, int r, int c, float cs)
 		for (int j = 0; j < cols; j++) {
 			Vector2D<int> pos = Vector2D<int>((int)floor(marginX + j * cs), (int)floor(marginY + i * cs));
 			Vector2D<int> size = Vector2D<int>((int)floor(cs), (int)floor(cs));
-			Box* box = new Box(cellTexture, pos, size, Vector2D<int>(i, j), nullptr);
+			Box* box = new Box(cellTexture, pos, size, Vector2D<int>(j, i), nullptr);
 			board[i][j] = box;
 		}
 	}
@@ -80,19 +80,19 @@ bool Board::isInRange(Box* from, Box* to, int range) {
 
 	int distanceX = abs((toCoords.getX() - fromCoords.getX()));
 	int distanceY = abs((toCoords.getY() - fromCoords.getY()));
-	int toalDistance = distanceX + distanceY;
+	int totalDistance = distanceX + distanceY;
 
-	return range >= toalDistance;
+	return range >= totalDistance;
 }
 
-int ** Board::getCellsInRange(Box box, int range) {
+int ** Board::getCellsInRange(Box* box, int range) {
 	int size = range * 2 + 1;
-	int startX = box.getIndex().getX() - range;
-	int startY = box.getIndex().getY() - range;
+	int startX = box->getIndex().getX() - range;
+	int startY = box->getIndex().getY() - range;
 
 	// Creates the array
 	int** cellsInRange = new int*[size];
-	for (int i = 0; i < rows; i++) {
+	for (int i = 0; i < size; i++) {
 		cellsInRange[i] = new int[size];
 	}
 
@@ -100,28 +100,44 @@ int ** Board::getCellsInRange(Box box, int range) {
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
 			// Current cell is out of the board
-			if (i + startX < 0 || j + startY < 0) {
-				cellsInRange[i][j] = outOfBoard;
+			if (j + startX < 0 || i + startY < 0 || j + startX >= cols || i + startY >= rows) {
+				cellsInRange[j][i] = outOfBoard;
 
 			// Current cell is out of the movement range
-			} else if(abs(box.getIndex().getX() - i + startX) + abs(box.getIndex().getY() - j + startY) > range) {
-				cellsInRange[i][j] = outOfRange;
+			} else if(!isInRange(box, getBoxAt(j + startX, i + startY), range)) {
+				cellsInRange[j][i] = outOfRange;
 
 			// Current cell is in the board and in range
 			} else {
-				Unit* unit = board[i + startX][j + startY]->getContent();
+				Unit* unit = board[i + startY][j + startX]->getContent();
 
 				// Current cell is empty
-				if (unit == nullptr) { cellsInRange[i][j] = empty; }
+				if (unit == nullptr) { cellsInRange[j][i] = empty; }
 
 				// Current cell is occupied
 				else {
-					if (unit->getTeam() == box.getContent()->getTeam()) { cellsInRange[i][j] = ally; }	// Ally
-					else { cellsInRange[i][j] = enemy; }	// Enemy
+					if (unit->getTeam() == box->getContent()->getTeam()) { cellsInRange[j][i] = ally; }	// Ally
+					else { cellsInRange[j][i] = enemy; }	// Enemy
 				}
+			}
+			cout << cellsInRange[j][i] << " ";
+		}
+		cout << endl;
+	}
+	return cellsInRange;
+}
+
+bool Board::isEnemyInRange(Box * box, int range) {
+	int** cellsInRange = getCellsInRange(box, range);
+	int size = range * 2 + 1;
+	bool enemyFound = false;
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size; j++) {
+			if (cellsInRange[i][j] == enemy) {
+				enemyFound = true;
 			}
 		}
 	}
 
-	return cellsInRange;
+	return enemyFound;
 }
