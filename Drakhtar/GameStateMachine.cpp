@@ -9,7 +9,11 @@ GameStateMachine::GameStateMachine()
 
 GameStateMachine::~GameStateMachine()
 {
-	while (!stateStack.empty()) stateStack.pop();
+	while (!stateStack.empty())
+	{
+		delete stateStack.top();
+		stateStack.pop();
+	}
 	currentState = nullptr;
 }
 

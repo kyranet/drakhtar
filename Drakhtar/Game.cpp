@@ -43,6 +43,7 @@ Game::Game()
 
 	// UI
 	textureManager_->add("UI-cellFrame", "../images/UI/cellFrame.png", 1, 1);
+	textureManager_->add("UI-cellHover", "../images/UI/cellHover.png", 1, 1);
 	textureManager_->add("UI-dialogueBackground", "../images/UI/dialogueBackground.png", 1, 1);
 	textureManager_->add("UI-turnBar", "../images/UI/turnBar.png", 1, 1);
 
@@ -136,9 +137,6 @@ Game::~Game()
 	SDL_DestroyRenderer(renderer_);
 	SDL_DestroyWindow(window_);
 
-	delete state_;
-	if(state_!=actualstate_)
-		delete actualstate_;
 	delete stateMachine;
 
 	SDL_Quit();
@@ -150,8 +148,6 @@ SDL_Renderer* Game::getRenderer()
 {
 	return renderer_;
 }
-
-
 
 Game* Game::instance = nullptr;
 

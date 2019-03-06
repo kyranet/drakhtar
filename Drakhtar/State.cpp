@@ -2,7 +2,6 @@
 
 #include "State.h"
 #include "BoardController.h"
-#include "UnitFactory.h"
 
 State::State(Game* game, SDL_Renderer* renderer)
 	: GameState(game,renderer), game_(game)
@@ -11,32 +10,32 @@ State::State(Game* game, SDL_Renderer* renderer)
 
 State::~State()
 {
-	for (auto gameObject : gameObjects_)
-		delete gameObject;
-	game_ = nullptr;
+	delete team1;
+	delete team2;
+	delete factory;
 }
 
 void State::_preload()
 {
 	// TextureManager
 	gameObjects_.push_back(new GameObject(TextureManager::get("Maps-FirstBattle"), Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2), Vector2D<int>(WIN_WIDTH, WIN_HEIGHT)));
-
+	
 	// Board
 	board_ = new Board(TextureManager::get("UI-cellFrame"), 8, 12, 50);
 	gameObjects_.push_back(new GameObject(TextureManager::get("Maps-FirstBattle"), Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2), Vector2D<int>(WIN_WIDTH, WIN_HEIGHT)));
     gameObjects_.push_back(board_);
 	
 	// Test Teams
-	Team * team1 = new Team(board_, Color::BLUE);
-	Team * team2 = new Team(board_, Color::RED);
-
+	team1 = new Team(board_, Color::BLUE);
+	team2 = new Team(board_, Color::RED);
+	
 	// Test Factory
-	UnitFactory * factory = new UnitFactory();
-	gameObjects_.push_back(factory->newSoldier(team1, board_->getBoxAt(0, 0), 10));
-	gameObjects_.push_back(factory->newArcher(team1, board_->getBoxAt(0, 1), 10));
-	gameObjects_.push_back(factory->newWizard(team1, board_->getBoxAt(0, 2), 10));
-	gameObjects_.push_back(factory->newKnight(team1, board_->getBoxAt(1, 0), 10));
-	gameObjects_.push_back(factory->newMonster(team1, board_->getBoxAt(1, 1), 10));
+	factory = new UnitFactory();
+	gameObjects_.push_back(factory->newSoldier(team1, board_->getBoxAt(0, 2), 10));
+	gameObjects_.push_back(factory->newArcher(team1, board_->getBoxAt(0, 3), 10));
+	gameObjects_.push_back(factory->newWizard(team1, board_->getBoxAt(0, 4), 10));
+	gameObjects_.push_back(factory->newKnight(team1, board_->getBoxAt(0, 5), 10));
+	gameObjects_.push_back(factory->newMonster(team1, board_->getBoxAt(0, 6), 10));
 
 
 	gameObjects_.push_back(factory->newSoldier(team2, board_->getBoxAt(11, 0), 10));
@@ -58,9 +57,8 @@ void State::_preload()
 	audioManager.setMusicVolume(2);
   
 	// Turn Bar
-	turnBar_ = new TurnBar(team1->getUnitList(), team2->getUnitList());
+	auto turnBar_ = new TurnBar(team1->getUnitList(), team2->getUnitList());
 	gameObjects_.push_back(turnBar_);
-
 
 	// Controller
 	addEventListener(new BoardController(board_, turnBar_));
@@ -95,4 +93,3 @@ void State::playASound(int tag, int loop, int channel)
 	audioManager.playChannelTimed(tag, loop, channel,3000);
 	audioManager.FadeOutChannel(1, 3000);
 }
-
