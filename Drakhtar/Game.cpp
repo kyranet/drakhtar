@@ -48,6 +48,7 @@ Game::Game()
 	//Button
 	textureManager_->add("Button-Play", "../images/MainMenu/Play_Button.png", 1, 1);
 	textureManager_->add("Button-Options", "../images/MainMenu/Options_Button.png", 1, 1);
+	textureManager_->add("Button-Pause", "../images/Pause/Pause_Button.png", 1, 1);
 
 	// Portraits
 	textureManager_->add("Portraits-Archer", "../images/Portraits/Archer.png", 1, 1);
