@@ -19,6 +19,6 @@ public:
 	Unit* getContent();
 	Vector2D<int> getIndex();
 	void setContent(Unit* object);
-	bool getHovered();
+	bool getHovered() const;
 	void setHovered(bool hover);
 };

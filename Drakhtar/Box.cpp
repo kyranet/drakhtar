@@ -17,14 +17,12 @@ Box::~Box() {
 void Box::render() {
 	if (!hovered) {
 		GameObject::render();
-	}
-	else 
-	{ 
+	} else { 
 		SDL_Rect dest{
-		pos_.getX() - size_.getX() / 2,
-		pos_.getY() - size_.getY() / 2,
-		size_.getX(),
-		size_.getY()
+			pos_.getX() - size_.getX() / 2,
+			pos_.getY() - size_.getY() / 2,
+			size_.getX(),
+			size_.getY()
 		};
 		textureHover->render(dest, texture_->getAnimation()[texture_->getFrame()]); 
 	}
@@ -36,10 +34,7 @@ void Box::render() {
 void Box::handleEvents(SDL_Event event)
 {
 	SDL_Point p = { event.motion.x, event.motion.y };
-	if (SDL_PointInRect(&p, &this->getRect())) {
-		hovered = true;
-	}
-	else { hovered = false; }
+	hovered = SDL_PointInRect(&p, &this->getRect());
 }
 
 Vector2D<int> Box::getIndex() {
@@ -54,7 +49,7 @@ void Box::setContent(Unit* object) {
 	content = object;
 }
 
-bool Box::getHovered() {
+bool Box::getHovered() const {
 	return hovered;
 }
 
