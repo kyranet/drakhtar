@@ -33,14 +33,10 @@ void GameState::_update() {
 
 void GameState::_handleEvents(SDL_Event& e) {
 	// Listen to SDL events
-	while (!_exit && SDL_PollEvent(&e))
+	if (e.type == SDL_QUIT)
 	{
-		// If the event type is quit, change state to GAMEOVER for cleanup
-		if (e.type == SDL_QUIT)
-		{
-			_exit = true;
-			// TODO: Change State
-		}
+		_exit = true;
+		// TODO: Change State
 	}
 }
 
@@ -78,14 +74,19 @@ void GameState::_destroy()
 
 GameState::~GameState()
 {
+	// Clean up game objects
 	for (auto gameObject : gameObjects_)
 		delete gameObject;
+	gameObjects_.clear();
+
+	// Clean up event listeners
 	while (!eventListeners_.empty()) {
 		EventListener * eventListener = eventListeners_.back();
 		eventListeners_.pop_back();
 		delete eventListener;
 	}
 
+	// Assign game to nullptr
 	game_ = nullptr;
 }
 GameState* GameState::addEventListener(EventListener* eventListener)

@@ -22,12 +22,14 @@ SDLAudioManager::~SDLAudioManager() {
 		if (pair.second != nullptr)
 			Mix_FreeChunk(pair.second);
 	}
+	chunks_.clear();
 
 	// free all music sound effect
 	for (const auto &pair : music_) {
 		if (pair.second != nullptr)
 			Mix_FreeMusic(pair.second);
 	}
+	music_.clear();
 
 	// close SDL_Mixer
 	Mix_Quit();
@@ -111,14 +113,23 @@ bool SDLAudioManager::loadMusic(int tag, string fileName) {
 		return false;
 
 	Mix_Music* music = Mix_LoadMUS(fileName.c_str());
-	if (music != nullptr) {
+	if (music != nullptr)
+	{
 		Mix_Music* curr = music_[tag];
 		if (curr != nullptr)
+		{
 			Mix_FreeMusic(curr);
-		music_[tag] = music;
+			music_[tag] = music;
+		}
+		else
+		{
+			music_.erase(tag);
+		}
+
 		return true;
 	}
-	else {
+	else
+	{
 		cout << "Couldn't load music file: " << fileName << endl;
 		return false;
 	}
@@ -126,8 +137,13 @@ bool SDLAudioManager::loadMusic(int tag, string fileName) {
 
 void SDLAudioManager::playMusic(int tag, int loops) {
 	Mix_Music* music = music_[tag];
-	if (music != nullptr) {
+	if (music != nullptr)
+	{
 		Mix_PlayMusic(music, loops);
+	}
+	else
+	{
+		music_.erase(tag);
 	}
 }
 

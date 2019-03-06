@@ -10,11 +10,9 @@ State::State(Game* game, SDL_Renderer* renderer)
 
 State::~State()
 {
-	game_ = nullptr;
 	delete team1;
 	delete team2;
 	delete factory;
-	delete turnBar_;
 }
 
 void State::_preload()
@@ -28,8 +26,8 @@ void State::_preload()
     gameObjects_.push_back(board_);
 	
 	// Test Teams
-	team1 = new Team(board_);
-	team2 = new Team(board_);
+	team1 = new Team(board_, Color::BLUE);
+	team2 = new Team(board_, Color::RED);
 	
 	// Test Factory
 	factory = new UnitFactory();
@@ -59,7 +57,7 @@ void State::_preload()
 	audioManager.setMusicVolume(2);
   
 	// Turn Bar
-	turnBar_ = new TurnBar(team1->getUnitList(), team2->getUnitList());
+	auto turnBar_ = new TurnBar(team1->getUnitList(), team2->getUnitList());
 	gameObjects_.push_back(turnBar_);
 
 	// Controller
@@ -68,32 +66,6 @@ void State::_preload()
 
 void State::_handleEvents(SDL_Event& e)
 {
-	while (!_exit && SDL_PollEvent(&e))
-	{
-		if (event.type == SDL_KEYDOWN) {
-			switch (event.key.keysym.sym)
-			{
-			case SDLK_e:
-				cout << "Pause";
-				break;
-			}
-		}
-
-		// For each game object, run the event handler
-		for (auto gameObject : gameObjects_)
-			gameObject->handleEvents(e);
-
-		GameState::_handleEvents(e);
-	}
-}
-
-void State::playASound(int tag, int loop, int channel)
-{
-	audioManager.playChannelTimed(tag, loop, channel,3000);
-	audioManager.FadeOutChannel(1, 3000);
-}
-
-
 	while (!_exit && SDL_PollEvent(&e))
 	{
 		if (e.type == SDL_KEYDOWN) {
@@ -113,7 +85,11 @@ void State::playASound(int tag, int loop, int channel)
 			gameObject->handleEvents(e);
 
 		GameState::_handleEvents(e);
-	delete team1;
-	delete team2;
-	delete factory;
-	delete turnBar_;
+	}
+}
+
+void State::playASound(int tag, int loop, int channel)
+{
+	audioManager.playChannelTimed(tag, loop, channel,3000);
+	audioManager.FadeOutChannel(1, 3000);
+}

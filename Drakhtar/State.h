@@ -24,7 +24,6 @@ class State : public GameState
 private:
 	bool _exit = false;
 	Game* game_ = nullptr;
-	TurnBar* turnBar_ = nullptr;
 	Board* board_ = nullptr;
 	Team* team1 = nullptr;
 	Team* team2 = nullptr;
@@ -32,7 +31,7 @@ private:
 
 protected:
 	void _preload();
-	void _handleEvents(SDL_Event& e);
+	virtual void _handleEvents(SDL_Event& e);
 	void boton() { cout << "boton"; }
 	SDLAudioManager audioManager;
 public:

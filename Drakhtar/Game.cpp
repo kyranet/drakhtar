@@ -137,9 +137,6 @@ Game::~Game()
 	SDL_DestroyRenderer(renderer_);
 	SDL_DestroyWindow(window_);
 
-	delete state_;
-	if(state_!=actualstate_)
-		delete actualstate_;
 	delete stateMachine;
 
 	SDL_Quit();
@@ -151,8 +148,6 @@ SDL_Renderer* Game::getRenderer()
 {
 	return renderer_;
 }
-
-
 
 Game* Game::instance = nullptr;
 
