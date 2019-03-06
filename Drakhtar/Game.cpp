@@ -34,6 +34,7 @@ Game::Game()
 	textureManager_->add("Units-Dreilay", "../images/Units/Dreilay.png", 2, 1);
 	textureManager_->add("Units-RedArcher", "../images/Units/RedArcher.png", 2, 1);
 	textureManager_->add("Units-RedKnight", "../images/Units/RedKnight.png", 2, 1);
+	textureManager_->add("Units-RedMage", "../images/Units/RedMage.png", 2, 1);
 	textureManager_->add("Units-RedMonster", "../images/Units/RedMonster.png", 2, 1);
 	textureManager_->add("Units-RedSoldier", "../images/Units/RedSoldier.png", 2, 1);
 	textureManager_->add("Units-Sheissa", "../images/Units/Sheissa.png", 2, 1);

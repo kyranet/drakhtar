@@ -27,23 +27,23 @@ void State::_preload()
     gameObjects_.push_back(board_);
 	
 	// Test Teams
-	Team * team1 = new Team(board_);
-	Team * team2 = new Team(board_);
+	Team * team1 = new Team(board_, Color::BLUE);
+	Team * team2 = new Team(board_, Color::RED);
 
 	// Test Factory
 	UnitFactory * factory = new UnitFactory();
-	gameObjects_.push_back(factory->newSoldier(team1, board_->getBoxAt(0, 2), 10));
-	gameObjects_.push_back(factory->newArcher(team1, board_->getBoxAt(0, 3), 10));
-	gameObjects_.push_back(factory->newWizard(team1, board_->getBoxAt(0, 4), 10));
-	gameObjects_.push_back(factory->newKnight(team1, board_->getBoxAt(0, 5), 10));
-	gameObjects_.push_back(factory->newMonster(team1, board_->getBoxAt(0, 6), 10));
+	gameObjects_.push_back(factory->newSoldier(team1, board_->getBoxAt(0, 0), 10));
+	gameObjects_.push_back(factory->newArcher(team1, board_->getBoxAt(0, 1), 10));
+	gameObjects_.push_back(factory->newWizard(team1, board_->getBoxAt(0, 2), 10));
+	gameObjects_.push_back(factory->newKnight(team1, board_->getBoxAt(1, 0), 10));
+	gameObjects_.push_back(factory->newMonster(team1, board_->getBoxAt(1, 1), 10));
 
+
+	gameObjects_.push_back(factory->newSoldier(team2, board_->getBoxAt(11, 0), 10));
 	gameObjects_.push_back(factory->newArcher(team2, board_->getBoxAt(11, 1), 10));
-	gameObjects_.push_back(factory->newArcher(team2, board_->getBoxAt(11, 2), 10));
-	gameObjects_.push_back(factory->newArcher(team2, board_->getBoxAt(11, 3), 10));
-	gameObjects_.push_back(factory->newArcher(team2, board_->getBoxAt(11, 4), 10));
-	gameObjects_.push_back(factory->newArcher(team2, board_->getBoxAt(11, 5), 10));
-	gameObjects_.push_back(factory->newArcher(team2, board_->getBoxAt(11, 6), 10));
+	gameObjects_.push_back(factory->newWizard(team2, board_->getBoxAt(11, 2), 10));
+	gameObjects_.push_back(factory->newKnight(team2, board_->getBoxAt(10, 0), 10));
+	gameObjects_.push_back(factory->newMonster(team2, board_->getBoxAt(10, 1), 10));
 
 	// Dialog
 	auto exampleDialog = new DialogScene(game_, "dialog1_start", "Retron2000");
