@@ -7,7 +7,7 @@ Button::Button(Texture* t, int x, int y, int w, int h, void(*callback)(Game* gam
 void Button::handleEvents(SDL_Event& e) {	
 	if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT) {    // RATON IZQUIERDO
 		SDL_Point p = { e.button.x, e.button.y };
-		SDL_Rect r = { x, y, w, h };
+		SDL_Rect r = { x - (w / 2), y - (h / 2), w, h };
 		if (SDL_PointInRect(&p, &r)) {
 			cb(game, renderer);			
 		}		
