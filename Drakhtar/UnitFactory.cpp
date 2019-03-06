@@ -18,7 +18,7 @@ Unit * UnitFactory::newSoldier(Team * team, Box * box, int size)
 	else
 		textureName = "Units-RedSoldier";
 
-	Unit * unit = (Unit*) new Battalion(TextureManager::get(textureName), box, soldierAttack, soldierHealth, soldierSpeed, soldierAttackRange, soldierMoveRange, size);
+	Unit* unit = (Unit*) new Battalion(TextureManager::get(textureName), box, soldierAttack, soldierHealth, soldierSpeed, soldierAttackRange, soldierMoveRange, size);
 	team->addUnit(unit);
 	return unit;
 }
