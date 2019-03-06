@@ -32,8 +32,6 @@ protected:
 public:
 	State(Game* game, SDL_Renderer* renderer);
 	virtual ~State();
-	virtual void addGameObject(GameObject* gameObject);
-	virtual void removeGameObject(GameObject* gameObject);
 
 	// temporary
 	void playASound(int tag, int loop, int channels);

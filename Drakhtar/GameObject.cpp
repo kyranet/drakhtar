@@ -13,6 +13,7 @@ GameObject::~GameObject()
 
 void GameObject::render() const
 {
+	if (texture_ == nullptr) return;
 	SDL_Rect dest{
 		pos_.getX() - size_.getX() / 2,
 		pos_.getY() - size_.getY() / 2,

@@ -90,11 +90,6 @@ void State::_handleEvents(SDL_Event& e)
 	}
 }
 
-void State::removeGameObject(GameObject* gameObject)
-{
-	pendingOnDestroy_.push_back(gameObject);	
-}
-
 void State::playASound(int tag, int loop, int channel)
 {
 	audioManager.playChannelTimed(tag, loop, channel,3000);
