@@ -30,7 +30,7 @@ void BoardController::onClickMove(SDL_Point p) {
 			activeUnit->moveToBox(boxClicked);
 
 			// If there are enemies nearby enable attack, if not end turn
-			if (board_->isEnemyInRange(boxClicked, activeUnit->getMoveRange())) {
+			if (board_->isEnemyInRange(boxClicked, activeUnit->getAttackRange())) {
 				moving = false;
 			} else {
 				turnBar_->advanceTurn();
@@ -41,5 +41,14 @@ void BoardController::onClickMove(SDL_Point p) {
 }
 
 void BoardController::onClickAttack(SDL_Point p) {
-	cout << "ATTACK" << endl;
+	Box * boxClicked = board_->getBoxAtCoordinates(Vector2D<int>(p.x, p.y));
+	Unit* activeUnit = turnBar_->getFrontUnit();
+
+	if (boxClicked != nullptr && !boxClicked->isEmpty()) {					// Box clicked exists and is not empty
+		if (boxClicked->getContent()->getTeam() != activeUnit->getTeam()) {	// Unit clicked if from a different team
+			boxClicked->getContent()->loseHealth(activeUnit->getAttack());	// Attack
+			moving = true;													// Re-enable movement
+			turnBar_->advanceTurn();										// End turn
+		}
+	}
 }
