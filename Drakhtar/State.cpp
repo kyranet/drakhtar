@@ -98,7 +98,7 @@ void State::_handleEvents(SDL_Event& e)
 				break;
 			case SDLK_ESCAPE:
 				//game_->getStateMachine()->pushState(new MainMenu(game_, renderer_));
-				pauseInterface = new Pause(renderer_);
+				pauseInterface = new Pause(game_, renderer_);
 				paused_ = !paused_;
 				break;
 			}
