@@ -30,6 +30,7 @@ private:
 protected:
 	void _preload();
 	void _render();
+	void _update();
 	void _handleEvents(SDL_Event& e);
 	void boton() { cout << "boton"; }
 	SDLAudioManager audioManager;

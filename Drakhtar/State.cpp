@@ -71,6 +71,16 @@ void State::_render()
 	if (!paused_) {
 		GameState::_render();
 	}
+	if (paused_) {
+		pause_->_render();
+	}
+}
+
+void State::_update()
+{
+	if (!paused_) {
+		GameState::_update();
+	}
 }
 
 void State::_handleEvents(SDL_Event& e)
@@ -85,17 +95,18 @@ void State::_handleEvents(SDL_Event& e)
 				break;
 			case SDLK_ESCAPE:
 				//game_->getStateMachine()->pushState(new MainMenu(game_, renderer_));
-				//pause_ = new Pause(renderer_);
+				pause_ = new Pause(renderer_);
 				paused_ = !paused_;
 				break;
 			}
 		}
+		if (!paused_) {
+			// For each game object, run the event handler
+			for (auto gameObject : gameObjects_)
+				gameObject->handleEvents(e);
 
-		// For each game object, run the event handler
-		for (auto gameObject : gameObjects_)
-			gameObject->handleEvents(e);
-
-		GameState::_handleEvents(e);
+			GameState::_handleEvents(e);
+		}
 	}
 }
 
