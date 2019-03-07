@@ -22,11 +22,10 @@ class State : public GameState
 {
 private:
 	bool _exit = false;
-	bool paused_ = false;
 	Game* game_ = nullptr;
 	TurnBar* turnBar_;
 	Board* board_;
-	Pause* pause_ = nullptr;
+	Pause * pauseInterface = nullptr;
 protected:
 	void _preload();
 	void _render();
@@ -37,9 +36,9 @@ protected:
 public:
 	State(Game* game, SDL_Renderer* renderer);
 	virtual ~State();
-
+	void setPause();
+	bool paused_ = false;
 	// temporary
-	void playSound(int tag, int loop, int channels);
-
+	void playSound(int tag, int loop, int channels);	
 };
 

@@ -4,6 +4,7 @@
 #include "BoardController.h"
 #include "UnitFactory.h"
 
+
 State::State(Game* game, SDL_Renderer* renderer)
 	: GameState(game,renderer), game_(game)
 {
@@ -14,7 +15,7 @@ State::~State()
 	for (auto gameObject : gameObjects_)
 		delete gameObject;
 	game_ = nullptr;
-	pause_ = nullptr;
+	pauseInterface = nullptr;
 }
 
 void State::_preload()
@@ -72,7 +73,7 @@ void State::_render()
 		GameState::_render();
 	}
 	if (paused_) {
-		pause_->_render();
+		pauseInterface->_render();
 	}
 }
 
@@ -95,10 +96,13 @@ void State::_handleEvents(SDL_Event& e)
 				break;
 			case SDLK_ESCAPE:
 				//game_->getStateMachine()->pushState(new MainMenu(game_, renderer_));
-				pause_ = new Pause(renderer_);
+				pauseInterface = new Pause(renderer_);
 				paused_ = !paused_;
 				break;
 			}
+		}
+		if (pauseInterface != nullptr) {
+			pauseInterface->_handleEvents(e);
 		}
 		if (!paused_) {
 			// For each game object, run the event handler
@@ -116,3 +120,7 @@ void State::playSound(int tag, int loop, int channel)
 	audioManager.FadeOutChannel(1, 3000);
 }
 
+void State::setPause()
+{
+	paused_ = !paused_;
+}

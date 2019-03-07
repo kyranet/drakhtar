@@ -2,6 +2,7 @@
 #include "Button.h"
 #include "SDL.h"
 #include "GameState.h"
+
 class Pause :  public GameState
 {
 private:
@@ -14,7 +15,8 @@ public:
 	virtual ~Pause();
 	void _preload();
 	void _render();
-	static void Play_game(SDL_Renderer* renderer);
-	static void Options_game( SDL_Renderer* renderer);
+	void _handleEvents(SDL_Event& e);
+	static void resumeGame(SDL_Renderer* renderer);
+	static void optionsGame( SDL_Renderer* renderer);
 };
 
