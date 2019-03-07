@@ -25,6 +25,7 @@ protected:
 
 public:
 	GameState(Game* game,SDL_Renderer* renderer) : game_(game),renderer_(renderer) {};
+	GameState(SDL_Renderer* renderer): renderer_(renderer) {};
 	~GameState();
 	
 	bool getexit();

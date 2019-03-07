@@ -14,6 +14,7 @@ State::~State()
 	for (auto gameObject : gameObjects_)
 		delete gameObject;
 	game_ = nullptr;
+	pause_ = nullptr;
 }
 
 void State::_preload()
@@ -49,7 +50,6 @@ void State::_preload()
 	auto exampleDialog = new DialogScene(game_, "dialog1_start", "Retron2000");
 	gameObjects_.push_back(exampleDialog);
 
-
 	//sounds
 	audioManager.init();
 	audioManager.loadMusic(0, "../audio/background/Smash Mouth - All Star _Official Music Video_.mp3");
@@ -66,6 +66,13 @@ void State::_preload()
 	addEventListener(new BoardController(board_, turnBar_));
 }
 
+void State::_render()
+{
+	if (!paused_) {
+		GameState::_render();
+	}
+}
+
 void State::_handleEvents(SDL_Event& e)
 {
 	while (!_exit && SDL_PollEvent(&e))
@@ -74,10 +81,12 @@ void State::_handleEvents(SDL_Event& e)
 			switch (e.key.keysym.sym)
 			{
 			case SDLK_e:
-				playASound(1, 2, 2);
+				playSound(1, 2, 2);
 				break;
 			case SDLK_ESCAPE:
-				game_->getStateMachine()->pushState(new MainMenu(game_, renderer_));
+				//game_->getStateMachine()->pushState(new MainMenu(game_, renderer_));
+				//pause_ = new Pause(renderer_);
+				paused_ = !paused_;
 				break;
 			}
 		}
@@ -90,7 +99,7 @@ void State::_handleEvents(SDL_Event& e)
 	}
 }
 
-void State::playASound(int tag, int loop, int channel)
+void State::playSound(int tag, int loop, int channel)
 {
 	audioManager.playChannelTimed(tag, loop, channel,3000);
 	audioManager.FadeOutChannel(1, 3000);

@@ -123,6 +123,9 @@
     <ClCompile Include="BoardController.cpp">
       <Filter>Archivos de código fuente\Components\EventListeners</Filter>
     </ClCompile>
+    <ClCompile Include="Pause.cpp">
+      <Filter>Archivos de código fuente</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -217,6 +220,9 @@
     </ClInclude>
     <ClInclude Include="BoardController.h">
       <Filter>Archivos de encabezado\Components\EventListeners</Filter>
+    </ClInclude>
+    <ClInclude Include="Pause.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
