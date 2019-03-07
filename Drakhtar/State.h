@@ -12,6 +12,7 @@
 #include "Battalion.h"
 #include "TurnBar.h"
 #include "SDLAudioManager.h"
+#include"Pause.h"
 
 using namespace std;
 
@@ -34,7 +35,7 @@ public:
 	virtual ~State();
 
 	// temporary
-	void playASound(int tag, int loop, int channels);
+	void playSound(int tag, int loop, int channels);
 
 };
 
