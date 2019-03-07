@@ -28,5 +28,8 @@ public:
 	void nextDialog();
 	void endOfDialog();
 
+	//getters
+	GameObject* getBlockSprite() const { return dialogBlockSprite; };
+
 };
 
