@@ -81,6 +81,8 @@ void State::_update()
 {
 	if (!paused_) {
 		GameState::_update();
+		pauseInterface = nullptr;
+		delete pauseInterface;
 	}
 }
 
@@ -101,6 +103,7 @@ void State::_handleEvents(SDL_Event& e)
 				break;
 			}
 		}
+		//calls handleevent of pause only when it is up only
 		if (pauseInterface != nullptr) {
 			pauseInterface->_handleEvents(e);
 		}
