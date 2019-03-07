@@ -8,12 +8,13 @@ private:
 	SDL_Renderer* renderer_ = nullptr;
 	Button* Resume;
 	Button* Options;
+	list<GameObject*> gameObjectsPause_;
 public:
 	Pause(SDL_Renderer* renderer);
 	virtual ~Pause();
 	void _preload();
 	void _render();
-	static void Play_game(Game* game, SDL_Renderer* renderer);
-	static void Options_game(Game* game, SDL_Renderer* renderer);
+	static void Play_game(SDL_Renderer* renderer);
+	static void Options_game( SDL_Renderer* renderer);
 };
 
