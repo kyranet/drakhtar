@@ -11,6 +11,9 @@
 #include "Button.h"
 #include "Battalion.h"
 #include "TurnBar.h"
+#include "UnitFactory.h"
+#include "SDLAudioManager.h"
+#include "UnitFactory.h"
 
 using namespace std;
 
@@ -21,17 +24,22 @@ class State : public GameState
 private:
 	bool _exit = false;
 	Game* game_ = nullptr;
-	TurnBar* turnBar_;
-	Board* board_;
+	Board* board_ = nullptr;
+	Team* team1 = nullptr;
+	Team* team2 = nullptr;
+	UnitFactory* factory = nullptr;
+
 protected:
 	void _preload();
-	void _handleEvents(SDL_Event& e);
-	
+	virtual void _handleEvents(SDL_Event& e);
 	void boton() { cout << "boton"; }
+	SDLAudioManager audioManager;
 public:
 	State(Game* game, SDL_Renderer* renderer);
 	virtual ~State();
-	virtual void addGameObject(GameObject* gameObject);
-	virtual void removeGameObject(GameObject* gameObject);
+
+	// temporary
+	void playASound(int tag, int loop, int channels);
+
 };
 

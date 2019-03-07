@@ -21,12 +21,11 @@ protected:
 	list<EventListener*> eventListeners_;
 	Game* game_ = nullptr;
 	SDL_Renderer *renderer_ = nullptr;
-	SDL_Event event;
 
 public:
 	GameState(Game* game,SDL_Renderer* renderer) : game_(game),renderer_(renderer) {};
-	~GameState();
-	
+	virtual ~GameState();
+
 	bool getexit();
 	virtual void _preload();
 	virtual void _create();
@@ -37,7 +36,10 @@ public:
 	virtual void _events();
 	virtual void _destroy();
 	virtual void _end() {};
+	virtual void addGameObject(GameObject* gameObject);
+	virtual void removeGameObject(GameObject* gameObject);
 
 	GameState* addEventListener(EventListener* eventListener);
+
 };
 

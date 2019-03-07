@@ -34,6 +34,7 @@ Game::Game()
 	textureManager_->add("Units-Dreilay", "../images/Units/Dreilay.png", 2, 1);
 	textureManager_->add("Units-RedArcher", "../images/Units/RedArcher.png", 2, 1);
 	textureManager_->add("Units-RedKnight", "../images/Units/RedKnight.png", 2, 1);
+	textureManager_->add("Units-RedMage", "../images/Units/RedMage.png", 2, 1);
 	textureManager_->add("Units-RedMonster", "../images/Units/RedMonster.png", 2, 1);
 	textureManager_->add("Units-RedSoldier", "../images/Units/RedSoldier.png", 2, 1);
 	textureManager_->add("Units-Sheissa", "../images/Units/Sheissa.png", 2, 1);
@@ -42,7 +43,9 @@ Game::Game()
 
 	// UI
 	textureManager_->add("UI-cellFrame", "../images/UI/cellFrame.png", 1, 1);
+	textureManager_->add("UI-cellHover", "../images/UI/cellHover.png", 1, 1);
 	textureManager_->add("UI-dialogueBackground", "../images/UI/dialogueBackground.png", 1, 1);
+	textureManager_->add("UI-turnBar", "../images/UI/turnBar.png", 1, 1);
 
 	//Button
 	textureManager_->add("Button-Play", "../images/MainMenu/Play_Button.png", 1, 1);
@@ -134,9 +137,6 @@ Game::~Game()
 	SDL_DestroyRenderer(renderer_);
 	SDL_DestroyWindow(window_);
 
-	delete state_;
-	if(state_!=actualstate_)
-		delete actualstate_;
 	delete stateMachine;
 
 	SDL_Quit();
@@ -148,8 +148,6 @@ SDL_Renderer* Game::getRenderer()
 {
 	return renderer_;
 }
-
-
 
 Game* Game::instance = nullptr;
 
@@ -167,7 +165,8 @@ GameStateMachine* Game::getStateMachine() {
 	return stateMachine;
 }
 
-/*State* Game::currentState()
+
+GameState* Game::currentState()
 {
 	return getInstance()->state_;
-}*/
+}

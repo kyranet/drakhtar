@@ -13,6 +13,7 @@ GameObject::~GameObject()
 
 void GameObject::render() const
 {
+	if (texture_ == nullptr) return;
 	SDL_Rect dest{
 		pos_.getX() - size_.getX() / 2,
 		pos_.getY() - size_.getY() / 2,
@@ -44,7 +45,17 @@ SDL_Rect GameObject::getRect() const
 	};
 }
 
+Texture * GameObject::getTexture() const
+{
+	return texture_;
+}
+
+void GameObject::setTexture(Texture * texture)
+{
+	texture_ = texture;
+}
+
 void GameObject::destroy()
 {
-	//Game::currentState()->removeGameObject(this);
+	Game::currentState()->removeGameObject(this);
 }

@@ -14,6 +14,7 @@ class DialogScene: public GameObject
 {
 private:
 	GameObject* dialogBlockSprite = nullptr;
+	GameObject* characterBlockSprite = nullptr;
 	int dialogChainSize = 0;
 	vector<Dialog*> dialogChain;
 	int currentDialogIndex = 0;
