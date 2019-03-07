@@ -5,8 +5,12 @@ BoardController::BoardController(Board * board, TurnBar * turnBar) :
 	board_(board), turnBar_(turnBar) { }
 
 void BoardController::run(SDL_Event event) {
-	SDL_Point p= { event.motion.x, event.motion.y };
+	activeUnit_ = turnBar_->getFrontUnit();
+	if (moving) {
+		board_->setTextureToCellsInRange(activeUnit_->getBox(), activeUnit_->getMoveRange(), Box::movable);
+	}
 
+	SDL_Point p= { event.motion.x, event.motion.y };
 	switch (event.type) {
 		case SDL_MOUSEBUTTONUP:
 			if (moving) {
@@ -35,6 +39,7 @@ void BoardController::onClickMove(SDL_Point p) {
 			} else {
 				turnBar_->advanceTurn();
 			}
+			board_->resetCellsToBase();
 		}
 		else { cout << "Out of movement range!" << endl; }
 	}
@@ -42,13 +47,12 @@ void BoardController::onClickMove(SDL_Point p) {
 
 void BoardController::onClickAttack(SDL_Point p) {
 	Box * boxClicked = board_->getBoxAtCoordinates(Vector2D<int>(p.x, p.y));
-	Unit* activeUnit = turnBar_->getFrontUnit();
 
-	if (boxClicked != nullptr && !boxClicked->isEmpty()) {					// Box clicked exists and is not empty
-		if (boxClicked->getContent()->getTeam() != activeUnit->getTeam()) {	// Unit clicked if from a different team
-			boxClicked->getContent()->loseHealth(activeUnit->getAttack());	// Attack
-			moving = true;													// Re-enable movement
-			turnBar_->advanceTurn();										// End turn
+	if (boxClicked != nullptr && !boxClicked->isEmpty()) {						// Box clicked exists and is not empty
+		if (boxClicked->getContent()->getTeam() != activeUnit_->getTeam()) {	// Unit clicked if from a different team
+			boxClicked->getContent()->loseHealth(activeUnit_->getAttack());		// Attack
+			moving = true;														// Re-enable movement
+			turnBar_->advanceTurn();											// End turn
 		}
 	}
 }

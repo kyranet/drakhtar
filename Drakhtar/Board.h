@@ -21,6 +21,8 @@ public:
 	bool isInRange(Box* from, Box* to, int range);
 	int** getCellsInRange(Box* box, int range);
 	bool isEnemyInRange(Box* box, int range);
+	void setTextureToCellsInRange(Box* box, int range, int textInd);
+	void resetCellsToBase();
 
 	const enum objectType {
 		outOfBoard,

@@ -85,6 +85,7 @@ bool Board::isInRange(Box* from, Box* to, int range) {
 	return range >= totalDistance;
 }
 
+// DEJA BASURA
 int ** Board::getCellsInRange(Box* box, int range) {
 	int size = range * 2 + 1;
 	int startX = box->getIndex().getX() - range;
@@ -138,4 +139,30 @@ bool Board::isEnemyInRange(Box * box, int range) {
 	}
 
 	return enemyFound;
+}
+
+void Board::setTextureToCellsInRange(Box * box, int range, int textInd) {
+	int** cellsInRange = getCellsInRange(box, range);
+	int size = range * 2 + 1;
+	int startX = box->getIndex().getX() - range;
+	int startY = box->getIndex().getY() - range;
+	
+
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size; j++) {
+			if (cellsInRange[i][j] == empty) {
+				if (getBoxAt(i + startX, j + startY)->getCurrentTexture() != 1) {
+					getBoxAt(i + startX, j + startY)->setCurrentTexture(textInd);
+				}
+			}
+		}
+	}
+}
+
+void Board::resetCellsToBase() {
+	for (int i = 0; i < cols; i++) {
+		for (int j = 0; j < rows; j++) {
+			board[j][i]->setCurrentTexture(Box::base);
+		}
+	}
 }

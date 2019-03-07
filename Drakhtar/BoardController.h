@@ -11,6 +11,7 @@ class BoardController : public EventListener
 protected:
 	Board * board_;
 	TurnBar * turnBar_;
+	Unit * activeUnit_;
 	bool moving = true;
 public:
 	BoardController(Board * board, TurnBar * turnBar);
