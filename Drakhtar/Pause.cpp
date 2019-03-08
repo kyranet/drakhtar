@@ -1,4 +1,5 @@
 #include "Pause.h"
+#include "State.h"
 #include "Game.h"
 
 
@@ -14,12 +15,13 @@ Pause::~Pause()
 
 void Pause::_preload()
 {
-	//Resume = new Button(TextureManager::get("Button-Play"), WIN_WIDTH / 2, 250, 200, 75, Play_game, game_, renderer_);
-	Resume = new Button(TextureManager::get("Button-Play"), WIN_WIDTH / 2, 250, 200, 75,resumeGame, game_, renderer_);
-	gameObjectsPause_.push_back(Resume);
-	//Options = new Button(TextureManager::get("Button-Options"), WIN_WIDTH / 2, 350, 200, 75, Options_game, game_, renderer_);
-	Options = new Button(TextureManager::get("Button-Options"), WIN_WIDTH / 2, 350, 200, 75, optionsGame, game_, renderer_);
-	gameObjectsPause_.push_back(Options);
+	
+	gameObjectsPause_.push_back(new GameObject(TextureManager::get("Pause-Panel"), Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2), Vector2D<int>(400, 500)));	
+	Restart = new Button(TextureManager::get("Button-Restart"), WIN_WIDTH / 2, 250, 225, 100, RestartGame, game_, renderer_);
+	gameObjectsPause_.push_back(Restart);
+	Exit = new Button(TextureManager::get("Button-Exit"), WIN_WIDTH / 2, 350, 225, 100, ExitGame, game_, renderer_);
+	gameObjectsPause_.push_back(Exit);
+
 }
 
 void Pause::_render()
@@ -34,17 +36,17 @@ void Pause::_render()
 
 void Pause::_handleEvents(SDL_Event & e)
 {
-	Resume->handleEvents(e);
-	Options->handleEvents(e);
+	Restart->handleEvents(e);
+	Exit->handleEvents(e);	
 }
 
-void Pause::resumeGame(Game * game, SDL_Renderer* renderer)
+void Pause::RestartGame(Game * game, SDL_Renderer * renderer)
 {
-	cout << "Play";	
+	game->getStateMachine()->pushState(new State(game, renderer));
+}
+
+void Pause::ExitGame(Game * game, SDL_Renderer * renderer)
+{
 	game->getStateMachine()->pushState(new MainMenu(game, renderer));
 }
 
-void Pause::optionsGame(Game * game, SDL_Renderer* renderer)
-{
-	cout << "Options";
-}

@@ -65,6 +65,10 @@ void State::_preload()
 
 	// Controller
 	addEventListener(new BoardController(board_, turnBar_));
+
+	//Button
+	Pause_Button= new Button(TextureManager::get("Button-Pause"), 770, 30, 50, 50, Pause_game, game_, renderer_);
+	gameObjects_.push_back(Pause_Button);
 }
 
 void State::_render()
@@ -90,6 +94,7 @@ void State::_handleEvents(SDL_Event& e)
 {
 	while (!_exit && SDL_PollEvent(&e))
 	{
+		Pause_Button->handleEvents(e);
 		if (e.type == SDL_KEYDOWN) {
 			switch (e.key.keysym.sym)
 			{
@@ -121,6 +126,11 @@ void State::playSound(int tag, int loop, int channel)
 {
 	audioManager.playChannelTimed(tag, loop, channel,3000);
 	audioManager.FadeOutChannel(1, 3000);
+}
+
+void State::Pause_game(Game * game, SDL_Renderer * renderer)
+{	
+	cout << "Pause";
 }
 
 void State::setPause()

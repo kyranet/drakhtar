@@ -49,6 +49,13 @@ Game::Game()
 	textureManager_->add("Button-Play", "../images/MainMenu/Play_Button.png", 1, 1);
 	textureManager_->add("Button-Options", "../images/MainMenu/Options_Button.png", 1, 1);
 	textureManager_->add("Button-Pause", "../images/Pause/Pause_Button.png", 1, 1);
+	textureManager_->add("Button-Resume", "../images/Pause/Resume_Button.png", 1, 1);
+	textureManager_->add("Button-Restart", "../images/Pause/Restart_Button.png", 1, 1);
+	textureManager_->add("Button-Exit", "../images/Pause/Exit_Button.png", 1, 1);
+
+	//Pause
+	textureManager_->add("Pause-Panel", "../images/Pause/Panel.png", 1, 1);
+	textureManager_->add("Pause-Background", "../images/Pause/Fondo.png", 1, 1);
 
 	// Portraits
 	textureManager_->add("Portraits-Archer", "../images/Portraits/Archer.png", 1, 1);

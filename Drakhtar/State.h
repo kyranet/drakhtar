@@ -25,6 +25,7 @@ private:
 	Game* game_ = nullptr;
 	TurnBar* turnBar_;
 	Board* board_;
+	Button* Pause_Button;
 	Pause * pauseInterface = nullptr;
 protected:
 	void _preload();
@@ -39,6 +40,7 @@ public:
 	void setPause();
 	bool paused_ = false;
 	// temporary
-	void playSound(int tag, int loop, int channels);	
+	void playSound(int tag, int loop, int channels);
+	static void Pause_game(Game* game, SDL_Renderer* renderer);
 };
 
