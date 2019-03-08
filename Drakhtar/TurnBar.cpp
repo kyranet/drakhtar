@@ -61,6 +61,7 @@ void TurnBar::advanceTurn()
 	Unit* frontUnit = unitTurnBar.front();
 	unitTurnBar.pop_front();
 	unitTurnBar.push_back(frontUnit);
+	updateVisibleUnits();
 }
 
 void TurnBar::render() const
@@ -77,7 +78,6 @@ void TurnBar::handleEvents(SDL_Event event)
 		{
 		case SDLK_t:
 			advanceTurn();
-			updateVisibleUnits();
 			break;
 		}
 	}
