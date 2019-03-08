@@ -16,16 +16,11 @@ void BoardController::run(SDL_Event event) {
 
 void BoardController::onClick(SDL_Point p) {
 	Box * boxClicked = board_->getBoxAtCoordinates(Vector2D<int>(p.x, p.y));
-	GameObject * dialogueText = dialogueScene_->getBlockSprite();
 
 	if (boxClicked != nullptr) {
 		if (boxClicked->getContent() == nullptr) {
 			turnBar_->getFrontUnit()->moveToBox(boxClicked);
 			turnBar_->advanceTurn();
 		}
-	}
-	else if (p.x <= dialogueText->getRect().x && p.y <= dialogueText->getRect().y)
-	{
-		dialogueScene_->nextDialog();
 	}
 }
