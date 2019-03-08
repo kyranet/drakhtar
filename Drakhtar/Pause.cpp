@@ -1,5 +1,5 @@
 #include "Pause.h"
-
+#include "Game.h"
 
 
 Pause::Pause(Game* game, SDL_Renderer* renderer) : GameState(game, renderer), renderer_(renderer), game_(game)
@@ -41,6 +41,7 @@ void Pause::_handleEvents(SDL_Event & e)
 void Pause::resumeGame(Game * game, SDL_Renderer* renderer)
 {
 	cout << "Play";	
+	game->getStateMachine()->pushState(new MainMenu(game, renderer));
 }
 
 void Pause::optionsGame(Game * game, SDL_Renderer* renderer)

@@ -3,6 +3,7 @@
 #include "SDL.h"
 #include "GameState.h"
 
+
 class Pause :  public GameState
 {
 private:
