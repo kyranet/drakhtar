@@ -75,6 +75,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="BoardController.cpp" />
     <ClCompile Include="Dialog.cpp" />
+    <ClCompile Include="DialogController.cpp" />
     <ClCompile Include="DialogScene.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -104,6 +105,7 @@
     <ClInclude Include="Constants.h" />
     <ClInclude Include="BoardController.h" />
     <ClInclude Include="Dialog.h" />
+    <ClInclude Include="DialogController.h" />
     <ClInclude Include="DialogScene.h" />
     <ClInclude Include="DrakhtarError.h" />
     <ClInclude Include="EventListener.h" />

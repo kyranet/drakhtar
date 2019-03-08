@@ -123,6 +123,9 @@
     <ClCompile Include="BoardController.cpp">
       <Filter>Archivos de código fuente\Components\EventListeners</Filter>
     </ClCompile>
+    <ClCompile Include="DialogController.cpp">
+      <Filter>Archivos de código fuente\Components\EventListeners</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -216,6 +219,9 @@
       <Filter>Archivos de encabezado\States</Filter>
     </ClInclude>
     <ClInclude Include="BoardController.h">
+      <Filter>Archivos de encabezado\Components\EventListeners</Filter>
+    </ClInclude>
+    <ClInclude Include="DialogController.h">
       <Filter>Archivos de encabezado\Components\EventListeners</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,4 +1,6 @@
 #pragma once
+
+#include "SDL.h"
 #include "EventListener.h"
 #include "DialogScene.h"
 

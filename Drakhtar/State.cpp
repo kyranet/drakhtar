@@ -2,6 +2,7 @@
 
 #include "State.h"
 #include "BoardController.h"
+#include "DialogController.h"
 
 State::State(Game* game, SDL_Renderer* renderer)
 	: GameState(game,renderer), game_(game)
@@ -62,6 +63,7 @@ void State::_preload()
 
 	// Controller
 	addEventListener(new BoardController(board_, turnBar_));
+	addEventListener(new DialogController(exampleDialog));
 }
 
 void State::_handleEvents(SDL_Event& e)
