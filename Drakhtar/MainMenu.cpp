@@ -7,9 +7,6 @@ MainMenu::MainMenu(Game* game, SDL_Renderer* renderer) : GameState(game,renderer
 
 MainMenu::~MainMenu()
 {
-	for (auto gameObject : gameObjects_)
-		delete gameObject;
-	game_ = nullptr;
 }
 
 void MainMenu::_preload()
@@ -39,8 +36,8 @@ void MainMenu::_handleEvents(SDL_Event& e)
 	{
 		Play->handleEvents(e);
 		Options->handleEvents(e);
-		if (event.type == SDL_KEYDOWN) {
-			switch (event.key.keysym.sym)
+		if (e.type == SDL_KEYDOWN) {
+			switch (e.key.keysym.sym)
 			{
 			case SDLK_e:
 				//game_->getStateMachine()->pushState(new State(game_, renderer_));

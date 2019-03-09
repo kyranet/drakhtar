@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include "GameObject.h"
@@ -21,7 +22,7 @@ protected:
 	list<EventListener*> eventListeners_;
 	Game* game_ = nullptr;
 	SDL_Renderer *renderer_ = nullptr;
-	SDL_Event event;
+	SDL_Event event; // whats the point of this?
 
 public:
 	GameState(Game* game,SDL_Renderer* renderer) : game_(game),renderer_(renderer) {};
@@ -44,4 +45,3 @@ public:
 	GameState* addEventListener(EventListener* eventListener);
 
 };
-
