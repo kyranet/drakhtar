@@ -24,7 +24,6 @@ protected:
 	SDL_Renderer *renderer_ = nullptr;
 public:
 	GameState(Game* game,SDL_Renderer* renderer) : game_(game),renderer_(renderer) {};
-	GameState(SDL_Renderer* renderer): renderer_(renderer) {};
 	virtual ~GameState();
 	
 	bool getexit();

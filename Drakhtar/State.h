@@ -27,7 +27,6 @@ private:
 	bool _exit = false;
 	Game* game_ = nullptr;
 	TurnBar* turnBar_;
-	Board* board_;
 	Button* Pause_Button;
 	Pause * pauseInterface = nullptr;
   	Board* board_ = nullptr;
