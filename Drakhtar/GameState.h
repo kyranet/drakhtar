@@ -22,12 +22,10 @@ protected:
 	list<EventListener*> eventListeners_;
 	Game* game_ = nullptr;
 	SDL_Renderer *renderer_ = nullptr;
-	SDL_Event event; // whats the point of this?
-
 public:
 	GameState(Game* game,SDL_Renderer* renderer) : game_(game),renderer_(renderer) {};
 	GameState(SDL_Renderer* renderer): renderer_(renderer) {};
-	~GameState();
+	virtual ~GameState();
 	
 	bool getexit();
 	virtual void _preload();
