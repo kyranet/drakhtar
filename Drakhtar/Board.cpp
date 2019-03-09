@@ -4,6 +4,7 @@
 Board::Board(Texture* cellTexture, int r, int c, float cs)
 	: GameObject(nullptr, Vector2D<int>(0, 0), Vector2D < int>(0, 0)), rows(r), cols(c), cellSize(cs)
 {
+
 	// Calculates margins to center the board on screen
 	marginX = (WIN_WIDTH - (cs * (cols - 1))) / 2;
 	marginY = (WIN_HEIGHT - (cs * (rows - 1))) / 2;
@@ -36,6 +37,7 @@ Board::~Board() {
 		delete[] board;
 		board = nullptr;
 	}
+	delete cellsMatrix;
 }
 
 void Board::render() const {
@@ -85,64 +87,63 @@ bool Board::isInRange(Box* from, Box* to, int range) {
 	return range >= totalDistance;
 }
 
-// DEJA BASURA
-int ** Board::getCellsInRange(Box* box, int range) {
+Matrix<int>* Board::getCellsInRange(Box* box, int range) {
+	// Reset the cells matrix
+	if (cellsMatrix != nullptr) { delete cellsMatrix; }
+
 	int size = range * 2 + 1;
 	int startX = box->getIndex().getX() - range;
 	int startY = box->getIndex().getY() - range;
-
-	// Creates the array
-	int** cellsInRange = new int*[size];
-	for (int i = 0; i < size; i++) {
-		cellsInRange[i] = new int[size];
-	}
+	cellsMatrix = new Matrix<int>(size, size);
 
 	// Fills the array
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
 			// Current cell is out of the board
 			if (j + startX < 0 || i + startY < 0 || j + startX >= cols || i + startY >= rows) {
-				cellsInRange[j][i] = outOfBoard;
+				cellsMatrix->setElement(j, i, outOfBoard);
 
 			// Current cell is out of the movement range
 			} else if(!isInRange(box, getBoxAt(j + startX, i + startY), range)) {
-				cellsInRange[j][i] = outOfRange;
+				cellsMatrix->setElement(j, i, outOfRange);
 
 			// Current cell is in the board and in range
 			} else {
 				Unit* unit = board[i + startY][j + startX]->getContent();
 
 				// Current cell is empty
-				if (unit == nullptr) { cellsInRange[j][i] = empty; }
+				if (unit == nullptr) { 
+					cellsMatrix->setElement(j, i, empty);
+				}
 
 				// Current cell is occupied
 				else {
-					if (unit->getTeam() == box->getContent()->getTeam()) { cellsInRange[j][i] = ally; }	// Ally
-					else { cellsInRange[j][i] = enemy; }	// Enemy
+					if (unit->getTeam() == box->getContent()->getTeam()) { cellsMatrix->setElement(j, i, ally); }	// Ally
+					else { cellsMatrix->setElement(j, i, enemy); }	// Enemy
 				}
 			}
 		}
 	}
-	return cellsInRange;
+	return cellsMatrix;
 }
 
 bool Board::isEnemyInRange(Box * box, int range) {
-	int** cellsInRange = getCellsInRange(box, range);
+	cellsMatrix = getCellsInRange(box, range);
 	int size = range * 2 + 1;
 	bool enemyFound = false;
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
-			if (cellsInRange[i][j] == enemy) {
+			if (cellsMatrix->getElement(i, j) == enemy) {
 				enemyFound = true;
 			}
 		}
 	}
-
+	
 	return enemyFound;
 }
 
 void Board::setTextureToCellsInRange(Box * box, int range, int textInd) {
-	int** cellsInRange = getCellsInRange(box, range);
+	cellsMatrix = getCellsInRange(box, range);
 	int size = range * 2 + 1;
 	int startX = box->getIndex().getX() - range;
 	int startY = box->getIndex().getY() - range;
@@ -150,7 +151,7 @@ void Board::setTextureToCellsInRange(Box * box, int range, int textInd) {
 
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
-			if (cellsInRange[i][j] == empty) {
+			if (cellsMatrix->getElement(i, j) == empty) {
 				if (getBoxAt(i + startX, j + startY)->getCurrentTexture() != 1) {
 					getBoxAt(i + startX, j + startY)->setCurrentTexture(textInd);
 				}
