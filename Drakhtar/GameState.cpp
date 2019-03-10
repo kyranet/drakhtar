@@ -38,6 +38,11 @@ void GameState::_handleEvents(SDL_Event& e) {
 		_exit = true;
 		// TODO: Change State
 	}
+
+	for (auto listener : eventListeners_) {
+		listener->run(e);
+	}
+
 }
 
 void GameState::_afterUpdate()

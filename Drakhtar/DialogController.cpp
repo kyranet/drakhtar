@@ -11,7 +11,8 @@ void DialogController::run(SDL_Event event)
 
 	switch (event.type) {
 	case SDL_MOUSEBUTTONUP:
-		onClick(p);
+		if (!endOfDialog_)
+			onClick(p);
 		break;
 	}
 }
@@ -21,8 +22,11 @@ void DialogController::onClick(SDL_Point p)
 	GameObject * dialogBlock = dialogScene_->getBlockSprite();
 
 	if (p.x >= dialogBlock->getRect().x && p.y >= dialogBlock->getRect().y &&
-		p.x <= dialogBlock->getRect().x + dialogBlock->getRect().w && p.y <= dialogBlock->getRect().y + dialogBlock->getRect().h)
+		p.x <= dialogBlock->getRect().x + dialogBlock->getRect().w && p.y <= dialogBlock->getRect().y + dialogBlock->getRect().h
+		&& !endOfDialog_)
 	{
 		dialogScene_->nextDialog();
+		if (dialogScene_->isEndOfDialog())
+			endOfDialog_ = true;
 	}
 }
