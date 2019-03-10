@@ -4,6 +4,7 @@
 Board::Board(Texture* cellTexture, int r, int c, float cs)
 	: GameObject(nullptr, Vector2D<int>(0, 0), Vector2D < int>(0, 0)), rows(r), cols(c), cellSize(cs)
 {
+
 	// Calculates margins to center the board on screen
 	marginX = (WIN_WIDTH - (cs * (cols - 1))) / 2;
 	marginY = (WIN_HEIGHT - (cs * (rows - 1))) / 2;
@@ -19,7 +20,7 @@ Board::Board(Texture* cellTexture, int r, int c, float cs)
 		for (int j = 0; j < cols; j++) {
 			Vector2D<int> pos = Vector2D<int>((int)floor(marginX + j * cs), (int)floor(marginY + i * cs));
 			Vector2D<int> size = Vector2D<int>((int)floor(cs), (int)floor(cs));
-			Box* box = new Box(cellTexture, pos, size, Vector2D<int>(i, j), nullptr);
+			Box* box = new Box(cellTexture, pos, size, Vector2D<int>(j, i), nullptr);
 			board[i][j] = box;
 		}
 	}
@@ -36,6 +37,7 @@ Board::~Board() {
 		delete[] board;
 		board = nullptr;
 	}
+	delete cellsMatrix;
 }
 
 void Board::render() const {
@@ -74,52 +76,94 @@ Box* Board::getBoxAtCoordinates(Vector2D<int> coordinates) {
 	}
 }
 
-bool Board::isInRange(Vector2D<int> from, Vector2D<int> to, int range) {
-	int distance = abs((to.getX() - from.getX()) + (to.getY() - to.getY()));
-	if (range >= distance) {
-		return true;
-	} else {
-		return false;
-	}
+bool Board::isInRange(Box* from, Box* to, int range) {
+	Vector2D<int> fromCoords = from->getIndex();
+	Vector2D<int> toCoords = to->getIndex();
+
+	int distanceX = abs((toCoords.getX() - fromCoords.getX()));
+	int distanceY = abs((toCoords.getY() - fromCoords.getY()));
+	int totalDistance = distanceX + distanceY;
+
+	return range >= totalDistance;
 }
 
-int ** Board::getCellsInRange(Box box, int range) {
-	int size = range * 2 + 1;
-	int startX = box.getIndex().getX() - range;
-	int startY = box.getIndex().getY() - range;
+Matrix<int>* Board::getCellsInRange(Box* box, int range) {
+	// Reset the cells matrix
+	if (cellsMatrix != nullptr) { delete cellsMatrix; }
 
-	// Creates the array
-	int** cellsInRange = new int*[size];
-	for (int i = 0; i < rows; i++) {
-		cellsInRange[i] = new int[size];
-	}
+	int size = range * 2 + 1;
+	int startX = box->getIndex().getX() - range;
+	int startY = box->getIndex().getY() - range;
+	cellsMatrix = new Matrix<int>(size, size);
 
 	// Fills the array
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
 			// Current cell is out of the board
-			if (i + startX < 0 || j + startY < 0) {
-				cellsInRange[i][j] = outOfBoard;
+			if (j + startX < 0 || i + startY < 0 || j + startX >= cols || i + startY >= rows) {
+				cellsMatrix->setElement(j, i, outOfBoard);
 
 			// Current cell is out of the movement range
-			} else if(abs(box.getIndex().getX() - i + startX) + abs(box.getIndex().getY() - j + startY) > range) {
-				cellsInRange[i][j] = outOfRange;
+			} else if(!isInRange(box, getBoxAt(j + startX, i + startY), range)) {
+				cellsMatrix->setElement(j, i, outOfRange);
 
 			// Current cell is in the board and in range
 			} else {
-				Unit* unit = board[i + startX][j + startY]->getContent();
+				Unit* unit = board[i + startY][j + startX]->getContent();
 
 				// Current cell is empty
-				if (unit == nullptr) { cellsInRange[i][j] = empty; }
+				if (unit == nullptr) { 
+					cellsMatrix->setElement(j, i, empty);
+				}
 
 				// Current cell is occupied
 				else {
-					if (unit->getTeam() == box.getContent()->getTeam()) { cellsInRange[i][j] = ally; }	// Ally
-					else { cellsInRange[i][j] = enemy; }	// Enemy
+					if (unit->getTeam() == box->getContent()->getTeam()) { cellsMatrix->setElement(j, i, ally); }	// Ally
+					else { cellsMatrix->setElement(j, i, enemy); }	// Enemy
 				}
 			}
 		}
 	}
+	return cellsMatrix;
+}
 
-	return cellsInRange;
+bool Board::isEnemyInRange(Box * box, int range) {
+	cellsMatrix = getCellsInRange(box, range);
+	int size = range * 2 + 1;
+	bool enemyFound = false;
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size; j++) {
+			if (cellsMatrix->getElement(i, j) == enemy) {
+				enemyFound = true;
+			}
+		}
+	}
+	
+	return enemyFound;
+}
+
+void Board::setTextureToCellsInRange(Box * box, int range, int textInd) {
+	cellsMatrix = getCellsInRange(box, range);
+	int size = range * 2 + 1;
+	int startX = box->getIndex().getX() - range;
+	int startY = box->getIndex().getY() - range;
+	
+
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size; j++) {
+			if (cellsMatrix->getElement(i, j) == empty) {
+				if (getBoxAt(i + startX, j + startY)->getCurrentTexture() != 1) {
+					getBoxAt(i + startX, j + startY)->setCurrentTexture(textInd);
+				}
+			}
+		}
+	}
+}
+
+void Board::resetCellsToBase() {
+	for (int i = 0; i < cols; i++) {
+		for (int j = 0; j < rows; j++) {
+			board[j][i]->setCurrentTexture(Box::base);
+		}
+	}
 }

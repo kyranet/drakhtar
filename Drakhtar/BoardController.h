@@ -11,8 +11,11 @@ class BoardController : public EventListener
 protected:
 	Board * board_;
 	TurnBar * turnBar_;
+	Unit * activeUnit_;
+	bool moving = true;
 public:
 	BoardController(Board * board, TurnBar * turnBar);
 	virtual void run(SDL_Event event);
-	void onClick(SDL_Point p);
+	void onClickMove(SDL_Point p);
+	void onClickAttack(SDL_Point p);
 };
