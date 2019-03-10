@@ -177,5 +177,5 @@ GameStateMachine* Game::getStateMachine() {
 
 GameState* Game::currentState()
 {
-	return getInstance()->state_;
+	return getInstance()->actualstate_;
 }
