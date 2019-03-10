@@ -11,8 +11,8 @@ State::State(Game* game, SDL_Renderer* renderer)
 
 State::~State()
 {
-	for (auto gameObject : gameObjects_)
-		delete gameObject;
+	/*for (auto gameObject : gameObjects_)
+		delete gameObject;*/
 	game_ = nullptr;
 	pauseInterface = nullptr;
 	delete team1;
