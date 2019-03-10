@@ -115,6 +115,7 @@
     <ClInclude Include="GameStateMachine.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Pause.h" />
+    <ClInclude Include="Matrix.h" />
     <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="SDLAudioManager.h" />
     <ClInclude Include="SDLError.h" />

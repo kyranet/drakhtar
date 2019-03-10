@@ -8,8 +8,8 @@ class Box : public GameObject {
 protected:
 	Vector2D<int> boardIndex;
 	Unit* content;
-	bool hovered = false;
-	Texture * textureHover;
+	int currentTexture;
+	Texture * cellTextures[3];
 public:
 	Box(Texture* t, Vector2D<int> pos, Vector2D<int> size, Vector2D<int> boardIndex, Unit* go);
 	virtual ~Box();
@@ -19,6 +19,13 @@ public:
 	Unit* getContent();
 	Vector2D<int> getIndex();
 	void setContent(Unit* object);
-	bool getHovered() const;
-	void setHovered(bool hover);
+	bool isEmpty();
+	int getCurrentTexture() const;
+	void setCurrentTexture(int textureInd);
+
+	const enum textureInd {
+		base,
+		hover,
+		movable
+	};
 };
