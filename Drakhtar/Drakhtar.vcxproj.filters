@@ -218,5 +218,8 @@
     <ClInclude Include="BoardController.h">
       <Filter>Archivos de encabezado\Components\EventListeners</Filter>
     </ClInclude>
+    <ClInclude Include="Matrix.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
