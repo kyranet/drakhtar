@@ -125,6 +125,8 @@
     </ClCompile>
     <ClCompile Include="DialogController.cpp">
       <Filter>Archivos de código fuente\Components\EventListeners</Filter>
+    <ClCompile Include="Pause.cpp">
+      <Filter>Archivos de código fuente</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -223,6 +225,9 @@
     </ClInclude>
     <ClInclude Include="DialogController.h">
       <Filter>Archivos de encabezado\Components\EventListeners</Filter>
+    <ClInclude Include="Pause.h">
+    <ClInclude Include="Matrix.h">
+      <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

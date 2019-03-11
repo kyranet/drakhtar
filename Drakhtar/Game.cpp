@@ -44,12 +44,21 @@ Game::Game()
 	// UI
 	textureManager_->add("UI-cellFrame", "../images/UI/cellFrame.png", 1, 1);
 	textureManager_->add("UI-cellHover", "../images/UI/cellHover.png", 1, 1);
+	textureManager_->add("UI-cellInRange", "../images/UI/cellInRange.png", 1, 1);
 	textureManager_->add("UI-dialogueBackground", "../images/UI/dialogueBackground.png", 1, 1);
 	textureManager_->add("UI-turnBar", "../images/UI/turnBar.png", 1, 1);
 
 	//Button
 	textureManager_->add("Button-Play", "../images/MainMenu/Play_Button.png", 1, 1);
 	textureManager_->add("Button-Options", "../images/MainMenu/Options_Button.png", 1, 1);
+	textureManager_->add("Button-Pause", "../images/Pause/Pause_Button.png", 1, 1);
+	textureManager_->add("Button-Resume", "../images/Pause/Resume_Button.png", 1, 1);
+	textureManager_->add("Button-Restart", "../images/Pause/Restart_Button.png", 1, 1);
+	textureManager_->add("Button-Exit", "../images/Pause/Exit_Button.png", 1, 1);
+
+	//Pause
+	textureManager_->add("Pause-Panel", "../images/Pause/Panel.png", 1, 1);
+	textureManager_->add("Pause-Background", "../images/Pause/Fondo.png", 1, 1);
 
 	// Portraits
 	textureManager_->add("Portraits-Archer", "../images/Portraits/Archer.png", 1, 1);
@@ -87,8 +96,9 @@ Game::Game()
 		throw new SDLError("Error loading the SDL window or renderer");
 
 	stateMachine = new GameStateMachine();
-	state_ = new State(this, renderer_);
+	state_ = new MainMenu(this, renderer_);
 	stateMachine->pushState(state_);
+	//stateMachine->pushState(state_);
 }
 
 void Game::run()
@@ -168,5 +178,5 @@ GameStateMachine* Game::getStateMachine() {
 
 GameState* Game::currentState()
 {
-	return getInstance()->state_;
+	return getInstance()->actualstate_;
 }

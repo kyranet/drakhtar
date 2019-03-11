@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include "GameObject.h"
@@ -21,11 +22,10 @@ protected:
 	list<EventListener*> eventListeners_;
 	Game* game_ = nullptr;
 	SDL_Renderer *renderer_ = nullptr;
-
 public:
 	GameState(Game* game,SDL_Renderer* renderer) : game_(game),renderer_(renderer) {};
 	virtual ~GameState();
-
+	
 	bool getexit();
 	virtual void _preload();
 	virtual void _create();
@@ -42,4 +42,3 @@ public:
 	GameState* addEventListener(EventListener* eventListener);
 
 };
-
