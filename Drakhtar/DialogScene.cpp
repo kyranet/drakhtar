@@ -72,6 +72,6 @@ void DialogScene::nextDialog()
 void DialogScene::endOfDialog()
 {
 	destroy();
-	finalDialog_ = true;
+	destroyedDialog = true;
 }
 

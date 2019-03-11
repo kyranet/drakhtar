@@ -43,7 +43,7 @@ TurnBar::TurnBar(list<Unit*> allyList, list<Unit*> enemyList): GameObject(Textur
 	auto listIt = unitTurnBar.begin();
 	for(int i=0;i< visibleTurnBarSize;i++)
 	{
-		visibleUnits[i] = new GameObject((*listIt)->getTexture(), Vector2D<int>(WIN_WIDTH - 432 + (i + 1) * 44, WIN_HEIGHT - 30), Vector2D<int>(30, 30));
+		visibleUnits[i] = new GameObject((*listIt)->getTexture(), Vector2D<int>(WIN_WIDTH - 432 + (i + 1) * 44, WIN_HEIGHT - 30), Vector2D<int>(45, 45));
 		listIt++;
 	}
 }
