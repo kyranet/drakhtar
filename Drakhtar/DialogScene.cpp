@@ -29,7 +29,7 @@ void DialogScene::render() const
 
 void DialogScene::handleEvents(SDL_Event event)
 {
-	if (event.type == SDL_KEYDOWN) {
+	/*if (event.type == SDL_KEYDOWN) {
 		switch (event.key.keysym.sym)
 		{
 		case SDLK_e:
@@ -39,7 +39,7 @@ void DialogScene::handleEvents(SDL_Event event)
 			endOfDialog();
 			break;
 		}
-	}
+	}*/
 }
 
 void DialogScene::readFromFile(Game* game, string filename, Font* textFont)

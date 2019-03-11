@@ -13,5 +13,6 @@ public:
 	DialogController(DialogScene* dialogScene);
 	virtual void run(SDL_Event event);
 	void onClick(SDL_Point p);
+	SDL_bool SDL_PointInRect(SDL_Point* p, SDL_Rect*  r);
 };
 
