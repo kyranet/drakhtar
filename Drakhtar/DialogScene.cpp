@@ -27,20 +27,7 @@ void DialogScene::render() const
 	dialogChain[currentDialogIndex]->render();
 }
 
-void DialogScene::handleEvents(SDL_Event event)
-{
-	/*if (event.type == SDL_KEYDOWN) {
-		switch (event.key.keysym.sym)
-		{
-		case SDLK_e:
-			nextDialog();
-			break;
-		case SDLK_s:
-			endOfDialog();
-			break;
-		}
-	}*/
-}
+void DialogScene::handleEvents(SDL_Event event) { }
 
 void DialogScene::readFromFile(Game* game, string filename, Font* textFont)
 {
