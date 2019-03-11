@@ -19,6 +19,7 @@ private:
 	vector<Dialog*> dialogChain;
 	int currentDialogIndex = 0;
 	Font* textFont = nullptr;
+	bool destroyedDialog = false;
 public:
 	DialogScene(Game* game, string filename, string fontfile);
 	~DialogScene();
@@ -27,6 +28,10 @@ public:
 	void readFromFile(Game* game, string filename, Font* textFont);
 	void nextDialog();
 	void endOfDialog();
+
+	//getters
+	GameObject* getBlockSprite() const { return dialogBlockSprite; };
+	bool isEndOfDialog() { return destroyedDialog; };
 
 };
 

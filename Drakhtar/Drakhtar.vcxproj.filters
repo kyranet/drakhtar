@@ -123,6 +123,9 @@
     <ClCompile Include="BoardController.cpp">
       <Filter>Archivos de código fuente\Components\EventListeners</Filter>
     </ClCompile>
+    <ClCompile Include="DialogController.cpp">
+      <Filter>Archivos de código fuente\Components\EventListeners</Filter>
+    </ClCompile>
     <ClCompile Include="Pause.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
@@ -221,7 +224,12 @@
     <ClInclude Include="BoardController.h">
       <Filter>Archivos de encabezado\Components\EventListeners</Filter>
     </ClInclude>
+    <ClInclude Include="DialogController.h">
+      <Filter>Archivos de encabezado\Components\EventListeners</Filter>
+    </ClInclude>
     <ClInclude Include="Pause.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
     <ClInclude Include="Matrix.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>

@@ -2,6 +2,7 @@
 
 #include "State.h"
 #include "BoardController.h"
+#include "DialogController.h"
 
 
 State::State(Game* game, SDL_Renderer* renderer)
@@ -67,6 +68,7 @@ void State::_preload()
 
 	// Controller
 	addEventListener(new BoardController(board_, turnBar_));
+	addEventListener(new DialogController(exampleDialog));
 
 	//Button
 	Pause_Button= new Button(TextureManager::get("Button-Pause"), 770, 30, 50, 50, Pause_game, game_, renderer_);
