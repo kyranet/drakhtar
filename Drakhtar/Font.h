@@ -10,15 +10,14 @@ class Font
 {
 private:
 	TTF_Font* font_;
-	int lineJumpLimit_;
 
 public:
 	Font();
-	Font(string filename, int size, int lineJumpLimit);
+	Font(string filename, int size);
 	~Font();
 
 	TTF_Font* getFont() const { return font_; }
 	Font* load(string filename, int size);
 	void close();
-	SDL_Surface* renderText(string text, SDL_Color color) const;
+	SDL_Surface* renderText(string text, SDL_Color color, int lineJumpLimit) const;
 };

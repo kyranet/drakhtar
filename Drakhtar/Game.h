@@ -9,6 +9,7 @@
 #include "GameStateMachine.h"
 #include "Constants.h"
 #include "TextureManager.h"
+#include "FontManager.h"
 
 
 typedef unsigned int uint;
@@ -25,6 +26,7 @@ private:
 	SDL_Event event;
 	bool _exit = false;
 	TextureManager* textureManager_ = TextureManager::getInstance();
+	FontManager * fontManager_ = FontManager::getInstance();
 	GameStateMachine* stateMachine = nullptr;
 	GameState* state_ = nullptr;
 	GameState* actualstate_ = nullptr;

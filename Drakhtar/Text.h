@@ -14,9 +14,9 @@ private:
 	SDL_Color color_;
 
 public:
-	Text(SDL_Renderer* renderer, Font* font, Vector2D<int> pos, SDL_Color &color, string &text);
+	Text(SDL_Renderer* renderer, Font* font, Vector2D<int> pos, SDL_Color &color, string &text, int lineJumpLimit);
 	~Text();
-	void setText(string const text, SDL_Color const color = { 0, 0, 0, 255 });
+	void setText(string const text, SDL_Color const color = { 0, 0, 0, 255 }, int lineJumpLimit = 250);
 	void setColor(SDL_Color const color);
 	void render() const;
 };

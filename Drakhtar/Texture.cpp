@@ -67,9 +67,9 @@ Texture* Texture::loadFromImage(string filename, ushort rowAmount, ushort column
 	return this;
 }
 
-Texture* Texture::loadFromText(Font* font, string text, SDL_Color const color)
+Texture* Texture::loadFromText(Font* font, string text, SDL_Color const color, int lineJumpLimit)
 {
-	SDL_Surface* surface = font->renderText(text, color);
+	SDL_Surface* surface = font->renderText(text, color, lineJumpLimit);
 	if (surface == nullptr)
 	{
 		string message = "Error loading text: " + text + "\nReason: " + TTF_GetError();

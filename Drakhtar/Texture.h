@@ -50,7 +50,7 @@ public:
 	Texture* setFrameSize(Vector2D<ushort> const& frameSize);
 	Texture* setFlip(SDL_RendererFlip const& flip);
 	Texture* loadFromImage(string filename, ushort rowAmount = 1, ushort columnAmount = 1);
-	Texture* loadFromText(Font* font, string text, SDL_Color const color = { 0, 0, 0, 255 });
+	Texture* loadFromText(Font* font, string text, SDL_Color const color = { 0, 0, 0, 255 }, int lineJumpLimit = 250);
 	void addAnimation(string const& name, vector<ushort> const& frames);
 	void setAnimation(string const& name);
 	bool hasAnimation(string const& name);

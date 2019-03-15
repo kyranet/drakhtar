@@ -20,6 +20,7 @@ private:
 	int currentDialogIndex = 0;
 	Font* textFont = nullptr;
 	bool destroyedDialog = false;
+	int lineJumpLimit_;
 public:
 	DialogScene(Game* game, string filename, string fontfile);
 	~DialogScene();

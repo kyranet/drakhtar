@@ -1,10 +1,12 @@
 #include "DialogScene.h"
-
+#include "FontManager.h"
 DialogScene::DialogScene(Game* game, string filename, string fontfile): GameObject(nullptr, Vector2D<int>(0,0), Vector2D<int>(1,1)) // default position and size(adjust it to move DialogScene)
 {
 	dialogBlockSprite = new GameObject(TextureManager::get("UI-dialogueBackground"), Vector2D<int>(getRect().x + WIN_WIDTH - 400, getRect().y + WIN_HEIGHT - 100), Vector2D<int>(getRect().w*600, getRect().h*160));
 	characterBlockSprite = new GameObject(TextureManager::get("UI-dialogueBackground"), Vector2D<int>(getRect().x + WIN_WIDTH - 197, getRect().y + WIN_HEIGHT - 190), Vector2D<int>(getRect().w * 120, getRect().h * 32));
-	textFont = new Font("../fonts/" + fontfile + ".ttf", 12, dialogBlockSprite->getRect().x + 400);
+//	textFont = new Font("../fonts/" + fontfile + ".ttf", 12);
+	lineJumpLimit_ = dialogBlockSprite->getRect().x + 400;
+	textFont = FontManager::get(fontfile);
 	readFromFile(game, "../dialog/" + filename + ".txt",+ textFont);
 }
 
@@ -41,7 +43,7 @@ void DialogScene::readFromFile(Game* game, string filename, Font* textFont)
 
 		for (int i = 0;i < dialogChainSize;i++)
 		{
-			dialogChain[i] = new Dialog(game, file, textFont, getRect());
+			dialogChain[i] = new Dialog(game, file, textFont, getRect(), lineJumpLimit_);
 		}
 		
 	//}

@@ -2,7 +2,7 @@
 
 
 
-Dialog::Dialog(Game* game, ifstream& file, Font* textFont, SDL_Rect dialogRect): dialogRect_(dialogRect) 
+Dialog::Dialog(Game* game, ifstream& file, Font* textFont, SDL_Rect dialogRect, int lineJumpLimit): dialogRect_(dialogRect)
 {
 	readFromFile(file);
 	characterPortraitSprite = new GameObject(TextureManager::get(spriteText), Vector2D<int>(dialogRect_.x + 200, dialogRect_.y + 345), Vector2D<int>(dialogRect_.w*150, dialogRect_.h*150));
@@ -13,8 +13,8 @@ Dialog::Dialog(Game* game, ifstream& file, Font* textFont, SDL_Rect dialogRect):
 	textColor.b = 0;
 	textColor.a = 1;
 
-	characterNameSprite = new Text(game->getRenderer(), textFont, Vector2D<int>(dialogRect_.x + 600, dialogRect_.y + 405), textColor, characterName);
-	dialogTextSprite = new Text(game->getRenderer(), textFont, Vector2D<int>(dialogRect_.x + 375, dialogRect_.y + 480), textColor, dialogText);
+	characterNameSprite = new Text(game->getRenderer(), textFont, Vector2D<int>(dialogRect_.x + 600, dialogRect_.y + 405), textColor, characterName, lineJumpLimit);
+	dialogTextSprite = new Text(game->getRenderer(), textFont, Vector2D<int>(dialogRect_.x + 375, dialogRect_.y + 480), textColor, dialogText, lineJumpLimit);
 }
 
 

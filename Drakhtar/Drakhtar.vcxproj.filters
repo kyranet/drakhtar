@@ -129,6 +129,9 @@
     <ClCompile Include="Pause.cpp">
       <Filter>Archivos de código fuente</Filter>
     </ClCompile>
+    <ClCompile Include="FontManager.cpp">
+      <Filter>Archivos de código fuente\Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -232,6 +235,9 @@
     </ClInclude>
     <ClInclude Include="Matrix.h">
       <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="FontManager.h">
+      <Filter>Archivos de encabezado\Managers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

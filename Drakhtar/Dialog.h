@@ -22,7 +22,7 @@ private:
 
 	SDL_Rect dialogRect_;
 public:
-	Dialog(Game* game, ifstream& file, Font* textfont, SDL_Rect dialogRect);
+	Dialog(Game* game, ifstream& file, Font* textfont, SDL_Rect dialogRect, int lineJumpLimit);
 	~Dialog();
 	virtual void render() const;
 	void readFromFile(ifstream& file);
