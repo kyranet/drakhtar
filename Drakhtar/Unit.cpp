@@ -46,8 +46,8 @@ void Unit::moveToBox(Box *newBox)
     pos_ = Vector2D<int>(newBox->getRect().x + newBox->getRect().w / 2, newBox->getRect().y + newBox->getRect().h / 2);
     box_ = newBox;
     newBox->setContent(this);
-    this->setMoved(true);
-    this->setMoving(false);
+    setMoved(true);
+    setMoving(false);
 }
 
 void Unit::loseHealth(int health)
