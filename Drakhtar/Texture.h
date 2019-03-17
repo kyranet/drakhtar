@@ -49,15 +49,15 @@ class Texture
     SDL_RendererFlip getFlip() const { return flip_; }
 
     Texture *setTexture(SDL_Texture *const &texture);
-    Texture *setColumnAmount(ushort const &columns);
-    Texture *setRowAmount(ushort const &rows);
+    Texture *setColumnAmount(ushort columns);
+    Texture *setRowAmount(ushort rows);
     Texture *setFrameSize(Vector2D<ushort> const &frameSize);
     Texture *setFlip(SDL_RendererFlip const &flip);
     Texture *loadFromImage(string filename, ushort rowAmount = 1, ushort columnAmount = 1);
     Texture *loadFromText(Font *font, string text, SDL_Color const color = {0, 0, 0, 255});
-    void addAnimation(string const &name, vector<ushort> const &frames);
-    void setAnimation(string const &name);
-    bool hasAnimation(string const &name);
+    void addAnimation(string name, vector<ushort> const &frames);
+    void setAnimation(string name);
+    bool hasAnimation(string name);
     void tick();
     void render(Vector2D<int> position) const;
     void render(SDL_Rect const &dest, double angle = 0, SDL_Rect *clip = nullptr) const;

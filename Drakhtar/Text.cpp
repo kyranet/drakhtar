@@ -2,7 +2,7 @@
 
 #include "Text.h"
 
-Text::Text(SDL_Renderer *renderer, Font *font, Vector2D<int> pos, SDL_Color &const color, string &const text)
+Text::Text(SDL_Renderer *renderer, Font *font, Vector2D<int> pos, SDL_Color const&color, string const&text)
     : GameObject(nullptr, pos, Vector2D<int>(0, 0)), font_(font), color_(color)
 {
     texture_ = new Texture(renderer);

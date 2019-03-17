@@ -30,6 +30,6 @@ class Button : public GameObject
     ~Button() {}
 
     void render(){}
-    void handleEvents(SDL_Event const &e);
+    void handleEvents(SDL_Event e);
     void update(){}
 };

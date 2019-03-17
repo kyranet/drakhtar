@@ -34,7 +34,7 @@ void MainMenu::Options_game(Game *game, SDL_Renderer *renderer)
     cout << "Options";
 }
 
-void MainMenu::_handleEvents(SDL_Event const &e)
+void MainMenu::_handleEvents(SDL_Event e)
 {
     while (!_exit && SDL_PollEvent(&e))
     {

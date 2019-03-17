@@ -99,7 +99,7 @@ void State::_update()
     }
 }
 
-void State::_handleEvents(SDL_Event const &e)
+void State::_handleEvents(SDL_Event e)
 {
     while (!_exit && SDL_PollEvent(&e))
     {

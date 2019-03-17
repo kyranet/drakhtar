@@ -34,7 +34,7 @@ class GameState
     virtual void _create();
     virtual void _update();
     virtual void _render();
-    virtual void _handleEvents(SDL_Event &const e);
+    virtual void _handleEvents(SDL_Event e);
     virtual void _afterUpdate();
     virtual void _events();
     virtual void _destroy();

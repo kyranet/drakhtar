@@ -23,7 +23,7 @@ Button::Button(Texture *t, int x, int y, int w, int h,
 {
 }
 
-void Button::handleEvents(SDL_Event const &e)
+void Button::handleEvents(SDL_Event e)
 {
     if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
     {

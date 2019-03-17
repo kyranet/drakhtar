@@ -32,7 +32,7 @@ void GameState::_update()
 {
 }
 
-void GameState::_handleEvents(SDL_Event &const e)
+void GameState::_handleEvents(SDL_Event e)
 {
     // Listen to SDL events
     if (e.type == SDL_QUIT)

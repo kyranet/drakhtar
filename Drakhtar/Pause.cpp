@@ -36,7 +36,7 @@ void Pause::_render()
     SDL_RenderPresent(renderer_);
 }
 
-void Pause::_handleEvents(SDL_Event const &e)
+void Pause::_handleEvents(SDL_Event e)
 {
     Restart->handleEvents(e);
     Exit->handleEvents(e);

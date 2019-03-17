@@ -27,7 +27,7 @@ class MainMenu : public GameState
 
  protected:
     void _preload();
-    void _handleEvents(SDL_Event const &e);
+    void _handleEvents(SDL_Event e);
 
     static void Play_game(Game *game, SDL_Renderer *renderer);
     static void Options_game(Game *game, SDL_Renderer *renderer);

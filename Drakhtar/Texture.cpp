@@ -24,13 +24,13 @@ Texture *Texture::setTexture(SDL_Texture *const &texture)
     return this;
 }
 
-Texture *Texture::setColumnAmount(ushort const &columns)
+Texture *Texture::setColumnAmount(ushort columns)
 {
     columnAmount_ = columns;
     return this;
 }
 
-Texture *Texture::setRowAmount(ushort const &rows)
+Texture *Texture::setRowAmount(ushort rows)
 {
     rowAmount_ = rows;
     return this;
@@ -92,12 +92,12 @@ Texture *Texture::loadFromText(Font *font, string text, SDL_Color const color)
     return this;
 }
 
-void Texture::addAnimation(string const &name, vector<ushort> const &frames)
+void Texture::addAnimation(string name, vector<ushort> const &frames)
 {
     animations_[name] = frames;
 }
 
-void Texture::setAnimation(string const &name)
+void Texture::setAnimation(string name)
 {
     if (hasAnimation(name))
         animation_ = animations_[name];
@@ -105,7 +105,7 @@ void Texture::setAnimation(string const &name)
         throw new DrakhtarError("Cannot set an animation that has not been previously added.");
 }
 
-bool Texture::hasAnimation(string const &name)
+bool Texture::hasAnimation(string name)
 {
     return animations_.count(name) != 0;
 }

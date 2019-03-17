@@ -13,10 +13,10 @@ void BoardController::run(SDL_Event event)
         board_->setTextureToCellsInRange(activeUnit_->getBox(), activeUnit_->getMoveRange(), Box::movable);
     }
 
-    SDL_Point p = {event.motion.x, event.motion.y};
     switch (event.type)
     {
     case SDL_MOUSEBUTTONUP:
+        SDL_Point p = {event.motion.x, event.motion.y};
         if (moving)
         {
             onClickMove(p);

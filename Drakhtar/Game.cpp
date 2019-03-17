@@ -103,7 +103,6 @@ Game::Game()
     stateMachine = new GameStateMachine();
     state_ = new MainMenu(this, renderer_);
     stateMachine->pushState(state_);
-    // stateMachine->pushState(state_);
 }
 
 void Game::run()

@@ -19,7 +19,7 @@ class Pause : public GameState
     virtual ~Pause();
     void _preload();
     void _render();
-    void _handleEvents(SDL_Event const &e);
+    void _handleEvents(SDL_Event e);
     static void RestartGame(Game *game, SDL_Renderer *renderer);
     static void ExitGame(Game *game, SDL_Renderer *renderer);
 };
