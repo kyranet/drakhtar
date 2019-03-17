@@ -17,12 +17,7 @@ void GameObject::render() const
 {
     if (texture_ == nullptr)
         return;
-    SDL_Rect dest{
-        pos_.getX() - size_.getX() / 2,
-        pos_.getY() - size_.getY() / 2,
-        size_.getX(),
-        size_.getY()};
-    texture_->renderFrame(dest, texture_->getAnimation()[texture_->getFrame()]);
+    texture_->renderFrame(getRect(), texture_->getAnimation()[texture_->getFrame()]);
 }
 
 void GameObject::handleEvents(SDL_Event event)

@@ -21,12 +21,7 @@ Box::~Box()
 // Renders itself and its content
 void Box::render()
 {
-    SDL_Rect dest{
-        pos_.getX() - size_.getX() / 2,
-        pos_.getY() - size_.getY() / 2,
-        size_.getX(),
-        size_.getY()};
-    cellTextures[currentTexture]->render(dest, texture_->getAnimation()[texture_->getFrame()]);
+    cellTextures[currentTexture]->render(getRect(), texture_->getAnimation()[texture_->getFrame()]);
     if (content != nullptr)
     {
         content->render();
@@ -36,7 +31,7 @@ void Box::render()
 void Box::handleEvents(SDL_Event event)
 {
     SDL_Point p = {event.motion.x, event.motion.y};
-    if (SDL_PointInRect(&p, &this->getRect()))
+    if (SDL_PointInRect(&p, &getRect()))
     {
         currentTexture = hover;
     }
