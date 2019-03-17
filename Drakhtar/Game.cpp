@@ -93,7 +93,7 @@ Game::Game()
                                            WIN_WIDTH,
                                            WIN_HEIGHT,
                                            SDL_WINDOW_SHOWN);
-    renderer_ = SDL_CreateRenderer(window_, -1, SDL_RENDERER_ACCELERATED);
+    renderer_ = SDL_CreateRenderer(window_, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     textureManager_->init(renderer_);
 
     // If window or renderer is a null pointer, throw a SDLError
