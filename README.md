@@ -6,8 +6,8 @@ A game built on top of SDLv2.
 
 ```bash
 # Windows
-$ python .\\tools\\cpplint.py --output=vs7 --recursive Drakhtar
+$ python .\\tools\\cpplint.py --quiet --recursive Drakhtar
 
 # Linux or Mac
-$ python ./tools/cpplint.py --output=vs7 --recursive Drakhtar
+$ python ./tools/cpplint.py --quiet --recursive Drakhtar
 ```
