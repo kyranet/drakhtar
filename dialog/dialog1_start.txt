@@ -1,21 +1,21 @@
 
 19
-Narrador Portraits-Narrator Mientras Thassa y su mano derecha, Valar, se encuentran de vuelta al reino de Drakhtar, al llegar a la frontera con el reino vecino de Crihendrath, notan en la lejanía que la ciudad está rodeada por una neblina que parece sospechosa .
-Thassa Portraits-Thassa ¿Qué es eso? .
-Valar Portraits-characterPlaceholder Desconozco que puede ser, en cualquier caso, debemos aproximar el ejército con cuidado .
-Narrador Portraits-Narrator El ejército sigue con cautela a su líder. Una vez están ya cerca de la ciudad descubren que se encuentra sitiada .
-Thassa Portraits-Thassa ¿Qué está ocurriendo? .
-Valar Portraits-characterPlaceholder Nos están sitiando... unos... ¿esqueletos...? .
+Narrador Portraits-Narrator Mientras Thassa y su mano derecha, Valar, se encuentran de vuelta al reino de Drakhtar, al llegar a la frontera con el reino vecino de Crihendrath, notan en la lejanï¿½a que la ciudad estÃ¡ rodeada por una neblina que parece sospechosa .
+Thassa Portraits-Thassa Â¿QuÃ© es eso? .
+Valar Portraits-characterPlaceholder Desconozco que puede ser, en cualquier caso, debemos aproximar el ejÃ©rcito con cuidado .
+Narrador Portraits-Narrator El ejÃ©rcito sigue con cautela a su lÃ­der. Una vez estÃ¡n ya cerca de la ciudad descubren que se encuentra sitiada .
+Thassa Portraits-Thassa Â¿QuÃ© estÃ¡ ocurriendo? .
+Valar Portraits-characterPlaceholder Nos estÃ¡n atacando... unos... Â¿esqueletos...? .
 Thassa Portraits-Thassa Debemos atacar ahora que no nos esperan .
-Valar Portraits-characterPlaceholder ¡No! hay que organizar un plan de batalla .
+Valar Portraits-characterPlaceholder Â¡No! hay que organizar un plan de batalla .
 Thassa Portraits-Thassa No tenemos tiempo, Valar .
-Thassa Portraits-Thassa ¡Preparaos para el ataque! ¡Avanzad! .
-Narrador Portraits-Narrator En el ejército enemigo se vislumbra una silueta que destaca por encima de todos .
-Narrador Portraits-Narrator Es un esqueleto más grande que los demás que porta un arco .
-Valar Portraits-characterPlaceholder Mueve las unidades haciendo click izquierdo en una casilla de terreno que está disponible .
-Valar Portraits-characterPlaceholder las unidades tienen distintos rangos, dependiendo de la unidad podrás atacar a mayor o menor distancia. Para atacar haz click izquierdo en la unidad enemiga que está al alcance .
-Valar Portraits-characterPlaceholder Para ganar la batalla tendremos que derrotar al líder enemigo, procura no morir o estaremos perdidos .
-Valar Portraits-characterPlaceholder ¡Acaba con él! .
-Valar Portraits-characterPlaceholder Los soldados registrarán las unidades enemigas que han caído en combate y obtendremos su oro que podemos usar para reabastecer las nuestras .
+Thassa Portraits-Thassa Â¡Preparaos para el ataque! Â¡Avanzad! .
+Narrador Portraits-Narrator En el ejÃ©rcito enemigo se vislumbra una silueta que destaca por encima de todos .
+Narrador Portraits-Narrator Es un esqueleto mÃ¡s grande que los demÃ¡s que porta un arco .
+Valar Portraits-characterPlaceholder Mueve las unidades haciendo click izquierdo en una casilla de terreno que estÃ¡ disponible .
+Valar Portraits-characterPlaceholder las unidades tienen distintos rangos, dependiendo de la unidad podrÃ¡s atacar a mayor o menor distancia. Para atacar haz click izquierdo en la unidad enemiga que estÃ¡ al alcance .
+Valar Portraits-characterPlaceholder Para ganar la batalla tendremos que derrotar al lÃ­der enemigo, procura no morir o estaremos perdidos .
+Valar Portraits-characterPlaceholder Â¡Acaba con Ã©l! .
+Valar Portraits-characterPlaceholder Los soldados registraron las unidades enemigas que han caÃ­do en combate y obtendremos su oro que podemos usar para reabastecer las nuestras .
 Valar Portraits-characterPlaceholder Ahora podemos reclutar nuevas unidades .
-Valar Portraits-characterPlaceholder Aquí se encuentra el oro disponible. Cada unidad cuesta una cantidad de oro, haz click en las unidades que quieras reclutar .
+Valar Portraits-characterPlaceholder AquÃ­ se encuentra el oro disponible. Cada unidad cuesta una cantidad de oro, haz click en las unidades que quieras reclutar .
