@@ -14,6 +14,6 @@ steps:
     # Run CPPLint into the project
     python ./tools/cpplint.py --quiet --recursive Drakhtar
   displayName: 'Lint Stage'
-- script: |
-    # TODO(kyranet): Implement CMake into the project
-    # make
+# TODO(kyranet): Implement CMake into the project
+# - script: |
+#     make
