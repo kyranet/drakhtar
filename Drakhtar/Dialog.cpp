@@ -6,7 +6,7 @@ Dialog::Dialog(Game* game, ifstream& file, Font* textFont, SDL_Rect dialogRect, 
 : dialogRect_(dialogRect)
 {
     readFromFile(file);
-    characterPortraitSprite = new GameObject(TextureManager::get(spriteText), 
+    characterPortraitSprite = new GameObject(TextureManager::get(spriteText),
                                            Vector2D<int>(dialogRect_.x + 200, dialogRect_.y + 345),
                                            Vector2D<int>(dialogRect_.w * 150, dialogRect_.h * 150));
 
