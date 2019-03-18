@@ -20,7 +20,7 @@ struct FontInfo
 
 class FontManager
 {
-private: 
+ private:
     static FontManager * instance;
     FontManager();
     ~FontManager();
@@ -28,12 +28,11 @@ private:
     map<string, Font*> map_;
     stack<FontInfo*> stack_;
 
-public:
+ public:
     static FontManager* getInstance();
     static void destroy();
     static Font* get(string name);
     FontInfo* add(string name, string path, int size, int lineJumpLimit);
     void init();
-    
 };
 

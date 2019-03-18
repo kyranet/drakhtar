@@ -23,7 +23,7 @@ class Dialog
     Text *dialogTextSprite = nullptr;
 
     SDL_Rect dialogRect_;
-public:
+ public:
     Dialog(Game* game, ifstream& file, Font* textfont, SDL_Rect dialogRect, int lineJumpLimit);
     ~Dialog();
     virtual void render() const;

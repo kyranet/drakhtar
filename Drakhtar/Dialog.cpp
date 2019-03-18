@@ -15,13 +15,14 @@ Dialog::Dialog(Game* game, ifstream& file, Font* textFont, SDL_Rect dialogRect, 
     textColor.b = 0;
     textColor.a = 1;
 
-    characterNameSprite = new Text(game->getRenderer(), 
-                                 textFont, 
-                                 Vector2D<int>(dialogRect_.x + 600, dialogRect_.y + 405), 
-                                 textColor, characterName, lineJumpLimit);
-    dialogTextSprite = new Text(game->getRenderer(), textFont, 
-                              Vector2D<int>(dialogRect_.x + 375, dialogRect_.y + 480),
-                              textColor, dialogText, lineJumpLimit);
+    characterNameSprite = 
+    new Text(game->getRenderer(),
+    textFont, Vector2D<int>(dialogRect_.x + 600, dialogRect_.y + 405),
+    textColor, characterName, lineJumpLimit);
+    
+    dialogTextSprite = new Text(game->getRenderer(), textFont,
+    Vector2D<int>(dialogRect_.x + 375, dialogRect_.y + 480),
+    textColor, dialogText, lineJumpLimit);
 }
 
 Dialog::~Dialog()
