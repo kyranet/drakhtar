@@ -12,7 +12,7 @@ class Box : public GameObject
     Vector2D<int> boardIndex;
     Unit *content;
     int currentTexture;
-    Texture *cellTextures[3];
+    Texture *cellTextures[4];
 
  public:
     Box(Texture *t, Vector2D<int> pos, Vector2D<int> size, Vector2D<int> boardIndex, Unit *go);
@@ -30,6 +30,7 @@ class Box : public GameObject
     const enum textureInd {
         base,
         hover,
-        movable
+        movable,
+		enemy
     };
 };

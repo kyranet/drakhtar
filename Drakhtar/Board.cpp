@@ -191,7 +191,7 @@ bool Board::isEnemyInRange(Box *box, int range)
     return enemyFound;
 }
 
-void Board::setTextureToCellsInRange(Box *box, int range, int textInd)
+void Board::highlightCellsInRange(Box *box, int range)
 {
     cellsMatrix = getCellsInRange(box, range);
     int size = range * 2 + 1;
@@ -206,11 +206,33 @@ void Board::setTextureToCellsInRange(Box *box, int range, int textInd)
             {
                 if (getBoxAt(i + startX, j + startY)->getCurrentTexture() != 1)
                 {
-                    getBoxAt(i + startX, j + startY)->setCurrentTexture(textInd);
+                    getBoxAt(i + startX, j + startY)->setCurrentTexture(Box::movable);
                 }
             }
         }
     }
+}
+
+void Board::highlightEnemiesInRange(Box *box, int range)
+{
+	cellsMatrix = getCellsInRange(box, range);
+	int size = range * 2 + 1;
+	int startX = box->getIndex().getX() - range;
+	int startY = box->getIndex().getY() - range;
+
+	for (int i = 0; i < size; i++)
+	{
+		for (int j = 0; j < size; j++)
+		{
+			if (cellsMatrix->getElement(i, j) == enemy)
+			{
+				if (getBoxAt(i + startX, j + startY)->getCurrentTexture() != 1)
+				{
+					getBoxAt(i + startX, j + startY)->setCurrentTexture(Box::enemy);
+				}
+			}
+		}
+	}
 }
 
 void Board::resetCellsToBase()
