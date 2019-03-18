@@ -18,7 +18,6 @@ DialogScene::~DialogScene()
 	dialogBlockSprite = nullptr;
 	delete characterBlockSprite;
 	characterBlockSprite = nullptr;
-	delete textFont;
 	textFont = nullptr;
 }
 

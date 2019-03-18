@@ -19,6 +19,12 @@ void Text::setText(string const text, SDL_Color const color, int lineJumpLimit)
 	size_.set(texture_->getSize().getX(), texture_->getSize().getY());
 }
 
+void Text::setPos(int x, int y)
+{
+	pos_.setX(x);
+	pos_.setY(y);
+}
+
 void Text::setColor(SDL_Color const color)
 {
 	color_ = color;
