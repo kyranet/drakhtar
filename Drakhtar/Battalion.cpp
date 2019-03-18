@@ -1,3 +1,4 @@
+// Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 #include "Battalion.h"
 #include "Game.h"
 
@@ -33,12 +34,12 @@ void Battalion::setBattalionSize(int battalionSize)
 
 int Battalion::getAttack() const
 {
-	return Unit::getAttack() * battalionSize_;
+    return Unit::getAttack() * battalionSize_;
 }
 
 int Battalion::getMaxHealth() const
 {
-	return Unit::getMaxHealth() * battalionSize_;
+    return Unit::getMaxHealth() * battalionSize_;
 }
 
 void Battalion::loseHealth(int health)

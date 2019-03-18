@@ -1,3 +1,5 @@
+// Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
+
 #pragma once
 
 #include <exception>
@@ -6,6 +8,6 @@ using namespace std;
 
 class DrakhtarError : public logic_error
 {
-public:
-	DrakhtarError(const string &m) : logic_error("Arkanoid Error " + m) {}
+ public:
+    explicit DrakhtarError(const string &m) : logic_error("Arkanoid Error " + m) {}
 };

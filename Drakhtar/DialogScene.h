@@ -1,3 +1,5 @@
+// Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
+
 #pragma once
 
 #include "Dialog.h"
@@ -10,7 +12,7 @@
 class Game;
 class Dialog;
 
-class DialogScene: public GameObject
+class DialogScene : public GameObject
 {
 private:
 	GameObject* dialogBlockSprite = nullptr;
@@ -30,9 +32,6 @@ public:
 	void nextDialog();
 	void endOfDialog();
 
-	//getters
-	GameObject* getBlockSprite() const { return dialogBlockSprite; };
-	bool isEndOfDialog() { return destroyedDialog; };
-
+    GameObject *getBlockSprite() const { return dialogBlockSprite; }
+    bool isEndOfDialog() { return destroyedDialog; }
 };
-
