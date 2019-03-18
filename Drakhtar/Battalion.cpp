@@ -11,7 +11,7 @@ Battalion::Battalion(Texture * texture, Box * box, int attack, int health, int s
 	textColor.g = 255;
 	textColor.b = 255;
 	textColor.a = 255;
-	status_->setText("Salud: " + to_string(this->getHealth()));
+	healthText->setText("Salud: " + to_string(this->getHealth()));
 
 	sizeText_ = new Text(Game::getInstance()->getRenderer(), FontManager::get("Retron2000"), { box_->getRect().x + box_->getRect().w / 2 , box_->getRect().y + box_->getRect().h * 4 / 5 },
 		textColor, "Units: " + to_string(battalionSize_), box_->getRect().w * 2);

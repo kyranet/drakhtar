@@ -14,16 +14,16 @@ Unit::Unit(Texture* texture, Box * box, int attack, int health, int speed, int a
 	textColor.b = 255;
 	textColor.a = 255;
 
-	status_ = new Text(Game::getInstance()->getRenderer(), FontManager::get("Retron2000"), { box_->getRect().x + box_->getRect().w /2 , box_->getRect().y + box_->getRect().h/5 },
+	healthText = new Text(Game::getInstance()->getRenderer(), FontManager::get("Retron2000"), { box_->getRect().x + box_->getRect().w /2 , box_->getRect().y + box_->getRect().h/5 },
 		textColor, "Salud: " + to_string(getHealth()), box_->getRect().w*2);
 }
 
 Unit::~Unit()
 {
-	if (status_ != nullptr) {
-		delete status_;
+	if (healthText != nullptr) {
+		delete healthText;
 	}
-	status_ = nullptr;
+	healthText = nullptr;
 }
 
 void Unit::moveTowards(Vector2D<int> pos) {
@@ -57,7 +57,7 @@ void Unit::moveToBox(Box * newBox)
 	box_ = newBox;
 	newBox->setContent(this);
 
-	status_->setPos(box_->getRect().x + box_->getRect().w / 2, box_->getRect().y + box_->getRect().h / 5);
+	healthText->setPos(box_->getRect().x + box_->getRect().w / 2, box_->getRect().y + box_->getRect().h / 5);
 
 	this->setMoved(true);
 	this->setMoving(false);
@@ -68,7 +68,7 @@ void Unit::loseHealth(int health)
 {
 	cout << "Health: " << health_ << " Damage: " << health;
 	health_ -= health;
-	status_->setText("Salud: " + to_string(this->getHealth()));
+	healthText->setText("Salud: " + to_string(this->getHealth()));
 
 	cout << " Remaining: " << health_ << endl;
 	// TODO: Send "Unit killed" event if health_ <= 0;
@@ -77,5 +77,5 @@ void Unit::loseHealth(int health)
 void Unit::render() const
 {
 	GameObject::render();
-	status_->render();
+	healthText->render();
 }

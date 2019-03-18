@@ -22,7 +22,7 @@ private:
 
 protected:
 	Box* box_ = nullptr;
-	Text* status_ = nullptr;
+	Text* healthText = nullptr;
 	int health_;
 public:
 	Unit(Texture* texture, Box * box, int attack, int health, int speed, int attackRange, int moveRange);
