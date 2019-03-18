@@ -151,6 +151,7 @@ Game::~Game()
 	SDL_DestroyWindow(window_);
 
 	delete stateMachine;
+	FontManager::destroy();
 
 	SDL_Quit();
 	TTF_Quit();
