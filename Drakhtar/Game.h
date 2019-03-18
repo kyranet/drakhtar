@@ -23,19 +23,25 @@ class Game
     static Game *instance;
     SDL_Window *window_ = nullptr;
     SDL_Renderer *renderer_ = nullptr;
+    // TODO(Kyra): Why is this a thing.
     SDL_Event event;
     bool _exit = false;
     TextureManager *textureManager_ = TextureManager::getInstance();
     GameStateMachine *stateMachine = nullptr;
     GameState *state_ = nullptr;
-    GameState *actualstate_ = nullptr;
+    GameState *currentState_ = nullptr;
     Game();
 
  public:
-    void run();
     virtual ~Game();
+    // Run the game's loop.
+    void run();
+    // Get the SDL_Renderer instance.
     SDL_Renderer *getRenderer();
+    // Get the Game instance.
     static Game *getInstance();
+    // Get the GameState instance.
     static GameState *currentState();
+    // Get the GameStateMachine instance.
     GameStateMachine *getStateMachine();
 };

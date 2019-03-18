@@ -110,7 +110,7 @@ void Game::run()
     while (!stateMachine->getCurrentState()->getexit())
     {
         // Preload the state before running
-        actualstate_ = stateMachine->getCurrentState();
+        currentState_ = stateMachine->getCurrentState();
         stateMachine->getCurrentState()->_preload();
 
         // The event loop follows this scheme:
@@ -126,7 +126,7 @@ void Game::run()
         uint lastTick = SDL_GetTicks();
         uint elapsedTicks = 0;
         uint requiredTicks = 1000 / ANIMATION_TICKS_PER_SECOND;
-        while (stateMachine->getCurrentState() == actualstate_ && !stateMachine->getCurrentState()->getexit())
+        while (stateMachine->getCurrentState() == currentState_ && !stateMachine->getCurrentState()->getexit())
         {
             stateMachine->getCurrentState()->_create();
             stateMachine->getCurrentState()->_handleEvents(event);
@@ -183,5 +183,5 @@ GameStateMachine *Game::getStateMachine()
 
 GameState *Game::currentState()
 {
-    return getInstance()->actualstate_;
+    return getInstance()->currentState_;
 }
