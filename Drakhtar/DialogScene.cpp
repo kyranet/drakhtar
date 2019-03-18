@@ -8,8 +8,8 @@ DialogScene::DialogScene(Game *game, string filename, string fontfile) : GameObj
                                                                                     Vector2D<int>(1, 1))
 {
     dialogBlockSprite = new GameObject(TextureManager::get("UI-dialogueBackground"),
-                                       Vector2D<int>(getRect().x + WIN_WIDTH - 400, getRect().y + WIN_HEIGHT - 100),
-                                       Vector2D<int>(getRect().w * 600, getRect().h * 160));
+                                       Vector2D<int>(getRect().x + WIN_WIDTH /2, WIN_HEIGHT- getRect().h * WIN_HEIGHT / 4),
+                                       Vector2D<int>(getRect().w * WIN_WIDTH/1.4, getRect().h * WIN_HEIGHT/5));
     characterBlockSprite = new GameObject(TextureManager::get("UI-dialogueBackground"),
                                           Vector2D<int>(getRect().x + WIN_WIDTH - 197, getRect().y + WIN_HEIGHT - 190),
                                           Vector2D<int>(getRect().w * 120, getRect().h * 32));

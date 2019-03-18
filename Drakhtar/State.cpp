@@ -29,7 +29,7 @@ void State::_preload()
                                           Vector2D<int>(WIN_WIDTH, WIN_HEIGHT)));
 
     // Board
-    board_ = new Board(TextureManager::get("UI-cellFrame"), 8, 12, 50);
+    board_ = new Board(TextureManager::get("UI-cellFrame"), 8, 12, WIN_HEIGHT/ 13);
     gameObjects_.push_back(new GameObject(TextureManager::get("Maps-FirstBattle"),
                                           Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
                                           Vector2D<int>(WIN_WIDTH, WIN_HEIGHT)));
@@ -73,7 +73,7 @@ void State::_preload()
     addEventListener(new DialogController(exampleDialog));
 
     // Button
-    Pause_Button = new Button(TextureManager::get("Button-Pause"), 770, 30, 50, 50, Pause_game, game_, renderer_);
+    Pause_Button = new Button(TextureManager::get("Button-Pause"), WIN_WIDTH - WIN_WIDTH / 24, WIN_HEIGHT / 18, WIN_WIDTH / 16, WIN_HEIGHT / 12, Pause_game, game_, renderer_);
     gameObjects_.push_back(Pause_Button);
 }
 
