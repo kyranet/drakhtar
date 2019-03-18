@@ -11,15 +11,15 @@ using namespace std;
 class Font
 {
 private:
-	TTF_Font* font_;
+    TTF_Font* font_;
 
 public:
-	Font();
-	Font(string filename, int size);
-	~Font();
+    Font();
+    Font(string filename, int size);
+    ~Font();
 
-	TTF_Font* getFont() const { return font_; }
-	Font* load(string filename, int size);
-	void close();
-	SDL_Surface* renderText(string text, SDL_Color color, int lineJumpLimit) const;
+    TTF_Font* getFont() const { return font_; }
+    Font* load(string filename, int size);
+    void close();
+    SDL_Surface* renderText(string text, SDL_Color color, int lineJumpLimit) const;
 };

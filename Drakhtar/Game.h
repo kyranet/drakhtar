@@ -28,7 +28,7 @@ class Game
     SDL_Event event;
     bool _exit = false;
     TextureManager *textureManager_ = TextureManager::getInstance();
-	  FontManager * fontManager_ = FontManager::getInstance();
+    FontManager * fontManager_ = FontManager::getInstance();
     GameStateMachine *stateMachine = nullptr;
     GameState *state_ = nullptr;
     GameState *currentState_ = nullptr;

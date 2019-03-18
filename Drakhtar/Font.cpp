@@ -37,8 +37,8 @@ Font *Font::load(string filename, int size)
 
 SDL_Surface* Font::renderText(string text, SDL_Color color, int lineJumpLimit) const
 {
-	if (font_ == nullptr) 
+    if (font_ == nullptr) 
     return nullptr;
-	//return TTF_RenderText_Blended(font_, text.c_str(), color);
-	return TTF_RenderText_Blended_Wrapped(font_, text.c_str(), color, lineJumpLimit);
+    //return TTF_RenderText_Blended(font_, text.c_str(), color);
+    return TTF_RenderText_Blended_Wrapped(font_, text.c_str(), color, lineJumpLimit);
 }

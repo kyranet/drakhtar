@@ -87,9 +87,9 @@ Game::Game()
     textureManager_->add("Maps-FirstBattle", "../images/Maps/FirstBattle.png", 1, 1);
     textureManager_->add("Maps-SecondBattle", "../images/Maps/SecondBattle.png", 1, 1);
 
-	  // Fonts
-	  fontManager_->add("Retron2000", "../fonts/Retron2000.ttf", 12, WIN_WIDTH);
-	  fontManager_->init();
+      // Fonts
+      fontManager_->add("Retron2000", "../fonts/Retron2000.ttf", 12, WIN_WIDTH);
+      fontManager_->init();
 
     // Create the window and renderer
     window_ = SDL_CreateWindow("Drakhtar", SDL_WINDOWPOS_CENTERED,
@@ -156,8 +156,8 @@ Game::~Game()
     SDL_DestroyRenderer(renderer_);
     SDL_DestroyWindow(window_);
 
-	delete stateMachine;
-	FontManager::destroy();
+    delete stateMachine;
+    FontManager::destroy();
 
     SDL_Quit();
     TTF_Quit();

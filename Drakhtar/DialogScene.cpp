@@ -8,26 +8,26 @@ DialogScene::DialogScene(Game* game, string filename, string fontfile): GameObje
                                                                                    Vector2D<int>(0,0), 
                                                                                    Vector2D<int>(1,1)) 
 {
-	dialogBlockSprite = new GameObject(TextureManager::get("UI-dialogueBackground"), 
+    dialogBlockSprite = new GameObject(TextureManager::get("UI-dialogueBackground"), 
                                      Vector2D<int>(getRect().x + WIN_WIDTH - 400, getRect().y + WIN_HEIGHT - 100), 
                                      Vector2D<int>(getRect().w*600, getRect().h*160));
-	characterBlockSprite = new GameObject(TextureManager::get("UI-dialogueBackground"), 
+    characterBlockSprite = new GameObject(TextureManager::get("UI-dialogueBackground"), 
                                         Vector2D<int>(getRect().x + WIN_WIDTH - 197, getRect().y + WIN_HEIGHT - 190), 
                                         Vector2D<int>(getRect().w * 120, getRect().h * 32));
-	lineJumpLimit_ = dialogBlockSprite->getRect().x + 400;
-	textFont = FontManager::get(fontfile);
-	readFromFile(game, "../dialog/" + filename + ".txt",+ textFont);
+    lineJumpLimit_ = dialogBlockSprite->getRect().x + 400;
+    textFont = FontManager::get(fontfile);
+    readFromFile(game, "../dialog/" + filename + ".txt",+ textFont);
 }
 
 DialogScene::~DialogScene()
 {
-	for (auto dialog : dialogChain)
-		delete dialog;
-	delete dialogBlockSprite;
-	dialogBlockSprite = nullptr;
-	delete characterBlockSprite;
-	characterBlockSprite = nullptr;
-	textFont = nullptr;
+    for (auto dialog : dialogChain)
+        delete dialog;
+    delete dialogBlockSprite;
+    dialogBlockSprite = nullptr;
+    delete characterBlockSprite;
+    characterBlockSprite = nullptr;
+    textFont = nullptr;
 }
 
 void DialogScene::render() const
@@ -49,13 +49,13 @@ void DialogScene::readFromFile(Game *game, string filename, Font *textFont)
     file >> dialogChainSize;
     dialogChain.resize(dialogChainSize);
 
-		for (int i = 0;i < dialogChainSize;i++)
-		{
-			dialogChain[i] = new Dialog(game, file, textFont, getRect(), lineJumpLimit_);
-		}
-		
-	//}
-	file.close();
+        for (int i = 0;i < dialogChainSize;i++)
+        {
+            dialogChain[i] = new Dialog(game, file, textFont, getRect(), lineJumpLimit_);
+        }
+        
+    //}
+    file.close();
 }
 
 void DialogScene::nextDialog()

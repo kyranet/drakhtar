@@ -22,10 +22,10 @@ class Dialog
     Text *characterNameSprite = nullptr;
     Text *dialogTextSprite = nullptr;
 
-	SDL_Rect dialogRect_;
+    SDL_Rect dialogRect_;
 public:
-	Dialog(Game* game, ifstream& file, Font* textfont, SDL_Rect dialogRect, int lineJumpLimit);
-	~Dialog();
-	virtual void render() const;
-	void readFromFile(ifstream& file);
+    Dialog(Game* game, ifstream& file, Font* textfont, SDL_Rect dialogRect, int lineJumpLimit);
+    ~Dialog();
+    virtual void render() const;
+    void readFromFile(ifstream& file);
 };

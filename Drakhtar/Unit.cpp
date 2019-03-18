@@ -12,21 +12,21 @@ Unit::Unit(Texture *texture, Box *box, int attack, int health, int speed, int at
       attackRange_(attackRange), moveRange_(moveRange), box_(box)
 {
     box->setContent(this);
-	SDL_Color textColor;
-	textColor.r = 255;
-	textColor.g = 255;
-	textColor.b = 255;
-	textColor.a = 255;
+    SDL_Color textColor;
+    textColor.r = 255;
+    textColor.g = 255;
+    textColor.b = 255;
+    textColor.a = 255;
 
-	healthText = new Text(Game::getInstance()->getRenderer(), FontManager::get("Retron2000"), { box_->getRect().x + box_->getRect().w /2 , box_->getRect().y + box_->getRect().h/5 },
-		textColor, "Salud: " + to_string(getHealth()), box_->getRect().w*2);
+    healthText = new Text(Game::getInstance()->getRenderer(), FontManager::get("Retron2000"), { box_->getRect().x + box_->getRect().w /2 , box_->getRect().y + box_->getRect().h/5 },
+        textColor, "Salud: " + to_string(getHealth()), box_->getRect().w*2);
 }
 
 Unit::~Unit()
 {
-	if (healthText != nullptr)
-		delete healthText;
-	healthText = nullptr;
+    if (healthText != nullptr)
+        delete healthText;
+    healthText = nullptr;
 }
 
 void Unit::moveTowards(Vector2D<int> pos)
@@ -63,7 +63,7 @@ void Unit::moveToBox(Box *newBox)
     pos_ = Vector2D<int>(newBox->getRect().x + newBox->getRect().w / 2, newBox->getRect().y + newBox->getRect().h / 2);
     box_ = newBox;
     newBox->setContent(this);
-	  healthText->setPos(box_->getRect().x + box_->getRect().w / 2, box_->getRect().y + box_->getRect().h / 5);
+      healthText->setPos(box_->getRect().x + box_->getRect().w / 2, box_->getRect().y + box_->getRect().h / 5);
     setMoved(true);
     setMoving(false);
 }
@@ -72,13 +72,13 @@ void Unit::loseHealth(int health)
 {
     cout << "Health: " << health_ << " Damage: " << health;
     health_ -= health;
-	  healthText->setText("Salud: " + to_string(this->getHealth()));
+      healthText->setText("Salud: " + to_string(this->getHealth()));
     cout << " Remaining: " << health_ << endl;
     // TODO(Carlos): Send "Unit killed" event if health_ <= 0;
 }
 
 void Unit::render() const
 {
-	GameObject::render();
-	healthText->render();
+    GameObject::render();
+    healthText->render();
 }
