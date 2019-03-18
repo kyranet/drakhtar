@@ -27,7 +27,8 @@ class Board : public GameObject
     bool isInRange(Box *from, Box *to, int range);
     Matrix<int> *getCellsInRange(Box *box, int range);
     bool isEnemyInRange(Box *box, int range);
-    void setTextureToCellsInRange(Box *box, int range, int textInd);
+    void highlightCellsInRange(Box *box, int range);
+    void highlightEnemiesInRange(Box *box, int range);
     void resetCellsToBase();
 
     const enum objectType {

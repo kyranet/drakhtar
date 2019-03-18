@@ -10,6 +10,7 @@ Box::Box(Texture *t, Vector2D<int> pos, Vector2D<int> size, Vector2D<int> bi, Un
     cellTextures[base] = t;
     cellTextures[hover] = TextureManager::get("UI-cellHover");
     cellTextures[movable] = TextureManager::get("UI-cellInRange");
+    cellTextures[enemy] = TextureManager::get("UI-enemyInRange");
     currentTexture = base;
 }
 
