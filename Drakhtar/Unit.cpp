@@ -1,12 +1,14 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Unit.h"
+#include "Game.h"
+
 
 Unit::Unit(Texture *texture, Box *box, int attack, int health, int speed, int attackRange, int moveRange)
     : GameObject(texture,
                  Vector2D<int>(box->getRect().x + box->getRect().w / 2, box->getRect().y + box->getRect().h / 2),
                  Vector2D<int>(box->getRect().w * 1.25, box->getRect().h * 1.25)),
-      attack_(attack), health_(health), speed_(speed),
+      attack_(attack), health_(health), maxHealth_(health), speed_(speed),
       attackRange_(attackRange), moveRange_(moveRange), box_(box)
 {
     box->setContent(this);
@@ -18,6 +20,13 @@ Unit::Unit(Texture *texture, Box *box, int attack, int health, int speed, int at
 
 	healthText = new Text(Game::getInstance()->getRenderer(), FontManager::get("Retron2000"), { box_->getRect().x + box_->getRect().w /2 , box_->getRect().y + box_->getRect().h/5 },
 		textColor, "Salud: " + to_string(getHealth()), box_->getRect().w*2);
+}
+
+Unit::~Unit()
+{
+	if (healthText != nullptr)
+		delete healthText;
+	healthText = nullptr;
 }
 
 void Unit::moveTowards(Vector2D<int> pos)
@@ -66,4 +75,10 @@ void Unit::loseHealth(int health)
 	  healthText->setText("Salud: " + to_string(this->getHealth()));
     cout << " Remaining: " << health_ << endl;
     // TODO(Carlos): Send "Unit killed" event if health_ <= 0;
+}
+
+void Unit::render() const
+{
+	GameObject::render();
+	healthText->render();
 }

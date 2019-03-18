@@ -28,7 +28,7 @@ protected:
 
  public:
     Unit(Texture *texture, Box *box, int attack, int health, int speed, int attackRange, int moveRange);
-    virtual ~Unit(){}
+	virtual ~Unit();
     int getAttack() const { return attack_; }
     int getAttackRange() const { return attackRange_; }
     int getMoveRange() const { return moveRange_; }
