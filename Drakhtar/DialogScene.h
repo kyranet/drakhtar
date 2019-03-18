@@ -14,7 +14,7 @@ class Dialog;
 
 class DialogScene : public GameObject
 {
-private:
+ private:
     GameObject* dialogBlockSprite = nullptr;
     GameObject* characterBlockSprite = nullptr;
     int dialogChainSize = 0;
@@ -23,7 +23,7 @@ private:
     Font* textFont = nullptr;
     bool destroyedDialog = false;
     int lineJumpLimit_;
-public:
+ public:
     DialogScene(Game* game, string filename, string fontfile);
     ~DialogScene();
     virtual void render() const;

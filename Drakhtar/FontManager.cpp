@@ -14,7 +14,6 @@ FontManager * FontManager::getInstance()
         instance = new FontManager();
 
     return instance;
-
 }
 
 void FontManager::destroy()

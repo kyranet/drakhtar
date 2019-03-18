@@ -6,12 +6,13 @@
 
 class Battalion : public Unit
 {
-private:
+ private:
     int battalionSize_;
     Text * sizeText_ = nullptr;
 
-public:
-    Battalion(Texture* texture, Box * box, int attack, int health, int speed, int attackRange, int moveRange, int battalionSize);
+ public:
+    Battalion(Texture* texture, Box * box, int attack, int health, int speed,
+    int attackRange, int moveRange, int battalionSize);
     virtual ~Battalion();
 
     int getBattalionSize() const { return battalionSize_; }

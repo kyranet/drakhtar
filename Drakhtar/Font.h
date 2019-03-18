@@ -10,10 +10,10 @@ using namespace std;
 
 class Font
 {
-private:
+ private:
     TTF_Font* font_;
 
-public:
+ public:
     Font();
     Font(string filename, int size);
     ~Font();

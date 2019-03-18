@@ -10,7 +10,7 @@ class Team;
 
 class Unit : public GameObject
 {
-private:
+ private:
       int attack_;
       int maxHealth_;
       int attackRange_;
@@ -21,9 +21,9 @@ private:
       Vector2D<int> boxPosition_;
       Team* team_ = nullptr;
 
-protected:
+ protected:
       Box* box_ = nullptr;
-      Text* healthText = nullptr;
+      Text* healthText_ = nullptr;
       int health_;
 
  public:

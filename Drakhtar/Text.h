@@ -15,7 +15,8 @@ class Text : public GameObject
     SDL_Color color_;
 
  public:
-    Text(SDL_Renderer *renderer, Font *font, Vector2D<int> pos, SDL_Color const&color, string const&text, int lineJumpLimit);
+    Text(SDL_Renderer *renderer, Font *font, Vector2D<int> pos,
+    SDL_Color const&color, string const&text, int lineJumpLimit);
     ~Text();
     void setText(string const text, SDL_Color const color = { 0, 0, 0, 255 }, int lineJumpLimit = 250);
     void setPos(int x, int y);
