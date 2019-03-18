@@ -1,6 +1,6 @@
+// Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
+
 #include "Battalion.h"
-
-
 
 Battalion::~Battalion()
 {
@@ -8,26 +8,26 @@ Battalion::~Battalion()
 
 void Battalion::setBattalionSize(int battalionSize)
 {
-	battalionSize_ = battalionSize;
+    battalionSize_ = battalionSize;
 }
 
 int Battalion::getAttack() const
 {
-	return Unit::getAttack() * battalionSize_;
+    return Unit::getAttack() * battalionSize_;
 }
 
 int Battalion::getMaxHealth() const
 {
-	return Unit::getMaxHealth() * battalionSize_;
+    return Unit::getMaxHealth() * battalionSize_;
 }
 
 void Battalion::loseHealth(int health)
 {
-	if (Unit::getMaxHealth() <= health) {
-		battalionSize_ -= health / Unit::getMaxHealth();
-		if (battalionSize_ < 0)
-			battalionSize_ = 0;
-	}
-	Unit::loseHealth(health);
-
+    if (Unit::getMaxHealth() <= health)
+    {
+        battalionSize_ -= health / Unit::getMaxHealth();
+        if (battalionSize_ < 0)
+            battalionSize_ = 0;
+    }
+    Unit::loseHealth(health);
 }

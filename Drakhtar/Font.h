@@ -1,3 +1,5 @@
+// Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
+
 #pragma once
 
 #include "SDL_ttf.h"
@@ -8,17 +10,17 @@ using namespace std;
 
 class Font
 {
-private:
-	TTF_Font* font_;
-	int lineJumpLimit_;
+ private:
+    TTF_Font *font_;
+    int lineJumpLimit_;
 
-public:
-	Font();
-	Font(string filename, int size, int lineJumpLimit);
-	~Font();
+ public:
+    Font();
+    Font(string filename, int size, int lineJumpLimit);
+    ~Font();
 
-	TTF_Font* getFont() const { return font_; }
-	Font* load(string filename, int size);
-	void close();
-	SDL_Surface* renderText(string text, SDL_Color color) const;
+    TTF_Font *getFont() const { return font_; }
+    Font *load(string filename, int size);
+    void close();
+    SDL_Surface *renderText(string text, SDL_Color color) const;
 };

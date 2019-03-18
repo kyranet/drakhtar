@@ -1,3 +1,5 @@
+// Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
+
 #pragma once
 
 #include "GameObject.h"
@@ -11,20 +13,20 @@ class Game;
 
 class Dialog
 {
-private:
-	string characterName;
-	string spriteText;
-	string dialogText;
+ private:
+    string characterName;
+    string spriteText;
+    string dialogText;
 
-	GameObject* characterPortraitSprite = nullptr;
-	Text* characterNameSprite = nullptr;
-	Text* dialogTextSprite = nullptr;
+    GameObject *characterPortraitSprite = nullptr;
+    Text *characterNameSprite = nullptr;
+    Text *dialogTextSprite = nullptr;
 
-	SDL_Rect dialogRect_;
-public:
-	Dialog(Game* game, ifstream& file, Font* textfont, SDL_Rect dialogRect);
-	~Dialog();
-	virtual void render() const;
-	void readFromFile(ifstream& file);
+    SDL_Rect dialogRect_;
+
+ public:
+    Dialog(Game *game, ifstream &file, Font *textfont, SDL_Rect dialogRect);
+    ~Dialog();
+    virtual void render() const;
+    void readFromFile(ifstream &file);
 };
-
