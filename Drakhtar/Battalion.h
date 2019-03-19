@@ -10,6 +10,8 @@ class Battalion : public Unit
     int battalionSize_;
     Text * sizeText_ = nullptr;
 
+	string sizeToString() const;
+
  public:
     Battalion(Texture* texture, Box * box, int attack, int health, int speed,
               int attackRange, int moveRange, int battalionSize);

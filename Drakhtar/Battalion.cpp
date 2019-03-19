@@ -4,6 +4,11 @@
 #include "Game.h"
 
 
+string Battalion::sizeToString() const
+{
+	return "Units: " + to_string(battalionSize_);
+}
+
 Battalion::Battalion(Texture * texture, Box * box, int attack, int health,
                      int speed, int attackRange, int moveRange, int battalionSize)
     : Unit(texture, box, attack, health, speed, attackRange, moveRange),
@@ -11,31 +16,33 @@ Battalion::Battalion(Texture * texture, Box * box, int attack, int health,
 {
     health_ = Unit::getMaxHealth() * battalionSize_;
 
-    SDL_Color textColor;
-    textColor.r = 255;
-    textColor.g = 255;
-    textColor.b = 255;
-    textColor.a = 255;
-    healthText->setText("Salud: " + to_string(this->getHealth()));
+	SDL_Color textColor = { 255, 255, 255, 255 };
+
+    healthText_->setText("Salud: " + to_string(this->getHealth()));
+
+	auto rect = box_->getRect();
 
     sizeText_ =
-    new Text(Game::getInstance()->getRenderer(), FontManager::get("Retron2000"),
-    { box_->getRect().x + box_->getRect().w / 2 , box_->getRect().y + box_->getRect().h * 4 / 5 },
-    textColor, "Units: " + to_string(battalionSize_), box_->getRect().w * 2);
+		new Text(Game::getInstance()->getRenderer(),
+			FontManager::get("Retron2000"),
+			{ rect.x + rect.w / 2 , rect.y + rect.h * 4 / 5 },
+			textColor,
+			sizeToString(),
+			rect.w * 2);
 }
 
 Battalion::~Battalion()
 {
     if (sizeText_ != nullptr) {
         delete sizeText_;
+		sizeText_ = nullptr;
     }
-    sizeText_ = nullptr;
 }
 
 void Battalion::setBattalionSize(int battalionSize)
 {
     battalionSize_ = battalionSize;
-    sizeText_->setText("Units: " + to_string(battalionSize_));
+    sizeText_->setText(sizeToString());
 }
 
 int Battalion::getAttack() const
@@ -56,14 +63,16 @@ void Battalion::loseHealth(int health)
             battalionSize_ = 0;
     }
     Unit::loseHealth(health);
-    sizeText_->setText("Units: " + to_string(battalionSize_));
+    sizeText_->setText(sizeToString());
 }
 
 void Battalion::moveToBox(Box * box)
 {
     Unit::moveToBox(box);
 
-    sizeText_->setPos(box_->getRect().x + box_->getRect().w / 2, box_->getRect().y + box_->getRect().h * 4 / 5);
+	auto rect = box_->getRect();
+
+    sizeText_->setPos(rect.x + rect.w / 2, rect.y + rect.h * 4 / 5);
 }
 
 void Battalion::render() const
