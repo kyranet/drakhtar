@@ -5,7 +5,7 @@
 
 
 Battalion::Battalion(Texture * texture, Box * box, int attack, int health,
-int speed, int attackRange, int moveRange, int battalionSize)
+                     int speed, int attackRange, int moveRange, int battalionSize)
     : Unit(texture, box, attack, health, speed, attackRange, moveRange),
     battalionSize_(battalionSize)
     {
