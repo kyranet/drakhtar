@@ -12,7 +12,7 @@ class Battalion : public Unit
 
  public:
     Battalion(Texture* texture, Box * box, int attack, int health, int speed,
-    int attackRange, int moveRange, int battalionSize);
+              int attackRange, int moveRange, int battalionSize);
     virtual ~Battalion();
 
     int getBattalionSize() const { return battalionSize_; }
