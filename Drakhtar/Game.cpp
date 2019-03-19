@@ -48,7 +48,9 @@ Game::Game()
     textureManager_->add("UI-cellHover", "../images/UI/cellHover.png", 1, 1);
     textureManager_->add("UI-cellInRange", "../images/UI/cellInRange.png", 1, 1);
     textureManager_->add("UI-dialogueBackground", "../images/UI/dialogueBackground.png", 1, 1);
-    textureManager_->add("UI-turnBar", "../images/UI/turnBar.png", 1, 1);
+    textureManager_->add("UI-turnBar", "../images/UI/rock_bar.png", 1, 1);
+	textureManager_->add("UI-circle", "../images/UI/circle.png", 7, 7);
+
 
     // Button
     textureManager_->add("Button-Play", "../images/MainMenu/Play_Button.png", 1, 1);

@@ -29,7 +29,7 @@ void State::_preload()
                                           Vector2D<int>(WIN_WIDTH, WIN_HEIGHT)));
 
     // Board
-    board_ = new Board(TextureManager::get("UI-cellFrame"), 8, 12, WIN_HEIGHT/ 13);
+    board_ = new Board(TextureManager::get("UI-cellFrame"), 8, 12, WIN_HEIGHT/ 12);
     gameObjects_.push_back(new GameObject(TextureManager::get("Maps-FirstBattle"),
                                           Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
                                           Vector2D<int>(WIN_WIDTH, WIN_HEIGHT)));
@@ -53,6 +53,10 @@ void State::_preload()
     gameObjects_.push_back(factory->newKnight(team2, board_->getBoxAt(10, 0), 10));
     gameObjects_.push_back(factory->newMonster(team2, board_->getBoxAt(10, 1), 10));
 
+	// Turn Bar
+	auto turnBar_ = new TurnBar(team1->getUnitList(), team2->getUnitList());
+	gameObjects_.push_back(turnBar_);
+
     // Dialog
     auto exampleDialog = new DialogScene(game_, "dialog1_start", "Retron2000");
     gameObjects_.push_back(exampleDialog);
@@ -64,9 +68,6 @@ void State::_preload()
     // audioManager.playMusic(0, 1);
     audioManager.setMusicVolume(2);
 
-    // Turn Bar
-    auto turnBar_ = new TurnBar(team1->getUnitList(), team2->getUnitList());
-    gameObjects_.push_back(turnBar_);
 
     // Controller
     addEventListener(new BoardController(board_, turnBar_));

@@ -5,7 +5,7 @@
 Unit::Unit(Texture *texture, Box *box, int attack, int health, int speed, int attackRange, int moveRange)
     : GameObject(texture,
                  Vector2D<int>(box->getRect().x + box->getRect().w / 2, box->getRect().y + box->getRect().h / 2),
-                 Vector2D<int>(box->getRect().w * 1.25, box->getRect().h * 1.25)),
+                 Vector2D<int>(box->getRect().w *2, box->getRect().h*2)),
       attack_(attack), health_(health), speed_(speed),
       attackRange_(attackRange), moveRange_(moveRange), box_(box)
 {

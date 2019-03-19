@@ -15,7 +15,7 @@ DialogScene::DialogScene(Game *game, string filename, string fontfile) : GameObj
     characterBlockSprite = new GameObject(TextureManager::get("UI-dialogueBackground"),
                                           Vector2D<int>(dialogBlockSprite->getRect().x + dialogBlockSprite->getRect().w - WIN_WIDTH/12, dialogBlockSprite->getRect().y - WIN_HEIGHT/70 ),
                                           Vector2D<int>(getRect().w * WIN_WIDTH/8, getRect().h * WIN_HEIGHT/20));
-    textFont = new Font("../fonts/" + fontfile + ".ttf", 12, dialogBlockSprite->getRect().x + 400);
+    textFont = new Font("../fonts/" + fontfile + ".ttf", WIN_WIDTH/66, dialogBlockSprite->getRect().x + WIN_WIDTH/2);
     readFromFile(game, "../dialog/" + filename + ".txt", +textFont);
 }
 
