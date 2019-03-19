@@ -6,7 +6,7 @@
 
 string Battalion::sizeToString() const
 {
-	return "Units: " + to_string(battalionSize_);
+    return "Units: " + to_string(battalionSize_);
 }
 
 Battalion::Battalion(Texture * texture, Box * box, int attack, int health,
@@ -16,26 +16,26 @@ Battalion::Battalion(Texture * texture, Box * box, int attack, int health,
 {
     health_ = Unit::getMaxHealth() * battalionSize_;
 
-	SDL_Color textColor = { 255, 255, 255, 255 };
+    SDL_Color textColor = { 255, 255, 255, 255 };
 
     healthText_->setText("Salud: " + to_string(this->getHealth()));
 
-	auto rect = box_->getRect();
+    auto rect = box_->getRect();
 
     sizeText_ =
-		new Text(Game::getInstance()->getRenderer(),
-			FontManager::get("Retron2000"),
-			{ rect.x + rect.w / 2 , rect.y + rect.h * 4 / 5 },
-			textColor,
-			sizeToString(),
-			rect.w * 2);
+        new Text(Game::getInstance()->getRenderer(),
+            FontManager::get("Retron2000"),
+            { rect.x + rect.w / 2 , rect.y + rect.h * 4 / 5 },
+            textColor,
+            sizeToString(),
+            rect.w * 2);
 }
 
 Battalion::~Battalion()
 {
     if (sizeText_ != nullptr) {
         delete sizeText_;
-		sizeText_ = nullptr;
+        sizeText_ = nullptr;
     }
 }
 
@@ -70,7 +70,7 @@ void Battalion::moveToBox(Box * box)
 {
     Unit::moveToBox(box);
 
-	auto rect = box_->getRect();
+    auto rect = box_->getRect();
 
     sizeText_->setPos(rect.x + rect.w / 2, rect.y + rect.h * 4 / 5);
 }
