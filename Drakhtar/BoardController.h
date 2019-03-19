@@ -14,11 +14,12 @@ class BoardController : public EventListener
     Board *board_;
     TurnBar *turnBar_;
     Unit *activeUnit_;
-    bool moving = true;
+    bool hasMoved = false;
+	bool hasAttacked = false;
 
  public:
     BoardController(Board *board, TurnBar *turnBar);
     virtual void run(SDL_Event event);
-    void onClickMove(SDL_Point p);
-    void onClickAttack(SDL_Point p);
+	void onClickMove(Box* boxClicked);
+    void onClickAttack(Box* boxClicked);
 };
