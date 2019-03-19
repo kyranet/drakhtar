@@ -7,12 +7,14 @@ DialogScene::DialogScene(Game *game, string filename, string fontfile) : GameObj
                                                                                     Vector2D<int>(0, 0),
                                                                                     Vector2D<int>(1, 1))
 {
-    dialogBlockSprite = new GameObject(TextureManager::get("UI-dialogueBackground"),
-                                       Vector2D<int>(getRect().x + WIN_WIDTH /2, WIN_HEIGHT- getRect().h * WIN_HEIGHT / 4),
-                                       Vector2D<int>(getRect().w * WIN_WIDTH/1.4, getRect().h * WIN_HEIGHT/5));
+
+	dialogBlockSprite = new GameObject(TextureManager::get("UI-dialogueBackground"),
+		Vector2D<int>(getRect().x + WIN_WIDTH / 2, WIN_HEIGHT - getRect().h * WIN_HEIGHT / 6),
+		Vector2D<int>(getRect().w * WIN_WIDTH / 1.4, getRect().h * WIN_HEIGHT / 5));
+
     characterBlockSprite = new GameObject(TextureManager::get("UI-dialogueBackground"),
-                                          Vector2D<int>(getRect().x + WIN_WIDTH - 197, getRect().y + WIN_HEIGHT - 190),
-                                          Vector2D<int>(getRect().w * 120, getRect().h * 32));
+                                          Vector2D<int>(dialogBlockSprite->getRect().x + dialogBlockSprite->getRect().w - WIN_WIDTH/12, dialogBlockSprite->getRect().y - WIN_HEIGHT/70 ),
+                                          Vector2D<int>(getRect().w * WIN_WIDTH/8, getRect().h * WIN_HEIGHT/20));
     textFont = new Font("../fonts/" + fontfile + ".ttf", 12, dialogBlockSprite->getRect().x + 400);
     readFromFile(game, "../dialog/" + filename + ".txt", +textFont);
 }
@@ -50,7 +52,7 @@ void DialogScene::readFromFile(Game *game, string filename, Font *textFont)
 
     for (int i = 0; i < dialogChainSize; i++)
     {
-        dialogChain[i] = new Dialog(game, file, textFont, getRect());
+        dialogChain[i] = new Dialog(game, file, textFont, dialogBlockSprite->getRect());
     }
 
     //}
