@@ -22,13 +22,28 @@ class Board : public GameObject
     virtual void render() const;
     virtual void handleEvents(SDL_Event event);
 
+	// Returns cell in board index (x, y)
     Box *getBoxAt(int x, int y);
+
+	// Returns cell in window coordinates (x, y)
     Box *getBoxAtCoordinates(Vector2D<int> coordinates);
+
+	// Checks if two cells are within a certain range of each other
     bool isInRange(Box *from, Box *to, int range);
+
+	// Returns an integer matrix of the contents of cells in range of a specific cell
     Matrix<int> *getCellsInRange(Box *box, int range);
+
+	// Checks is there is one or more enemies in range
     bool isEnemyInRange(Box *box, int range);
+
+	// Changes texture of empty cells in range
     void highlightCellsInRange(Box *box, int range);
+
+	// Changes texture of cells with enemies in range
     void highlightEnemiesInRange(Box *box, int range);
+
+	// Resets ALL cells to their base texture
     void resetCellsToBase();
 
     const enum objectType {
