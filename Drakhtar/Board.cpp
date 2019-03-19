@@ -52,6 +52,7 @@ Board::~Board()
 
 void Board::render() const
 {
+	// Renders each cell and it's content
     for (int i = 0; i < rows; i++)
     {
         for (int j = 0; j < cols; j++)
@@ -133,15 +134,13 @@ Matrix<int> *Board::getCellsInRange(Box *box, int range)
             if (j + startX < 0 || i + startY < 0 || j + startX >= cols || i + startY >= rows)
             {
                 cellsMatrix->setElement(j, i, outOfBoard);
-
-                // Current cell is out of the movement range
             }
+			// Current cell is out of the movement range
             else if (!isInRange(box, getBoxAt(j + startX, i + startY), range))
             {
                 cellsMatrix->setElement(j, i, outOfRange);
-
-                // Current cell is in the board and in range
             }
+			// Current cell is in the board and in range
             else
             {
                 Unit *unit = board[i + startY][j + startX]->getContent();

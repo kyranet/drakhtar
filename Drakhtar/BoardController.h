@@ -19,7 +19,13 @@ class BoardController : public EventListener
 
  public:
     BoardController(Board *board, TurnBar *turnBar);
+
+	// Is called from GameState::_handleEvents() any time an event is captured
     virtual void run(SDL_Event event);
+
+	// Moves turnBar's current unit to an empty cell within range
 	void onClickMove(Box* boxClicked);
+
+	// turnBar's current unit attacks target enemy unit in range
     void onClickAttack(Box* boxClicked);
 };

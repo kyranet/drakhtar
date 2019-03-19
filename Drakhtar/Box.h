@@ -20,10 +20,12 @@ class Box : public GameObject
 
     virtual void render();
     virtual void handleEvents(SDL_Event event);
+
+	// Getters and Setters
+	bool isEmpty();
+	Vector2D<int> getIndex();
     Unit *getContent();
-    Vector2D<int> getIndex();
     void setContent(Unit *object);
-    bool isEmpty();
     int getCurrentTexture() const;
     void setCurrentTexture(int textureInd);
 
