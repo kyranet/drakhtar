@@ -8,7 +8,7 @@ Battalion::Battalion(Texture * texture, Box * box, int attack, int health,
                      int speed, int attackRange, int moveRange, int battalionSize)
     : Unit(texture, box, attack, health, speed, attackRange, moveRange),
       battalionSize_(battalionSize)
-    {
+{
     health_ = Unit::getMaxHealth() * battalionSize_;
 
     SDL_Color textColor;
