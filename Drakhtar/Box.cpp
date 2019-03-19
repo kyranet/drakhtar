@@ -31,6 +31,7 @@ void Box::render()
 
 void Box::handleEvents(SDL_Event event)
 {
+	// Changes cell texture on mouse hover
     SDL_Point p = {event.motion.x, event.motion.y};
     if (SDL_PointInRect(&p, &getRect()))
     {
@@ -41,6 +42,8 @@ void Box::handleEvents(SDL_Event event)
         currentTexture = base;
     }
 }
+
+// ---------- Getters and Setters ----------
 
 Vector2D<int> Box::getIndex()
 {
