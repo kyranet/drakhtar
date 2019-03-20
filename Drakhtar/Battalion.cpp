@@ -6,7 +6,7 @@
 
 string Battalion::sizeToString() const
 {
-    return "Units: " + to_string(battalionSize_);
+    return to_string(battalionSize_);
 }
 
 Battalion::Battalion(Texture * texture, Box * box, int attack, int health,
