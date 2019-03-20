@@ -3,7 +3,7 @@
 #include "BoardController.h"
 #include <iostream>
 
-BoardController::BoardController(Board *board, TurnBar *turnBar) : board_(board), turnBar_(turnBar) {}
+BoardController::BoardController(Board *board, TurnBar *turnBar, GameState* state) : board_(board), turnBar_(turnBar), state_(state) {}
 
 // Is called every time an event is captured
 void BoardController::run(SDL_Event event) {
@@ -59,11 +59,18 @@ void BoardController::onClickMove(Box* boxClicked)
 }
 
 void BoardController::onClickAttack(Box* boxClicked) {
+	Unit* enemyUnit = boxClicked->getContent();
+
 	// Unit clicked if from a different team and in range
-    if (boxClicked->getContent()->getTeam() != activeUnit_->getTeam() &&
+    if (enemyUnit->getTeam() != activeUnit_->getTeam() &&
 		board_->isInRange(activeUnit_->getBox(), boxClicked, activeUnit_->getAttackRange()))
     {
-        boxClicked->getContent()->loseHealth(activeUnit_->getAttack());
+		enemyUnit->loseHealth(activeUnit_->getAttack());
+		if (enemyUnit->getHealth() == 0) {
+			boxClicked->setContent(nullptr);
+			turnBar_->deleteUnit(enemyUnit);
+			state_->removeGameObject(enemyUnit);
+		}
 		hasAttacked = true;
 		board_->resetCellsToBase();
     }

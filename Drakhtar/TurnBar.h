@@ -24,4 +24,5 @@ class TurnBar : public GameObject
     virtual void render() const;
     virtual void handleEvents(SDL_Event event);
     void updateVisibleUnits();
+	void deleteUnit(Unit* unit);
 };

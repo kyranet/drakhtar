@@ -6,7 +6,7 @@
 #include "EventListener.h"
 #include "Board.h"
 #include "TurnBar.h"
-#include "State.h"
+#include "GameState.h"
 
 class BoardController : public EventListener
 {
@@ -14,11 +14,12 @@ class BoardController : public EventListener
     Board *board_;
     TurnBar *turnBar_;
     Unit *activeUnit_;
+	GameState* state_;
     bool hasMoved = false;
 	bool hasAttacked = false;
 
  public:
-    BoardController(Board *board, TurnBar *turnBar);
+    BoardController(Board *board, TurnBar *turnBar, GameState* state);
 
 	// Is called from GameState::_handleEvents() any time an event is captured
     virtual void run(SDL_Event event);
