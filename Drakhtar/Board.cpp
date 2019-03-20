@@ -1,5 +1,5 @@
 #include "Board.h"
-#include "Unit.h"<
+#include "Unit.h"
 
 Board::Board(Texture* cellTexture, int r, int c, float cs)
 	: GameObject(nullptr, Vector2D<int>(0, 0), Vector2D < int>(0, 0)), rows(r), cols(c), cellSize(cs)
@@ -167,3 +167,4 @@ void Board::resetCellsToBase() {
 		}
 	}
 }
+

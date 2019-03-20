@@ -26,13 +26,15 @@ Game::Game()
 	textureManager_->add("Units-BlueArcher", "../images/Units/BlueArcher.png", 4, 3, SDL_FLIP_HORIZONTAL)
 		->addAnimation("default", { 0, 1 })
 		->addAnimation("attack", { 2, 3, 4, 5, 6, 7, 8, 9, 10 });
-	textureManager_->add("Units-BlueKnight", "../images/Units/BlueKnight.png", 2, 1, SDL_FLIP_HORIZONTAL);
+	textureManager_->add("Units-BlueKnight", "../images/Units/BlueKnight.png", 4, 3, SDL_FLIP_HORIZONTAL)
+		->addAnimation("default", { 0, 1 })
+		->addAnimation("attack", { 2, 3, 4, 5, 6, 7, 8, 9, 10 });
 	textureManager_->add("Units-BlueMage", "../images/Units/BlueMage.png", 4, 2, SDL_FLIP_HORIZONTAL)
 		->addAnimation("default", { 0, 1 })
-		->addAnimation("attack", { 2, 3, 4, 5, 6});
+		->addAnimation("attack", { 2, 3, 4, 5, 6 });
 	textureManager_->add("Units-BlueMonster", "../images/Units/BlueMonster.png", 3, 3)
 		->addAnimation("default", { 0, 1 })
-		->addAnimation("attack", { 2, 3, 4, 5, 6, 7, 8});
+		->addAnimation("attack", { 2, 3, 4, 5, 6, 7, 8 });
 	textureManager_->add("Units-BlueSoldier", "../images/Units/BlueSoldier.png", 5, 2, SDL_FLIP_HORIZONTAL)
 		->addAnimation("default", { 0, 1 })
 		->addAnimation("attack", { 2, 3, 4, 5, 6, 7, 8, 9 });
@@ -43,15 +45,21 @@ Game::Game()
 	textureManager_->add("Units-Abeizhul", "../images/Units/Abeizhul.png", 5, 2)
 		->addAnimation("default", { 0, 1 })
 		->addAnimation("attack", { 2, 3, 4, 5, 6, 7, 8, 9 });
-	textureManager_->add("Units-Dreilay", "../images/Units/Dreilay.png", 2, 1);
+	textureManager_->add("Units-Dreilay", "../images/Units/Dreilay.png", 4, 3)
+		->addAnimation("default", { 0, 1 })
+		->addAnimation("attack", { 2, 3, 4, 5, 6, 7, 8, 9, 10 });
 	textureManager_->add("Units-RedArcher", "../images/Units/RedArcher.png", 4, 3)
 		->addAnimation("default", { 0, 1 })
 		->addAnimation("attack", { 2, 3, 4, 5, 6, 7, 8, 9, 10 });
-	textureManager_->add("Units-RedKnight", "../images/Units/RedKnight.png", 2, 1);
+	textureManager_->add("Units-RedKnight", "../images/Units/RedKnight.png", 4, 3)
+		->addAnimation("default", { 0, 1 })
+		->addAnimation("attack", { 2, 3, 4, 5, 6, 7, 8, 9, 10 });
 	textureManager_->add("Units-RedMage", "../images/Units/RedMage.png", 3, 3, SDL_FLIP_HORIZONTAL)
 		->addAnimation("default", { 0, 1 })
-		->addAnimation("attack", { 2, 3, 4, 5, 6, 7, 8});
-	textureManager_->add("Units-RedMonster", "../images/Units/RedMonster.png", 2, 1, SDL_FLIP_HORIZONTAL);
+		->addAnimation("attack", { 2, 3, 4, 5, 6, 7, 8 });
+	textureManager_->add("Units-RedMonster", "../images/Units/RedMonster.png", 3, 3, SDL_FLIP_HORIZONTAL)
+		->addAnimation("default", { 0, 1 })
+		->addAnimation("attack", { 2, 3, 4, 5, 6, 7, 8 });
 	textureManager_->add("Units-RedSoldier", "../images/Units/RedSoldier.png", 5, 2)
 		->addAnimation("default", { 0, 1 })
 		->addAnimation("attack", { 2, 3, 4, 5, 6, 7, 8, 9 });
