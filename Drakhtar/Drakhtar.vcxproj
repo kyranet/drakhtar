@@ -78,6 +78,7 @@
     <ClCompile Include="DialogController.cpp" />
     <ClCompile Include="DialogScene.cpp" />
     <ClCompile Include="Font.cpp" />
+    <ClCompile Include="FontManager.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameState.cpp" />
@@ -111,6 +112,7 @@
     <ClInclude Include="DrakhtarError.h" />
     <ClInclude Include="EventListener.h" />
     <ClInclude Include="Font.h" />
+    <ClInclude Include="FontManager.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameState.h" />

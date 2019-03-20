@@ -5,7 +5,7 @@
 
 Font::Font() : font_(nullptr) {}
 
-Font::Font(string filename, int size, int lineJumpLimit) : lineJumpLimit_(lineJumpLimit)
+Font::Font(string filename, int size)
 {
     load(filename, size);
 }
@@ -35,10 +35,10 @@ Font *Font::load(string filename, int size)
     return this;
 }
 
-SDL_Surface *Font::renderText(string text, SDL_Color color) const
+SDL_Surface* Font::renderText(string text, SDL_Color color, int lineJumpLimit) const
 {
     if (font_ == nullptr)
-        return nullptr;
+    return nullptr;
     // return TTF_RenderText_Blended(font_, text.c_str(), color);
-    return TTF_RenderText_Blended_Wrapped(font_, text.c_str(), color, lineJumpLimit_);
+    return TTF_RenderText_Blended_Wrapped(font_, text.c_str(), color, lineJumpLimit);
 }
