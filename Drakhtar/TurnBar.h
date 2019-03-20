@@ -1,18 +1,17 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-#include <queue>
 #include <list>
+#include <queue>
 #include <vector>
-#include "Unit.h"
 #include "TextureManager.h"
+#include "Unit.h"
 
-class TurnBar : public GameObject
-{
+class TurnBar : public GameObject {
  private:
-    list<Unit *> unitTurnBar;
-    int visibleTurnBarSize = 9;
-    vector<GameObject *> visibleUnits;
+  list<Unit *> unitTurnBar;
+  int visibleTurnBarSize = 9;
+  vector<GameObject *> visibleUnits;
 
  public:
   // constructor intercalates units from each team list into the turn bar (ally

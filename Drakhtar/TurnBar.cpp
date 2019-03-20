@@ -5,26 +5,21 @@
 TurnBar::TurnBar(list<Unit *> allyList, list<Unit *> enemyList)
     : GameObject(TextureManager::get("UI-turnBar"),
                  Vector2D<int>(WIN_WIDTH - 215, WIN_HEIGHT - 30),
-                 Vector2D<int>(400, 50))
-{
-    auto allyIt = allyList.begin();
-    auto enemyIt = enemyList.begin();
-    int unitCount = 0;
+                 Vector2D<int>(400, 50)) {
+  auto allyIt = allyList.begin();
+  auto enemyIt = enemyList.begin();
+  int unitCount = 0;
 
-    while (allyIt != allyList.end() || enemyIt != enemyList.end())
-    {
-        if (unitCount % 2 == 0 && allyIt != allyList.end())
-        {
-            unitTurnBar.push_back(*allyIt);
-            allyIt++;
-        }
-        else if (enemyIt != enemyList.end())
-        {
-            unitTurnBar.push_back(*enemyIt);
-            enemyIt++;
-        }
-        unitCount++;
+  while (allyIt != allyList.end() || enemyIt != enemyList.end()) {
+    if (unitCount % 2 == 0 && allyIt != allyList.end()) {
+      unitTurnBar.push_back(*allyIt);
+      allyIt++;
+    } else if (enemyIt != enemyList.end()) {
+      unitTurnBar.push_back(*enemyIt);
+      enemyIt++;
     }
+    unitCount++;
+  }
 
   visibleUnits.resize(visibleTurnBarSize);
   auto listIt = unitTurnBar.begin();
@@ -45,19 +40,16 @@ TurnBar::TurnBar(list<Unit *> allyList, list<Unit *> enemyList)
   sort();
 }
 
-TurnBar::~TurnBar()
-{
-    for (auto unit : visibleUnits)
-        delete unit;
+TurnBar::~TurnBar() {
+  for (auto unit : visibleUnits) delete unit;
 }
 
 // takes out the unit in the front of the queue and puts it in the back
-void TurnBar::advanceTurn()
-{
-    Unit *frontUnit = unitTurnBar.front();
-    unitTurnBar.pop_front();
-    unitTurnBar.push_back(frontUnit);
-    updateVisibleUnits();
+void TurnBar::advanceTurn() {
+  Unit *frontUnit = unitTurnBar.front();
+  unitTurnBar.pop_front();
+  unitTurnBar.push_back(frontUnit);
+  updateVisibleUnits();
 }
 
 void TurnBar::sort() {
@@ -99,16 +91,15 @@ void TurnBar::handleEvents(SDL_Event event)
             break;
         }
     }
+  }
 }
 
-void TurnBar::updateVisibleUnits()
-{
-    auto listIt = unitTurnBar.begin();
-    for (int i = 0; i < visibleTurnBarSize; i++)
-    {
-        visibleUnits[i]->setTexture((*listIt)->getTexture());
-        listIt++;
-    }
+void TurnBar::updateVisibleUnits() {
+  auto listIt = unitTurnBar.begin();
+  for (int i = 0; i < visibleTurnBarSize; i++) {
+    visibleUnits[i]->setTexture((*listIt)->getTexture());
+    listIt++;
+  }
 }
 
 void TurnBar::decreaseVisibleUnitsSize() {
