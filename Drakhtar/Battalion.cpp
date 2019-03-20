@@ -3,12 +3,6 @@
 #include "Battalion.h"
 #include "Game.h"
 
-
-string Battalion::sizeToString() const
-{
-    return to_string(battalionSize_);
-}
-
 Battalion::Battalion(Texture * texture, Box * box, int attack, int health,
                      int speed, int attackRange, int moveRange, int battalionSize)
     : Unit(texture, box, attack, health, speed, attackRange, moveRange),
@@ -37,6 +31,11 @@ Battalion::~Battalion()
         delete sizeText_;
         sizeText_ = nullptr;
     }
+}
+
+string Battalion::sizeToString() const
+{
+    return to_string(battalionSize_);
 }
 
 void Battalion::setBattalionSize(int battalionSize)
