@@ -103,3 +103,17 @@ void TurnBar::decreaseVisibleUnitsSize() {
   delete visibleUnits[visibleTurnBarSize];
   visibleUnits.resize(visibleTurnBarSize);
 }
+
+void TurnBar::deleteUnit(Unit * unit) 
+{
+	auto it = unitTurnBar.begin();
+	while (it != unitTurnBar.end())
+	{
+		if (*it == unit)
+		{
+			unitTurnBar.erase(it);
+			break;
+		}
+		it++;
+	}
+}

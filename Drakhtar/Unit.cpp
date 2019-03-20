@@ -74,6 +74,7 @@ void Unit::loseHealth(int health)
     cout << "Health: " << health_ << " Damage: " << health;
     health_ -= health;
     healthText_->setText("Salud: " + to_string(this->getHealth()));
+	if (health_ < 0) { health_ = 0; }
     cout << " Remaining: " << health_ << endl;
     // TODO(Carlos): Send "Unit killed" event if health_ <= 0;
 }

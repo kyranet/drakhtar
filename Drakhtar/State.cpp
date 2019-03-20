@@ -69,7 +69,7 @@ void State::_preload()
     gameObjects_.push_back(turnBar_);
 
     // Controller
-    addEventListener(new BoardController(board_, turnBar_));
+    addEventListener(new BoardController(board_, turnBar_, this));
     addEventListener(new DialogController(exampleDialog));
 
     // Button
