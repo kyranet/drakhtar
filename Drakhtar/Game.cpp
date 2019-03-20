@@ -23,6 +23,7 @@ Game::Game()
         string message = string("Error initializing MIX.\nReason: ") + Mix_GetError();
         throw new SDLError(message);
     }
+
 	// Units
 	textureManager_->add("Units-BlueArcher", "../images/Units/BlueArcher.png", 4, 3, SDL_FLIP_HORIZONTAL)
 		->addAnimation("default", { 0, 1 })
@@ -73,26 +74,7 @@ Game::Game()
 	textureManager_->add("Units-Zamdran", "../images/Units/Zamdran.png", 2, 1);
 	textureManager_->add("LogoDrakhtar", "../images/Units/LogoDrakhtar.png", 3, 3)
 		->addAnimation("default", { 0, 1, 2, 3, 4, 5, 6, 7, 8 });
-
-    // Units
-    textureManager_->add("Units-BlueArcher", "../images/Units/BlueArcher.png", 2, 1, SDL_FLIP_HORIZONTAL);
-    textureManager_->add("Units-BlueKnight", "../images/Units/BlueKnight.png", 2, 1, SDL_FLIP_HORIZONTAL);
-    textureManager_->add("Units-BlueMage", "../images/Units/BlueMage.png", 2, 1, SDL_FLIP_HORIZONTAL);
-    textureManager_->add("Units-BlueMonster", "../images/Units/BlueMonster.png", 2, 1, SDL_FLIP_HORIZONTAL);
-    textureManager_->add("Units-BlueSoldier", "../images/Units/BlueSoldier.png", 2, 1, SDL_FLIP_HORIZONTAL);
-    textureManager_->add("Units-BlueValar", "../images/Units/BlueValar.png", 2, 1, SDL_FLIP_HORIZONTAL);
-    textureManager_->add("Units-Thassa", "../images/Units/Thassa.png", 2, 1, SDL_FLIP_HORIZONTAL);
-    textureManager_->add("Units-Abeizhul", "../images/Units/Abeizhul.png", 2, 1);
-    textureManager_->add("Units-Dreilay", "../images/Units/Dreilay.png", 2, 1);
-    textureManager_->add("Units-RedArcher", "../images/Units/RedArcher.png", 2, 1);
-    textureManager_->add("Units-RedKnight", "../images/Units/RedKnight.png", 2, 1);
-    textureManager_->add("Units-RedMage", "../images/Units/RedMage.png", 2, 1);
-    textureManager_->add("Units-RedMonster", "../images/Units/RedMonster.png", 2, 1);
-    textureManager_->add("Units-RedSoldier", "../images/Units/RedSoldier.png", 2, 1);
-    textureManager_->add("Units-Sheissa", "../images/Units/Sheissa.png", 2, 1);
-    textureManager_->add("Units-Valar", "../images/Units/Valar.png", 2, 1);
-    textureManager_->add("Units-Zamdran", "../images/Units/Zamdran.png", 2, 1);
-
+	
     // UI
     textureManager_->add("UI-cellFrame", "../images/UI/cellFrame.png", 1, 1);
     textureManager_->add("UI-cellHover", "../images/UI/cellHover.png", 1, 1);
