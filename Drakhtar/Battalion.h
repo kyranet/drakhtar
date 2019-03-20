@@ -13,8 +13,8 @@ class Battalion : public Unit
     string sizeToString() const;
 
  public:
-    Battalion(Texture* texture, Box * box, int attack, int health, int speed,
-              int attackRange, int moveRange, int battalionSize);
+    Battalion(Texture* texture, Box * box, int attack, int defense, int health, int speed,
+              int attackRange, int moveRange, int prize, int battalionSize);
     virtual ~Battalion();
 
     int getBattalionSize() const { return battalionSize_; }
@@ -22,8 +22,9 @@ class Battalion : public Unit
 
     virtual int getAttack() const;
     virtual int getMaxHealth() const;
+    virtual int getPrize() const;
 
-    virtual void loseHealth(int health);
+    virtual int loseHealth(int attack);
 
     virtual void moveToBox(Box * box);
     virtual void render() const;

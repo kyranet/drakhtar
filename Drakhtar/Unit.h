@@ -23,10 +23,13 @@ class Unit : public GameObject
       Vector2D<int> boxPosition_;
       Team* team_ = nullptr;
 
+
  protected:
       Box* box_ = nullptr;
       Text* healthText_ = nullptr;
       int health_;
+
+      string healthToString() const;
 
  public:
     Unit(Texture *texture, Box *box, int attack, int defense, int health, int speed, int attackRange, int moveRange, int prize);
@@ -37,6 +40,7 @@ class Unit : public GameObject
     int getMoveRange() const { return moveRange_; }
     virtual int getMaxHealth() const { return maxHealth_; }
     virtual int getHealth() const { return health_; }
+    virtual int getPrize() const { return prize_; }
     bool getMoving() const { return moving_; }
     bool getMoved() const { return moved_; }
     bool getSpeed() const { return speed_; }
@@ -48,6 +52,6 @@ class Unit : public GameObject
     void setMoved(bool moved);
     void setTeam(Team *team);
     virtual void moveToBox(Box * box);
-    virtual void loseHealth(int health);
+    virtual int loseHealth(int attack);
     virtual void render() const;
 };

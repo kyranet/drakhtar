@@ -9,16 +9,16 @@ string Battalion::sizeToString() const
     return "Units: " + to_string(battalionSize_);
 }
 
-Battalion::Battalion(Texture * texture, Box * box, int attack, int health,
-                     int speed, int attackRange, int moveRange, int battalionSize)
-    : Unit(texture, box, attack, health, speed, attackRange, moveRange),
+Battalion::Battalion(Texture * texture, Box * box, int attack, int defense, int health,
+    int speed, int attackRange, int moveRange, int prize, int battalionSize)
+    : Unit(texture, box, attack, defense, health, speed, attackRange, moveRange, prize),
       battalionSize_(battalionSize)
 {
     health_ = Unit::getMaxHealth() * battalionSize_;
 
     SDL_Color textColor = { 255, 255, 255, 255 };
 
-    healthText_->setText("Salud: " + to_string(this->getHealth()));
+    healthText_->setText(healthToString());
 
     auto rect = box_->getRect();
 
@@ -50,20 +50,26 @@ int Battalion::getAttack() const
     return Unit::getAttack() * battalionSize_;
 }
 
+
 int Battalion::getMaxHealth() const
 {
     return Unit::getMaxHealth() * battalionSize_;
 }
 
-void Battalion::loseHealth(int health)
+int Battalion::getPrize() const
 {
+    return Unit::getPrize() * battalionSize_;
+}
+
+int Battalion::loseHealth(int attack)
+{
+    int health = Unit::loseHealth(attack);
     if (Unit::getMaxHealth() <= health) {
         battalionSize_ -= health / Unit::getMaxHealth();
         if (battalionSize_ < 0)
             battalionSize_ = 0;
+        sizeText_->setText(sizeToString());
     }
-    Unit::loseHealth(health);
-    sizeText_->setText(sizeToString());
 }
 
 void Battalion::moveToBox(Box * box)
