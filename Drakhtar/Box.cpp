@@ -7,12 +7,12 @@
 Box::Box(Texture *t, Vector2D<int> pos, Vector2D<int> size, Vector2D<int> bi,
          Unit *go)
     : GameObject(t, pos, size), boardIndex(bi), content(go) {
-  cellTextures[base] = t;
-  cellTextures[hover] = TextureManager::get("UI-cellHover");
-  cellTextures[movable] = TextureManager::get("UI-cellInRange");
-  cellTextures[enemy] = TextureManager::get("UI-enemyInRange");
-  cellTextures[active] = TextureManager::get("UI-activeUnit");
-  currentTexture = base;
+  cellTextures[BASE_TEX] = t;
+  cellTextures[HOVER_TEX] = TextureManager::get("UI-cellHover");
+  cellTextures[MOVABLE_TEX] = TextureManager::get("UI-cellInRange");
+  cellTextures[ENEMY_TEX] = TextureManager::get("UI-enemyInRange");
+  cellTextures[ACTICE_TEX] = TextureManager::get("UI-activeUnit");
+  currentTexture = BASE_TEX;
 }
 
 Box::~Box() { content = nullptr; }
@@ -30,9 +30,9 @@ void Box::handleEvents(SDL_Event event) {
   // Changes cell texture on mouse hover
   SDL_Point p = {event.motion.x, event.motion.y};
   if (SDL_PointInRect(&p, &getRect())) {
-    currentTexture = hover;
-  } else if (currentTexture == hover) {
-    currentTexture = base;
+    currentTexture = HOVER_TEX;
+  } else if (currentTexture == HOVER_TEX) {
+    currentTexture = BASE_TEX;
   }
 }
 

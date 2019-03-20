@@ -48,7 +48,7 @@ Game::Game()
     textureManager_->add("UI-cellHover", "../images/UI/cellHover.png", 1, 1);
     textureManager_->add("UI-cellInRange", "../images/UI/cellInRange.png", 1, 1);
     textureManager_->add("UI-enemyInRange", "../images/UI/enemyInRange.png", 1, 1);
-	textureManager_->add("UI-activeUnit", "../images/UI/activeUnitCell.png", 1, 1);
+    textureManager_->add("UI-activeUnit", "../images/UI/activeUnitCell.png", 1, 1);
     textureManager_->add("UI-dialogueBackground", "../images/UI/dialogueBackground.png", 1, 1);
     textureManager_->add("UI-turnBar", "../images/UI/turnBar.png", 1, 1);
 
