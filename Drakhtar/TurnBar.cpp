@@ -122,16 +122,13 @@ void TurnBar::deleteUnit(Unit * unit)
 	}
 }
 
-void TurnBar::deleteUnit(Unit * unit) 
-{
-	auto it = unitTurnBar.begin();
-	while (it != unitTurnBar.end())
-	{
-		if (*it == unit)
-		{
-			unitTurnBar.erase(it);
-			break;
-		}
-		it++;
-	}
+void TurnBar::deleteUnit(Unit *unit) {
+  auto it = unitTurnBar.begin();
+  while (it != unitTurnBar.end()) {
+    if (*it == unit) {
+      unitTurnBar.erase(it);
+      break;
+    }
+    it++;
+  }
 }
