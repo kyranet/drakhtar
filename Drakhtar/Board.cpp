@@ -73,9 +73,8 @@ Box *Board::getBoxAtCoordinates(Vector2D<int> coordinates) {
       coordinates.getX() > marginX + cols * cellSize - cellSize / 2 ||
       coordinates.getY() > marginY + rows * cellSize - cellSize / 2) {
     return nullptr;
-  }
-  // Coordinates are inside the board
-  else {
+  } else {
+    // Coordinates are inside the board
     int x = static_cast<int>(
         floor((coordinates.getX() - marginX + cellSize / 2) / cellSize));
     int y = static_cast<int>(
@@ -109,32 +108,28 @@ Matrix<int> *Board::getCellsInRange(Box *box, int range) {
   // Fills the array
   for (int i = 0; i < size; i++) {
     for (int j = 0; j < size; j++) {
-      // Current cell is out of the board
       if (j + startX < 0 || i + startY < 0 || j + startX >= cols ||
           i + startY >= rows) {
-        cellsMatrix->setElement(j, i, outOfBoard);
-      }
-      // Current cell is out of the movement range
-      else if (!isInRange(box, getBoxAt(j + startX, i + startY), range)) {
-        cellsMatrix->setElement(j, i, outOfRange);
-      }
-      // Current cell is in the board and in range
-      else {
+        // Current cell is out of the board
+        cellsMatrix->setElement(j, i, OUT_OF_BOARD);
+      } else if (!isInRange(box, getBoxAt(j + startX, i + startY), range)) {
+        // Current cell is out of the movement range
+        cellsMatrix->setElement(j, i, OUT_OF_RANGE);
+      } else {
+        // Current cell is in the board and in range
         Unit *unit = board[i + startY][j + startX]->getContent();
 
-        // Current cell is empty
         if (unit == nullptr) {
-          cellsMatrix->setElement(j, i, empty);
-        }
-
-        // Current cell is occupied
-        else {
+          // Current cell is empty
+          cellsMatrix->setElement(j, i, EMPTY);
+        } else {
+          // Current cell is occupied
           if (unit->getTeam() == box->getContent()->getTeam()) {
             // Ally
-            cellsMatrix->setElement(j, i, ally);
+            cellsMatrix->setElement(j, i, ALLY);
           } else {
             // Enemy
-            cellsMatrix->setElement(j, i, enemy);
+            cellsMatrix->setElement(j, i, ENEMY);
           }
         }
       }
@@ -149,7 +144,7 @@ bool Board::isEnemyInRange(Box *box, int range) {
   bool enemyFound = false;
   for (int i = 0; i < size; i++) {
     for (int j = 0; j < size; j++) {
-      if (cellsMatrix->getElement(i, j) == enemy) {
+      if (cellsMatrix->getElement(i, j) == ENEMY) {
         enemyFound = true;
       }
     }
@@ -166,9 +161,9 @@ void Board::highlightCellsInRange(Box *box, int range) {
 
   for (int i = 0; i < size; i++) {
     for (int j = 0; j < size; j++) {
-      if (cellsMatrix->getElement(i, j) == empty) {
+      if (cellsMatrix->getElement(i, j) == EMPTY) {
         if (getBoxAt(i + startX, j + startY)->getCurrentTexture() != 1) {
-          getBoxAt(i + startX, j + startY)->setCurrentTexture(Box::movable);
+          getBoxAt(i + startX, j + startY)->setCurrentTexture(Box::MOVABLE_TEX);
         }
       }
     }
@@ -183,9 +178,9 @@ void Board::highlightEnemiesInRange(Box *box, int range) {
 
   for (int i = 0; i < size; i++) {
     for (int j = 0; j < size; j++) {
-      if (cellsMatrix->getElement(i, j) == enemy) {
+      if (cellsMatrix->getElement(i, j) == ENEMY) {
         if (getBoxAt(i + startX, j + startY)->getCurrentTexture() != 1) {
-          getBoxAt(i + startX, j + startY)->setCurrentTexture(Box::enemy);
+          getBoxAt(i + startX, j + startY)->setCurrentTexture(Box::ENEMY_TEX);
         }
       }
     }
@@ -195,7 +190,7 @@ void Board::highlightEnemiesInRange(Box *box, int range) {
 void Board::resetCellsToBase() {
   for (int i = 0; i < cols; i++) {
     for (int j = 0; j < rows; j++) {
-      board[j][i]->setCurrentTexture(Box::base);
+      board[j][i]->setCurrentTexture(Box::BASE_TEX);
     }
   }
 }

@@ -12,7 +12,7 @@ void BoardController::run(SDL_Event event) {
   activeUnit_ = turnBar_->getFrontUnit();
 
   // Highlights cells around selected unit
-  activeUnit_->getBox()->setCurrentTexture(Box::active);
+  activeUnit_->getBox()->setCurrentTexture(Box::ACTICE_TEX);
   if (!hasMoved) {
     board_->highlightCellsInRange(activeUnit_->getBox(),
                                   activeUnit_->getMoveRange());

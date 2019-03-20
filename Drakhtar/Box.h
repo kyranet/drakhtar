@@ -29,5 +29,11 @@ class Box : public GameObject {
   int getCurrentTexture() const;
   void setCurrentTexture(int textureInd);
 
-  const enum textureInd { base, hover, movable, enemy, active };
+  const enum textureInd {
+    BASE_TEX = 0,
+    HOVER_TEX = 1,
+    MOVABLE_TEX = 2,
+    ENEMY_TEX = 3,
+    ACTICE_TEX = 4
+  };
 };

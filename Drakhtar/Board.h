@@ -46,5 +46,11 @@ class Board : public GameObject {
   // Resets ALL cells to their base texture
   void resetCellsToBase();
 
-  const enum objectType { outOfBoard, outOfRange, empty, ally, enemy };
+  const enum objectType {
+    OUT_OF_BOARD = 0,
+    OUT_OF_RANGE = 1,
+    EMPTY = 2,
+    ALLY = 3,
+    ENEMY = 4
+  };
 };
