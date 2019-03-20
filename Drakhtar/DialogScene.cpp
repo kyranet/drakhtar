@@ -33,7 +33,7 @@ void DialogScene::render() const
 {
     characterBlockSprite->render();
     dialogBlockSprite->render();
-    dialogChain[currentDialogIndex]->render();
+    if (currentDialogIndex < dialogChain.size()) dialogChain[currentDialogIndex]->render();
 }
 
 void DialogScene::handleEvents(SDL_Event event) {}

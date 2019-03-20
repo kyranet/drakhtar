@@ -1,3 +1,4 @@
+.vscode/
 .vs/
 *.exe
 *.ilk
@@ -6,4 +7,6 @@
 *.obj
 *.idb
 
-Drakhtar/Debug/
+build/
+deps/
+bin/
