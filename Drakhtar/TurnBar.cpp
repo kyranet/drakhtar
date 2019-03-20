@@ -77,7 +77,9 @@ void TurnBar::eraseUnit(Unit * unit)
 		{
 			unitTurnBar.erase(it);
 			deleted = true;
-			updateVisibleUnits();
+
+			if (visibleTurnBarSize > unitTurnBar.size())
+				resizeVisibleUnits(unitTurnBar.size());
 		}
 
 		it++;
@@ -112,4 +114,12 @@ void TurnBar::updateVisibleUnits()
         visibleUnits[i]->setTexture((*listIt)->getTexture());
         listIt++;
     }
+}
+
+void TurnBar::resizeVisibleUnits(int newSize)
+{
+	delete visibleUnits[newSize];
+	visibleUnits.resize(newSize);
+	visibleTurnBarSize = newSize;
+	updateVisibleUnits();
 }
