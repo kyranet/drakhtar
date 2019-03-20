@@ -67,6 +67,23 @@ void TurnBar::sort()
 	updateVisibleUnits();
 }
 
+void TurnBar::eraseUnit(Unit * unit)
+{
+	bool deleted = false;
+	auto it = unitTurnBar.begin();
+	while(!deleted && it != unitTurnBar.end())
+	{
+		if ((*it) == unit)
+		{
+			unitTurnBar.erase(it);
+			deleted = true;
+			updateVisibleUnits();
+		}
+
+		it++;
+	}
+}
+
 void TurnBar::render() const
 {
     GameObject::render();

@@ -21,6 +21,7 @@ class TurnBar : public GameObject
     Unit *getFrontUnit() { return unitTurnBar.front(); }
     void advanceTurn();
 	void sort();
+	void eraseUnit(Unit* unit);
     virtual void render() const;
     virtual void handleEvents(SDL_Event event);
     void updateVisibleUnits();
