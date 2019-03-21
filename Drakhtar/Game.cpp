@@ -47,6 +47,8 @@ Game::Game()
     textureManager_->add("UI-cellFrame", "../images/UI/cellFrame.png", 1, 1);
     textureManager_->add("UI-cellHover", "../images/UI/cellHover.png", 1, 1);
     textureManager_->add("UI-cellInRange", "../images/UI/cellInRange.png", 1, 1);
+    textureManager_->add("UI-enemyInRange", "../images/UI/enemyInRange.png", 1, 1);
+    textureManager_->add("UI-activeUnit", "../images/UI/activeUnitCell.png", 1, 1);
     textureManager_->add("UI-dialogueBackground", "../images/UI/dialogueBackground.png", 1, 1);
     textureManager_->add("UI-turnBar", "../images/UI/turnBar.png", 1, 1);
 
@@ -100,9 +102,9 @@ Game::Game()
     renderer_ = SDL_CreateRenderer(window_, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     textureManager_->init(renderer_);
 
-    // If window or renderer is a null pointer, throw a SDLError
-    if (window_ == nullptr || renderer_ == nullptr)
-        throw new SDLError("Error loading the SDL window or renderer");
+  // If window or renderer is a null pointer, throw a SDLError
+  if (window_ == nullptr || renderer_ == nullptr)
+    throw new SDLError("Error loading the SDL window or renderer");
 
     stateMachine = new GameStateMachine();
     state_ = new MainMenu(this, renderer_);

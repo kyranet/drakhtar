@@ -3,76 +3,78 @@
 #include "BoardController.h"
 #include <iostream>
 
-BoardController::BoardController(Board *board, TurnBar *turnBar) : board_(board), turnBar_(turnBar) {}
+BoardController::BoardController(Board* board, TurnBar* turnBar,
+                                 GameState* state)
+    : board_(board), turnBar_(turnBar), state_(state) {}
 
-void BoardController::run(SDL_Event event)
-{
-    activeUnit_ = turnBar_->getFrontUnit();
-    if (moving)
-    {
-        board_->setTextureToCellsInRange(activeUnit_->getBox(), activeUnit_->getMoveRange(), Box::movable);
-    }
+// Is called every time an event is captured
+void BoardController::run(SDL_Event event) {
+  activeUnit_ = turnBar_->getFrontUnit();
 
-    switch (event.type)
-    {
-    case SDL_MOUSEBUTTONUP:
-        SDL_Point p = {event.motion.x, event.motion.y};
-        if (moving)
-        {
-            onClickMove(p);
-        }
-        else
-        {
-            onClickAttack(p);
-        }
-        break;
+  // Highlights cells around selected unit
+  activeUnit_->getBox()->setCurrentTexture(Box::ACTICE_TEX);
+  if (!hasMoved) {
+    board_->highlightCellsInRange(activeUnit_->getBox(),
+                                  activeUnit_->getMoveRange());
+  }
+  if (!hasAttacked) {
+    board_->highlightEnemiesInRange(activeUnit_->getBox(),
+                                    activeUnit_->getAttackRange());
+  }
+
+  // Captures mouse event
+  if (event.type == SDL_MOUSEBUTTONUP) {
+    SDL_Point p = {event.motion.x, event.motion.y};
+    Box* boxClicked = board_->getBoxAtCoordinates(Vector2D<int>(p.x, p.y));
+
+    if (boxClicked != nullptr) {
+      if (boxClicked->isEmpty() && !hasMoved) {
+        onClickMove(boxClicked);
+      } else if (!hasAttacked) {
+        onClickAttack(boxClicked);
+      }
     }
+  }
+
+  // If no actions left, reset and skip turn
+  if (hasMoved && hasAttacked) {
+    hasMoved = hasAttacked = false;
+    turnBar_->advanceTurn();
+  }
 }
 
-void BoardController::onClickMove(SDL_Point p)
-{
-    Box *boxClicked = board_->getBoxAtCoordinates(Vector2D<int>(p.x, p.y));
+void BoardController::onClickMove(Box* boxClicked) {
+  // Checks if the box clicked is within movement range
+  if (board_->isInRange(activeUnit_->getBox(), boxClicked,
+                        activeUnit_->getMoveRange())) {
+    activeUnit_->moveToBox(boxClicked);
+    hasMoved = true;
+    board_->resetCellsToBase();
 
-    // Checks if the box clicked exists and is empty
-    if (boxClicked != nullptr && boxClicked->isEmpty())
-    {
-        Unit *activeUnit = turnBar_->getFrontUnit();
-
-        // Checks if the box clicked is within movement range
-        if (board_->isInRange(activeUnit->getBox(), boxClicked, activeUnit->getMoveRange()))
-        {
-            activeUnit->moveToBox(boxClicked);
-
-            // If there are enemies nearby enable attack, if not end turn
-            if (board_->isEnemyInRange(boxClicked, activeUnit->getAttackRange()))
-            {
-                moving = false;
-            }
-            else
-            {
-                turnBar_->advanceTurn();
-            }
-            board_->resetCellsToBase();
-        }
-        else
-        {
-            cout << "Out of movement range!" << endl;
-        }
+    // If there are no enemies in range, reset and skip turn
+    if (!board_->isEnemyInRange(boxClicked, activeUnit_->getAttackRange())) {
+      hasMoved = hasAttacked = false;
+      turnBar_->advanceTurn();
     }
+  } else {
+    cout << "Out of movement range!" << endl;
+  }
 }
 
-void BoardController::onClickAttack(SDL_Point p)
-{
-    Box *boxClicked = board_->getBoxAtCoordinates(Vector2D<int>(p.x, p.y));
+void BoardController::onClickAttack(Box* boxClicked) {
+  Unit* enemyUnit = boxClicked->getContent();
 
-    if (boxClicked != nullptr && !boxClicked->isEmpty())
-    {
-        // Box clicked exists and is not empty
-        if (boxClicked->getContent()->getTeam() != activeUnit_->getTeam())
-        {                                                                    // Unit clicked if from a different team
-            boxClicked->getContent()->loseHealth(activeUnit_->getAttack());  // Attack
-            moving = true;                                                   // Re-enable movement
-            turnBar_->advanceTurn();                                         // End turn
-        }
+  // Unit clicked if from a different team and in range
+  if (enemyUnit->getTeam() != activeUnit_->getTeam() &&
+      board_->isInRange(activeUnit_->getBox(), boxClicked,
+                        activeUnit_->getAttackRange())) {
+    enemyUnit->loseHealth(activeUnit_->getAttack());
+    if (enemyUnit->getHealth() == 0) {
+      boxClicked->setContent(nullptr);
+      turnBar_->eraseUnit(enemyUnit);
+      state_->removeGameObject(enemyUnit);
     }
+    hasAttacked = true;
+    board_->resetCellsToBase();
+  }
 }
