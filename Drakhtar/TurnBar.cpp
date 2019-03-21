@@ -80,16 +80,12 @@ void TurnBar::render() const {
   for (auto unit : visibleUnits) unit->render();
 }
 
-void TurnBar::handleEvents(SDL_Event event)
-{
-    if (event.type == SDL_KEYDOWN)
-    {
-        switch (event.key.keysym.sym)
-        {
-        case SDLK_t:
-            advanceTurn();
-            break;
-        }
+void TurnBar::handleEvents(SDL_Event event) {
+  if (event.type == SDL_KEYDOWN) {
+    switch (event.key.keysym.sym) {
+      case SDLK_t:
+        advanceTurn();
+        break;
     }
   }
 }
@@ -106,29 +102,4 @@ void TurnBar::decreaseVisibleUnitsSize() {
   visibleTurnBarSize--;
   delete visibleUnits[visibleTurnBarSize];
   visibleUnits.resize(visibleTurnBarSize);
-}
-
-void TurnBar::deleteUnit(Unit * unit) 
-{
-	auto it = unitTurnBar.begin();
-	while (it != unitTurnBar.end())
-	{
-		if (*it == unit)
-		{
-			unitTurnBar.erase(it);
-			break;
-		}
-		it++;
-	}
-}
-
-void TurnBar::deleteUnit(Unit *unit) {
-  auto it = unitTurnBar.begin();
-  while (it != unitTurnBar.end()) {
-    if (*it == unit) {
-      unitTurnBar.erase(it);
-      break;
-    }
-    it++;
-  }
 }

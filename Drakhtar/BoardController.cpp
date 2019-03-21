@@ -71,7 +71,7 @@ void BoardController::onClickAttack(Box* boxClicked) {
     enemyUnit->loseHealth(activeUnit_->getAttack());
     if (enemyUnit->getHealth() == 0) {
       boxClicked->setContent(nullptr);
-      turnBar_->deleteUnit(enemyUnit);
+      turnBar_->eraseUnit(enemyUnit);
       state_->removeGameObject(enemyUnit);
     }
     hasAttacked = true;
