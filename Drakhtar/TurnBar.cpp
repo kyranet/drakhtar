@@ -44,9 +44,6 @@ TurnBar::TurnBar(list<Unit *> allyList, list<Unit *> enemyList)
 	//unitTurnBar.push_back(*e);
 	//unitTurnBar.push_back(*e);
 	sort();
-
-	auto ite = unitTurnBar.begin();
-	eraseUnit((*ite));
 }
 
 TurnBar::~TurnBar()
