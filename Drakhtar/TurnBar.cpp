@@ -44,6 +44,9 @@ TurnBar::TurnBar(list<Unit *> allyList, list<Unit *> enemyList)
 	//unitTurnBar.push_back(*e);
 	//unitTurnBar.push_back(*e);
 	sort();
+
+	auto ite = unitTurnBar.begin();
+	eraseUnit((*ite));
 }
 
 TurnBar::~TurnBar()
@@ -79,11 +82,14 @@ void TurnBar::eraseUnit(Unit * unit)
 			deleted = true;
 
 			if (visibleTurnBarSize > unitTurnBar.size())
-				resizeVisibleUnits(unitTurnBar.size());
+				decreaseVisibleUnitsSize();
 		}
-
-		it++;
+		else
+		{
+			it++;
+		}
 	}
+	updateVisibleUnits();
 }
 
 void TurnBar::render() const
@@ -116,10 +122,9 @@ void TurnBar::updateVisibleUnits()
     }
 }
 
-void TurnBar::resizeVisibleUnits(int newSize)
+void TurnBar::decreaseVisibleUnitsSize()
 {
-	delete visibleUnits[newSize];
-	visibleUnits.resize(newSize);
-	visibleTurnBarSize = newSize;
-	updateVisibleUnits();
+	visibleTurnBarSize--;
+	delete visibleUnits[visibleTurnBarSize];
+	visibleUnits.resize(visibleTurnBarSize);
 }
