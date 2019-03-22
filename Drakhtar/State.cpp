@@ -138,3 +138,4 @@ void State::playSound(int tag, int loop, int channel) {
 
 void State::Pause_game(Game *game, SDL_Renderer *renderer) { cout << "Pause"; }
 void State::setPause() { paused_ = !paused_; }
+

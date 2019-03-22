@@ -51,3 +51,4 @@ class State : public GameState
     void playSound(int tag, int loop, int channels);
     static void Pause_game(Game *game, SDL_Renderer *renderer);
 };
+
