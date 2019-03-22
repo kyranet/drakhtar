@@ -1,6 +1,7 @@
 #include "GameScene.h"
 #include "Button.h"
 #include "DialogScene.h"
+#include "GameStateMachine.h"
 #include "Team.h"
 #include "TextureManager.h"
 #include "TurnBar.h"
@@ -54,12 +55,6 @@ void GameScene::preload() {
 
 void GameScene::pause() {
   Scene::pause();
-  // TODO(Antonio Román): Add GameObject::enable()
-  // pauseObject->enable();
-}
-
-void GameScene::resume() {
-  Scene::resume();
-  // TODO(Antonio Román): Add GameObject::disable()
-  // pauseObject->disable();
+  // TODO(Antonio Román): Push Pause scene
+  // Game::getStateMachine()->pushState();
 }

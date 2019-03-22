@@ -1,21 +1,26 @@
 #include "Scene.h"
-#include "GameObject"
+#include "GameObject.h"
 #include "SDL.h"
 
 Scene::Scene() {}
 Scene::~Scene() {}
 
 bool Scene::isFinished() const { return exit_; }
+bool Scene::isRunning() const { return !paused_; }
 bool Scene::isPaused() const { return paused_; }
 bool Scene::isLoaded() const { return loaded_; }
 
 void Scene::run() {
+  // If it hasn't loaded yet, preload and set it to loaded
   if (!isLoaded()) {
     preload();
     loaded_ = true;
   }
 
-  while (!isPaused() && !isFinished()) {
+  // If it's already running, don't re-run the event loop twice
+  if (isRunning()) return;
+
+  while (!isFinished()) {
     create();
     handleEvents();
     update();
@@ -57,7 +62,9 @@ void Scene::render() {
   SDL_RenderClear(renderer_);
 
   // Render each game object
-  for (auto gameObject : gameObjects_) gameObject->render();
+  for (auto gameObject : gameObjects_) {
+    if (gameObject->getActive()) gameObject->render();
+  }
 
   // Render the new frame
   SDL_RenderPresent(renderer_);

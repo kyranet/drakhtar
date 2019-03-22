@@ -20,6 +20,7 @@ class Scene {
   virtual ~Scene();
 
   bool isFinished() const;
+  bool isRunning() const;
   bool isPaused() const;
   bool isLoaded() const;
   virtual void run();
