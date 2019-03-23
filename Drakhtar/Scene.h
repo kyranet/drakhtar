@@ -9,7 +9,7 @@ class Scene {
  private:
   bool exit_ = false;
   bool loaded_ = false;
-  bool paused_ = false;
+  bool paused_ = true;
   bool finished_ = false;
 
  protected:

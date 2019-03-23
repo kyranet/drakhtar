@@ -21,14 +21,14 @@ void SceneMachine::changeScene(Scene *scene) {
 
 void SceneMachine::popScene() {
   if (!sceneStack_.empty()) {
-    delete sceneStack_.top();
+    auto current = sceneStack_.top();
+    current->finish();
+    delete current;
     sceneStack_.pop();
   }
 }
 
-bool SceneMachine::isEmpty() const {
-    return sceneStack_.empty();
-}
+bool SceneMachine::isEmpty() const { return sceneStack_.empty(); }
 
 Scene *SceneMachine::getCurrentScene() {
   return sceneStack_.empty() ? nullptr : sceneStack_.top();
