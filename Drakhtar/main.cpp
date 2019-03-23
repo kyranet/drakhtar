@@ -3,10 +3,8 @@
 #include <iostream>
 #include "Game.h"
 #include "SDL.h"
-#include "SDL_image.h"
+#include "TextureManager.h"
 #include "checkML.h"
-
-using namespace std;
 
 int main(int argc, char *argv[]) {
   _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF |
@@ -15,6 +13,7 @@ int main(int argc, char *argv[]) {
     auto game = Game::getInstance();
     game->run();
     delete game;
+    TextureManager::destroy();
     return 0;
   } catch (exception e) {
     cout << e.what();
