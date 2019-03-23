@@ -1,31 +1,30 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-
-#include "GameObject.h"
-#include "Text.h"
-#include "Game.h"
-#include <iostream>
 #include <fstream>
-#include "checkML.h"
+#include <iostream>
+#include "GameObject.h"
 
-class Game;
+class Text;
+class Font;
+class Scene;
 
-class Dialog
-{
+class Dialog : public GameObject {
  private:
-    string characterName;
-    string spriteText;
-    string dialogText;
+  std::string characterName;
+  std::string spriteText;
+  std::string dialogText;
 
-    GameObject *characterPortraitSprite = nullptr;
-    Text *characterNameSprite = nullptr;
-    Text *dialogTextSprite = nullptr;
+  GameObject* characterPortraitSprite = nullptr;
+  Text* characterNameSprite = nullptr;
+  Text* dialogTextSprite = nullptr;
 
-    SDL_Rect dialogRect_;
+  SDL_Rect dialogRect_;
+
  public:
-    Dialog(Game* game, ifstream& file, Font* textfont, SDL_Rect dialogRect, int lineJumpLimit);
-    ~Dialog();
-    virtual void render() const;
-    void readFromFile(ifstream& file);
+  Dialog(Scene *scene, std::ifstream& file, Font* textfont, SDL_Rect dialogRect,
+         int lineJumpLimit);
+  ~Dialog();
+  virtual void render() const;
+  void readFromFile(std::ifstream& file);
 };

@@ -1,15 +1,20 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Unit.h"
+#include "Box.h"
+#include "FontManager.h"
 #include "Game.h"
+#include "Team.h"
+#include "Text.h"
+#include "Vector2D.h"
 
-Unit::Unit(Texture *texture, Box *box, int attack, int health, int speed,
-           int attackRange, int moveRange)
-    : GameObject(
-          texture,
-          Vector2D<int>(box->getRect().x + box->getRect().w / 2,
-                        box->getRect().y + box->getRect().h / 2),
-          Vector2D<int>(box->getRect().w * 1.25, box->getRect().h * 1.25)),
+Unit::Unit(Scene *scene, Texture *texture, Box *box, int attack, int health,
+           int speed, int attackRange, int moveRange)
+    : GameObject(scene, texture,
+                 Vector2D<int>(box->getRect().x + box->getRect().w / 2,
+                               box->getRect().y + box->getRect().h / 2),
+                 Vector2D<int>(static_cast<int>(box->getRect().w * 1.25),
+                               static_cast<int>(box->getRect().h * 1.25))),
       attack_(attack),
       health_(health),
       maxHealth_(health),
@@ -24,11 +29,11 @@ Unit::Unit(Texture *texture, Box *box, int attack, int health, int speed,
   textColor.b = 255;
   textColor.a = 255;
 
-  healthText_ = new Text(
-      Game::getInstance()->getRenderer(), FontManager::get("Retron2000"),
-      {box_->getRect().x + box_->getRect().w / 2,
-       box_->getRect().y + box_->getRect().h / 5},
-      textColor, "Salud: " + to_string(getHealth()), box_->getRect().w * 2);
+  healthText_ = new Text(scene_, FontManager::get("Retron2000"),
+                         {box_->getRect().x + box_->getRect().w / 2,
+                          box_->getRect().y + box_->getRect().h / 5},
+                         textColor, "Salud: " + to_string(getHealth()),
+                         box_->getRect().w * 2);
 }
 
 Unit::~Unit() {
@@ -55,12 +60,13 @@ void Unit::moveToBox(Box *newBox) {
   // if (!moving_) return;
 
   box_->setContent(nullptr);
-  pos_ = Vector2D<int>(newBox->getRect().x + newBox->getRect().w / 2,
-                       newBox->getRect().y + newBox->getRect().h / 2);
+  setPosition(Vector2D<int>(newBox->getRect().x + newBox->getRect().w / 2,
+                            newBox->getRect().y + newBox->getRect().h / 2));
   box_ = newBox;
   newBox->setContent(this);
-  healthText_->setPos(box_->getRect().x + box_->getRect().w / 2,
-                      box_->getRect().y + box_->getRect().h / 5);
+  healthText_->setPosition(
+      Vector2D<int>(box_->getRect().x + box_->getRect().w / 2,
+                    box_->getRect().y + box_->getRect().h / 5));
   setMoved(true);
   setMoving(false);
 }

@@ -1,84 +1,87 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Board.h"
+#include "Box.h"
+#include "Constants.h"
 #include "Unit.h"
 
-Board::Board(Texture *cellTexture, int r, int c, float cs)
-    : GameObject(nullptr, Vector2D<int>(0, 0), Vector2D<int>(0, 0)),
-      rows(r),
-      cols(c),
-      cellSize(cs) {
+Board::Board(Scene *scene, int rows, int columns, float cellSize)
+    : GameObject(scene, nullptr, Vector2D<int>(0, 0), Vector2D<int>(0, 0)),
+      rows_(rows),
+      columns_(columns),
+      cellSize_(cellSize) {
   // Calculates margins to center the board on screen
-  marginX = (WIN_WIDTH - (cs * (cols - 1))) / 2;
-  marginY = (WIN_HEIGHT - (cs * (rows - 1))) / 2;
+  marginX_ = (WIN_WIDTH - (cellSize_ * (columns_ - 1))) / 2;
+  marginY_ = (WIN_HEIGHT - (cellSize_ * (rows_ - 1))) / 2;
 
   // Creates the board matrix
-  board = new Box **[rows];
-  for (int i = 0; i < rows; i++) {
-    board[i] = new Box *[cols];
+  board_ = new Box **[rows_];
+  for (int i = 0; i < rows_; i++) {
+    board_[i] = new Box *[columns_];
   }
 
   // Fills the board with empty boxes
-  for (int i = 0; i < rows; i++) {
-    for (int j = 0; j < cols; j++) {
-      auto pos = Vector2D<int>(static_cast<int>(floor(marginX + j * cs)),
-                               static_cast<int>(floor(marginY + i * cs)));
-      auto size = Vector2D<int>(static_cast<int>(floor(cs)),
-                                static_cast<int>(floor(cs)));
-      auto box = new Box(cellTexture, pos, size, Vector2D<int>(j, i), nullptr);
-      board[i][j] = box;
+  for (int i = 0; i < rows_; i++) {
+    for (int j = 0; j < columns_; j++) {
+      auto pos =
+          Vector2D<int>(static_cast<int>(floor(marginX_ + j * cellSize_)),
+                        static_cast<int>(floor(marginY_ + i * cellSize_)));
+      auto size = Vector2D<int>(static_cast<int>(floor(cellSize_)),
+                                static_cast<int>(floor(cellSize_)));
+      auto box = new Box(scene, pos, size, Vector2D<int>(j, i), nullptr);
+      board_[i][j] = box;
     }
   }
 }
 
 Board::~Board() {
-  if (board != nullptr) {
-    for (int r = 0; r < rows; r++) {
-      for (int c = 0; c < cols; c++) {
-        delete board[r][c];
+  if (board_ != nullptr) {
+    for (int r = 0; r < rows_; r++) {
+      for (int c = 0; c < columns_; c++) {
+        delete board_[r][c];
       }
-      delete board[r];
+      delete[] board_[r];
     }
-    delete[] board;
-    board = nullptr;
+    delete[] board_;
+    board_ = nullptr;
   }
-  delete cellsMatrix;
+  delete cellsMatrix_;
 }
 
 void Board::render() const {
   // Renders each cell and it's content
-  for (int i = 0; i < rows; i++) {
-    for (int j = 0; j < cols; j++) {
-      if (board[i][j] != nullptr) {
-        board[i][j]->render();
+  for (int i = 0; i < rows_; i++) {
+    for (int j = 0; j < columns_; j++) {
+      if (board_[i][j] != nullptr) {
+        board_[i][j]->render();
       }
     }
   }
 }
 
 void Board::handleEvents(SDL_Event event) {
-  for (int i = 0; i < rows; i++) {
-    for (int j = 0; j < cols; j++) {
-      board[i][j]->handleEvents(event);
+  for (int i = 0; i < rows_; i++) {
+    for (int j = 0; j < columns_; j++) {
+      board_[i][j]->handleEvents(event);
     }
   }
 }
 
-Box *Board::getBoxAt(int x, int y) { return board[y][x]; }
+Box *Board::getBoxAt(int x, int y) { return board_[y][x]; }
 
 Box *Board::getBoxAtCoordinates(Vector2D<int> coordinates) {
   // Coordinates are out of the board
-  if (coordinates.getX() < marginX - cellSize / 2 ||
-      coordinates.getY() < marginY - cellSize / 2 ||
-      coordinates.getX() > marginX + cols * cellSize - cellSize / 2 ||
-      coordinates.getY() > marginY + rows * cellSize - cellSize / 2) {
+  if (coordinates.getX() < marginX_ - cellSize_ / 2 ||
+      coordinates.getY() < marginY_ - cellSize_ / 2 ||
+      coordinates.getX() > marginX_ + columns_ * cellSize_ - cellSize_ / 2 ||
+      coordinates.getY() > marginY_ + rows_ * cellSize_ - cellSize_ / 2) {
     return nullptr;
   } else {
     // Coordinates are inside the board
     int x = static_cast<int>(
-        floor((coordinates.getX() - marginX + cellSize / 2) / cellSize));
+        floor((coordinates.getX() - marginX_ + cellSize_ / 2) / cellSize_));
     int y = static_cast<int>(
-        floor((coordinates.getY() - marginY + cellSize / 2) / cellSize));
+        floor((coordinates.getY() - marginY_ + cellSize_ / 2) / cellSize_));
     return getBoxAt(x, y);
   }
 }
@@ -94,57 +97,57 @@ bool Board::isInRange(Box *from, Box *to, int range) {
   return range >= totalDistance;
 }
 
-Matrix<int> *Board::getCellsInRange(Box *box, int range) {
+Matrix<ObjectType> *Board::getCellsInRange(Box *box, int range) {
   // Reset the cells matrix
-  if (cellsMatrix != nullptr) {
-    delete cellsMatrix;
+  if (cellsMatrix_ != nullptr) {
+    delete cellsMatrix_;
   }
 
   int size = range * 2 + 1;
   int startX = box->getIndex().getX() - range;
   int startY = box->getIndex().getY() - range;
-  cellsMatrix = new Matrix<int>(size, size);
+  cellsMatrix_ = new Matrix<ObjectType>(size, size);
 
   // Fills the array
   for (int i = 0; i < size; i++) {
     for (int j = 0; j < size; j++) {
-      if (j + startX < 0 || i + startY < 0 || j + startX >= cols ||
-          i + startY >= rows) {
+      if (j + startX < 0 || i + startY < 0 || j + startX >= columns_ ||
+          i + startY >= rows_) {
         // Current cell is out of the board
-        cellsMatrix->setElement(j, i, OUT_OF_BOARD);
+        cellsMatrix_->setElement(j, i, ObjectType::OUT_OF_BOARD);
       } else if (!isInRange(box, getBoxAt(j + startX, i + startY), range)) {
         // Current cell is out of the movement range
-        cellsMatrix->setElement(j, i, OUT_OF_RANGE);
+        cellsMatrix_->setElement(j, i, ObjectType::OUT_OF_RANGE);
       } else {
         // Current cell is in the board and in range
-        Unit *unit = board[i + startY][j + startX]->getContent();
+        Unit *unit = board_[i + startY][j + startX]->getContent();
 
         if (unit == nullptr) {
           // Current cell is empty
-          cellsMatrix->setElement(j, i, EMPTY);
+          cellsMatrix_->setElement(j, i, ObjectType::EMPTY);
         } else {
           // Current cell is occupied
           if (unit->getTeam() == box->getContent()->getTeam()) {
             // Ally
-            cellsMatrix->setElement(j, i, ALLY);
+            cellsMatrix_->setElement(j, i, ObjectType::ALLY);
           } else {
             // Enemy
-            cellsMatrix->setElement(j, i, ENEMY);
+            cellsMatrix_->setElement(j, i, ObjectType::ENEMY);
           }
         }
       }
     }
   }
-  return cellsMatrix;
+  return cellsMatrix_;
 }
 
 bool Board::isEnemyInRange(Box *box, int range) {
-  cellsMatrix = getCellsInRange(box, range);
+  cellsMatrix_ = getCellsInRange(box, range);
   int size = range * 2 + 1;
   bool enemyFound = false;
   for (int i = 0; i < size; i++) {
     for (int j = 0; j < size; j++) {
-      if (cellsMatrix->getElement(i, j) == ENEMY) {
+      if (cellsMatrix_->getElement(i, j) == ObjectType::ENEMY) {
         enemyFound = true;
       }
     }
@@ -154,16 +157,17 @@ bool Board::isEnemyInRange(Box *box, int range) {
 }
 
 void Board::highlightCellsInRange(Box *box, int range) {
-  cellsMatrix = getCellsInRange(box, range);
+  cellsMatrix_ = getCellsInRange(box, range);
   int size = range * 2 + 1;
   int startX = box->getIndex().getX() - range;
   int startY = box->getIndex().getY() - range;
 
   for (int i = 0; i < size; i++) {
     for (int j = 0; j < size; j++) {
-      if (cellsMatrix->getElement(i, j) == EMPTY) {
-        if (getBoxAt(i + startX, j + startY)->getCurrentTexture() != 1) {
-          getBoxAt(i + startX, j + startY)->setCurrentTexture(Box::MOVABLE_TEX);
+      if (cellsMatrix_->getElement(i, j) == ObjectType::EMPTY) {
+        if (getBoxAt(i + startX, j + startY)->getCurrentTexture() != TextureInd::HOVER) {
+          getBoxAt(i + startX, j + startY)
+              ->setCurrentTexture(TextureInd::MOVABLE);
         }
       }
     }
@@ -171,16 +175,17 @@ void Board::highlightCellsInRange(Box *box, int range) {
 }
 
 void Board::highlightEnemiesInRange(Box *box, int range) {
-  cellsMatrix = getCellsInRange(box, range);
+  cellsMatrix_ = getCellsInRange(box, range);
   int size = range * 2 + 1;
   int startX = box->getIndex().getX() - range;
   int startY = box->getIndex().getY() - range;
 
   for (int i = 0; i < size; i++) {
     for (int j = 0; j < size; j++) {
-      if (cellsMatrix->getElement(i, j) == ENEMY) {
-        if (getBoxAt(i + startX, j + startY)->getCurrentTexture() != 1) {
-          getBoxAt(i + startX, j + startY)->setCurrentTexture(Box::ENEMY_TEX);
+      if (cellsMatrix_->getElement(i, j) == ObjectType::ENEMY) {
+        if (getBoxAt(i + startX, j + startY)->getCurrentTexture() != TextureInd::HOVER) {
+          getBoxAt(i + startX, j + startY)
+              ->setCurrentTexture(TextureInd::ENEMY);
         }
       }
     }
@@ -188,9 +193,9 @@ void Board::highlightEnemiesInRange(Box *box, int range) {
 }
 
 void Board::resetCellsToBase() {
-  for (int i = 0; i < cols; i++) {
-    for (int j = 0; j < rows; j++) {
-      board[j][i]->setCurrentTexture(Box::BASE_TEX);
+  for (int i = 0; i < columns_; i++) {
+    for (int j = 0; j < rows_; j++) {
+      board_[j][i]->setCurrentTexture(TextureInd::BASE);
     }
   }
 }

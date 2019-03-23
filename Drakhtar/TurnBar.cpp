@@ -1,9 +1,14 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "TurnBar.h"
+#include "Constants.h"
+#include "Scene.h"
+#include "TextureManager.h"
+#include "Unit.h"
 
-TurnBar::TurnBar(list<Unit *> allyList, list<Unit *> enemyList)
-    : GameObject(TextureManager::get("UI-turnBar"),
+TurnBar::TurnBar(Scene *scene, std::list<Unit *> allyList,
+                 std::list<Unit *> enemyList)
+    : GameObject(scene, TextureManager::get("UI-turnBar"),
                  Vector2D<int>(WIN_WIDTH - 215, WIN_HEIGHT - 30),
                  Vector2D<int>(400, 50)) {
   auto allyIt = allyList.begin();
@@ -25,7 +30,7 @@ TurnBar::TurnBar(list<Unit *> allyList, list<Unit *> enemyList)
   auto listIt = unitTurnBar.begin();
   for (int i = 0; i < visibleTurnBarSize; i++) {
     visibleUnits[i] = new GameObject(
-        (*listIt)->getTexture(),
+        scene_, (*listIt)->getTexture(),
         Vector2D<int>(WIN_WIDTH - 432 + (i + 1) * 44, WIN_HEIGHT - 30),
         Vector2D<int>(45, 45));
     listIt++;

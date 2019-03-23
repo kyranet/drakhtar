@@ -1,4 +1,5 @@
 #include "Scene.h"
+#include "Game.h"
 #include "GameObject.h"
 #include "SDL.h"
 
@@ -59,7 +60,7 @@ void Scene::update() {
 
 void Scene::render() {
   // Clear the screen
-  SDL_RenderClear(renderer_);
+  SDL_RenderClear(Game::getRenderer());
 
   // Render each game object
   for (auto gameObject : gameObjects_) {
@@ -67,7 +68,7 @@ void Scene::render() {
   }
 
   // Render the new frame
-  SDL_RenderPresent(renderer_);
+  SDL_RenderPresent(Game::getRenderer());
 }
 
 void Scene::destroy() {
@@ -90,7 +91,7 @@ void Scene::destroy() {
   pendingOnDestroy_.clear();
 }
 
-void Scene::end() {}
+void Scene::end() { finish(); }
 
 void Scene::resume() { paused_ = true; }
 void Scene::pause() {
@@ -99,8 +100,12 @@ void Scene::pause() {
 }
 
 void Scene::finish() {
+  if (finished_) return;
+
+  finished_ = true;
   paused_ = true;
   exit_ = true;
+  Game::getSceneMachine()->popScene();
 }
 
 void Scene::addGameObject(GameObject *gameObject) {

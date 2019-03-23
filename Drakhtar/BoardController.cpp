@@ -2,17 +2,21 @@
 
 #include "BoardController.h"
 #include <iostream>
+#include "GameScene.h"
+#include "TurnBar.h"
+#include "Box.h"
+#include "Unit.h"
 
 BoardController::BoardController(Board* board, TurnBar* turnBar,
-                                 GameState* state)
-    : board_(board), turnBar_(turnBar), state_(state) {}
+                                 GameScene* scene)
+    : board_(board), turnBar_(turnBar), scene_(scene) {}
 
 // Is called every time an event is captured
 void BoardController::run(SDL_Event event) {
   activeUnit_ = turnBar_->getFrontUnit();
 
   // Highlights cells around selected unit
-  activeUnit_->getBox()->setCurrentTexture(Box::ACTICE_TEX);
+  activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
   if (!hasMoved) {
     board_->highlightCellsInRange(activeUnit_->getBox(),
                                   activeUnit_->getMoveRange());
@@ -72,7 +76,7 @@ void BoardController::onClickAttack(Box* boxClicked) {
     if (enemyUnit->getHealth() == 0) {
       boxClicked->setContent(nullptr);
       turnBar_->eraseUnit(enemyUnit);
-      state_->removeGameObject(enemyUnit);
+      scene_->removeGameObject(enemyUnit);
     }
     hasAttacked = true;
     board_->resetCellsToBase();

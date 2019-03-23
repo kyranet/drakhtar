@@ -1,21 +1,28 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-
-#include "Box.h"
-#include "Constants.h"
 #include "GameObject.h"
 #include "Matrix.h"
 
+class Box;
+
+enum class ObjectType {
+  OUT_OF_BOARD = 0,
+  OUT_OF_RANGE = 1,
+  EMPTY = 2,
+  ALLY = 3,
+  ENEMY = 4
+};
+
 class Board : public GameObject {
  protected:
-  int rows, cols;
-  float marginX, marginY, cellSize;
-  Box ***board;
-  Matrix<int> *cellsMatrix = nullptr;
+  int rows_, columns_;
+  float marginX_, marginY_, cellSize_;
+  Box ***board_;
+  Matrix<ObjectType> *cellsMatrix_ = nullptr;
 
  public:
-  Board(Texture *cellTexture, int r, int c, float cellSize);
+  Board(Scene *scene, int rows, int columns, float cellSize);
   virtual ~Board();
 
   virtual void render() const;
@@ -32,7 +39,7 @@ class Board : public GameObject {
 
   // Returns an integer matrix of the contents of cells in range of a specific
   // cell
-  Matrix<int> *getCellsInRange(Box *box, int range);
+  Matrix<ObjectType> *getCellsInRange(Box *box, int range);
 
   // Checks is there is one or more enemies in range
   bool isEnemyInRange(Box *box, int range);
@@ -45,12 +52,4 @@ class Board : public GameObject {
 
   // Resets ALL cells to their base texture
   void resetCellsToBase();
-
-  const enum objectType {
-    OUT_OF_BOARD = 0,
-    OUT_OF_RANGE = 1,
-    EMPTY = 2,
-    ALLY = 3,
-    ENEMY = 4
-  };
 };

@@ -2,11 +2,11 @@
 
 #pragma once
 #include "GameObject.h"
-#include "Team.h"
-#include "Box.h"
-#include "Text.h"
 
 class Team;
+class Box;
+class Text;
+class Scene;
 
 class Unit : public GameObject
 {
@@ -27,7 +27,7 @@ class Unit : public GameObject
       int health_;
 
  public:
-    Unit(Texture *texture, Box *box, int attack, int health, int speed, int attackRange, int moveRange);
+    Unit(Scene *scene, Texture *texture, Box *box, int attack, int health, int speed, int attackRange, int moveRange);
     virtual ~Unit();
     virtual int getAttack() const { return attack_; }
     int getAttackRange() const { return attackRange_; }

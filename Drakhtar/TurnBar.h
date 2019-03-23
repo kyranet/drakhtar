@@ -4,19 +4,23 @@
 #include <list>
 #include <queue>
 #include <vector>
-#include "TextureManager.h"
-#include "Unit.h"
+#include "GameObject.h"
+#include "SDL.h"
+
+class Scene;
+class Unit;
 
 class TurnBar : public GameObject {
  private:
-  list<Unit *> unitTurnBar;
+  std::list<Unit *> unitTurnBar;
   int visibleTurnBarSize = 9;
-  vector<GameObject *> visibleUnits;
+  std::vector<GameObject *> visibleUnits;
 
  public:
   // constructor intercalates units from each team list into the turn bar (ally
   // -> enemy -> ally -> etc)
-  TurnBar(list<Unit *> allyList, list<Unit *> enemyList);
+  TurnBar(Scene *scene, std::list<Unit *> allyList,
+          std::list<Unit *> enemyList);
   virtual ~TurnBar();
   Unit *getFrontUnit() { return unitTurnBar.front(); }
   void advanceTurn();
