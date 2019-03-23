@@ -18,6 +18,7 @@ GameObject::GameObject(Scene *scene, Texture *texture, Vector2D<int> position,
     : scene_(scene), texture_(texture), position_(position), size_(size) {}
 
 GameObject::~GameObject() {
+  scene_ = nullptr;
   texture_ = nullptr;
   for (auto listener : eventListeners_) delete listener;
   eventListeners_.clear();

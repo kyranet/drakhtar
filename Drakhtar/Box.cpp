@@ -9,18 +9,23 @@ Box::Box(Scene *scene, Vector2D<int> pos, Vector2D<int> size,
     : GameObject(scene, nullptr, pos, size),
       boardIndex_(boardIndex),
       content_(unit) {
-  cellTextures_[static_cast<int>(TextureInd::BASE)] = TextureManager::get("UI-cellFrame");
-  cellTextures_[static_cast<int>(TextureInd::HOVER)] = TextureManager::get("UI-cellHover");
-  cellTextures_[static_cast<int>(TextureInd::MOVABLE)] = TextureManager::get("UI-cellInRange");
-  cellTextures_[static_cast<int>(TextureInd::ENEMY)] = TextureManager::get("UI-enemyInRange");
-  cellTextures_[static_cast<int>(TextureInd::ACTIVE)] = TextureManager::get("UI-activeUnit");
+  cellTextures_[static_cast<int>(TextureInd::BASE)] =
+      TextureManager::get("UI-cellFrame");
+  cellTextures_[static_cast<int>(TextureInd::HOVER)] =
+      TextureManager::get("UI-cellHover");
+  cellTextures_[static_cast<int>(TextureInd::MOVABLE)] =
+      TextureManager::get("UI-cellInRange");
+  cellTextures_[static_cast<int>(TextureInd::ENEMY)] =
+      TextureManager::get("UI-enemyInRange");
+  cellTextures_[static_cast<int>(TextureInd::ACTIVE)] =
+      TextureManager::get("UI-activeUnit");
   cellTexture_ = TextureInd::BASE;
 }
 
 // Renders itself and its content
 void Box::render() {
-  cellTextures_[static_cast<int>(cellTexture_)]->render(
-      getRect(), texture_->getAnimation()[texture_->getFrame()]);
+  auto texture = cellTextures_[static_cast<int>(cellTexture_)];
+  texture->render(getRect(), texture->getAnimation()[texture->getFrame()]);
   if (!isEmpty()) {
     getContent()->render();
   }

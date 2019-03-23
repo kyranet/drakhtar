@@ -15,17 +15,12 @@ SceneMachine::~SceneMachine() {
 void SceneMachine::pushScene(Scene *scene) { sceneStack_.push(scene); }
 
 void SceneMachine::changeScene(Scene *scene) {
-  popScene();
+  sceneStack_.top()->finish();
   pushScene(scene);
 }
 
 void SceneMachine::popScene() {
-  if (!sceneStack_.empty()) {
-    auto current = sceneStack_.top();
-    current->finish();
-    delete current;
-    sceneStack_.pop();
-  }
+  if (!sceneStack_.empty()) sceneStack_.pop();
 }
 
 bool SceneMachine::isEmpty() const { return sceneStack_.empty(); }

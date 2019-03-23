@@ -2,8 +2,11 @@
 
 #pragma once
 #include <list>
+#include <functional>
 
 class GameObject;
+
+using NextTickCallback = void();
 
 class Scene {
  private:
@@ -16,6 +19,7 @@ class Scene {
   std::list<GameObject *> gameObjects_;
   std::list<GameObject *> pendingOnCreate_;
   std::list<GameObject *> pendingOnDestroy_;
+  std::list<NextTickCallback *> nextTick_;
 
  public:
   Scene();
@@ -27,6 +31,7 @@ class Scene {
   bool isLoaded() const;
   virtual void run();
   virtual void preload();
+  virtual void tick();
   virtual void create();
   virtual void update();
   virtual void render();
@@ -40,4 +45,6 @@ class Scene {
 
   void addGameObject(GameObject *gameObject);
   void removeGameObject(GameObject *gameObject);
+
+  void processNextTick(NextTickCallback *callback);
 };

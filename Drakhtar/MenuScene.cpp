@@ -9,7 +9,10 @@
 #include "TextureManager.h"
 #include "Vector2D.h"
 
-void buttonPlay() { Game::getSceneMachine()->changeScene(new GameScene()); }
+void buttonPlay() {
+  Game::getSceneMachine()->getCurrentScene()->processNextTick(
+      []() { Game::getSceneMachine()->changeScene(new GameScene()); });
+}
 
 void buttonOptions() { cout << "Options\n"; }
 
