@@ -24,7 +24,8 @@ DialogScene::DialogScene(Scene *scene, string filename, string fontFile)
   addChild(nameBackground);
   addChild(dialogueBackground);
 
-  dialogueBackground->addEventListener(new DialogSceneOnClick(dialogueBackground));
+  dialogueBackground->addEventListener(
+      new DialogSceneOnClick(dialogueBackground));
 
   lineJumpLimit_ = dialogueBackground->getRect().x + 400;
   readFromFile("../dialog/" + filename + ".txt", FontManager::get(fontFile));
@@ -64,5 +65,5 @@ void DialogScene::readFromFile(string filename, Font *textFont) {
 }
 
 void DialogSceneOnClick::onClickStop(SDL_Point point) {
-  std::cout << "Clicked!\n";
+  static_cast<DialogScene *>(getGameObject()->getParent())->next();
 }

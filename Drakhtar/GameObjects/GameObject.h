@@ -4,8 +4,8 @@
 
 #include <list>
 #include <typeindex>
-#include "SDL.h"
 #include "../Utils/Vector2D.h"
+#include "SDL.h"
 
 class Scene;
 class Texture;
@@ -20,6 +20,7 @@ class GameObject {
   Texture *texture_;
   std::list<EventListener *> eventListeners_;
   std::list<GameObject *> children_;
+  GameObject *parent_ = nullptr;
 
  public:
   GameObject(Scene *scene, Texture *texture);
@@ -39,6 +40,10 @@ class GameObject {
 
   void setTexture(Texture *texture);
   Texture *getTexture() const;
+
+  bool hasParent() const;
+  void setParent(GameObject *gameObject);
+  GameObject *getParent() const;
 
   bool hasChildren() const;
   std::list<GameObject *> getChildren() const;

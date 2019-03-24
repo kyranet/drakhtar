@@ -55,6 +55,10 @@ SDL_Rect GameObject::getRect() const {
 
 Texture *GameObject::getTexture() const { return texture_; }
 
+bool GameObject::hasParent() const { return parent_ != nullptr; }
+void GameObject::setParent(GameObject *gameObject) { parent_ = gameObject; }
+GameObject *GameObject::getParent() const { return parent_; }
+
 void GameObject::setTexture(Texture *texture) { texture_ = texture; }
 
 void GameObject::setActive(bool active) { active_ = active; }
@@ -69,6 +73,7 @@ std::list<GameObject *> GameObject::getChildren() const { return children_; }
 
 void GameObject::addChild(GameObject *gameObject) {
   children_.push_back(gameObject);
+  gameObject->setParent(this);
 }
 
 void GameObject::removeChild(GameObject *gameObject) {

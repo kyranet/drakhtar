@@ -17,11 +17,11 @@ class DialogScene : public GameObject {
   int dialogueIndex = 0;
   int lineJumpLimit_ = 0;
   void readFromFile(std::string filename, Font* textFont);
-  void next();
 
  public:
   DialogScene(Scene* scene, std::string filename, std::string fontfile);
   ~DialogScene();
+  void next();
   virtual void render() const;
 };
 
