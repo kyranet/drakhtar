@@ -3,6 +3,7 @@
 #pragma once
 
 #include <list>
+#include <typeindex>
 #include "SDL.h"
 #include "Vector2D.h"
 
@@ -17,7 +18,8 @@ class GameObject {
   Vector2D<int> position_;
   Vector2D<int> size_;
   Texture *texture_;
-  list<EventListener *> eventListeners_;
+  std::list<EventListener *> eventListeners_;
+  std::list<GameObject *> children_;
 
  public:
   GameObject(Scene *scene, Texture *texture);
@@ -37,6 +39,11 @@ class GameObject {
 
   void setTexture(Texture *texture);
   Texture *getTexture() const;
+
+  bool hasChildren() const;
+  std::list<GameObject *> getChildren() const;
+  void addChild(GameObject *gameObject);
+  void removeChild(GameObject *gameObject);
 
   void destroy();
 };

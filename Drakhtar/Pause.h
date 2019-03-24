@@ -1,11 +1,9 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-#include "SDL.h"
-#include "Scene.h"
+#include "GameObject.h"
 
-class PauseScene : public Scene
-{
+class Pause : public GameObject {
  public:
-    void preload();
+  Pause(Scene *scene);
 };

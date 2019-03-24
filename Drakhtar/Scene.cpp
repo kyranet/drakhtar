@@ -21,6 +21,9 @@ void Scene::run() {
   // If it's already running, don't re-run the event loop twice
   if (isRunning()) return;
 
+  // Set current status to resume
+  resume();
+
   while (!isFinished()) {
     create();
     handleEvents();
@@ -67,7 +70,15 @@ void Scene::handleEvents() {
       break;
     }
 
-    for (auto gameObject : gameObjects_) gameObject->handleEvents(event);
+    for (auto gameObject : gameObjects_) {
+      gameObject->handleEvents(event);
+
+      // Some event handlers can change the exit_ state, which causes several
+      // issues as this loop will keep running when it's supposed to stop. This
+      // cannot be done with a for loop using iterators, but only making it so
+      // it checks for exit_ and breaking before increasing it.
+      if (exit_) break;
+    }
   }
 }
 
@@ -120,11 +131,11 @@ void Scene::end() {
   delete this;
 }
 
-void Scene::resume() { paused_ = true; }
-void Scene::pause() {
+void Scene::resume() {
   paused_ = false;
   run();
 }
+void Scene::pause() { paused_ = true; }
 
 void Scene::finish() {
   if (finished_) return;

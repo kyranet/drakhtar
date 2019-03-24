@@ -20,18 +20,27 @@ GameObject::GameObject(Scene *scene, Texture *texture, Vector2D<int> position,
 GameObject::~GameObject() {
   scene_ = nullptr;
   texture_ = nullptr;
+
+  // Clean up event listeners
   for (auto listener : eventListeners_) delete listener;
   eventListeners_.clear();
+
+  // Clean up children
+  for (auto child : children_) delete child;
+  children_.clear();
 }
 
 void GameObject::render() const {
-  if (texture_ == nullptr) return;
-  texture_->renderFrame(getRect(),
-                        texture_->getAnimation()[texture_->getFrame()]);
+  if (texture_ != nullptr) {
+    texture_->renderFrame(getRect(),
+                          texture_->getAnimation()[texture_->getFrame()]);
+  }
+  for (auto child : children_) child->render();
 }
 
 void GameObject::handleEvents(SDL_Event event) {
   for (auto listener : eventListeners_) listener->run(event);
+  for (auto child : children_) child->handleEvents(event);
 }
 
 GameObject *GameObject::addEventListener(EventListener *eventListener) {
@@ -54,5 +63,21 @@ bool GameObject::getActive() const { return active_; }
 
 void GameObject::setPosition(Vector2D<int> position) { position_ = position; }
 Vector2D<int> GameObject::getPosition() const { return position_; }
+
+bool GameObject::hasChildren() const { return !children_.empty(); }
+std::list<GameObject *> GameObject::getChildren() const { return children_; }
+
+void GameObject::addChild(GameObject *gameObject) {
+  children_.push_back(gameObject);
+}
+
+void GameObject::removeChild(GameObject *gameObject) {
+  for (auto it = children_.begin(); it != children_.end(); it++) {
+    if (*it == gameObject) {
+      children_.erase(it);
+      break;
+    }
+  }
+}
 
 void GameObject::destroy() { scene_->removeGameObject(this); }

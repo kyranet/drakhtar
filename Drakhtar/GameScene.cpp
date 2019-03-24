@@ -3,6 +3,7 @@
 #include "Constants.h"
 #include "DialogScene.h"
 #include "Game.h"
+#include "Pause.h"
 #include "Team.h"
 #include "TextureManager.h"
 #include "TurnBar.h"
@@ -14,8 +15,7 @@ GameScene::~GameScene() {
 }
 
 void buttonPause() {
-  auto scene = Game::getSceneMachine()->getCurrentScene();
-  if (!scene->isPaused()) scene->pause();
+  Game::getSceneMachine()->getCurrentScene()->pause();
 }
 
 void GameScene::preload() {
@@ -59,7 +59,6 @@ void GameScene::preload() {
 }
 
 void GameScene::pause() {
+  if (!isPaused()) addGameObject(new Pause(this));
   Scene::pause();
-  // TODO(Antonio Román): Push Pause scene
-  // Game::getStateMachine()->pushState();
 }
