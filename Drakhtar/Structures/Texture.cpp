@@ -3,6 +3,7 @@
 #include "Texture.h"
 #include <iostream>
 #include "../Errors/SDLError.h"
+#include "../Structures/Game.h"
 
 using namespace std;
 
@@ -137,3 +138,4 @@ void Texture::close() {
     size_.set(0, 0);
   }
 }
+

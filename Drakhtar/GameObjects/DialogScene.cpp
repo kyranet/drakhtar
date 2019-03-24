@@ -10,8 +10,7 @@
 
 // default position and size(adjust it to move DialogScene)
 DialogScene::DialogScene(Scene *scene, string filename, string fontFile)
-    : GameObject(scene, nullptr, Vector2D<int>(0, 0), Vector2D<int>(1, 1)),
-      textFont_(FontManager::get(fontFile)) {
+    : GameObject(scene, nullptr, Vector2D<int>(0, 0), Vector2D<int>(1, 1)) {
   auto area = getRect();
   auto nameBackground = new GameObject(
       scene_, TextureManager::get("UI-dialogueBackground"),
@@ -25,10 +24,10 @@ DialogScene::DialogScene(Scene *scene, string filename, string fontFile)
   addChild(nameBackground);
   addChild(dialogueBackground);
 
-  dialogueBackground->addEventListener(new DialogSceneOnClick(this));
+  dialogueBackground->addEventListener(new DialogSceneOnClick(dialogueBackground));
 
   lineJumpLimit_ = dialogueBackground->getRect().x + 400;
-  readFromFile("../dialog/" + filename + ".txt", textFont_);
+  readFromFile("../dialog/" + filename + ".txt", FontManager::get(fontFile));
 }
 
 DialogScene::~DialogScene() {
@@ -64,4 +63,6 @@ void DialogScene::readFromFile(string filename, Font *textFont) {
   file.close();
 }
 
-void DialogSceneOnClick::onClickStop(SDL_Point point) {}
+void DialogSceneOnClick::onClickStop(SDL_Point point) {
+  std::cout << "Clicked!\n";
+}

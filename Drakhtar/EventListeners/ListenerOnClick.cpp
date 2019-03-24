@@ -8,12 +8,12 @@ void ListenerOnClick::run(SDL_Event event) {
   SDL_Point p = {event.motion.x, event.motion.y};
 
   switch (event.type) {
-    case SDL_MOUSEBUTTONUP:
+    case SDL_MOUSEBUTTONDOWN:
       if (!SDL_PointInRect(&p, &area)) return;
       if (!clicked_) onClickStart(p);
       clicked_ = true;
       break;
-    case SDL_MOUSEBUTTONDOWN:
+    case SDL_MOUSEBUTTONUP:
       if (!SDL_PointInRect(&p, &area)) return;
       if (clicked_) onClickStop(p);
       clicked_ = false;
