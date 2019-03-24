@@ -1,9 +1,9 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include <iostream>
-#include "Game.h"
+#include "Managers/TextureManager.h"
 #include "SDL.h"
-#include "TextureManager.h"
+#include "Structures/Game.h"
 #include "checkML.h"
 
 int main(int argc, char *argv[]) {
