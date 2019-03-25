@@ -1,8 +1,8 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-#include <list>
 #include <functional>
+#include <list>
 
 class GameObject;
 

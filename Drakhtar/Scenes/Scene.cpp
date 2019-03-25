@@ -1,6 +1,9 @@
 #include "Scene.h"
 #include "../GameObjects/GameObject.h"
+#include "../Managers/TextureManager.h"
 #include "../Structures/Game.h"
+#include "../Utils/Constants.h"
+#include "../Utils/TimePool.h"
 #include "SDL.h"
 
 Scene::Scene() {}
@@ -24,7 +27,14 @@ void Scene::run() {
   // Set current status to resume
   resume();
 
+  auto poolAnimation =
+      new TimePool(1000 / ANIMATION_TICKS_PER_SECOND, SDL_GetTicks());
+  auto poolFrameRate = new TimePool(1000 / GAME_FRAMERATE, SDL_GetTicks());
   while (!isFinished()) {
+    if (poolAnimation->next(SDL_GetTicks())) {
+      TextureManager::getInstance()->tick();
+    }
+
     create();
     handleEvents();
 
@@ -36,7 +46,16 @@ void Scene::run() {
     render();
     destroy();
     tick();
+
+    if (poolFrameRate->next(SDL_GetTicks())) {
+      std::cout << "Waiting for " << poolFrameRate->getRemaining()
+                << "milliseconds.\n";
+      SDL_Delay(poolFrameRate->getRemaining());
+    }
   }
+
+  delete poolAnimation;
+  delete poolFrameRate;
 
   end();
 }
