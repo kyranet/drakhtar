@@ -23,7 +23,7 @@ Unit::Unit(Texture *texture, Box *box, int attack, int defense, int health, int 
 
     healthText_ = new Text(Game::getInstance()->getRenderer(),
         FontManager::get("Retron2000"),
-        { rect.x + rect.w /2 , rect.y + rect.h/5 },
+        { rect.x + rect.w / 2 , rect.y + rect.h / 6 },
         textColor,
         healthToString(),
         rect.w*2);
@@ -74,7 +74,7 @@ void Unit::moveToBox(Box *newBox)
 
     auto rect = box_->getRect();
 
-    healthText_->setPos(rect.x + rect.w / 2, rect.y + rect.h / 5);
+    healthText_->setPos(rect.x + rect.w / 2, rect.y + rect.h / 6);
     setMoved(true);
     setMoving(false);
 }

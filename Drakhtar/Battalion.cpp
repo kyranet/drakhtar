@@ -25,7 +25,7 @@ Battalion::Battalion(Texture * texture, Box * box, int attack, int defense, int 
     sizeText_ =
         new Text(Game::getInstance()->getRenderer(),
             FontManager::get("Retron2000"),
-            { rect.x + rect.w / 2 , rect.y + rect.h * 4 / 5 },
+            { rect.x + rect.w / 2 , rect.y + rect.h * 5 / 6 },
             textColor,
             sizeToString(),
             rect.w * 2);
@@ -79,7 +79,7 @@ void Battalion::moveToBox(Box * box)
 
     auto rect = box_->getRect();
 
-    sizeText_->setPos(rect.x + rect.w / 2, rect.y + rect.h * 4 / 5);
+    sizeText_->setPos(rect.x + rect.w / 2, rect.y + rect.h * 5 / 6);
 }
 
 void Battalion::render() const
