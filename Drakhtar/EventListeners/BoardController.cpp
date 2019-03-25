@@ -12,6 +12,7 @@ BoardController::BoardController(Board* board, TurnBar* turnBar,
                                  GameScene* scene)
     : board_(board), turnBar_(turnBar), scene_(scene), ListenerOnClick(board) {
   activeUnit_ = turnBar_->getFrontUnit();
+  activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
   board_->highlightCellsInRange(activeUnit_->getBox(),
                                 activeUnit_->getMoveRange());
   board_->highlightEnemiesInRange(activeUnit_->getBox(),
@@ -20,8 +21,6 @@ BoardController::BoardController(Board* board, TurnBar* turnBar,
 
 // Is called every time an event is captured
 void BoardController::run(SDL_Event event) {
-  activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
-
   // Captures mouse event
   ListenerOnClick::run(event);
 
@@ -53,6 +52,7 @@ void BoardController::onClickMove(Box* boxClicked) {
     // If there are enemies in range, highlight them, otherwise skip turn
     if (board_->isEnemyInRange(boxClicked, activeUnit_->getAttackRange())) {
       board_->resetCellsToBase();
+	  activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
       board_->highlightEnemiesInRange(activeUnit_->getBox(),
                                       activeUnit_->getAttackRange());
     } else {
@@ -86,6 +86,7 @@ void BoardController::advanceTurn() {
   hasMoved = hasAttacked = false;
   turnBar_->advanceTurn();
   activeUnit_ = turnBar_->getFrontUnit();
+  activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
   board_->highlightCellsInRange(activeUnit_->getBox(),
                                 activeUnit_->getMoveRange());
   board_->highlightEnemiesInRange(activeUnit_->getBox(),
