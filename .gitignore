@@ -7,3 +7,7 @@
 *.idb
 
 Drakhtar/Debug/
+
+deps/SDL2_image-2\.0\.4/
+
+deps/SDL2_ttf-2\.0\.15/

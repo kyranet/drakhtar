@@ -6,7 +6,7 @@
 
 string Unit::healthToString() const
 {
-    return "Salud: " + to_string(getHealth())
+    return to_string(getHealth()) + " HP";
 }
 
 Unit::Unit(Texture *texture, Box *box, int attack, int defense, int health, int speed, int attackRange, int moveRange, int prize)
@@ -83,11 +83,10 @@ int Unit::loseHealth(int attack)
 {
     int health = attack - this->getDefense();
     if (health < 0)
-        health = 0;
+        health = 1;
     cout << "Health: " << health_ << " Damage: " << health;
     health_ -= health;
-    if(health != 0)
-        healthText_->setText(healthToString());
+    healthText_->setText(healthToString());
     cout << " Remaining: " << health_ << endl;
     // TODO(Carlos): Send "Unit killed" event if health_ <= 0;
     return health;
