@@ -103,19 +103,14 @@ Matrix<ObjectType> *Board::getCellsInRange(Box *box, int range) {
   }
 
   auto team = box->getContent()->getTeam();
-  int size = range * 2 + 1;
-  int startX = std::max(box->getIndex().getX() - range, 0);
-  int startY = std::max(box->getIndex().getY() - range, 0);
-  int endX = std::min(box->getIndex().getX() + range, columns_);
-  int endY = std::min(box->getIndex().getY() + range, rows_);
-  cellsMatrix_ = new Matrix<ObjectType>(endX - startX, endY - startY);
+  cellsMatrix_ = new Matrix<ObjectType>(columns_, rows_);
 
   // Fills the array
-  for (int x = startX; x < endX; x++) {
-    for (int y = startY; y < endY; y++) {
+  for (int x = 0; x < columns_; x++) {
+    for (int y = 0; y < rows_; y++) {
       ObjectType type;
       if (!isInRange(box, getBoxAt(x, y), range)) {
-        type = ObjectType::OUT_OF_BOARD;
+        type = ObjectType::OUT_OF_RANGE;
       } else {
         auto unit = getBoxAt(x, y)->getContent();
         if (unit == nullptr) {
@@ -123,27 +118,22 @@ Matrix<ObjectType> *Board::getCellsInRange(Box *box, int range) {
         } else if (unit->getTeam() == team) {
           type = ObjectType::ALLY;
         } else {
-          type = ObjectType::EMPTY;
+          type = ObjectType::ENEMY;
         }
       }
 
-      cellsMatrix_->setElement(x - startX, y - startY, type);
+      cellsMatrix_->setElement(x, y, type);
     }
   }
   return cellsMatrix_;
 }
 
 bool Board::isEnemyInRange(Box *box, int range) {
-  cellsMatrix_ = getCellsInRange(box, range);
-  int size = range * 2 + 1;
-  int startX = std::max(box->getIndex().getX() - range, 0);
-  int startY = std::max(box->getIndex().getY() - range, 0);
-  int endX = std::min(box->getIndex().getX() + range, columns_);
-  int endY = std::min(box->getIndex().getY() + range, rows_);
+  getCellsInRange(box, range);
 
-  for (int x = startX; x < endX; x++) {
-      for (int y = startY; y < endY; y++) {
-      if (cellsMatrix_->getElement(x - startX, y - startY) == ObjectType::ENEMY) {
+  for (int x = 0; x < columns_; x++) {
+    for (int y = 0; y < rows_; y++) {
+      if (cellsMatrix_->getElement(x, y) == ObjectType::ENEMY) {
         return true;
       }
     }
@@ -155,19 +145,11 @@ bool Board::isEnemyInRange(Box *box, int range) {
 void Board::highlightCellsInRange(Box *box, int range) {
   getCellsInRange(box, range);
 
-  int size = range * 2 + 1;
-  int startX = std::max(box->getIndex().getX() - range, 0);
-  int startY = std::max(box->getIndex().getY() - range, 0);
-  int endX = std::min(box->getIndex().getX() + range, columns_);
-  int endY = std::min(box->getIndex().getY() + range, rows_);
-
-  for (int x = startX; x < endX; x++) {
-      for (int y = startY; y < endY; y++) {
-      if (cellsMatrix_->getElement(x - startX, y - startY) == ObjectType::EMPTY) {
-        if (getBoxAt(x, y)->getCurrentTexture() !=
-            TextureInd::HOVER) {
-          getBoxAt(x, y)
-              ->setCurrentTexture(TextureInd::MOVABLE);
+  for (int x = 0; x < columns_; x++) {
+    for (int y = 0; y < rows_; y++) {
+      if (cellsMatrix_->getElement(x, y) == ObjectType::EMPTY) {
+        if (getBoxAt(x, y)->getCurrentTexture() != TextureInd::HOVER) {
+          getBoxAt(x, y)->setCurrentTexture(TextureInd::MOVABLE);
         }
       }
     }
@@ -177,19 +159,11 @@ void Board::highlightCellsInRange(Box *box, int range) {
 void Board::highlightEnemiesInRange(Box *box, int range) {
   getCellsInRange(box, range);
 
-  int size = range * 2 + 1;
-  int startX = std::max(box->getIndex().getX() - range, 0);
-  int startY = std::max(box->getIndex().getY() - range, 0);
-  int endX = std::min(box->getIndex().getX() + range, columns_);
-  int endY = std::min(box->getIndex().getY() + range, rows_);
-
-  for (int x = startX; x < endX; x++) {
-      for (int y = startY; y < endY; y++) {
-      if (cellsMatrix_->getElement(x - startX, y - startY) == ObjectType::ENEMY) {
-        if (getBoxAt(x, y)->getCurrentTexture() !=
-            TextureInd::HOVER) {
-          getBoxAt(x, y)
-              ->setCurrentTexture(TextureInd::ENEMY);
+  for (int x = 0; x < columns_; x++) {
+    for (int y = 0; y < rows_; y++) {
+      if (cellsMatrix_->getElement(x, y) == ObjectType::ENEMY) {
+        if (getBoxAt(x, y)->getCurrentTexture() != TextureInd::HOVER) {
+          getBoxAt(x, y)->setCurrentTexture(TextureInd::ENEMY);
         }
       }
     }
