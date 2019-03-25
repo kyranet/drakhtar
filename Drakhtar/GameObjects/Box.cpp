@@ -42,6 +42,7 @@ void Box::render() {
 
 void Box::handleEvents(SDL_Event event) {
   // Changes cell texture on mouse hover
+  if (event.type != SDL_MOUSEMOTION) return;
   SDL_Point p = {event.motion.x, event.motion.y};
   hovered_ = SDL_PointInRect(&p, &getRect());
 }
