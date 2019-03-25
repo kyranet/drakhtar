@@ -46,7 +46,7 @@ Board::~Board() {
     delete[] board_;
     board_ = nullptr;
   }
-  delete cellsMatrix_;
+  delete objectTypeMatrix_;
 }
 
 SDL_Rect Board::getRect() const {
@@ -96,14 +96,14 @@ bool Board::isInRange(Box *from, Box *to, int range) {
   return range >= totalDistance;
 }
 
-Matrix<ObjectType> *Board::getCellsInRange(Box *box, int range) {
+Matrix<ObjectType> *Board::getObjectTypesInRange(Box *box, int range) {
   // Reset the cells matrix
-  if (cellsMatrix_ != nullptr) {
-    delete cellsMatrix_;
+  if (objectTypeMatrix_ != nullptr) {
+    delete objectTypeMatrix_;
   }
 
   auto team = box->getContent()->getTeam();
-  cellsMatrix_ = new Matrix<ObjectType>(columns_, rows_);
+  objectTypeMatrix_ = new Matrix<ObjectType>(columns_, rows_);
 
   // Fills the array
   for (int x = 0; x < columns_; x++) {
@@ -122,18 +122,18 @@ Matrix<ObjectType> *Board::getCellsInRange(Box *box, int range) {
         }
       }
 
-      cellsMatrix_->setElement(x, y, type);
+      objectTypeMatrix_->setElement(x, y, type);
     }
   }
-  return cellsMatrix_;
+  return objectTypeMatrix_;
 }
 
 bool Board::isEnemyInRange(Box *box, int range) {
-  getCellsInRange(box, range);
+  getObjectTypesInRange(box, range);
 
   for (int x = 0; x < columns_; x++) {
     for (int y = 0; y < rows_; y++) {
-      if (cellsMatrix_->getElement(x, y) == ObjectType::ENEMY) {
+      if (objectTypeMatrix_->getElement(x, y) == ObjectType::ENEMY) {
         return true;
       }
     }
@@ -143,28 +143,24 @@ bool Board::isEnemyInRange(Box *box, int range) {
 }
 
 void Board::highlightCellsInRange(Box *box, int range) {
-  getCellsInRange(box, range);
+  getObjectTypesInRange(box, range);
 
   for (int x = 0; x < columns_; x++) {
     for (int y = 0; y < rows_; y++) {
-      if (cellsMatrix_->getElement(x, y) == ObjectType::EMPTY) {
-        if (getBoxAt(x, y)->getCurrentTexture() != TextureInd::HOVER) {
-          getBoxAt(x, y)->setCurrentTexture(TextureInd::MOVABLE);
-        }
+      if (objectTypeMatrix_->getElement(x, y) == ObjectType::EMPTY) {
+        getBoxAt(x, y)->setCurrentTexture(TextureInd::MOVABLE);
       }
     }
   }
 }
 
 void Board::highlightEnemiesInRange(Box *box, int range) {
-  getCellsInRange(box, range);
+  getObjectTypesInRange(box, range);
 
   for (int x = 0; x < columns_; x++) {
     for (int y = 0; y < rows_; y++) {
-      if (cellsMatrix_->getElement(x, y) == ObjectType::ENEMY) {
-        if (getBoxAt(x, y)->getCurrentTexture() != TextureInd::HOVER) {
-          getBoxAt(x, y)->setCurrentTexture(TextureInd::ENEMY);
-        }
+      if (objectTypeMatrix_->getElement(x, y) == ObjectType::ENEMY) {
+        getBoxAt(x, y)->setCurrentTexture(TextureInd::ENEMY);
       }
     }
   }

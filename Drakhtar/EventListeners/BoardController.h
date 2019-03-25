@@ -30,4 +30,7 @@ class BoardController : public ListenerOnClick {
 
   // turnBar's current unit attacks target enemy unit in range
   void onClickAttack(Box *boxClicked);
+
+  // Activates next unit
+  void advanceTurn();
 };

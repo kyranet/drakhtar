@@ -19,7 +19,7 @@ class Board : public GameObject {
   int rows_, columns_;
   float cellSize_;
   Box ***board_;
-  Matrix<ObjectType> *cellsMatrix_ = nullptr;
+  Matrix<ObjectType> *objectTypeMatrix_ = nullptr;
 
  public:
   Board(Scene *scene, int rows, int columns, float cellSize);
@@ -40,7 +40,7 @@ class Board : public GameObject {
 
   // Returns an integer matrix of the contents of cells in range of a specific
   // cell
-  Matrix<ObjectType> *getCellsInRange(Box *box, int range);
+  Matrix<ObjectType> *getObjectTypesInRange(Box *box, int range);
 
   // Checks is there is one or more enemies in range
   bool isEnemyInRange(Box *box, int range);
