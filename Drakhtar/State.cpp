@@ -58,8 +58,8 @@ void State::_preload()
 	gameObjects_.push_back(turnBar_);
 
     // Dialog
-    auto exampleDialog = new DialogScene(game_, "dialog1_start", "Retron2000");
-    gameObjects_.push_back(exampleDialog);
+    /*auto exampleDialog = new DialogScene(game_, "dialog1_start", "Retron2000");
+    gameObjects_.push_back(exampleDialog);*/
 
     // Sounds
     audioManager.init();
@@ -71,7 +71,7 @@ void State::_preload()
 
     // Controller
     addEventListener(new BoardController(board_, turnBar_));
-    addEventListener(new DialogController(exampleDialog));
+    //addEventListener(new DialogController(exampleDialog));
 
     // Button
     Pause_Button = new Button(TextureManager::get("Button-Pause"), WIN_WIDTH - WIN_WIDTH / 24, WIN_HEIGHT / 18, WIN_WIDTH / 16, WIN_HEIGHT / 12, Pause_game, game_, renderer_);

@@ -72,12 +72,17 @@ TurnBar::TurnBar(list<Unit *> allyList, list<Unit *> enemyList)
                                          Vector2D<int>(WIN_HEIGHT/ 8, WIN_HEIGHT /8));
         listIt++;
     }
+
+	selectedUnitSprite = new GameObject(TextureManager::get("UI-circle"),
+		Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 2.1, WIN_HEIGHT - WIN_HEIGHT / 13), // pos
+		Vector2D<int>(WIN_WIDTH / 5, WIN_WIDTH / 5)); // tam
 }
 
 TurnBar::~TurnBar()
 {
     for (auto unit : visibleUnits)
         delete unit;
+	delete selectedUnitSprite;
 }
 
 // takes out the unit in the front of the queue and puts it in the back
@@ -92,6 +97,7 @@ void TurnBar::advanceTurn()
 void TurnBar::render() const
 {
     GameObject::render();
+	selectedUnitSprite->render();
     for (auto unit : visibleUnits)
         unit->render();
 }

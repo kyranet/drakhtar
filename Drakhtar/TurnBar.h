@@ -13,6 +13,7 @@ class TurnBar : public GameObject
     list<Unit *> unitTurnBar;
     int visibleTurnBarSize = 9;
     vector<GameObject *> visibleUnits;
+	GameObject* selectedUnitSprite = nullptr;
 
  public:
     TurnBar();
