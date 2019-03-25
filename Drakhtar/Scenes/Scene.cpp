@@ -48,8 +48,6 @@ void Scene::run() {
     tick();
 
     if (poolFrameRate->next(SDL_GetTicks())) {
-      std::cout << "Waiting for " << poolFrameRate->getRemaining()
-                << "milliseconds.\n";
       SDL_Delay(poolFrameRate->getRemaining());
     }
   }

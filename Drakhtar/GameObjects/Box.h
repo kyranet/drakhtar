@@ -18,6 +18,7 @@ class Box : public GameObject {
   Vector2D<int> boardIndex_;
   Unit *content_;
   TextureInd cellTexture_;
+  bool hovered_ = false;
   Texture *cellTextures_[5];
 
  public:

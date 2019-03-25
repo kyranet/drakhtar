@@ -29,7 +29,12 @@ SDL_Rect Box::getRect() const {
 // Renders itself and its content
 void Box::render() {
   auto texture = cellTextures_[static_cast<int>(cellTexture_)];
-  texture->render(getRect(), texture->getAnimation()[texture->getFrame()]);
+  if (hovered_) {
+    cellTextures_[static_cast<int>(TextureInd::HOVER)]->render(
+        getRect(), texture->getAnimation()[texture->getFrame()]);
+  } else {
+    texture->render(getRect(), texture->getAnimation()[texture->getFrame()]);
+  }
   if (!isEmpty()) {
     getContent()->render();
   }
@@ -38,11 +43,7 @@ void Box::render() {
 void Box::handleEvents(SDL_Event event) {
   // Changes cell texture on mouse hover
   SDL_Point p = {event.motion.x, event.motion.y};
-  if (SDL_PointInRect(&p, &getRect())) {
-    cellTexture_ = TextureInd::HOVER;
-  } else if (cellTexture_ == TextureInd::HOVER) {
-    cellTexture_ = TextureInd::BASE;
-  }
+  hovered_ = SDL_PointInRect(&p, &getRect());
 }
 
 // ---------- Getters and Setters ----------
