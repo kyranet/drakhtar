@@ -10,7 +10,7 @@ TurnBar::TurnBar(Scene *scene, std::list<Unit *> allyList,
                  std::list<Unit *> enemyList)
     : GameObject(scene, TextureManager::get("UI-turnBar"),
                  Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 5.3 , WIN_HEIGHT - WIN_HEIGHT / 13),
-                 Vector2D<int>(WIN_WIDTH / 2, WIN_WIDTH / 46.4)) {
+                 Vector2D<int>(WIN_WIDTH / 2, WIN_WIDTH / 16.44)) {
   auto allyIt = allyList.begin();
   auto enemyIt = enemyList.begin();
   int unitCount = 0;
@@ -37,7 +37,7 @@ TurnBar::TurnBar(Scene *scene, std::list<Unit *> allyList,
 	  else
 		visibleUnits[i] = new GameObject(
 			scene_, (*listIt)->getTexture(),
-			Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 1.9 + (i + 1) * WIN_HEIGHT/18.18, WIN_HEIGHT - WIN_HEIGHT / 12.5),
+			Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 1.9 + (i + 1) * WIN_HEIGHT/11, WIN_HEIGHT - WIN_HEIGHT / 12.5),
 			Vector2D<int>(WIN_HEIGHT / 8, WIN_HEIGHT / 8));
     listIt++;
   }
