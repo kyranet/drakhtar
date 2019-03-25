@@ -67,15 +67,20 @@ TurnBar::TurnBar(list<Unit *> allyList, list<Unit *> enemyList)
     auto listIt = unitTurnBar.begin();
     for (int i = 0; i < visibleTurnBarSize; i++)
     {
-        visibleUnits[i] = new GameObject((*listIt)->getTexture(),
-                                         Vector2D<int>(WIN_WIDTH - WIN_WIDTH/1.9 + (i + 1) * WIN_WIDTH/18.18, WIN_HEIGHT - WIN_HEIGHT/12.5),
-                                         Vector2D<int>(WIN_HEIGHT/ 8, WIN_HEIGHT /8));
+		if(i == 0)
+			visibleUnits[i] = new GameObject((*listIt)->getTexture(),
+				Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 1.85 + (i + 1) * WIN_WIDTH / 18.18, WIN_HEIGHT - WIN_HEIGHT / 12.5),
+				Vector2D<int>(WIN_HEIGHT /5, WIN_HEIGHT / 5));
+		else
+			visibleUnits[i] = new GameObject((*listIt)->getTexture(),
+											 Vector2D<int>(WIN_WIDTH - WIN_WIDTH/1.9 + (i + 1) * WIN_WIDTH/18.18, WIN_HEIGHT - WIN_HEIGHT/12.5),
+											 Vector2D<int>(WIN_HEIGHT/ 8, WIN_HEIGHT /8));
         listIt++;
     }
 
 	selectedUnitSprite = new GameObject(TextureManager::get("UI-circle"),
-		Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 2.1, WIN_HEIGHT - WIN_HEIGHT / 13), // pos
-		Vector2D<int>(WIN_WIDTH / 5, WIN_WIDTH / 5)); // tam
+		Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 2.05, WIN_HEIGHT - WIN_HEIGHT / 13), // pos
+		Vector2D<int>(WIN_WIDTH / 7, WIN_WIDTH / 7)); // tam
 }
 
 TurnBar::~TurnBar()

@@ -49,7 +49,7 @@ Game::Game()
     textureManager_->add("UI-cellInRange", "../images/UI/cellInRange.png", 1, 1);
     textureManager_->add("UI-dialogueBackground", "../images/UI/dialogueBackground.png", 1, 1);
     textureManager_->add("UI-turnBar", "../images/UI/rock_bar.png", 1, 1);
-	textureManager_->add("UI-circle", "../images/UI/circle.png", 7, 7);
+	textureManager_->add("UI-circle", "../images/UI/circle.png", 1, 1);
 
 
     // Button
