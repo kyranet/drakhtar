@@ -14,12 +14,12 @@ DialogScene::DialogScene(Scene *scene, string filename, string fontFile)
   auto area = getRect();
   auto nameBackground = new GameObject(
       scene_, TextureManager::get("UI-dialogueBackground"),
-      Vector2D<int>(area.x + WIN_WIDTH - 197, area.y + WIN_HEIGHT - 190),
-      Vector2D<int>(area.w * 120, area.h * 32));
+      Vector2D<int>(area.x + WIN_WIDTH/2, WIN_HEIGHT - area.h * WIN_HEIGHT/6),
+      Vector2D<int>(area.w * WIN_WIDTH/1.4, area.h * WIN_HEIGHT/5));
   auto dialogueBackground = new GameObject(
       scene_, TextureManager::get("UI-dialogueBackground"),
-      Vector2D<int>(area.x + WIN_WIDTH - 400, area.y + WIN_HEIGHT - 100),
-      Vector2D<int>(area.w * 600, area.h * 160));
+      Vector2D<int>(area.x + area.w - WIN_WIDTH/12, area.y - WIN_HEIGHT /70),
+      Vector2D<int>(area.w * WIN_WIDTH/8, area.h * WIN_HEIGHT/ 20));
 
   addChild(nameBackground);
   addChild(dialogueBackground);
@@ -27,7 +27,7 @@ DialogScene::DialogScene(Scene *scene, string filename, string fontFile)
   dialogueBackground->addEventListener(
       new DialogSceneOnClick(dialogueBackground));
 
-  lineJumpLimit_ = dialogueBackground->getRect().x + 400;
+  lineJumpLimit_ = dialogueBackground->getRect().x + WIN_WIDTH / 2;
   readFromFile("../dialog/" + filename + ".txt", FontManager::get(fontFile));
 }
 

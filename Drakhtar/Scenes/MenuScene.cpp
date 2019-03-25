@@ -21,10 +21,10 @@ void MenuScene::preload() {
                                    Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
                                    Vector2D<int>(WIN_WIDTH, WIN_HEIGHT));
   auto play = new Button(this, TextureManager::get("Button-Play"),
-                         Vector2D<int>(WIN_WIDTH / 2, 250),
+                         Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2 -50),
                          Vector2D<int>(200, 75), buttonPlay);
   auto options = new Button(this, TextureManager::get("Button-Options"),
-                            Vector2D<int>(WIN_WIDTH / 2, 350),
+                            Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2 + 50),
                             Vector2D<int>(200, 75), buttonOptions);
 
   addGameObject(background);

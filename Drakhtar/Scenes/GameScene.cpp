@@ -23,7 +23,7 @@ void GameScene::preload() {
       new GameObject(this, TextureManager::get("Maps-FirstBattle"),
                      Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
                      Vector2D<int>(WIN_WIDTH, WIN_HEIGHT));
-  auto board = new Board(this, 8, 12, 50.0f);
+  auto board = new Board(this, 8, 12, (float)(WIN_HEIGHT / 12));
   addGameObject(background);
   addGameObject(board);
 
@@ -47,10 +47,10 @@ void GameScene::preload() {
 
   // Add the GUI features now
   auto turnBar = new TurnBar(this, team1->getUnitList(), team2->getUnitList());
-  auto dialog = new DialogScene(this, "dialog1_start", "Retron2000");
+  auto dialog = new DialogScene(this, "dialog1_start", "DialogFont");
   auto pauseButton =
       new Button(this, TextureManager::get("Button-Pause"),
-                 Vector2D<int>(770, 30), Vector2D<int>(50, 50), buttonPause);
+                 Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 24, WIN_HEIGHT / 18), Vector2D<int>(WIN_WIDTH / 16, WIN_HEIGHT / 12), buttonPause);
 
   addGameObject(turnBar);
   addGameObject(dialog);
