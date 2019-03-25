@@ -10,8 +10,7 @@
 
 BoardController::BoardController(Board* board, TurnBar* turnBar,
                                  GameScene* scene)
-    // TODO: Fix this
-    : board_(board), turnBar_(turnBar), scene_(scene), EventListener(nullptr) {}
+    : board_(board), turnBar_(turnBar), scene_(scene), ListenerOnClick(board) {}
 
 // Is called every time an event is captured
 void BoardController::run(SDL_Event event) {
@@ -29,23 +28,25 @@ void BoardController::run(SDL_Event event) {
   }
 
   // Captures mouse event
-  if (event.type == SDL_MOUSEBUTTONUP) {
-    SDL_Point p = {event.motion.x, event.motion.y};
-    Box* boxClicked = board_->getBoxAtCoordinates(Vector2D<int>(p.x, p.y));
-
-    if (boxClicked != nullptr) {
-      if (boxClicked->isEmpty() && !hasMoved) {
-        onClickMove(boxClicked);
-      } else if (!hasAttacked) {
-        onClickAttack(boxClicked);
-      }
-    }
-  }
+  ListenerOnClick::run(event);
 
   // If no actions left, reset and skip turn
   if (hasMoved && hasAttacked) {
     hasMoved = hasAttacked = false;
     turnBar_->advanceTurn();
+  }
+}
+
+void BoardController::onClickStop(SDL_Point point) {
+  Box* boxClicked =
+      board_->getBoxAtCoordinates(point);
+
+  if (boxClicked != nullptr) {
+    if (boxClicked->isEmpty() && !hasMoved) {
+      onClickMove(boxClicked);
+    } else if (!hasAttacked) {
+      onClickAttack(boxClicked);
+    }
   }
 }
 

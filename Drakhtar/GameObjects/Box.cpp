@@ -22,6 +22,10 @@ Box::Box(Scene *scene, Vector2D<int> pos, Vector2D<int> size,
   cellTexture_ = TextureInd::BASE;
 }
 
+SDL_Rect Box::getRect() const {
+  return {position_.getX(), position_.getY(), size_.getX(), size_.getY()};
+}
+
 // Renders itself and its content
 void Box::render() {
   auto texture = cellTextures_[static_cast<int>(cellTexture_)];

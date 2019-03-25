@@ -24,6 +24,7 @@ class Box : public GameObject {
   Box(Scene *scene, Vector2D<int> pos, Vector2D<int> size,
       Vector2D<int> boardIndex, Unit *unit);
 
+  SDL_Rect getRect() const;
   virtual void render();
   virtual void handleEvents(SDL_Event event);
 

@@ -1,4 +1,5 @@
 #include "GameScene.h"
+#include "../EventListeners/BoardController.h"
 #include "../GameObjects/Button.h"
 #include "../GameObjects/DialogScene.h"
 #include "../GameObjects/Pause.h"
@@ -54,6 +55,8 @@ void GameScene::preload() {
   addGameObject(turnBar);
   addGameObject(dialog);
   addGameObject(pauseButton);
+
+  board->addEventListener(new BoardController(board, turnBar, this));
 }
 
 void GameScene::pause() {

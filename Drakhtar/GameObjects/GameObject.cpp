@@ -69,7 +69,7 @@ void GameObject::setPosition(Vector2D<int> position) { position_ = position; }
 Vector2D<int> GameObject::getPosition() const { return position_; }
 
 bool GameObject::hasChildren() const { return !children_.empty(); }
-std::list<GameObject *> GameObject::getChildren() const { return children_; }
+std::vector<GameObject *> GameObject::getChildren() const { return children_; }
 
 void GameObject::addChild(GameObject *gameObject) {
   children_.push_back(gameObject);

@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Board.h"
+#include <algorithm>
 #include "../Utils/Constants.h"
 #include "Box.h"
 #include "Unit.h"
@@ -11,36 +12,36 @@ Board::Board(Scene *scene, int rows, int columns, float cellSize)
       columns_(columns),
       cellSize_(cellSize) {
   // Calculates margins to center the board on screen
-  marginX_ = (WIN_WIDTH - (cellSize_ * (columns_ - 1))) / 2;
-  marginY_ = (WIN_HEIGHT - (cellSize_ * (rows_ - 1))) / 2;
+  size_.set(static_cast<int>(floor(columns_ * cellSize_)),
+            static_cast<int>(floor(rows_ * cellSize_)));
+  position_.set(static_cast<int>(floor((WIN_WIDTH - size_.getX()) / 2)),
+                static_cast<int>(floor((WIN_HEIGHT - size_.getY()) / 2)));
 
   // Creates the board matrix
-  board_ = new Box **[rows_];
-  for (int i = 0; i < rows_; i++) {
-    board_[i] = new Box *[columns_];
-  }
+  board_ = new Box **[columns_];
 
   // Fills the board with empty boxes
-  for (int i = 0; i < rows_; i++) {
-    for (int j = 0; j < columns_; j++) {
-      auto pos =
-          Vector2D<int>(static_cast<int>(floor(marginX_ + j * cellSize_)),
-                        static_cast<int>(floor(marginY_ + i * cellSize_)));
+  for (int x = 0; x < columns_; x++) {
+    board_[x] = new Box *[rows_];
+    for (int y = 0; y < rows_; y++) {
+      auto pos = Vector2D<int>(
+          static_cast<int>(floor(position_.getX() + x * cellSize_)),
+          static_cast<int>(floor(position_.getY() + y * cellSize_)));
       auto size = Vector2D<int>(static_cast<int>(floor(cellSize_)),
                                 static_cast<int>(floor(cellSize_)));
-      auto box = new Box(scene, pos, size, Vector2D<int>(j, i), nullptr);
-      board_[i][j] = box;
+      auto box = new Box(scene, pos, size, Vector2D<int>(x, y), nullptr);
+      board_[x][y] = box;
     }
   }
 }
 
 Board::~Board() {
   if (board_ != nullptr) {
-    for (int r = 0; r < rows_; r++) {
-      for (int c = 0; c < columns_; c++) {
-        delete board_[r][c];
+    for (int x = 0; x < columns_; x++) {
+      for (int y = 0; y < rows_; y++) {
+        delete board_[x][y];
       }
-      delete[] board_[r];
+      delete[] board_[x];
     }
     delete[] board_;
     board_ = nullptr;
@@ -48,10 +49,14 @@ Board::~Board() {
   delete cellsMatrix_;
 }
 
+SDL_Rect Board::getRect() const {
+  return {position_.getX(), position_.getY(), size_.getX(), size_.getY()};
+}
+
 void Board::render() const {
   // Renders each cell and it's content
-  for (int i = 0; i < rows_; i++) {
-    for (int j = 0; j < columns_; j++) {
+  for (int i = 0; i < columns_; i++) {
+    for (int j = 0; j < rows_; j++) {
       if (board_[i][j] != nullptr) {
         board_[i][j]->render();
       }
@@ -60,30 +65,24 @@ void Board::render() const {
 }
 
 void Board::handleEvents(SDL_Event event) {
-  for (int i = 0; i < rows_; i++) {
-    for (int j = 0; j < columns_; j++) {
+  for (int i = 0; i < columns_; i++) {
+    for (int j = 0; j < rows_; j++) {
       board_[i][j]->handleEvents(event);
     }
   }
+  GameObject::handleEvents(event);
 }
 
-Box *Board::getBoxAt(int x, int y) { return board_[y][x]; }
+Box *Board::getBoxAt(int x, int y) { return board_[x][y]; }
 
-Box *Board::getBoxAtCoordinates(Vector2D<int> coordinates) {
-  // Coordinates are out of the board
-  if (coordinates.getX() < marginX_ - cellSize_ / 2 ||
-      coordinates.getY() < marginY_ - cellSize_ / 2 ||
-      coordinates.getX() > marginX_ + columns_ * cellSize_ - cellSize_ / 2 ||
-      coordinates.getY() > marginY_ + rows_ * cellSize_ - cellSize_ / 2) {
-    return nullptr;
-  } else {
-    // Coordinates are inside the board
-    int x = static_cast<int>(
-        floor((coordinates.getX() - marginX_ + cellSize_ / 2) / cellSize_));
-    int y = static_cast<int>(
-        floor((coordinates.getY() - marginY_ + cellSize_ / 2) / cellSize_));
-    return getBoxAt(x, y);
-  }
+Box *Board::getBoxAtCoordinates(SDL_Point point) {
+  int x = static_cast<int>(floor((point.x - position_.getX()) / cellSize_));
+  if (x < 0 || x >= columns_) return nullptr;
+
+  int y = static_cast<int>(floor((point.y - position_.getY()) / cellSize_));
+  if (y < 0 || y >= rows_) return nullptr;
+
+  return getBoxAt(x, y);
 }
 
 bool Board::isInRange(Box *from, Box *to, int range) {
@@ -103,39 +102,32 @@ Matrix<ObjectType> *Board::getCellsInRange(Box *box, int range) {
     delete cellsMatrix_;
   }
 
+  auto team = box->getContent()->getTeam();
   int size = range * 2 + 1;
-  int startX = box->getIndex().getX() - range;
-  int startY = box->getIndex().getY() - range;
-  cellsMatrix_ = new Matrix<ObjectType>(size, size);
+  int startX = std::max(box->getIndex().getX() - range, 0);
+  int startY = std::max(box->getIndex().getY() - range, 0);
+  int endX = std::min(box->getIndex().getX() + range, columns_);
+  int endY = std::min(box->getIndex().getY() + range, rows_);
+  cellsMatrix_ = new Matrix<ObjectType>(endX - startX, endY - startY);
 
   // Fills the array
-  for (int i = 0; i < size; i++) {
-    for (int j = 0; j < size; j++) {
-      if (j + startX < 0 || i + startY < 0 || j + startX >= columns_ ||
-          i + startY >= rows_) {
-        // Current cell is out of the board
-        cellsMatrix_->setElement(j, i, ObjectType::OUT_OF_BOARD);
-      } else if (!isInRange(box, getBoxAt(j + startX, i + startY), range)) {
-        // Current cell is out of the movement range
-        cellsMatrix_->setElement(j, i, ObjectType::OUT_OF_RANGE);
+  for (int x = startX; x < endX; x++) {
+    for (int y = startY; y < endY; y++) {
+      ObjectType type;
+      if (!isInRange(box, getBoxAt(x, y), range)) {
+        type = ObjectType::OUT_OF_BOARD;
       } else {
-        // Current cell is in the board and in range
-        Unit *unit = board_[i + startY][j + startX]->getContent();
-
+        auto unit = getBoxAt(x, y)->getContent();
         if (unit == nullptr) {
-          // Current cell is empty
-          cellsMatrix_->setElement(j, i, ObjectType::EMPTY);
+          type = ObjectType::EMPTY;
+        } else if (unit->getTeam() == team) {
+          type = ObjectType::ALLY;
         } else {
-          // Current cell is occupied
-          if (unit->getTeam() == box->getContent()->getTeam()) {
-            // Ally
-            cellsMatrix_->setElement(j, i, ObjectType::ALLY);
-          } else {
-            // Enemy
-            cellsMatrix_->setElement(j, i, ObjectType::ENEMY);
-          }
+          type = ObjectType::EMPTY;
         }
       }
+
+      cellsMatrix_->setElement(x - startX, y - startY, type);
     }
   }
   return cellsMatrix_;
@@ -144,30 +136,37 @@ Matrix<ObjectType> *Board::getCellsInRange(Box *box, int range) {
 bool Board::isEnemyInRange(Box *box, int range) {
   cellsMatrix_ = getCellsInRange(box, range);
   int size = range * 2 + 1;
-  bool enemyFound = false;
-  for (int i = 0; i < size; i++) {
-    for (int j = 0; j < size; j++) {
-      if (cellsMatrix_->getElement(i, j) == ObjectType::ENEMY) {
-        enemyFound = true;
+  int startX = std::max(box->getIndex().getX() - range, 0);
+  int startY = std::max(box->getIndex().getY() - range, 0);
+  int endX = std::min(box->getIndex().getX() + range, columns_);
+  int endY = std::min(box->getIndex().getY() + range, rows_);
+
+  for (int x = startX; x < endX; x++) {
+      for (int y = startY; y < endY; y++) {
+      if (cellsMatrix_->getElement(x - startX, y - startY) == ObjectType::ENEMY) {
+        return true;
       }
     }
   }
 
-  return enemyFound;
+  return false;
 }
 
 void Board::highlightCellsInRange(Box *box, int range) {
-  cellsMatrix_ = getCellsInRange(box, range);
-  int size = range * 2 + 1;
-  int startX = box->getIndex().getX() - range;
-  int startY = box->getIndex().getY() - range;
+  getCellsInRange(box, range);
 
-  for (int i = 0; i < size; i++) {
-    for (int j = 0; j < size; j++) {
-      if (cellsMatrix_->getElement(i, j) == ObjectType::EMPTY) {
-        if (getBoxAt(i + startX, j + startY)->getCurrentTexture() !=
+  int size = range * 2 + 1;
+  int startX = std::max(box->getIndex().getX() - range, 0);
+  int startY = std::max(box->getIndex().getY() - range, 0);
+  int endX = std::min(box->getIndex().getX() + range, columns_);
+  int endY = std::min(box->getIndex().getY() + range, rows_);
+
+  for (int x = startX; x < endX; x++) {
+      for (int y = startY; y < endY; y++) {
+      if (cellsMatrix_->getElement(x - startX, y - startY) == ObjectType::EMPTY) {
+        if (getBoxAt(x, y)->getCurrentTexture() !=
             TextureInd::HOVER) {
-          getBoxAt(i + startX, j + startY)
+          getBoxAt(x, y)
               ->setCurrentTexture(TextureInd::MOVABLE);
         }
       }
@@ -176,17 +175,20 @@ void Board::highlightCellsInRange(Box *box, int range) {
 }
 
 void Board::highlightEnemiesInRange(Box *box, int range) {
-  cellsMatrix_ = getCellsInRange(box, range);
-  int size = range * 2 + 1;
-  int startX = box->getIndex().getX() - range;
-  int startY = box->getIndex().getY() - range;
+  getCellsInRange(box, range);
 
-  for (int i = 0; i < size; i++) {
-    for (int j = 0; j < size; j++) {
-      if (cellsMatrix_->getElement(i, j) == ObjectType::ENEMY) {
-        if (getBoxAt(i + startX, j + startY)->getCurrentTexture() !=
+  int size = range * 2 + 1;
+  int startX = std::max(box->getIndex().getX() - range, 0);
+  int startY = std::max(box->getIndex().getY() - range, 0);
+  int endX = std::min(box->getIndex().getX() + range, columns_);
+  int endY = std::min(box->getIndex().getY() + range, rows_);
+
+  for (int x = startX; x < endX; x++) {
+      for (int y = startY; y < endY; y++) {
+      if (cellsMatrix_->getElement(x - startX, y - startY) == ObjectType::ENEMY) {
+        if (getBoxAt(x, y)->getCurrentTexture() !=
             TextureInd::HOVER) {
-          getBoxAt(i + startX, j + startY)
+          getBoxAt(x, y)
               ->setCurrentTexture(TextureInd::ENEMY);
         }
       }
@@ -195,9 +197,9 @@ void Board::highlightEnemiesInRange(Box *box, int range) {
 }
 
 void Board::resetCellsToBase() {
-  for (int i = 0; i < columns_; i++) {
-    for (int j = 0; j < rows_; j++) {
-      board_[j][i]->setCurrentTexture(TextureInd::BASE);
+  for (int x = 0; x < columns_; x++) {
+    for (int y = 0; y < rows_; y++) {
+      board_[x][y]->setCurrentTexture(TextureInd::BASE);
     }
   }
 }

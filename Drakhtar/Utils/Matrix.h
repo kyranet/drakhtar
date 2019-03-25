@@ -11,15 +11,15 @@ class Matrix {
 
  public:
   Matrix<T>(int cols, int rows) : cols_(cols), rows_(rows) {
-    matrix_ = new T *[rows];
-    for (int i = 0; i < rows; i++) {
-      matrix_[i] = new T[cols];
+    matrix_ = new T *[cols];
+    for (int x = 0; x < cols; x++) {
+      matrix_[x] = new T[rows];
     }
   };
 
   ~Matrix<T>() {
-    for (int r = 0; r < rows_; r++) {
-      delete matrix_[r];
+    for (int x = 0; x < cols_; x++) {
+      delete matrix_[x];
     }
     delete[] matrix_;
   };

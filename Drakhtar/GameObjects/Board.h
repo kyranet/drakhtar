@@ -17,7 +17,7 @@ enum class ObjectType {
 class Board : public GameObject {
  protected:
   int rows_, columns_;
-  float marginX_, marginY_, cellSize_;
+  float cellSize_;
   Box ***board_;
   Matrix<ObjectType> *cellsMatrix_ = nullptr;
 
@@ -25,6 +25,7 @@ class Board : public GameObject {
   Board(Scene *scene, int rows, int columns, float cellSize);
   virtual ~Board();
 
+  SDL_Rect Board::getRect() const;
   virtual void render() const;
   virtual void handleEvents(SDL_Event event);
 
@@ -32,7 +33,7 @@ class Board : public GameObject {
   Box *getBoxAt(int x, int y);
 
   // Returns cell in window coordinates (x, y)
-  Box *getBoxAtCoordinates(Vector2D<int> coordinates);
+  Box *getBoxAtCoordinates(SDL_Point coordinates);
 
   // Checks if two cells are within a certain range of each other
   bool isInRange(Box *from, Box *to, int range);

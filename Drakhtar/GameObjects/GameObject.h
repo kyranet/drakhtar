@@ -2,8 +2,7 @@
 
 #pragma once
 
-#include <list>
-#include <typeindex>
+#include <vector>
 #include "../Utils/Vector2D.h"
 #include "SDL.h"
 
@@ -18,8 +17,8 @@ class GameObject {
   Vector2D<int> position_;
   Vector2D<int> size_;
   Texture *texture_;
-  std::list<EventListener *> eventListeners_;
-  std::list<GameObject *> children_;
+  std::vector<EventListener *> eventListeners_;
+  std::vector<GameObject *> children_;
   GameObject *parent_ = nullptr;
 
  public:
@@ -30,7 +29,7 @@ class GameObject {
   virtual void render() const;
   virtual void handleEvents(SDL_Event event);
   GameObject *addEventListener(EventListener *eventListener);
-  SDL_Rect getRect() const;
+  virtual SDL_Rect getRect() const;
 
   void setActive(bool active);
   bool getActive() const;
@@ -46,7 +45,7 @@ class GameObject {
   GameObject *getParent() const;
 
   bool hasChildren() const;
-  std::list<GameObject *> getChildren() const;
+  std::vector<GameObject *> getChildren() const;
   void addChild(GameObject *gameObject);
   void removeChild(GameObject *gameObject);
 
