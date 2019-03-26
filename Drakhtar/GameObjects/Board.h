@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
+#include <list>
 #include "../Utils/Matrix.h"
 #include "GameObject.h"
 
@@ -29,6 +30,9 @@ class Board : public GameObject {
   virtual void render() const;
   virtual void handleEvents(SDL_Event event);
 
+  int getRows() { return rows_; };
+  int getCols() { return columns_; };
+
   // Returns cell in board index (x, y)
   Box *getBoxAt(int x, int y);
 
@@ -37,6 +41,10 @@ class Board : public GameObject {
 
   // Checks if two cells are within a certain range of each other
   bool isInRange(Box *from, Box *to, int range);
+
+  // Checks if two cells are within a certain range of each other considering
+  // pathfinding
+  bool isInMoveRange(Box *from, Box *to, int range);
 
   // Returns an integer matrix of the contents of cells in range of a specific
   // cell
@@ -53,4 +61,6 @@ class Board : public GameObject {
 
   // Resets ALL cells to their base texture
   void resetCellsToBase();
+
+  std::list<Vector2D<int>> findPath(Vector2D<int> start, Vector2D<int> end);
 };
