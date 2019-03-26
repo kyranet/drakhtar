@@ -1,6 +1,5 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
-#pragma once
 #include "Scene.h"
 #include "../GameObjects/GameObject.h"
 #include "../Managers/TextureManager.h"
@@ -103,7 +102,7 @@ void Scene::handleEvents() {
 }
 
 void Scene::update() {
-  // TODO(Antonio Román): Add GameObject::update()
+  // TODO(Antonio RomÃ¡n): Add GameObject::update()
   // for (auto gameObject : gameObjects_) gameObject->update();
 }
 
