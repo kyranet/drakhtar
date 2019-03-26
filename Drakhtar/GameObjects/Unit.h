@@ -51,6 +51,6 @@ class Unit : public GameObject {
   void setMoved(bool moved);
   void setTeam(Team *team);
   virtual void moveToBox(Box *box);
-  virtual int loseHealth(int attack);
+  virtual int loseHealth(int enemyAttack);
   virtual void render() const;
 };

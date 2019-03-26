@@ -47,8 +47,8 @@ int Battalion::getMaxHealth() const {
   return Unit::getMaxHealth() * battalionSize_;
 }
 
-int Battalion::loseHealth(int attack) {
-  int health = Unit::loseHealth(attack);
+int Battalion::loseHealth(int enemyAttack) {
+  int health = Unit::loseHealth(enemyAttack);
   if (Unit::getMaxHealth() <= health) {
     battalionSize_ -= health / Unit::getMaxHealth();
     if (battalionSize_ < 0) battalionSize_ = 0;

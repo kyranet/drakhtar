@@ -27,7 +27,7 @@ class Battalion : public Unit {
   virtual int getAttack() const;
   virtual int getMaxHealth() const;
 
-  virtual int loseHealth(int attack);
+  virtual int loseHealth(int enemyAttack);
 
   virtual void moveToBox(Box* box);
   virtual void render() const;

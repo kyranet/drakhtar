@@ -61,8 +61,8 @@ void Unit::moveToBox(Box *newBox) {
   setMoving(false);
 }
 
-int Unit::loseHealth(int attack) {
-  int health = attack - this->getDefense();
+int Unit::loseHealth(int enemyAttack) {
+  int health = enemyAttack - this->getDefense();
   if (health < 0) health = 1;
   health_ -= health;
   healthText_->setText(healthToString());
