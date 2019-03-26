@@ -12,13 +12,13 @@
 DialogScene::DialogScene(Scene *scene, string filename, string fontFile)
     : GameObject(scene, nullptr, Vector2D<int>(0, 0), Vector2D<int>(1, 1)) {
   auto area = getRect();
-  auto nameBackground = new GameObject(
+  auto dialogueBackground = new GameObject(
       scene_, TextureManager::get("UI-dialogueBackground"),
       Vector2D<int>(area.x + WIN_WIDTH/2, WIN_HEIGHT - area.h * WIN_HEIGHT/6),
       Vector2D<int>(area.w * WIN_WIDTH/1.4, area.h * WIN_HEIGHT/5));
-  auto dialogueBackground = new GameObject(
+  auto nameBackground = new GameObject(
       scene_, TextureManager::get("UI-dialogueBackground"),
-      Vector2D<int>(area.x + area.w - WIN_WIDTH/12, area.y - WIN_HEIGHT /70), // TODO(DANI AND MIGUEL)problems here, it moves every object of the dialog UI
+      Vector2D<int>(dialogueBackground->getRect().x + dialogueBackground->getRect().w - WIN_WIDTH/12, dialogueBackground->getRect().y - WIN_WIDTH/70), // TODO(DANI AND MIGUEL)problems here, it moves every object of the dialog UI
       Vector2D<int>(area.w * WIN_WIDTH/8, area.h * WIN_HEIGHT/ 20));
 
   addChild(nameBackground);
@@ -27,7 +27,7 @@ DialogScene::DialogScene(Scene *scene, string filename, string fontFile)
   dialogueBackground->addEventListener(
       new DialogSceneOnClick(dialogueBackground));
 
-  lineJumpLimit_ = dialogueBackground->getRect().x + WIN_WIDTH /1.5;
+  lineJumpLimit_ = dialogueBackground->getRect().x + WIN_WIDTH /2;
   readFromFile("../dialog/" + filename + ".txt", FontManager::get(fontFile), dialogueBackground->getRect());
 }
 
