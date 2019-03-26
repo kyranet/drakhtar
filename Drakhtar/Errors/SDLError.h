@@ -2,10 +2,13 @@
 
 #pragma once
 #include "DrakhtarError.h"
-#include <SDL.h>
 
-class SDLError : public DrakhtarError
-{
+class SDLError final : public DrakhtarError {
  public:
-    explicit SDLError(const string &m) : DrakhtarError("[SDL]: " + m) {}
+  /**
+   * \brief Create a SDL Error instance.
+   * \param message The error message description.
+   */
+  explicit SDLError(const std::string &message)
+      : DrakhtarError("[SDL]: " + message) {}
 };

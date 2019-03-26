@@ -5,6 +5,4 @@
 EventListener::EventListener(GameObject *gameObject)
     : gameObject_(gameObject) {}
 
-EventListener::~EventListener() {}
-
 GameObject *EventListener::getGameObject() const { return gameObject_; }

@@ -2,7 +2,7 @@
 
 #include "ListenerOnClick.h"
 
-void ListenerOnClick::run(SDL_Event event) {
+void ListenerOnClick::run(const SDL_Event event) {
   auto area = getGameObject()->getRect();
 
   SDL_Point p = {event.motion.x, event.motion.y};

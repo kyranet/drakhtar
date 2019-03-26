@@ -1,13 +1,14 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-
-#include <exception>
 #include <stdexcept>
-using namespace std;
 
-class DrakhtarError : public logic_error
-{
+class DrakhtarError : public std::logic_error {
  public:
-    explicit DrakhtarError(const string &m) : logic_error("Arkanoid Error " + m) {}
+  /**
+   * \brief Create a Drakhtar Error instance.
+   * \param message The error message description.
+   */
+  explicit DrakhtarError(const std::string &message)
+      : std::logic_error("Drakhtar Error " + message) {}
 };
