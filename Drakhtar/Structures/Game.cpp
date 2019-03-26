@@ -62,8 +62,8 @@ Game::Game() : window_(nullptr), renderer_(nullptr) {
   textures->add("UI-activeUnit", "../images/UI/activeUnitCell.png", 1, 1);
   textures->add("UI-dialogueBackground", "../images/UI/dialogueBackground.png",
                 1, 1);
-  textures->add("UI-turnBar", "../images/UI/turnBar.png", 1, 1);
-
+  textures->add("UI-turnBar", "../images/UI/rock_bar.png", 1, 1);
+  textures->add("UI-circle", "../images/UI/circle.png", 1, 1);
   // Button
   textures->add("Button-Play", "../images/MainMenu/Play_Button.png", 1, 1);
   textures->add("Button-Options", "../images/MainMenu/Options_Button.png", 1,
@@ -118,6 +118,7 @@ Game::Game() : window_(nullptr), renderer_(nullptr) {
   textures->init(renderer_);
 
   // Fonts
+  fonts->add("DialogFont", "../fonts/Retron2000.ttf", WIN_WIDTH /66, WIN_WIDTH);
   fonts->add("Retron2000", "../fonts/Retron2000.ttf", 12, WIN_WIDTH);
   fonts->init();
 
