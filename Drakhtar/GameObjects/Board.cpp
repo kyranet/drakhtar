@@ -3,9 +3,9 @@
 #include "Board.h"
 #include <algorithm>
 #include "../Utils/Constants.h"
+#include "../third_party/AStar.h"
 #include "Box.h"
 #include "Unit.h"
-#include "../third_party/AStar.h"
 
 Board::Board(Scene *scene, int rows, int columns, float cellSize)
     : GameObject(scene, nullptr, Vector2D<int>(0, 0), Vector2D<int>(0, 0)),
@@ -97,6 +97,11 @@ bool Board::isInRange(Box *from, Box *to, int range) {
   return range >= totalDistance;
 }
 
+bool Board::isInMoveRange(Box *from, Box *to, int range) {
+  std::list<Vector2D<int>> path = findPath(from->getIndex(), to->getIndex());
+  return range >= path.size() - 1;
+}
+
 Matrix<ObjectType> *Board::getObjectTypesInRange(Box *box, int range) {
   // Reset the cells matrix
   if (objectTypeMatrix_ != nullptr) {
@@ -149,7 +154,9 @@ void Board::highlightCellsInRange(Box *box, int range) {
   for (int x = 0; x < columns_; x++) {
     for (int y = 0; y < rows_; y++) {
       if (objectTypeMatrix_->getElement(x, y) == ObjectType::EMPTY) {
-        getBoxAt(x, y)->setCurrentTexture(TextureInd::MOVABLE);
+        if (isInMoveRange(box, getBoxAt(x, y), range)) {
+          getBoxAt(x, y)->setCurrentTexture(TextureInd::MOVABLE);
+        }
       }
     }
   }
@@ -175,34 +182,35 @@ void Board::resetCellsToBase() {
   }
 }
 
-std::list<Vector2D<int>> Board::findPath(Vector2D<int> start, Vector2D<int> end) {
-	// Create path generator
-	AStar::Generator generator;
-	generator.setWorldSize({ columns_, rows_ });
-	generator.setHeuristic(AStar::Heuristic::euclidean); // manhattan, euclidean or octagonal
-	generator.setDiagonalMovement(false);
+std::list<Vector2D<int>> Board::findPath(Vector2D<int> start,
+                                         Vector2D<int> end) {
+  // Create path generator
+  AStar::Generator generator;
+  generator.setWorldSize({columns_, rows_});
+  generator.setHeuristic(
+      AStar::Heuristic::euclidean);  // manhattan, euclidean or octagonal
+  generator.setDiagonalMovement(false);
 
-	// Load board obstacles
-	for (int x = 0; x < columns_; x++) {
-		for (int y = 0; y < rows_; y++) {
-			if (getBoxAt(x, y)->getContent() != nullptr) {
-				generator.addCollision({ x, y });
-			}
-		}
-	}
+  // Load board obstacles
+  for (int x = 0; x < columns_; x++) {
+    for (int y = 0; y < rows_; y++) {
+      if (getBoxAt(x, y)->getContent() != nullptr) {
+        generator.addCollision({x, y});
+      }
+    }
+  }
 
-	// Remove itself as an obstacle
-	generator.removeCollision({ start.getX(), start.getY() });
+  // Remove itself as an obstacle
+  generator.removeCollision({start.getX(), start.getY()});
 
-	// Find path
-	std::list<Vector2D<int>> pathList;
-	auto path = generator.findPath({ start.getX(), start.getY() }, { end.getX(), end.getY() });
+  // Find path
+  std::list<Vector2D<int>> pathList;
+  auto path = generator.findPath({start.getX(), start.getY()},
+                                 {end.getX(), end.getY()});
 
-	std::cout << "Generate path ... \n";
-	for (auto& coordinate : path) {
-		pathList.push_back({ coordinate.x, coordinate.y });
-		std::cout << coordinate.x << " " << coordinate.y << "\n";
-	}
+  for (auto &coordinate : path) {
+    pathList.push_back({coordinate.x, coordinate.y});
+  }
 
-	return pathList;
+  return pathList;
 }

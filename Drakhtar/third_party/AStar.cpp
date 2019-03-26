@@ -1,6 +1,6 @@
 // Copyright 2018 the daancode/a-star authors. All rights reserved. MIT license. (https://github.com/daancode/a-star)
 
-#include "AStar.hpp"
+#include "AStar.h"
 #include <algorithm>
 
 using namespace std::placeholders;
