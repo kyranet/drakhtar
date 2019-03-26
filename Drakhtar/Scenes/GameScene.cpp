@@ -50,7 +50,7 @@ void GameScene::preload() {
   auto dialog = new DialogScene(this, "dialog1_start", "DialogFont");
   auto pauseButton =
       new Button(this, TextureManager::get("Button-Pause"),
-                 Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 24, WIN_HEIGHT / 18), Vector2D<int>(WIN_WIDTH / 16, WIN_HEIGHT / 12), buttonPause);
+                 Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 24, WIN_HEIGHT / 18), Vector2D<int>(WIN_WIDTH / 21.6, WIN_HEIGHT / 14.4), buttonPause);
 
   addGameObject(turnBar);
   addGameObject(dialog);

@@ -23,13 +23,13 @@ void exitGame() {
 Pause::Pause(Scene *scene) : GameObject(scene, nullptr) {
   auto panel = new GameObject(scene_, TextureManager::get("Pause-Panel"),
                               Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
-                              Vector2D<int>(400, 500));
+                              Vector2D<int>(WIN_WIDTH/4.68, WIN_HEIGHT/2.25));
   auto restart = new Button(scene_, TextureManager::get("Button-Restart"),
-                            Vector2D<int>(WIN_WIDTH / 2, 250),
-                            Vector2D<int>(225, 100), restartGame);
+                            Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT/2 - WIN_HEIGHT/18),
+                            Vector2D<int>(WIN_WIDTH/8.33, WIN_HEIGHT/11.25), restartGame);
   auto exit = new Button(scene_, TextureManager::get("Button-Exit"),
-                         Vector2D<int>(WIN_WIDTH / 2, 350),
-                         Vector2D<int>(225, 100), exitGame);
+                         Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT/2 + WIN_HEIGHT/18),
+                         Vector2D<int>(WIN_WIDTH / 8.33, WIN_HEIGHT / 11.25), exitGame);
 
   addChild(panel);
   addChild(restart);
