@@ -4,12 +4,11 @@
 #include "../GameObjects/GameObject.h"
 
 class EventListener {
- private:
   GameObject *gameObject_;
 
  public:
   explicit EventListener(GameObject *gameObject);
-  virtual ~EventListener();
+  virtual ~EventListener() = default;
   virtual void run(SDL_Event event) = 0;
   GameObject *getGameObject() const;
 };

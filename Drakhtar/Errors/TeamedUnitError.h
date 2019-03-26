@@ -2,10 +2,13 @@
 
 #pragma once
 #include "DrakhtarError.h"
-#include <SDL.h>
 
-class TeamedUnitError : public DrakhtarError
-{
+class TeamedUnitError final : public DrakhtarError {
  public:
-    explicit TeamedUnitError(const string &m) : DrakhtarError(m) {}
+  /**
+   * \brief Create a Teamed Unit Error instance.
+   * \param message The error message description.
+   */
+  explicit TeamedUnitError(const std::string &message)
+      : DrakhtarError(message) {}
 };

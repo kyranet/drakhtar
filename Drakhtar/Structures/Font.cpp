@@ -5,7 +5,7 @@
 
 Font::Font() : font_(nullptr) {}
 
-Font::Font(string filename, int size) { load(filename, size); }
+Font::Font(std::string filename, int size) { load(filename, size); }
 
 Font::~Font() { close(); }
 
@@ -16,17 +16,17 @@ void Font::close() {
   }
 }
 
-Font* Font::load(string filename, int size) {
+Font* Font::load(std::string filename, int size) {
   font_ = TTF_OpenFont(filename.c_str(), size);
   if (font_ == nullptr) {
-    string message =
+      std::string message =
         "Error loading font from " + filename + "\nReason: " + TTF_GetError();
     throw new SDLError(message);
   }
   return this;
 }
 
-SDL_Surface* Font::renderText(string text, SDL_Color color,
+SDL_Surface* Font::renderText(std::string text, SDL_Color color,
                               int lineJumpLimit) const {
   if (font_ == nullptr) return nullptr;
   // return TTF_RenderText_Blended(font_, text.c_str(), color);

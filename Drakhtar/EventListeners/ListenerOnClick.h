@@ -5,14 +5,46 @@
 #include "EventListener.h"
 #include "SDL.h"
 
+/**
+ * \brief The click listener for game objects. This is an abstract class and
+ * must be extended.
+ */
 class ListenerOnClick : public EventListener {
- private:
+  /**
+   * \brief Whether or not the player is clicking the game object for this
+   * instance.
+   */
   bool clicked_ = false;
 
  public:
-  ListenerOnClick(GameObject *gameObject) : EventListener(gameObject) {}
-  virtual void run(SDL_Event event);
-  virtual void onClickStart(SDL_Point point) {}
-  virtual void onClickStay(SDL_Point point) {}
-  virtual void onClickStop(SDL_Point point) {}
+  /**
+   * \brief Creates a ListenerOnClick event listener.
+   * \param gameObject The GameObject that listens to this instance.
+   */
+  explicit ListenerOnClick(GameObject *gameObject)
+      : EventListener(gameObject) {}
+
+  /**
+   * \brief Runs this event listener with any event and filters them.
+   * \param event The event received from SDL's poll.
+   */
+  void run(SDL_Event event) override;
+
+  /**
+   * \brief Runs when this listener has detected a click start to this game
+   * object.
+   */
+  virtual void onClickStart(const SDL_Point) {}
+
+  /**
+   * \brief Runs when this listener has detected a click hold to this game
+   * object.
+   */
+  virtual void onClickStay(const SDL_Point) {}
+
+  /**
+   * \brief Runs when this listener has detected a click stop from this game
+   * object.
+   */
+  virtual void onClickStop(const SDL_Point) {}
 };
