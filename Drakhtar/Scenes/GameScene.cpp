@@ -23,7 +23,7 @@ void GameScene::preload() {
       new GameObject(this, TextureManager::get("Maps-FirstBattle"),
                      Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
                      Vector2D<int>(WIN_WIDTH, WIN_HEIGHT));
-  auto board = new Board(this, 8, 12, (float)(WIN_HEIGHT / 12));
+  auto board = new Board(this, 8, 12, (float)(WIN_HEIGHT /10));
   addGameObject(background);
   addGameObject(board);
 
