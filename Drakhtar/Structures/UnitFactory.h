@@ -13,7 +13,7 @@ class UnitFactory {
   Scene *scene_;
 
  public:
-  UnitFactory(Scene *scene);
+  explicit UnitFactory(Scene *scene);
   ~UnitFactory();
   Unit *newSoldier(Team *team, Box *box, int size);
   Unit *newArcher(Team *team, Box *box, int size);

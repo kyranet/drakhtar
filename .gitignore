@@ -10,3 +10,7 @@
 build/
 deps/
 bin/
+
+Drakhtar/Debug/Drakhtar\.log
+
+Drakhtar/Debug/DrakhtarDebug\.Build\.CppClean\.log

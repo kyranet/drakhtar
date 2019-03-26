@@ -1,9 +1,0 @@
-﻿  Battalion.cpp
-  Unit.cpp
-c:\users\usuario\documents\drakhtar\drakhtar\unit.cpp(15): warning C4244: 'argumento': conversión de 'double' a 'T'; posible pérdida de datos
-          with
-          [
-              T=int
-          ]
-  Generando código...
-  Drakhtar.vcxproj -> C:\Users\usuario\Documents\Drakhtar\bin\DrakhtarDebug.exe

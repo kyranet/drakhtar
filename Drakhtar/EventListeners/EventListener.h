@@ -8,7 +8,7 @@ class EventListener {
   GameObject *gameObject_;
 
  public:
-  EventListener(GameObject *gameObject);
+  explicit EventListener(GameObject *gameObject);
   virtual ~EventListener();
   virtual void run(SDL_Event event) = 0;
   GameObject *getGameObject() const;

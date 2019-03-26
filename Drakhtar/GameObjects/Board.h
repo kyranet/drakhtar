@@ -30,8 +30,8 @@ class Board : public GameObject {
   virtual void render() const;
   virtual void handleEvents(SDL_Event event);
 
-  int getRows() { return rows_; };
-  int getCols() { return columns_; };
+  int getRows() { return rows_; }
+  int getCols() { return columns_; }
 
   // Returns cell in board index (x, y)
   Box *getBoxAt(int x, int y);

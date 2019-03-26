@@ -1,3 +1,6 @@
+// Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
+
+#pragma once
 #include "Scene.h"
 #include "../GameObjects/GameObject.h"
 #include "../Managers/TextureManager.h"

@@ -1,3 +1,5 @@
+// Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
+
 #include "GameScene.h"
 #include "../EventListeners/BoardController.h"
 #include "../GameObjects/Button.h"
@@ -61,7 +63,6 @@ void GameScene::preload() {
 }
 
 void GameScene::pause() {
-  if (!isPaused())
-    addGameObject(new Pause(this));
+  if (!isPaused()) addGameObject(new Pause(this));
   Scene::pause();
 }
