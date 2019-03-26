@@ -3,8 +3,8 @@
     Following tool is licensed under the terms and conditions of the ISC
    license. For more information visit https://opensource.org/licenses/ISC.
 */
-#ifndef __ASTAR_HPP_8F637DB91972F6C878D41D63F7E7214F__
-#define __ASTAR_HPP_8F637DB91972F6C878D41D63F7E7214F__
+#ifndef DRAKHTAR_THIRD_PARTY_ASTAR_H_
+#define DRAKHTAR_THIRD_PARTY_ASTAR_H_
 
 #include <functional>
 #include <set>
@@ -26,7 +26,7 @@ struct Node {
   Vec2i coordinates;
   Node* parent;
 
-  Node(Vec2i coord_, Node* parent_ = nullptr);
+  explicit Node(Vec2i coord_, Node* parent_ = nullptr);
   uint getScore();
 };
 
@@ -64,4 +64,4 @@ class Heuristic {
 };
 }  // namespace AStar
 
-#endif  // __ASTAR_HPP_8F637DB91972F6C878D41D63F7E7214F__
+#endif  // DRAKHTAR_THIRD_PARTY_ASTAR_H_

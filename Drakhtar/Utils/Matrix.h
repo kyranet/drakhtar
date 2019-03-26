@@ -15,14 +15,14 @@ class Matrix {
     for (int x = 0; x < cols; x++) {
       matrix_[x] = new T[rows];
     }
-  };
+  }
 
   ~Matrix<T>() {
     for (int x = 0; x < cols_; x++) {
       delete matrix_[x];
     }
     delete[] matrix_;
-  };
+  }
 
   int cols() const { return cols_; }
   int rows() const { return rows_; }

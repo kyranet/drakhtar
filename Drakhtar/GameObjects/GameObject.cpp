@@ -46,7 +46,7 @@ void GameObject::handleEvents(SDL_Event event) {
 GameObject *GameObject::addEventListener(EventListener *eventListener) {
   eventListeners_.push_back(eventListener);
   return this;
-};
+}
 
 SDL_Rect GameObject::getRect() const {
   return {position_.getX() - size_.getX() / 2,

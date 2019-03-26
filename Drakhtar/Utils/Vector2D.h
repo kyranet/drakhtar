@@ -7,6 +7,7 @@ template <typename T>
 class Vector2D {
   T x_;  // first coordinate
   T y_;  // second coordinate
+
  public:
   Vector2D<T>() : x_(), y_() {}
   Vector2D<T>(const Vector2D<T> &v) : x_(v.getX()), y_(v.getY()) {}
@@ -20,7 +21,7 @@ class Vector2D {
   void set(T x, T y) {
     x_ = x;
     y_ = y;
-  };
+  }
   T magnitude() const;
   Vector2D<T> rotate(double degrees);
   T angle(const Vector2D<T> &v) const;
