@@ -32,7 +32,7 @@ TurnBar::TurnBar(Scene *scene, std::list<Unit *> allyList,
 	  if(i == 0)
 		  visibleUnits[i] = new GameObject(
 			  scene_, (*listIt)->getTexture(),
-			  Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 1.85 + (i + 1) * WIN_HEIGHT / 18.18, WIN_HEIGHT - WIN_HEIGHT / 12.5),
+			  Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 1.92 + (i + 1) * WIN_HEIGHT / 18.18, WIN_HEIGHT - WIN_HEIGHT / 12.5),
 			  Vector2D<int>(WIN_HEIGHT / 5, WIN_HEIGHT / 5));
 	  else
 		visibleUnits[i] = new GameObject(
