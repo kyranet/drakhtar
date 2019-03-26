@@ -3,6 +3,7 @@
 #pragma once
 #include "../Utils/Matrix.h"
 #include "GameObject.h"
+#include <list>
 
 class Box;
 
@@ -29,6 +30,9 @@ class Board : public GameObject {
   virtual void render() const;
   virtual void handleEvents(SDL_Event event);
 
+  int getRows() { return rows_; };
+  int getCols() { return columns_; };
+
   // Returns cell in board index (x, y)
   Box *getBoxAt(int x, int y);
 
@@ -53,4 +57,6 @@ class Board : public GameObject {
 
   // Resets ALL cells to their base texture
   void resetCellsToBase();
+
+  std::list<Vector2D<int>> findPath(Vector2D<int> start, Vector2D<int> end);
 };

@@ -5,6 +5,7 @@
 #include "../Utils/Constants.h"
 #include "Box.h"
 #include "Unit.h"
+#include "../third_party/AStar.h"
 
 Board::Board(Scene *scene, int rows, int columns, float cellSize)
     : GameObject(scene, nullptr, Vector2D<int>(0, 0), Vector2D<int>(0, 0)),
@@ -172,4 +173,36 @@ void Board::resetCellsToBase() {
       board_[x][y]->setCurrentTexture(TextureInd::BASE);
     }
   }
+}
+
+std::list<Vector2D<int>> Board::findPath(Vector2D<int> start, Vector2D<int> end) {
+	// Create path generator
+	AStar::Generator generator;
+	generator.setWorldSize({ columns_, rows_ });
+	generator.setHeuristic(AStar::Heuristic::euclidean); // manhattan, euclidean or octagonal
+	generator.setDiagonalMovement(false);
+
+	// Load board obstacles
+	for (int x = 0; x < columns_; x++) {
+		for (int y = 0; y < rows_; y++) {
+			if (getBoxAt(x, y)->getContent() != nullptr) {
+				generator.addCollision({ x, y });
+			}
+		}
+	}
+
+	// Remove itself as an obstacle
+	generator.removeCollision({ start.getX(), start.getY() });
+
+	// Find path
+	std::list<Vector2D<int>> pathList;
+	auto path = generator.findPath({ start.getX(), start.getY() }, { end.getX(), end.getY() });
+
+	std::cout << "Generate path ... \n";
+	for (auto& coordinate : path) {
+		pathList.push_back({ coordinate.x, coordinate.y });
+		std::cout << coordinate.x << " " << coordinate.y << "\n";
+	}
+
+	return pathList;
 }
