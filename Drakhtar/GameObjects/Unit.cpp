@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Unit.h"
+#include <algorithm>
 #include "../Managers/FontManager.h"
 #include "../Structures/Team.h"
 #include "../Utils/Vector2D.h"
@@ -62,11 +63,10 @@ void Unit::moveToBox(Box *newBox) {
 }
 
 int Unit::loseHealth(int enemyAttack) {
-  int health = enemyAttack - this->getDefense();
-  if (health < 0) health = 1;
-  health_ -= health;
+  enemyAttack = std::max(enemyAttack - this->getDefense(), 1);
+  health_ = std::max(health_ - enemyAttack, 0);
   healthText_->setText(healthToString());
-  return health;
+  return enemyAttack;
 }
 
 void Unit::render() const {
