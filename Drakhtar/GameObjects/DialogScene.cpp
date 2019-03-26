@@ -14,12 +14,15 @@ DialogScene::DialogScene(Scene *scene, string filename, string fontFile)
   auto area = getRect();
   auto dialogueBackground = new GameObject(
       scene_, TextureManager::get("UI-dialogueBackground"),
-      Vector2D<int>(area.x + WIN_WIDTH/2, WIN_HEIGHT - area.h * WIN_HEIGHT/6),
-      Vector2D<int>(area.w * WIN_WIDTH/1.4, area.h * WIN_HEIGHT/5));
+      Vector2D<int>(area.x + WIN_WIDTH / 2,
+                    WIN_HEIGHT - area.h * WIN_HEIGHT / 6),
+      Vector2D<int>(area.w * WIN_WIDTH / 1.4, area.h * WIN_HEIGHT / 5));
   auto nameBackground = new GameObject(
       scene_, TextureManager::get("UI-dialogueBackground"),
-      Vector2D<int>(dialogueBackground->getRect().x + dialogueBackground->getRect().w - WIN_WIDTH/12, dialogueBackground->getRect().y - WIN_WIDTH/70), // TODO(DANI AND MIGUEL)problems here, it moves every object of the dialog UI
-      Vector2D<int>(area.w * WIN_WIDTH/8, area.h * WIN_HEIGHT/ 20));
+      Vector2D<int>(dialogueBackground->getRect().x +
+                        dialogueBackground->getRect().w - WIN_WIDTH / 12,
+                    dialogueBackground->getRect().y - WIN_WIDTH / 70),
+      Vector2D<int>(area.w * WIN_WIDTH / 8, area.h * WIN_HEIGHT / 20));
 
   addChild(nameBackground);
   addChild(dialogueBackground);
@@ -27,12 +30,14 @@ DialogScene::DialogScene(Scene *scene, string filename, string fontFile)
   dialogueBackground->addEventListener(
       new DialogSceneOnClick(dialogueBackground));
 
-  lineJumpLimit_ = dialogueBackground->getRect().x + WIN_WIDTH /2;
-  readFromFile("../dialog/" + filename + ".txt", FontManager::get(fontFile), dialogueBackground->getRect());
+  lineJumpLimit_ = dialogueBackground->getRect().x + WIN_WIDTH / 2;
+  readFromFile("../dialog/" + filename + ".txt", FontManager::get(fontFile),
+               dialogueBackground->getRect());
 }
 
 DialogScene::~DialogScene() {
-  for (auto dialog : dialogues) delete dialog;
+  for (auto dialog : dialogues)
+    delete dialog;
 }
 
 void DialogScene::render() const {
@@ -51,14 +56,14 @@ void DialogScene::readFromFile(string filename, Font *textFont, SDL_Rect rect) {
   ifstream file;
   file.open(filename);
 
-  if (!file.is_open()) throw new DrakhtarError("Could not find file");
+  if (!file.is_open())
+    throw new DrakhtarError("Could not find file");
 
   size_t lines, i;
   file >> lines;
   dialogues.resize(lines);
   for (size_t i = 0; i < lines && !file.eof(); i++) {
-    dialogues[i] =
-        new Dialog(scene_, file, textFont, rect, lineJumpLimit_);
+    dialogues[i] = new Dialog(scene_, file, textFont, rect, lineJumpLimit_);
   }
 
   file.close();

@@ -23,7 +23,7 @@ void GameScene::preload() {
       new GameObject(this, TextureManager::get("Maps-FirstBattle"),
                      Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
                      Vector2D<int>(WIN_WIDTH, WIN_HEIGHT));
-  auto board = new Board(this, 8, 12, (float)(WIN_HEIGHT /10));
+  auto board = new Board(this, 8, 12, (float)(WIN_HEIGHT / 10));
   addGameObject(background);
   addGameObject(board);
 
@@ -48,9 +48,10 @@ void GameScene::preload() {
   // Add the GUI features now
   auto turnBar = new TurnBar(this, team1->getUnitList(), team2->getUnitList());
   auto dialog = new DialogScene(this, "dialog1_start", "DialogFont");
-  auto pauseButton =
-      new Button(this, TextureManager::get("Button-Pause"),
-                 Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 24, WIN_HEIGHT / 18), Vector2D<int>(WIN_WIDTH / 21.6, WIN_HEIGHT / 14.4), buttonPause);
+  auto pauseButton = new Button(
+      this, TextureManager::get("Button-Pause"),
+      Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 24, WIN_HEIGHT / 18),
+      Vector2D<int>(WIN_WIDTH / 21.6, WIN_HEIGHT / 14.4), buttonPause);
 
   addGameObject(turnBar);
   addGameObject(dialog);
@@ -60,6 +61,7 @@ void GameScene::preload() {
 }
 
 void GameScene::pause() {
-  if (!isPaused()) addGameObject(new Pause(this));
+  if (!isPaused())
+    addGameObject(new Pause(this));
   Scene::pause();
 }
