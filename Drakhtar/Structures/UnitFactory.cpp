@@ -23,9 +23,10 @@ Unit *UnitFactory::newSoldier(Team *team, Box *box, int size) {
   string textureName = team->getColor() == Color::BLUE ? "Units-BlueSoldier"
                                                        : "Units-RedSoldier";
 
-  auto unit = new Battalion(scene_, TextureManager::get(textureName), box,
-                            soldierAttack, soldierDefense, soldierHealth, soldierSpeed,
-                            soldierAttackRange, soldierMoveRange, size, soldierPrize);
+  auto unit =
+      new Battalion(scene_, TextureManager::get(textureName), box,
+                    soldierAttack, soldierDefense, soldierHealth, soldierSpeed,
+                    soldierAttackRange, soldierMoveRange, size, soldierPrize);
   team->addUnit(unit);
   return unit;
 }
@@ -42,9 +43,10 @@ Unit *UnitFactory::newArcher(Team *team, Box *box, int size) {
   string textureName =
       team->getColor() == Color::BLUE ? "Units-BlueArcher" : "Units-RedArcher";
 
-  auto unit = new Battalion(scene_, TextureManager::get(textureName), box,
-                            archerAttack, archerDefense, archerHealth, archerSpeed,
-                            archerAttackRange, archerMoveRange, size, archerPrize);
+  auto unit =
+      new Battalion(scene_, TextureManager::get(textureName), box, archerAttack,
+                    archerDefense, archerHealth, archerSpeed, archerAttackRange,
+                    archerMoveRange, size, archerPrize);
   team->addUnit(unit);
   return unit;
 }
@@ -61,9 +63,10 @@ Unit *UnitFactory::newKnight(Team *team, Box *box, int size) {
   string textureName =
       team->getColor() == Color::BLUE ? "Units-BlueKnight" : "Units-RedKnight";
 
-  auto unit = new Battalion(scene_, TextureManager::get(textureName), box,
-                            knightAttack, knightDefense, knightHealth, knightSpeed,
-                            knightAttackRange, knightMoveRange, size, knightPrize);
+  auto unit =
+      new Battalion(scene_, TextureManager::get(textureName), box, knightAttack,
+                    knightDefense, knightHealth, knightSpeed, knightAttackRange,
+                    knightMoveRange, size, knightPrize);
   team->addUnit(unit);
   return unit;
 }
@@ -80,9 +83,10 @@ Unit *UnitFactory::newWizard(Team *team, Box *box, int size) {
   string textureName =
       team->getColor() == Color::BLUE ? "Units-BlueMage" : "Units-RedMage";
 
-  auto unit = new Battalion(scene_, TextureManager::get(textureName), box,
-                            wizardAttack, wizardDefense, wizardHealth, wizardSpeed,
-                            wizardAttackRange, wizardMoveRange, size, wizardPrize);
+  auto unit =
+      new Battalion(scene_, TextureManager::get(textureName), box, wizardAttack,
+                    wizardDefense, wizardHealth, wizardSpeed, wizardAttackRange,
+                    wizardMoveRange, size, wizardPrize);
   team->addUnit(unit);
   return unit;
 }
@@ -99,9 +103,10 @@ Unit *UnitFactory::newMonster(Team *team, Box *box, int size) {
   string textureName = team->getColor() == Color::BLUE ? "Units-BlueMonster"
                                                        : "Units-RedMonster";
 
-  auto unit = new Battalion(scene_, TextureManager::get(textureName), box,
-                            monsterAttack, monsterDefense, monsterHealth, monsterSpeed,
-                            monsterAttackRange, monsterMoveRange, size, monsterPrize);
+  auto unit =
+      new Battalion(scene_, TextureManager::get(textureName), box,
+                    monsterAttack, monsterDefense, monsterHealth, monsterSpeed,
+                    monsterAttackRange, monsterMoveRange, size, monsterPrize);
   team->addUnit(unit);
   return unit;
 }

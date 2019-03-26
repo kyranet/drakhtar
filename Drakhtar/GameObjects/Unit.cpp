@@ -7,45 +7,38 @@
 #include "Box.h"
 #include "Text.h"
 
-
 Unit::Unit(Scene *scene, Texture *texture, Box *box, int attack, int defense,
-    int health, int speed, int attackRange, int moveRange, int prize)
+           int health, int speed, int attackRange, int moveRange, int prize)
     : GameObject(scene, texture,
                  Vector2D<int>(box->getRect().x + box->getRect().w / 2,
                                box->getRect().y + box->getRect().h / 2),
                  Vector2D<int>(static_cast<int>(box->getRect().w * 2),
                                static_cast<int>(box->getRect().h * 2))),
-    attack_(attack),
-    defense_(defense),
-    health_(health),
-    maxHealth_(health),
-    speed_(speed),
-    attackRange_(attackRange),
-    moveRange_(moveRange),
-    box_(box),
-    prize_(prize) {
-    
-    box->setContent(this);
-    SDL_Color textColor = { 255, 255, 255, 255 };
+      attack_(attack),
+      defense_(defense),
+      health_(health),
+      maxHealth_(health),
+      speed_(speed),
+      attackRange_(attackRange),
+      moveRange_(moveRange),
+      box_(box),
+      prize_(prize) {
+  box->setContent(this);
+  SDL_Color textColor = {255, 255, 255, 255};
 
-    auto rect = box_->getRect();
+  auto rect = box_->getRect();
 
-    healthText_ = new Text(scene,
-        FontManager::get("Retron2000"),
-        { rect.x + rect.w / 2 , rect.y + rect.h / 6 },
-        textColor,
-        healthToString(),
-        rect.w * 2);
+  healthText_ = new Text(scene, FontManager::get("Retron2000"),
+                         {rect.x + rect.w / 2, rect.y + rect.h / 6}, textColor,
+                         healthToString(), rect.w * 2);
 }
 
-Unit::~Unit()
-{
-    if (healthText_ != nullptr) {
-        delete healthText_;
-        healthText_ = nullptr;
-    }
+Unit::~Unit() {
+  if (healthText_ != nullptr) {
+    delete healthText_;
+    healthText_ = nullptr;
+  }
 }
-
 
 void Unit::setMoving(bool moving) { moving_ = moving; }
 
@@ -63,20 +56,17 @@ void Unit::moveToBox(Box *newBox) {
   box_ = newBox;
   newBox->setContent(this);
   auto rect = box_->getRect();
-  healthText_->setPosition( { rect.x + rect.w / 2,
-      rect.y + rect.h / 6 } );
+  healthText_->setPosition({rect.x + rect.w / 2, rect.y + rect.h / 6});
   setMoved(true);
   setMoving(false);
-
 }
 
 int Unit::loseHealth(int attack) {
-    int health = attack - this->getDefense();
-    if (health < 0)
-        health = 1;
-    health_ -= health;
-    healthText_->setText(healthToString());
-    return health;
+  int health = attack - this->getDefense();
+  if (health < 0) health = 1;
+  health_ -= health;
+  healthText_->setText(healthToString());
+  return health;
 }
 
 void Unit::render() const {
@@ -84,7 +74,6 @@ void Unit::render() const {
   healthText_->render();
 }
 
-string Unit::healthToString() const
-{
-    return std::to_string(getHealth()) + " HP";
+string Unit::healthToString() const {
+  return std::to_string(getHealth()) + " HP";
 }
