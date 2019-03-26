@@ -113,9 +113,9 @@ Vector2D<T>::Vector2D(T x, T y) : x_(x), y_(y) {}
 
 template <typename T>
 Vector2D<T>::~Vector2D() {
-  if (std::is_destructible<T>()) {
-    delete x_;
-    delete y_;
+  if (std::is_pointer<T>()) {
+    delete &x_;
+    delete &y_;
   }
 }
 
@@ -223,8 +223,8 @@ Vector2D<T> Vector2D<T>::operator*(T d) const {
 }
 
 template <typename T>
-double Vector2D<T>::operator*(const Vector2D<T> &d) const {
-  return x_ * d.getX() + y_ * d.getY();
+Vector2D<T> Vector2D<T>::operator*(const Vector2D<T> &d) const {
+  return Vector2D(x_ * d.getX(), y_ * d.getY());
 }
 
 template <typename T>

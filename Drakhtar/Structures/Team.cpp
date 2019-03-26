@@ -64,7 +64,7 @@ Color Team::getColor()
     return color_;
 }
 
-list<Unit *>::iterator Team::findInsertPosition(Unit *unit)
+std::list<Unit *>::iterator Team::findInsertPosition(Unit *unit)
 {
     int i = 0;
     auto it = units_.begin();
