@@ -1,9 +1,9 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
+#include <list>
 #include "../Utils/Matrix.h"
 #include "GameObject.h"
-#include <list>
 
 class Box;
 
@@ -42,7 +42,8 @@ class Board : public GameObject {
   // Checks if two cells are within a certain range of each other
   bool isInRange(Box *from, Box *to, int range);
 
-  // Checks if two cells are within a certain range of each other considering pathfinding
+  // Checks if two cells are within a certain range of each other considering
+  // pathfinding
   bool isInMoveRange(Box *from, Box *to, int range);
 
   // Returns an integer matrix of the contents of cells in range of a specific

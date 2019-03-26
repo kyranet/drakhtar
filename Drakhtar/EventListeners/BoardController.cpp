@@ -45,8 +45,8 @@ void BoardController::onClickStop(SDL_Point point) {
 void BoardController::onClickMove(Box *boxClicked) {
   // Checks if the box clicked is within movement range
   if (board_->isInMoveRange(activeUnit_->getBox(), boxClicked,
-                        activeUnit_->getMoveRange())) {
-	board_->findPath(activeUnit_->getBox()->getIndex(), boxClicked->getIndex());
+                            activeUnit_->getMoveRange())) {
+    board_->findPath(activeUnit_->getBox()->getIndex(), boxClicked->getIndex());
     activeUnit_->moveToBox(boxClicked);
     hasMoved = true;
 
