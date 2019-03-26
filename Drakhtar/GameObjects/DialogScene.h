@@ -16,7 +16,7 @@ class DialogScene : public GameObject {
   std::vector<Dialog*> dialogues;
   int dialogueIndex = 0;
   int lineJumpLimit_ = 0;
-  void readFromFile(std::string filename, Font* textFont);
+  void readFromFile(std::string filename, Font* textFont, SDL_Rect rect);
 
  public:
   DialogScene(Scene* scene, std::string filename, std::string fontfile);

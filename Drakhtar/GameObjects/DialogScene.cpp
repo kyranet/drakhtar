@@ -18,7 +18,7 @@ DialogScene::DialogScene(Scene *scene, string filename, string fontFile)
       Vector2D<int>(area.w * WIN_WIDTH/1.4, area.h * WIN_HEIGHT/5));
   auto dialogueBackground = new GameObject(
       scene_, TextureManager::get("UI-dialogueBackground"),
-      Vector2D<int>(area.x + area.w - WIN_WIDTH/12, area.y - WIN_HEIGHT /70),
+      Vector2D<int>(area.x + area.w - WIN_WIDTH/12, area.y - WIN_HEIGHT /70), // TODO(DANI AND MIGUEL)problems here, it moves every object of the dialog UI
       Vector2D<int>(area.w * WIN_WIDTH/8, area.h * WIN_HEIGHT/ 20));
 
   addChild(nameBackground);
@@ -27,8 +27,8 @@ DialogScene::DialogScene(Scene *scene, string filename, string fontFile)
   dialogueBackground->addEventListener(
       new DialogSceneOnClick(dialogueBackground));
 
-  lineJumpLimit_ = dialogueBackground->getRect().x + WIN_WIDTH / 2;
-  readFromFile("../dialog/" + filename + ".txt", FontManager::get(fontFile));
+  lineJumpLimit_ = dialogueBackground->getRect().x + WIN_WIDTH /1.5;
+  readFromFile("../dialog/" + filename + ".txt", FontManager::get(fontFile), dialogueBackground->getRect());
 }
 
 DialogScene::~DialogScene() {
@@ -47,7 +47,7 @@ void DialogScene::next() {
     destroy();
 }
 
-void DialogScene::readFromFile(string filename, Font *textFont) {
+void DialogScene::readFromFile(string filename, Font *textFont, SDL_Rect rect) {
   ifstream file;
   file.open(filename);
 
@@ -58,7 +58,7 @@ void DialogScene::readFromFile(string filename, Font *textFont) {
   dialogues.resize(lines);
   for (size_t i = 0; i < lines && !file.eof(); i++) {
     dialogues[i] =
-        new Dialog(scene_, file, textFont, getRect(), lineJumpLimit_);
+        new Dialog(scene_, file, textFont, rect, lineJumpLimit_);
   }
 
   file.close();
