@@ -15,6 +15,8 @@ class TurnBar : public GameObject {
   std::list<Unit *> unitTurnBar;
   int visibleTurnBarSize = 9;
   std::vector<GameObject *> visibleUnits;
+  GameObject* selectedUnitSprite = nullptr;
+
 
  public:
   // constructor intercalates units from each team list into the turn bar (ally
