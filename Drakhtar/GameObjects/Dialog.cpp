@@ -13,21 +13,21 @@ Dialog::Dialog(Scene *scene, std::ifstream &file, Font *textfont,
 
   auto characterPortraitSprite = new GameObject(
       scene, TextureManager::get(spriteText_),
-      Vector2D<int>(dialogueArea_.x + dialogueArea_.w / 8,
-                    dialogueArea_.y - dialogueArea_.h / 3),
-      Vector2D<int>(dialogueArea_.h / 1.5, dialogueArea_.h / 1.5));
+      Vector2D<int>(dialogueArea_.x + dialogueArea_.w / 5.5,
+                    dialogueArea_.y - dialogueArea_.h / 15),
+      Vector2D<int>(dialogueArea_.h / 1.7, dialogueArea_.h / 1.7));
 
   SDL_Color textColor = {0, 0, 0, 1};
 
   auto characterNameSprite =
       new Text(scene_, textfont,
-               Vector2D<int>(dialogueArea_.x + dialogueArea_.w / 1.13,
-                             dialogueArea_.y - dialogueArea_.h / 10),
+               Vector2D<int>(dialogueArea_.x + dialogueArea_.w / 1.15,
+                             dialogueArea_.y + dialogueArea_.h / 4.5),
                textColor, characterName_, lineJumpLimit);
 
   auto dialogTextSprite =
       new Text(scene_, textfont,
-               Vector2D<int>(dialogueArea_.x + dialogueArea_.w / 2.1,
+               Vector2D<int>(dialogueArea_.x + dialogueArea_.w / 2,
                              dialogueArea_.y + dialogueArea_.h / 2),
                textColor, dialogText_, lineJumpLimit);
 

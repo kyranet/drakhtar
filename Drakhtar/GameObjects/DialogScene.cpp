@@ -12,18 +12,17 @@
 DialogScene::DialogScene(Scene* scene, const std::string& filename,
                          const std::string& fontFile)
     : GameObject(scene, nullptr, Vector2D<int>(0, 0), Vector2D<int>(1, 1)) {
+  
   const auto area = getRect();
   auto dialogueBackground = new GameObject(
       scene_, TextureManager::get("UI-dialogueBackground"),
-      Vector2D<int>(area.x + WIN_WIDTH / 2,
-                    WIN_HEIGHT - area.h * WIN_HEIGHT / 6),
-      Vector2D<int>(area.w * WIN_WIDTH / 1.4, area.h * WIN_HEIGHT / 5));
+      Vector2D<int>(area.x + WIN_WIDTH / 2, WIN_HEIGHT - area.h * WIN_HEIGHT / 6),
+      Vector2D<int>(area.w * WIN_WIDTH / 1.3, area.h * WIN_HEIGHT / 2));
   const auto nameBackground = new GameObject(
       scene_, TextureManager::get("UI-dialogueBackground"),
-      Vector2D<int>(dialogueBackground->getRect().x +
-                        dialogueBackground->getRect().w - WIN_WIDTH / 12,
-                    dialogueBackground->getRect().y - WIN_WIDTH / 70),
-      Vector2D<int>(area.w * WIN_WIDTH / 8, area.h * WIN_HEIGHT / 20));
+      Vector2D<int>(dialogueBackground->getRect().x + dialogueBackground->getRect().w - WIN_WIDTH / 10,
+                    dialogueBackground->getRect().y+80),
+      Vector2D<int>(area.w * WIN_WIDTH / 8, area.h * WIN_HEIGHT / 10));
 
   addChild(nameBackground);
   addChild(dialogueBackground);
