@@ -3,26 +3,21 @@
 #pragma once
 
 #include "SDL.h"
-#include "SDL_mixer.h"
-#include "SDL_ttf.h"
 #include "SceneMachine.h"
-
-using uint = unsigned int;
 
 class Scene;
 class SceneMachine;
 
-class Game {
- private:
-  static Game *instance;
+class Game final {
+  static Game *instance_;
   SDL_Window *window_ = nullptr;
   SDL_Renderer *renderer_ = nullptr;
   SceneMachine *sceneMachine_ = nullptr;
   Game();
 
  public:
-  virtual ~Game();
-  void run();
+  ~Game();
+  void run() const;
   // Get the SDL_Renderer instance.
   static SDL_Renderer *getRenderer();
   // Get the Game instance.

@@ -3,7 +3,6 @@
 #pragma once
 #include <string>
 #include "GameObject.h"
-using namespace std;
 
 class Team;
 class Box;
@@ -11,7 +10,6 @@ class Text;
 class Scene;
 
 class Unit : public GameObject {
- private:
   int attack_;
   int defense_;
   int maxHealth_;
@@ -28,7 +26,7 @@ class Unit : public GameObject {
   Box *box_ = nullptr;
   Text *healthText_ = nullptr;
   int health_;
-  string healthToString() const;
+  std::string healthToString() const;
 
  public:
   Unit(Scene *scene, Texture *texture, Box *box, int attack, int defense,
@@ -52,5 +50,5 @@ class Unit : public GameObject {
   void setTeam(Team *team);
   virtual void moveToBox(Box *box);
   virtual int loseHealth(int enemyAttack);
-  virtual void render() const;
+  void render() const override;
 };

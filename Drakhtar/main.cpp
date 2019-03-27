@@ -15,8 +15,8 @@ int main(int argc, char *argv[]) {
     delete game;
     TextureManager::destroy();
     return 0;
-  } catch (exception e) {
-    cout << e.what();
+  } catch (std::exception e) {
+    std::cout << e.what();
     return -1;
   }
 }

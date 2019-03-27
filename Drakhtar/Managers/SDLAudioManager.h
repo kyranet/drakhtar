@@ -2,6 +2,7 @@
 
 #pragma once
 #include <map>
+#include <string>
 #include "AudioManager.h"
 #include "SDL_mixer.h"
 
@@ -18,17 +19,17 @@ class SDLAudioManager : public AudioManager {
   virtual bool init();
 
   // Sound effects
-  virtual bool loadSound(int tag, string fileName);
+  virtual bool loadSound(int tag, std::string fileName);
   virtual int playChannel(int tag, int loops, int channel);
   virtual int playChannelTimed(int tag, int loops, int channel, int ticks);
   virtual void pauseChannel(int channel);
-  virtual void resumeChanne(int channel);
+  virtual void resumeChannel(int channel);
   virtual void haltChannel(int channel);
   virtual int setChannelVolume(int volume, int channel);
   virtual int channels();
 
   // Music
-  virtual bool loadMusic(int tag, string fileName);
+  virtual bool loadMusic(int tag, std::string fileName);
   virtual void playMusic(int tag, int loops);
   virtual int setMusicVolume(int volume);
   virtual void haltMusic();
@@ -42,6 +43,6 @@ class SDLAudioManager : public AudioManager {
  private:
   bool initialized_;
   int channels_;
-  map<int, Mix_Chunk *> chunks_;
-  map<int, Mix_Music *> music_;
+  std::map<int, Mix_Chunk *> chunks_;
+  std::map<int, Mix_Music *> music_;
 };

@@ -10,7 +10,6 @@ class Unit;
 enum Color { BLUE, RED };
 
 class Team {
- private:
   std::list<Unit *> units_;
   Board *board_ = nullptr;
   std::list<Unit *>::iterator findInsertPosition(Unit *unit);
@@ -19,10 +18,10 @@ class Team {
  public:
   Team(Board *board, Color color);
   virtual ~Team();
-  Board *getBoard() { return board_; }
+  Board *getBoard() const;
   void addUnit(Unit *unit);
   void removeUnit(Unit *unit);
   Unit *pickUnit() const;
-  std::list<Unit *> getUnitList() { return units_; }
-  Color getColor();
+  std::list<Unit *> getUnitList() const;
+  Color getColor() const;
 };

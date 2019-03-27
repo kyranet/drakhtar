@@ -1,7 +1,6 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-#include <functional>
 #include <list>
 
 class GameObject;
@@ -9,7 +8,6 @@ class GameObject;
 using NextTickCallback = void();
 
 class Scene {
- private:
   bool exit_ = false;
   bool loaded_ = false;
   bool paused_ = true;

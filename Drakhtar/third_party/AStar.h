@@ -14,7 +14,7 @@ namespace AStar {
 struct Vec2i {
   int x, y;
 
-  bool operator==(const Vec2i& coordinates_);
+  bool operator==(const Vec2i& coordinates_) const;
 };
 
 using uint = unsigned int;
@@ -23,19 +23,19 @@ using CoordinateList = std::vector<Vec2i>;
 
 struct Node {
   uint G, H;
-  Vec2i coordinates;
+  Vec2i coordinates{};
   Node* parent;
 
   explicit Node(Vec2i coord_, Node* parent_ = nullptr);
-  uint getScore();
+  uint getScore() const;
 };
 
 using NodeSet = std::set<Node*>;
 
 class Generator {
   bool detectCollision(Vec2i coordinates_);
-  Node* findNodeOnList(NodeSet& nodes_, Vec2i coordinates_);
-  void releaseNodes(NodeSet& nodes_);
+  static Node* findNodeOnList(NodeSet& nodes_, Vec2i coordinates_);
+  static void releaseNodes(NodeSet& nodes_);
 
  public:
   Generator();
@@ -50,8 +50,8 @@ class Generator {
  private:
   HeuristicFunction heuristic;
   CoordinateList direction, walls;
-  Vec2i worldSize;
-  uint directions;
+  Vec2i worldSize{};
+  uint directions{};
 };
 
 class Heuristic {

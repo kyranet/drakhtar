@@ -9,21 +9,21 @@
 
 UnitFactory::UnitFactory(Scene *scene) : scene_(scene) {}
 
-UnitFactory::~UnitFactory() {}
+UnitFactory::~UnitFactory() = default;
 
-Unit *UnitFactory::newSoldier(Team *team, Box *box, int size) {
-  int soldierAttack = 5;
-  int soldierDefense = 5;
-  int soldierHealth = 10;
-  int soldierAttackRange = 1;
-  int soldierMoveRange = 3;
-  int soldierSpeed = 3;
-  int soldierPrize = 3;
+Unit *UnitFactory::newSoldier(Team *team, Box *box, const int size) const {
+  const auto soldierAttack = 5;
+  const auto soldierDefense = 5;
+  const auto soldierHealth = 10;
+  const auto soldierAttackRange = 1;
+  const auto soldierMoveRange = 3;
+  const auto soldierSpeed = 3;
+  const auto soldierPrize = 3;
 
-  string textureName = team->getColor() == Color::BLUE ? "Units-BlueSoldier"
-                                                       : "Units-RedSoldier";
+  const auto textureName =
+      team->getColor() == BLUE ? "Units-BlueSoldier" : "Units-RedSoldier";
 
-  auto unit =
+  const auto unit =
       new Battalion(scene_, TextureManager::get(textureName), box,
                     soldierAttack, soldierDefense, soldierHealth, soldierSpeed,
                     soldierAttackRange, soldierMoveRange, size, soldierPrize);
@@ -31,19 +31,19 @@ Unit *UnitFactory::newSoldier(Team *team, Box *box, int size) {
   return unit;
 }
 
-Unit *UnitFactory::newArcher(Team *team, Box *box, int size) {
-  int archerAttack = 6;
-  int archerDefense = 3;
-  int archerHealth = 10;
-  int archerAttackRange = 3;
-  int archerMoveRange = 1;
-  int archerSpeed = 3;
-  int archerPrize = 3;
+Unit *UnitFactory::newArcher(Team *team, Box *box, const int size) const {
+  const auto archerAttack = 6;
+  const auto archerDefense = 3;
+  const auto archerHealth = 10;
+  const auto archerAttackRange = 3;
+  const auto archerMoveRange = 1;
+  const auto archerSpeed = 3;
+  const auto archerPrize = 3;
 
-  string textureName =
-      team->getColor() == Color::BLUE ? "Units-BlueArcher" : "Units-RedArcher";
+  const auto textureName =
+      team->getColor() == BLUE ? "Units-BlueArcher" : "Units-RedArcher";
 
-  auto unit =
+  const auto unit =
       new Battalion(scene_, TextureManager::get(textureName), box, archerAttack,
                     archerDefense, archerHealth, archerSpeed, archerAttackRange,
                     archerMoveRange, size, archerPrize);
@@ -51,19 +51,19 @@ Unit *UnitFactory::newArcher(Team *team, Box *box, int size) {
   return unit;
 }
 
-Unit *UnitFactory::newKnight(Team *team, Box *box, int size) {
-  int knightAttack = 8;
-  int knightDefense = 7;
-  int knightHealth = 15;
-  int knightAttackRange = 1;
-  int knightMoveRange = 5;
-  int knightSpeed = 5;
-  int knightPrize = 8;
+Unit *UnitFactory::newKnight(Team *team, Box *box, const int size) const {
+  const auto knightAttack = 8;
+  const auto knightDefense = 7;
+  const auto knightHealth = 15;
+  const auto knightAttackRange = 1;
+  const auto knightMoveRange = 5;
+  const auto knightSpeed = 5;
+  const auto knightPrize = 8;
 
-  string textureName =
-      team->getColor() == Color::BLUE ? "Units-BlueKnight" : "Units-RedKnight";
+  const auto textureName =
+      team->getColor() == BLUE ? "Units-BlueKnight" : "Units-RedKnight";
 
-  auto unit =
+  const auto unit =
       new Battalion(scene_, TextureManager::get(textureName), box, knightAttack,
                     knightDefense, knightHealth, knightSpeed, knightAttackRange,
                     knightMoveRange, size, knightPrize);
@@ -71,19 +71,19 @@ Unit *UnitFactory::newKnight(Team *team, Box *box, int size) {
   return unit;
 }
 
-Unit *UnitFactory::newWizard(Team *team, Box *box, int size) {
-  int wizardAttack = 4;
-  int wizardDefense = 2;
-  int wizardHealth = 7;
-  int wizardAttackRange = 2;
-  int wizardMoveRange = 1;
-  int wizardSpeed = 2;
-  int wizardPrize = 5;
+Unit *UnitFactory::newWizard(Team *team, Box *box, const int size) const {
+  const auto wizardAttack = 4;
+  const auto wizardDefense = 2;
+  const auto wizardHealth = 7;
+  const auto wizardAttackRange = 2;
+  const auto wizardMoveRange = 1;
+  const auto wizardSpeed = 2;
+  const auto wizardPrize = 5;
 
-  string textureName =
-      team->getColor() == Color::BLUE ? "Units-BlueMage" : "Units-RedMage";
+  const auto textureName =
+      team->getColor() == BLUE ? "Units-BlueMage" : "Units-RedMage";
 
-  auto unit =
+  const auto unit =
       new Battalion(scene_, TextureManager::get(textureName), box, wizardAttack,
                     wizardDefense, wizardHealth, wizardSpeed, wizardAttackRange,
                     wizardMoveRange, size, wizardPrize);
@@ -91,19 +91,19 @@ Unit *UnitFactory::newWizard(Team *team, Box *box, int size) {
   return unit;
 }
 
-Unit *UnitFactory::newMonster(Team *team, Box *box, int size) {
-  int monsterAttack = 9;
-  int monsterDefense = 8;
-  int monsterHealth = 15;
-  int monsterAttackRange = 1;
-  int monsterMoveRange = 5;
-  int monsterSpeed = 1;
-  int monsterPrize = 10;
+Unit *UnitFactory::newMonster(Team *team, Box *box, const int size) const {
+  const auto monsterAttack = 9;
+  const auto monsterDefense = 8;
+  const auto monsterHealth = 15;
+  const auto monsterAttackRange = 1;
+  const auto monsterMoveRange = 5;
+  const auto monsterSpeed = 1;
+  const auto monsterPrize = 10;
 
-  string textureName = team->getColor() == Color::BLUE ? "Units-BlueMonster"
-                                                       : "Units-RedMonster";
+  const auto textureName =
+      team->getColor() == BLUE ? "Units-BlueMonster" : "Units-RedMonster";
 
-  auto unit =
+  const auto unit =
       new Battalion(scene_, TextureManager::get(textureName), box,
                     monsterAttack, monsterDefense, monsterHealth, monsterSpeed,
                     monsterAttackRange, monsterMoveRange, size, monsterPrize);

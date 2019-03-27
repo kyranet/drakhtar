@@ -9,17 +9,16 @@ class Font;
 class Scene;
 
 class Text : public GameObject {
- private:
-  Font *font_;
+  Font* font_;
   std::string text_;
   SDL_Color color_;
 
  public:
-  Text(Scene *scene, Font *font, Vector2D<int> position, SDL_Color color,
+  Text(Scene* scene, Font* font, Vector2D<int> position, SDL_Color color,
        std::string text, int lineJumpLimit);
   ~Text();
-  void setText(std::string const text, SDL_Color const color = {0, 0, 0, 255},
+  void setText(const std::string& text, const SDL_Color& color = {0, 0, 0, 255},
                int lineJumpLimit = 250);
-  void setColor(SDL_Color const color);
-  void render() const;
+  void setColor(const SDL_Color& color);
+  void render() const override;
 };

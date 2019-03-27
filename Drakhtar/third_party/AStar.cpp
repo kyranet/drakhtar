@@ -4,9 +4,7 @@
 #include "AStar.h"
 #include <algorithm>
 
-using namespace std::placeholders;
-
-bool AStar::Vec2i::operator==(const Vec2i& coordinates_) {
+bool AStar::Vec2i::operator==(const Vec2i& coordinates_) const {
   return (x == coordinates_.x && y == coordinates_.y);
 }
 
@@ -20,7 +18,7 @@ AStar::Node::Node(Vec2i coordinates_, Node* parent_) {
   G = H = 0;
 }
 
-AStar::uint AStar::Node::getScore() { return G + H; }
+AStar::uint AStar::Node::getScore() const { return G + H; }
 
 AStar::Generator::Generator() {
   setDiagonalMovement(false);
@@ -38,7 +36,8 @@ void AStar::Generator::setDiagonalMovement(bool enable_) {
 }
 
 void AStar::Generator::setHeuristic(HeuristicFunction heuristic_) {
-  heuristic = std::bind(heuristic_, _1, _2);
+  heuristic =
+      std::bind(heuristic_, std::placeholders::_1, std::placeholders::_2);
 }
 
 void AStar::Generator::addCollision(Vec2i coordinates_) {
@@ -46,7 +45,7 @@ void AStar::Generator::addCollision(Vec2i coordinates_) {
 }
 
 void AStar::Generator::removeCollision(Vec2i coordinates_) {
-  auto it = std::find(walls.begin(), walls.end(), coordinates_);
+  const auto it = std::find(walls.begin(), walls.end(), coordinates_);
   if (it != walls.end()) {
     walls.erase(it);
   }
@@ -75,15 +74,15 @@ AStar::CoordinateList AStar::Generator::findPath(Vec2i source_, Vec2i target_) {
     openSet.erase(std::find(openSet.begin(), openSet.end(), current));
 
     for (uint i = 0; i < directions; ++i) {
-      Vec2i newCoordinates(current->coordinates + direction[i]);
+      const auto newCoordinates(current->coordinates + direction[i]);
       if (detectCollision(newCoordinates) ||
           findNodeOnList(closedSet, newCoordinates)) {
         continue;
       }
 
-      uint totalCost = current->G + ((i < 4) ? 10 : 14);
+      const auto totalCost = current->G + ((i < 4) ? 10 : 14);
 
-      Node* successor = findNodeOnList(openSet, newCoordinates);
+      auto successor = findNodeOnList(openSet, newCoordinates);
       if (successor == nullptr) {
         successor = new Node(newCoordinates, current);
         successor->G = totalCost;
@@ -126,12 +125,9 @@ void AStar::Generator::releaseNodes(NodeSet& nodes_) {
 }
 
 bool AStar::Generator::detectCollision(Vec2i coordinates_) {
-  if (coordinates_.x < 0 || coordinates_.x >= worldSize.x ||
-      coordinates_.y < 0 || coordinates_.y >= worldSize.y ||
-      std::find(walls.begin(), walls.end(), coordinates_) != walls.end()) {
-    return true;
-  }
-  return false;
+  return coordinates_.x < 0 || coordinates_.x >= worldSize.x ||
+         coordinates_.y < 0 || coordinates_.y >= worldSize.y ||
+         std::find(walls.begin(), walls.end(), coordinates_) != walls.end();
 }
 
 AStar::Vec2i AStar::Heuristic::getDelta(Vec2i source_, Vec2i target_) {
@@ -139,16 +135,16 @@ AStar::Vec2i AStar::Heuristic::getDelta(Vec2i source_, Vec2i target_) {
 }
 
 AStar::uint AStar::Heuristic::manhattan(Vec2i source_, Vec2i target_) {
-  auto delta = std::move(getDelta(source_, target_));
+  const auto delta = getDelta(source_, target_);
   return static_cast<uint>(10 * (delta.x + delta.y));
 }
 
 AStar::uint AStar::Heuristic::euclidean(Vec2i source_, Vec2i target_) {
-  auto delta = std::move(getDelta(source_, target_));
+  const auto delta = getDelta(source_, target_);
   return static_cast<uint>(10 * sqrt(pow(delta.x, 2) + pow(delta.y, 2)));
 }
 
 AStar::uint AStar::Heuristic::octagonal(Vec2i source_, Vec2i target_) {
-  auto delta = std::move(getDelta(source_, target_));
+  const auto delta = getDelta(source_, target_);
   return 10 * (delta.x + delta.y) + (-6) * std::min(delta.x, delta.y);
 }

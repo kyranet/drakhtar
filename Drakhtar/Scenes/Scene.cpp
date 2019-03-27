@@ -8,8 +8,8 @@
 #include "../Utils/TimePool.h"
 #include "SDL.h"
 
-Scene::Scene() {}
-Scene::~Scene() { finish(); }
+Scene::Scene() = default;
+Scene::~Scene() { Scene::finish(); }
 
 bool Scene::isFinished() const { return exit_; }
 bool Scene::isRunning() const { return !paused_; }
@@ -63,7 +63,7 @@ void Scene::run() {
 void Scene::preload() {}
 
 void Scene::tick() {
-  if (!nextTick_.size()) return;
+  if (nextTick_.empty()) return;
 
   for (auto callback : nextTick_) {
     callback();
@@ -132,7 +132,7 @@ void Scene::destroy() {
         delete gameObject;
         break;
       }
-      it++;
+      ++it;
     }
   }
 

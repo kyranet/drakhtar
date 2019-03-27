@@ -6,24 +6,26 @@
 #include "../Managers/TextureManager.h"
 #include "../Scenes/MenuScene.h"
 #include "../Utils/Constants.h"
+#include "SDL_mixer.h"
+#include "SDL_ttf.h"
 
-Game::Game() : window_(nullptr), renderer_(nullptr) {
+Game::Game() {
   if (SDL_Init(SDL_INIT_EVENTS | SDL_INIT_TIMER | SDL_INIT_AUDIO) != 0) {
-    string message =
-        string("Error initializing SDL.\nReason: ") + SDL_GetError();
-    throw new SDLError(message);
+    const auto message =
+        std::string("Error initializing SDL.\nReason: ") + SDL_GetError();
+    throw SDLError(message);
   }
 
   if (TTF_Init() != 0) {
-    string message =
-        string("Error initializing TTF.\nReason: ") + TTF_GetError();
-    throw new SDLError(message);
+    const auto message =
+        std::string("Error initializing TTF.\nReason: ") + TTF_GetError();
+    throw SDLError(message);
   }
 
   if (Mix_Init(MIX_INIT_MP3 | MIX_INIT_OGG) == 0) {
-    string message =
-        string("Error initializing MIX.\nReason: ") + Mix_GetError();
-    throw new SDLError(message);
+    const auto message =
+        std::string("Error initializing MIX.\nReason: ") + Mix_GetError();
+    throw SDLError(message);
   }
 
   auto textures = TextureManager::getInstance();
@@ -118,13 +120,14 @@ Game::Game() : window_(nullptr), renderer_(nullptr) {
   textures->init(renderer_);
 
   // Fonts
-  fonts->add("DialogFont", "../fonts/Retron2000.ttf", WIN_WIDTH /66, WIN_WIDTH);
+  fonts->add("DialogFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 66,
+             WIN_WIDTH);
   fonts->add("Retron2000", "../fonts/Retron2000.ttf", 12, WIN_WIDTH);
   fonts->init();
 
   // If window or renderer is a null pointer, throw a SDLError
   if (window_ == nullptr || renderer_ == nullptr)
-    throw new SDLError("Error loading the SDL window or renderer");
+    throw SDLError("Error loading the SDL window or renderer");
 
   sceneMachine_ = new SceneMachine();
   sceneMachine_->pushScene(new MenuScene());
@@ -142,7 +145,7 @@ Game::~Game() {
   Mix_Quit();
 }
 
-void Game::run() {
+void Game::run() const {
   while (!sceneMachine_->isEmpty()) {
     sceneMachine_->getCurrentScene()->run();
   }
@@ -150,14 +153,14 @@ void Game::run() {
 
 SDL_Renderer *Game::getRenderer() { return getInstance()->renderer_; }
 
-Game *Game::instance = nullptr;
+Game *Game::instance_ = nullptr;
 
 Game *Game::getInstance() {
-  if (instance == nullptr) {
-    instance = new Game();
+  if (instance_ == nullptr) {
+    instance_ = new Game();
   }
 
-  return instance;
+  return instance_;
 }
 
 SceneMachine *Game::getSceneMachine() { return getInstance()->sceneMachine_; }

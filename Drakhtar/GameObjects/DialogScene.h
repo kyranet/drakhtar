@@ -16,12 +16,13 @@ class DialogScene : public GameObject {
   std::vector<Dialog *> dialogues;
   int dialogueIndex = 0;   // index of the current position in vector
   int lineJumpLimit_ = 0;  // text line length
-  void readFromFile(std::string filename, Font *textFont, SDL_Rect rect);
+  void readFromFile(const std::string &filename, Font *textFont, SDL_Rect rect);
 
  public:
-  DialogScene(Scene *scene, std::string filename,
-              std::string fontfile);  // we set the position of every component
-                                      // of the dialog(text and background)
+  DialogScene(
+      Scene *scene, const std::string &filename,
+      const std::string &fontfile);  // we set the position of every component
+                                     // of the dialog(text and background)
   ~DialogScene();
   void next();
   virtual void render() const;

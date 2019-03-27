@@ -6,41 +6,40 @@
 #include "ResourceManager.h"
 
 struct AnimationTextureInfo {
-  string name;
-  vector<ushort> frames;
+  std::string name;
+  std::vector<Uint16> frames;
 };
 
 class TextureInfo {
  public:
-  TextureInfo(string name, string path, ushort columns, ushort rows,
+  TextureInfo(std::string name, std::string path, Uint16 columns, Uint16 rows,
               SDL_RendererFlip flip = SDL_FLIP_NONE)
       : name(name), path(path), columns(columns), rows(rows), flip(flip) {}
   ~TextureInfo() { animations.clear(); }
-  string name;
-  string path;
-  ushort columns;
-  ushort rows;
+  std::string name;
+  std::string path;
+  Uint16 columns;
+  Uint16 rows;
   SDL_RendererFlip flip;
-  vector<AnimationTextureInfo> animations;
-  TextureInfo *addAnimation(string name, vector<ushort> frames) {
+  std::vector<AnimationTextureInfo> animations;
+  TextureInfo *addAnimation(std::string name, std::vector<Uint16> frames) {
     animations.push_back({name, frames});
     return this;
   }
 };
 
 class TextureManager : public ResourceManager<Texture *> {
- private:
-  static TextureManager *instance;
+  static TextureManager *instance_;
   TextureManager();
   ~TextureManager();
-  stack<TextureInfo *> stack_;
+  std::stack<TextureInfo *> stack_;
 
  public:
-  TextureInfo *add(string name, string path, ushort columns, ushort rows,
-                   SDL_RendererFlip flip = SDL_FLIP_NONE);
-  void init(SDL_Renderer *renderer);
+  TextureInfo *add(std::string name, std::string path, Uint16 columns,
+                   Uint16 rows, SDL_RendererFlip flip = SDL_FLIP_NONE);
+  void init(SDL_Renderer *renderer) override;
   void tick();
-  static Texture *get(string name);
+  static Texture *get(std::string name);
   static TextureManager *getInstance();
   static void destroy();
 };
