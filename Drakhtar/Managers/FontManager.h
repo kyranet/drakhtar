@@ -7,7 +7,7 @@
 class Font;
 
 struct FontInfo {
-  FontInfo(const std::string name, const std::string path, const int size,
+  FontInfo(const std::string& name, const std::string& path, const int size,
            const int lineJumpLimit)
       : name(name), path(path), size(size), lineJumpLimit(lineJumpLimit) {}
   ~FontInfo() = default;
@@ -28,8 +28,8 @@ class FontManager {
  public:
   static FontManager* getInstance();
   static void destroy();
-  static Font* get(std::string name);
-  FontInfo* add(std::string name, std::string path, int size,
+  static Font* get(const std::string& name);
+  FontInfo* add(const std::string& name, const std::string& path, int size,
                 int lineJumpLimit);
   void init();
 };

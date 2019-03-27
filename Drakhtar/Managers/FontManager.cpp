@@ -19,9 +19,9 @@ void FontManager::destroy() {
   }
 }
 
-Font* FontManager::get(std::string name) { return getInstance()->map_[name]; }
+Font* FontManager::get(const std::string& name) { return getInstance()->map_[name]; }
 
-FontInfo* FontManager::add(const std::string name, const std::string path,
+FontInfo* FontManager::add(const std::string& name, const std::string& path,
                            const int size, const int lineJumpLimit) {
   const auto info = new FontInfo(name, path, size, lineJumpLimit);
   stack_.push(info);
