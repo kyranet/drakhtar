@@ -25,9 +25,8 @@ Unit::Unit(Scene *scene, Texture *texture, Box *box, int attack, int defense,
       box_(box),
       prize_(prize) {
   box->setContent(this);
-  SDL_Color textColor = {255, 255, 255, 255};
-
-  auto rect = box_->getRect();
+  const SDL_Color textColor = {255, 255, 255, 255};
+  const auto rect = box_->getRect();
 
   healthText_ = new Text(scene, FontManager::get("Retron2000"),
                          {rect.x + rect.w / 2, rect.y + rect.h / 6}, textColor,
@@ -56,7 +55,7 @@ void Unit::moveToBox(Box *newBox) {
                             newBox->getRect().y + newBox->getRect().h / 2));
   box_ = newBox;
   newBox->setContent(this);
-  auto rect = box_->getRect();
+  const auto rect = box_->getRect();
   healthText_->setPosition({rect.x + rect.w / 2, rect.y + rect.h / 6});
   setMoved(true);
   setMoving(false);
@@ -74,6 +73,6 @@ void Unit::render() const {
   healthText_->render();
 }
 
-string Unit::healthToString() const {
+std::string Unit::healthToString() const {
   return std::to_string(getHealth()) + " HP";
 }

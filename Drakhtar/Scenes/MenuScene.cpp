@@ -14,7 +14,7 @@ void buttonPlay() {
       []() { Game::getSceneMachine()->changeScene(new GameScene()); });
 }
 
-void buttonOptions() { cout << "Options\n"; }
+void buttonOptions() { std::cout << "Options\n"; }
 
 void MenuScene::preload() {
   auto background = new GameObject(this, TextureManager::get("Maps-Test"),

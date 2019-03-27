@@ -5,17 +5,16 @@
 #include "SDL_ttf.h"
 
 class Font {
- private:
   TTF_Font* font_;
 
  public:
   Font();
-  Font(std::string filename, int size);
+  Font(const std::string& filename, int size);
   ~Font();
 
   TTF_Font* getFont() const { return font_; }
-  Font* load(std::string filename, int size);
+  Font* load(const std::string& filename, int size);
   void close();
-  SDL_Surface* renderText(std::string text, SDL_Color color,
+  SDL_Surface* renderText(const std::string& text, SDL_Color color,
                           int lineJumpLimit) const;
 };

@@ -5,13 +5,12 @@
 
 class Team;
 
-class GameScene : public Scene {
- private:
-  Team* team1 = nullptr;
-  Team* team2 = nullptr;
+class GameScene final : public Scene {
+  Team* team1_ = nullptr;
+  Team* team2_ = nullptr;
 
  public:
   virtual ~GameScene();
-  void preload();
-  void pause();
+  void preload() override;
+  void pause() override;
 };

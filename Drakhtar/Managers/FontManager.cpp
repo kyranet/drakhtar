@@ -3,37 +3,36 @@
 #include "FontManager.h"
 #include "../Structures/Font.h"
 
-FontManager* FontManager::instance = nullptr;
+FontManager* FontManager::instance_ = nullptr;
 
-FontManager::FontManager() {}
+FontManager::FontManager() = default;
 
 FontManager* FontManager::getInstance() {
-  if (instance == nullptr) instance = new FontManager();
-
-  return instance;
+  if (instance_ == nullptr) instance_ = new FontManager();
+  return instance_;
 }
 
 void FontManager::destroy() {
-  if (instance != nullptr) {
-    delete instance;
-    instance = nullptr;
+  if (instance_ != nullptr) {
+    delete instance_;
+    instance_ = nullptr;
   }
 }
 
 Font* FontManager::get(std::string name) { return getInstance()->map_[name]; }
 
-FontInfo* FontManager::add(std::string name, std::string path, int size,
-                           int lineJumpLimit) {
-  auto info = new FontInfo(name, path, size, lineJumpLimit);
+FontInfo* FontManager::add(const std::string name, const std::string path,
+                           const int size, const int lineJumpLimit) {
+  const auto info = new FontInfo(name, path, size, lineJumpLimit);
   stack_.push(info);
   return info;
 }
 
 void FontManager::init() {
   while (!stack_.empty()) {
-    auto info = stack_.top();
-    auto font = (new Font(info->path_, info->size_));
-    map_.insert(std::pair<std::string, Font*>(info->name_, font));
+    const auto info = stack_.top();
+    auto font = (new Font(info->path, info->size));
+    map_.insert(std::pair<std::string, Font*>(info->name, font));
     stack_.pop();
     delete info;
   }

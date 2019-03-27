@@ -1,11 +1,9 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Texture.h"
-#include <iostream>
 #include "../Errors/SDLError.h"
 #include "../Structures/Game.h"
-
-using namespace std;
+#include "SDL_image.h"
 
 Texture::~Texture() {
   close();
@@ -21,17 +19,17 @@ Texture *Texture::setTexture(SDL_Texture *const &texture) {
   return this;
 }
 
-Texture *Texture::setColumnAmount(ushort columns) {
+Texture *Texture::setColumnAmount(const Uint16 columns) {
   columnAmount_ = columns;
   return this;
 }
 
-Texture *Texture::setRowAmount(ushort rows) {
+Texture *Texture::setRowAmount(const Uint16 rows) {
   rowAmount_ = rows;
   return this;
 }
 
-Texture *Texture::setFrameSize(Vector2D<ushort> const &frameSize) {
+Texture *Texture::setFrameSize(Vector2D<Uint16> const &frameSize) {
   frameSize_ = frameSize;
   return this;
 }
@@ -41,13 +39,14 @@ Texture *Texture::setFlip(SDL_RendererFlip const &flip) {
   return this;
 }
 
-Texture *Texture::loadFromImage(string filename, ushort rowAmount,
-                                ushort columnAmount) {
-  SDL_Surface *surface = IMG_Load(filename.c_str());
+Texture *Texture::loadFromImage(const std::string &filename,
+                                const Uint16 rowAmount,
+                                const Uint16 columnAmount) {
+  const auto surface = IMG_Load(filename.c_str());
   if (surface == nullptr) {
-    string message = "Error loading surface from " + filename +
-                     "\nReason: " + SDL_GetError();
-    throw new SDLError(message);
+    const auto message = "Error loading surface from " + filename +
+                         "\nReason: " + SDL_GetError();
+    throw SDLError(message);
   }
 
   close();
@@ -62,13 +61,13 @@ Texture *Texture::loadFromImage(string filename, ushort rowAmount,
   return this;
 }
 
-Texture *Texture::loadFromText(Font *font, string text, SDL_Color const color,
-                               int lineJumpLimit) {
-  SDL_Surface *surface = font->renderText(text, color, lineJumpLimit);
+Texture *Texture::loadFromText(Font *font, const std::string &text,
+                               SDL_Color const color, const int lineJumpLimit) {
+  const auto surface = font->renderText(text, color, lineJumpLimit);
   if (surface == nullptr) {
-    string message =
+    const auto message =
         "Error loading text: " + text + "\nReason: " + TTF_GetError();
-    throw new SDLError(message);
+    throw SDLError(message);
   }
 
   close();
@@ -83,22 +82,25 @@ Texture *Texture::loadFromText(Font *font, string text, SDL_Color const color,
   return this;
 }
 
-void Texture::addAnimation(string name, vector<ushort> const &frames) {
+void Texture::addAnimation(const std::string &name,
+                           const std::vector<Uint16> &frames) {
   animations_[name] = frames;
 }
 
-void Texture::setAnimation(string name) {
+void Texture::setAnimation(const std::string &name) {
   if (hasAnimation(name))
     animation_ = animations_[name];
   else
-    throw new DrakhtarError(
+    throw DrakhtarError(
         "Cannot set an animation that has not been previously added.");
 }
 
-bool Texture::hasAnimation(string name) { return animations_.count(name) != 0; }
+bool Texture::hasAnimation(const std::string &name) {
+  return animations_.count(name) != 0;
+}
 
 void Texture::tick() {
-  auto size = animation_.size();
+  const auto size = animation_.size();
   if (size == 0) return;
   if (frame_ == size - 1)
     frame_ = 0;
@@ -106,29 +108,30 @@ void Texture::tick() {
     frame_++;
 }
 
-void Texture::render(Vector2D<int> position) const {
-  SDL_Rect dest{position.getX(), position.getY(), size_.getX(), size_.getY()};
+void Texture::render(const Vector2D<int> &position) const {
+  const SDL_Rect dest{position.getX(), position.getY(), size_.getX(),
+                      size_.getY()};
   render(dest);
 }
 
-void Texture::render(SDL_Rect const &dest, double angle, SDL_Rect *clip) const {
+void Texture::render(const SDL_Rect &dest, double angle, SDL_Rect *clip) const {
   if (texture_ != nullptr) {
     if (clip == nullptr) {
-      SDL_Rect default_clip = {0, 0, size_.getX(), size_.getY()};
-      clip = &default_clip;
+      SDL_Rect defaultClip = {0, 0, size_.getX(), size_.getY()};
+      clip = &defaultClip;
     }
     SDL_RenderCopy(renderer_, texture_, clip, &dest);
   }
 }
 
-void Texture::renderFrame(SDL_Rect const &dest, ushort frame,
+void Texture::renderFrame(SDL_Rect const &dest, Uint16 frame,
                           double angle) const {
   auto framePosition = getFramePosition(frame);
-  ushort width = frameSize_.getX();
-  ushort heigth = frameSize_.getY();
-  SDL_Rect src{width * framePosition.getX(), heigth * framePosition.getY(),
-               width, heigth};
-  SDL_RenderCopyEx(renderer_, texture_, &src, &dest, angle, 0, flip_);
+  const auto width = frameSize_.getX();
+  const auto height = frameSize_.getY();
+  SDL_Rect src{width * framePosition.getX(), height * framePosition.getY(),
+               width, height};
+  SDL_RenderCopyEx(renderer_, texture_, &src, &dest, angle, nullptr, flip_);
 }
 
 void Texture::close() {
@@ -138,4 +141,3 @@ void Texture::close() {
     size_.set(0, 0);
   }
 }
-

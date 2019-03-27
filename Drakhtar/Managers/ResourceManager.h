@@ -4,12 +4,10 @@
 #include <SDL.h>
 #include <map>
 
-using namespace std;
-
 template <class V>
 class ResourceManager {
  protected:
-  map<string, V> map_;
+  std::map<std::string, V> map_;
 
  public:
   ResourceManager() {}

@@ -15,9 +15,9 @@ class UnitFactory {
  public:
   explicit UnitFactory(Scene *scene);
   ~UnitFactory();
-  Unit *newSoldier(Team *team, Box *box, int size);
-  Unit *newArcher(Team *team, Box *box, int size);
-  Unit *newKnight(Team *team, Box *box, int size);
-  Unit *newWizard(Team *team, Box *box, int size);
-  Unit *newMonster(Team *team, Box *box, int size);
+  Unit *newSoldier(Team *team, Box *box, int size) const;
+  Unit *newArcher(Team *team, Box *box, int size) const;
+  Unit *newKnight(Team *team, Box *box, int size) const;
+  Unit *newWizard(Team *team, Box *box, int size) const;
+  Unit *newMonster(Team *team, Box *box, int size) const;
 };
