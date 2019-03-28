@@ -17,14 +17,14 @@ DialogScene::DialogScene(Scene* scene, const std::string& filename,
   auto dialogueBackground = new GameObject(
       scene_, TextureManager::get("UI-dialogueBackground"),
       Vector2D<int>(area.x + WIN_WIDTH / 2, WIN_HEIGHT - area.h * WIN_HEIGHT / 6),
-      Vector2D<int>(area.w * WIN_WIDTH / 1.3, area.h * WIN_HEIGHT / 2));
+      Vector2D<int>(area.w * WIN_WIDTH / 1.4, area.h * WIN_HEIGHT / 4));
   const auto nameBackground = new GameObject(
       scene_, TextureManager::get("UI-dialogueBackground"),
-      Vector2D<int>(dialogueBackground->getRect().x + dialogueBackground->getRect().w - WIN_WIDTH / 10,
-                    dialogueBackground->getRect().y+80),
-      Vector2D<int>(area.w * WIN_WIDTH / 8, area.h * WIN_HEIGHT / 10));
+      Vector2D<int>(dialogueBackground->getRect().x + dialogueBackground->getRect().w - WIN_WIDTH / 12,
+                    dialogueBackground->getRect().y-WIN_WIDTH/70),
+      Vector2D<int>(area.w * WIN_WIDTH / 8, area.h * WIN_HEIGHT / 20));
   const auto arrow = new GameObject(scene_, TextureManager::get("UI-dialogueArrow"),
-	  Vector2D<int>(dialogueBackground->getRect().x + dialogueBackground->getRect().w - WIN_WIDTH / 2.57, dialogueBackground->getRect().y + 225),
+	  Vector2D<int>(dialogueBackground->getRect().x + dialogueBackground->getRect().w/2 , dialogueBackground->getRect().y + 140),
 	  Vector2D<int>(area.w * WIN_WIDTH / 8, area.h * WIN_HEIGHT / 10));
   addChild(nameBackground);
   addChild(dialogueBackground);
