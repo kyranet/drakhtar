@@ -65,6 +65,8 @@ Game::Game() {
   textures->add("UI-dialogueBackground", "../images/UI/dialogueBackground.png",
 	  1, 1);
   textures->add("UI-dialogueArrow", "../images/UI/arrow_Dialog.png", 7, 1);
+  textures->add("UI-dialoguePortrait", "../images/UI/portrait.png", 1, 1);
+
   textures->add("UI-turnBar", "../images/UI/rock_bar.png", 1, 1);
   textures->add("UI-circle", "../images/UI/circle.png", 1, 1);
   // Button

@@ -6,6 +6,7 @@
 #include "../Utils/Constants.h"
 #include "GameObject.h"
 #include "Text.h"
+
 Dialog::Dialog(Scene *scene, std::ifstream &file, Font *textfont,
                SDL_Rect dialogRect, int lineJumpLimit)
     : GameObject(scene, nullptr), dialogueArea_(dialogRect) {
@@ -14,9 +15,9 @@ Dialog::Dialog(Scene *scene, std::ifstream &file, Font *textfont,
   auto characterPortraitSprite = new GameObject(
       scene, TextureManager::get(spriteText_),
       Vector2D<int>(dialogueArea_.x + dialogueArea_.w / 5.5,
-                    dialogueArea_.y - dialogueArea_.h / 15),
+                    dialogueArea_.y - dialogueArea_.h / 37),
       Vector2D<int>(dialogueArea_.h / 1.7, dialogueArea_.h / 1.7));
-
+  
   SDL_Color textColor = {0, 0, 0, 1};
 
   auto characterNameSprite =

@@ -23,9 +23,12 @@ DialogScene::DialogScene(Scene* scene, const std::string& filename,
       Vector2D<int>(dialogueBackground->getRect().x + dialogueBackground->getRect().w - WIN_WIDTH / 10,
                     dialogueBackground->getRect().y+80),
       Vector2D<int>(area.w * WIN_WIDTH / 8, area.h * WIN_HEIGHT / 10));
-
+  const auto arrow = new GameObject(scene_, TextureManager::get("UI-dialogueArrow"),
+	  Vector2D<int>(dialogueBackground->getRect().x + dialogueBackground->getRect().w - WIN_WIDTH / 2.57, dialogueBackground->getRect().y + 225),
+	  Vector2D<int>(area.w * WIN_WIDTH / 8, area.h * WIN_HEIGHT / 10));
   addChild(nameBackground);
   addChild(dialogueBackground);
+  addChild(arrow);
 
   dialogueBackground->addEventListener(
       new DialogSceneOnClick(dialogueBackground));
