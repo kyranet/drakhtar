@@ -4,6 +4,8 @@
 #include <iostream>
 #include <string>
 
+SDLAudioManager* SDLAudioManager::instance_ = nullptr;
+
 SDLAudioManager::SDLAudioManager() : SDLAudioManager(8) {}
 
 SDLAudioManager::SDLAudioManager(const int channels)
@@ -26,6 +28,20 @@ SDLAudioManager::~SDLAudioManager() {
 
   // close SDL_Mixer
   Mix_Quit();
+}
+
+SDLAudioManager * SDLAudioManager::getInstance()
+{
+	if (instance_ == nullptr) instance_ = new SDLAudioManager();
+	return instance_;
+}
+
+void SDLAudioManager::destroy()
+{
+	if (instance_ != nullptr) {
+		delete instance_;
+		instance_ = nullptr;
+	}
 }
 
 bool SDLAudioManager::init() {

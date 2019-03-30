@@ -11,9 +11,13 @@ class SDLAudioManager : public AudioManager {
   // Channel means one sound, meaning for example a footstep
   // Music means a background sound or a song
  public:
+  static SDLAudioManager* instance_;
   SDLAudioManager();
   explicit SDLAudioManager(int channels);
   virtual ~SDLAudioManager();
+
+  static SDLAudioManager* getInstance();
+  static void destroy();
 
   // Supposed to be called before start using the object
   virtual bool init();
