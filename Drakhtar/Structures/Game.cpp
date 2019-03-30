@@ -3,6 +3,7 @@
 #include "Game.h"
 #include "../Errors/SDLError.h"
 #include "../Managers/FontManager.h"
+#include "../Managers/SDLAudioManager.h"
 #include "../Managers/TextureManager.h"
 #include "../Scenes/MenuScene.h"
 #include "../Scenes/TransitionScene.h"
@@ -163,6 +164,11 @@ Game::Game() {
              WIN_WIDTH);
   fonts->add("Retron2000", "../fonts/Retron2000.ttf", 12, WIN_WIDTH);
   fonts->init();
+
+  auto audio = SDLAudioManager::getInstance();
+  audio->init();
+  audio->loadMusic(0, "../audio/background/Smash Mouth - All Star _Official Music Video_.mp3");
+  audio->loadSound(1, "../audio/sound/Glass_Running.mp3");
 
   // If window or renderer is a null pointer, throw a SDLError
   if (window_ == nullptr || renderer_ == nullptr)

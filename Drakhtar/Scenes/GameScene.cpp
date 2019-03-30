@@ -7,6 +7,7 @@
 #include "../GameObjects/Pause.h"
 #include "../GameObjects/TurnBar.h"
 #include "../Managers/TextureManager.h"
+#include "../Managers/SDLAudioManager.h"
 #include "../Structures/Game.h"
 #include "../Structures/Team.h"
 #include "../Structures/UnitFactory.h"
@@ -61,6 +62,10 @@ void GameScene::preload() {
   addGameObject(pauseButton);
 
   board->addEventListener(new BoardController(board, turnBar, this));
+
+  auto audio = SDLAudioManager::getInstance();
+  audio->playChannel(1, 3, 0);
+  audio->playMusic(0, -1);
 }
 
 void GameScene::pause() {
