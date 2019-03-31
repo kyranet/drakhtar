@@ -5,6 +5,7 @@
 #include "../Managers/FontManager.h"
 #include "../Managers/TextureManager.h"
 #include "../Scenes/MenuScene.h"
+#include "../Scenes/TransitionScene.h"
 #include "../Utils/Constants.h"
 #include "SDL_mixer.h"
 #include "SDL_ttf.h"
@@ -111,6 +112,10 @@ Game::Game() {
   textures->add("Maps-Test", "../images/Maps/TestMap.png", 1, 1);
   textures->add("Maps-FirstBattle", "../images/Maps/FirstBattle.png", 1, 1);
   textures->add("Maps-SecondBattle", "../images/Maps/SecondBattle.png", 1, 1);
+
+  //Transition
+  textures->add("Transition-Map1", "../images/Transition/Transition_1.png", 1, 1);
+  textures->add("Transition-Map2", "../images/Maps/TestMap.png", 1, 1);
 
   auto fonts = FontManager::getInstance();
 
