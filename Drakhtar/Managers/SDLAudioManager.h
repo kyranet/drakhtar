@@ -6,6 +6,8 @@
 #include "AudioManager.h"
 #include "SDL_mixer.h"
 
+// TODO: HALT ALL MUSIC METHOD DANI Y MIGUEL
+
 class SDLAudioManager : public AudioManager {
   // IMPORTANT NOTES:
   // Channel means one sound, meaning for example a footstep
