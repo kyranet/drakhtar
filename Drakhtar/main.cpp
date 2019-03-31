@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "Managers/TextureManager.h"
+#include "Managers/SDLAudioManager.h"
 #include "SDL.h"
 #include "Structures/Game.h"
 #include "checkML.h"
@@ -12,8 +13,9 @@ int main(int argc, char *argv[]) {
   try {
     auto game = Game::getInstance();
     game->run();
+	SDLAudioManager::destroy();
+	TextureManager::destroy();
     delete game;
-    TextureManager::destroy();
     return 0;
   } catch (std::exception e) {
     std::cout << e.what();

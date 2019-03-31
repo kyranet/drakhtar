@@ -22,7 +22,8 @@ SDLAudioManager::~SDLAudioManager() {
 
   // free all music sound effect
   for (const auto &pair : music_) {
-    if (pair.second != nullptr) Mix_FreeMusic(pair.second);
+    if (pair.second != nullptr)
+		Mix_FreeMusic(pair.second);
   }
   music_.clear();
 
@@ -102,23 +103,21 @@ int SDLAudioManager::setChannelVolume(int volume, int channel) {
 int SDLAudioManager::channels() { return channels_; }
 
 bool SDLAudioManager::loadMusic(int tag, std::string fileName) {
-  if (!initialized_) return false;
+	if (!initialized_)
+		return false;
 
-  Mix_Music *music = Mix_LoadMUS(fileName.c_str());
-  if (music != nullptr) {
-    Mix_Music *curr = music_[tag];
-    if (curr != nullptr) {
-      Mix_FreeMusic(curr);
-      music_[tag] = music;
-    } else {
-      music_.erase(tag);
-    }
-
-    return true;
-  } else {
-    std::cout << "Couldn't load music file: " << fileName << "\n";
-    return false;
-  }
+	Mix_Music* music = Mix_LoadMUS(fileName.c_str());
+	if (music != nullptr) {
+		Mix_Music* curr = music_[tag];
+		if (curr != nullptr)
+			Mix_FreeMusic(curr);
+		music_[tag] = music;
+		return true;
+	}
+	else {
+		std::cout << "Couldn't load music file: " << fileName << std::endl;
+		return false;
+	}
 }
 
 void SDLAudioManager::playMusic(int tag, int loops) {

@@ -167,7 +167,7 @@ Game::Game() {
 
   auto audio = SDLAudioManager::getInstance();
   audio->init();
-  audio->loadMusic(0, "../audio/background/Smash Mouth - All Star _Official Music Video_.mp3");
+  audio->loadMusic(1, "../audio/background/Smash Mouth - All Star _Official Music Video_.mp3");
   audio->loadSound(1, "../audio/sound/Glass_Running.mp3");
 
   // If window or renderer is a null pointer, throw a SDLError

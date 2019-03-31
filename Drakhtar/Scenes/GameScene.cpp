@@ -65,7 +65,7 @@ void GameScene::preload() {
 
   auto audio = SDLAudioManager::getInstance();
   audio->playChannel(1, 3, 0);
-  audio->playMusic(0, -1);
+  audio->playMusic(1,-1);
 }
 
 void GameScene::pause() {
