@@ -122,7 +122,8 @@ Game::Game() {
   // Fonts
   fonts->add("DialogFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 66,
              WIN_WIDTH);
-  fonts->add("Retron2000", "../fonts/Retron2000.ttf", 12, WIN_WIDTH);
+  fonts->add("Retron2000", "../fonts/Retron2000.ttf", WIN_WIDTH / 88, 
+      WIN_WIDTH);
   fonts->init();
 
   // If window or renderer is a null pointer, throw a SDLError
