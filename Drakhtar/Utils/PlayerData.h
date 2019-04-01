@@ -10,9 +10,13 @@ class PlayerData {
   int money_ = 0;
   string name;
   map<string, int>* army_ = nullptr;
+  PlayerData();
+  static PlayerData * instance_;
+  ~PlayerData();
 
  public:
-  PlayerData();
+  static PlayerData* getInstance();
+  static void destroy();
 
   int getMoney() const { return money_; }
   map<string, int>* getArmy() const { return army_; }

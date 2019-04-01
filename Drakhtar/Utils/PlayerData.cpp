@@ -4,9 +4,34 @@
 
 #include "PlayerData.h"
 
+PlayerData * PlayerData::instance_ = nullptr;
+
 PlayerData::PlayerData()
 {
   army_ = new map<string, int>();
+}
+
+PlayerData::~PlayerData()
+{
+  if (army_ != nullptr) {
+    delete army_;
+    army_ = nullptr;
+  }
+}
+
+PlayerData * PlayerData::getInstance()
+{
+  if (instance_ == nullptr)
+    instance_ = new PlayerData();
+  return instance_;
+}
+
+void PlayerData::destroy()
+{
+  if (instance_ != nullptr) {
+    instance_->~PlayerData();
+    instance_ = nullptr;
+  }
 }
 
 void PlayerData::lossMoney(int money)
