@@ -10,8 +10,11 @@
 #include "Dialog.h"
 #include "../Scenes/GameScene.h"
 #include "../Scenes/Scene.h"
+#include "../GameObjects/Button.h"
 
-
+void skipDialog() {
+	Game::getSceneMachine()->getCurrentScene()->setSkip(true);
+}
 // default position and size(adjust it to move DialogScene)
 DialogScene::DialogScene(Scene* scene, const std::string& filename,
                          const std::string& fontFile)
@@ -30,9 +33,14 @@ DialogScene::DialogScene(Scene* scene, const std::string& filename,
   const auto arrow = new GameObject(scene_, TextureManager::get("UI-dialogueArrow"),
 	  Vector2D<int>(dialogueBackground->getRect().x + dialogueBackground->getRect().w/2 , dialogueBackground->getRect().y + 140),
 	  Vector2D<int>(area.w * WIN_WIDTH / 8, area.h * WIN_HEIGHT / 10));
+  const auto skip = new Button(scene_, TextureManager::get("Button-Skip"),
+	  Vector2D<int>(dialogueBackground->getRect().x + dialogueBackground->getRect().w / 1.05, dialogueBackground->getRect().y + 140),
+	  Vector2D<int>(area.w * WIN_WIDTH / 30, area.h * WIN_HEIGHT / 24), skipDialog);
+
   addChild(nameBackground);
   addChild(dialogueBackground);
   addChild(arrow);
+  addChild(skip);
 
   dialogueBackground->addEventListener(
       new DialogSceneOnClick(dialogueBackground));
@@ -40,6 +48,7 @@ DialogScene::DialogScene(Scene* scene, const std::string& filename,
   lineJumpLimit_ = dialogueBackground->getRect().x + WIN_WIDTH / 2;
   readFromFile("../dialog/" + filename + ".txt", FontManager::get(fontFile),
                dialogueBackground->getRect());
+    
 }
 
 DialogScene::~DialogScene() {
@@ -52,7 +61,13 @@ void DialogScene::render() const {
 }
 
 void DialogScene::next() {
-  if (dialogueIndex < dialogues.size() - 1)
+	if (Game::getSceneMachine()->getCurrentScene()->getSkip()) {
+		destroy();
+		if (Game::getSceneMachine()->getCurrentScene()->getTransition())
+			Game::getSceneMachine()->getCurrentScene()->processNextTick(
+				[]() { Game::getSceneMachine()->changeScene(new GameScene()); });
+	}
+  else if (dialogueIndex < dialogues.size() - 1)
     dialogueIndex++;
   else {
 	destroy();

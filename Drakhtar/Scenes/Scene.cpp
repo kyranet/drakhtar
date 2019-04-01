@@ -21,9 +21,19 @@ bool Scene::getTransition()
 	return transition_;
 }
 
+bool Scene::getSkip()
+{
+	return skipDialog_;
+}
+
 void Scene::setTransition(bool transition) 
 {
 	transition_ = transition;
+}
+
+void Scene::setSkip(bool skip)
+{
+	skipDialog_ = skip;
 }
 
 void Scene::run() {

@@ -8,10 +8,11 @@
 #include "../Utils/Constants.h"
 #include "../Utils/Vector2D.h"
 #include "GameScene.h"
+#include "TransitionScene.h"
 
 void buttonPlay() {
   Game::getSceneMachine()->getCurrentScene()->processNextTick(
-      []() { Game::getSceneMachine()->changeScene(new GameScene()); });
+      []() { Game::getSceneMachine()->changeScene(new TransitionScene(1)); });
 }
 
 void buttonOptions() { std::cout << "Options\n"; }

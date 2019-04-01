@@ -78,6 +78,7 @@ Game::Game() {
   textures->add("Button-Resume", "../images/Pause/Resume_Button.png", 1, 1);
   textures->add("Button-Restart", "../images/Pause/Restart_Button.png", 1, 1);
   textures->add("Button-Exit", "../images/Pause/Exit_Button.png", 1, 1);
+  textures->add("Button-Skip", "../images/UI/skipButton.png", 1, 1);
 
   // Pause
   textures->add("Pause-Panel", "../images/Pause/Panel.png", 1, 1);
@@ -114,8 +115,8 @@ Game::Game() {
   textures->add("Maps-SecondBattle", "../images/Maps/SecondBattle.png", 1, 1);
 
   //Transition
-  textures->add("Transition-Map1", "../images/Transition/Transition_1.png", 1, 1);
-  textures->add("Transition-Map2", "../images/Maps/TestMap.png", 1, 1);
+  textures->add("Transition-Map1", "../images/Maps/TestMap.png", 1, 1);
+  textures->add("Transition-Map2", "../images/Transition/Transition_2.png", 1, 1);  
 
   auto fonts = FontManager::getInstance();
 
@@ -138,7 +139,7 @@ Game::Game() {
     throw SDLError("Error loading the SDL window or renderer");
 
   sceneMachine_ = new SceneMachine();
-  sceneMachine_->pushScene(new TransitionScene(1));
+  sceneMachine_->pushScene(new MenuScene());
 }
 
 Game::~Game() {
