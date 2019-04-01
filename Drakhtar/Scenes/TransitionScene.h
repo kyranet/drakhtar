@@ -7,6 +7,8 @@ class TransitionScene final : public Scene {
 public:		
 	TransitionScene(int battle);
 	void preload() override;
+	//void run();
 private:
 	int battle_;
+	//DialogScene dialog;
 };

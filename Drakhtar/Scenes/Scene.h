@@ -12,6 +12,7 @@ class Scene {
   bool loaded_ = false;
   bool paused_ = true;
   bool finished_ = false;
+  bool transition_ = false;
 
  protected:
   std::list<GameObject *> gameObjects_;
@@ -27,6 +28,8 @@ class Scene {
   bool isRunning() const;
   bool isPaused() const;
   bool isLoaded() const;
+  bool getTransition();
+  void setTransition(bool transition);
   virtual void run();
   virtual void preload();
   virtual void tick();

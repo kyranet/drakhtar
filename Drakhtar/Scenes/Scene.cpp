@@ -16,6 +16,16 @@ bool Scene::isRunning() const { return !paused_; }
 bool Scene::isPaused() const { return paused_; }
 bool Scene::isLoaded() const { return loaded_; }
 
+bool Scene::getTransition()
+{
+	return transition_;
+}
+
+void Scene::setTransition(bool transition) 
+{
+	transition_ = transition;
+}
+
 void Scene::run() {
   // If it hasn't loaded yet, preload and set it to loaded
   if (!isLoaded()) {

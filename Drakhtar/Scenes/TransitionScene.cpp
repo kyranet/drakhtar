@@ -1,4 +1,5 @@
 #include "TransitionScene.h"
+#include "GameScene.h"
 #include "../Structures/Game.h"
 #include "../GameObjects/GameObject.h"
 #include "../Managers/TextureManager.h"
@@ -20,4 +21,5 @@ void TransitionScene::preload()
 	
 	auto dialog = new DialogScene(this, "dialog1_start", "DialogFont");
 	addGameObject(dialog);
+	setTransition(true);
 }

@@ -5,8 +5,12 @@
 #include "../Managers/FontManager.h"
 #include "../Managers/TextureManager.h"
 #include "../Structures/Font.h"
+#include "../Structures/Game.h"
 #include "../Utils/Constants.h"
 #include "Dialog.h"
+#include "../Scenes/GameScene.h"
+#include "../Scenes/Scene.h"
+
 
 // default position and size(adjust it to move DialogScene)
 DialogScene::DialogScene(Scene* scene, const std::string& filename,
@@ -50,8 +54,14 @@ void DialogScene::render() const {
 void DialogScene::next() {
   if (dialogueIndex < dialogues.size() - 1)
     dialogueIndex++;
-  else
-    destroy();
+  else {
+	destroy();
+	if(Game::getSceneMachine()->getCurrentScene()->getTransition())
+		Game::getSceneMachine()->getCurrentScene()->processNextTick(
+			[]() { Game::getSceneMachine()->changeScene(new GameScene()); });
+	
+  }
+   
 }
 
 void DialogScene::readFromFile(const std::string& filename, Font* textFont,

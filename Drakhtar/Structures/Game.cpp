@@ -138,7 +138,7 @@ Game::Game() {
     throw SDLError("Error loading the SDL window or renderer");
 
   sceneMachine_ = new SceneMachine();
-  sceneMachine_->pushScene(new MenuScene());
+  sceneMachine_->pushScene(new TransitionScene(1));
 }
 
 Game::~Game() {
