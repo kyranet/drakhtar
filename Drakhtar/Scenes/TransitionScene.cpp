@@ -19,7 +19,7 @@ void TransitionScene::preload()
 			Vector2D<int>(WIN_WIDTH, WIN_HEIGHT));
 	addGameObject(background);
 	
-	auto dialog = new DialogScene(this, "dialog1_start", "DialogFont");
+	auto dialog = new DialogScene(this, "dialog1_intro", "DialogFont");
 	addGameObject(dialog);
 	setTransition(true);
 }
