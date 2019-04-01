@@ -20,6 +20,7 @@ GameScene::~GameScene() {
 void buttonPause() { Game::getSceneMachine()->getCurrentScene()->pause(); }
 
 void GameScene::preload() {
+  Scene::preload();
   // Add the background and the board.
   const auto background =
       new GameObject(this, TextureManager::get("Maps-FirstBattle"),

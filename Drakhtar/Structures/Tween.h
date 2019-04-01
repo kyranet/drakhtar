@@ -77,7 +77,7 @@ class Tween final {
    * \brief The time in frames for the whole tween to play through once,
    * excluding loo amounts and loop delays.
    */
-  int duration_ = 0;
+  int duration_ = 15;
   /**
    * \brief Value between 0 and 1. The amount through the tween, excluding
    * loops.
@@ -103,7 +103,7 @@ class Tween final {
   void calculateDuration();
 
  public:
-  Tween();
+  explicit Tween(TweenManager* tweenManager);
   ~Tween();
   Tween* from(const Vector2D<int>& start);
   Tween* to(const Vector2D<int>& end);
@@ -125,7 +125,7 @@ class Tween final {
   Tween* setState(TweenState state);
 
   bool init();
-  bool update();
+  void update();
 
   bool isPlaying() const;
   bool isPaused() const;

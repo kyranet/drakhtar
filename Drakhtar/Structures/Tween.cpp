@@ -5,7 +5,7 @@
 #include "Tween.h"
 #include <algorithm>
 
-Tween::Tween() = default;
+Tween::Tween(TweenManager* tweenManager) : tweenManager_(tweenManager) {}
 Tween::~Tween() = default;
 
 Tween* Tween::from(const Vector2D<int>& start) {
@@ -150,8 +150,8 @@ Tween* Tween::setState(TweenState state) {
   return this;
 }
 
-bool Tween::update() {
-  if (isPaused()) return false;
+void Tween::update() {
+  if (isPaused()) return;
   elapsed_++;
   progress_ = std::min(elapsed_ / duration_, 1);
 
@@ -208,8 +208,6 @@ bool Tween::update() {
     (*onUpdate_)({((to_.getX() - from_.getX()) * progress_) + from_.getX(),
                   ((to_.getY() - from_.getY()) * progress_) + from_.getY()});
   }
-
-  return state_ == TweenState::PENDING_REMOVE;
 }
 
 bool Tween::isPlaying() const { return state_ == TweenState::ACTIVE; }

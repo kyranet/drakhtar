@@ -2,11 +2,12 @@
 
 #include "BoardController.h"
 #include <iostream>
-#include "../GameObjects/Board.h"
-#include "../GameObjects/Box.h"
-#include "../GameObjects/TurnBar.h"
-#include "../GameObjects/Unit.h"
-#include "../Scenes/GameScene.h"
+#include "GameObjects/Board.h"
+#include "GameObjects/Box.h"
+#include "GameObjects/TurnBar.h"
+#include "GameObjects/Unit.h"
+#include "Scenes/GameScene.h"
+#include "Structures/Tween.h"
 
 BoardController::BoardController(Board *board, TurnBar *turnBar,
                                  GameScene *scene)
@@ -47,6 +48,18 @@ void BoardController::onClickMove(Box *boxClicked) {
   if (board_->isInMoveRange(activeUnit_->getBox(), boxClicked,
                             activeUnit_->getMoveRange())) {
     board_->findPath(activeUnit_->getBox()->getIndex(), boxClicked->getIndex());
+
+    scene_->getTweenManager()
+        ->create()
+        ->from(activeUnit_->getBox()->getPosition())
+        ->to(boxClicked->getPosition())
+        ->setOnUpdate(&std::function<void(Vector2D<double>)>(
+            [this](Vector2D<double> updated) {
+              activeUnit_->setPosition(
+                  {static_cast<int>(std::floor(updated.getX())),
+                   static_cast<int>(std::floor(updated.getY()))});
+            }));
+
     activeUnit_->moveToBox(boxClicked);
     hasMoved = true;
 

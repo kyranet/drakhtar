@@ -17,12 +17,13 @@ class TweenManager final : public GameObject {
   unsigned int toProcess_ = 0;
 
  public:
-  TweenManager(Scene* scene);
+  explicit TweenManager(Scene* scene);
   ~TweenManager();
+  Tween* create();
   void add(Tween* tween);
   void remove(Tween* tween);
   void preUpdate();
-  void update();
+  void update() override;
   void makeActive(Tween* tween);
   std::list<Tween*> getAllTweens() const;
   void removeAllTweens() const;

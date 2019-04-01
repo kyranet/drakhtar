@@ -1,12 +1,12 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Scene.h"
-#include "../GameObjects/GameObject.h"
-#include "../Managers/TextureManager.h"
-#include "../Structures/Game.h"
-#include "../Utils/Constants.h"
-#include "../Utils/TimePool.h"
+#include "GameObjects/GameObject.h"
+#include "Managers/TextureManager.h"
 #include "SDL.h"
+#include "Structures/Game.h"
+#include "Utils/Constants.h"
+#include "Utils/TimePool.h"
 
 Scene::Scene() = default;
 Scene::~Scene() { Scene::finish(); }
@@ -68,7 +68,10 @@ void Scene::run() {
   end();
 }
 
-void Scene::preload() {}
+void Scene::preload() {
+  tweenManager_ = new TweenManager(this);
+  addGameObject(tweenManager_);
+}
 
 void Scene::tick() {
   if (nextTick_.empty()) return;
@@ -110,8 +113,7 @@ void Scene::handleEvents() {
 }
 
 void Scene::update() {
-  // TODO(Antonio Román): Add GameObject::update()
-  // for (auto gameObject : gameObjects_) gameObject->update();
+  for (auto gameObject : gameObjects_) gameObject->update();
 }
 
 void Scene::render() {
@@ -188,3 +190,5 @@ void Scene::removeGameObject(GameObject *gameObject) {
 void Scene::processNextTick(NextTickCallback *callback) {
   nextTick_.push_back(callback);
 }
+
+TweenManager *Scene::getTweenManager() const { return tweenManager_; }

@@ -38,7 +38,11 @@ void GameObject::render() const {
   for (auto child : children_) child->render();
 }
 
-void GameObject::handleEvents(SDL_Event event) {
+void GameObject::update() {
+  for (auto child : children_) child->update();
+}
+
+void GameObject::handleEvents(const SDL_Event event) {
   for (auto listener : eventListeners_) listener->run(event);
   for (auto child : children_) child->handleEvents(event);
 }

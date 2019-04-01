@@ -6,7 +6,7 @@
 #include "Scenes/Scene.h"
 #include "Structures/Tween.h"
 
-static std::list<Tween*>::iterator IteratorFrom(std::list<Tween*> list,
+static std::list<Tween*>::iterator iteratorFrom(std::list<Tween*>& list,
                                                 Tween* tween) {
   for (auto it = list.begin(); it != list.end(); ++it) {
     if ((*it) == tween) return it;
@@ -14,8 +14,8 @@ static std::list<Tween*>::iterator IteratorFrom(std::list<Tween*> list,
   return list.end();
 }
 
-static bool IsInList(std::list<Tween*> list, Tween* tween) {
-  return IteratorFrom(list, tween) != list.end();
+static bool isInList(std::list<Tween*>& list, Tween* tween) {
+  return iteratorFrom(list, tween) != list.end();
 }
 
 TweenManager::TweenManager(Scene* scene) : GameObject(scene, nullptr) {}
@@ -29,6 +29,12 @@ TweenManager::~TweenManager() {
   active_.clear();
   destroy_.clear();
   toProcess_ = 0;
+}
+
+Tween* TweenManager::create() {
+  const auto tween = new Tween(this);
+  add(tween);
+  return tween;
 }
 
 void TweenManager::add(Tween* tween) {
@@ -48,10 +54,10 @@ void TweenManager::preUpdate() {
 
   // Process all pending-to-destroy tweens
   for (auto tween : destroy_) {
-    auto it = IteratorFrom(active_, tween);
+    auto it = iteratorFrom(active_, tween);
     if (it == destroy_.end()) {
       // Not in the active array, is it in pending instead?
-      it = IteratorFrom(pending_, tween);
+      it = iteratorFrom(pending_, tween);
       if (it != pending_.end()) {
         tween->setState(TweenState::REMOVED);
         pending_.erase(it);
@@ -83,8 +89,8 @@ void TweenManager::update() {
   preUpdate();
 
   for (auto tween : active_) {
-    // If Tween::update returned true, it means it has completed.
-    if (tween->update()) {
+    tween->update();
+    if (tween->getState() == TweenState::PENDING_REMOVE) {
       destroy_.push_back(tween);
       toProcess_++;
     }
@@ -106,9 +112,9 @@ void TweenManager::resumeAllTweens() {
 }
 
 void TweenManager::makeActive(Tween* tween) {
-  if (IsInList(add_, tween) || IsInList(active_, tween)) return;
+  if (isInList(add_, tween) || isInList(active_, tween)) return;
 
-  const auto index = IteratorFrom(pending_, tween);
+  const auto index = iteratorFrom(pending_, tween);
   if (index != pending_.end()) {
     pending_.erase(index);
   }
