@@ -152,7 +152,8 @@ Tween* Tween::setState(TweenState state) {
 void Tween::update() {
   if (isPaused()) return;
   elapsed_++;
-  progress_ = std::min((double)elapsed_ / (double)duration_, 1.0);
+  progress_ = std::min(
+      static_cast<double>(elapsed_) / static_cast<double>(duration_), 1.0);
 
   totalElapsed_++;
   totalProgress_ = std::min(totalElapsed_ / totalDuration_, 1);
