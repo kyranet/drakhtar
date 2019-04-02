@@ -14,6 +14,7 @@ class Scene {
   bool finished_ = false;
   bool transition_ = false;
   bool skipDialog_ = false;
+
  protected:
   std::list<GameObject *> gameObjects_;
   std::list<GameObject *> pendingOnCreate_;

@@ -71,9 +71,9 @@ void DialogScene::next() {
     if (Game::getSceneMachine()->getCurrentScene()->getTransition())
       Game::getSceneMachine()->getCurrentScene()->processNextTick(
           []() { Game::getSceneMachine()->changeScene(new GameScene()); });
-  } else if (dialogueIndex < dialogues.size() - 1)
+  } else if (dialogueIndex < dialogues.size() - 1) {
     dialogueIndex++;
-  else {
+  } else {
     destroy();
     if (Game::getSceneMachine()->getCurrentScene()->getTransition())
       Game::getSceneMachine()->getCurrentScene()->processNextTick(

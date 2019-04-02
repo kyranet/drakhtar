@@ -1,3 +1,5 @@
+// Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
+
 #include "TransitionScene.h"
 #include "../GameObjects/DialogScene.h"
 #include "../GameObjects/GameObject.h"

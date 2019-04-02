@@ -5,7 +5,7 @@
 
 class TransitionScene final : public Scene {
  public:
-  TransitionScene(int battle);
+  explicit TransitionScene(int battle);
   void preload() override;
   // void run();
  private:
