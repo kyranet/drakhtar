@@ -34,7 +34,7 @@ void PlayerData::destroy()
   }
 }
 
-void PlayerData::lossMoney(int money)
+void PlayerData::loseMoney(int money)
 {
   money_ -= money;
 }
