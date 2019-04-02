@@ -12,20 +12,17 @@ SDLAudioManager::SDLAudioManager(const int channels)
     : initialized_(false), channels_(channels) {}
 
 SDLAudioManager::~SDLAudioManager() {
-  if (!initialized_)
-    return;
+  if (!initialized_) return;
 
   // free all sound effect chucks
   for (const auto &pair : chunks_) {
-    if (pair.second != nullptr)
-      Mix_FreeChunk(pair.second);
+    if (pair.second != nullptr) Mix_FreeChunk(pair.second);
   }
   chunks_.clear();
 
   // free all music sound effect
   for (const auto &pair : music_) {
-    if (pair.second != nullptr)
-      Mix_FreeMusic(pair.second);
+    if (pair.second != nullptr) Mix_FreeMusic(pair.second);
   }
   music_.clear();
 
@@ -34,8 +31,7 @@ SDLAudioManager::~SDLAudioManager() {
 }
 
 SDLAudioManager *SDLAudioManager::getInstance() {
-  if (instance_ == nullptr)
-    instance_ = new SDLAudioManager();
+  if (instance_ == nullptr) instance_ = new SDLAudioManager();
   return instance_;
 }
 
@@ -47,8 +43,7 @@ void SDLAudioManager::destroy() {
 }
 
 bool SDLAudioManager::init() {
-  if (initialized_)
-    return false;
+  if (initialized_) return false;
 
   Mix_Init(MIX_INIT_FLAC | MIX_INIT_MOD | MIX_INIT_MP3 | MIX_INIT_OGG);
   Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
@@ -60,14 +55,12 @@ bool SDLAudioManager::init() {
 }
 
 bool SDLAudioManager::loadSound(const int tag, std::string fileName) {
-  if (!initialized_)
-    return false;
+  if (!initialized_) return false;
 
   const auto mixChunk = Mix_LoadWAV(fileName.c_str());
   if (mixChunk != nullptr) {
     const auto chunk = chunks_[tag];
-    if (chunk != nullptr)
-      Mix_FreeChunk(chunk);
+    if (chunk != nullptr) Mix_FreeChunk(chunk);
     chunks_[tag] = mixChunk;
     return true;
   }
@@ -94,36 +87,36 @@ int SDLAudioManager::playChannelTimed(const int tag, const int loops,
   return -1;
 }
 
-void SDLAudioManager::pauseChannel(int channel) { Mix_Pause(channel); }
+void SDLAudioManager::pauseChannel(const int channel) { Mix_Pause(channel); }
 
-void SDLAudioManager::resumeChannel(int channel) { Mix_Resume(channel); }
+void SDLAudioManager::resumeChannel(const int channel) { Mix_Resume(channel); }
 
-void SDLAudioManager::haltChannel(int channel) { Mix_HaltChannel(channel); }
+void SDLAudioManager::haltChannel(const int channel) {
+  Mix_HaltChannel(channel);
+}
 
-int SDLAudioManager::setChannelVolume(int volume, int channel) {
+int SDLAudioManager::setChannelVolume(const int volume, const int channel) {
   return Mix_Volume(channel, volume);
 }
 
 int SDLAudioManager::channels() { return channels_; }
 
-bool SDLAudioManager::loadMusic(int tag, std::string fileName) {
-  if (!initialized_)
-    return false;
+bool SDLAudioManager::loadMusic(const int tag, std::string fileName) {
+  if (!initialized_) return false;
 
-  Mix_Music *music = Mix_LoadMUS(fileName.c_str());
+  const auto music = Mix_LoadMUS(fileName.c_str());
   if (music != nullptr) {
-    Mix_Music *curr = music_[tag];
-    if (curr != nullptr)
-      Mix_FreeMusic(curr);
+    const auto current = music_[tag];
+    if (current != nullptr) Mix_FreeMusic(current);
     music_[tag] = music;
     return true;
-  } else {
-    std::cout << "Couldn't load music file: " << fileName << std::endl;
-    return false;
   }
+
+  std::cout << "Couldn't load music file: " << fileName << std::endl;
+  return false;
 }
 
-void SDLAudioManager::playMusic(int tag, int loops) {
+void SDLAudioManager::playMusic(const int tag, const int loops) {
   Mix_Music *music = music_[tag];
   if (music != nullptr) {
     Mix_PlayMusic(music, loops);
@@ -132,7 +125,7 @@ void SDLAudioManager::playMusic(int tag, int loops) {
   }
 }
 
-int SDLAudioManager::setMusicVolume(int volume) {
+int SDLAudioManager::setMusicVolume(const int volume) {
   // volume = 2 is quite low already, play with that number
   return Mix_VolumeMusic(volume);
 }
@@ -143,8 +136,8 @@ void SDLAudioManager::pauseMusic() { Mix_PauseMusic(); }
 
 void SDLAudioManager::resumeMusic() { Mix_ResumeMusic(); }
 
-void SDLAudioManager::FadeOutChannel(int channel, int ticks) {
+void SDLAudioManager::fadeOutChannel(const int channel, const int ticks) {
   Mix_FadeOutChannel(channel, ticks);
 }
 
-void SDLAudioManager::FadeOutMusic(int ticks) { Mix_FadeOutMusic(ticks); }
+void SDLAudioManager::fadeOutMusic(const int ticks) { Mix_FadeOutMusic(ticks); }

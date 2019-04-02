@@ -27,11 +27,11 @@ void TextureManager::init(SDL_Renderer *renderer) {
   while (!stack_.empty()) {
     auto info = stack_.top();
     auto texture = (new Texture(renderer))
-                       ->loadFromImage(info->path, info->rows, info->columns);
-    texture->setFlip(info->flip);
+                       ->loadFromImage(info->path_, info->rows_, info->columns_);
+    texture->setFlip(info->flip_);
 
     // Add all the queued animations
-    for (const auto &animation : info->animations)
+    for (const auto &animation : info->animations_)
       texture->addAnimation(animation.name, animation.frames);
 
     // If there was no default animation override, add it
@@ -39,8 +39,7 @@ void TextureManager::init(SDL_Renderer *renderer) {
       const Uint16 frames =
           texture->getColumnAmount() * texture->getRowAmount();
       std::vector<Uint16> animation(frames);
-      for (Uint16 i = 0; i < frames; i++)
-        animation[i] = i;
+      for (Uint16 i = 0; i < frames; i++) animation[i] = i;
       texture->addAnimation("default", animation);
     }
 
@@ -48,15 +47,14 @@ void TextureManager::init(SDL_Renderer *renderer) {
 
     // Insert the texture to the map, pop the stack, and delete the temporary
     // information
-    map_.insert(std::pair<std::string, Texture *>(info->name, texture));
+    map_.insert(std::pair<std::string, Texture *>(info->name_, texture));
     stack_.pop();
     delete info;
   }
 }
 
 void TextureManager::tick() {
-  if (instance_ == nullptr)
-    return;
+  if (instance_ == nullptr) return;
   for (auto pair : map_) {
     pair.second->tick();
   }
@@ -67,10 +65,8 @@ Texture *TextureManager::get(const std::string name) {
 }
 
 TextureManager::~TextureManager() {
-  while (!stack_.empty())
-    stack_.pop();
-  for (const auto &pair : map_)
-    delete pair.second;
+  while (!stack_.empty()) stack_.pop();
+  for (const auto &pair : map_) delete pair.second;
   map_.clear();
 }
 

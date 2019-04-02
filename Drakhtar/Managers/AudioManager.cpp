@@ -2,10 +2,6 @@
 
 #include "AudioManager.h"
 
-AudioManager::AudioManager() {
-  // All Auto-generated constructor stub
-}
+AudioManager::AudioManager() = default;
 
-AudioManager::~AudioManager() {
-  // aLL Auto-generated destructor stub
-}
+AudioManager::~AudioManager() = default;

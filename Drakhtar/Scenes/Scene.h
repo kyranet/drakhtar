@@ -15,13 +15,13 @@ class Scene {
   bool transition_ = false;
   bool skipDialog_ = false;
 
-protected:
+ protected:
   std::list<GameObject *> gameObjects_;
   std::list<GameObject *> pendingOnCreate_;
   std::list<GameObject *> pendingOnDestroy_;
   std::list<NextTickCallback *> nextTick_;
 
-public:
+ public:
   Scene();
   virtual ~Scene();
 
@@ -29,8 +29,8 @@ public:
   bool isRunning() const;
   bool isPaused() const;
   bool isLoaded() const;
-  bool getTransition();
-  bool getSkip();
+  bool getTransition() const;
+  bool getSkip() const;
   void setTransition(bool transition);
   void setSkip(bool skip);
   virtual void run();
