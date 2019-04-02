@@ -5,6 +5,7 @@
 #include "../Managers/FontManager.h"
 #include "../Managers/TextureManager.h"
 #include "../Scenes/MenuScene.h"
+#include "../Scenes/TransitionScene.h"
 #include "../Utils/Constants.h"
 #include "SDL_mixer.h"
 #include "SDL_ttf.h"
@@ -83,6 +84,26 @@ Game::Game() {
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10});
   textures->add("Units-Zamdran", "../images/Units/Zamdran.png", 2, 1);
 
+  // Units attacks
+  textures->add("Attack-BlueArcher", "../images/Units/BlueArcherAttack.png", 4,
+                3, SDL_FLIP_HORIZONTAL);
+  textures->add("Attack-BlueMage", "../images/Units/BlueMageAttack.png", 4, 2,
+                SDL_FLIP_HORIZONTAL);
+  textures->add("Attack-BlueMonster", "../images/Units/BlueMonsterAttack.png",
+                3, 3, SDL_FLIP_HORIZONTAL);
+  textures->add("Attack-BlueSoldier", "../images/Units/BlueSoldierAttack.png",
+                5, 2, SDL_FLIP_HORIZONTAL);
+  textures->add("Attack-Thassa", "../images/Units/ThassaAttack.png", 3, 3,
+                SDL_FLIP_HORIZONTAL);
+  textures->add("Attack-Abeizhul", "../images/Units/AbeizhulAttack.png", 5, 2);
+  textures->add("Attack-RedArcher", "../images/Units/RedArcherAttack.png", 4,
+                3);
+  textures->add("Attack-RedMage", "../images/Units/RedMageAttack.png", 3, 3);
+  textures->add("Attack-RedSoldier", "../images/Units/RedSoldierAttack.png", 5,
+                2);
+  textures->add("Attack-Sheissa", "../images/Units/SheissaAttack.png", 3, 3);
+  textures->add("Attack-Valar", "../images/Units/RedValarAttack.png", 4, 3);
+
   // UI
   textures->add("UI-cellFrame", "../images/UI/cellFrame.png", 1, 1);
   textures->add("UI-cellHover", "../images/UI/cellHover.png", 1, 1);
@@ -91,6 +112,9 @@ Game::Game() {
   textures->add("UI-activeUnit", "../images/UI/activeUnitCell.png", 1, 1);
   textures->add("UI-dialogueBackground", "../images/UI/dialogueBackground.png",
                 1, 1);
+  textures->add("UI-dialogueArrow", "../images/UI/arrow_Dialog.png", 7, 1);
+  textures->add("UI-dialoguePortrait", "../images/UI/portrait.png", 1, 1);
+
   textures->add("UI-turnBar", "../images/UI/rock_bar.png", 1, 1);
   textures->add("UI-circle", "../images/UI/circle.png", 1, 1);
   // Button
@@ -101,6 +125,7 @@ Game::Game() {
   textures->add("Button-Resume", "../images/Pause/Resume_Button.png", 1, 1);
   textures->add("Button-Restart", "../images/Pause/Restart_Button.png", 1, 1);
   textures->add("Button-Exit", "../images/Pause/Exit_Button.png", 1, 1);
+  textures->add("Button-Skip", "../images/UI/skipButton.png", 1, 1);
 
   // Pause
   textures->add("Pause-Panel", "../images/Pause/Panel.png", 1, 1);
@@ -111,8 +136,10 @@ Game::Game() {
   textures->add("Portraits-ArcherEnemy", "../images/Portraits/ArcherEnemy.png",
                 1, 1);
   // TODO(Javi): Nuke this
-  textures->add("Portraits-characterPlaceholder",
-                "../images/Portraits/characterPlaceholder.png", 1, 1);
+  textures->add("Portraits-Valar", "../images/Portraits/Valar.png", 1, 1);
+  textures->add("Portraits-EvilValar", "../images/Portraits/EvilValar.png", 1,
+                1);
+
   textures->add("Portraits-Knight", "../images/Portraits/Knight.png", 1, 1);
   textures->add("Portraits-KnightEnemy", "../images/Portraits/KnightEnemy.png",
                 1, 1);
@@ -135,6 +162,11 @@ Game::Game() {
   textures->add("Maps-Test", "../images/Maps/TestMap.png", 1, 1);
   textures->add("Maps-FirstBattle", "../images/Maps/FirstBattle.png", 1, 1);
   textures->add("Maps-SecondBattle", "../images/Maps/SecondBattle.png", 1, 1);
+
+  // Transition
+  textures->add("Transition-Map1", "../images/Maps/TestMap.png", 1, 1);
+  textures->add("Transition-Map2", "../images/Transition/Transition_2.png", 1,
+                1);
 
   auto fonts = FontManager::getInstance();
 
