@@ -4,12 +4,12 @@
 #include "../GameObjects/Button.h"
 #include "../GameObjects/GameObject.h"
 #include "../Managers/TextureManager.h"
+#include "../Scenes/TransitionScene.h"
 #include "../Structures/Game.h"
 #include "../Utils/Constants.h"
 #include "../Utils/Vector2D.h"
 #include "GameScene.h"
 #include "Managers/SDLAudioManager.h"
-#include "Scenes/TransitionScene.h"
 
 void buttonPlay() {
   Game::getSceneMachine()->getCurrentScene()->processNextTick(

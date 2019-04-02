@@ -1,9 +1,9 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-#include <stack>
 #include "../Structures/Texture.h"
 #include "ResourceManager.h"
+#include <stack>
 
 struct AnimationTextureInfo {
   std::string name;
@@ -11,7 +11,7 @@ struct AnimationTextureInfo {
 };
 
 class TextureInfo {
- public:
+public:
   TextureInfo(std::string name, std::string path, Uint16 columns, Uint16 rows,
               SDL_RendererFlip flip = SDL_FLIP_NONE)
       : name(name), path(path), columns(columns), rows(rows), flip(flip) {}
@@ -34,7 +34,7 @@ class TextureManager : public ResourceManager<Texture *> {
   ~TextureManager();
   std::stack<TextureInfo *> stack_;
 
- public:
+public:
   TextureInfo *add(std::string name, std::string path, Uint16 columns,
                    Uint16 rows, SDL_RendererFlip flip = SDL_FLIP_NONE);
   void init(SDL_Renderer *renderer) override;

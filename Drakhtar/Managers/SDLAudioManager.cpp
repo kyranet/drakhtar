@@ -4,7 +4,7 @@
 #include <iostream>
 #include <string>
 
-SDLAudioManager* SDLAudioManager::instance_ = nullptr;
+SDLAudioManager *SDLAudioManager::instance_ = nullptr;
 
 SDLAudioManager::SDLAudioManager() : SDLAudioManager(8) {}
 
@@ -12,17 +12,20 @@ SDLAudioManager::SDLAudioManager(const int channels)
     : initialized_(false), channels_(channels) {}
 
 SDLAudioManager::~SDLAudioManager() {
-  if (!initialized_) return;
+  if (!initialized_)
+    return;
 
   // free all sound effect chucks
-  for (const auto& pair : chunks_) {
-    if (pair.second != nullptr) Mix_FreeChunk(pair.second);
+  for (const auto &pair : chunks_) {
+    if (pair.second != nullptr)
+      Mix_FreeChunk(pair.second);
   }
   chunks_.clear();
 
   // free all music sound effect
-  for (const auto& pair : music_) {
-    if (pair.second != nullptr) Mix_FreeMusic(pair.second);
+  for (const auto &pair : music_) {
+    if (pair.second != nullptr)
+      Mix_FreeMusic(pair.second);
   }
   music_.clear();
 
@@ -30,8 +33,9 @@ SDLAudioManager::~SDLAudioManager() {
   Mix_Quit();
 }
 
-SDLAudioManager* SDLAudioManager::getInstance() {
-  if (instance_ == nullptr) instance_ = new SDLAudioManager();
+SDLAudioManager *SDLAudioManager::getInstance() {
+  if (instance_ == nullptr)
+    instance_ = new SDLAudioManager();
   return instance_;
 }
 
@@ -43,7 +47,8 @@ void SDLAudioManager::destroy() {
 }
 
 bool SDLAudioManager::init() {
-  if (initialized_) return false;
+  if (initialized_)
+    return false;
 
   Mix_Init(MIX_INIT_FLAC | MIX_INIT_MOD | MIX_INIT_MP3 | MIX_INIT_OGG);
   Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048);
@@ -55,12 +60,14 @@ bool SDLAudioManager::init() {
 }
 
 bool SDLAudioManager::loadSound(const int tag, std::string fileName) {
-  if (!initialized_) return false;
+  if (!initialized_)
+    return false;
 
   const auto mixChunk = Mix_LoadWAV(fileName.c_str());
   if (mixChunk != nullptr) {
     const auto chunk = chunks_[tag];
-    if (chunk != nullptr) Mix_FreeChunk(chunk);
+    if (chunk != nullptr)
+      Mix_FreeChunk(chunk);
     chunks_[tag] = mixChunk;
     return true;
   }
@@ -100,12 +107,14 @@ int SDLAudioManager::setChannelVolume(int volume, int channel) {
 int SDLAudioManager::channels() { return channels_; }
 
 bool SDLAudioManager::loadMusic(int tag, std::string fileName) {
-  if (!initialized_) return false;
+  if (!initialized_)
+    return false;
 
-  Mix_Music* music = Mix_LoadMUS(fileName.c_str());
+  Mix_Music *music = Mix_LoadMUS(fileName.c_str());
   if (music != nullptr) {
-    Mix_Music* curr = music_[tag];
-    if (curr != nullptr) Mix_FreeMusic(curr);
+    Mix_Music *curr = music_[tag];
+    if (curr != nullptr)
+      Mix_FreeMusic(curr);
     music_[tag] = music;
     return true;
   } else {
@@ -115,7 +124,7 @@ bool SDLAudioManager::loadMusic(int tag, std::string fileName) {
 }
 
 void SDLAudioManager::playMusic(int tag, int loops) {
-  Mix_Music* music = music_[tag];
+  Mix_Music *music = music_[tag];
   if (music != nullptr) {
     Mix_PlayMusic(music, loops);
   } else {

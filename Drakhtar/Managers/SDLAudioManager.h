@@ -1,24 +1,24 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-#include <map>
-#include <string>
 #include "AudioManager.h"
 #include "SDL_mixer.h"
+#include <map>
+#include <string>
 
-// TODO DANI/MIGUEL: HALT ALL MUSIC METHOD 
+// TODO DANI/MIGUEL: HALT ALL MUSIC METHOD
 
 class SDLAudioManager : public AudioManager {
   // IMPORTANT NOTES:
   // Channel means one sound, meaning for example a footstep
   // Music means a background sound or a song
- public:
-  static SDLAudioManager* instance_;
+public:
+  static SDLAudioManager *instance_;
   SDLAudioManager();
   explicit SDLAudioManager(int channels);
   virtual ~SDLAudioManager();
 
-  static SDLAudioManager* getInstance();
+  static SDLAudioManager *getInstance();
   static void destroy();
 
   // Supposed to be called before start using the object
@@ -46,9 +46,9 @@ class SDLAudioManager : public AudioManager {
   virtual void FadeOutChannel(int channel, int ticks);
   virtual void FadeOutMusic(int ticks);
 
- private:
+private:
   bool initialized_;
   int channels_;
-  std::map<int, Mix_Chunk*> chunks_;
-  std::map<int, Mix_Music*> music_;
+  std::map<int, Mix_Chunk *> chunks_;
+  std::map<int, Mix_Music *> music_;
 };

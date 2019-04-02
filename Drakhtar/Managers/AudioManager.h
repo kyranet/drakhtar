@@ -5,7 +5,7 @@
 #include <string>
 
 class AudioManager {
- public:
+public:
   AudioManager();
   virtual ~AudioManager();
 

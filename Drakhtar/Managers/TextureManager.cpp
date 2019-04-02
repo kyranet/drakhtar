@@ -39,7 +39,8 @@ void TextureManager::init(SDL_Renderer *renderer) {
       const Uint16 frames =
           texture->getColumnAmount() * texture->getRowAmount();
       std::vector<Uint16> animation(frames);
-      for (Uint16 i = 0; i < frames; i++) animation[i] = i;
+      for (Uint16 i = 0; i < frames; i++)
+        animation[i] = i;
       texture->addAnimation("default", animation);
     }
 
@@ -54,7 +55,8 @@ void TextureManager::init(SDL_Renderer *renderer) {
 }
 
 void TextureManager::tick() {
-  if (instance_ == nullptr) return;
+  if (instance_ == nullptr)
+    return;
   for (auto pair : map_) {
     pair.second->tick();
   }
@@ -65,8 +67,10 @@ Texture *TextureManager::get(const std::string name) {
 }
 
 TextureManager::~TextureManager() {
-  while (!stack_.empty()) stack_.pop();
-  for (const auto &pair : map_) delete pair.second;
+  while (!stack_.empty())
+    stack_.pop();
+  for (const auto &pair : map_)
+    delete pair.second;
   map_.clear();
 }
 

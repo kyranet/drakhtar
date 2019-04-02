@@ -6,7 +6,6 @@
 #include "../GameObjects/DialogScene.h"
 #include "../GameObjects/Pause.h"
 #include "../GameObjects/TurnBar.h"
-#include "../Managers/SDLAudioManager.h"
 #include "../Managers/TextureManager.h"
 #include "../Structures/Game.h"
 #include "../Structures/Team.h"
@@ -62,15 +61,10 @@ void GameScene::preload() {
   addGameObject(pauseButton);
 
   board->addEventListener(new BoardController(board, turnBar, this));
-
-  auto audio = SDLAudioManager::getInstance();
-  audio->haltMusic();
-  audio->setChannelVolume(100, 0);
-  audio->playMusic(1, -1);
-  audio->setMusicVolume(30);
 }
 
 void GameScene::pause() {
-  if (!isPaused()) addGameObject(new Pause(this));
+  if (!isPaused())
+    addGameObject(new Pause(this));
   Scene::pause();
 }
