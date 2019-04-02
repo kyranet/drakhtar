@@ -32,50 +32,57 @@ Game::Game() {
   auto textures = TextureManager::getInstance();
 
   // Units
-  textures->add("Units-BlueArcher", "../images/Units/BlueArcher.png", 2, 1,
-                SDL_FLIP_HORIZONTAL);
+  textures
+      ->add("Units-BlueArcher", "../images/Units/BlueArcher.png", 4, 3,
+            SDL_FLIP_HORIZONTAL)
+      ->addAnimation("default", {0, 1})
+      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10});
   textures->add("Units-BlueKnight", "../images/Units/BlueKnight.png", 2, 1,
                 SDL_FLIP_HORIZONTAL);
-  textures->add("Units-BlueMage", "../images/Units/BlueMage.png", 2, 1,
-                SDL_FLIP_HORIZONTAL);
-  textures->add("Units-BlueMonster", "../images/Units/BlueMonster.png", 2, 1,
-                SDL_FLIP_HORIZONTAL);
-  textures->add("Units-BlueSoldier", "../images/Units/BlueSoldier.png", 2, 1,
-                SDL_FLIP_HORIZONTAL);
+  textures
+      ->add("Units-BlueMage", "../images/Units/BlueMage.png", 4, 2,
+            SDL_FLIP_HORIZONTAL)
+      ->addAnimation("default", {0, 1})
+      ->addAnimation("attack", {2, 3, 4, 5, 6});
+  textures
+      ->add("Units-BlueMonster", "../images/Units/BlueMonster.png", 3, 3,
+            SDL_FLIP_HORIZONTAL)
+      ->addAnimation("default", {0, 1})
+      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8});
+  textures
+      ->add("Units-BlueSoldier", "../images/Units/BlueSoldier.png", 5, 2,
+            SDL_FLIP_HORIZONTAL)
+      ->addAnimation("default", {0, 1})
+      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9});
   textures->add("Units-BlueValar", "../images/Units/BlueValar.png", 2, 1,
                 SDL_FLIP_HORIZONTAL);
-  textures->add("Units-Thassa", "../images/Units/Thassa.png", 2, 1,
-                SDL_FLIP_HORIZONTAL);
-  textures->add("Units-Abeizhul", "../images/Units/Abeizhul.png", 2, 1);
+  textures
+      ->add("Units-Thassa", "../images/Units/Thassa.png", 3, 3,
+            SDL_FLIP_HORIZONTAL)
+      ->addAnimation("default", {0, 1})
+      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8});
+  textures->add("Units-Abeizhul", "../images/Units/Abeizhul.png", 5, 2)
+      ->addAnimation("default", {0, 1})
+      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9});
   textures->add("Units-Dreilay", "../images/Units/Dreilay.png", 2, 1);
-  textures->add("Units-RedArcher", "../images/Units/RedArcher.png", 2, 1);
+  textures->add("Units-RedArcher", "../images/Units/RedArcher.png", 4, 3)
+      ->addAnimation("default", {0, 1})
+      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10});
   textures->add("Units-RedKnight", "../images/Units/RedKnight.png", 2, 1);
-  textures->add("Units-RedMage", "../images/Units/RedMage.png", 2, 1);
+  textures->add("Units-RedMage", "../images/Units/RedMage.png", 3, 3)
+      ->addAnimation("default", {0, 1})
+      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8});
   textures->add("Units-RedMonster", "../images/Units/RedMonster.png", 2, 1);
-  textures->add("Units-RedSoldier", "../images/Units/RedSoldier.png", 2, 1);
-  textures->add("Units-Sheissa", "../images/Units/Sheissa.png", 2, 1);
-  textures->add("Units-Valar", "../images/Units/Valar.png", 2, 1);
+  textures->add("Units-RedSoldier", "../images/Units/RedSoldier.png", 5, 2)
+      ->addAnimation("default", {0, 1})
+      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9});
+  textures->add("Units-Sheissa", "../images/Units/Sheissa.png", 3, 3)
+      ->addAnimation("default", {0, 1})
+      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8});
+  textures->add("Units-Valar", "../images/Units/RedValar.png", 4, 3)
+      ->addAnimation("default", {0, 1})
+      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10});
   textures->add("Units-Zamdran", "../images/Units/Zamdran.png", 2, 1);
-
-  // Units attacks
-  textures->add("Attack-BlueArcher", "../images/Units/BlueArcherAttack.png", 4,
-                3, SDL_FLIP_HORIZONTAL);
-  textures->add("Attack-BlueMage", "../images/Units/BlueMageAttack.png", 4, 2,
-                SDL_FLIP_HORIZONTAL);
-  textures->add("Attack-BlueMonster", "../images/Units/BlueMonsterAttack.png",
-                3, 3, SDL_FLIP_HORIZONTAL);
-  textures->add("Attack-BlueSoldier", "../images/Units/BlueSoldierAttack.png",
-                5, 2, SDL_FLIP_HORIZONTAL);
-  textures->add("Attack-Thassa", "../images/Units/ThassaAttack.png", 3, 3,
-                SDL_FLIP_HORIZONTAL);
-  textures->add("Attack-Abeizhul", "../images/Units/AbeizhulAttack.png", 5, 2);
-  textures->add("Attack-RedArcher", "../images/Units/RedArcherAttack.png", 4,
-                3);
-  textures->add("Attack-RedMage", "../images/Units/RedMageAttack.png", 3, 3);
-  textures->add("Attack-RedSoldier", "../images/Units/RedSoldierAttack.png", 5,
-                2);
-  textures->add("Attack-Sheissa", "../images/Units/SheissaAttack.png", 3, 3);
-  textures->add("Attack-Valar", "../images/Units/RedValarAttack.png", 4, 3);
 
   // UI
   textures->add("UI-cellFrame", "../images/UI/cellFrame.png", 1, 1);
