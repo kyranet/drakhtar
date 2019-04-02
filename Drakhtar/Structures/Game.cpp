@@ -5,6 +5,7 @@
 #include "../Managers/FontManager.h"
 #include "../Managers/TextureManager.h"
 #include "../Scenes/MenuScene.h"
+#include "../Scenes/TransitionScene.h"
 #include "../Utils/Constants.h"
 #include "SDL_mixer.h"
 #include "SDL_ttf.h"
@@ -64,6 +65,9 @@ Game::Game() {
   textures->add("UI-activeUnit", "../images/UI/activeUnitCell.png", 1, 1);
   textures->add("UI-dialogueBackground", "../images/UI/dialogueBackground.png",
                 1, 1);
+  textures->add("UI-dialogueArrow", "../images/UI/arrow_Dialog.png", 7, 1);
+  textures->add("UI-dialoguePortrait", "../images/UI/portrait.png", 1, 1);
+
   textures->add("UI-turnBar", "../images/UI/rock_bar.png", 1, 1);
   textures->add("UI-circle", "../images/UI/circle.png", 1, 1);
   // Button
@@ -74,6 +78,7 @@ Game::Game() {
   textures->add("Button-Resume", "../images/Pause/Resume_Button.png", 1, 1);
   textures->add("Button-Restart", "../images/Pause/Restart_Button.png", 1, 1);
   textures->add("Button-Exit", "../images/Pause/Exit_Button.png", 1, 1);
+  textures->add("Button-Skip", "../images/UI/skipButton.png", 1, 1);
 
   // Pause
   textures->add("Pause-Panel", "../images/Pause/Panel.png", 1, 1);
@@ -84,8 +89,10 @@ Game::Game() {
   textures->add("Portraits-ArcherEnemy", "../images/Portraits/ArcherEnemy.png",
                 1, 1);
   // TODO(Javi): Nuke this
-  textures->add("Portraits-characterPlaceholder",
-                "../images/Portraits/characterPlaceholder.png", 1, 1);
+  textures->add("Portraits-Valar", "../images/Portraits/Valar.png", 1, 1);
+  textures->add("Portraits-EvilValar", "../images/Portraits/EvilValar.png", 1,
+                1);
+
   textures->add("Portraits-Knight", "../images/Portraits/Knight.png", 1, 1);
   textures->add("Portraits-KnightEnemy", "../images/Portraits/KnightEnemy.png",
                 1, 1);
@@ -108,6 +115,11 @@ Game::Game() {
   textures->add("Maps-Test", "../images/Maps/TestMap.png", 1, 1);
   textures->add("Maps-FirstBattle", "../images/Maps/FirstBattle.png", 1, 1);
   textures->add("Maps-SecondBattle", "../images/Maps/SecondBattle.png", 1, 1);
+
+  // Transition
+  textures->add("Transition-Map1", "../images/Maps/TestMap.png", 1, 1);
+  textures->add("Transition-Map2", "../images/Transition/Transition_2.png", 1,
+                1);
 
   auto fonts = FontManager::getInstance();
 
