@@ -3,14 +3,21 @@
 #pragma once
 
 #include "Scene.h"
+#include <string>
+
+using namespace std;
 
 class GameObject;
+class UnitSelectorController;
 
 class RecruitScene : public Scene {
 private:
-	GameObject * soldier = nullptr;
+	GameObject * unitBar = nullptr;
+  UnitSelectorController * controller = nullptr;
+  
+
+  void addUnit(string textureName, int position);
 public:
 	//virtual ~RecruitScene();
 	void preload() override;
-	void update() override;
 };
