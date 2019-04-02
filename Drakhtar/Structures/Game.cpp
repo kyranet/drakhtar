@@ -89,8 +89,9 @@ Game::Game() {
   textures->add("Portraits-ArcherEnemy", "../images/Portraits/ArcherEnemy.png",
                 1, 1);
   // TODO(Javi): Nuke this
-  textures->add("Portraits-characterPlaceholder",
-                "../images/Portraits/characterPlaceholder.png", 1, 1);
+  textures->add("Portraits-Valar", "../images/Portraits/Valar.png", 1, 1);
+  textures->add("Portraits-EvilValar", "../images/Portraits/EvilValar.png", 1, 1);
+
   textures->add("Portraits-Knight", "../images/Portraits/Knight.png", 1, 1);
   textures->add("Portraits-KnightEnemy", "../images/Portraits/KnightEnemy.png",
                 1, 1);
