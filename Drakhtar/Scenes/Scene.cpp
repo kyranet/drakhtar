@@ -16,25 +16,13 @@ bool Scene::isRunning() const { return !paused_; }
 bool Scene::isPaused() const { return paused_; }
 bool Scene::isLoaded() const { return loaded_; }
 
-bool Scene::getTransition()
-{
-	return transition_;
-}
+bool Scene::getTransition() { return transition_; }
 
-bool Scene::getSkip()
-{
-	return skipDialog_;
-}
+bool Scene::getSkip() { return skipDialog_; }
 
-void Scene::setTransition(bool transition) 
-{
-	transition_ = transition;
-}
+void Scene::setTransition(bool transition) { transition_ = transition; }
 
-void Scene::setSkip(bool skip)
-{
-	skipDialog_ = skip;
-}
+void Scene::setSkip(bool skip) { skipDialog_ = skip; }
 
 void Scene::run() {
   // If it hasn't loaded yet, preload and set it to loaded
