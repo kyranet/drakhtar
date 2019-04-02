@@ -6,7 +6,7 @@
 #include "AudioManager.h"
 #include "SDL_mixer.h"
 
-// TODO: HALT ALL MUSIC METHOD DANI Y MIGUEL
+// TODO DANI/MIGUEL: HALT ALL MUSIC METHOD 
 
 class SDLAudioManager : public AudioManager {
   // IMPORTANT NOTES:
