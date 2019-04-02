@@ -77,7 +77,7 @@ class Tween final {
    * \brief The time in frames for the whole tween to play through once,
    * excluding loo amounts and loop delays.
    */
-  int duration_ = 15;
+  int duration_ = 0;
   /**
    * \brief Value between 0 and 1. The amount through the tween, excluding
    * loops.
@@ -117,12 +117,15 @@ class Tween final {
   Tween* remove();
   Tween* stop(double position = -1.0);
 
-  Tween* setOnComplete(std::function<void()> callback);
-  Tween* setOnLoop(std::function<void()> callback);
-  Tween* setOnRepeat(std::function<void()> callback);
-  Tween* setOnStart(std::function<void()> callback);
-  Tween* setOnUpdate(std::function<void(Vector2D<double>)> callback);
+  Tween* setOnComplete(const std::function<void()>& callback);
+  Tween* setOnLoop(const std::function<void()>& callback);
+  Tween* setOnRepeat(const std::function<void()>& callback);
+  Tween* setOnStart(const std::function<void()>& callback);
+  Tween* setOnUpdate(const std::function<void(Vector2D<double>)>& callback);
   Tween* setState(TweenState state);
+
+  Tween* setDuration(int duration);
+  int getDuration() const;
 
   bool init();
   void update();

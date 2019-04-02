@@ -92,7 +92,7 @@ Tween* Tween::remove() {
   return this;
 }
 
-Tween* Tween::stop(double position) {
+Tween* Tween::stop(const double position) {
   if (state_ == TweenState::ACTIVE) {
     if (position != -1) seek(position);
   }
@@ -124,30 +124,38 @@ bool Tween::init() {
   return true;
 }
 
-Tween* Tween::setOnComplete(std::function<void()> callback) {
+Tween* Tween::setOnComplete(const std::function<void()>& callback) {
   onComplete_ = callback;
   return this;
 }
-Tween* Tween::setOnLoop(std::function<void()> callback) {
+Tween* Tween::setOnLoop(const std::function<void()>& callback) {
   onLoop_ = callback;
   return this;
 }
-Tween* Tween::setOnRepeat(std::function<void()> callback) {
+Tween* Tween::setOnRepeat(const std::function<void()>& callback) {
   onRepeat_ = callback;
   return this;
 }
-Tween* Tween::setOnStart(std::function<void()> callback) {
+Tween* Tween::setOnStart(const std::function<void()>& callback) {
   onStart_ = callback;
   return this;
 }
-Tween* Tween::setOnUpdate(std::function<void(Vector2D<double>)> callback) {
+Tween* Tween::setOnUpdate(
+    const std::function<void(Vector2D<double>)>& callback) {
   onUpdate_ = callback;
   return this;
 }
-Tween* Tween::setState(TweenState state) {
+Tween* Tween::setState(const TweenState state) {
   state_ = state;
   return this;
 }
+
+Tween* Tween::setDuration(const int duration) {
+  duration_ = duration;
+  return this;
+}
+
+int Tween::getDuration() const { return duration_; }
 
 void Tween::update() {
   if (isPaused()) return;

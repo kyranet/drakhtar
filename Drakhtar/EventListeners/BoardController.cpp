@@ -7,7 +7,9 @@
 #include "GameObjects/TurnBar.h"
 #include "GameObjects/Unit.h"
 #include "Scenes/GameScene.h"
+#include "Structures/Texture.h"
 #include "Structures/Tween.h"
+#include "Utils/Constants.h"
 
 BoardController::BoardController(Board *board, TurnBar *turnBar,
                                  GameScene *scene)
@@ -47,7 +49,8 @@ void BoardController::onClickMove(Box *boxClicked) {
   // Checks if the box clicked is within movement range
   if (board_->isInMoveRange(activeUnit_->getBox(), boxClicked,
                             activeUnit_->getMoveRange())) {
-    board_->findPath(activeUnit_->getBox()->getIndex(), boxClicked->getIndex());
+    const auto path = board_->findPath(activeUnit_->getBox()->getIndex(),
+                                       boxClicked->getIndex());
 
     const auto unit = activeUnit_;
     scene_->getTweenManager()
@@ -55,12 +58,15 @@ void BoardController::onClickMove(Box *boxClicked) {
         ->from(activeUnit_->getBox()->getPosition() +
                (activeUnit_->getBox()->getSize() / 2))
         ->to(boxClicked->getPosition() + (boxClicked->getSize() / 2))
+        ->setDuration(static_cast<int>(
+            floor(static_cast<double>(path.size()) * GAME_FRAMERATE * 0.25)))
         ->setOnUpdate([unit](Vector2D<double> updated) {
           unit->setPosition({static_cast<int>(std::floor(updated.getX())),
                              static_cast<int>(std::floor(updated.getY()))});
         })
         ->setOnComplete([this, unit, boxClicked]() {
           unit->moveToBox(boxClicked);
+          hasMoved = true;
           // If there are enemies in range, highlight them, otherwise skip turn
           if (board_->isEnemyInRange(boxClicked, unit->getAttackRange())) {
             board_->resetCellsToBase();
@@ -71,8 +77,6 @@ void BoardController::onClickMove(Box *boxClicked) {
             advanceTurn();
           }
         });
-
-    hasMoved = true;
   } else {
     std::cout << "Out of movement range!\n";
   }
