@@ -2,6 +2,7 @@
 
 #pragma once
 #include <stack>
+#include <utility>
 #include "../Structures/Texture.h"
 #include "ResourceManager.h"
 
@@ -10,25 +11,30 @@ struct AnimationTextureInfo {
   std::vector<Uint16> frames;
 };
 
-class TextureInfo {
+class TextureInfo final {
  public:
-  TextureInfo(std::string name, std::string path, Uint16 columns, Uint16 rows,
-              SDL_RendererFlip flip = SDL_FLIP_NONE)
-      : name(name), path(path), columns(columns), rows(rows), flip(flip) {}
-  ~TextureInfo() { animations.clear(); }
-  std::string name;
-  std::string path;
-  Uint16 columns;
-  Uint16 rows;
-  SDL_RendererFlip flip;
-  std::vector<AnimationTextureInfo> animations;
-  TextureInfo *addAnimation(std::string name, std::vector<Uint16> frames) {
-    animations.push_back({name, frames});
+  TextureInfo(std::string name, std::string path, const Uint16 columns,
+              const Uint16 rows, const SDL_RendererFlip flip = SDL_FLIP_NONE)
+      : name_(std::move(name)),
+        path_(std::move(path)),
+        columns_(columns),
+        rows_(rows),
+        flip_(flip) {}
+  ~TextureInfo() { animations_.clear(); }
+  std::string name_;
+  std::string path_;
+  Uint16 columns_;
+  Uint16 rows_;
+  SDL_RendererFlip flip_;
+  std::vector<AnimationTextureInfo> animations_;
+  TextureInfo *addAnimation(const std::string &name,
+                            const std::vector<Uint16> &frames) {
+    animations_.push_back({name, frames});
     return this;
   }
 };
 
-class TextureManager : public ResourceManager<Texture *> {
+class TextureManager final : public ResourceManager<Texture *> {
   static TextureManager *instance_;
   TextureManager();
   ~TextureManager();

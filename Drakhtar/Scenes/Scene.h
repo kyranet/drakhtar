@@ -29,8 +29,8 @@ class Scene {
   bool isRunning() const;
   bool isPaused() const;
   bool isLoaded() const;
-  bool getTransition();
-  bool getSkip();
+  bool getTransition() const;
+  bool getSkip() const;
   void setTransition(bool transition);
   void setSkip(bool skip);
   virtual void run();

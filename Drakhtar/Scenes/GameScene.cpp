@@ -64,6 +64,7 @@ void GameScene::preload() {
 }
 
 void GameScene::pause() {
-  if (!isPaused()) addGameObject(new Pause(this));
+  if (!isPaused())
+    addGameObject(new Pause(this));
   Scene::pause();
 }

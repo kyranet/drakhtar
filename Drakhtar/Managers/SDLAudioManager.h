@@ -6,39 +6,46 @@
 #include "AudioManager.h"
 #include "SDL_mixer.h"
 
-class SDLAudioManager : public AudioManager {
+// TODO(Dani/Miguel): Halt all music method.
+
+class SDLAudioManager final : public AudioManager {
   // IMPORTANT NOTES:
   // Channel means one sound, meaning for example a footstep
   // Music means a background sound or a song
+  static SDLAudioManager *instance_;
+
  public:
   SDLAudioManager();
   explicit SDLAudioManager(int channels);
-  virtual ~SDLAudioManager();
+  ~SDLAudioManager();
+
+  static SDLAudioManager *getInstance();
+  static void destroy();
 
   // Supposed to be called before start using the object
-  virtual bool init();
+  bool init() override;
 
   // Sound effects
-  virtual bool loadSound(int tag, std::string fileName);
-  virtual int playChannel(int tag, int loops, int channel);
-  virtual int playChannelTimed(int tag, int loops, int channel, int ticks);
-  virtual void pauseChannel(int channel);
-  virtual void resumeChannel(int channel);
-  virtual void haltChannel(int channel);
-  virtual int setChannelVolume(int volume, int channel);
-  virtual int channels();
+  bool loadSound(int tag, std::string fileName) override;
+  int playChannel(int tag, int loops, int channel) override;
+  int playChannelTimed(int tag, int loops, int channel, int ticks) override;
+  void pauseChannel(int channel) override;
+  void resumeChannel(int channel) override;
+  void haltChannel(int channel) override;
+  int setChannelVolume(int volume, int channel) override;
+  int channels() override;
 
   // Music
-  virtual bool loadMusic(int tag, std::string fileName);
-  virtual void playMusic(int tag, int loops);
-  virtual int setMusicVolume(int volume);
-  virtual void haltMusic();
-  virtual void pauseMusic();
-  virtual void resumeMusic();
+  bool loadMusic(int tag, std::string fileName) override;
+  void playMusic(int tag, int loops) override;
+  int setMusicVolume(int volume) override;
+  void haltMusic() override;
+  void pauseMusic() override;
+  void resumeMusic() override;
 
   // Effects
-  virtual void FadeOutChannel(int channel, int ticks);
-  virtual void FadeOutMusic(int ticks);
+  void fadeOutChannel(int channel, int ticks);
+  void fadeOutMusic(int ticks);
 
  private:
   bool initialized_;

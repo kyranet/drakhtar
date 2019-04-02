@@ -1,12 +1,12 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "BoardController.h"
+#include <iostream>
 #include "../GameObjects/Board.h"
 #include "../GameObjects/Box.h"
 #include "../GameObjects/TurnBar.h"
 #include "../GameObjects/Unit.h"
 #include "../Scenes/GameScene.h"
-#include <iostream>
 
 BoardController::BoardController(Board *board, TurnBar *turnBar,
                                  GameScene *scene)
