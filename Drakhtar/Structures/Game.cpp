@@ -57,20 +57,22 @@ Game::Game() {
   textures->add("Units-Zamdran", "../images/Units/Zamdran.png", 2, 1);
 
   // Units attacks
-  textures->add("Attack-BlueArcher", "../images/Units/BlueArcherAttack.png", 4, 3,
-	  SDL_FLIP_HORIZONTAL);
+  textures->add("Attack-BlueArcher", "../images/Units/BlueArcherAttack.png", 4,
+                3, SDL_FLIP_HORIZONTAL);
   textures->add("Attack-BlueMage", "../images/Units/BlueMageAttack.png", 4, 2,
-	  SDL_FLIP_HORIZONTAL);
-  textures->add("Attack-BlueMonster", "../images/Units/BlueMonsterAttack.png", 3, 3,
-	  SDL_FLIP_HORIZONTAL);
-  textures->add("Attack-BlueSoldier", "../images/Units/BlueSoldierAttack.png", 5, 2,
-	  SDL_FLIP_HORIZONTAL);
+                SDL_FLIP_HORIZONTAL);
+  textures->add("Attack-BlueMonster", "../images/Units/BlueMonsterAttack.png",
+                3, 3, SDL_FLIP_HORIZONTAL);
+  textures->add("Attack-BlueSoldier", "../images/Units/BlueSoldierAttack.png",
+                5, 2, SDL_FLIP_HORIZONTAL);
   textures->add("Attack-Thassa", "../images/Units/ThassaAttack.png", 3, 3,
-	  SDL_FLIP_HORIZONTAL);
+                SDL_FLIP_HORIZONTAL);
   textures->add("Attack-Abeizhul", "../images/Units/AbeizhulAttack.png", 5, 2);
-  textures->add("Attack-RedArcher", "../images/Units/RedArcherAttack.png", 4, 3);
+  textures->add("Attack-RedArcher", "../images/Units/RedArcherAttack.png", 4,
+                3);
   textures->add("Attack-RedMage", "../images/Units/RedMageAttack.png", 3, 3);
-  textures->add("Attack-RedSoldier", "../images/Units/RedSoldierAttack.png", 5, 2);
+  textures->add("Attack-RedSoldier", "../images/Units/RedSoldierAttack.png", 5,
+                2);
   textures->add("Attack-Sheissa", "../images/Units/SheissaAttack.png", 3, 3);
   textures->add("Attack-Valar", "../images/Units/RedValarAttack.png", 4, 3);
 
