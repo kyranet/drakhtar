@@ -9,7 +9,7 @@
 #include "../Utils/Vector2D.h"
 #include "GameScene.h"
 #include "Managers/SDLAudioManager.h"
-#include "TransitionScene.h"
+#include "Scenes/TransitionScene.h"
 
 void buttonPlay() {
   Game::getSceneMachine()->getCurrentScene()->processNextTick(
