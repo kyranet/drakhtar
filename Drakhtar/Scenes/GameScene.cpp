@@ -6,8 +6,8 @@
 #include "../GameObjects/DialogScene.h"
 #include "../GameObjects/Pause.h"
 #include "../GameObjects/TurnBar.h"
-#include "../Managers/TextureManager.h"
 #include "../Managers/SDLAudioManager.h"
+#include "../Managers/TextureManager.h"
 #include "../Structures/Game.h"
 #include "../Structures/Team.h"
 #include "../Structures/UnitFactory.h"
@@ -66,7 +66,7 @@ void GameScene::preload() {
   auto audio = SDLAudioManager::getInstance();
   audio->haltMusic();
   audio->setChannelVolume(100, 0);
-  audio->playMusic(1,-1);
+  audio->playMusic(1, -1);
   audio->setMusicVolume(30);
 }
 

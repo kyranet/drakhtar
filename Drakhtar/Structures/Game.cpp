@@ -168,21 +168,22 @@ Game::Game() {
   auto audio = SDLAudioManager::getInstance();
   audio->init();
 
-  //background music
-  audio->loadMusic(0,"../audio/background/MenuSceneMusic - by AShamaluevMusic.ogg");
-  audio->loadMusic(1, "../audio/background/FirstGameSceneMusic - by Always Music.ogg");
+  // background music
+  audio->loadMusic(
+      0, "../audio/background/MenuSceneMusic - by AShamaluevMusic.ogg");
+  audio->loadMusic(
+      1, "../audio/background/FirstGameSceneMusic - by Always Music.ogg");
 
-  //sound effects
+  // sound effects
 
   /*
-		channel 0 = click sounds
-		channel 1 = unit sounds
+                channel 0 = click sounds
+                channel 1 = unit sounds
 
   */
   audio->loadSound(0, "../audio/sound/basic_click.mp3");
   audio->loadSound(1, "../audio/sound/button_click.mp3");
   audio->loadSound(2, "../audio/sound/hitPlayMenu.mp3");
-
 
   // If window or renderer is a null pointer, throw a SDLError
   if (window_ == nullptr || renderer_ == nullptr)

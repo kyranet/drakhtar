@@ -49,6 +49,6 @@ class SDLAudioManager : public AudioManager {
  private:
   bool initialized_;
   int channels_;
-  std::map<int, Mix_Chunk *> chunks_;
-  std::map<int, Mix_Music *> music_;
+  std::map<int, Mix_Chunk*> chunks_;
+  std::map<int, Mix_Music*> music_;
 };

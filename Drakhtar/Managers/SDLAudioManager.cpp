@@ -15,15 +15,14 @@ SDLAudioManager::~SDLAudioManager() {
   if (!initialized_) return;
 
   // free all sound effect chucks
-  for (const auto &pair : chunks_) {
+  for (const auto& pair : chunks_) {
     if (pair.second != nullptr) Mix_FreeChunk(pair.second);
   }
   chunks_.clear();
 
   // free all music sound effect
-  for (const auto &pair : music_) {
-    if (pair.second != nullptr)
-		Mix_FreeMusic(pair.second);
+  for (const auto& pair : music_) {
+    if (pair.second != nullptr) Mix_FreeMusic(pair.second);
   }
   music_.clear();
 
@@ -31,18 +30,16 @@ SDLAudioManager::~SDLAudioManager() {
   Mix_Quit();
 }
 
-SDLAudioManager * SDLAudioManager::getInstance()
-{
-	if (instance_ == nullptr) instance_ = new SDLAudioManager();
-	return instance_;
+SDLAudioManager* SDLAudioManager::getInstance() {
+  if (instance_ == nullptr) instance_ = new SDLAudioManager();
+  return instance_;
 }
 
-void SDLAudioManager::destroy()
-{
-	if (instance_ != nullptr) {
-		delete instance_;
-		instance_ = nullptr;
-	}
+void SDLAudioManager::destroy() {
+  if (instance_ != nullptr) {
+    delete instance_;
+    instance_ = nullptr;
+  }
 }
 
 bool SDLAudioManager::init() {
@@ -103,25 +100,22 @@ int SDLAudioManager::setChannelVolume(int volume, int channel) {
 int SDLAudioManager::channels() { return channels_; }
 
 bool SDLAudioManager::loadMusic(int tag, std::string fileName) {
-	if (!initialized_)
-		return false;
+  if (!initialized_) return false;
 
-	Mix_Music* music = Mix_LoadMUS(fileName.c_str());
-	if (music != nullptr) {
-		Mix_Music* curr = music_[tag];
-		if (curr != nullptr)
-			Mix_FreeMusic(curr);
-		music_[tag] = music;
-		return true;
-	}
-	else {
-		std::cout << "Couldn't load music file: " << fileName << std::endl;
-		return false;
-	}
+  Mix_Music* music = Mix_LoadMUS(fileName.c_str());
+  if (music != nullptr) {
+    Mix_Music* curr = music_[tag];
+    if (curr != nullptr) Mix_FreeMusic(curr);
+    music_[tag] = music;
+    return true;
+  } else {
+    std::cout << "Couldn't load music file: " << fileName << std::endl;
+    return false;
+  }
 }
 
 void SDLAudioManager::playMusic(int tag, int loops) {
-  Mix_Music *music = music_[tag];
+  Mix_Music* music = music_[tag];
   if (music != nullptr) {
     Mix_PlayMusic(music, loops);
   } else {
