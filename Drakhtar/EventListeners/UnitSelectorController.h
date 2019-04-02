@@ -9,10 +9,17 @@ using namespace std;
 
 class UnitSelectorController : public ListenerOnClick {
 private:
-	vector<GameObject*> unitList = nullptr;
-	vector<GameObject*> UnitStore = nullptr;
-	GameObject currentVisibleUnit = nullptr;
+	vector<GameObject*> bigUnits;
+	vector<GameObject*> unitStore;
+	GameObject *currentVisibleUnit = nullptr;
 public:
-	UnitSelectorController();
+  explicit UnitSelectorController(GameObject *gameObject)
+    : ListenerOnClick(gameObject) {}
+
+  void addUnitToStore(GameObject * unit);
+  void addBigUnit(GameObject * unit);
+
+
+  virtual void onClickStop(const SDL_Point) override;
 
 };
