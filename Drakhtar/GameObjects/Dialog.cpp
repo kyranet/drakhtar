@@ -12,12 +12,12 @@ Dialog::Dialog(Scene *scene, std::ifstream &file, Font *textfont,
     : GameObject(scene, nullptr), dialogueArea_(dialogRect) {
   readFromFile(file);
 
-  auto characterPortraitSprite = new GameObject(
-      scene, TextureManager::get(spriteText_),
-      Vector2D<int>(dialogueArea_.x + dialogueArea_.w / 8,
-                    dialogueArea_.y - dialogueArea_.h / 2),
-      Vector2D<int>(dialogueArea_.h / 1, dialogueArea_.h / 1));
-  
+  auto characterPortraitSprite =
+      new GameObject(scene, TextureManager::get(spriteText_),
+                     Vector2D<int>(dialogueArea_.x + dialogueArea_.w / 8,
+                                   dialogueArea_.y - dialogueArea_.h / 2),
+                     Vector2D<int>(dialogueArea_.h / 1, dialogueArea_.h / 1));
+
   SDL_Color textColor = {0, 0, 0, 1};
 
   auto characterNameSprite =

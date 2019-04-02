@@ -64,7 +64,7 @@ Game::Game() {
   textures->add("UI-enemyInRange", "../images/UI/enemyInRange.png", 1, 1);
   textures->add("UI-activeUnit", "../images/UI/activeUnitCell.png", 1, 1);
   textures->add("UI-dialogueBackground", "../images/UI/dialogueBackground.png",
-	  1, 1);
+                1, 1);
   textures->add("UI-dialogueArrow", "../images/UI/arrow_Dialog.png", 7, 1);
   textures->add("UI-dialoguePortrait", "../images/UI/portrait.png", 1, 1);
 
@@ -90,7 +90,8 @@ Game::Game() {
                 1, 1);
   // TODO(Javi): Nuke this
   textures->add("Portraits-Valar", "../images/Portraits/Valar.png", 1, 1);
-  textures->add("Portraits-EvilValar", "../images/Portraits/EvilValar.png", 1, 1);
+  textures->add("Portraits-EvilValar", "../images/Portraits/EvilValar.png", 1,
+                1);
 
   textures->add("Portraits-Knight", "../images/Portraits/Knight.png", 1, 1);
   textures->add("Portraits-KnightEnemy", "../images/Portraits/KnightEnemy.png",
@@ -115,9 +116,10 @@ Game::Game() {
   textures->add("Maps-FirstBattle", "../images/Maps/FirstBattle.png", 1, 1);
   textures->add("Maps-SecondBattle", "../images/Maps/SecondBattle.png", 1, 1);
 
-  //Transition
+  // Transition
   textures->add("Transition-Map1", "../images/Maps/TestMap.png", 1, 1);
-  textures->add("Transition-Map2", "../images/Transition/Transition_2.png", 1, 1);  
+  textures->add("Transition-Map2", "../images/Transition/Transition_2.png", 1,
+                1);
 
   auto fonts = FontManager::getInstance();
 
