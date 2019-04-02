@@ -99,6 +99,10 @@ void GameScene::preload() {
   addGameObject(arrowRainButton);
 
   board->addEventListener(new BoardController(board, turnBar, this));
+
+  auto tutorialBox = new TutorialBox(this, "prueba", "DialogFont");
+  addGameObject(tutorialBox);
+
 }
 
 void GameScene::pause() {
