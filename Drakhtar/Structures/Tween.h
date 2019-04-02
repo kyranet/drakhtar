@@ -94,11 +94,11 @@ class Tween final {
    */
   double totalProgress_ = 0;
 
-  std::function<void()>* onComplete_ = nullptr;
-  std::function<void()>* onLoop_ = nullptr;
-  std::function<void()>* onRepeat_ = nullptr;
-  std::function<void()>* onStart_ = nullptr;
-  std::function<void(Vector2D<double> updated)>* onUpdate_ = nullptr;
+  std::function<void()> onComplete_ = nullptr;
+  std::function<void()> onLoop_ = nullptr;
+  std::function<void()> onRepeat_ = nullptr;
+  std::function<void()> onStart_ = nullptr;
+  std::function<void(Vector2D<double>)> onUpdate_ = nullptr;
 
   void calculateDuration();
 
@@ -117,11 +117,11 @@ class Tween final {
   Tween* remove();
   Tween* stop(double position = -1.0);
 
-  Tween* setOnComplete(std::function<void()>* callback);
-  Tween* setOnLoop(std::function<void()>* callback);
-  Tween* setOnRepeat(std::function<void()>* callback);
-  Tween* setOnStart(std::function<void()>* callback);
-  Tween* setOnUpdate(std::function<void(Vector2D<double> updated)>* callback);
+  Tween* setOnComplete(std::function<void()> callback);
+  Tween* setOnLoop(std::function<void()> callback);
+  Tween* setOnRepeat(std::function<void()> callback);
+  Tween* setOnStart(std::function<void()> callback);
+  Tween* setOnUpdate(std::function<void(Vector2D<double>)> callback);
   Tween* setState(TweenState state);
 
   bool init();

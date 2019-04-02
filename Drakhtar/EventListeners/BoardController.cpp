@@ -21,7 +21,7 @@ BoardController::BoardController(Board *board, TurnBar *turnBar,
 }
 
 // Is called every time an event is captured
-void BoardController::run(SDL_Event event) {
+void BoardController::run(const SDL_Event event) {
   // Captures mouse event
   ListenerOnClick::run(event);
 
@@ -31,8 +31,8 @@ void BoardController::run(SDL_Event event) {
   }
 }
 
-void BoardController::onClickStop(SDL_Point point) {
-  Box *boxClicked = board_->getBoxAtCoordinates(point);
+void BoardController::onClickStop(const SDL_Point point) {
+  const auto boxClicked = board_->getBoxAtCoordinates(point);
 
   if (boxClicked != nullptr) {
     if (boxClicked->isEmpty() && !hasMoved) {
@@ -51,27 +51,30 @@ void BoardController::onClickMove(Box *boxClicked) {
 
     scene_->getTweenManager()
         ->create()
-        ->from(activeUnit_->getBox()->getPosition())
-        ->to(boxClicked->getPosition())
-        ->setOnUpdate(&std::function<void(Vector2D<double>)>(
-            [this](Vector2D<double> updated) {
-              activeUnit_->setPosition(
-                  {static_cast<int>(std::floor(updated.getX())),
-                   static_cast<int>(std::floor(updated.getY()))});
-            }));
+        ->from(activeUnit_->getBox()->getPosition() +
+               (activeUnit_->getBox()->getSize() / 2))
+        ->to(boxClicked->getPosition() + (boxClicked->getSize() / 2))
+        ->setOnUpdate([this](Vector2D<double> updated) {
+          activeUnit_->setPosition(
+              {static_cast<int>(std::floor(updated.getX())),
+               static_cast<int>(std::floor(updated.getY()))});
+        })
+        ->setOnComplete([this, boxClicked]() {
+          activeUnit_->moveToBox(boxClicked);
+          // If there are enemies in range, highlight them, otherwise skip turn
+          if (board_->isEnemyInRange(boxClicked,
+                                     activeUnit_->getAttackRange())) {
+            board_->resetCellsToBase();
+            activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
+            board_->highlightEnemiesInRange(activeUnit_->getBox(),
+                                            activeUnit_->getAttackRange());
+          } else {
+            advanceTurn();
+          }
+        });
 
-    activeUnit_->moveToBox(boxClicked);
     hasMoved = true;
 
-    // If there are enemies in range, highlight them, otherwise skip turn
-    if (board_->isEnemyInRange(boxClicked, activeUnit_->getAttackRange())) {
-      board_->resetCellsToBase();
-      activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
-      board_->highlightEnemiesInRange(activeUnit_->getBox(),
-                                      activeUnit_->getAttackRange());
-    } else {
-      advanceTurn();
-    }
   } else {
     std::cout << "Out of movement range!\n";
   }

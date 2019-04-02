@@ -55,15 +55,17 @@ void TweenManager::preUpdate() {
   // Process all pending-to-destroy tweens
   for (auto tween : destroy_) {
     auto it = iteratorFrom(active_, tween);
-    if (it == destroy_.end()) {
+    if (it == active_.end()) {
       // Not in the active array, is it in pending instead?
       it = iteratorFrom(pending_, tween);
       if (it != pending_.end()) {
         tween->setState(TweenState::REMOVED);
+        delete *it;
         pending_.erase(it);
       }
     } else {
       tween->setState(TweenState::REMOVED);
+      delete *it;
       active_.erase(it);
     }
   }

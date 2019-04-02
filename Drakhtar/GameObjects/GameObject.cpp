@@ -10,12 +10,12 @@
 
 GameObject::GameObject(Scene *scene, Texture *texture)
     : scene_(scene),
-      texture_(texture),
       position_(Vector2D<int>(0, 0)),
-      size_(Vector2D<int>(0, 0)) {}
-GameObject::GameObject(Scene *scene, Texture *texture, Vector2D<int> position,
-                       Vector2D<int> size)
-    : scene_(scene), texture_(texture), position_(position), size_(size) {}
+      size_(Vector2D<int>(0, 0)),
+      texture_(texture) {}
+GameObject::GameObject(Scene *scene, Texture *texture, const Vector2D<int>& position,
+                       const Vector2D<int>& size)
+    : scene_(scene), position_(position), size_(size), texture_(texture) {}
 
 GameObject::~GameObject() {
   scene_ = nullptr;
@@ -57,19 +57,20 @@ SDL_Rect GameObject::getRect() const {
           position_.getY() - size_.getY() / 2, size_.getX(), size_.getY()};
 }
 
-Texture *GameObject::getTexture() const { return texture_; }
-
 bool GameObject::hasParent() const { return parent_ != nullptr; }
 void GameObject::setParent(GameObject *gameObject) { parent_ = gameObject; }
 GameObject *GameObject::getParent() const { return parent_; }
 
 void GameObject::setTexture(Texture *texture) { texture_ = texture; }
+Texture *GameObject::getTexture() const { return texture_; }
 
-void GameObject::setActive(bool active) { active_ = active; }
-
+void GameObject::setActive(const bool active) { active_ = active; }
 bool GameObject::getActive() const { return active_; }
 
-void GameObject::setPosition(Vector2D<int> position) { position_ = position; }
+void GameObject::setSize(Vector2D<int> size) { size_ = size; }
+Vector2D<int> GameObject::getSize() const { return size_; }
+
+void GameObject::setPosition(const Vector2D<int>& position) { position_ = position; }
 Vector2D<int> GameObject::getPosition() const { return position_; }
 
 bool GameObject::hasChildren() const { return !children_.empty(); }
@@ -81,7 +82,7 @@ void GameObject::addChild(GameObject *gameObject) {
 }
 
 void GameObject::removeChild(GameObject *gameObject) {
-  for (auto it = children_.begin(); it != children_.end(); it++) {
+  for (auto it = children_.begin(); it != children_.end(); ++it) {
     if (*it == gameObject) {
       children_.erase(it);
       break;

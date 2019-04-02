@@ -36,7 +36,7 @@ Tween* Tween::play() {
     tweenManager_->makeActive(this);
   } else {
     state_ = TweenState::ACTIVE;
-    if (onStart_ != nullptr) (*onStart_)();
+    if (onStart_ != nullptr) onStart_();
     tweenManager_->makeActive(this);
   }
   return this;
@@ -81,7 +81,7 @@ Tween* Tween::complete(const int delay) {
     countdown_ = delay;
     state_ = TweenState::COMPLETE_DELAY;
   } else {
-    if (onComplete_ != nullptr) (*onComplete_)();
+    if (onComplete_ != nullptr) onComplete_();
     state_ = TweenState::PENDING_REMOVE;
   }
   return this;
@@ -124,24 +124,23 @@ bool Tween::init() {
   return true;
 }
 
-Tween* Tween::setOnComplete(std::function<void()>* callback) {
+Tween* Tween::setOnComplete(std::function<void()> callback) {
   onComplete_ = callback;
   return this;
 }
-Tween* Tween::setOnLoop(std::function<void()>* callback) {
+Tween* Tween::setOnLoop(std::function<void()> callback) {
   onLoop_ = callback;
   return this;
 }
-Tween* Tween::setOnRepeat(std::function<void()>* callback) {
+Tween* Tween::setOnRepeat(std::function<void()> callback) {
   onRepeat_ = callback;
   return this;
 }
-Tween* Tween::setOnStart(std::function<void()>* callback) {
+Tween* Tween::setOnStart(std::function<void()> callback) {
   onStart_ = callback;
   return this;
 }
-Tween* Tween::setOnUpdate(
-    std::function<void(Vector2D<double> updated)>* callback) {
+Tween* Tween::setOnUpdate(std::function<void(Vector2D<double>)> callback) {
   onUpdate_ = callback;
   return this;
 }
@@ -153,7 +152,7 @@ Tween* Tween::setState(TweenState state) {
 void Tween::update() {
   if (isPaused()) return;
   elapsed_++;
-  progress_ = std::min(elapsed_ / duration_, 1);
+  progress_ = std::min((double)elapsed_ / (double)duration_, 1.0);
 
   totalElapsed_++;
   totalProgress_ = std::min(totalElapsed_ / totalDuration_, 1);
@@ -165,7 +164,7 @@ void Tween::update() {
           elapsed_ = 0;
           progress_ = 0;
           --loopCounter_;
-          if (onLoop_ != nullptr) (*onLoop_)();
+          if (onLoop_ != nullptr) onLoop_();
           if (loopDelay_ > 0) {
             countdown_ = loopDelay_;
             state_ = TweenState::LOOP_DELAY;
@@ -176,7 +175,7 @@ void Tween::update() {
           countdown_ = completeDelay_;
           state_ = TweenState::COMPLETE_DELAY;
         } else {
-          if (onComplete_ != nullptr) (*onComplete_)();
+          if (onComplete_ != nullptr) onComplete_();
           state_ = TweenState::PENDING_REMOVE;
         }
       }
@@ -188,14 +187,14 @@ void Tween::update() {
     }
     case TweenState::OFFSET_DELAY: {
       if (--countdown_ <= 0) {
-        if (onStart_ != nullptr) (*onStart_)();
+        if (onStart_ != nullptr) onStart_();
         state_ = TweenState::ACTIVE;
       }
       break;
     }
     case TweenState::COMPLETE_DELAY: {
       if (--countdown_ <= 0) {
-        if (onComplete_ != nullptr) (*onComplete_)();
+        if (onComplete_ != nullptr) onComplete_();
         state_ = TweenState::PENDING_REMOVE;
       }
       break;
@@ -205,8 +204,8 @@ void Tween::update() {
   }
 
   if (state_ == TweenState::ACTIVE) {
-    (*onUpdate_)({((to_.getX() - from_.getX()) * progress_) + from_.getX(),
-                  ((to_.getY() - from_.getY()) * progress_) + from_.getY()});
+    onUpdate_({((to_.getX() - from_.getX()) * progress_) + from_.getX(),
+               ((to_.getY() - from_.getY()) * progress_) + from_.getY()});
   }
 }
 
