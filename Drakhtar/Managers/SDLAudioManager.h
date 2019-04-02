@@ -6,7 +6,7 @@
 #include <map>
 #include <string>
 
-// TODO DANI/MIGUEL: HALT ALL MUSIC METHOD
+// TODO(Dani/Miguel): Halt all music method.
 
 class SDLAudioManager : public AudioManager {
   // IMPORTANT NOTES:
