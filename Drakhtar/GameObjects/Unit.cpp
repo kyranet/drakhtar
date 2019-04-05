@@ -73,6 +73,18 @@ void Unit::render() const {
   healthText_->render();
 }
 
+void Unit::attack(Unit *enemy, bool counter) {
+  enemy->loseHealth(getAttack());
+
+  // If the attack is not a counter and the enemy is
+  // alive and within attack range, counter-attack
+  if (!counter && enemy->getHealth() > 0 &&
+      team_->getBoard()->isInRange(box_, enemy->getBox(),
+                                   enemy->getAttackRange())) {
+    enemy->attack(this, true);
+  }
+}
+
 std::string Unit::healthToString() const {
   return std::to_string(getHealth()) + " HP";
 }

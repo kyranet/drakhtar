@@ -51,4 +51,5 @@ class Unit : public GameObject {
   virtual void moveToBox(Box *box);
   virtual int loseHealth(int enemyAttack);
   void render() const override;
+  virtual void attack(Unit* enemy, bool counter);
 };
