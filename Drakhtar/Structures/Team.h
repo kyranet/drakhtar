@@ -6,6 +6,7 @@
 #include "../GameObjects/Unit.h"
 
 class Unit;
+class Commander;
 
 enum Color { BLUE, RED };
 
@@ -14,11 +15,14 @@ class Team {
   Board *board_ = nullptr;
   std::list<Unit *>::iterator findInsertPosition(Unit *unit);
   Color color_;
+  Commander *commander_ = nullptr;
 
  public:
   Team(Board *board, Color color);
   virtual ~Team();
   Board *getBoard() const;
+  Commander *getCommander() const { return commander_; }
+  void setCommander(Commander* commander) { commander_ = commander; }
   void addUnit(Unit *unit);
   void removeUnit(Unit *unit);
   Unit *pickUnit() const;

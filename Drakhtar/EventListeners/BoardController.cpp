@@ -116,6 +116,7 @@ void BoardController::advanceTurn() {
   hasMoved = hasAttacked = false;
   turnBar_->advanceTurn();
   activeUnit_ = turnBar_->getFrontUnit();
+
   activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
   board_->highlightCellsInRange(activeUnit_->getBox(),
                                 activeUnit_->getMoveRange());

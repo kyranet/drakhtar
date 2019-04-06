@@ -7,6 +7,8 @@ class Scene;
 class Team;
 class Box;
 class Unit;
+class Thassa;
+class Zamdran;
 
 class UnitFactory {
  private:
@@ -20,4 +22,7 @@ class UnitFactory {
   Unit *newKnight(Team *team, Box *box, int size) const;
   Unit *newWizard(Team *team, Box *box, int size) const;
   Unit *newMonster(Team *team, Box *box, int size) const;
+
+  Thassa *newThassa(Team *team, Box *box) const;
+  Zamdran *newZamdran(Team *team, Box *box) const;
 };
