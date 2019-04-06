@@ -46,12 +46,16 @@ void BoardController::onClickStop(const SDL_Point point) {
 }
 
 void BoardController::onClickMove(Box *boxClicked) {
+  // If this BoardController is stopped, don't run
+  if (isTweening) return;
+
   // Checks if the box clicked is within movement range
   if (board_->isInMoveRange(activeUnit_->getBox(), boxClicked,
                             activeUnit_->getMoveRange())) {
     const auto path = board_->findPath(activeUnit_->getBox()->getIndex(),
                                        boxClicked->getIndex());
 
+    isTweening = true;
     const auto unit = activeUnit_;
     scene_->getTweenManager()
         ->create()
@@ -65,6 +69,7 @@ void BoardController::onClickMove(Box *boxClicked) {
         ->setOnComplete([this, unit, boxClicked]() {
           unit->moveToBox(boxClicked);
           hasMoved = true;
+          isTweening = false;
           // If there are enemies in range, highlight them, otherwise skip turn
           if (board_->isEnemyInRange(boxClicked, unit->getAttackRange())) {
             board_->resetCellsToBase();
