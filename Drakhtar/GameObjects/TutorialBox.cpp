@@ -24,7 +24,7 @@ TutorialBox::TutorialBox(Scene *scene, const std::string& filename, const std::s
 	const auto tutorialArea_ = getRect();
 
 	auto dialogueBackground = new GameObject(
-		scene_, TextureManager::get("UI-dialogueBackground"),
+		scene_, TextureManager::get("UI-tutorialBackground"),
 		Vector2D<int>(tutorialArea_.x + WIN_WIDTH / 2, WIN_HEIGHT - tutorialArea_.h * WIN_HEIGHT / 6),
 		Vector2D<int>(tutorialArea_.w * WIN_WIDTH / 1.4, tutorialArea_.h * WIN_HEIGHT / 4));
 
@@ -50,6 +50,7 @@ TutorialBox::TutorialBox(Scene *scene, const std::string& filename, const std::s
 
 	addChild(tutorialImage);
 	addChild(dialogTextSprite);
+	addChild(dialogueBackground);
 	addChild(skip);
 
 }

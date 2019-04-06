@@ -89,6 +89,8 @@ Game::Game() {
   textures->add("UI-activeUnit", "../images/UI/activeUnitCell.png", 1, 1);
   textures->add("UI-dialogueBackground", "../images/UI/dialogueBackground.png",
                 1, 1);
+  textures->add("UI-tutorialBackground", "../images/UI/tutorialBackground.png",
+                1, 1);
   textures->add("UI-dialogueArrow", "../images/UI/arrow_Dialog.png", 7, 1);
   textures->add("UI-dialoguePortrait", "../images/UI/portrait.png", 1, 1);
 
@@ -141,6 +143,9 @@ Game::Game() {
   textures->add("Maps-Test", "../images/Maps/TestMap.png", 1, 1);
   textures->add("Maps-FirstBattle", "../images/Maps/FirstBattle.png", 1, 1);
   textures->add("Maps-SecondBattle", "../images/Maps/SecondBattle.png", 1, 1);
+
+  // Tutorial images
+  textures->add("tutorial-1", "../images/Tutorials/tutorial_1.png", 1, 1);
 
   // Transition
   textures->add("Transition-Map1", "../images/Maps/TestMap.png", 1, 1);
