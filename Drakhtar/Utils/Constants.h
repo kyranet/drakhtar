@@ -261,9 +261,4 @@ enum class KeyboardKey {
   kKeyLimit
 };
 
-enum class MouseKey {
-    LEFT,
-    MIDDLE,
-    RIGHT,
-    kKeyLimit
-};
+enum class MouseKey { LEFT, MIDDLE, RIGHT, kKeyLimit };
