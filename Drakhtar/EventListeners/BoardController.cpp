@@ -92,12 +92,20 @@ void BoardController::onClickAttack(Box *boxClicked) {
     if (enemyUnit->getTeam() != activeUnit_->getTeam() &&
         board_->isInRange(activeUnit_->getBox(), boxClicked,
                           activeUnit_->getAttackRange())) {
-      enemyUnit->loseHealth(activeUnit_->getAttack());
+      activeUnit_->attack(enemyUnit, false);
+
+      // Enemy dies
       if (enemyUnit->getHealth() == 0) {
         boxClicked->setContent(nullptr);
         turnBar_->eraseUnit(enemyUnit);
         scene_->removeGameObject(enemyUnit);
       }
+
+      // Re-highlight board
+      board_->resetCellsToBase();
+      activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
+      board_->highlightCellsInRange(activeUnit_->getBox(),
+                                    activeUnit_->getMoveRange());
       hasAttacked = true;
     }
   }
