@@ -20,6 +20,11 @@ Tween* Tween::to(const Vector2D<int>& end) {
   return this;
 }
 
+Tween* Tween::setRoute(const std::vector<Vector2D<double>>& route) {
+  route_ = route;
+  return this;
+}
+
 Tween* Tween::setLoops(const int loops) {
   loop_ = loops;
   return this;
@@ -213,8 +218,23 @@ void Tween::update() {
   }
 
   if (state_ == TweenState::ACTIVE) {
-    onUpdate_({((to_.getX() - from_.getX()) * progress_) + from_.getX(),
-               ((to_.getY() - from_.getY()) * progress_) + from_.getY()});
+    double x, y;
+    if (route_.empty()) {
+      x = (to_.getX() - from_.getX()) * progress_ + from_.getX();
+      y = (to_.getY() - from_.getY()) * progress_ + from_.getY();
+    } else {
+      const auto progress = route_.size() * progress_;
+      const auto node = std::floor(progress);
+      const auto next = std::ceil(progress);
+      if (next == route_.size()) return;
+      const auto nodeRoute = route_[static_cast<int>(node)];
+      const auto nextRoute = route_[static_cast<int>(next)];
+      const auto transition = progress - node;
+      x = (nextRoute.getX() - nodeRoute.getX()) * transition + nodeRoute.getX();
+      y = (nextRoute.getY() - nodeRoute.getY()) * transition + nodeRoute.getY();
+    }
+
+    onUpdate_({x, y});
   }
 }
 

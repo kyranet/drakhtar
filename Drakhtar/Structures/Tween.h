@@ -31,6 +31,7 @@ class Tween final {
   TweenManager* tweenManager_ = nullptr;
   Vector2D<double> from_;
   Vector2D<double> to_;
+  std::vector<Vector2D<double>> route_;
   /**
    * \brief The amount of times to loop this Tween, -1 for infinite loop.
    */
@@ -107,6 +108,7 @@ class Tween final {
   ~Tween();
   Tween* from(const Vector2D<int>& start);
   Tween* to(const Vector2D<int>& end);
+  Tween* setRoute(const std::vector<Vector2D<double>>& route);
   Tween* setLoops(int loops);
   Tween* play();
   Tween* restart();

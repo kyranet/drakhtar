@@ -55,9 +55,7 @@ void BoardController::onClickMove(Box *boxClicked) {
     const auto unit = activeUnit_;
     scene_->getTweenManager()
         ->create()
-        ->from(activeUnit_->getBox()->getPosition() +
-               (activeUnit_->getBox()->getSize() / 2))
-        ->to(boxClicked->getPosition() + (boxClicked->getSize() / 2))
+        ->setRoute(board_->pathToRoute(path))
         ->setDuration(static_cast<int>(
             floor(static_cast<double>(path.size()) * GAME_FRAMERATE * 0.25)))
         ->setOnUpdate([unit](Vector2D<double> updated) {
