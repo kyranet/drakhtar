@@ -38,8 +38,8 @@ class Unit : public GameObject {
        int health, int speed, int attackRange, int moveRange, int prize);
   virtual ~Unit();
 
-  int getBaseAttack() { return baseAttack_; }
-  int getBaseSpeed() { return baseSpeed_; }
+  int getBaseAttack() const { return baseAttack_; }
+  int getBaseSpeed() const { return baseSpeed_; }
   virtual int getAttack() const { return attack_; }
   int getIndividualAttack() const { return attack_; }
   virtual int getDefense() const { return defense_; }
@@ -55,10 +55,10 @@ class Unit : public GameObject {
   Box *getBox() const { return box_; }
   Vector2D<int> getBoxPosition() const { return boxPosition_; }
 
-  void setAttack(int attack) { attack_ = attack; }
-  void setSpeed(int speed) { speed_ = speed; }
-  void setMoving(bool moving) { moving_ = moving; }
-  void setMoved(bool moved) { moved_ = moved; }
+  void setAttack(const int attack) { attack_ = attack; }
+  void setSpeed(const int speed) { speed_ = speed; }
+  void setMoving(const bool moving) { moving_ = moving; }
+  void setMoved(const bool moved) { moved_ = moved; }
   void setTeam(Team *team) { team_ = team; }
 
   virtual void moveToBox(Box *box);

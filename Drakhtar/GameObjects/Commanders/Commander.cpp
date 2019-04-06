@@ -12,6 +12,7 @@ Commander::~Commander() {
   for (auto skill : skills) {
     delete skill;
   }
+  skills.clear();
 }
 
 void Commander::onSelect() {

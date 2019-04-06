@@ -9,21 +9,3 @@ Thassa::Thassa(Scene *scene, Texture *texture, Box *box, int attack,
                 attackRange, moveRange, prize) {
   skills.push_back(new BattleCry(this));
 }
-
-Thassa::~Thassa() {}
-
-/*
-vector <map<string, bool>> onSelect()
-
-class Skill {
-string id;
-
-execute(board *)
-}
-
-class KillAll : public Skill {
-}
-
-vector <Skill*> getSkills();
-
-*/

@@ -3,6 +3,8 @@
 #include "GameScene.h"
 #include "../EventListeners/BoardController.h"
 #include "../GameObjects/Button.h"
+#include "../GameObjects/Commanders/Thassa.h"
+#include "../GameObjects/Commanders/Zamdran.h"
 #include "../GameObjects/DialogScene.h"
 #include "../GameObjects/Pause.h"
 #include "../GameObjects/SkillButton.h"
@@ -39,7 +41,8 @@ void GameScene::preload() {
   UnitFactory factory = UnitFactory(this);
 
   // Blue Team
-  thassa_ = factory.newThassa(team1_, board->getBoxAt(0, 0));
+  const auto thassa_ = factory.newThassa(team1_, board->getBoxAt(0, 0));
+  team1_->setCommander(thassa_);
   addGameObject(thassa_);
   addGameObject(factory.newSoldier(team1_, board->getBoxAt(0, 2), 10));
   addGameObject(factory.newArcher(team1_, board->getBoxAt(0, 3), 10));
@@ -48,7 +51,8 @@ void GameScene::preload() {
   addGameObject(factory.newMonster(team1_, board->getBoxAt(0, 6), 10));
 
   // Red Team
-  zamdran_ = factory.newZamdran(team2_, board->getBoxAt(11, 0));
+  const auto zamdran_ = factory.newZamdran(team2_, board->getBoxAt(11, 0));
+  team2_->setCommander(zamdran_);
   addGameObject(zamdran_);
   addGameObject(factory.newSoldier(team2_, board->getBoxAt(11, 2), 10));
   addGameObject(factory.newArcher(team2_, board->getBoxAt(11, 3), 10));
@@ -85,7 +89,6 @@ void GameScene::preload() {
 }
 
 void GameScene::pause() {
-  if (!isPaused())
-    addGameObject(new Pause(this));
+  if (!isPaused()) addGameObject(new Pause(this));
   Scene::pause();
 }

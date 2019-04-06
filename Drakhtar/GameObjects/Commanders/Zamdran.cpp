@@ -9,5 +9,3 @@ Zamdran::Zamdran(Scene *scene, Texture *texture, Box *box, int attack,
                 attackRange, moveRange, prize) {
   skills.push_back(new ArrowRain(this));
 }
-
-Zamdran::~Zamdran() {}
