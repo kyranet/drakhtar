@@ -109,7 +109,6 @@ Game::Game() {
   textures->add("Button-Restart", "../images/Pause/Restart_Button.png", 1, 1);
   textures->add("Button-Exit", "../images/Pause/Exit_Button.png", 1, 1);
   textures->add("Button-Skip", "../images/UI/skipButton.png", 1, 1);
-  textures->add("Button-BattleCry", "../images/UI/battlecry_icon.png", 1, 1);
 
   // Pause
   textures->add("Pause-Panel", "../images/Pause/Panel.png", 1, 1);
