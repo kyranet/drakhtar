@@ -1,7 +1,6 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Board.h"
-#include <algorithm>
 #include "../Utils/Constants.h"
 #include "../third_party/AStar.h"
 #include "Box.h"
@@ -74,7 +73,7 @@ void Board::handleEvents(SDL_Event event) {
   GameObject::handleEvents(event);
 }
 
-Box *Board::getBoxAt(int x, int y) { return board_[x][y]; }
+Box *Board::getBoxAt(const int x, const int y) const { return board_[x][y]; }
 
 Box *Board::getBoxAtCoordinates(SDL_Point point) {
   int x = static_cast<int>(floor((point.x - position_.getX()) / cellSize_));
@@ -209,8 +208,22 @@ std::list<Vector2D<int>> Board::findPath(Vector2D<int> start,
                                  {end.getX(), end.getY()});
 
   for (auto &coordinate : path) {
-    pathList.push_back({coordinate.x, coordinate.y});
+    pathList.push_front({coordinate.x, coordinate.y});
   }
 
   return pathList;
+}
+
+std::vector<Vector2D<double>> Board::pathToRoute(
+    std::list<Vector2D<int>> path) const {
+  std::vector<Vector2D<double>> vector;
+  vector.reserve(path.size());
+  for (const auto &element : path) {
+    const auto box = getBoxAt(element.getX(), element.getY());
+    const auto pos = box->getPosition();
+    const auto size = box->getSize();
+    vector.emplace_back(pos.getX() + size.getX() / 2.0,
+                        pos.getY() + size.getY() / 2.0);
+  }
+  return vector;
 }

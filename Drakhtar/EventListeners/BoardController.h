@@ -18,6 +18,7 @@ class BoardController : public ListenerOnClick {
   GameScene *scene_;
   bool hasMoved = false;
   bool hasAttacked = false;
+  bool isTweening = false;
 
  public:
   BoardController(Board *board, TurnBar *turnBar, GameScene *scene);

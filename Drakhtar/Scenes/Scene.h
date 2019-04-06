@@ -2,6 +2,7 @@
 
 #pragma once
 #include <list>
+#include "Managers/TweenManager.h"
 
 class GameObject;
 
@@ -12,6 +13,7 @@ class Scene {
   bool loaded_ = false;
   bool paused_ = true;
   bool finished_ = false;
+  TweenManager *tweenManager_ = nullptr;
   bool transition_ = false;
   bool skipDialog_ = false;
 
@@ -51,4 +53,6 @@ class Scene {
   void removeGameObject(GameObject *gameObject);
 
   void processNextTick(NextTickCallback *callback);
+
+  TweenManager *getTweenManager() const;
 };
