@@ -19,7 +19,7 @@ void skipDialog() {
 TutorialBox::TutorialBox(Scene* scene, std::ifstream& file, Font* textfont, int lineJumpLimit)
 	: GameObject(scene, nullptr, Vector2D<int>(WIN_WIDTH/2, WIN_HEIGHT/2), Vector2D<int>(1, 1)) {
 
-	readFromFile("../tutorials/" + filename + ".txt");
+	readFromFile(file);
 
 	const auto tutorialArea_ = getRect();
 
@@ -39,7 +39,7 @@ TutorialBox::TutorialBox(Scene* scene, std::ifstream& file, Font* textfont, int 
 	SDL_Color textColor = { 0, 0, 0, 1 };
 
 	auto dialogTextSprite =
-		new Text(scene_, FontManager::get(fontFile),
+		new Text(scene_, textfont,
 			Vector2D<int>(tutorialArea_.x + tutorialArea_.w / 2.1,
 				tutorialArea_.y + tutorialArea_.h / 2),
 			textColor, dialogText_, lineJumpLimit);
@@ -55,11 +55,8 @@ TutorialBox::TutorialBox(Scene* scene, std::ifstream& file, Font* textfont, int 
 
 }
 
-void TutorialBox::readFromFile(const std::string& filename, std::ifstream& file) {
-	std::ifstream file;
-	file.open(filename);
+void TutorialBox::readFromFile(std::ifstream& file) {
 
-	if (!file.is_open()) throw new DrakhtarError("Could not find file");
 	file >> imageText_;
 
 	std::string text;       // full dialog text
@@ -69,7 +66,5 @@ void TutorialBox::readFromFile(const std::string& filename, std::ifstream& file)
 		if (word != ".") text += word + " ";
 	}
 	dialogText_ = text;
-
-	file.close();
 }
 

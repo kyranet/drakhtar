@@ -100,8 +100,8 @@ void GameScene::preload() {
 
   board->addEventListener(new BoardController(board, turnBar, this));
 
-  auto tutorialBox = new TutorialBox(this, "prueba", "DialogFont");
-  addGameObject(tutorialBox);
+  auto tutorialSequence = new TutorialSequence(this, "prueba", "DialogFont");
+  addGameObject(tutorialSequence);
 
 }
 

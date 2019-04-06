@@ -17,7 +17,7 @@ private:
 
 public:
 	TutorialBox(Scene* scene, std::ifstream& file, Font* textfont, int lineJumpLimit);
-	void readFromFile(const std::string& filename, std::ifstream& file);
+	void readFromFile(std::ifstream& file);
 	
 
 };
