@@ -5,6 +5,7 @@
 #include "Managers/TextureManager.h"
 #include "SDL.h"
 #include "Structures/Game.h"
+#include "Managers/Input.h"
 #include "checkML.h"
 
 int main(int argc, char *argv[]) {
@@ -15,6 +16,7 @@ int main(int argc, char *argv[]) {
     game->run();
     SDLAudioManager::destroy();
     TextureManager::destroy();
+    Input::destroy();
     delete game;
     return 0;
   } catch (std::exception e) {
