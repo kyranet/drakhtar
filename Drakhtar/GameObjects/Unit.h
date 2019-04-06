@@ -10,6 +10,9 @@ class Text;
 class Scene;
 
 class Unit : public GameObject {
+  int baseAttack_;
+  int baseSpeed_;
+
   int attack_;
   int defense_;
   int maxHealth_;
@@ -17,8 +20,10 @@ class Unit : public GameObject {
   int moveRange_;
   int speed_;
   int prize_;
-  bool moving_ = false;
+
   bool moved_ = false;
+  bool moving_ = false;
+
   Vector2D<int> boxPosition_;
   Team *team_ = nullptr;
 
@@ -32,24 +37,35 @@ class Unit : public GameObject {
   Unit(Scene *scene, Texture *texture, Box *box, int attack, int defense,
        int health, int speed, int attackRange, int moveRange, int prize);
   virtual ~Unit();
+
+  int getBaseAttack() { return baseAttack_; }
+  int getBaseSpeed() { return baseSpeed_; }
   virtual int getAttack() const { return attack_; }
+  int getIndividualAttack() const { return attack_; }
   virtual int getDefense() const { return defense_; }
   int getAttackRange() const { return attackRange_; }
   int getMoveRange() const { return moveRange_; }
   virtual int getMaxHealth() const { return maxHealth_; }
   virtual int getHealth() const { return health_; }
   virtual int getPrize() const { return prize_; }
-  bool getMoving() const { return moving_; }
-  bool getMoved() const { return moved_; }
+  virtual bool getMoved() { return moved_; }
+  virtual bool getMoving() { return moving_; }
   int getSpeed() const { return speed_; }
   Team *getTeam() const { return team_; }
   Box *getBox() const { return box_; }
   Vector2D<int> getBoxPosition() const { return boxPosition_; }
-  void setMoving(bool moving);
-  void setMoved(bool moved);
-  void setTeam(Team *team);
+
+  void setAttack(int attack) { attack_ = attack; }
+  void setSpeed(int speed) { speed_ = speed; }
+  void setMoving(bool moving) { moving_ = moving; }
+  void setMoved(bool moved) { moved_ = moved; }
+  void setTeam(Team *team) { team_ = team; }
+
   virtual void moveToBox(Box *box);
   virtual int loseHealth(int enemyAttack);
   void render() const override;
   virtual void attack(Unit* enemy, bool counter);
+
+  virtual void onSelect();
+  virtual void onDeselect();
 };

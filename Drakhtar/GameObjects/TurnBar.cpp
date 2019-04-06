@@ -53,6 +53,7 @@ TurnBar::TurnBar(Scene *scene, std::list<Unit *> allyList,
                      Vector2D<int>(WIN_WIDTH / 7, WIN_WIDTH / 7));  // tam
 
   sort();
+  unitTurnBar.front()->onSelect();
 }
 
 TurnBar::~TurnBar() {
@@ -63,9 +64,13 @@ TurnBar::~TurnBar() {
 // takes out the unit in the front of the queue and puts it in the back
 void TurnBar::advanceTurn() {
   Unit *frontUnit = unitTurnBar.front();
+  if (frontUnit != nullptr) {
+    frontUnit->onDeselect();
+  }
   unitTurnBar.pop_front();
   unitTurnBar.push_back(frontUnit);
   updateVisibleUnits();
+  unitTurnBar.front()->onSelect();
 }
 
 void TurnBar::sort() {

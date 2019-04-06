@@ -2,6 +2,8 @@
 
 #include "UnitFactory.h"
 #include "../GameObjects/Battalion.h"
+#include "../GameObjects/Commanders/Thassa.h"
+#include "../GameObjects/Commanders/Zamdran.h"
 #include "../GameObjects/Unit.h"
 #include "../Managers/TextureManager.h"
 #include "../Scenes/Scene.h"
@@ -107,6 +109,44 @@ Unit *UnitFactory::newMonster(Team *team, Box *box, const int size) const {
       new Battalion(scene_, TextureManager::get(textureName), box,
                     monsterAttack, monsterDefense, monsterHealth, monsterSpeed,
                     monsterAttackRange, monsterMoveRange, size, monsterPrize);
+  team->addUnit(unit);
+  return unit;
+}
+
+//---------- COMMANDERS ----------
+
+Thassa *UnitFactory::newThassa(Team *team, Box *box) const {
+  const auto attack = 50;
+  const auto defense = 50;
+  const auto health = 100;
+  const auto attackRange = 1;
+  const auto moveRange = 3;
+  const auto speed = 3;
+  const auto prize = 100;
+
+  const auto textureName = "Units-Thassa";
+
+  const auto unit =
+      new Thassa(scene_, TextureManager::get(textureName), box, attack, defense,
+                 health, speed, attackRange, moveRange, prize);
+  team->addUnit(unit);
+  return unit;
+}
+
+Zamdran *UnitFactory::newZamdran(Team *team, Box *box) const {
+  const auto attack = 30;
+  const auto defense = 30;
+  const auto health = 100;
+  const auto attackRange = 3;
+  const auto moveRange = 2;
+  const auto speed = 5;
+  const auto prize = 100;
+
+  const auto textureName = "Units-Zamdran";
+
+  const auto unit =
+      new Zamdran(scene_, TextureManager::get(textureName), box, attack,
+                  defense, health, speed, attackRange, moveRange, prize);
   team->addUnit(unit);
   return unit;
 }
