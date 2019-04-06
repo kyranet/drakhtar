@@ -16,8 +16,8 @@ private:
 	std::string dialogText_;
 
 public:
-	TutorialBox(Scene* scene, const std::string& filename, const std::string& fontFile);
-	void readFromFile(const std::string& filename);
+	TutorialBox(Scene* scene, std::ifstream& file, Font* textfont, int lineJumpLimit);
+	void readFromFile(const std::string& filename, std::ifstream& file);
 	
 
 };

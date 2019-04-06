@@ -16,7 +16,7 @@ void skipDialog() {
 	//Game::getSceneMachine()->getCurrentScene()->setSkip(true);
 }
 
-TutorialBox::TutorialBox(Scene *scene, const std::string& filename, const std::string& fontFile)
+TutorialBox::TutorialBox(Scene* scene, std::ifstream& file, Font* textfont, int lineJumpLimit)
 	: GameObject(scene, nullptr, Vector2D<int>(WIN_WIDTH/2, WIN_HEIGHT/2), Vector2D<int>(1, 1)) {
 
 	readFromFile("../tutorials/" + filename + ".txt");
@@ -55,7 +55,7 @@ TutorialBox::TutorialBox(Scene *scene, const std::string& filename, const std::s
 
 }
 
-void TutorialBox::readFromFile(const std::string& filename) {
+void TutorialBox::readFromFile(const std::string& filename, std::ifstream& file) {
 	std::ifstream file;
 	file.open(filename);
 
