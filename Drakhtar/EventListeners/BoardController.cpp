@@ -1,12 +1,13 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "BoardController.h"
-#include <iostream>
 #include "../GameObjects/Board.h"
 #include "../GameObjects/Box.h"
 #include "../GameObjects/TurnBar.h"
 #include "../GameObjects/Unit.h"
+#include "../Managers/SDLAudioManager.h"
 #include "../Scenes/GameScene.h"
+#include <iostream>
 
 BoardController::BoardController(Board *board, TurnBar *turnBar,
                                  GameScene *scene)
@@ -49,6 +50,7 @@ void BoardController::onClickMove(Box *boxClicked) {
     board_->findPath(activeUnit_->getBox()->getIndex(), boxClicked->getIndex());
     activeUnit_->moveToBox(boxClicked);
     hasMoved = true;
+    SDLAudioManager::getInstance()->playChannel(0, 0, 0);
 
     // If there are enemies in range, highlight them, otherwise skip turn
     if (board_->isEnemyInRange(boxClicked, activeUnit_->getAttackRange())) {
@@ -56,11 +58,15 @@ void BoardController::onClickMove(Box *boxClicked) {
       activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
       board_->highlightEnemiesInRange(activeUnit_->getBox(),
                                       activeUnit_->getAttackRange());
+	  SDLAudioManager::getInstance()->setChannelVolume(30,0);
+      SDLAudioManager::getInstance()->playChannel(4, 0, 0);
+
     } else {
       advanceTurn();
     }
   } else {
     std::cout << "Out of movement range!\n";
+    SDLAudioManager::getInstance()->playChannel(3, 0, 0);
   }
 }
 
@@ -72,6 +78,7 @@ void BoardController::onClickAttack(Box *boxClicked) {
         board_->isInRange(activeUnit_->getBox(), boxClicked,
                           activeUnit_->getAttackRange())) {
       enemyUnit->loseHealth(activeUnit_->getAttack());
+	  SDLAudioManager::getInstance()->playChannel(5, 0, 0);
       if (enemyUnit->getHealth() == 0) {
         boxClicked->setContent(nullptr);
         turnBar_->eraseUnit(enemyUnit);

@@ -11,6 +11,7 @@
 #include "../Structures/Team.h"
 #include "../Structures/UnitFactory.h"
 #include "../Utils/Constants.h"
+#include "../Managers/SDLAudioManager.h"
 
 GameScene::~GameScene() {
   delete team1_;
@@ -55,6 +56,11 @@ void GameScene::preload() {
       this, TextureManager::get("Button-Pause"),
       Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 24, WIN_HEIGHT / 18),
       Vector2D<int>(WIN_WIDTH / 21.6, WIN_HEIGHT / 14.4), buttonPause);
+
+  auto audio = SDLAudioManager::getInstance();
+  audio->haltMusic();
+  audio->setMusicVolume(10);
+  audio->playMusic(1, 999);
 
   addGameObject(turnBar);
   addGameObject(dialog);

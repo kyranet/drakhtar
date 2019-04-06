@@ -9,7 +9,6 @@ void ListenerOnClick::run(const SDL_Event event) {
 
   switch (event.type) {
   case SDL_MOUSEBUTTONDOWN:
-    SDLAudioManager::getInstance()->playChannel(0, 1, 0);
     if (!SDL_PointInRect(&p, &area))
       return;
     if (!clicked_)

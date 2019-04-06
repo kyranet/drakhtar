@@ -177,13 +177,18 @@ Game::Game() {
   // sound effects
 
   /*
-                channel 0 = click sounds
+                channel 0 = UI sounds
                 channel 1 = unit sounds
 
   */
-  audio->loadSound(0, "../audio/sound/basic_click.mp3");
-  audio->loadSound(1, "../audio/sound/button_click.mp3");
-  audio->loadSound(2, "../audio/sound/hitPlayMenu.mp3");
+  audio->loadSound(0, "../audio/sound/UI-sounds/basic_click.mp3");
+  audio->loadSound(1, "../audio/sound/UI-sounds/button_click.mp3");
+  audio->loadSound(2, "../audio/sound/UI-sounds/hitPlayMenu.mp3");
+  audio->loadSound(3, "../audio/sound/UI-sounds/accionBloqueada.mp3");
+  audio->loadSound(4, "../audio/sound/UI-sounds/attackCommand.mp3");
+  audio->loadSound(5, "../audio/sound/UI-sounds/attackConfirm.mp3");
+
+
 
   // If window or renderer is a null pointer, throw a SDLError
   if (window_ == nullptr || renderer_ == nullptr)
