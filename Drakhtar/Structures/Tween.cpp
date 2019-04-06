@@ -226,12 +226,20 @@ void Tween::update() {
       const auto progress = route_.size() * progress_;
       const auto node = std::floor(progress);
       const auto next = std::ceil(progress);
-      if (next == route_.size()) return;
       const auto nodeRoute = route_[static_cast<int>(node)];
-      const auto nextRoute = route_[static_cast<int>(next)];
-      const auto transition = progress - node;
-      x = (nextRoute.getX() - nodeRoute.getX()) * transition + nodeRoute.getX();
-      y = (nextRoute.getY() - nodeRoute.getY()) * transition + nodeRoute.getY();
+
+      // Handle last frame
+      if (next == route_.size()) {
+        x = nodeRoute.getX();
+        y = nodeRoute.getY();
+      } else {
+        const auto nextRoute = route_[static_cast<int>(next)];
+        const auto transition = progress - node;
+        x = (nextRoute.getX() - nodeRoute.getX()) * transition +
+            nodeRoute.getX();
+        y = (nextRoute.getY() - nodeRoute.getY()) * transition +
+            nodeRoute.getY();
+      }
     }
 
     onUpdate_({x, y});
