@@ -14,7 +14,7 @@ class Text;
 
 class RecruitScene : public Scene {
 private:
-  GameObject * unitBar_ = nullptr;
+  GameObject * recruitmentPanel = nullptr;
   UnitSelectorController * controller_ = nullptr;
   map<string, int> costs_;
   Text * moneyText_;
@@ -23,7 +23,6 @@ private:
   string moneyToString();
 
 public:
-	//virtual ~RecruitScene();
 	void preload() override;
 	void buyUnits(string type, int quantity);
 };

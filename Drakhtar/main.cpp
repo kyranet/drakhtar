@@ -3,8 +3,10 @@
 #include <iostream>
 #include "Managers/SDLAudioManager.h"
 #include "Managers/TextureManager.h"
+#include "Managers/FontManager.h"
 #include "SDL.h"
 #include "Structures/Game.h"
+#include "Utils/PlayerData.h"
 #include "checkML.h"
 
 int main(int argc, char *argv[]) {
@@ -15,6 +17,9 @@ int main(int argc, char *argv[]) {
     game->run();
     SDLAudioManager::destroy();
     TextureManager::destroy();
+    FontManager::destroy();
+    PlayerData::destroy();
+
     delete game;
     return 0;
   } catch (std::exception e) {

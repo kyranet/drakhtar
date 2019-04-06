@@ -8,6 +8,7 @@
 #include "Managers/FontManager.h"
 #include "Utils/Vector2D.h"
 
+
 void RecruitScene::preload()
 {
 	PlayerData::getInstance()->addMoney(100);
@@ -19,40 +20,30 @@ void RecruitScene::preload()
 	costs_["Monster"] = 18;
 
 	const auto background =
-		new GameObject(this, TextureManager::get("Maps-SecondBattle"),
+		new GameObject(this, TextureManager::get("Recruitment-Background"),
 			Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
 			Vector2D<int>(WIN_WIDTH, WIN_HEIGHT));
 
 
 
 	moneyText_ = new Text(this, FontManager::get("Retron2000"),
-		Vector2D<int>(WIN_WIDTH / 15 , WIN_HEIGHT / 10),
+		Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 7.5, WIN_HEIGHT / 15),
 		{ 0,0,0,0 },
 		moneyToString(),
 		WIN_WIDTH);
 
-	unitBar_ =
-		new GameObject(this, TextureManager::get("UI-turnBar"),
-			Vector2D<int>(WIN_WIDTH / 2,
-				WIN_HEIGHT - WIN_HEIGHT / 13),
-			Vector2D<int>(WIN_WIDTH / 2, 
-				WIN_WIDTH / 16.44 ));
+	recruitmentPanel =
+		new GameObject(this, TextureManager::get("Recruitment-Panel"),
+			Vector2D<int>(WIN_WIDTH / 4,
+        WIN_HEIGHT / 2),
+			Vector2D<int>(WIN_WIDTH / 2.184, 
+        WIN_HEIGHT / 1.058 ));
 
-  const auto circle = new GameObject(this, TextureManager::get("UI-circle"),
-    Vector2D<int>(WIN_WIDTH/ 4,
-      WIN_HEIGHT / 2),
-    Vector2D<int>(WIN_HEIGHT / 3,
-      WIN_HEIGHT / 3));
 
 
   addGameObject(background);
   addGameObject(moneyText_);
-  addGameObject(unitBar_);
-  addGameObject(circle);
-
-  controller_ = new UnitSelectorController(unitBar_);
-
-  unitBar_->addEventListener(controller_);
+  addGameObject(recruitmentPanel);
 
   addUnit("Units-BlueSoldier", 1);
   addUnit("Units-BlueArcher", 2);
@@ -74,30 +65,41 @@ void RecruitScene::buyUnits(string type, int quantity)
 void RecruitScene::addUnit(string textureName, int position)
 {
 
-	auto rect = unitBar_->getRect();
+	auto rect = recruitmentPanel->getRect();
 
 	position -= 3;
 
-	auto unit = new GameObject(this,
+	auto object = new GameObject(this,
 		TextureManager::get(textureName),
-		Vector2D<int>(WIN_WIDTH / 2 + rect.w * position / 6,
-			WIN_HEIGHT - WIN_HEIGHT / 13),
+		Vector2D<int>(WIN_WIDTH / 9.5,
+			WIN_HEIGHT /2 + WIN_HEIGHT / 6 * position),
 		Vector2D<int>(WIN_HEIGHT / 6,
 			WIN_HEIGHT / 6));
-	controller_->addUnitToStore(unit);
 
-	addGameObject(unit);
+  addGameObject(object);
 
-	unit = new GameObject(this,
-		TextureManager::get(textureName),
-		Vector2D<int>(WIN_WIDTH / 4,
-			WIN_HEIGHT - WIN_HEIGHT / 2),
-		Vector2D<int>(WIN_HEIGHT / 3,
-			WIN_HEIGHT / 3));
+  // 4.5 distancia base
 
-	controller_->addBigUnit(unit);
+  // 1280/(3.47)  = 368 = centro
+  // 1280/(12.8)   = 100 = separacion
 
-	addGameObject(unit);
+  object = new GameObject(this,
+    TextureManager::get("Quantity-Button"),
+    Vector2D<int>(WIN_WIDTH/ 3.47 - WIN_WIDTH / 12.8,
+      WIN_HEIGHT / 2 + WIN_HEIGHT / 6 * position),
+    Vector2D<int>(WIN_WIDTH / 12.92 * 1.5,
+      WIN_HEIGHT / 10.14 * 1.5));
+
+	addGameObject(object);
+
+  object = new GameObject(this,
+    TextureManager::get("Quantity-Button"),
+    Vector2D<int>(WIN_WIDTH/3.47 + WIN_WIDTH / 12.8,
+      WIN_HEIGHT / 2 + WIN_HEIGHT / 6 * position),
+    Vector2D<int>(WIN_WIDTH / 12.92 * 1.5,
+      WIN_HEIGHT / 10.14 * 1.5));
+
+  addGameObject(object);
 }
 
 string RecruitScene::moneyToString()

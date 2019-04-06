@@ -29,7 +29,7 @@ PlayerData * PlayerData::getInstance()
 void PlayerData::destroy()
 {
   if (instance_ != nullptr) {
-    instance_->~PlayerData();
+    delete instance_;
     instance_ = nullptr;
   }
 }

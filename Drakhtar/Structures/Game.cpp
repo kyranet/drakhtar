@@ -41,13 +41,11 @@ Game::Game() {
   textures->add("Units-BlueKnight", "../images/Units/BlueKnight.png", 2, 1,
                 SDL_FLIP_HORIZONTAL);
   textures
-      ->add("Units-BlueMage", "../images/Units/BlueMage.png", 4, 2,
-            SDL_FLIP_HORIZONTAL)
+      ->add("Units-BlueMage", "../images/Units/BlueMage.png", 4, 2)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6});
   textures
-      ->add("Units-BlueMonster", "../images/Units/BlueMonster.png", 3, 3,
-            SDL_FLIP_HORIZONTAL)
+      ->add("Units-BlueMonster", "../images/Units/BlueMonster.png", 3, 3)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8});
   textures
@@ -149,6 +147,11 @@ Game::Game() {
   textures->add("Transition-Map2", "../images/Transition/Transition_2.png", 1,
                 1);
 
+  // Recruitment
+  textures->add("Recruitment-Background", "../images/Recruitment/recruitment.png", 1, 1);
+  textures->add("Recruitment-Panel", "../images/Recruitment/recruitment_Panel.png", 1, 1);
+  textures->add("Quantity-Button", "../images/Recruitment/quantity_Button.png", 1, 1);
+
   auto fonts = FontManager::getInstance();
 
   // Create the window and renderer
@@ -199,7 +202,6 @@ Game::~Game() {
   SDL_DestroyWindow(window_);
 
   delete sceneMachine_;
-  FontManager::destroy();
 
   SDL_Quit();
   TTF_Quit();
