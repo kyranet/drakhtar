@@ -109,6 +109,7 @@ Game::Game() {
   // Pause
   textures->add("Pause-Panel", "../images/Pause/Panel.png", 1, 1);
   textures->add("Pause-Background", "../images/Pause/Fondo.png", 1, 1);
+  textures->add("Button-Resume", "../images/Pause/Empty.png", 1, 1);
 
   // Portraits
   textures->add("Portraits-Archer", "../images/Portraits/Archer.png", 1, 1);

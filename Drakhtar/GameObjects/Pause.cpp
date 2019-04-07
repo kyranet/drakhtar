@@ -19,6 +19,10 @@ void exitGame() {
   Game::getSceneMachine()->getCurrentScene()->processNextTick(
       []() { Game::getSceneMachine()->changeScene(new MenuScene()); });
 }
+void buttonResume() {
+  Game::getSceneMachine()->getCurrentScene()->pause();
+  //Game::getSceneMachine()->getCurrentScene()->removeGameObject(this);
+}
 
 Pause::Pause(Scene *scene) : GameObject(scene, nullptr) {
   auto panel =
@@ -34,7 +38,13 @@ Pause::Pause(Scene *scene) : GameObject(scene, nullptr) {
                  Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2 + WIN_HEIGHT / 18),
                  Vector2D<int>(WIN_WIDTH / 8.33, WIN_HEIGHT / 11.25), exitGame);
 
+  auto resumeButton = new Button(
+      scene_, TextureManager::get("Button-Resume"),
+      Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 24, WIN_HEIGHT / 18),
+      Vector2D<int>(WIN_WIDTH / 21.6, WIN_HEIGHT / 14.4), buttonResume);
+
   addChild(panel);
   addChild(restart);
+  scene_->addGameObject(resumeButton);
   addChild(exit);
 }

@@ -15,6 +15,7 @@
 #include "../Structures/UnitFactory.h"
 #include "../Utils/Constants.h"
 
+Pause* pause_;
 GameScene::~GameScene() {
   delete team1_;
   delete team2_;
@@ -68,6 +69,7 @@ void GameScene::preload() {
       this, TextureManager::get("Button-Pause"),
       Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 24, WIN_HEIGHT / 18),
       Vector2D<int>(WIN_WIDTH / 21.6, WIN_HEIGHT / 14.4), buttonPause);
+  pause_ = new Pause(this);
 
   SkillButton* battleCryButton = new SkillButton(
       this, TextureManager::get("Button-BattleCry"),
@@ -89,6 +91,6 @@ void GameScene::preload() {
 }
 
 void GameScene::pause() {
-  if (!isPaused()) addGameObject(new Pause(this));
+  if (!isPaused()) addGameObject(pause_);
   Scene::pause();
 }

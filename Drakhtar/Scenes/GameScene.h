@@ -8,7 +8,6 @@ class Team;
 class GameScene final : public Scene {
   Team* team1_ = nullptr;
   Team* team2_ = nullptr;
-
  public:
   virtual ~GameScene();
   void preload() override;
