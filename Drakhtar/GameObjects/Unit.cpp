@@ -8,8 +8,9 @@
 #include "Box.h"
 #include "Text.h"
 
-Unit::Unit(Scene *scene, Texture *texture, Box *box, int attack, int defense,
-           int health, int speed, int attackRange, int moveRange, int prize)
+Unit::Unit(Scene *scene, Texture *texture, Box *box, const int attack,
+           const int defense, const int health, const int speed,
+           const int attackRange, const int moveRange, const int prize)
     : GameObject(scene, texture,
                  Vector2D<int>(box->getRect().x + box->getRect().w / 2,
                                box->getRect().y + box->getRect().h / 2),
@@ -19,13 +20,13 @@ Unit::Unit(Scene *scene, Texture *texture, Box *box, int attack, int defense,
       baseSpeed_(speed),
       attack_(attack),
       defense_(defense),
-      health_(health),
       maxHealth_(health),
-      speed_(speed),
       attackRange_(attackRange),
       moveRange_(moveRange),
+      speed_(speed),
+      prize_(prize),
       box_(box),
-      prize_(prize) {
+      health_(health) {
   box->setContent(this);
   const SDL_Color textColor = {255, 0, 0, 0};
   const auto rect = box_->getRect();
@@ -72,7 +73,7 @@ void Unit::onSelect() { setMoving(true); }
 
 void Unit::onDeselect() { setMoving(false); }
 
-void Unit::attack(Unit *enemy, bool counter) {
+void Unit::attack(Unit *enemy, const bool counter) {
   enemy->loseHealth(getAttack());
 
   // If the attack is not a counter and the enemy is

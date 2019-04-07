@@ -29,7 +29,11 @@ class Vector2D final {
    * \brief Clone a Vector2D instance.
    * \param v The Vector2D instance to clone.
    */
-  Vector2D<T>(const Vector2D<T> &v);
+  Vector2D<T>(const Vector2D<T> &v) = default;            // Copy Constructor
+  Vector2D<T>(Vector2D<T> &&v) = default;                 // Move Constructor
+  Vector2D<T> &operator=(const Vector2D<T> &) = default;  // Assignment Operator
+  Vector2D<T> &operator=(Vector2D<T> &&) = default;       // Move Operator
+
   /**
    * \brief Create a Vector2D instance with an x and y coordinates.
    * \param x The value for the x coordinate.
@@ -77,9 +81,9 @@ class Vector2D final {
    */
   T magnitude() const;
   /**
-   * \brief Creates a clone of this instance and rotates it by n degrees from (0, 0).
-   * \param degrees Rotate a vector by n degrees from (0, 0).
-   * \return The rotated Vector2D instance.
+   * \brief Creates a clone of this instance and rotates it by n degrees from
+   * (0, 0). \param degrees Rotate a vector by n degrees from (0, 0). \return
+   * The rotated Vector2D instance.
    */
   Vector2D<T> rotate(double degrees) const;
   /**
@@ -104,9 +108,6 @@ class Vector2D final {
 
 template <typename T>
 Vector2D<T>::Vector2D() : x_(), y_() {}
-
-template <typename T>
-Vector2D<T>::Vector2D(const Vector2D<T> &v) : x_(v.getX()), y_(v.getY()) {}
 
 template <typename T>
 Vector2D<T>::Vector2D(T x, T y) : x_(x), y_(y) {}

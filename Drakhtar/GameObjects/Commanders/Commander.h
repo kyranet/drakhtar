@@ -9,15 +9,15 @@ class Scene;
 
 class Commander : public Unit {
  protected:
-  std::vector<Skill*> skills;
+  std::vector<Skill*> skills_;
 
  public:
   Commander(Scene* scene, Texture* texture, Box* box, int attack, int defense,
             int health, int speed, int attackRange, int moveRange, int prize);
   virtual ~Commander();
 
-  std::vector<Skill*> getSkills() { return skills; }
+  std::vector<Skill*> getSkills() const { return skills_; }
 
   // Lowers skill cooldown on unit turn
-  virtual void onSelect();
+  void onSelect() override;
 };

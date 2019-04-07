@@ -6,19 +6,20 @@
 #include "Box.h"
 #include "Text.h"
 
-Battalion::Battalion(Scene *scene, Texture *texture, Box *box, int attack,
-                     int defense, int health, int speed, int attackRange,
-                     int moveRange, int prize, int battalionSize)
+Battalion::Battalion(Scene *scene, Texture *texture, Box *box, const int attack,
+                     const int defense, const int health, const int speed,
+                     const int attackRange, const int moveRange,
+                     const int prize, const int battalionSize)
     : Unit(scene, texture, box, attack, defense, health, speed, attackRange,
            moveRange, prize),
       battalionSize_(battalionSize) {
   health_ = Unit::getMaxHealth() * battalionSize_;
 
-  SDL_Color textColor = {255, 255, 255, 255};
+  const SDL_Color textColor = {255, 255, 255, 255};
 
   healthText_->setText(healthToString());
 
-  auto rect = box_->getRect();
+  const auto rect = box_->getRect();
 
   sizeText_ = new Text(scene, FontManager::get("Retron2000"),
                        {rect.x + rect.w / 2, rect.y + rect.h * 5 / 6},
@@ -36,7 +37,7 @@ std::string Battalion::sizeToString() const {
   return std::to_string(battalionSize_);
 }
 
-void Battalion::setBattalionSize(int battalionSize) {
+void Battalion::setBattalionSize(const int battalionSize) {
   battalionSize_ = battalionSize;
   sizeText_->setText(sizeToString());
 }
@@ -47,8 +48,8 @@ int Battalion::getMaxHealth() const {
   return Unit::getMaxHealth() * battalionSize_;
 }
 
-int Battalion::loseHealth(int enemyAttack) {
-  int health = Unit::loseHealth(enemyAttack);
+int Battalion::loseHealth(const int enemyAttack) {
+  const auto health = Unit::loseHealth(enemyAttack);
   if (Unit::getMaxHealth() <= health) {
     battalionSize_ -= health / Unit::getMaxHealth();
     if (battalionSize_ < 0) battalionSize_ = 0;
@@ -60,7 +61,7 @@ int Battalion::loseHealth(int enemyAttack) {
 void Battalion::moveToBox(Box *box) {
   Unit::moveToBox(box);
 
-  auto rect = box_->getRect();
+  const auto rect = box_->getRect();
 
   sizeText_->setPosition(
       Vector2D<int>(rect.x + rect.w / 2, rect.y + rect.h * 4 / 5));

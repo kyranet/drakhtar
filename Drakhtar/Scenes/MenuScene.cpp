@@ -8,7 +8,6 @@
 #include "../Structures/Game.h"
 #include "../Utils/Constants.h"
 #include "../Utils/Vector2D.h"
-#include "GameScene.h"
 #include "Managers/SDLAudioManager.h"
 #include "RecruitScene.h"
 

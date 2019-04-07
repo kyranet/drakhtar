@@ -8,7 +8,7 @@
 #include "../Utils/Constants.h"
 #include "GameScene.h"
 
-TransitionScene::TransitionScene(int battle) : battle_(battle) {}
+TransitionScene::TransitionScene(const int battle) : battle_(battle) {}
 
 void TransitionScene::preload() {
   const auto background = new GameObject(
@@ -17,7 +17,7 @@ void TransitionScene::preload() {
       Vector2D<int>(WIN_WIDTH, WIN_HEIGHT));
   addGameObject(background);
 
-  auto dialog = new DialogScene(this, "dialog1_intro", "DialogFont");
+  const auto dialog = new DialogScene(this, "dialog1_intro", "DialogFont");
   addGameObject(dialog);
   setTransition(true);
 }

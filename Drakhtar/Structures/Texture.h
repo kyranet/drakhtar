@@ -21,24 +21,21 @@ class Texture final {
   SDL_RendererFlip flip_ = SDL_FLIP_NONE;
 
  public:
-  Texture() = default;
-  explicit Texture(SDL_Renderer *r) : renderer_(r) {}
+  Texture();
+  explicit Texture(SDL_Renderer *r);
   ~Texture();
 
-  Uint16 getColumnAmount() const { return columnAmount_; }
-  Uint16 getRowAmount() const { return rowAmount_; }
-  Uint16 getFrame() const { return frame_; }
-  Vector2D<Uint16> getSize() const { return size_; }
-  Vector2D<Uint16> getFrameSize() const { return frameSize_; }
-  Vector2D<Uint16> getFramePosition(Uint16 frame) const {
-    return Vector2D<Uint16>(frame % columnAmount_,
-                            static_cast<Uint16>(floor(frame / columnAmount_)));
-  }
+  Uint16 getColumnAmount() const;
+  Uint16 getRowAmount() const;
+  Uint16 getFrame() const;
+  Vector2D<Uint16> getSize() const;
+  Vector2D<Uint16> getFrameSize() const;
+  Vector2D<Uint16> getFramePosition(Uint16 frame) const;
 
-  std::vector<Uint16> getAnimation() const { return animation_; }
-  SDL_Texture *getTexture() const { return texture_; }
-  SDL_Renderer *getRenderer() const { return renderer_; }
-  SDL_RendererFlip getFlip() const { return flip_; }
+  std::vector<Uint16> getAnimation() const;
+  SDL_Texture *getTexture() const;
+  SDL_Renderer *getRenderer() const;
+  SDL_RendererFlip getFlip() const;
 
   Texture *setTexture(SDL_Texture *const &texture);
   Texture *setColumnAmount(Uint16 columns);
@@ -52,7 +49,7 @@ class Texture final {
                         int lineJumpLimit = 250);
   void addAnimation(const std::string &name, std::vector<Uint16> const &frames);
   void setAnimation(const std::string &name);
-  bool hasAnimation(const std::string &name);
+  bool hasAnimation(const std::string &name) const;
   void tick();
   void render(const Vector2D<int> &position) const;
   void render(SDL_Rect const &dest, double angle = 0,

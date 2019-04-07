@@ -1,12 +1,11 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "TimePool.h"
-#include <algorithm>
 
-TimePool::TimePool(Uint32 ticksInterval, Uint32 now)
-    : ticksInterval_(ticksInterval), ticksLast_(now), ticksAccumulated_(0) {}
+TimePool::TimePool(const Uint32 ticksInterval, const Uint32 now)
+    : ticksInterval_(ticksInterval), ticksLast_(now) {}
 
-bool TimePool::next(Uint32 now) {
+bool TimePool::next(const Uint32 now) {
   ticksAccumulated_ += now - ticksLast_;
   ticksLast_ = now;
 
