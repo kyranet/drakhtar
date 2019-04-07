@@ -167,7 +167,7 @@ void Scene::resume() {
   paused_ = false;
   run();
 }
-void Scene::pause() { paused_ = !paused_; }
+void Scene::pause() { paused_ = true; }
 
 void Scene::finish() {
   if (finished_) return;
