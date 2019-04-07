@@ -34,6 +34,11 @@ void PlayerData::destroy()
   }
 }
 
+void PlayerData::increaseLevel()
+{
+  level_++;
+}
+
 void PlayerData::loseMoney(int money)
 {
   money_ -= money;

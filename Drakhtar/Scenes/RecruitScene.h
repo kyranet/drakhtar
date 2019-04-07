@@ -9,15 +9,16 @@
 using namespace std;
 
 class GameObject;
-class UnitSelectorController;
+class UnitStoreController;
 class Text;
 
 class RecruitScene : public Scene {
 private:
-  GameObject * recruitmentPanel = nullptr;
-  UnitSelectorController * controller_ = nullptr;
+  GameObject * recruitmentPanel_ = nullptr;
+  UnitStoreController * controller_ = nullptr;
   map<string, int> costs_;
-  Text * moneyText_;
+  Text * moneyText_ = nullptr;
+  Text * totalCostText_ = nullptr;
 
   void addUnit(string textureName, int position);
   string moneyToString();
@@ -25,4 +26,6 @@ private:
 public:
 	void preload() override;
 	void buyUnits(string type, int quantity);
+  int getCost(string type);
+  void updateTotalCostText(int amount);
 };
