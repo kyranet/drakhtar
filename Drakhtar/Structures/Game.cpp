@@ -107,7 +107,8 @@ Game::Game() {
   textures->add("Button-Restart", "../images/Pause/Restart_Button.png", 1, 1);
   textures->add("Button-Exit", "../images/Pause/Exit_Button.png", 1, 1);
   textures->add("Button-Skip", "../images/UI/skipButton.png", 1, 1);
-  textures->add("Button-Continue", "../images/Tutorials/Continue_Button.png", 1, 1);
+  textures->add("Button-Continue", "../images/Tutorials/Continue_Button.png", 1,
+                1);
   textures->add("Button-Next", "../images/Tutorials/Next_Button.png", 1, 1);
 
   // Pause
@@ -191,6 +192,7 @@ Game::Game() {
   fonts->add("Retron2000", "../fonts/Retron2000.ttf", WIN_WIDTH / 88,
              WIN_WIDTH);
   fonts->add("TutorialFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 100,
+             WIN_WIDTH);
   fonts->init();
 
   auto audio = SDLAudioManager::getInstance();
