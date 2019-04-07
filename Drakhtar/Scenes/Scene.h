@@ -32,7 +32,7 @@ class Scene {
   bool isRunning() const;
   bool isPaused() const;
   bool isLoaded() const;
-  bool getTransition() const;  
+  bool getTransition() const;
   bool getSkip() const;
   void setTransition(bool transition);
   void setSkip(bool skip);
