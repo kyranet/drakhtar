@@ -11,7 +11,6 @@
 #include "UnitStoreController.h"
 #include "Utils/Constants.h"
 
-using namespace std;
 
 UnitStoreController::UnitStoreController(GameObject* gameObject)
     : ListenerOnClick(gameObject) {
@@ -48,7 +47,7 @@ void UnitStoreController::increaseAmount(StoreUnit* storeUnit) {
       totalCost + scene->getCost(storeUnit->type_)) {
     totalCost += scene->getCost(storeUnit->type_);
     storeUnit->amount_++;
-    storeUnit->amountText_->setText(to_string(storeUnit->amount_));
+    storeUnit->amountText_->setText(std::to_string(storeUnit->amount_));
     scene->updateTotalCostText(totalCost);
   }
 }
@@ -58,7 +57,7 @@ void UnitStoreController::reduceAmount(StoreUnit* storeUnit) {
       static_cast<RecruitScene*>(Game::getSceneMachine()->getCurrentScene());
   totalCost -= scene->getCost(storeUnit->type_);
   storeUnit->amount_--;
-  storeUnit->amountText_->setText(to_string(storeUnit->amount_));
+  storeUnit->amountText_->setText(std::to_string(storeUnit->amount_));
   scene->updateTotalCostText(totalCost);
 }
 
@@ -69,7 +68,7 @@ void UnitStoreController::buyUnits() {
     if (unitStore[i]->amount_ > 0) {
       scene->buyUnits(unitStore[i]->type_, unitStore[i]->amount_);
       unitStore[i]->amount_ = 0;
-      unitStore[i]->amountText_->setText(to_string(0));
+      unitStore[i]->amountText_->setText(std::to_string(0));
     }
   }
   totalCost = 0;
@@ -80,7 +79,7 @@ void UnitStoreController::reset() {
   for (int i = 0; i < unitStore.size(); i++) {
     if (unitStore[i]->amount_ > 0) {
       unitStore[i]->amount_ = 0;
-      unitStore[i]->amountText_->setText(to_string(0));
+      unitStore[i]->amountText_->setText(std::to_string(0));
     }
   }
 
@@ -89,7 +88,7 @@ void UnitStoreController::reset() {
       ->updateTotalCostText(0);
 }
 
-void UnitStoreController::addUnitToStore(string type, GameObject* unit,
+void UnitStoreController::addUnitToStore(std::string type, GameObject* unit,
                                          Text* amountText,
                                          GameObject* moreButton,
                                          GameObject* lessButton) {
