@@ -6,7 +6,7 @@
 const int WIN_WIDTH = 1280;
 const int WIN_HEIGHT = 720;
 static const int ANIMATION_TICKS_PER_SECOND = 1;
-static const int GAME_FRAMERATE = 15;
+static const int GAME_FRAMERATE = 25;
 
 // TODO(Miguel): method to get fullscreen , will be implemented in the near
 // future

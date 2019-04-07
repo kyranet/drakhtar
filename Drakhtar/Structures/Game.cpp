@@ -94,10 +94,12 @@ Game::Game() {
 
   textures->add("UI-turnBar", "../images/UI/rock_bar.png", 1, 1);
   textures->add("UI-circle", "../images/UI/circle.png", 1, 1);
+
   // Button
   textures->add("Button-Play", "../images/MainMenu/Play_Button.png", 1, 1);
   textures->add("Button-Options", "../images/MainMenu/Options_Button.png", 1,
                 1);
+  textures->add("Button-BattleCry", "../images/UI/battlecry_icon.png", 1, 1);
   textures->add("Button-Pause", "../images/Pause/Pause_Button.png", 1, 1);
   textures->add("Button-Resume", "../images/Pause/Resume_Button.png", 1, 1);
   textures->add("Button-Restart", "../images/Pause/Restart_Button.png", 1, 1);

@@ -20,13 +20,15 @@ class GameObject {
   std::vector<EventListener *> eventListeners_;
   std::vector<GameObject *> children_;
   GameObject *parent_ = nullptr;
+  const Vector2D<int> position;
 
  public:
   GameObject(Scene *scene, Texture *texture);
-  GameObject(Scene *scene, Texture *texture, Vector2D<int> position,
-             Vector2D<int> size);
+  GameObject(Scene *scene, Texture *texture, const Vector2D<int> &position,
+             const Vector2D<int> &size);
   virtual ~GameObject();
   virtual void render() const;
+  virtual void update();
   virtual void handleEvents(SDL_Event event);
   GameObject *addEventListener(EventListener *eventListener);
   virtual SDL_Rect getRect() const;
@@ -34,7 +36,10 @@ class GameObject {
   void setActive(bool active);
   bool getActive() const;
 
-  void setPosition(Vector2D<int> position);
+  void setSize(Vector2D<int> size);
+  Vector2D<int> getSize() const;
+
+  void setPosition(const Vector2D<int> &position);
   Vector2D<int> getPosition() const;
 
   void setTexture(Texture *texture);

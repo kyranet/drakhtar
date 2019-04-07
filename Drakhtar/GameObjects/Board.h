@@ -34,7 +34,7 @@ class Board : public GameObject {
   int getCols() { return columns_; }
 
   // Returns cell in board index (x, y)
-  Box *getBoxAt(int x, int y);
+  Box *getBoxAt(int x, int y) const;
 
   // Returns cell in window coordinates (x, y)
   Box *getBoxAtCoordinates(SDL_Point coordinates);
@@ -63,4 +63,6 @@ class Board : public GameObject {
   void resetCellsToBase();
 
   std::list<Vector2D<int>> findPath(Vector2D<int> start, Vector2D<int> end);
+  std::vector<Vector2D<double>> pathToRoute(
+      std::list<Vector2D<int>> path) const;
 };

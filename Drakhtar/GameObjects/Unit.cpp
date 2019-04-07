@@ -15,6 +15,8 @@ Unit::Unit(Scene *scene, Texture *texture, Box *box, int attack, int defense,
                                box->getRect().y + box->getRect().h / 2),
                  Vector2D<int>(static_cast<int>(box->getRect().w * 2),
                                static_cast<int>(box->getRect().h * 2))),
+      baseAttack_(attack),
+      baseSpeed_(speed),
       attack_(attack),
       defense_(defense),
       health_(health),
@@ -42,16 +44,7 @@ Unit::~Unit() {
   }
 }
 
-void Unit::setMoving(bool moving) { moving_ = moving; }
-
-void Unit::setMoved(bool moved) { moved_ = moved; }
-
-void Unit::setTeam(Team *team) { team_ = team; }
-
 void Unit::moveToBox(Box *newBox) {
-  // If it's not the unit's turn, cancel any action
-  // if (!moving_) return;
-
   box_->setContent(nullptr);
   setPosition(Vector2D<int>(newBox->getRect().x + newBox->getRect().w / 2,
                             newBox->getRect().y + newBox->getRect().h / 2));
@@ -73,6 +66,22 @@ int Unit::loseHealth(int enemyAttack) {
 void Unit::render() const {
   GameObject::render();
   healthText_->render();
+}
+
+void Unit::onSelect() { setMoving(true); }
+
+void Unit::onDeselect() { setMoving(false); }
+
+void Unit::attack(Unit *enemy, bool counter) {
+  enemy->loseHealth(getAttack());
+
+  // If the attack is not a counter and the enemy is
+  // alive and within attack range, counter-attack
+  if (!counter && enemy->getHealth() > 0 &&
+      team_->getBoard()->isInRange(box_, enemy->getBox(),
+                                   enemy->getAttackRange())) {
+    enemy->attack(this, true);
+  }
 }
 
 std::string Unit::healthToString() const {
