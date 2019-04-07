@@ -1,15 +1,15 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Pause.h"
-#include "../Managers/SDLAudioManager.h"
-#include "../Managers/TextureManager.h"
-#include "../Scenes/GameScene.h"
-#include "../Scenes/MenuScene.h"
-#include "../Scenes/Scene.h"
-#include "../Structures/Game.h"
-#include "../Utils/Constants.h"
-#include "../Utils/Vector2D.h"
 #include "Button.h"
+#include "Managers/SDLAudioManager.h"
+#include "Managers/TextureManager.h"
+#include "Scenes/GameScene.h"
+#include "Scenes/MenuScene.h"
+#include "Scenes/Scene.h"
+#include "Structures/Game.h"
+#include "Utils/Constants.h"
+#include "Utils/Vector2D.h"
 
 void restartGame() {
   Game::getSceneMachine()->getCurrentScene()->processNextTick(

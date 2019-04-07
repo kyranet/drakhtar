@@ -1,20 +1,20 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "GameScene.h"
-#include "../EventListeners/BoardController.h"
-#include "../GameObjects/Button.h"
-#include "../GameObjects/Commanders/Thassa.h"
-#include "../GameObjects/Commanders/Zamdran.h"
-#include "../GameObjects/DialogScene.h"
-#include "../GameObjects/Pause.h"
-#include "../GameObjects/SkillButton.h"
-#include "../GameObjects/TurnBar.h"
-#include "../Managers/SDLAudioManager.h"
-#include "../Managers/TextureManager.h"
-#include "../Structures/Game.h"
-#include "../Structures/Team.h"
-#include "../Structures/UnitFactory.h"
-#include "../Utils/Constants.h"
+#include "EventListeners/BoardController.h"
+#include "GameObjects/Button.h"
+#include "GameObjects/Commanders/Thassa.h"
+#include "GameObjects/Commanders/Zamdran.h"
+#include "GameObjects/DialogScene.h"
+#include "GameObjects/Pause.h"
+#include "GameObjects/SkillButton.h"
+#include "GameObjects/TurnBar.h"
+#include "Managers/SDLAudioManager.h"
+#include "Managers/TextureManager.h"
+#include "Structures/Game.h"
+#include "Structures/Team.h"
+#include "Structures/UnitFactory.h"
+#include "Utils/Constants.h"
 
 auto audio = SDLAudioManager::getInstance();
 
@@ -32,7 +32,7 @@ void GameScene::preload() {
       new GameObject(this, TextureManager::get("Maps-FirstBattle"),
                      Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
                      Vector2D<int>(WIN_WIDTH, WIN_HEIGHT));
-  auto board = new Board(this, 8, 12, static_cast<float>(WIN_HEIGHT / 10));
+  auto board = new Board(this, 8, 12, static_cast<float>(WIN_HEIGHT / 10.0f));
   addGameObject(background);
   addGameObject(board);
 
@@ -41,12 +41,12 @@ void GameScene::preload() {
   team2_ = new Team(board, Color::RED);
 
   // Create a temporary factory to create the units easily.
-  UnitFactory factory = UnitFactory(this);
+  auto factory = UnitFactory(this);
 
   // Blue Team
-  const auto thassa_ = factory.newThassa(team1_, board->getBoxAt(0, 0));
-  team1_->setCommander(thassa_);
-  addGameObject(thassa_);
+  const auto thassa = factory.newThassa(team1_, board->getBoxAt(0, 0));
+  team1_->setCommander(thassa);
+  addGameObject(thassa);
   addGameObject(factory.newSoldier(team1_, board->getBoxAt(0, 2), 10));
   addGameObject(factory.newArcher(team1_, board->getBoxAt(0, 3), 10));
   addGameObject(factory.newWizard(team1_, board->getBoxAt(0, 4), 10));
@@ -64,27 +64,33 @@ void GameScene::preload() {
   addGameObject(factory.newMonster(team2_, board->getBoxAt(11, 6), 10));
 
   // Add the GUI features now
-  auto turnBar =
+  const auto turnBar =
       new TurnBar(this, team1_->getUnitList(), team2_->getUnitList());
-  auto dialog = new DialogScene(this, "dialog1_start", "DialogFont");
-  auto pauseButton = new Button(
-      this, TextureManager::get("Button-Pause"),
-      Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 24, WIN_HEIGHT / 18),
-      Vector2D<int>(WIN_WIDTH / 21.6, WIN_HEIGHT / 14.4), buttonPause);
+  const auto dialog = new DialogScene(this, "dialog1_start", "DialogFont");
+  const auto pauseButton =
+      new Button(this, TextureManager::get("Button-Pause"),
+                 Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 24, WIN_HEIGHT / 18),
+                 Vector2D<int>(static_cast<int>(WIN_WIDTH / 21.6),
+                               static_cast<int>(WIN_HEIGHT / 14.4)),
+                 buttonPause);
 
   audio->haltMusic();
   audio->setMusicVolume(10);
   audio->playMusic(1, 999);
 
-  SkillButton *battleCryButton = new SkillButton(
-      this, TextureManager::get("Button-BattleCry"),
-      Vector2D<int>(WIN_WIDTH / 24, WIN_HEIGHT / 18),
-      Vector2D<int>(WIN_WIDTH / 21.6, WIN_HEIGHT / 14.4), board, thassa_, 0);
+  const auto battleCryButton =
+      new SkillButton(this, TextureManager::get("Button-BattleCry"),
+                      Vector2D<int>(WIN_WIDTH / 24, WIN_HEIGHT / 18),
+                      Vector2D<int>(static_cast<int>(WIN_WIDTH / 21.6),
+                                    static_cast<int>(WIN_HEIGHT / 14.4)),
+                      board, thassa, 0);
 
-  SkillButton *arrowRainButton = new SkillButton(
-      this, TextureManager::get("Button-BattleCry"),
-      Vector2D<int>(WIN_WIDTH / 10, WIN_HEIGHT / 18),
-      Vector2D<int>(WIN_WIDTH / 21.6, WIN_HEIGHT / 14.4), board, zamdran_, 0);
+  const auto arrowRainButton =
+      new SkillButton(this, TextureManager::get("Button-BattleCry"),
+                      Vector2D<int>(WIN_WIDTH / 10, WIN_HEIGHT / 18),
+                      Vector2D<int>(static_cast<int>(WIN_WIDTH / 21.6),
+                                    static_cast<int>(WIN_HEIGHT / 14.4)),
+                      board, zamdran_, 0);
 
   addGameObject(turnBar);
   addGameObject(dialog);

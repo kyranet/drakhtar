@@ -1,16 +1,16 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "BoardController.h"
-#include "../Managers/SDLAudioManager.h"
+#include <iostream>
 #include "GameObjects/Board.h"
 #include "GameObjects/Box.h"
 #include "GameObjects/TurnBar.h"
 #include "GameObjects/Unit.h"
+#include "Managers/SDLAudioManager.h"
 #include "Scenes/GameScene.h"
 #include "Structures/Texture.h"
 #include "Structures/Tween.h"
 #include "Utils/Constants.h"
-#include <iostream>
 
 BoardController::BoardController(Board *board, TurnBar *turnBar,
                                  GameScene *scene)
@@ -48,13 +48,11 @@ void BoardController::onClickStop(const SDL_Point point) {
 
 void BoardController::onClickMove(Box *boxClicked) {
   // If this BoardController is stopped, don't run
-  if (isTweening)
-    return;
+  if (isTweening) return;
 
   // Checks if the box clicked is within movement range
   if (board_->isInMoveRange(activeUnit_->getBox(), boxClicked,
                             activeUnit_->getMoveRange())) {
-
     const auto path = board_->findPath(activeUnit_->getBox()->getIndex(),
                                        boxClicked->getIndex());
 
@@ -99,7 +97,6 @@ void BoardController::onClickAttack(Box *boxClicked) {
     if (enemyUnit->getTeam() != activeUnit_->getTeam() &&
         board_->isInRange(activeUnit_->getBox(), boxClicked,
                           activeUnit_->getAttackRange())) {
-
       // enemyUnit->loseHealth(activeUnit_->getAttack());
       activeUnit_->attack(enemyUnit, false);
       SDLAudioManager::getInstance()->playChannel(5, 0, 0);
