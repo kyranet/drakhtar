@@ -72,17 +72,16 @@ void GameScene::preload() {
       Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 24, WIN_HEIGHT / 18),
       Vector2D<int>(WIN_WIDTH / 21.6, WIN_HEIGHT / 14.4), buttonPause);
 
-
   audio->haltMusic();
   audio->setMusicVolume(10);
   audio->playMusic(1, 999);
-  
-  SkillButton* battleCryButton = new SkillButton(
+
+  SkillButton *battleCryButton = new SkillButton(
       this, TextureManager::get("Button-BattleCry"),
       Vector2D<int>(WIN_WIDTH / 24, WIN_HEIGHT / 18),
       Vector2D<int>(WIN_WIDTH / 21.6, WIN_HEIGHT / 14.4), board, thassa_, 0);
 
-  SkillButton* arrowRainButton = new SkillButton(
+  SkillButton *arrowRainButton = new SkillButton(
       this, TextureManager::get("Button-BattleCry"),
       Vector2D<int>(WIN_WIDTH / 10, WIN_HEIGHT / 18),
       Vector2D<int>(WIN_WIDTH / 21.6, WIN_HEIGHT / 14.4), board, zamdran_, 0);
@@ -97,7 +96,8 @@ void GameScene::preload() {
 }
 
 void GameScene::pause() {
-  if (!isPaused()) addGameObject(new Pause(this));
+  if (!isPaused())
+    addGameObject(new Pause(this));
   audio->playChannel(7, 0, 0);
   Scene::pause();
 }
