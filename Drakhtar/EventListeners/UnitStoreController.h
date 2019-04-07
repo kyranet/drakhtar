@@ -27,13 +27,14 @@ class UnitStoreController : public ListenerOnClick {
 private:
 	vector<StoreUnit*> unitStore;
   StoreUnit *selectedUnit = nullptr;
+  GameObject * acceptButton = nullptr;
   int totalCost = 0;
 
   void increaseAmount(StoreUnit * storeUnit);
   void reduceAmount(StoreUnit* storeUnit);
+  void buyUnits();
 public:
-  explicit UnitStoreController(GameObject *gameObject)
-    : ListenerOnClick(gameObject) {}
+  explicit UnitStoreController(GameObject *gameObject);
 
   void addUnitToStore(string type, GameObject * unit, Text * amountText, GameObject * moreButton, GameObject * lessButton);
 

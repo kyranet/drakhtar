@@ -151,6 +151,8 @@ Game::Game() {
   textures->add("Recruitment-Background", "../images/Recruitment/recruitment.png", 1, 1);
   textures->add("Recruitment-Panel", "../images/Recruitment/recruitment_Panel.png", 1, 1);
   textures->add("Quantity-Button", "../images/Recruitment/quantity_Button.png", 1, 1);
+  textures->add("Accept-Button", "../images/Recruitment/accept_Button.png", 1, 1);
+
 
   auto fonts = FontManager::getInstance();
 

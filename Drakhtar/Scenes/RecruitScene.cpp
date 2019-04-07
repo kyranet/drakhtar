@@ -46,13 +46,19 @@ void RecruitScene::preload()
 			Vector2D<int>(WIN_WIDTH / 2.184, 
         WIN_HEIGHT / 1.058 ));
 
+  addGameObject(background);
+  addGameObject(recruitmentPanel_);
+
   controller_ = new UnitStoreController(recruitmentPanel_);
   recruitmentPanel_->addEventListener(controller_);
 
-  addGameObject(background);
-  addGameObject(recruitmentPanel_);
+
+
   addGameObject(totalCostText_);
   addGameObject(moneyText_);
+
+
+
 
   addUnit("Units-BlueSoldier", 1);
   addUnit("Units-BlueArcher", 2);
@@ -173,3 +179,4 @@ string RecruitScene::moneyToString()
 {
 	return "Money: " + to_string(PlayerData::getInstance()->getMoney());
 }
+
