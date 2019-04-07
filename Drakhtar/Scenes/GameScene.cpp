@@ -31,10 +31,10 @@ void buttonPause() { Game::getSceneMachine()->getCurrentScene()->pause(); }
 void GameScene::preload() {
   Scene::preload();
   // Add the background and the board.
-  const auto background =
-      new GameObject(this, TextureManager::get("Maps-" + std::to_string(battle_) + "Battle"),
-                     Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
-                     Vector2D<int>(WIN_WIDTH, WIN_HEIGHT));
+  const auto background = new GameObject(
+      this, TextureManager::get("Maps-" + std::to_string(battle_) + "Battle"),
+      Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
+      Vector2D<int>(WIN_WIDTH, WIN_HEIGHT));
   auto board = new Board(this, 8, 12, static_cast<float>(WIN_HEIGHT / 10.0f));
   addGameObject(background);
   addGameObject(board);
@@ -70,7 +70,8 @@ void GameScene::preload() {
   const auto turnBar =
       new TurnBar(this, team1_->getUnitList(), team2_->getUnitList());
 
-  const auto dialog = new DialogScene(this, "dialog" + std::to_string(battle_), "DialogFont");
+  const auto dialog =
+      new DialogScene(this, "dialog" + std::to_string(battle_), "DialogFont");
   const auto pauseButton =
       new Button(this, TextureManager::get("Button-Pause"),
                  Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 24, WIN_HEIGHT / 18),

@@ -8,8 +8,8 @@
 #include "../Managers/FontManager.h"
 #include "../Managers/TextureManager.h"
 #include "../Scenes/GameScene.h"
-#include "../Scenes/Scene.h"
 #include "../Scenes/RecruitScene.h"
+#include "../Scenes/Scene.h"
 #include "../Structures/Font.h"
 #include "../Structures/Game.h"
 #include "../Utils/Constants.h"
@@ -77,7 +77,7 @@ void DialogScene::next() {
       Game::getSceneMachine()->getCurrentScene()->processNextTick(
           []() { Game::getSceneMachine()->changeScene(new RecruitScene()); });
   } else if (dialogueIndex_ < dialogues_.size() - 1) {
-    dialogueIndex++;
+    ++dialogueIndex_;
   } else {
     destroy();
     if (Game::getSceneMachine()->getCurrentScene()->getTransition())
