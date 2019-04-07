@@ -1,8 +1,6 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-#include <vector>
-#include "../Skill.h"
 #include "Commander.h"
 
 class Scene;

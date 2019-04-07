@@ -3,7 +3,7 @@
 #include "SceneMachine.h"
 #include "../Scenes/Scene.h"
 
-SceneMachine::SceneMachine() {}
+SceneMachine::SceneMachine() = default;
 
 SceneMachine::~SceneMachine() {
   while (!sceneStack_.empty()) {

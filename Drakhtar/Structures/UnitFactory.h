@@ -1,7 +1,6 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-#include <vector>
 
 class Scene;
 class Team;
@@ -11,7 +10,6 @@ class Thassa;
 class Zamdran;
 
 class UnitFactory {
- private:
   Scene *scene_;
 
  public:

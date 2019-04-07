@@ -10,7 +10,7 @@ class Commander;
 
 enum Color { BLUE, RED };
 
-class Team {
+class Team final {
   std::list<Unit *> units_;
   Board *board_ = nullptr;
   std::list<Unit *>::iterator findInsertPosition(Unit *unit);
@@ -19,7 +19,7 @@ class Team {
 
  public:
   Team(Board *board, Color color);
-  virtual ~Team();
+  ~Team();
   Board *getBoard() const;
   Commander *getCommander() const { return commander_; }
   void setCommander(Commander* commander) { commander_ = commander; }

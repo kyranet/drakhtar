@@ -9,6 +9,7 @@
 #include "GameObjects/Pause.h"
 #include "GameObjects/SkillButton.h"
 #include "GameObjects/TurnBar.h"
+#include "GameObjects/TutorialSequence.h"
 #include "Managers/SDLAudioManager.h"
 #include "Managers/TextureManager.h"
 #include "Structures/Game.h"
@@ -102,6 +103,10 @@ void GameScene::preload() {
   addGameObject(arrowRainButton);
 
   board->addEventListener(new BoardController(board, turnBar, this));
+
+  const auto tutorialSequence =
+      new TutorialSequence(this, "tutorials", "TutorialFont");
+  addGameObject(tutorialSequence);
 }
 
 void GameScene::pause() {

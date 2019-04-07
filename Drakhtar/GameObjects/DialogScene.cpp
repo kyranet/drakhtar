@@ -1,6 +1,8 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "DialogScene.h"
+#include <fstream>
+#include <iostream>
 #include "../Errors/DrakhtarError.h"
 #include "../GameObjects/Button.h"
 #include "../Managers/FontManager.h"
@@ -14,16 +16,18 @@
 #include "Dialog.h"
 
 void skipDialog() { Game::getSceneMachine()->getCurrentScene()->setSkip(true); }
+
 // default position and size(adjust it to move DialogScene)
 DialogScene::DialogScene(Scene* scene, const std::string& filename,
                          const std::string& fontFile)
     : GameObject(scene, nullptr, Vector2D<int>(0, 0), Vector2D<int>(1, 1)) {
-  const auto area = getRect();
-  auto dialogueBackground = new GameObject(
-      scene_, TextureManager::get("UI-dialogueBackground"),
-      Vector2D<int>(area.x + WIN_WIDTH / 2,
-                    WIN_HEIGHT - area.h * WIN_HEIGHT / 6),
-      Vector2D<int>(area.w * WIN_WIDTH / 1.4, area.h * WIN_HEIGHT / 4));
+  const auto area = GameObject::getRect();
+  auto dialogueBackground =
+      new GameObject(scene_, TextureManager::get("UI-dialogueBackground"),
+                     Vector2D<int>(area.x + WIN_WIDTH / 2,
+                                   WIN_HEIGHT - area.h * WIN_HEIGHT / 6),
+                     Vector2D<int>(static_cast<int>(area.w * WIN_WIDTH / 1.4),
+                                   area.h * WIN_HEIGHT / 4));
   const auto nameBackground = new GameObject(
       scene_, TextureManager::get("UI-dialogueBackground"),
       Vector2D<int>(dialogueBackground->getRect().x +
@@ -38,8 +42,8 @@ DialogScene::DialogScene(Scene* scene, const std::string& filename,
       Vector2D<int>(area.w * WIN_WIDTH / 8, area.h * WIN_HEIGHT / 10));
   const auto skip = new Button(
       scene_, TextureManager::get("Button-Skip"),
-      Vector2D<int>(dialogueBackground->getRect().x +
-                        dialogueBackground->getRect().w / 1.05,
+      Vector2D<int>(static_cast<int>(dialogueBackground->getRect().x +
+                                     dialogueBackground->getRect().w / 1.05),
                     dialogueBackground->getRect().y + 140),
       Vector2D<int>(area.w * WIN_WIDTH / 30, area.h * WIN_HEIGHT / 24),
       skipDialog);
@@ -58,12 +62,12 @@ DialogScene::DialogScene(Scene* scene, const std::string& filename,
 }
 
 DialogScene::~DialogScene() {
-  for (auto dialog : dialogues) delete dialog;
+  for (auto dialog : dialogues_) delete dialog;
 }
 
 void DialogScene::render() const {
   GameObject::render();
-  dialogues[dialogueIndex]->render();
+  dialogues_[dialogueIndex_]->render();
 }
 
 void DialogScene::next() {
@@ -72,7 +76,7 @@ void DialogScene::next() {
     if (Game::getSceneMachine()->getCurrentScene()->getTransition())
       Game::getSceneMachine()->getCurrentScene()->processNextTick(
           []() { Game::getSceneMachine()->changeScene(new RecruitScene()); });
-  } else if (dialogueIndex < dialogues.size() - 1) {
+  } else if (dialogueIndex_ < dialogues_.size() - 1) {
     dialogueIndex++;
   } else {
     destroy();
@@ -83,17 +87,17 @@ void DialogScene::next() {
 }
 
 void DialogScene::readFromFile(const std::string& filename, Font* textFont,
-                               SDL_Rect rect) {
+                               const SDL_Rect rect) {
   std::ifstream file;
   file.open(filename);
 
-  if (!file.is_open()) throw new DrakhtarError("Could not find file");
+  if (!file.is_open()) throw DrakhtarError("Could not find file");
 
-  size_t lines, i;
+  size_t lines;
   file >> lines;
-  dialogues.resize(lines);
+  dialogues_.resize(lines);
   for (size_t i = 0; i < lines && !file.eof(); i++) {
-    dialogues[i] = new Dialog(scene_, file, textFont, rect, lineJumpLimit_);
+    dialogues_[i] = new Dialog(scene_, file, textFont, rect, lineJumpLimit_);
   }
 
   file.close();

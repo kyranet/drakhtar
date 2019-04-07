@@ -2,12 +2,38 @@
 
 #include "Texture.h"
 #include "../Errors/SDLError.h"
-#include "../Structures/Game.h"
 #include "SDL_image.h"
+
+Texture::Texture() = default;
+
+Texture::Texture(SDL_Renderer *r) : renderer_(r) {}
+
+Uint16 Texture::getColumnAmount() const { return columnAmount_; }
+
+Uint16 Texture::getRowAmount() const { return rowAmount_; }
+
+Uint16 Texture::getFrame() const { return frame_; }
+
+Vector2D<Uint16> Texture::getSize() const { return size_; }
+
+Vector2D<Uint16> Texture::getFrameSize() const { return frameSize_; }
+
+std::vector<Uint16> Texture::getAnimation() const { return animation_; }
+
+SDL_Texture *Texture::getTexture() const { return texture_; }
+
+SDL_Renderer *Texture::getRenderer() const { return renderer_; }
+
+SDL_RendererFlip Texture::getFlip() const { return flip_; }
 
 Texture::~Texture() {
   close();
   animations_.clear();
+}
+
+Vector2D<Uint16> Texture::getFramePosition(const Uint16 frame) const {
+  return Vector2D<Uint16>(frame % columnAmount_,
+                          static_cast<Uint16>(floor(frame / columnAmount_)));
 }
 
 Texture *Texture::setTexture(SDL_Texture *const &texture) {
@@ -95,7 +121,7 @@ void Texture::setAnimation(const std::string &name) {
         "Cannot set an animation that has not been previously added.");
 }
 
-bool Texture::hasAnimation(const std::string &name) {
+bool Texture::hasAnimation(const std::string &name) const {
   return animations_.count(name) != 0;
 }
 
@@ -124,8 +150,8 @@ void Texture::render(const SDL_Rect &dest, double angle, SDL_Rect *clip) const {
   }
 }
 
-void Texture::renderFrame(SDL_Rect const &dest, Uint16 frame,
-                          double angle) const {
+void Texture::renderFrame(SDL_Rect const &dest, const Uint16 frame,
+                          const double angle) const {
   auto framePosition = getFramePosition(frame);
   const auto width = frameSize_.getX();
   const auto height = frameSize_.getY();
