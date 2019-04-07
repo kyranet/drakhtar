@@ -6,6 +6,7 @@
 #include "GameObjects/Box.h"
 #include "GameObjects/TurnBar.h"
 #include "GameObjects/Unit.h"
+#include "Managers/SDLAudioManager.h"
 #include "Scenes/GameScene.h"
 #include "Structures/Texture.h"
 #include "Structures/Tween.h"
@@ -56,6 +57,7 @@ void BoardController::onClickMove(Box *boxClicked) {
                                        boxClicked->getIndex());
 
     isTweening = true;
+    SDLAudioManager::getInstance()->playChannel(0, 0, 0);
     const auto unit = activeUnit_;
     scene_->getTweenManager()
         ->create()
@@ -76,12 +78,15 @@ void BoardController::onClickMove(Box *boxClicked) {
             unit->getBox()->setCurrentTexture(TextureInd::ACTIVE);
             board_->highlightEnemiesInRange(unit->getBox(),
                                             unit->getAttackRange());
+            SDLAudioManager::getInstance()->setChannelVolume(30, 0);
+            SDLAudioManager::getInstance()->playChannel(4, 0, 0);
           } else {
             advanceTurn();
           }
         });
   } else {
     std::cout << "Out of movement range!\n";
+    SDLAudioManager::getInstance()->playChannel(3, 0, 0);
   }
 }
 
@@ -92,7 +97,9 @@ void BoardController::onClickAttack(Box *boxClicked) {
     if (enemyUnit->getTeam() != activeUnit_->getTeam() &&
         board_->isInRange(activeUnit_->getBox(), boxClicked,
                           activeUnit_->getAttackRange())) {
+      // enemyUnit->loseHealth(activeUnit_->getAttack());
       activeUnit_->attack(enemyUnit, false);
+      SDLAudioManager::getInstance()->playChannel(5, 0, 0);
 
       // Enemy dies
       if (enemyUnit->getHealth() == 0) {
