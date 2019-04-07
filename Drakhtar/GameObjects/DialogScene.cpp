@@ -13,6 +13,7 @@
 #include "Dialog.h"
 
 void skipDialog() { Game::getSceneMachine()->getCurrentScene()->setSkip(true); }
+
 // default position and size(adjust it to move DialogScene)
 DialogScene::DialogScene(Scene* scene, const std::string& filename,
                          const std::string& fontFile)
