@@ -8,17 +8,15 @@
 class Unit;
 class Text;
 
-using namespace std;
-
 struct StoreUnit {
-  string type_;
+  std::string type_;
   int amount_ = 0;
   GameObject *unit_;
   Text *amountText_;
   GameObject *moreButton_;
   GameObject *lessButton_;
 
-  StoreUnit(string type, GameObject *unit, Text *amountText,
+  StoreUnit(std::string type, GameObject *unit, Text *amountText,
             GameObject *moreButton, GameObject *lessButton)
       : type_(type),
         unit_(unit),
@@ -29,7 +27,7 @@ struct StoreUnit {
 
 class UnitStoreController : public ListenerOnClick {
  private:
-  vector<StoreUnit *> unitStore;
+  std::vector<StoreUnit *> unitStore;
   StoreUnit *selectedUnit = nullptr;
   GameObject *acceptButton = nullptr;
   GameObject *cancelButton = nullptr;
@@ -44,8 +42,8 @@ class UnitStoreController : public ListenerOnClick {
   explicit UnitStoreController(GameObject *gameObject);
   virtual ~UnitStoreController();
 
-  void addUnitToStore(string type, GameObject *unit, Text *amountText,
+  void addUnitToStore(std::string type, GameObject *unit, Text *amountText,
                       GameObject *moreButton, GameObject *lessButton);
 
-  virtual void onClickStop(const SDL_Point) override;
+  void onClickStop(const SDL_Point) override;
 };

@@ -138,5 +138,5 @@ void UnitStoreController::onClickStop(const SDL_Point point) {
   if (!found) return;
 
   selectedUnit = unitStore[i];
-  // TODO: Show and update Unit Parameters Sheet
+  // TODO(Carlos): Show and update Unit Parameters Sheet
 }
