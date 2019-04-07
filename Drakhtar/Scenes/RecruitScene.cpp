@@ -5,6 +5,7 @@
 #include "GameObjects/Button.h"
 #include "GameObjects/GameObject.h"
 #include "GameObjects/Text.h"
+#include "GameScene.h"
 #include "Managers/FontManager.h"
 #include "Managers/PlayerData.h"
 #include "Managers/TextureManager.h"
@@ -15,7 +16,7 @@
 
 void buttonStartGame() {
   Game::getSceneMachine()->getCurrentScene()->processNextTick(
-      []() { Game::getSceneMachine()->changeScene(new TransitionScene(1)); });
+      []() { Game::getSceneMachine()->changeScene(new GameScene((1))); });
 }
 
 void RecruitScene::preload() {
