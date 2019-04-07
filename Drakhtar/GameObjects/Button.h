@@ -5,14 +5,14 @@
 #include "GameObject.h"
 #include "SDL.h"
 
-using Callback = void();
+using Callback = std::function<void()>;
 
-class Button : public GameObject {
+class Button final : public GameObject {
  protected:
-  Callback *callback_;
+  Callback callback_;
 
  public:
-  Button(Scene *scene, Texture *texture, Vector2D<int> pos, Vector2D<int> size,
-         Callback *callback);
-  void handleEvents(SDL_Event e);
+  Button(Scene* scene, Texture* texture, const Vector2D<int>& pos,
+         const Vector2D<int>& size, Callback callback);
+  void handleEvents(SDL_Event e) override;
 };

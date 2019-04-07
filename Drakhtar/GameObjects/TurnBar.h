@@ -2,7 +2,6 @@
 
 #pragma once
 #include <list>
-#include <queue>
 #include <vector>
 #include "GameObject.h"
 #include "SDL.h"
@@ -10,26 +9,25 @@
 class Scene;
 class Unit;
 
-class TurnBar : public GameObject {
- private:
-  std::list<Unit *> unitTurnBar;
-  int visibleTurnBarSize = 9;
-  std::vector<GameObject *> visibleUnits;
-  GameObject* selectedUnitSprite = nullptr;
+class TurnBar final : public GameObject {
+  std::list<Unit *> unitTurnBar_;
+  size_t visibleTurnBarSize_ = 9;
+  std::vector<GameObject *> visibleUnits_;
+  GameObject* selectedUnitSprite_ = nullptr;
 
 
  public:
-  // constructor intercalates units from each team list into the turn bar (ally
+  // constructor interlaces units from each team list into the turn bar (ally
   // -> enemy -> ally -> etc)
   TurnBar(Scene *scene, std::list<Unit *> allyList,
           std::list<Unit *> enemyList);
   virtual ~TurnBar();
-  Unit *getFrontUnit() { return unitTurnBar.front(); }
+  Unit *getFrontUnit() { return unitTurnBar_.front(); }
   void advanceTurn();
   void sort();
   void eraseUnit(Unit *unit);
-  virtual void render() const;
-  virtual void handleEvents(SDL_Event event);
+  void render() const override;
+  void handleEvents(SDL_Event event) override;
   void updateVisibleUnits();
   void decreaseVisibleUnitsSize();
 };

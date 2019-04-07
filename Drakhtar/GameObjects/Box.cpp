@@ -5,7 +5,7 @@
 #include "Managers/Input.h"
 #include "Unit.h"
 
-Box::Box(Scene *scene, const Vector2D<int> &pos, const Vector2D<int> size,
+Box::Box(Scene *scene, const Vector2D<int> &pos, const Vector2D<int> &size,
          const Vector2D<int> &boardIndex, Unit *unit)
     : GameObject(scene, nullptr, pos, size),
       boardIndex_(boardIndex),

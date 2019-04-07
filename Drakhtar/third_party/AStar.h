@@ -3,9 +3,8 @@
     Following tool is licensed under the terms and conditions of the ISC
    license. For more information visit https://opensource.org/licenses/ISC.
 */
-#ifndef DRAKHTAR_THIRD_PARTY_ASTAR_H_
-#define DRAKHTAR_THIRD_PARTY_ASTAR_H_
 
+#pragma once
 #include <functional>
 #include <set>
 #include <vector>
@@ -14,54 +13,52 @@ namespace AStar {
 struct Vec2i {
   int x, y;
 
-  bool operator==(const Vec2i& coordinates_) const;
+  bool operator==(const Vec2i& coordinates) const;
 };
 
-using uint = unsigned int;
-using HeuristicFunction = std::function<uint(Vec2i, Vec2i)>;
+using Uint = unsigned int;
+using HeuristicFunction = std::function<Uint(Vec2i, Vec2i)>;
 using CoordinateList = std::vector<Vec2i>;
 
 struct Node {
-  uint G, H;
+  Uint g, h;
   Vec2i coordinates{};
   Node* parent;
 
-  explicit Node(Vec2i coord_, Node* parent_ = nullptr);
-  uint getScore() const;
+  explicit Node(Vec2i coordinates, Node* parent = nullptr);
+  Uint getScore() const;
 };
 
 using NodeSet = std::set<Node*>;
 
 class Generator {
-  bool detectCollision(Vec2i coordinates_);
-  static Node* findNodeOnList(NodeSet& nodes_, Vec2i coordinates_);
-  static void releaseNodes(NodeSet& nodes_);
+  bool detectCollision(Vec2i coordinates);
+  static Node* findNodeOnList(NodeSet& nodes, Vec2i coordinates);
+  static void releaseNodes(NodeSet& nodes);
 
  public:
   Generator();
-  void setWorldSize(Vec2i worldSize_);
-  void setDiagonalMovement(bool enable_);
-  void setHeuristic(HeuristicFunction heuristic_);
-  CoordinateList findPath(Vec2i source_, Vec2i target_);
-  void addCollision(Vec2i coordinates_);
-  void removeCollision(Vec2i coordinates_);
+  void setWorldSize(Vec2i worldSize);
+  void setDiagonalMovement(bool enable);
+  void setHeuristic(HeuristicFunction heuristic);
+  CoordinateList findPath(Vec2i source, Vec2i target);
+  void addCollision(Vec2i coordinates);
+  void removeCollision(Vec2i coordinates);
   void clearCollisions();
 
  private:
-  HeuristicFunction heuristic;
-  CoordinateList direction, walls;
-  Vec2i worldSize{};
-  uint directions{};
+  HeuristicFunction heuristic_;
+  CoordinateList direction_, walls_;
+  Vec2i worldSize_{};
+  Uint directions_{};
 };
 
 class Heuristic {
-  static Vec2i getDelta(Vec2i source_, Vec2i target_);
+  static Vec2i getDelta(Vec2i source, Vec2i target);
 
  public:
-  static uint manhattan(Vec2i source_, Vec2i target_);
-  static uint euclidean(Vec2i source_, Vec2i target_);
-  static uint octagonal(Vec2i source_, Vec2i target_);
+  static Uint manhattan(Vec2i source, Vec2i target);
+  static Uint euclidean(Vec2i source, Vec2i target);
+  static Uint octagonal(Vec2i source, Vec2i target);
 };
 }  // namespace AStar
-
-#endif  // DRAKHTAR_THIRD_PARTY_ASTAR_H_

@@ -8,8 +8,7 @@ class Scene;
 class Texture;
 class Text;
 
-class Battalion : public Unit {
- private:
+class Battalion final : public Unit {
   int battalionSize_;
   Text* sizeText_ = nullptr;
 
@@ -17,18 +16,18 @@ class Battalion : public Unit {
 
  public:
   Battalion(Scene* scene, Texture* texture, Box* box, int attack, int defense,
-            int health, int speed, int attackRange, int moveRange,
-            int battalionSize, int prize);
+            int health, int speed, int attackRange, int moveRange, int prize,
+            int battalionSize);
   virtual ~Battalion();
 
   int getBattalionSize() const { return battalionSize_; }
   void setBattalionSize(int battalionSize);
 
-  virtual int getAttack() const;
-  virtual int getMaxHealth() const;
+  int getAttack() const override;
+  int getMaxHealth() const override;
 
-  virtual int loseHealth(int enemyAttack);
+  int loseHealth(int enemyAttack) override;
 
-  virtual void moveToBox(Box* box);
-  virtual void render() const;
+  void moveToBox(Box* box) override;
+  void render() const override;
 };

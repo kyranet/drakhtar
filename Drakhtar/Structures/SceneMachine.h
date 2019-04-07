@@ -5,15 +5,24 @@
 
 class Scene;
 
-class SceneMachine {
+/**
+ * \brief The Scene machine that manages all scenes.
+ */
+class SceneMachine final {
  protected:
   std::stack<Scene *> sceneStack_;
 
  public:
   SceneMachine();
-  virtual ~SceneMachine();
-  void pushScene(Scene *state);
-  void changeScene(Scene *state);
+  ~SceneMachine();
+  SceneMachine(const SceneMachine &) = default;  // Copy Constructor
+  SceneMachine(SceneMachine &&) = default;       // Move Constructor
+  SceneMachine &operator=(const SceneMachine &) =
+      default;                                         // Assignment Operator
+  SceneMachine &operator=(SceneMachine &&) = default;  // Move Operator
+
+  void pushScene(Scene *scene);
+  void changeScene(Scene *scene);
   void popScene();
   bool isEmpty() const;
   Scene *getCurrentScene();

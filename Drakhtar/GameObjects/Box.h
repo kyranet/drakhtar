@@ -23,7 +23,7 @@ class Box final : public GameObject {
   const Vector2D<int> size_;
 
  public:
-  Box(Scene *scene, const Vector2D<int> &pos, Vector2D<int> size,
+  Box(Scene *scene, const Vector2D<int> &pos, const Vector2D<int> &size,
       const Vector2D<int> &boardIndex, Unit *unit);
 
   SDL_Rect getRect() const override;

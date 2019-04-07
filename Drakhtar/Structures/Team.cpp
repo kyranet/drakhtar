@@ -3,7 +3,7 @@
 #include "Team.h"
 #include "../Errors/TeamedUnitError.h"
 
-Team::Team(Board *board, Color color) : board_(board), color_(color) {}
+Team::Team(Board *board, const Color color) : board_(board), color_(color) {}
 
 Team::~Team() { board_ = nullptr; }
 
@@ -11,14 +11,14 @@ Board *Team::getBoard() const { return board_; }
 
 void Team::addUnit(Unit *unit) {
   if (unit->getTeam() != nullptr) {
-    throw new TeamedUnitError("This unit already has a team.");
+    throw TeamedUnitError("This unit already has a team.");
   }
   unit->setTeam(this);
 
   // Gets the sorted position. If it does not find an unit
   // with lower speed, it gets pushed to the end, otherwise
   // it gets pushed right before the first slower one.
-  auto index = findInsertPosition(unit);
+  const auto index = findInsertPosition(unit);
   if (index == units_.end())
     units_.push_back(unit);
   else
@@ -52,7 +52,7 @@ std::list<Unit *> Team::getUnitList() const { return units_; }
 Color Team::getColor() const { return color_; }
 
 std::list<Unit *>::iterator Team::findInsertPosition(Unit *unit) {
-  auto i = 0;
+  // auto i = 0;
   auto it = units_.begin();
   auto end = units_.end();
   /*

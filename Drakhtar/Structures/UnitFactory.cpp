@@ -28,7 +28,7 @@ Unit *UnitFactory::newSoldier(Team *team, Box *box, const int size) const {
   const auto unit =
       new Battalion(scene_, TextureManager::get(textureName), box,
                     soldierAttack, soldierDefense, soldierHealth, soldierSpeed,
-                    soldierAttackRange, soldierMoveRange, size, soldierPrize);
+                    soldierAttackRange, soldierMoveRange, soldierPrize, size);
   team->addUnit(unit);
   return unit;
 }
@@ -48,7 +48,7 @@ Unit *UnitFactory::newArcher(Team *team, Box *box, const int size) const {
   const auto unit =
       new Battalion(scene_, TextureManager::get(textureName), box, archerAttack,
                     archerDefense, archerHealth, archerSpeed, archerAttackRange,
-                    archerMoveRange, size, archerPrize);
+                    archerMoveRange, archerPrize, size);
   team->addUnit(unit);
   return unit;
 }
@@ -68,7 +68,7 @@ Unit *UnitFactory::newKnight(Team *team, Box *box, const int size) const {
   const auto unit =
       new Battalion(scene_, TextureManager::get(textureName), box, knightAttack,
                     knightDefense, knightHealth, knightSpeed, knightAttackRange,
-                    knightMoveRange, size, knightPrize);
+                    knightMoveRange, knightPrize, size);
   team->addUnit(unit);
   return unit;
 }
@@ -88,7 +88,7 @@ Unit *UnitFactory::newWizard(Team *team, Box *box, const int size) const {
   const auto unit =
       new Battalion(scene_, TextureManager::get(textureName), box, wizardAttack,
                     wizardDefense, wizardHealth, wizardSpeed, wizardAttackRange,
-                    wizardMoveRange, size, wizardPrize);
+                    wizardMoveRange, wizardPrize, size);
   team->addUnit(unit);
   return unit;
 }
@@ -108,7 +108,7 @@ Unit *UnitFactory::newMonster(Team *team, Box *box, const int size) const {
   const auto unit =
       new Battalion(scene_, TextureManager::get(textureName), box,
                     monsterAttack, monsterDefense, monsterHealth, monsterSpeed,
-                    monsterAttackRange, monsterMoveRange, size, monsterPrize);
+                    monsterAttackRange, monsterMoveRange, monsterPrize, size);
   team->addUnit(unit);
   return unit;
 }
