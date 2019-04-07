@@ -27,12 +27,14 @@ Unit::Unit(Scene *scene, Texture *texture, Box *box, int attack, int defense,
       box_(box),
       prize_(prize) {
   box->setContent(this);
-  const SDL_Color textColor = {255, 255, 255, 255};
+  const SDL_Color textColor = {255, 0, 0, 0};
   const auto rect = box_->getRect();
 
   healthText_ = new Text(scene, FontManager::get("Retron2000"),
                          {rect.x + rect.w / 2, rect.y + rect.h / 6}, textColor,
                          healthToString(), rect.w * 2);
+
+  healthText_->setColor(textColor);
 }
 
 Unit::~Unit() {

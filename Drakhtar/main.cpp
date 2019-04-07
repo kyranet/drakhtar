@@ -1,6 +1,8 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include <iostream>
+#include "Managers/FontManager.h"
+#include "Managers/PlayerData.h"
 #include "Managers/Input.h"
 #include "Managers/SDLAudioManager.h"
 #include "Managers/TextureManager.h"
@@ -16,6 +18,8 @@ int main(int argc, char *argv[]) {
     game->run();
     SDLAudioManager::destroy();
     TextureManager::destroy();
+    FontManager::destroy();
+    PlayerData::destroy();
     Input::destroy();
     delete game;
     return 0;
