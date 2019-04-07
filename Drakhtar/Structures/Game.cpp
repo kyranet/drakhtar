@@ -89,6 +89,8 @@ Game::Game() {
   textures->add("UI-activeUnit", "../images/UI/activeUnitCell.png", 1, 1);
   textures->add("UI-dialogueBackground", "../images/UI/dialogueBackground.png",
                 1, 1);
+  textures->add("UI-tutorialBackground", "../images/UI/tutorialBackground.png",
+                1, 1);
   textures->add("UI-dialogueArrow", "../images/UI/arrow_Dialog.png", 7, 1);
   textures->add("UI-dialoguePortrait", "../images/UI/portrait.png", 1, 1);
 
@@ -105,6 +107,9 @@ Game::Game() {
   textures->add("Button-Restart", "../images/Pause/Restart_Button.png", 1, 1);
   textures->add("Button-Exit", "../images/Pause/Exit_Button.png", 1, 1);
   textures->add("Button-Skip", "../images/UI/skipButton.png", 1, 1);
+  textures->add("Button-Continue", "../images/Tutorials/Continue_Button.png", 1,
+                1);
+  textures->add("Button-Next", "../images/Tutorials/Next_Button.png", 1, 1);
 
   // Pause
   textures->add("Pause-Panel", "../images/Pause/Panel.png", 1, 1);
@@ -142,6 +147,18 @@ Game::Game() {
   textures->add("Maps-FirstBattle", "../images/Maps/FirstBattle.png", 1, 1);
   textures->add("Maps-SecondBattle", "../images/Maps/SecondBattle.png", 1, 1);
 
+  // Tutorial images
+  textures->add("Tutorial-Box", "../images/Tutorials/tutorial_Box.png", 1, 1);
+  textures->add("tutorial-1", "../images/Tutorials/tutorial_1.png", 1, 1);
+  textures->add("tutorial-2", "../images/Tutorials/tutorial_2.png", 1, 1);
+  textures->add("tutorial-3", "../images/Tutorials/tutorial_3.png", 1, 1);
+  textures->add("tutorial-4", "../images/Tutorials/tutorial_4.png", 1, 1);
+  textures->add("tutorial-5", "../images/Tutorials/tutorial_5.png", 1, 1);
+  textures->add("tutorial-6", "../images/Tutorials/tutorial_6.png", 1, 1);
+  textures->add("tutorial-7", "../images/Tutorials/tutorial_7.png", 1, 1);
+  textures->add("tutorial-8", "../images/Tutorials/tutorial_8.png", 1, 1);
+  textures->add("tutorial-9", "../images/Tutorials/tutorial_9.png", 1, 1);
+
   // Transition
   textures->add("Transition-Map1", "../images/Maps/TestMap.png", 1, 1);
   textures->add("Transition-Map2", "../images/Transition/Transition_2.png", 1,
@@ -173,6 +190,8 @@ Game::Game() {
   fonts->add("DialogFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 66,
              WIN_WIDTH);
   fonts->add("Retron2000", "../fonts/Retron2000.ttf", WIN_WIDTH / 88,
+             WIN_WIDTH);
+  fonts->add("TutorialFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 100,
              WIN_WIDTH);
   fonts->init();
 
