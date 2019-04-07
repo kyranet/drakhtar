@@ -58,7 +58,7 @@ void BoardController::onClickMove(Box *boxClicked) {
       activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
       board_->highlightEnemiesInRange(activeUnit_->getBox(),
                                       activeUnit_->getAttackRange());
-	  SDLAudioManager::getInstance()->setChannelVolume(30,0);
+      SDLAudioManager::getInstance()->setChannelVolume(30, 0);
       SDLAudioManager::getInstance()->playChannel(4, 0, 0);
 
     } else {
@@ -78,7 +78,7 @@ void BoardController::onClickAttack(Box *boxClicked) {
         board_->isInRange(activeUnit_->getBox(), boxClicked,
                           activeUnit_->getAttackRange())) {
       enemyUnit->loseHealth(activeUnit_->getAttack());
-	  SDLAudioManager::getInstance()->playChannel(5, 0, 0);
+      SDLAudioManager::getInstance()->playChannel(5, 0, 0);
       if (enemyUnit->getHealth() == 0) {
         boxClicked->setContent(nullptr);
         turnBar_->eraseUnit(enemyUnit);
