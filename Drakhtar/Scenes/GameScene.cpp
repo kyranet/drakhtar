@@ -96,8 +96,9 @@ void GameScene::preload() {
 }
 
 void GameScene::pause() {
-  if (!isPaused())
+  if (!isPaused()) {
     addGameObject(new Pause(this));
-  audio->playChannel(7, 0, 0);
-  Scene::pause();
+    audio->playChannel(7, 0, 0);
+    Scene::pause();
+  }
 }
