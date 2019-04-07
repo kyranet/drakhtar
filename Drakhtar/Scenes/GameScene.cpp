@@ -13,6 +13,8 @@
 #include "../Structures/UnitFactory.h"
 #include "../Utils/Constants.h"
 
+auto audio = SDLAudioManager::getInstance();
+
 GameScene::~GameScene() {
   delete team1_;
   delete team2_;
@@ -57,7 +59,6 @@ void GameScene::preload() {
       Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 24, WIN_HEIGHT / 18),
       Vector2D<int>(WIN_WIDTH / 21.6, WIN_HEIGHT / 14.4), buttonPause);
 
-  auto audio = SDLAudioManager::getInstance();
   audio->haltMusic();
   audio->setMusicVolume(10);
   audio->playMusic(1, 999);
@@ -72,6 +73,6 @@ void GameScene::preload() {
 void GameScene::pause() {
   if (!isPaused())
     addGameObject(new Pause(this));
-  SDLAudioManager::getInstance()->playChannel(7, 0, 0);
+  audio->playChannel(7, 0, 0);
   Scene::pause();
 }
