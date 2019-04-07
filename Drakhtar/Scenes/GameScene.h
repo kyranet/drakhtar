@@ -10,7 +10,11 @@ class GameScene final : public Scene {
   Team* team2_ = nullptr;
 
  public:
+  explicit GameScene(int battle);
   virtual ~GameScene();
   void preload() override;
   void pause() override;
+
+ private:
+  int battle_;
 };

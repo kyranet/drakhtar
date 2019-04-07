@@ -14,7 +14,7 @@
 
 void buttonPlay() {
   Game::getSceneMachine()->getCurrentScene()->processNextTick([]() {
-    Game::getSceneMachine()->changeScene(new RecruitScene());
+    Game::getSceneMachine()->changeScene(new TransitionScene(1.0));
     SDLAudioManager::getInstance()->playChannel(2, 0, 0);
   });
 }

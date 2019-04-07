@@ -139,8 +139,8 @@ Game::Game() {
 
   // Maps
   textures->add("Maps-Test", "../images/Maps/TestMap.png", 1, 1);
-  textures->add("Maps-FirstBattle", "../images/Maps/FirstBattle.png", 1, 1);
-  textures->add("Maps-SecondBattle", "../images/Maps/SecondBattle.png", 1, 1);
+  textures->add("Maps-1Battle", "../images/Maps/FirstBattle.png", 1, 1);
+  textures->add("Maps-2Battle", "../images/Maps/SecondBattle.png", 1, 1);
 
   // Transition
   textures->add("Transition-Map1", "../images/Maps/TestMap.png", 1, 1);
