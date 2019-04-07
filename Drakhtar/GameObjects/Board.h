@@ -58,7 +58,8 @@ class Board final : public GameObject {
   // Resets ALL cells to their base texture
   void resetCellsToBase();
 
-  std::list<Vector2D<int>> findPath(const Vector2D<int>& start, const Vector2D<int>& end) const;
+  std::list<Vector2D<int>> findPath(const Vector2D<int> &start,
+                                    const Vector2D<int> &end) const;
   std::vector<Vector2D<double>> pathToRoute(
       std::list<Vector2D<int>> path) const;
 };

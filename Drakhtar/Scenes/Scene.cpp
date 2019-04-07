@@ -103,7 +103,6 @@ void Scene::handleEvents() {
     }
 
     Input::instance()->update(event);
-
     for (auto gameObject : gameObjects_) {
       gameObject->handleEvents(event);
 

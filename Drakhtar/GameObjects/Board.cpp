@@ -39,7 +39,7 @@ SDL_Rect Board::getRect() const {
 }
 
 Box *Board::getBoxAt(const int x, const int y) const {
-  return static_cast<Box *>(children_[x * rows_ + y]); // NOLINT
+  return static_cast<Box *>(children_[x * rows_ + y]);  // NOLINT
 }
 
 Box *Board::getBoxAtCoordinates(const SDL_Point point) const {
@@ -83,7 +83,7 @@ Matrix<ObjectType> *Board::getObjectTypesInRange(Box *box, const int range) {
       if (!isInRange(box, getBoxAt(x, y), range)) {
         type = ObjectType::OUT_OF_RANGE;
       } else {
-          const auto unit = getBoxAt(x, y)->getContent();
+        const auto unit = getBoxAt(x, y)->getContent();
         if (unit == nullptr) {
           type = ObjectType::EMPTY;
         } else if (unit->getTeam() == team) {
@@ -140,11 +140,12 @@ void Board::highlightEnemiesInRange(Box *box, const int range) {
 }
 
 void Board::resetCellsToBase() {
-    for (const auto box : children_) static_cast<Box*>(box)->setCurrentTexture(TextureInd::BASE);  // NOLINT
+  for (const auto box : children_)
+    static_cast<Box *>(box)->setCurrentTexture(TextureInd::BASE);  // NOLINT
 }
 
-std::list<Vector2D<int>> Board::findPath(const Vector2D<int>& start,
-                     const Vector2D<int>& end) const {
+std::list<Vector2D<int>> Board::findPath(const Vector2D<int> &start,
+                                         const Vector2D<int> &end) const {
   // Create path generator
   AStar::Generator generator;
   generator.setWorldSize({columns_, rows_});
