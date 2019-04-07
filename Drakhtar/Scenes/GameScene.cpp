@@ -3,8 +3,11 @@
 #include "GameScene.h"
 #include "../EventListeners/BoardController.h"
 #include "../GameObjects/Button.h"
+#include "../GameObjects/Commanders/Thassa.h"
+#include "../GameObjects/Commanders/Zamdran.h"
 #include "../GameObjects/DialogScene.h"
 #include "../GameObjects/Pause.h"
+#include "../GameObjects/SkillButton.h"
 #include "../GameObjects/TurnBar.h"
 #include "../Managers/SDLAudioManager.h"
 #include "../Managers/TextureManager.h"
@@ -23,6 +26,7 @@ GameScene::~GameScene() {
 void buttonPause() { Game::getSceneMachine()->getCurrentScene()->pause(); }
 
 void GameScene::preload() {
+  Scene::preload();
   // Add the background and the board.
   const auto background =
       new GameObject(this, TextureManager::get("Maps-FirstBattle"),
@@ -38,12 +42,21 @@ void GameScene::preload() {
 
   // Create a temporary factory to create the units easily.
   UnitFactory factory = UnitFactory(this);
+
+  // Blue Team
+  const auto thassa_ = factory.newThassa(team1_, board->getBoxAt(0, 0));
+  team1_->setCommander(thassa_);
+  addGameObject(thassa_);
   addGameObject(factory.newSoldier(team1_, board->getBoxAt(0, 2), 10));
   addGameObject(factory.newArcher(team1_, board->getBoxAt(0, 3), 10));
   addGameObject(factory.newWizard(team1_, board->getBoxAt(0, 4), 10));
   addGameObject(factory.newKnight(team1_, board->getBoxAt(0, 5), 10));
   addGameObject(factory.newMonster(team1_, board->getBoxAt(0, 6), 10));
 
+  // Red Team
+  const auto zamdran_ = factory.newZamdran(team2_, board->getBoxAt(11, 0));
+  team2_->setCommander(zamdran_);
+  addGameObject(zamdran_);
   addGameObject(factory.newSoldier(team2_, board->getBoxAt(11, 2), 10));
   addGameObject(factory.newArcher(team2_, board->getBoxAt(11, 3), 10));
   addGameObject(factory.newWizard(team2_, board->getBoxAt(11, 4), 10));
@@ -59,20 +72,32 @@ void GameScene::preload() {
       Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 24, WIN_HEIGHT / 18),
       Vector2D<int>(WIN_WIDTH / 21.6, WIN_HEIGHT / 14.4), buttonPause);
 
+
   audio->haltMusic();
   audio->setMusicVolume(10);
   audio->playMusic(1, 999);
+  
+  SkillButton* battleCryButton = new SkillButton(
+      this, TextureManager::get("Button-BattleCry"),
+      Vector2D<int>(WIN_WIDTH / 24, WIN_HEIGHT / 18),
+      Vector2D<int>(WIN_WIDTH / 21.6, WIN_HEIGHT / 14.4), board, thassa_, 0);
+
+  SkillButton* arrowRainButton = new SkillButton(
+      this, TextureManager::get("Button-BattleCry"),
+      Vector2D<int>(WIN_WIDTH / 10, WIN_HEIGHT / 18),
+      Vector2D<int>(WIN_WIDTH / 21.6, WIN_HEIGHT / 14.4), board, zamdran_, 0);
 
   addGameObject(turnBar);
   addGameObject(dialog);
   addGameObject(pauseButton);
+  addGameObject(battleCryButton);
+  addGameObject(arrowRainButton);
 
   board->addEventListener(new BoardController(board, turnBar, this));
 }
 
 void GameScene::pause() {
-  if (!isPaused())
-    addGameObject(new Pause(this));
+  if (!isPaused()) addGameObject(new Pause(this));
   audio->playChannel(7, 0, 0);
   Scene::pause();
 }

@@ -13,28 +13,29 @@ enum class TextureInd {
   ACTIVE = 4
 };
 
-class Box : public GameObject {
+class Box final : public GameObject {
  protected:
   Vector2D<int> boardIndex_;
   Unit *content_;
   TextureInd cellTexture_;
   bool hovered_ = false;
-  Texture *cellTextures_[5];
+  Texture *cellTextures_[5]{};
+  const Vector2D<int> size_;
 
  public:
-  Box(Scene *scene, Vector2D<int> pos, Vector2D<int> size,
-      Vector2D<int> boardIndex, Unit *unit);
+  Box(Scene *scene, const Vector2D<int> &pos, Vector2D<int> size,
+      const Vector2D<int> &boardIndex, Unit *unit);
 
-  SDL_Rect getRect() const;
-  virtual void render();
-  virtual void handleEvents(SDL_Event event);
+  SDL_Rect getRect() const override;
+  void render() const override;
+  void update() override;
 
   // Getters and Setters
   bool isEmpty() const;
   Vector2D<int> getIndex() const;
 
   Unit *getContent() const;
-  void setContent(Unit *object);
+  void setContent(Unit *content);
 
   TextureInd getCurrentTexture() const;
   void setCurrentTexture(TextureInd cellTexture);

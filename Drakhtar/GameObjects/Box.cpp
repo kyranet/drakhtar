@@ -2,13 +2,15 @@
 
 #include "Box.h"
 #include "../Managers/TextureManager.h"
+#include "Managers/Input.h"
 #include "Unit.h"
 
-Box::Box(Scene *scene, Vector2D<int> pos, Vector2D<int> size,
-         Vector2D<int> boardIndex, Unit *unit)
+Box::Box(Scene *scene, const Vector2D<int> &pos, const Vector2D<int> size,
+         const Vector2D<int> &boardIndex, Unit *unit)
     : GameObject(scene, nullptr, pos, size),
       boardIndex_(boardIndex),
-      content_(unit) {
+      content_(unit),
+      size_(std::move(size)) {
   cellTextures_[static_cast<int>(TextureInd::BASE)] =
       TextureManager::get("UI-cellFrame");
   cellTextures_[static_cast<int>(TextureInd::HOVER)] =
@@ -27,8 +29,8 @@ SDL_Rect Box::getRect() const {
 }
 
 // Renders itself and its content
-void Box::render() {
-  auto texture = cellTextures_[static_cast<int>(cellTexture_)];
+void Box::render() const {
+  const auto texture = cellTextures_[static_cast<int>(cellTexture_)];
   if (hovered_) {
     cellTextures_[static_cast<int>(TextureInd::HOVER)]->render(
         getRect(), texture->getAnimation()[texture->getFrame()]);
@@ -40,10 +42,9 @@ void Box::render() {
   }
 }
 
-void Box::handleEvents(SDL_Event event) {
-  // Changes cell texture on mouse hover
-  SDL_Point p = {event.motion.x, event.motion.y};
-  hovered_ = SDL_PointInRect(&p, &getRect());
+void Box::update() {
+  const auto area = getRect();
+  hovered_ = Input::isMouseInside(&area);
 }
 
 // ---------- Getters and Setters ----------

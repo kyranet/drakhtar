@@ -15,36 +15,32 @@ enum class ObjectType {
   ENEMY = 4
 };
 
-class Board : public GameObject {
+class Board final : public GameObject {
  protected:
   int rows_, columns_;
   float cellSize_;
-  Box ***board_;
   Matrix<ObjectType> *objectTypeMatrix_ = nullptr;
 
  public:
   Board(Scene *scene, int rows, int columns, float cellSize);
   virtual ~Board();
 
-  SDL_Rect Board::getRect() const;
-  virtual void render() const;
-  virtual void handleEvents(SDL_Event event);
-
-  int getRows() { return rows_; }
-  int getCols() { return columns_; }
+  SDL_Rect getRect() const override;
+  int getRows() const { return rows_; }
+  int getCols() const { return columns_; }
 
   // Returns cell in board index (x, y)
-  Box *getBoxAt(int x, int y);
+  Box *getBoxAt(int x, int y) const;
 
   // Returns cell in window coordinates (x, y)
-  Box *getBoxAtCoordinates(SDL_Point coordinates);
+  Box *getBoxAtCoordinates(SDL_Point point) const;
 
   // Checks if two cells are within a certain range of each other
-  bool isInRange(Box *from, Box *to, int range);
+  bool isInRange(Box *from, Box *to, int range) const;
 
   // Checks if two cells are within a certain range of each other considering
-  // pathfinding
-  bool isInMoveRange(Box *from, Box *to, int range);
+  // path-finding
+  bool isInMoveRange(Box *from, Box *to, int range) const;
 
   // Returns an integer matrix of the contents of cells in range of a specific
   // cell
@@ -62,5 +58,8 @@ class Board : public GameObject {
   // Resets ALL cells to their base texture
   void resetCellsToBase();
 
-  std::list<Vector2D<int>> findPath(Vector2D<int> start, Vector2D<int> end);
+  std::list<Vector2D<int>> findPath(const Vector2D<int> &start,
+                                    const Vector2D<int> &end) const;
+  std::vector<Vector2D<double>> pathToRoute(
+      std::list<Vector2D<int>> path) const;
 };
