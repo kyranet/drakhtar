@@ -28,13 +28,16 @@ private:
 	vector<StoreUnit*> unitStore;
   StoreUnit *selectedUnit = nullptr;
   GameObject * acceptButton = nullptr;
+  GameObject * cancelButton = nullptr;
   int totalCost = 0;
 
   void increaseAmount(StoreUnit * storeUnit);
   void reduceAmount(StoreUnit* storeUnit);
   void buyUnits();
+  void reset();
 public:
   explicit UnitStoreController(GameObject *gameObject);
+  virtual ~UnitStoreController();
 
   void addUnitToStore(string type, GameObject * unit, Text * amountText, GameObject * moreButton, GameObject * lessButton);
 

@@ -14,6 +14,32 @@
 
 class Text;
 
+UnitStoreController::UnitStoreController(GameObject * gameObject)
+  : ListenerOnClick(gameObject) {
+  acceptButton = new GameObject(Game::getInstance()->getSceneMachine()->getCurrentScene(), TextureManager::get("Accept-Button"),
+    Vector2D<int>(WIN_WIDTH / 4 + WIN_WIDTH / 20,
+      WIN_HEIGHT - WIN_HEIGHT / 13),
+    Vector2D<int>(WIN_WIDTH / 26.6,
+      WIN_HEIGHT / 15));
+  Game::getInstance()->getSceneMachine()->getCurrentScene()->addGameObject(acceptButton);
+
+  cancelButton = new GameObject(Game::getInstance()->getSceneMachine()->getCurrentScene(), TextureManager::get("Cancel-Button"),
+    Vector2D<int>(WIN_WIDTH / 4 - WIN_WIDTH/20,
+      WIN_HEIGHT - WIN_HEIGHT / 13),
+    Vector2D<int>(WIN_WIDTH / 26.6,
+      WIN_HEIGHT / 15));
+  Game::getInstance()->getSceneMachine()->getCurrentScene()->addGameObject(cancelButton);
+
+}
+
+UnitStoreController::~UnitStoreController()
+{
+  while (!unitStore.empty()) {
+    delete unitStore.back();
+    unitStore.pop_back();
+  }
+}
+
 void UnitStoreController::increaseAmount(StoreUnit * storeUnit)
 {
   auto scene = (RecruitScene*)Game::getSceneMachine()->getCurrentScene();
@@ -46,17 +72,20 @@ void UnitStoreController::buyUnits()
     }
   }
   totalCost = 0;
+  scene->updateTotalCostText(0);
 }
 
-UnitStoreController::UnitStoreController(GameObject * gameObject)
-  : ListenerOnClick(gameObject) {
-  acceptButton = new GameObject(Game::getInstance()->getSceneMachine()->getCurrentScene(), TextureManager::get("Accept-Button"),
-    Vector2D<int>(WIN_WIDTH / 4,
-      WIN_HEIGHT - WIN_HEIGHT / 13),
-    Vector2D<int>(WIN_WIDTH / 26.6,
-      WIN_HEIGHT / 15));
-  Game::getInstance()->getSceneMachine()->getCurrentScene()->addGameObject(acceptButton);
+void UnitStoreController::reset()
+{
+  for (int i = 0; i < unitStore.size(); i++) {
+    if (unitStore[i]->amount_ > 0) {
+      unitStore[i]->amount_ = 0;
+      unitStore[i]->amountText_->setText(to_string(0));
+    }
+  }
 
+  totalCost = 0;
+  ((RecruitScene*)Game::getSceneMachine()->getCurrentScene())->updateTotalCostText(0);
 }
 
 void UnitStoreController::addUnitToStore(string type, GameObject * unit, Text * amountText, GameObject * moreButton, GameObject * lessButton)
@@ -74,10 +103,17 @@ void UnitStoreController::onClickStop(const SDL_Point point)
     rect.y < point.y &&
     rect.y + rect.h > point.y) {
     buyUnits();
-
+    return;
   }
 
-
+  rect = cancelButton->getRect();
+  if(rect.x < point.x &&
+    rect.x + rect.w > point.x &&
+    rect.y < point.y &&
+    rect.y + rect.h > point.y){
+    reset();
+    return;
+  }
 
   bool found = false;
   int i;
