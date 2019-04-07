@@ -42,7 +42,7 @@ void MenuScene::preload() {
   audio->haltChannel(0);
   audio->haltMusic();
   audio->playMusic(0, -1);
-  audio->setMusicVolume(50);
+  audio->setMusicVolume(30);
   addGameObject(background);
   addGameObject(play);
   addGameObject(options);
