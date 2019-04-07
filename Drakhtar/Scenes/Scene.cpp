@@ -2,6 +2,7 @@
 
 #include "Scene.h"
 #include "GameObjects/GameObject.h"
+#include "Managers/Input.h"
 #include "Managers/TextureManager.h"
 #include "SDL.h"
 #include "Structures/Game.h"
@@ -94,12 +95,14 @@ void Scene::create() {
 
 void Scene::handleEvents() {
   SDL_Event event;
+  Input::instance()->clear();
   while (SDL_PollEvent(&event)) {
     if (event.type == SDL_QUIT) {
       exit_ = true;
       break;
     }
 
+    Input::instance()->update(event);
     for (auto gameObject : gameObjects_) {
       gameObject->handleEvents(event);
 
