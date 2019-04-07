@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Pause.h"
+#include "../Managers/SDLAudioManager.h"
 #include "../Managers/TextureManager.h"
 #include "../Scenes/GameScene.h"
 #include "../Scenes/MenuScene.h"
@@ -18,6 +19,7 @@ void restartGame() {
 void exitGame() {
   Game::getSceneMachine()->getCurrentScene()->processNextTick(
       []() { Game::getSceneMachine()->changeScene(new MenuScene()); });
+  SDLAudioManager::getInstance()->playChannel(6, 0, 0);
 }
 
 Pause::Pause(Scene *scene) : GameObject(scene, nullptr) {

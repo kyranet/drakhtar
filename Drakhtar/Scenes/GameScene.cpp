@@ -6,12 +6,12 @@
 #include "../GameObjects/DialogScene.h"
 #include "../GameObjects/Pause.h"
 #include "../GameObjects/TurnBar.h"
+#include "../Managers/SDLAudioManager.h"
 #include "../Managers/TextureManager.h"
 #include "../Structures/Game.h"
 #include "../Structures/Team.h"
 #include "../Structures/UnitFactory.h"
 #include "../Utils/Constants.h"
-#include "../Managers/SDLAudioManager.h"
 
 GameScene::~GameScene() {
   delete team1_;
@@ -72,5 +72,6 @@ void GameScene::preload() {
 void GameScene::pause() {
   if (!isPaused())
     addGameObject(new Pause(this));
+  SDLAudioManager::getInstance()->playChannel(7, 0, 0);
   Scene::pause();
 }

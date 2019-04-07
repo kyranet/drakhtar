@@ -187,8 +187,8 @@ Game::Game() {
   audio->loadSound(3, "../audio/sound/UI-sounds/accionBloqueada.mp3");
   audio->loadSound(4, "../audio/sound/UI-sounds/attackCommand.mp3");
   audio->loadSound(5, "../audio/sound/UI-sounds/attackConfirm.mp3");
-
-
+  audio->loadSound(6, "../audio/sound/UI-sounds/quitButton.mp3");
+  audio->loadSound(7, "../audio/sound/UI-sounds/pauseButton.mp3");
 
   // If window or renderer is a null pointer, throw a SDLError
   if (window_ == nullptr || renderer_ == nullptr)
