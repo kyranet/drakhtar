@@ -11,6 +11,8 @@
 #include "UnitStoreController.h"
 #include "Utils/Constants.h"
 
+using namespace std;
+
 UnitStoreController::UnitStoreController(GameObject* gameObject)
     : ListenerOnClick(gameObject) {
   acceptButton =
@@ -40,7 +42,8 @@ UnitStoreController::~UnitStoreController() {
 }
 
 void UnitStoreController::increaseAmount(StoreUnit* storeUnit) {
-  auto scene = (RecruitScene*)Game::getSceneMachine()->getCurrentScene();
+  auto scene =
+      static_cast<RecruitScene*>(Game::getSceneMachine()->getCurrentScene());
   if (PlayerData::getInstance()->getMoney() >=
       totalCost + scene->getCost(storeUnit->type_)) {
     totalCost += scene->getCost(storeUnit->type_);
@@ -51,7 +54,8 @@ void UnitStoreController::increaseAmount(StoreUnit* storeUnit) {
 }
 
 void UnitStoreController::reduceAmount(StoreUnit* storeUnit) {
-  auto scene = (RecruitScene*)Game::getSceneMachine()->getCurrentScene();
+  auto scene =
+      static_cast<RecruitScene*>(Game::getSceneMachine()->getCurrentScene());
   totalCost -= scene->getCost(storeUnit->type_);
   storeUnit->amount_--;
   storeUnit->amountText_->setText(to_string(storeUnit->amount_));
@@ -59,7 +63,8 @@ void UnitStoreController::reduceAmount(StoreUnit* storeUnit) {
 }
 
 void UnitStoreController::buyUnits() {
-  auto scene = (RecruitScene*)Game::getSceneMachine()->getCurrentScene();
+  auto scene =
+      static_cast<RecruitScene*>(Game::getSceneMachine()->getCurrentScene());
   for (int i = 0; i < unitStore.size(); i++) {
     if (unitStore[i]->amount_ > 0) {
       scene->buyUnits(unitStore[i]->type_, unitStore[i]->amount_);
@@ -80,7 +85,7 @@ void UnitStoreController::reset() {
   }
 
   totalCost = 0;
-  ((RecruitScene*)Game::getSceneMachine()->getCurrentScene())
+  static_cast<RecruitScene*>(Game::getSceneMachine()->getCurrentScene())
       ->updateTotalCostText(0);
 }
 
