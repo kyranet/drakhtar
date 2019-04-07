@@ -1,139 +1,133 @@
-#include "UnitStoreController.h"
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
-#pragma once
-
+#include "UnitStoreController.h"
 #include "../Managers/PlayerData.h"
 #include "../Scenes/RecruitScene.h"
 #include "../Structures/Game.h"
 #include "GameObjects/Text.h"
 #include "Managers/TextureManager.h"
-#include "UnitStoreController.h"
 #include "Utils/Constants.h"
-
 
 UnitStoreController::UnitStoreController(GameObject* gameObject)
     : ListenerOnClick(gameObject) {
-  acceptButton =
-      new GameObject(Game::getInstance()->getSceneMachine()->getCurrentScene(),
-                     TextureManager::get("Accept-Button"),
-                     Vector2D<int>(WIN_WIDTH / 4 + WIN_WIDTH / 20,
-                                   WIN_HEIGHT - WIN_HEIGHT / 13),
-                     Vector2D<int>(WIN_WIDTH / 26.6, WIN_HEIGHT / 15));
-  Game::getInstance()->getSceneMachine()->getCurrentScene()->addGameObject(
-      acceptButton);
+  const auto sceneMachine = Game::getSceneMachine();
+  acceptButton_ = new GameObject(
+      sceneMachine->getCurrentScene(), TextureManager::get("Accept-Button"),
+      Vector2D<int>(WIN_WIDTH / 4 + WIN_WIDTH / 20,
+                    WIN_HEIGHT - WIN_HEIGHT / 13),
+      Vector2D<int>(static_cast<int>(WIN_WIDTH / 26.6), WIN_HEIGHT / 15));
+  sceneMachine->getCurrentScene()->addGameObject(acceptButton_);
 
-  cancelButton =
-      new GameObject(Game::getInstance()->getSceneMachine()->getCurrentScene(),
-                     TextureManager::get("Cancel-Button"),
-                     Vector2D<int>(WIN_WIDTH / 4 - WIN_WIDTH / 20,
-                                   WIN_HEIGHT - WIN_HEIGHT / 13),
-                     Vector2D<int>(WIN_WIDTH / 26.6, WIN_HEIGHT / 15));
-  Game::getInstance()->getSceneMachine()->getCurrentScene()->addGameObject(
-      cancelButton);
+  cancelButton_ = new GameObject(
+      sceneMachine->getCurrentScene(), TextureManager::get("Cancel-Button"),
+      Vector2D<int>(WIN_WIDTH / 4 - WIN_WIDTH / 20,
+                    WIN_HEIGHT - WIN_HEIGHT / 13),
+      Vector2D<int>(static_cast<int>(WIN_WIDTH / 26.6), WIN_HEIGHT / 15));
+  sceneMachine->getCurrentScene()->addGameObject(cancelButton_);
 }
 
 UnitStoreController::~UnitStoreController() {
-  while (!unitStore.empty()) {
-    delete unitStore.back();
-    unitStore.pop_back();
+  while (!unitStore_.empty()) {
+    delete unitStore_.back();
+    unitStore_.pop_back();
   }
 }
 
 void UnitStoreController::increaseAmount(StoreUnit* storeUnit) {
-  auto scene =
-      static_cast<RecruitScene*>(Game::getSceneMachine()->getCurrentScene());
+  auto scene = static_cast<RecruitScene*>(  // NOLINT
+      Game::getSceneMachine()->getCurrentScene());
   if (PlayerData::getInstance()->getMoney() >=
-      totalCost + scene->getCost(storeUnit->type_)) {
-    totalCost += scene->getCost(storeUnit->type_);
-    storeUnit->amount_++;
-    storeUnit->amountText_->setText(std::to_string(storeUnit->amount_));
-    scene->updateTotalCostText(totalCost);
+      totalCost_ + scene->getCost(storeUnit->type)) {
+    totalCost_ += scene->getCost(storeUnit->type);
+    storeUnit->amount++;
+    storeUnit->amountText->setText(std::to_string(storeUnit->amount));
+    scene->updateTotalCostText(totalCost_);
   }
 }
 
 void UnitStoreController::reduceAmount(StoreUnit* storeUnit) {
-  auto scene =
-      static_cast<RecruitScene*>(Game::getSceneMachine()->getCurrentScene());
-  totalCost -= scene->getCost(storeUnit->type_);
-  storeUnit->amount_--;
-  storeUnit->amountText_->setText(std::to_string(storeUnit->amount_));
-  scene->updateTotalCostText(totalCost);
+  auto scene = static_cast<RecruitScene*>(  // NOLINT
+      Game::getSceneMachine()->getCurrentScene());
+  totalCost_ -= scene->getCost(storeUnit->type);
+  storeUnit->amount--;
+  storeUnit->amountText->setText(std::to_string(storeUnit->amount));
+  scene->updateTotalCostText(totalCost_);
 }
 
 void UnitStoreController::buyUnits() {
-  auto scene =
-      static_cast<RecruitScene*>(Game::getSceneMachine()->getCurrentScene());
-  for (int i = 0; i < unitStore.size(); i++) {
-    if (unitStore[i]->amount_ > 0) {
-      scene->buyUnits(unitStore[i]->type_, unitStore[i]->amount_);
-      unitStore[i]->amount_ = 0;
-      unitStore[i]->amountText_->setText(std::to_string(0));
+  auto scene = static_cast<RecruitScene*>(  // NOLINT
+      Game::getSceneMachine()->getCurrentScene());
+  for (auto& i : unitStore_) {
+    if (i->amount > 0) {
+      scene->buyUnits(i->type, i->amount);
+      i->amount = 0;
+      i->amountText->setText(std::to_string(0));
     }
   }
-  totalCost = 0;
+  totalCost_ = 0;
   scene->updateTotalCostText(0);
 }
 
 void UnitStoreController::reset() {
-  for (int i = 0; i < unitStore.size(); i++) {
-    if (unitStore[i]->amount_ > 0) {
-      unitStore[i]->amount_ = 0;
-      unitStore[i]->amountText_->setText(std::to_string(0));
+  for (auto& i : unitStore_) {
+    if (i->amount > 0) {
+      i->amount = 0;
+      i->amountText->setText(std::to_string(0));
     }
   }
 
-  totalCost = 0;
-  static_cast<RecruitScene*>(Game::getSceneMachine()->getCurrentScene())
+  totalCost_ = 0;
+  static_cast<RecruitScene*>(  // NOLINT
+      Game::getSceneMachine()->getCurrentScene())
       ->updateTotalCostText(0);
 }
 
-void UnitStoreController::addUnitToStore(std::string type, GameObject* unit,
-                                         Text* amountText,
+void UnitStoreController::addUnitToStore(const std::string& type,
+                                         GameObject* unit, Text* amountText,
                                          GameObject* moreButton,
                                          GameObject* lessButton) {
-  StoreUnit* storeUnit =
+  const auto storeUnit =
       new StoreUnit(type, unit, amountText, moreButton, lessButton);
-  unitStore.push_back(storeUnit);
+  unitStore_.push_back(storeUnit);
 }
 
 void UnitStoreController::onClickStop(const SDL_Point point) {
-  auto rect = acceptButton->getRect();
+  auto rect = acceptButton_->getRect();
   if (rect.x < point.x && rect.x + rect.w > point.x && rect.y < point.y &&
       rect.y + rect.h > point.y) {
     buyUnits();
     return;
   }
 
-  rect = cancelButton->getRect();
+  rect = cancelButton_->getRect();
   if (rect.x < point.x && rect.x + rect.w > point.x && rect.y < point.y &&
       rect.y + rect.h > point.y) {
     reset();
     return;
   }
 
-  bool found = false;
-  int i;
-  for (i = 0; i < unitStore.size(); i++) {
-    auto rect = unitStore[i]->lessButton_->getRect();
-    if (rect.x < point.x && rect.x + rect.w > point.x && rect.y < point.y &&
-        rect.y + rect.h > point.y) {
-      if (unitStore[i]->amount_ > 0) {
-        reduceAmount(unitStore[i]);
+  auto found = false;
+  size_t i;
+  for (i = 0; i < unitStore_.size(); i++) {
+    auto rectangle = unitStore_[i]->lessButton->getRect();
+    if (rectangle.x < point.x && rectangle.x + rectangle.w > point.x &&
+        rectangle.y < point.y && rectangle.y + rectangle.h > point.y) {
+      if (unitStore_[i]->amount > 0) {
+        reduceAmount(unitStore_[i]);
         return;
       }
     }
 
-    rect = unitStore[i]->moreButton_->getRect();
-    if (rect.x < point.x && rect.x + rect.w > point.x && rect.y < point.y &&
-        rect.y + rect.h > point.y) {
-      increaseAmount(unitStore[i]);
+    rectangle = unitStore_[i]->moreButton->getRect();
+    if (rectangle.x < point.x && rectangle.x + rectangle.w > point.x &&
+        rectangle.y < point.y && rectangle.y + rectangle.h > point.y) {
+      increaseAmount(unitStore_[i]);
       return;
     }
 
-    rect = unitStore[i]->unit_->getRect();
-    if (rect.x < point.x && rect.x + rect.w > point.x && rect.y < point.y &&
-        rect.y + rect.h > point.y) {
+    rectangle = unitStore_[i]->unit->getRect();
+    if (rectangle.x < point.x && rectangle.x + rectangle.w > point.x &&
+        rectangle.y < point.y && rectangle.y + rectangle.h > point.y) {
       found = true;
       break;
     }
@@ -141,6 +135,6 @@ void UnitStoreController::onClickStop(const SDL_Point point) {
 
   if (!found) return;
 
-  selectedUnit = unitStore[i];
+  selectedUnit_ = unitStore_[i];
   // TODO(Carlos): Show and update Unit Parameters Sheet
 }

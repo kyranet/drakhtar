@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
+#include <utility>
 #include <vector>
 #include "ListenerOnClick.h"
 #include "SDL.h"
@@ -9,29 +10,28 @@ class Unit;
 class Text;
 
 struct StoreUnit {
-  std::string type_;
-  int amount_ = 0;
-  GameObject *unit_;
-  Text *amountText_;
-  GameObject *moreButton_;
-  GameObject *lessButton_;
+  std::string type;
+  int amount = 0;
+  GameObject *unit;
+  Text *amountText;
+  GameObject *moreButton;
+  GameObject *lessButton;
 
   StoreUnit(std::string type, GameObject *unit, Text *amountText,
             GameObject *moreButton, GameObject *lessButton)
-      : type_(type),
-        unit_(unit),
-        amountText_(amountText),
-        moreButton_(moreButton),
-        lessButton_(lessButton) {}
+      : type(std::move(type)),
+        unit(unit),
+        amountText(amountText),
+        moreButton(moreButton),
+        lessButton(lessButton) {}
 };
 
-class UnitStoreController : public ListenerOnClick {
- private:
-  std::vector<StoreUnit *> unitStore;
-  StoreUnit *selectedUnit = nullptr;
-  GameObject *acceptButton = nullptr;
-  GameObject *cancelButton = nullptr;
-  int totalCost = 0;
+class UnitStoreController final : public ListenerOnClick {
+  std::vector<StoreUnit *> unitStore_;
+  StoreUnit *selectedUnit_ = nullptr;
+  GameObject *acceptButton_ = nullptr;
+  GameObject *cancelButton_ = nullptr;
+  int totalCost_ = 0;
 
   void increaseAmount(StoreUnit *storeUnit);
   void reduceAmount(StoreUnit *storeUnit);
@@ -40,10 +40,10 @@ class UnitStoreController : public ListenerOnClick {
 
  public:
   explicit UnitStoreController(GameObject *gameObject);
-  virtual ~UnitStoreController();
+  ~UnitStoreController();
 
-  void addUnitToStore(std::string type, GameObject *unit, Text *amountText,
+  void addUnitToStore(const std::string& type, GameObject *unit, Text *amountText,
                       GameObject *moreButton, GameObject *lessButton);
 
-  void onClickStop(const SDL_Point) override;
+  void onClickStop(SDL_Point) override;
 };

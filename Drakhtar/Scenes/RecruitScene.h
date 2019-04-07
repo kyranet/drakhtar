@@ -10,8 +10,7 @@ class GameObject;
 class UnitStoreController;
 class Text;
 
-class RecruitScene : public Scene {
- private:
+class RecruitScene final : public Scene {
   GameObject* recruitmentPanel_ = nullptr;
   UnitStoreController* controller_ = nullptr;
   std::map<std::string, int> costs_;
@@ -19,11 +18,11 @@ class RecruitScene : public Scene {
   Text* totalCostText_ = nullptr;
 
   void addUnit(std::string textureName, int position);
-  std::string moneyToString();
+  std::string moneyToString() const;
 
  public:
   void preload() override;
-  void buyUnits(std::string type, int quantity);
-  int getCost(std::string type);
-  void updateTotalCostText(int amount);
+  void buyUnits(const std::string& type, int quantity);
+  int getCost(const std::string& type);
+  void updateTotalCostText(int amount) const;
 };

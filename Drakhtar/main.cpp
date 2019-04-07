@@ -1,12 +1,12 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include <iostream>
+#include "Managers/FontManager.h"
+#include "Managers/PlayerData.h"
 #include "Managers/SDLAudioManager.h"
 #include "Managers/TextureManager.h"
-#include "Managers/FontManager.h"
 #include "SDL.h"
 #include "Structures/Game.h"
-#include "Managers/PlayerData.h"
 #include "checkML.h"
 
 int main(int argc, char *argv[]) {
