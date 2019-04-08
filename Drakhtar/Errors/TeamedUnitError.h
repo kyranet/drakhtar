@@ -3,6 +3,10 @@
 #pragma once
 #include "DrakhtarError.h"
 
+/**
+ * \brief The TeamedUnit error class for any team unit mismatch. This is used
+ * when an unit from one teams joins the other.
+ */
 class TeamedUnitError final : public DrakhtarError {
  public:
   /**

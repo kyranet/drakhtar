@@ -3,6 +3,10 @@
 #pragma once
 #include "DrakhtarError.h"
 
+/**
+ * \brief The SDL error class for any operative error related to the SDL2
+ * library.
+ */
 class SDLError final : public DrakhtarError {
  public:
   /**
