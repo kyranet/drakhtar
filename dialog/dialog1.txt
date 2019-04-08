@@ -1,7 +1,7 @@
 6
 Narrator Portraits-Narrator Valar rode at the column's head. Once close to Drakhtar, his wary eye proved useful. .
-Valar Portraits-Valar Your Majesty! Something is besieging our realm?! .
+Valar Portraits-Valar Your Majesty! Something is besieging our realm!? .
 Thassa Portraits-Thassa What! Who!? .
-Valar Portraits-Valar  I don't ... know your majesty, some sort of skeletons?  .
+Valar Portraits-Valar  I don't know... your majesty, some sort of skeletons? .
 Narrator Portraits-Narrator Thassa barely care what she was facing, something was attacking her beloved home, and they were about to pay. .
-Thassa Portraits-Thassa We shall discuss that later, provided we survive. Attaaack!! .
+Thassa Portraits-Thassa We shall discuss that later, provided we survive. ATTACK! .
