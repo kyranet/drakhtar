@@ -3,6 +3,9 @@
 #pragma once
 #include <stdexcept>
 
+/**
+ * \brief The Drakhtar Error class for any game-related error.
+ */
 class DrakhtarError : public std::logic_error {
  public:
   /**
