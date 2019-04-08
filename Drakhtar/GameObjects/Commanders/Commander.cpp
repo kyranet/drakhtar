@@ -7,7 +7,7 @@ Commander::Commander(Scene *scene, Texture *texture, Box *box, const int attack,
                      const int attackRange, const int moveRange,
                      const int prize)
     : Unit(scene, texture, box, attack, defense, health, speed, attackRange,
-           moveRange, prize) {}
+           moveRange, prize, "") {}
 
 Commander::~Commander() {
   for (auto skill : skills_) {

@@ -7,7 +7,7 @@
 #include "GameObjects/Text.h"
 #include "GameScene.h"
 #include "Managers/FontManager.h"
-#include "Managers/PlayerData.h"
+#include "Managers/GameManager.h"
 #include "Managers/TextureManager.h"
 #include "Structures/Game.h"
 #include "TransitionScene.h"
@@ -20,7 +20,7 @@ void buttonStartGame() {
 }
 
 void RecruitScene::preload() {
-  PlayerData::getInstance()->addMoney(100);
+  GameManager::getInstance()->addMoney(100);
 
   costs_["Soldier"] = 10;
   costs_["Archer"] = 10;
@@ -61,12 +61,12 @@ void RecruitScene::preload() {
   addUnit("Units-BlueSoldier", 1);
   addUnit("Units-BlueArcher", 2);
 
-  if (PlayerData::getInstance()->getLevel() >= 2) addUnit("Units-BlueMage", 3);
+  if (GameManager::getInstance()->getLevel() >= 2) addUnit("Units-BlueMage", 3);
 
-  if (PlayerData::getInstance()->getLevel() >= 3)
+  if (GameManager::getInstance()->getLevel() >= 3)
     addUnit("Units-BlueKnight", 4);
 
-  if (PlayerData::getInstance()->getLevel() >= 4)
+  if (GameManager::getInstance()->getLevel() >= 4)
     addUnit("Units-BlueMonster", 5);
 
   const auto button = new Button(
@@ -145,13 +145,13 @@ void RecruitScene::addUnit(std::string textureName, int position) {
 }
 
 std::string RecruitScene::moneyToString() const {
-  return "Money: " + std::to_string(PlayerData::getInstance()->getMoney());
+  return "Money: " + std::to_string(GameManager::getInstance()->getMoney());
 }
 
 void RecruitScene::buyUnits(const std::string& type, const int quantity) {
-  if (costs_[type] * quantity <= PlayerData::getInstance()->getMoney()) {
-    PlayerData::getInstance()->addUnits(type, quantity);
-    PlayerData::getInstance()->loseMoney(costs_[type] * quantity);
+  if (costs_[type] * quantity <= GameManager::getInstance()->getMoney()) {
+    GameManager::getInstance()->addUnits(type, quantity);
+    GameManager::getInstance()->loseMoney(costs_[type] * quantity);
     moneyText_->setText(moneyToString());
   }
 }
