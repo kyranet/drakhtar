@@ -4,13 +4,13 @@
 
 GameManager* GameManager::instance_ = nullptr;
 
-GameManager::GameManager() { 
-	army_ = new std::map<std::string, int>();
-	(*army_)["Soldier"] = 10;
-	(*army_)["Archer"] = 10;
-	(*army_)["Mage"] = 10;
-	(*army_)["Knight"] = 10;
-	(*army_)["Monster"] = 10;
+GameManager::GameManager() {
+  army_ = new std::map<std::string, int>();
+  (*army_)["Soldier"] = 10;
+  (*army_)["Archer"] = 10;
+  (*army_)["Mage"] = 10;
+  (*army_)["Knight"] = 10;
+  (*army_)["Monster"] = 10;
 }
 
 GameManager::~GameManager() {
