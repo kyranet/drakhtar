@@ -105,7 +105,7 @@ void BoardController::onClickAttack(Box *boxClicked) {
       // Enemy dies
       if (enemyUnit->getHealth() == 0) {
 
-		  if (enemyUnit->getTeam()->getColor == Color::RED) {
+		  if (enemyUnit->getTeam()->getColor() == Color::RED) {
 			  GameManager::getInstance()->addMoney(enemyUnit->getPrize());
 		  }
         boxClicked->setContent(nullptr);

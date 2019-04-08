@@ -26,6 +26,7 @@ class Unit : public GameObject {
 
   Vector2D<int> boxPosition_;
   Team *team_ = nullptr;
+  std::string type_;
 
  protected:
   Box *box_ = nullptr;
@@ -35,7 +36,7 @@ class Unit : public GameObject {
 
  public:
   Unit(Scene *scene, Texture *texture, Box *box, int attack, int defense,
-       int health, int speed, int attackRange, int moveRange, int prize);
+       int health, int speed, int attackRange, int moveRange, int prize, std::string type);
   virtual ~Unit();
 
   int getBaseAttack() const { return baseAttack_; }
@@ -54,6 +55,7 @@ class Unit : public GameObject {
   Team *getTeam() const { return team_; }
   Box *getBox() const { return box_; }
   Vector2D<int> getBoxPosition() const { return boxPosition_; }
+  std::string getType() const { return type_; }
 
   void setAttack(const int attack) { attack_ = attack; }
   void setSpeed(const int speed) { speed_ = speed; }
