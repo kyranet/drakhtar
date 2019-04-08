@@ -102,7 +102,7 @@ void Scene::handleEvents() {
       exit_ = true;
       break;
     }
-    // TODO(GonzaPM7):delete after presentation
+    // TODO(GonzaPM7): Delete after presentation
     if (event.type == SDL_KEYDOWN) {
       switch (event.key.keysym.sym) {
         case SDLK_ESCAPE:
