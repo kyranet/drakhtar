@@ -1,17 +1,18 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Battalion.h"
+#include "Box.h"
 #include "Managers/FontManager.h"
 #include "Managers/GameManager.h"
 #include "Scenes/Scene.h"
 #include "Structures/Team.h"
-#include "Box.h"
 #include "Text.h"
 
 Battalion::Battalion(Scene *scene, Texture *texture, Box *box, const int attack,
                      const int defense, const int health, const int speed,
                      const int attackRange, const int moveRange,
-                     const int prize, const std::string type, const int battalionSize)
+                     const int prize, const std::string type,
+                     const int battalionSize)
     : Unit(scene, texture, box, attack, defense, health, speed, attackRange,
            moveRange, prize * battalionSize, type),
       battalionSize_(battalionSize) {
@@ -54,8 +55,9 @@ int Battalion::loseHealth(const int enemyAttack) {
   const auto health = Unit::loseHealth(enemyAttack);
   if (Unit::getMaxHealth() <= health) {
     battalionSize_ -= health / Unit::getMaxHealth();
-	if(this->getTeam()->getColor() == Color::BLUE)
-		(*GameManager::getInstance()->getArmy())[this->getType()] = battalionSize_;
+    if (this->getTeam()->getColor() == Color::BLUE)
+      (*GameManager::getInstance()->getArmy())[this->getType()] =
+          battalionSize_;
     if (battalionSize_ < 0) battalionSize_ = 0;
     sizeText_->setText(sizeToString());
   }

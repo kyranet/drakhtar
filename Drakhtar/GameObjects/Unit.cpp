@@ -10,7 +10,8 @@
 
 Unit::Unit(Scene *scene, Texture *texture, Box *box, const int attack,
            const int defense, const int health, const int speed,
-           const int attackRange, const int moveRange, const int prize, const std::string type)
+           const int attackRange, const int moveRange, const int prize,
+           const std::string type)
     : GameObject(scene, texture,
                  Vector2D<int>(box->getRect().x + box->getRect().w / 2,
                                box->getRect().y + box->getRect().h / 2),
@@ -27,8 +28,7 @@ Unit::Unit(Scene *scene, Texture *texture, Box *box, const int attack,
       prize_(prize),
       box_(box),
       health_(health),
-	  type_(type)
-{
+      type_(type) {
   box->setContent(this);
   const SDL_Color textColor = {255, 0, 0, 0};
   const auto rect = box_->getRect();
