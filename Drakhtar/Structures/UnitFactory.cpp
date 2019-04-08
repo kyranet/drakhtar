@@ -34,11 +34,11 @@ Unit *UnitFactory::newSoldier(Team *team, Box *box, const int size) const {
 }
 
 Unit *UnitFactory::newArcher(Team *team, Box *box, const int size) const {
-  const auto archerAttack = 6;
+  const auto archerAttack = 4;
   const auto archerDefense = 3;
   const auto archerHealth = 10;
   const auto archerAttackRange = 3;
-  const auto archerMoveRange = 1;
+  const auto archerMoveRange = 2;
   const auto archerSpeed = 3;
   const auto archerPrize = 3;
 
@@ -74,11 +74,11 @@ Unit *UnitFactory::newKnight(Team *team, Box *box, const int size) const {
 }
 
 Unit *UnitFactory::newWizard(Team *team, Box *box, const int size) const {
-  const auto wizardAttack = 4;
-  const auto wizardDefense = 2;
+  const auto wizardAttack = 8;
+  const auto wizardDefense = 1;
   const auto wizardHealth = 7;
   const auto wizardAttackRange = 2;
-  const auto wizardMoveRange = 1;
+  const auto wizardMoveRange = 2;
   const auto wizardSpeed = 2;
   const auto wizardPrize = 5;
 
@@ -94,13 +94,13 @@ Unit *UnitFactory::newWizard(Team *team, Box *box, const int size) const {
 }
 
 Unit *UnitFactory::newMonster(Team *team, Box *box, const int size) const {
-  const auto monsterAttack = 9;
-  const auto monsterDefense = 8;
-  const auto monsterHealth = 15;
+  const auto monsterAttack = 20;
+  const auto monsterDefense = 10;
+  const auto monsterHealth = 50;
   const auto monsterAttackRange = 1;
-  const auto monsterMoveRange = 5;
+  const auto monsterMoveRange = 2;
   const auto monsterSpeed = 1;
-  const auto monsterPrize = 10;
+  const auto monsterPrize = 50;
 
   const auto textureName =
       team->getColor() == BLUE ? "Units-BlueMonster" : "Units-RedMonster";
@@ -116,8 +116,8 @@ Unit *UnitFactory::newMonster(Team *team, Box *box, const int size) const {
 //---------- COMMANDERS ----------
 
 Thassa *UnitFactory::newThassa(Team *team, Box *box) const {
-  const auto attack = 50;
-  const auto defense = 50;
+  const auto attack = 30;
+  const auto defense = 30;
   const auto health = 100;
   const auto attackRange = 1;
   const auto moveRange = 3;
@@ -134,8 +134,8 @@ Thassa *UnitFactory::newThassa(Team *team, Box *box) const {
 }
 
 Zamdran *UnitFactory::newZamdran(Team *team, Box *box) const {
-  const auto attack = 30;
-  const auto defense = 30;
+  const auto attack = 25;
+  const auto defense = 20;
   const auto health = 100;
   const auto attackRange = 3;
   const auto moveRange = 2;
