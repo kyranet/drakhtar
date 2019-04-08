@@ -24,9 +24,9 @@ void RecruitScene::preload() {
 
   costs_["Soldier"] = 10;
   costs_["Archer"] = 10;
-  costs_["Mage"] = 13;
-  costs_["Knight"] = 20;
-  costs_["Monster"] = 18;
+  costs_["Mage"] = 18;
+  costs_["Knight"] = 25;
+  costs_["Monster"] = 100;
 
   const auto background =
       new GameObject(this, TextureManager::get("Recruitment-Background"),
