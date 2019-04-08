@@ -9,6 +9,9 @@ class Scene;
 
 class Commander : public Unit {
  protected:
+  /**
+   * \brief A vector of all the skills the commander can cast.
+   */
   std::vector<Skill*> skills_;
 
  public:
@@ -16,8 +19,14 @@ class Commander : public Unit {
             int health, int speed, int attackRange, int moveRange, int prize);
   virtual ~Commander();
 
+  /**
+   * \return A vector of all the skills the commander can cast.
+   */
   std::vector<Skill*> getSkills() const { return skills_; }
 
-  // Lowers skill cooldown on unit turn
+  /**
+   * \brief Is called every time it's the commander's turn to lower every
+   * skill's cooldown timer and duration timer.
+   */
   void onSelect() override;
 };
