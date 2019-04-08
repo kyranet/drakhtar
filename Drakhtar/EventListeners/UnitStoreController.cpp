@@ -1,11 +1,11 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "UnitStoreController.h"
-#include "../Managers/GameManager.h"
 #include "../Scenes/RecruitScene.h"
 #include "../Structures/Game.h"
 #include "GameObjects/Text.h"
 #include "Managers/TextureManager.h"
+#include "Managers/GameManager.h"
 #include "Utils/Constants.h"
 
 UnitStoreController::UnitStoreController(GameObject* gameObject)

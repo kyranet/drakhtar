@@ -12,6 +12,7 @@
 #include "GameObjects/TutorialSequence.h"
 #include "Managers/SDLAudioManager.h"
 #include "Managers/TextureManager.h"
+#include "Managers/GameManager.h"
 #include "Structures/Game.h"
 #include "Structures/Team.h"
 #include "Structures/UnitFactory.h"
@@ -50,11 +51,20 @@ void GameScene::preload() {
   const auto thassa = factory.newThassa(team1_, board->getBoxAt(0, 0));
   team1_->setCommander(thassa);
   addGameObject(thassa);
-  addGameObject(factory.newSoldier(team1_, board->getBoxAt(0, 2), 10));
-  addGameObject(factory.newArcher(team1_, board->getBoxAt(0, 3), 10));
-  addGameObject(factory.newWizard(team1_, board->getBoxAt(0, 4), 10));
-  addGameObject(factory.newKnight(team1_, board->getBoxAt(0, 5), 10));
-  addGameObject(factory.newMonster(team1_, board->getBoxAt(0, 6), 10));
+
+  std::map<std::string, int> * army = GameManager::getInstance()->getArmy();
+
+  addGameObject(factory.newSoldier(team1_, board->getBoxAt(0, 2), (*army)["Soldier"]));
+  addGameObject(factory.newArcher(team1_, board->getBoxAt(0, 3), (*army)["Archer"]));
+
+  if((*army)["Mage"] > 0)
+	  addGameObject(factory.newWizard(team1_, board->getBoxAt(0, 4), (*army)["Mage"]));
+
+  if ((*army)["Knight"] > 0)
+	  addGameObject(factory.newKnight(team1_, board->getBoxAt(0, 5), (*army)["Knight"]));
+
+  if ((*army)["Monster"] > 0)
+	  addGameObject(factory.newMonster(team1_, board->getBoxAt(0, 6), (*army)["Monster"]));
 
   // Red Team
   const auto zamdran_ = factory.newZamdran(team2_, board->getBoxAt(11, 0));

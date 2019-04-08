@@ -19,7 +19,7 @@ class GameManager final {
   static void destroy();
 
   int getMoney() const;
-  std::map<std::string, int>* getArmy() const;
+  std::map<std::string, int> * getArmy() const;
   int getLevel() const;
   void increaseLevel();
 
