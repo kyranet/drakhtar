@@ -75,14 +75,14 @@ void DialogScene::next() {
     destroy();
     if (Game::getSceneMachine()->getCurrentScene()->getTransition())
       Game::getSceneMachine()->getCurrentScene()->processNextTick(
-          []() { Game::getSceneMachine()->changeScene(new RecruitScene()); });
+          []() { Game::getSceneMachine()->changeScene(new GameScene(1)); });
   } else if (dialogueIndex_ < dialogues_.size() - 1) {
     ++dialogueIndex_;
   } else {
     destroy();
     if (Game::getSceneMachine()->getCurrentScene()->getTransition())
       Game::getSceneMachine()->getCurrentScene()->processNextTick(
-          []() { Game::getSceneMachine()->changeScene(new RecruitScene()); });
+          []() { Game::getSceneMachine()->changeScene(new GameScene(1)); });
   }
 }
 

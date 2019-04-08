@@ -8,6 +8,7 @@
 #include "Structures/Game.h"
 #include "Utils/Constants.h"
 #include "Utils/TimePool.h"
+#include "../Scenes/RecruitScene.h"
 
 Scene::Scene() = default;
 Scene::~Scene() { Scene::finish(); }
@@ -100,6 +101,14 @@ void Scene::handleEvents() {
     if (event.type == SDL_QUIT) {
       exit_ = true;
       break;
+    }
+    if (event.type == SDL_KEYDOWN) {
+      switch (event.key.keysym.sym) {
+        case SDLK_ESCAPE:
+			Game::getSceneMachine()->getCurrentScene()->processNextTick(
+				[]() { Game::getSceneMachine()->changeScene(new RecruitScene()); });
+          break;
+      }
     }
 
     Input::instance()->update(event);
