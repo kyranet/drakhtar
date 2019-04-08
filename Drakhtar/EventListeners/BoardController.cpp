@@ -7,9 +7,11 @@
 #include "GameObjects/TurnBar.h"
 #include "GameObjects/Unit.h"
 #include "Managers/SDLAudioManager.h"
+#include "Managers/GameManager.h"
 #include "Scenes/GameScene.h"
 #include "Structures/Texture.h"
 #include "Structures/Tween.h"
+#include "Structures/Team.h"
 #include "Utils/Constants.h"
 
 BoardController::BoardController(Board *board, TurnBar *turnBar,
@@ -102,6 +104,10 @@ void BoardController::onClickAttack(Box *boxClicked) {
 
       // Enemy dies
       if (enemyUnit->getHealth() == 0) {
+
+		  if (enemyUnit->getTeam()->getColor == Color::RED) {
+			  GameManager::getInstance()->addMoney(enemyUnit->getPrize());
+		  }
         boxClicked->setContent(nullptr);
         turnBar_->eraseUnit(enemyUnit);
         scene_->removeGameObject(enemyUnit);

@@ -11,7 +11,7 @@ Battalion::Battalion(Scene *scene, Texture *texture, Box *box, const int attack,
                      const int attackRange, const int moveRange,
                      const int prize, const int battalionSize)
     : Unit(scene, texture, box, attack, defense, health, speed, attackRange,
-           moveRange, prize),
+           moveRange, prize * battalionSize),
       battalionSize_(battalionSize) {
   health_ = Unit::getMaxHealth() * battalionSize_;
 
