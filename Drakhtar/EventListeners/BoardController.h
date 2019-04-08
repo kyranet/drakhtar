@@ -10,7 +10,7 @@ class GameScene;
 class Board;
 class Box;
 
-class BoardController : public ListenerOnClick {
+class BoardController final : public ListenerOnClick {
  protected:
   /**
    * \brief A pointer to the game board.
@@ -35,17 +35,17 @@ class BoardController : public ListenerOnClick {
   /**
    * \brief Whether or not the active unit has already moved this turn.
    */
-  bool hasMoved = false;
+  bool hasMoved_ = false;
 
   /**
    * \brief Whether or not the active unit has already attacked this turn.
    */
-  bool hasAttacked = false;
+  bool hasAttacked_ = false;
 
   /**
    * \brief Whether or not the active unit currently moving.
    */
-  bool isTweening = false;
+  bool isTweening_ = false;
 
  public:
   BoardController(Board *board, TurnBar *turnBar, GameScene *scene);
@@ -54,14 +54,14 @@ class BoardController : public ListenerOnClick {
    * \brief Is called every time an event is capture to process it.
    * \param event: The event to be processed.
    */
-  void run(SDL_Event event);
+  void run(SDL_Event event) override;
 
   /**
    * \brief Checks if the click was in a box or outside the board and determines
    * if the active unit should move or attack.
    * \param point: The SDL_Point in the window where the click was made.
    */
-  void onClickStop(SDL_Point point);
+  void onClickStop(SDL_Point point) override;
 
   /**
    * \brief Moves active unit to an empty cell within range.

@@ -28,7 +28,7 @@ void BoardController::run(const SDL_Event event) {
   ListenerOnClick::run(event);
 
   // If no actions left, reset and skip turn
-  if (hasMoved && hasAttacked) {
+  if (hasMoved_ && hasAttacked_) {
     advanceTurn();
   }
 }
@@ -37,9 +37,9 @@ void BoardController::onClickStop(const SDL_Point point) {
   const auto boxClicked = board_->getBoxAtCoordinates(point);
 
   if (boxClicked != nullptr) {
-    if (boxClicked->isEmpty() && !hasMoved) {
+    if (boxClicked->isEmpty() && !hasMoved_) {
       onClickMove(boxClicked);
-    } else if (!hasAttacked) {
+    } else if (!hasAttacked_) {
       onClickAttack(boxClicked);
     }
   }
@@ -47,7 +47,7 @@ void BoardController::onClickStop(const SDL_Point point) {
 
 void BoardController::onClickMove(Box *boxClicked) {
   // If this BoardController is stopped, don't run
-  if (isTweening) return;
+  if (isTweening_) return;
 
   // Checks if the box clicked is within movement range
   if (board_->isInMoveRange(activeUnit_->getBox(), boxClicked,
@@ -55,7 +55,7 @@ void BoardController::onClickMove(Box *boxClicked) {
     const auto path = board_->findPath(activeUnit_->getBox()->getIndex(),
                                        boxClicked->getIndex());
 
-    isTweening = true;
+    isTweening_ = true;
     SDLAudioManager::getInstance()->playChannel(0, 0, 0);
     const auto unit = activeUnit_;
     scene_->getTweenManager()
@@ -69,8 +69,8 @@ void BoardController::onClickMove(Box *boxClicked) {
         })
         ->setOnComplete([this, unit, boxClicked]() {
           unit->moveToBox(boxClicked);
-          hasMoved = true;
-          isTweening = false;
+          hasMoved_ = true;
+          isTweening_ = false;
           // If there are enemies in range, highlight them, otherwise skip turn
           if (board_->isEnemyInRange(boxClicked, unit->getAttackRange())) {
             board_->resetCellsToBase();
@@ -112,7 +112,7 @@ void BoardController::onClickAttack(Box *boxClicked) {
       activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
       board_->highlightCellsInRange(activeUnit_->getBox(),
                                     activeUnit_->getMoveRange());
-      hasAttacked = true;
+      hasAttacked_ = true;
     }
 
     // Unit dies to counter-attack
@@ -127,7 +127,7 @@ void BoardController::onClickAttack(Box *boxClicked) {
 
 void BoardController::advanceTurn() {
   board_->resetCellsToBase();
-  hasMoved = hasAttacked = false;
+  hasMoved_ = hasAttacked_ = false;
   turnBar_->advanceTurn();
   activeUnit_ = turnBar_->getFrontUnit();
 
