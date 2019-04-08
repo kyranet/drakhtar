@@ -8,9 +8,9 @@ GameManager::GameManager() {
   army_ = new std::map<std::string, int>();
   (*army_)["Soldier"] = 10;
   (*army_)["Archer"] = 10;
-  (*army_)["Mage"] = 10;
-  (*army_)["Knight"] = 10;
-  (*army_)["Monster"] = 10;
+  (*army_)["Mage"] = 5;
+  (*army_)["Knight"] = 5;
+  (*army_)["Monster"] = 2;
 }
 
 GameManager::~GameManager() {

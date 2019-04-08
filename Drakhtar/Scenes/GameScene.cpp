@@ -77,9 +77,9 @@ void GameScene::preload() {
   addGameObject(zamdran_);
   addGameObject(factory.newSoldier(team2_, board->getBoxAt(11, 2), 10));
   addGameObject(factory.newArcher(team2_, board->getBoxAt(11, 3), 10));
-  addGameObject(factory.newWizard(team2_, board->getBoxAt(11, 4), 10));
-  addGameObject(factory.newKnight(team2_, board->getBoxAt(11, 5), 10));
-  addGameObject(factory.newMonster(team2_, board->getBoxAt(11, 6), 10));
+  addGameObject(factory.newWizard(team2_, board->getBoxAt(11, 4), 5));
+  addGameObject(factory.newKnight(team2_, board->getBoxAt(11, 5), 5));
+  addGameObject(factory.newMonster(team2_, board->getBoxAt(11, 6), 2));
 
   // Add the GUI features now
   const auto turnBar =
