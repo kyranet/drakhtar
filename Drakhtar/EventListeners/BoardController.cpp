@@ -115,13 +115,13 @@ void BoardController::onClickAttack(Box *boxClicked) {
       hasAttacked = true;
     }
 
-	// Unit dies to counter-attack
-	if (activeUnit_->getHealth() == 0) {
-		activeUnit_->getBox()->setContent(nullptr);
-		turnBar_->eraseUnit(activeUnit_);
-		scene_->removeGameObject(activeUnit_);
-		advanceTurn();
-	}
+    // Unit dies to counter-attack
+    if (activeUnit_->getHealth() == 0) {
+      activeUnit_->getBox()->setContent(nullptr);
+      turnBar_->eraseUnit(activeUnit_);
+      scene_->removeGameObject(activeUnit_);
+      advanceTurn();
+    }
   }
 }
 
