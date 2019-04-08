@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include "Managers/FontManager.h"
-#include "Managers/PlayerData.h"
+#include "Managers/GameManager.h"
 #include "Managers/Input.h"
 #include "Managers/SDLAudioManager.h"
 #include "Managers/TextureManager.h"
@@ -19,7 +19,7 @@ int main(int argc, char *argv[]) {
     SDLAudioManager::destroy();
     TextureManager::destroy();
     FontManager::destroy();
-    PlayerData::destroy();
+    GameManager::destroy();
     Input::destroy();
     delete game;
     return 0;

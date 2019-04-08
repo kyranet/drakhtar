@@ -4,18 +4,18 @@
 #include <map>
 #include <string>
 
-class PlayerData final {
-  static PlayerData* instance_;
+class GameManager final {
+  static GameManager* instance_;
 
   int money_ = 0;
   int level_ = 5;
 
   std::map<std::string, int>* army_ = nullptr;
-  PlayerData();
-  ~PlayerData();
+  GameManager();
+  ~GameManager();
 
  public:
-  static PlayerData* getInstance();
+  static GameManager* getInstance();
   static void destroy();
 
   int getMoney() const;

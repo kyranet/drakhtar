@@ -1,7 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "UnitStoreController.h"
-#include "../Managers/PlayerData.h"
+#include "../Managers/GameManager.h"
 #include "../Scenes/RecruitScene.h"
 #include "../Structures/Game.h"
 #include "GameObjects/Text.h"
@@ -36,7 +36,7 @@ UnitStoreController::~UnitStoreController() {
 void UnitStoreController::increaseAmount(StoreUnit* storeUnit) {
   auto scene = static_cast<RecruitScene*>(  // NOLINT
       Game::getSceneMachine()->getCurrentScene());
-  if (PlayerData::getInstance()->getMoney() >=
+  if (GameManager::getInstance()->getMoney() >=
       totalCost_ + scene->getCost(storeUnit->type)) {
     totalCost_ += scene->getCost(storeUnit->type);
     storeUnit->amount++;
