@@ -16,7 +16,7 @@
 
 void buttonStartGame() {
   Game::getSceneMachine()->getCurrentScene()->processNextTick(
-      []() { Game::getSceneMachine()->changeScene(new GameScene((1))); });
+      []() { Game::getSceneMachine()->changeScene(new TransitionScene(2)); });
 }
 
 void RecruitScene::preload() {
