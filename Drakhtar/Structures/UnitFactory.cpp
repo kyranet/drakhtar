@@ -20,7 +20,7 @@ Unit *UnitFactory::newSoldier(Team *team, Box *box, const int size) const {
   const auto soldierAttackRange = 1;
   const auto soldierMoveRange = 3;
   const auto soldierSpeed = 3;
-  const auto soldierPrize = 10;
+  const auto soldierPrize = 5;
 
   const auto textureName =
       team->getColor() == BLUE ? "Units-BlueSoldier" : "Units-RedSoldier";
@@ -40,7 +40,7 @@ Unit *UnitFactory::newArcher(Team *team, Box *box, const int size) const {
   const auto archerAttackRange = 3;
   const auto archerMoveRange = 2;
   const auto archerSpeed = 3;
-  const auto archerPrize = 10;
+  const auto archerPrize = 5;
 
   const auto textureName =
       team->getColor() == BLUE ? "Units-BlueArcher" : "Units-RedArcher";
@@ -60,7 +60,7 @@ Unit *UnitFactory::newKnight(Team *team, Box *box, const int size) const {
   const auto knightAttackRange = 1;
   const auto knightMoveRange = 5;
   const auto knightSpeed = 5;
-  const auto knightPrize = 25;
+  const auto knightPrize = 12;
 
   const auto textureName =
       team->getColor() == BLUE ? "Units-BlueKnight" : "Units-RedKnight";
@@ -80,7 +80,7 @@ Unit *UnitFactory::newWizard(Team *team, Box *box, const int size) const {
   const auto wizardAttackRange = 2;
   const auto wizardMoveRange = 2;
   const auto wizardSpeed = 2;
-  const auto wizardPrize = 15;
+  const auto wizardPrize = 7;
 
   const auto textureName =
       team->getColor() == BLUE ? "Units-BlueMage" : "Units-RedMage";
@@ -100,7 +100,7 @@ Unit *UnitFactory::newMonster(Team *team, Box *box, const int size) const {
   const auto monsterAttackRange = 1;
   const auto monsterMoveRange = 2;
   const auto monsterSpeed = 1;
-  const auto monsterPrize = 100;
+  const auto monsterPrize = 50;
 
   const auto textureName =
       team->getColor() == BLUE ? "Units-BlueMonster" : "Units-RedMonster";
