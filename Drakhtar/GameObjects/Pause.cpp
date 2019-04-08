@@ -13,7 +13,7 @@
 
 void restartGame() {
   Game::getSceneMachine()->getCurrentScene()->processNextTick(
-      []() { Game::getSceneMachine()->changeScene(new GameScene()); });
+      []() { Game::getSceneMachine()->changeScene(new GameScene(1)); });
 }
 
 void exitGame() {

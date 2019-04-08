@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Scene.h"
+#include "../Scenes/RecruitScene.h"
 #include "GameObjects/GameObject.h"
 #include "Managers/Input.h"
 #include "Managers/TextureManager.h"
@@ -100,6 +101,16 @@ void Scene::handleEvents() {
     if (event.type == SDL_QUIT) {
       exit_ = true;
       break;
+    }
+    // TODO(GonzaPM7): Delete after presentation
+    if (event.type == SDL_KEYDOWN) {
+      switch (event.key.keysym.sym) {
+        case SDLK_ESCAPE:
+          Game::getSceneMachine()->getCurrentScene()->processNextTick([]() {
+            Game::getSceneMachine()->changeScene(new RecruitScene());
+          });
+          break;
+      }
     }
 
     Input::instance()->update(event);
