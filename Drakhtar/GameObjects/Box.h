@@ -58,7 +58,7 @@ class Box final : public GameObject {
   SDL_Rect getRect() const override;
 
   /**
-   * \brief Renders the appropiate texture for the box AND its content.
+   * \brief Renders the appropiate texture for the box and its content.
    */
   void render() const override;
 
