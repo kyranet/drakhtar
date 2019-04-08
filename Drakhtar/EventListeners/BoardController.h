@@ -12,26 +12,72 @@ class Box;
 
 class BoardController : public ListenerOnClick {
  protected:
+  /**
+   * \brief A pointer to the game board.
+   */
   Board *board_;
+
+  /**
+   * \brief A pointer to the game's turn bar.
+   */
   TurnBar *turnBar_;
+
+  /**
+   * \brief A pointer to the unit that has the turn.
+   */
   Unit *activeUnit_;
+
+  /**
+   * \brief A pointer to the game scene.
+   */
   GameScene *scene_;
+
+  /**
+   * \brief Whether or not the active unit has already moved this turn.
+   */
   bool hasMoved = false;
+
+  /**
+   * \brief Whether or not the active unit has already attacked this turn.
+   */
   bool hasAttacked = false;
+
+  /**
+   * \brief Whether or not the active unit currently moving.
+   */
   bool isTweening = false;
 
  public:
   BoardController(Board *board, TurnBar *turnBar, GameScene *scene);
 
+  /**
+   * \brief Is called every time an event is capture to process it.
+   * \param event: The event to be processed.
+   */
   void run(SDL_Event event);
+
+  /**
+   * \brief Checks if the click was in a box or outside the board and determines
+   * if the active unit should move or attack.
+   * \param point: The SDL_Point in the window where the click was made.
+   */
   void onClickStop(SDL_Point point);
 
-  // Moves turnBar's current unit to an empty cell within range
+  /**
+   * \brief Moves active unit to an empty cell within range.
+   * \param boxClicked: The box where the unit should move.
+   */
   void onClickMove(Box *boxClicked);
 
-  // turnBar's current unit attacks target enemy unit in range
+  /**
+   * \brief Makes active unit attack another unit clicked
+   * \param boxClicked: The box containing the unit that will receive the
+   * attack.
+   */
   void onClickAttack(Box *boxClicked);
 
-  // Activates next unit
+  /**
+   * \brief Resets board textures, ends unit's turn and updates active unit.
+   */
   void advanceTurn();
 };

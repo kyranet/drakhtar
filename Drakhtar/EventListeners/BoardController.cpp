@@ -23,7 +23,6 @@ BoardController::BoardController(Board *board, TurnBar *turnBar,
                                   activeUnit_->getAttackRange());
 }
 
-// Is called every time an event is captured
 void BoardController::run(const SDL_Event event) {
   // Captures mouse event
   ListenerOnClick::run(event);
@@ -114,6 +113,14 @@ void BoardController::onClickAttack(Box *boxClicked) {
       board_->highlightCellsInRange(activeUnit_->getBox(),
                                     activeUnit_->getMoveRange());
       hasAttacked = true;
+    }
+
+    // Unit dies to counter-attack
+    if (activeUnit_->getHealth() == 0) {
+      activeUnit_->getBox()->setContent(nullptr);
+      turnBar_->eraseUnit(activeUnit_);
+      scene_->removeGameObject(activeUnit_);
+      advanceTurn();
     }
   }
 }
