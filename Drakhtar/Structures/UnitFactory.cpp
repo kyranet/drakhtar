@@ -37,7 +37,6 @@ Unit *UnitFactory::newArcher(Team *team, Box *box, const int size) const {
 
   const auto unit = new Battalion(scene_, TextureManager::get(textureName), box,
                                   archerStats_, "Archer", size);
-  unit->setTeam(team);
   team->addUnit(unit);
   return unit;
 }
