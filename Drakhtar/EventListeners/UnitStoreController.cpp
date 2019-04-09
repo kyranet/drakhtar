@@ -4,8 +4,8 @@
 #include "../Scenes/RecruitScene.h"
 #include "../Structures/Game.h"
 #include "GameObjects/Text.h"
-#include "Managers/TextureManager.h"
 #include "Managers/GameManager.h"
+#include "Managers/TextureManager.h"
 #include "Utils/Constants.h"
 
 UnitStoreController::UnitStoreController(GameObject* gameObject)
@@ -34,7 +34,7 @@ UnitStoreController::~UnitStoreController() {
 }
 
 void UnitStoreController::increaseAmount(StoreUnit* storeUnit) {
-  auto scene = static_cast<RecruitScene*>(  // NOLINT
+  auto scene = reinterpret_cast<RecruitScene*>(
       Game::getSceneMachine()->getCurrentScene());
   if (GameManager::getInstance()->getMoney() >=
       totalCost_ + scene->getCost(storeUnit->type)) {
@@ -46,7 +46,7 @@ void UnitStoreController::increaseAmount(StoreUnit* storeUnit) {
 }
 
 void UnitStoreController::reduceAmount(StoreUnit* storeUnit) {
-  auto scene = static_cast<RecruitScene*>(  // NOLINT
+  auto scene = reinterpret_cast<RecruitScene*>(
       Game::getSceneMachine()->getCurrentScene());
   totalCost_ -= scene->getCost(storeUnit->type);
   storeUnit->amount--;
@@ -55,7 +55,7 @@ void UnitStoreController::reduceAmount(StoreUnit* storeUnit) {
 }
 
 void UnitStoreController::buyUnits() {
-  auto scene = static_cast<RecruitScene*>(  // NOLINT
+  auto scene = reinterpret_cast<RecruitScene*>(
       Game::getSceneMachine()->getCurrentScene());
   for (auto& i : unitStore_) {
     if (i->amount > 0) {
@@ -77,8 +77,7 @@ void UnitStoreController::reset() {
   }
 
   totalCost_ = 0;
-  static_cast<RecruitScene*>(  // NOLINT
-      Game::getSceneMachine()->getCurrentScene())
+  reinterpret_cast<RecruitScene*>(Game::getSceneMachine()->getCurrentScene())
       ->updateTotalCostText(0);
 }
 

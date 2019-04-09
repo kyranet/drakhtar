@@ -104,5 +104,5 @@ void DialogScene::readFromFile(const std::string& filename, Font* textFont,
 }
 
 void DialogSceneOnClick::onClickStop(SDL_Point point) {
-  static_cast<DialogScene*>(getGameObject()->getParent())->next();  // NOLINT
+  reinterpret_cast<DialogScene*>(getGameObject()->getParent())->next();
 }
