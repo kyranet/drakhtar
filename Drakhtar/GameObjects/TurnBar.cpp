@@ -75,7 +75,7 @@ void TurnBar::advanceTurn() {
 
 void TurnBar::sort() {
   unitTurnBar_.sort([](Unit *unit1, Unit *unit2) {
-    return unit1->getSpeed() > unit2->getSpeed();
+    return unit1->getStats().speed > unit2->getStats().speed;
   });
   updateVisibleUnits();
 }

@@ -15,7 +15,7 @@ void BattleCry::cast(Board* board) {
     active_ = true;
     for (auto unit : caster_->getTeam()->getUnitList()) {
       unit->setAttack(
-          static_cast<int>(floor(unit->getIndividualAttack() * 1.2)));
+          static_cast<int>(floor(unit->getStats().attack * 1.2)));
       // TODO(onaranjoUCM): Uncomment when we get acces to turnBar
       // unit->setSpeed(unit->getSpeed() + 1);
       // turnBar.sort()
@@ -28,7 +28,7 @@ void BattleCry::end() {
   std::cout << "<BattleCry> ended" << std::endl;
   active_ = false;
   for (auto unit : caster_->getTeam()->getUnitList()) {
-    unit->setAttack(unit->getBaseAttack());
+    unit->setAttack(unit->getBaseStats().attack);
     // TODO(onaranjoUCM): Uncomment when we get acces to turnBar
     // unit->setSpeed(unit->getBaseSpeed());
   }
@@ -39,7 +39,7 @@ void BattleCry::resetAttack() {
     std::cout << "Casted <BattleCry>" << std::endl;
     for (auto unit : caster_->getTeam()->getUnitList()) {
       unit->setAttack(
-          static_cast<int>(floor(unit->getIndividualAttack() * 1.2)));
+          static_cast<int>(floor(unit->getStats().attack * 1.2)));
     }
     remainingCooldown_ = cooldown_;
   }
@@ -54,7 +54,7 @@ void ArrowRain::cast(Board* board) {
     active_ = true;
     for (auto unit : caster_->getTeam()->getUnitList()) {
       unit->setAttack(
-          static_cast<int>(floor(unit->getIndividualAttack() * 1.2)));
+          static_cast<int>(floor(unit->getStats().attack * 1.2)));
     }
     remainingCooldown_ = cooldown_;
   }

@@ -46,8 +46,8 @@ public:
   virtual int getAttack() const { return attack_; }
   int getIndividualAttack() const { return attack_; }
   virtual int getDefense() const { return defense_; }
-  int getAttackRange() const { return attackRange_; }
-  int getMoveRange() const { return moveRange_; }
+  int getStats().attackRange const { return attackRange_; }
+  int getStats().moveRange const { return moveRange_; }
   virtual int getMaxHealth() const { return maxHealth_; }
   virtual int getHealth() const { return health_; }
   virtual int getPrize() const { return prize_; }

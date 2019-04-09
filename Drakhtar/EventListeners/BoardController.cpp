@@ -20,9 +20,9 @@ BoardController::BoardController(Board *board, TurnBar *turnBar,
   activeUnit_ = turnBar_->getFrontUnit();
   activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
   board_->highlightCellsInRange(activeUnit_->getBox(),
-                                activeUnit_->getMoveRange());
+                                activeUnit_->getStats().moveRange);
   board_->highlightEnemiesInRange(activeUnit_->getBox(),
-                                  activeUnit_->getAttackRange());
+                                  activeUnit_->getStats().attackRange);
 }
 
 void BoardController::run(const SDL_Event event) {
@@ -53,7 +53,7 @@ void BoardController::onClickMove(Box *boxClicked) {
 
   // Checks if the box clicked is within movement range
   if (board_->isInMoveRange(activeUnit_->getBox(), boxClicked,
-                            activeUnit_->getMoveRange())) {
+                            activeUnit_->getStats().moveRange)) {
     const auto path = board_->findPath(activeUnit_->getBox()->getIndex(),
                                        boxClicked->getIndex());
 
@@ -74,11 +74,11 @@ void BoardController::onClickMove(Box *boxClicked) {
           hasMoved_ = true;
           isTweening_ = false;
           // If there are enemies in range, highlight them, otherwise skip turn
-          if (board_->isEnemyInRange(boxClicked, unit->getAttackRange())) {
+          if (board_->isEnemyInRange(boxClicked, unit->getStats().attackRange)) {
             board_->resetCellsToBase();
             unit->getBox()->setCurrentTexture(TextureInd::ACTIVE);
             board_->highlightEnemiesInRange(unit->getBox(),
-                                            unit->getAttackRange());
+                                            unit->getStats().attackRange);
             SDLAudioManager::getInstance()->setChannelVolume(30, 0);
             SDLAudioManager::getInstance()->playChannel(4, 0, 0);
           } else {
@@ -97,15 +97,15 @@ void BoardController::onClickAttack(Box *boxClicked) {
     // Unit clicked if from a different team and in range
     if (enemyUnit->getTeam() != activeUnit_->getTeam() &&
         board_->isInRange(activeUnit_->getBox(), boxClicked,
-                          activeUnit_->getAttackRange())) {
+                          activeUnit_->getStats().attackRange)) {
       // enemyUnit->loseHealth(activeUnit_->getAttack());
       activeUnit_->attack(enemyUnit, false);
       SDLAudioManager::getInstance()->playChannel(5, 0, 0);
 
       // Enemy dies
-      if (enemyUnit->getHealth() == 0) {
+      if (enemyUnit->getStats().health == 0) {
         if (enemyUnit->getTeam()->getColor() == Color::RED) {
-          GameManager::getInstance()->addMoney(enemyUnit->getPrize());
+          GameManager::getInstance()->addMoney(enemyUnit->getStats().prize);
         }
         boxClicked->setContent(nullptr);
         turnBar_->eraseUnit(enemyUnit);
@@ -116,12 +116,12 @@ void BoardController::onClickAttack(Box *boxClicked) {
       board_->resetCellsToBase();
       activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
       board_->highlightCellsInRange(activeUnit_->getBox(),
-                                    activeUnit_->getMoveRange());
+                                    activeUnit_->getStats().moveRange);
       hasAttacked_ = true;
     }
 
     // Unit dies to counter-attack
-    if (activeUnit_->getHealth() == 0) {
+    if (activeUnit_->getStats().health == 0) {
       activeUnit_->getBox()->setContent(nullptr);
       turnBar_->eraseUnit(activeUnit_);
       scene_->removeGameObject(activeUnit_);
@@ -138,7 +138,7 @@ void BoardController::advanceTurn() {
 
   activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
   board_->highlightCellsInRange(activeUnit_->getBox(),
-                                activeUnit_->getMoveRange());
+                                activeUnit_->getStats().moveRange);
   board_->highlightEnemiesInRange(activeUnit_->getBox(),
-                                  activeUnit_->getAttackRange());
+                                  activeUnit_->getStats().attackRange);
 }
