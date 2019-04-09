@@ -15,16 +15,15 @@ class Battalion final : public Unit {
   std::string sizeToString() const;
 
  public:
-  Battalion(Scene* scene, Texture* texture, Box* box, int attack, int defense,
-            int health, int speed, int attackRange, int moveRange, int prize,
+  Battalion(Scene* scene, Texture* texture, Box* box, const UnitStats stats,
             std::string type, int battalionSize);
   virtual ~Battalion();
 
   int getBattalionSize() const { return battalionSize_; }
   void setBattalionSize(int battalionSize);
 
-  int getAttack() const override;
-  int getMaxHealth() const override;
+  int getAttack() const;
+  int getMaxHealth() const;
 
   int loseHealth(int enemyAttack) override;
 

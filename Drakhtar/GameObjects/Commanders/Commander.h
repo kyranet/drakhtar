@@ -15,8 +15,7 @@ class Commander : public Unit {
   std::vector<Skill*> skills_;
 
  public:
-  Commander(Scene* scene, Texture* texture, Box* box, int attack, int defense,
-            int health, int speed, int attackRange, int moveRange, int prize);
+  Commander(Scene* scene, Texture* texture, Box* box, UnitStats commanderStats);
   virtual ~Commander();
 
   /**

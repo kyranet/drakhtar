@@ -8,6 +8,62 @@ const int WIN_HEIGHT = 720;
 static const int ANIMATION_TICKS_PER_SECOND = 1;
 static const int GAME_FRAMERATE = 25;
 
+//Thassa
+const auto thassaAttack = 30;
+const auto thassaDefense = 30;
+const auto thassaHealth = 100;
+const auto thassaAttackRange = 1;
+const auto thassaMoveRange = 3;
+const auto thassaSpeed = 3;
+const auto thassaPrize = 100;
+//Zamdran
+const auto zamdranAttack = 25;
+const auto zamdranDefense = 20;
+const auto zamdranHealth = 100;
+const auto zamdranAttackRange = 3;
+const auto zamdranMoveRange = 2;
+const auto zamdranSpeed = 5;
+const auto zamdranPrize = 100;
+// wizard
+const int wizardAttack = 8;
+const int wizardDefense = 1;
+const int wizardHealth = 7;
+const int wizardAttackRange = 2;
+const int wizardMoveRange = 2;
+const int wizardSpeed = 2;
+const int wizardPrize = 7;
+// knight
+const auto knightAttack = 8;
+const auto knightDefense = 7;
+const auto knightHealth = 15;
+const auto knightAttackRange = 1;
+const auto knightMoveRange = 5;
+const auto knightSpeed = 5;
+const auto knightPrize = 12;
+// archer
+const auto archerAttack = 4;
+const auto archerDefense = 3;
+const auto archerHealth = 10;
+const auto archerAttackRange = 3;
+const auto archerMoveRange = 2;
+const auto archerSpeed = 3;
+const auto archerPrize = 5;
+// soldier
+const auto soldierAttack = 5;
+const auto soldierDefense = 5;
+const auto soldierHealth = 10;
+const auto soldierAttackRange = 1;
+const auto soldierMoveRange = 3;
+const auto soldierSpeed = 3;
+const auto soldierPrize = 5;
+// monster
+const auto monsterAttack = 20;
+const auto monsterDefense = 10;
+const auto monsterHealth = 50;
+const auto monsterAttackRange = 1;
+const auto monsterMoveRange = 2;
+const auto monsterSpeed = 1;
+const auto monsterPrize = 50;
 // TODO(Miguel): method to get fullscreen , will be implemented in the near
 // future
 /*int flags = SDL_GetWindowFlags(window_);
@@ -17,7 +73,6 @@ if (flags & SDL_WINDOW_FULLSCREEN) {
 else {
         SDL_SetWindowFullscreen(window_, SDL_WINDOW_FULLSCREEN);
 }*/
-
 enum class KeyboardKey {
   UNKNOWN = SDL_SCANCODE_UNKNOWN,
   A = SDL_SCANCODE_A,

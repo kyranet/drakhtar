@@ -8,15 +8,11 @@
 #include "Structures/Team.h"
 #include "Text.h"
 
-Battalion::Battalion(Scene *scene, Texture *texture, Box *box, const int attack,
-                     const int defense, const int health, const int speed,
-                     const int attackRange, const int moveRange,
-                     const int prize, const std::string type,
+Battalion::Battalion(Scene *scene, Texture *texture, Box *box, const UnitStats stats, const std::string type,
                      const int battalionSize)
-    : Unit(scene, texture, box, attack, defense, health, speed, attackRange,
-           moveRange, prize * battalionSize, type),
+    : Unit(scene, texture, box, stats, type),
       battalionSize_(battalionSize) {
-  health_ = Unit::getMaxHealth() * battalionSize_;
+  stats_.health = baseStats_.health * battalionSize_;
 
   const SDL_Color textColor = {255, 255, 255, 255};
 
@@ -45,16 +41,16 @@ void Battalion::setBattalionSize(const int battalionSize) {
   sizeText_->setText(sizeToString());
 }
 
-int Battalion::getAttack() const { return Unit::getAttack() * battalionSize_; }
+int Battalion::getAttack() const { return stats_.attack * battalionSize_; }
 
 int Battalion::getMaxHealth() const {
-  return Unit::getMaxHealth() * battalionSize_;
+  return baseStats_.health * battalionSize_;
 }
 
 int Battalion::loseHealth(const int enemyAttack) {
   const auto health = Unit::loseHealth(enemyAttack);
-  if (Unit::getMaxHealth() <= health) {
-    battalionSize_ -= health / Unit::getMaxHealth();
+  if (baseStats_.health <= health) {
+    battalionSize_ -= health / baseStats_.health;
     if (this->getTeam()->getColor() == Color::BLUE)
       (*GameManager::getInstance()->getArmy())[this->getType()] =
           battalionSize_;

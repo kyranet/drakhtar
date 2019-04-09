@@ -7,6 +7,7 @@
 #include "../GameObjects/Unit.h"
 #include "../Managers/TextureManager.h"
 #include "../Scenes/Scene.h"
+#include "../Utils/Constants.h"
 #include "Team.h"
 
 UnitFactory::UnitFactory(Scene *scene) : scene_(scene) {}
@@ -14,101 +15,72 @@ UnitFactory::UnitFactory(Scene *scene) : scene_(scene) {}
 UnitFactory::~UnitFactory() = default;
 
 Unit *UnitFactory::newSoldier(Team *team, Box *box, const int size) const {
-  const auto soldierAttack = 5;
-  const auto soldierDefense = 5;
-  const auto soldierHealth = 10;
-  const auto soldierAttackRange = 1;
-  const auto soldierMoveRange = 3;
-  const auto soldierSpeed = 3;
-  const auto soldierPrize = 5;
 
+  UnitStats soldierStats_ = {
+      soldierAttack,    soldierDefense, soldierHealth,      soldierAttackRange,
+      soldierMoveRange, soldierSpeed,   soldierPrize * size};
   const auto textureName =
       team->getColor() == BLUE ? "Units-BlueSoldier" : "Units-RedSoldier";
 
-  const auto unit =
-      new Battalion(scene_, TextureManager::get(textureName), box,
-                    soldierAttack, soldierDefense, soldierHealth, soldierSpeed,
-                    soldierAttackRange, soldierMoveRange, soldierPrize, "Soldier", size);
+  const auto unit = new Battalion(scene_, TextureManager::get(textureName), box,
+                                  soldierStats_, "Soldier", size);
   team->addUnit(unit);
   return unit;
 }
 
 Unit *UnitFactory::newArcher(Team *team, Box *box, const int size) const {
-  const auto archerAttack = 4;
-  const auto archerDefense = 3;
-  const auto archerHealth = 10;
-  const auto archerAttackRange = 3;
-  const auto archerMoveRange = 2;
-  const auto archerSpeed = 3;
-  const auto archerPrize = 5;
-
+  UnitStats archerStats_ = {archerAttack,      archerDefense,   archerHealth,
+                            archerAttackRange, archerMoveRange, archerSpeed,
+                            archerPrize * size};
   const auto textureName =
       team->getColor() == BLUE ? "Units-BlueArcher" : "Units-RedArcher";
 
-  const auto unit =
-      new Battalion(scene_, TextureManager::get(textureName), box, archerAttack,
-                    archerDefense, archerHealth, archerSpeed, archerAttackRange,
-                    archerMoveRange, archerPrize, "Archer", size);
+  const auto unit = new Battalion(scene_, TextureManager::get(textureName), box,
+                                  archerStats_, "Archer", size);
+  unit->setTeam(team);
   team->addUnit(unit);
   return unit;
 }
 
 Unit *UnitFactory::newKnight(Team *team, Box *box, const int size) const {
-  const auto knightAttack = 8;
-  const auto knightDefense = 7;
-  const auto knightHealth = 15;
-  const auto knightAttackRange = 1;
-  const auto knightMoveRange = 5;
-  const auto knightSpeed = 5;
-  const auto knightPrize = 12;
+  UnitStats knightStats_ = {knightAttack,      knightDefense,   knightHealth,
+                            knightAttackRange, knightMoveRange, knightSpeed,
+                            knightPrize * size};
 
   const auto textureName =
       team->getColor() == BLUE ? "Units-BlueKnight" : "Units-RedKnight";
 
-  const auto unit =
-      new Battalion(scene_, TextureManager::get(textureName), box, knightAttack,
-                    knightDefense, knightHealth, knightSpeed, knightAttackRange,
-                    knightMoveRange, knightPrize, "Knight", size);
+  const auto unit = new Battalion(scene_, TextureManager::get(textureName), box,
+                                  knightStats_, "Knight", size);
   team->addUnit(unit);
   return unit;
 }
 
 Unit *UnitFactory::newWizard(Team *team, Box *box, const int size) const {
-  const auto wizardAttack = 8;
-  const auto wizardDefense = 1;
-  const auto wizardHealth = 7;
-  const auto wizardAttackRange = 2;
-  const auto wizardMoveRange = 2;
-  const auto wizardSpeed = 2;
-  const auto wizardPrize = 7;
 
+  UnitStats wizardStats_ = {wizardAttack,      wizardDefense,   wizardHealth,
+                            wizardAttackRange, wizardMoveRange, wizardSpeed,
+                            wizardPrize * size};
   const auto textureName =
       team->getColor() == BLUE ? "Units-BlueMage" : "Units-RedMage";
 
-  const auto unit =
-      new Battalion(scene_, TextureManager::get(textureName), box, wizardAttack,
-                    wizardDefense, wizardHealth, wizardSpeed, wizardAttackRange,
-                    wizardMoveRange, wizardPrize, "Mage", size);
+  const auto unit = new Battalion(scene_, TextureManager::get(textureName), box,
+                                  wizardStats_, "Mage", size);
   team->addUnit(unit);
   return unit;
 }
 
 Unit *UnitFactory::newMonster(Team *team, Box *box, const int size) const {
-  const auto monsterAttack = 20;
-  const auto monsterDefense = 10;
-  const auto monsterHealth = 50;
-  const auto monsterAttackRange = 1;
-  const auto monsterMoveRange = 2;
-  const auto monsterSpeed = 1;
-  const auto monsterPrize = 50;
+
+  UnitStats monsterStats_ = {
+      monsterAttack,    monsterDefense, monsterHealth,      monsterAttackRange,
+      monsterMoveRange, monsterSpeed,   monsterPrize * size};
 
   const auto textureName =
       team->getColor() == BLUE ? "Units-BlueMonster" : "Units-RedMonster";
 
-  const auto unit =
-      new Battalion(scene_, TextureManager::get(textureName), box,
-                    monsterAttack, monsterDefense, monsterHealth, monsterSpeed,
-                    monsterAttackRange, monsterMoveRange, monsterPrize, "Monster", size);
+  const auto unit = new Battalion(scene_, TextureManager::get(textureName), box,
+                                  monsterStats_, "Monster", size);
   team->addUnit(unit);
   return unit;
 }
@@ -116,37 +88,26 @@ Unit *UnitFactory::newMonster(Team *team, Box *box, const int size) const {
 //---------- COMMANDERS ----------
 
 Thassa *UnitFactory::newThassa(Team *team, Box *box) const {
-  const auto attack = 30;
-  const auto defense = 30;
-  const auto health = 100;
-  const auto attackRange = 1;
-  const auto moveRange = 3;
-  const auto speed = 3;
-  const auto prize = 100;
+  UnitStats thassaStats_ = {thassaAttack,      thassaDefense,   thassaHealth,
+                            thassaAttackRange, thassaMoveRange, thassaSpeed,
+                            thassaPrize};
 
   const auto textureName = "Units-Thassa";
 
   const auto unit =
-      new Thassa(scene_, TextureManager::get(textureName), box, attack, defense,
-                 health, speed, attackRange, moveRange, prize);
+      new Thassa(scene_, TextureManager::get(textureName), box, thassaStats_);
   team->addUnit(unit);
   return unit;
 }
 
 Zamdran *UnitFactory::newZamdran(Team *team, Box *box) const {
-  const auto attack = 25;
-  const auto defense = 20;
-  const auto health = 100;
-  const auto attackRange = 3;
-  const auto moveRange = 2;
-  const auto speed = 5;
-  const auto prize = 100;
-
+  UnitStats zamdranStats_ = {
+      zamdranAttack,    zamdranDefense, zamdranHealth, zamdranAttackRange,
+      zamdranMoveRange, zamdranSpeed,   zamdranPrize};
   const auto textureName = "Units-Zamdran";
 
   const auto unit =
-      new Zamdran(scene_, TextureManager::get(textureName), box, attack,
-                  defense, health, speed, attackRange, moveRange, prize);
+      new Zamdran(scene_, TextureManager::get(textureName), box, zamdranStats_);
   team->addUnit(unit);
   return unit;
 }
