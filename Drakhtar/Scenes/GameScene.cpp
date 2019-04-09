@@ -27,6 +27,9 @@ GameScene::~GameScene() {
 }
 
 void buttonPause() { Game::getSceneMachine()->getCurrentScene()->pause(); }
+void buttonSkipTurn() {
+  Game::getSceneMachine()->getCurrentScene()->skipTurn();
+}
 
 void GameScene::preload() {
   Scene::preload();
@@ -72,6 +75,17 @@ void GameScene::preload() {
 
   const auto dialog =
       new DialogScene(this, "dialog" + std::to_string(battle_), "DialogFont");
+
+  boardController_ = new BoardController(board, turnBar, this);
+  board->addEventListener(boardController_);
+
+  const auto skipTurnButton =
+      new Button(this, TextureManager::get("Button-SkipTurn"),
+                 Vector2D<int>(WIN_WIDTH / 6, WIN_HEIGHT / 18),
+                 Vector2D<int>(static_cast<int>(WIN_WIDTH / 21.6),
+                               static_cast<int>(WIN_HEIGHT / 14.4)),
+                 buttonSkipTurn);
+
   const auto pauseButton =
       new Button(this, TextureManager::get("Button-Pause"),
                  Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 24, WIN_HEIGHT / 18),
@@ -99,11 +113,10 @@ void GameScene::preload() {
 
   addGameObject(turnBar);
   addGameObject(dialog);
+  addGameObject(skipTurnButton);
   addGameObject(pauseButton);
   addGameObject(battleCryButton);
   addGameObject(arrowRainButton);
-
-  board->addEventListener(new BoardController(board, turnBar, this));
 
   const auto tutorialSequence =
       new TutorialSequence(this, "tutorials", "TutorialFont");
@@ -117,3 +130,5 @@ void GameScene::pause() {
     Scene::pause();
   }
 }
+
+void GameScene::skipTurn() { boardController_->advanceTurn(); }
