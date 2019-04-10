@@ -110,6 +110,7 @@ Game::Game() {
   textures->add("Button-Continue", "../images/Tutorials/Continue_Button.png", 1,
                 1);
   textures->add("Button-Next", "../images/Tutorials/Next_Button.png", 1, 1);
+  textures->add("Button-SkipTurn", "../images/UI/skipTurnButton.png", 1, 1);
 
   // Pause
   textures->add("Pause-Panel", "../images/Pause/Panel.png", 1, 1);

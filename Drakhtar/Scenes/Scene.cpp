@@ -180,6 +180,8 @@ void Scene::resume() {
 }
 void Scene::pause() { paused_ = true; }
 
+void Scene::skipTurn() {}
+
 void Scene::finish() {
   if (finished_) return;
 
