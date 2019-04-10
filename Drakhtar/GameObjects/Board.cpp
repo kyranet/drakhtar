@@ -39,7 +39,7 @@ SDL_Rect Board::getRect() const {
 }
 
 Box *Board::getBoxAt(const int x, const int y) const {
-  return static_cast<Box *>(children_[x * rows_ + y]);  // NOLINT
+  return reinterpret_cast<Box *>(children_[x * rows_ + y]);
 }
 
 Box *Board::getBoxAtCoordinates(const SDL_Point point) const {
@@ -141,7 +141,7 @@ void Board::highlightEnemiesInRange(Box *box, const int range) {
 
 void Board::resetCellsToBase() {
   for (const auto box : children_)
-    static_cast<Box *>(box)->setCurrentTexture(TextureInd::BASE);  // NOLINT
+    reinterpret_cast<Box *>(box)->setCurrentTexture(TextureInd::BASE);
 }
 
 std::list<Vector2D<int>> Board::findPath(const Vector2D<int> &start,

@@ -9,14 +9,13 @@ Tween::Tween(TweenManager* tweenManager) : tweenManager_(tweenManager) {}
 Tween::~Tween() = default;
 
 Tween* Tween::from(const Vector2D<int>& start) {
-  from_.set(static_cast<double>(start.getX()),   // NOLINT
-            static_cast<double>(start.getY()));  // NOLINT
+  from_.set(static_cast<double>(start.getX()),
+            static_cast<double>(start.getY()));
   return this;
 }
 
 Tween* Tween::to(const Vector2D<int>& end) {
-  to_.set(static_cast<double>(end.getX()),   // NOLINT
-          static_cast<double>(end.getY()));  // NOLINT
+  to_.set(static_cast<double>(end.getX()), static_cast<double>(end.getY()));
   return this;
 }
 
