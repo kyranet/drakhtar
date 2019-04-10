@@ -14,10 +14,9 @@
 #include "Structures/Tween.h"
 #include "Utils/Constants.h"
 
-BoardController::BoardController(Board* board, TurnBar* turnBar,
-                                 GameScene* scene)
-    : ListenerOnClick(board), board_(board), turnBar_(turnBar), scene_(scene) {
-  activeUnit_ = turnBar_->getFrontUnit();
+BoardController::BoardController(Board *board, TurnBar *turnBar,
+                                 GameScene *scene)
+    : TeamController(board, turnBar, scene) {
   activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
   board_->highlightCellsInRange(activeUnit_->getBox(),
                                 activeUnit_->getStats().moveRange);
