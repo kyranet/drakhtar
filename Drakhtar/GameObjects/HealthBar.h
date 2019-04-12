@@ -22,6 +22,7 @@ private:
 public:
 	HealthBar(Scene *scene, Vector2D<int> pos);
 	virtual ~HealthBar();
+	virtual void render() const;
 	virtual void update();
-	void takeDamage();
+	void takeDamage(int damage);
 };
