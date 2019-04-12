@@ -105,10 +105,20 @@ void Scene::handleEvents() {
     // TODO(GonzaPM7): Delete after presentation
     if (event.type == SDL_KEYDOWN) {
       switch (event.key.keysym.sym) {
-      case SDLK_ESCAPE:
-        Game::getSceneMachine()->getCurrentScene()->processNextTick(
-            []() { Game::getSceneMachine()->changeScene(new RecruitScene()); });
-        break;
+        case SDLK_ESCAPE:
+          Game::getSceneMachine()->getCurrentScene()->processNextTick([]() {
+            Game::getSceneMachine()->changeScene(new RecruitScene());
+          });
+          break;
+        case SDLK_f:
+          SDL_Window *window_ = Game::getWindow();
+          int flags = SDL_GetWindowFlags(window_);
+          if (flags & SDL_WINDOW_FULLSCREEN) {
+            SDL_SetWindowFullscreen(window_, 0);
+          } else {
+            SDL_SetWindowFullscreen(window_, SDL_WINDOW_FULLSCREEN);
+          }
+          break;
       }
     }
 
