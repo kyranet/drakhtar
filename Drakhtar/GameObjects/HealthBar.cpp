@@ -36,7 +36,10 @@ void HealthBar::update()
 	{
 		if (damageBar->getRect().w > damageAnimationSpeed)
 		{
+			int oldX = damageBar->getRect().x;
+			int oldY = damageBar->getRect().y;
 			damageBar->setSize(Vector2D<int>(damageBar->getRect().w - damageAnimationSpeed, damageBar->getRect().h));
+			damageBar->setPosition(Vector2D<int>(oldX + (damageBar->getRect().w / 2), oldY + (damageBar->getRect().h / 2)));
 		}
 		else
 		{
@@ -60,5 +63,5 @@ void HealthBar::takeDamage(int damage)
 	damageBar->setSize(Vector2D<int>(originalWidth * damageProportion, damageBar->getRect().h));
 	damageBar->setPosition(Vector2D<int>(lifeBar->getRect().x + (lifeBar->getRect().w) + (damageBar->getRect().w/2), damageBar->getRect().y + (lifeBar->getRect().h/2)));
 	damageBar->setActive(true);
-	// damageAnimationPlaying = true;
+	damageAnimationPlaying = true;
 }
