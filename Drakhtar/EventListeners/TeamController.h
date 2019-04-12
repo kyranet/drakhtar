@@ -1,3 +1,6 @@
+// Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
+
+#pragma once
 #include "ListenerOnClick.h"
 #include "SDL.h"
 
@@ -52,9 +55,4 @@ class TeamController : public ListenerOnClick {
    * \param event: The event to be processed.
    */
   virtual void run(SDL_Event event) = 0;
-
-  /**
-   * \brief Resets board textures, ends unit's turn and updates active unit.
-   */
-  // virtual void advanceTurn() = 0;
 };

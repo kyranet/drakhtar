@@ -1,14 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-#include "SDL.h"
 #include "TeamController.h"
-
-class TurnBar;
-class Unit;
-class GameScene;
-class Board;
-class Box;
 
 class BoardController final : public TeamController {
  public:
