@@ -18,6 +18,7 @@
 #include "Structures/UnitFactory.h"
 #include "Utils/Constants.h"
 
+
 auto audio = SDLAudioManager::getInstance();
 
 GameScene::GameScene(int battle) : battle_(battle) {}
@@ -136,6 +137,8 @@ void GameScene::preload() {
   const auto tutorialSequence =
       new TutorialSequence(this, "tutorials", "TutorialFont");
   addGameObject(tutorialSequence);
+
+
 }
 
 void GameScene::pause() {
