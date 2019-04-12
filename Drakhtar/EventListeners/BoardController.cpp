@@ -105,7 +105,7 @@ void BoardController::onClickAttack(Box *boxClicked) {
       SDLAudioManager::getInstance()->playChannel(5, 0, 0);
 
       // Enemy dies
-      if (enemyUnit->getStats().health == 0) {
+      if (enemyUnit->getStats().health <= 0) {
         if (enemyUnit->getTeam()->getColor() == Color::RED) {
           GameManager::getInstance()->addMoney(enemyUnit->getStats().prize);
         }
