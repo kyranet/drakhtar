@@ -141,7 +141,7 @@ void GameScene::preload() {
 
   const auto healthBar = new HealthBar(this, Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2));
   addGameObject(healthBar);
-  healthBar->takeDamage(50);
+  healthBar->takeDamage(80);
 }
 
 void GameScene::pause() {
