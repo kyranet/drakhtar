@@ -46,6 +46,7 @@ class Scene {
   virtual void end();
 
   virtual void pause();
+  virtual void skipTurn();
   virtual void resume();
   virtual void finish();
 
