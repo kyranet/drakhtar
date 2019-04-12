@@ -16,9 +16,10 @@ UnitFactory::~UnitFactory() = default;
 
 Unit *UnitFactory::newSoldier(Team *team, Box *box, const int size) const {
 
-  UnitStats soldierStats_ = {
-      soldierAttack,    soldierDefense, soldierHealth,      soldierAttackRange,
-      soldierMoveRange, soldierSpeed,   soldierPrize * size};
+  UnitStats soldierStats_ = {soldierAttack * size, soldierDefense,
+                             soldierHealth,        soldierAttackRange,
+                             soldierMoveRange,     soldierSpeed,
+                             soldierPrize * size};
   const auto textureName =
       team->getColor() == BLUE ? "Units-BlueSoldier" : "Units-RedSoldier";
 
@@ -29,8 +30,8 @@ Unit *UnitFactory::newSoldier(Team *team, Box *box, const int size) const {
 }
 
 Unit *UnitFactory::newArcher(Team *team, Box *box, const int size) const {
-  UnitStats archerStats_ = {archerAttack,      archerDefense,   archerHealth,
-                            archerAttackRange, archerMoveRange, archerSpeed,
+  UnitStats archerStats_ = {archerAttack * size, archerDefense,   archerHealth,
+                            archerAttackRange,   archerMoveRange, archerSpeed,
                             archerPrize * size};
   const auto textureName =
       team->getColor() == BLUE ? "Units-BlueArcher" : "Units-RedArcher";
@@ -42,8 +43,8 @@ Unit *UnitFactory::newArcher(Team *team, Box *box, const int size) const {
 }
 
 Unit *UnitFactory::newKnight(Team *team, Box *box, const int size) const {
-  UnitStats knightStats_ = {knightAttack,      knightDefense,   knightHealth,
-                            knightAttackRange, knightMoveRange, knightSpeed,
+  UnitStats knightStats_ = {knightAttack * size, knightDefense,   knightHealth,
+                            knightAttackRange,   knightMoveRange, knightSpeed,
                             knightPrize * size};
 
   const auto textureName =
@@ -57,8 +58,8 @@ Unit *UnitFactory::newKnight(Team *team, Box *box, const int size) const {
 
 Unit *UnitFactory::newWizard(Team *team, Box *box, const int size) const {
 
-  UnitStats wizardStats_ = {wizardAttack,      wizardDefense,   wizardHealth,
-                            wizardAttackRange, wizardMoveRange, wizardSpeed,
+  UnitStats wizardStats_ = {wizardAttack * size, wizardDefense,   wizardHealth,
+                            wizardAttackRange,   wizardMoveRange, wizardSpeed,
                             wizardPrize * size};
   const auto textureName =
       team->getColor() == BLUE ? "Units-BlueMage" : "Units-RedMage";
@@ -71,9 +72,10 @@ Unit *UnitFactory::newWizard(Team *team, Box *box, const int size) const {
 
 Unit *UnitFactory::newMonster(Team *team, Box *box, const int size) const {
 
-  UnitStats monsterStats_ = {
-      monsterAttack,    monsterDefense, monsterHealth,      monsterAttackRange,
-      monsterMoveRange, monsterSpeed,   monsterPrize * size};
+  UnitStats monsterStats_ = {monsterAttack * size, monsterDefense,
+                             monsterHealth,        monsterAttackRange,
+                             monsterMoveRange,     monsterSpeed,
+                             monsterPrize * size};
 
   const auto textureName =
       team->getColor() == BLUE ? "Units-BlueMonster" : "Units-RedMonster";
