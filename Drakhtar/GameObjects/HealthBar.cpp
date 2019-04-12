@@ -4,13 +4,12 @@
 #include "../Utils/Constants.h"
 
 HealthBar::HealthBar(Scene * scene, Vector2D<int> pos):
-	GameObject(scene, TextureManager::get("UI-healthBar_background"), pos, Vector2D<int>(WIN_WIDTH/20, WIN_HEIGHT/60))
+	GameObject(scene, TextureManager::get("UI-healthBar_background"), pos, Vector2D<int>(WIN_WIDTH/17, WIN_HEIGHT/60))
 {
-	lifeBar = new GameObject(scene, TextureManager::get("UI-healthBar_life"), pos, Vector2D<int>(WIN_WIDTH / 20, WIN_HEIGHT / 60));
-	damageBar = new GameObject(scene, TextureManager::get("UI-healthBar_damage"), pos, Vector2D<int>(WIN_WIDTH / 20, WIN_HEIGHT / 60));
-	addChild(lifeBar);
-	addChild(damageBar);
+	lifeBar = new GameObject(scene, TextureManager::get("UI-healthBar_life"), pos, Vector2D<int>(getRect().w, getRect().h));
+	damageBar = new GameObject(scene, TextureManager::get("UI-healthBar_damage"), pos, Vector2D<int>(getRect().w, getRect().h));
 	damageBar->setActive(false);
+
 
 	originalWidth = lifeBar->getRect().w;
 	currentHealth = maxHealth;
@@ -20,6 +19,15 @@ HealthBar::~HealthBar()
 {
 	delete lifeBar;
 	delete damageBar;
+}
+
+void HealthBar::render() const
+{
+	GameObject::render();
+	lifeBar->render();
+
+	if (damageBar->getActive())
+		damageBar->render();
 }
 
 void HealthBar::update()
@@ -39,10 +47,18 @@ void HealthBar::update()
 	}
 }
 
-void HealthBar::takeDamage()
+void HealthBar::takeDamage(int damage)
 {
-	int damageProportion = currentHealth / maxHealth;
-	lifeBar->setSize(Vector2D<int>(originalWidth * damageProportion, lifeBar->getRect().h);
+	currentHealth -= damage;
+	double lifeProportion = (double)currentHealth / maxHealth;
+	int oldX = lifeBar->getRect().x;
+	int oldY = lifeBar->getRect().y;
+	lifeBar->setSize(Vector2D<int>(originalWidth * lifeProportion, lifeBar->getRect().h));
+	lifeBar->setPosition(Vector2D<int>(oldX + (lifeBar->getRect().w / 2), oldY + (lifeBar->getRect().h / 2)));
+
+	damageBar->setPosition(Vector2D<int>(damageBar->getRect().x + lifeBar->getRect().w, damageBar->getRect().y));
+	double damageProportion = (double)damage / maxHealth;
+	damageBar->setSize(Vector2D<int>(originalWidth * damageProportion, damageBar->getRect().h));
 	damageBar->setActive(true);
-	damageAnimationPlaying = true;
+	// damageAnimationPlaying = true;
 }
