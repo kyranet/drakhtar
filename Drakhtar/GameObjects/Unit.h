@@ -44,13 +44,14 @@ class Unit : public GameObject {
   int getBaseSpeed() const { return baseSpeed_; }
   virtual int getAttack() const { return attack_; }
   int getIndividualAttack() const { return attack_; }
-  virtual int getDefense() const { return defense_; }
   int getStats().attackRange const { return attackRange_; }
   int getStats().moveRange const { return moveRange_; }
   virtual int getMaxHealth() const { return maxHealth_; }
   virtual int getHealth() const { return health_; }
   virtual int getPrize() const { return prize_; }
     int getSpeed() const { return speed_; }*/
+
+  virtual int getDefense() const { return stats_.defense; }
   UnitStats getBaseStats() const { return baseStats_; }
   UnitStats getStats() const { return stats_; }
   virtual bool getMoved() { return moved_; }

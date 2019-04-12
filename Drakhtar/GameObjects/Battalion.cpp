@@ -43,6 +43,10 @@ void Battalion::setBattalionSize(const int battalionSize) {
 
 int Battalion::getAttack() const { return stats_.attack * battalionSize_; }
 
+int Battalion::getDefense() const {
+  return Unit::getDefense() * battalionSize_;
+}
+
 int Battalion::getMaxHealth() const {
   return baseStats_.health * battalionSize_;
 }
@@ -54,8 +58,7 @@ int Battalion::loseHealth(const int enemyAttack) {
     if (this->getTeam()->getColor() == Color::BLUE)
       (*GameManager::getInstance()->getArmy())[this->getType()] =
           battalionSize_;
-    if (battalionSize_ < 0)
-      battalionSize_ = 0;
+    if (battalionSize_ < 0) battalionSize_ = 0;
     sizeText_->setText(sizeToString());
   }
   return health;

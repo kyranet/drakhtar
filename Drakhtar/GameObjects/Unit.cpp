@@ -1,12 +1,12 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Unit.h"
+#include <algorithm>
 #include "../Managers/FontManager.h"
 #include "../Structures/Team.h"
 #include "../Utils/Vector2D.h"
 #include "Box.h"
 #include "Text.h"
-#include <algorithm>
 
 Unit::Unit(Scene *scene, Texture *texture, Box *box, UnitStats stats,
            const std::string type)
@@ -24,7 +24,10 @@ Unit::Unit(Scene *scene, Texture *texture, Box *box, UnitStats stats,
       moveRange_(moveRange),
       speed_(speed),
       prize_(prize),*/
-      box_(box), stats_(stats), baseStats_(stats), type_(type) {
+      box_(box),
+      stats_(stats),
+      baseStats_(stats),
+      type_(type) {
   box->setContent(this);
   const SDL_Color textColor = {255, 0, 0, 0};
   const auto rect = box_->getRect();
@@ -56,7 +59,7 @@ void Unit::moveToBox(Box *newBox) {
 }
 
 int Unit::loseHealth(int enemyAttack) {
-  enemyAttack = std::max(enemyAttack - getStats().defense, 1);
+  enemyAttack = std::max(enemyAttack - getDefense(), 1);
   health_ = std::max(health_ - enemyAttack, 0);
   stats_.health -= enemyAttack;
   healthText_->setText(healthToString());

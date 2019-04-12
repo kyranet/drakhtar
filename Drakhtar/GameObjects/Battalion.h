@@ -23,6 +23,7 @@ class Battalion final : public Unit {
   void setBattalionSize(int battalionSize);
 
   int getAttack() const;
+  int getDefense() const override;
   int getMaxHealth() const;
 
   int loseHealth(int enemyAttack) override;
