@@ -1,8 +1,8 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-#include <string>
 #include "Unit.h"
+#include <string>
 
 class Scene;
 class Texture;
@@ -10,12 +10,12 @@ class Text;
 
 class Battalion final : public Unit {
   int battalionSize_;
-  Text* sizeText_ = nullptr;
+  Text *sizeText_ = nullptr;
 
   std::string sizeToString() const;
 
- public:
-  Battalion(Scene* scene, Texture* texture, Box* box, const UnitStats stats,
+public:
+  Battalion(Scene *scene, Texture *texture, Box *box, const UnitStats stats,
             std::string type, int battalionSize);
   virtual ~Battalion();
 
@@ -27,6 +27,6 @@ class Battalion final : public Unit {
 
   int loseHealth(int enemyAttack) override;
 
-  void moveToBox(Box* box) override;
+  void moveToBox(Box *box) override;
   void render() const override;
 };

@@ -8,7 +8,7 @@ const int WIN_HEIGHT = 720;
 static const int ANIMATION_TICKS_PER_SECOND = 1;
 static const int GAME_FRAMERATE = 25;
 
-//Thassa
+// Thassa
 const auto thassaAttack = 30;
 const auto thassaDefense = 30;
 const auto thassaHealth = 100;
@@ -16,7 +16,7 @@ const auto thassaAttackRange = 1;
 const auto thassaMoveRange = 3;
 const auto thassaSpeed = 3;
 const auto thassaPrize = 100;
-//Zamdran
+// Zamdran
 const auto zamdranAttack = 25;
 const auto zamdranDefense = 20;
 const auto zamdranHealth = 100;

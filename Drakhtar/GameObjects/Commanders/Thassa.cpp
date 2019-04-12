@@ -2,7 +2,8 @@
 
 #include "Thassa.h"
 
-Thassa::Thassa(Scene *scene, Texture *texture, Box *box, const UnitStats thassaStats)
-    : Commander(scene, texture, box,thassaStats) {
+Thassa::Thassa(Scene *scene, Texture *texture, Box *box,
+               const UnitStats thassaStats)
+    : Commander(scene, texture, box, thassaStats) {
   skills_.push_back(new BattleCry(this));
 }

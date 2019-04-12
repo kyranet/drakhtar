@@ -8,10 +8,10 @@
 #include "Structures/Team.h"
 #include "Text.h"
 
-Battalion::Battalion(Scene *scene, Texture *texture, Box *box, const UnitStats stats, const std::string type,
+Battalion::Battalion(Scene *scene, Texture *texture, Box *box,
+                     const UnitStats stats, const std::string type,
                      const int battalionSize)
-    : Unit(scene, texture, box, stats, type),
-      battalionSize_(battalionSize) {
+    : Unit(scene, texture, box, stats, type), battalionSize_(battalionSize) {
   stats_.health = baseStats_.health * battalionSize_;
 
   const SDL_Color textColor = {255, 255, 255, 255};
@@ -54,7 +54,8 @@ int Battalion::loseHealth(const int enemyAttack) {
     if (this->getTeam()->getColor() == Color::BLUE)
       (*GameManager::getInstance()->getArmy())[this->getType()] =
           battalionSize_;
-    if (battalionSize_ < 0) battalionSize_ = 0;
+    if (battalionSize_ < 0)
+      battalionSize_ = 0;
     sizeText_->setText(sizeToString());
   }
   return health;

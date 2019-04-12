@@ -2,7 +2,8 @@
 
 #include "Commander.h"
 
-Commander::Commander(Scene *scene, Texture *texture, Box *box, const UnitStats commanderStats)
+Commander::Commander(Scene *scene, Texture *texture, Box *box,
+                     const UnitStats commanderStats)
     : Unit(scene, texture, box, commanderStats, "") {}
 
 Commander::~Commander() {

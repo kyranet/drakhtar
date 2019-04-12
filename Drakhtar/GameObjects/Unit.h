@@ -10,13 +10,13 @@ class Text;
 class Scene;
 
 struct UnitStats {
-	int attack;
-	int defense;
-	int health;
-	int attackRange;
-	int moveRange;
-	int speed;
-	int prize;
+  int attack;
+  int defense;
+  int health;
+  int attackRange;
+  int moveRange;
+  int speed;
+  int prize;
 };
 class Unit : public GameObject {
 
@@ -75,4 +75,3 @@ public:
   virtual void onSelect();
   virtual void onDeselect();
 };
-

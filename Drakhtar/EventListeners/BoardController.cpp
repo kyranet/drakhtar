@@ -1,7 +1,6 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "BoardController.h"
-#include <iostream>
 #include "GameObjects/Board.h"
 #include "GameObjects/Box.h"
 #include "GameObjects/TurnBar.h"
@@ -13,6 +12,7 @@
 #include "Structures/Texture.h"
 #include "Structures/Tween.h"
 #include "Utils/Constants.h"
+#include <iostream>
 
 BoardController::BoardController(Board *board, TurnBar *turnBar,
                                  GameScene *scene)
@@ -49,7 +49,8 @@ void BoardController::onClickStop(const SDL_Point point) {
 
 void BoardController::onClickMove(Box *boxClicked) {
   // If this BoardController is stopped, don't run
-  if (isTweening_) return;
+  if (isTweening_)
+    return;
 
   // Checks if the box clicked is within movement range
   if (board_->isInMoveRange(activeUnit_->getBox(), boxClicked,
@@ -74,7 +75,8 @@ void BoardController::onClickMove(Box *boxClicked) {
           hasMoved_ = true;
           isTweening_ = false;
           // If there are enemies in range, highlight them, otherwise skip turn
-          if (board_->isEnemyInRange(boxClicked, unit->getStats().attackRange)) {
+          if (board_->isEnemyInRange(boxClicked,
+                                     unit->getStats().attackRange)) {
             board_->resetCellsToBase();
             unit->getBox()->setCurrentTexture(TextureInd::ACTIVE);
             board_->highlightEnemiesInRange(unit->getBox(),
