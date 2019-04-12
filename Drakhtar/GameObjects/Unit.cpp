@@ -58,6 +58,7 @@ void Unit::moveToBox(Box *newBox) {
 int Unit::loseHealth(int enemyAttack) {
   enemyAttack = std::max(enemyAttack - getStats().defense, 1);
   health_ = std::max(health_ - enemyAttack, 0);
+  stats_.health -= enemyAttack;
   healthText_->setText(healthToString());
   return enemyAttack;
 }
