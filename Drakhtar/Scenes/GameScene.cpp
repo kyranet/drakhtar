@@ -18,8 +18,6 @@
 #include "Structures/UnitFactory.h"
 #include "Utils/Constants.h"
 
-#include "GameObjects/HealthBar.h"
-
 auto audio = SDLAudioManager::getInstance();
 
 GameScene::GameScene(int battle) : battle_(battle) {}
@@ -138,10 +136,6 @@ void GameScene::preload() {
   const auto tutorialSequence =
       new TutorialSequence(this, "tutorials", "TutorialFont");
   addGameObject(tutorialSequence);
-
-  const auto healthBar = new HealthBar(this, Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2));
-  addGameObject(healthBar);
-  healthBar->takeDamage(80);
 }
 
 void GameScene::pause() {
