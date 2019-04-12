@@ -13,8 +13,7 @@ class TurnBar final : public GameObject {
   std::list<Unit *> unitTurnBar_;
   size_t visibleTurnBarSize_ = 9;
   std::vector<GameObject *> visibleUnits_;
-  GameObject* selectedUnitSprite_ = nullptr;
-
+  GameObject *selectedUnitSprite_ = nullptr;
 
  public:
   // constructor interlaces units from each team list into the turn bar (ally

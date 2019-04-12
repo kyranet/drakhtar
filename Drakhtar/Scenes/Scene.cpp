@@ -34,7 +34,8 @@ void Scene::run() {
   }
 
   // If it's already running, don't re-run the event loop twice
-  if (isRunning()) return;
+  if (isRunning())
+    return;
 
   // Set current status to resume
   resume();
@@ -51,7 +52,8 @@ void Scene::run() {
     handleEvents();
 
     // If it has received a SDL_QUIT, don't process the event loop any further
-    if (exit_) break;
+    if (exit_)
+      break;
 
     // Otherwise continue the event loop
     update();
@@ -76,7 +78,8 @@ void Scene::preload() {
 }
 
 void Scene::tick() {
-  if (nextTick_.empty()) return;
+  if (nextTick_.empty())
+    return;
 
   for (auto callback : nextTick_) {
     callback();
@@ -87,7 +90,8 @@ void Scene::tick() {
 void Scene::create() {
   for (auto gameObject : pendingOnCreate_) {
     // If the gameObject was removed early, skip
-    if (gameObject == nullptr) continue;
+    if (gameObject == nullptr)
+      continue;
     gameObjects_.push_back(gameObject);
   }
 
@@ -105,11 +109,10 @@ void Scene::handleEvents() {
     // TODO(GonzaPM7): Delete after presentation
     if (event.type == SDL_KEYDOWN) {
       switch (event.key.keysym.sym) {
-        case SDLK_ESCAPE:
-          Game::getSceneMachine()->getCurrentScene()->processNextTick([]() {
-            Game::getSceneMachine()->changeScene(new RecruitScene());
-          });
-          break;
+      case SDLK_ESCAPE:
+        Game::getSceneMachine()->getCurrentScene()->processNextTick(
+            []() { Game::getSceneMachine()->changeScene(new RecruitScene()); });
+        break;
       }
     }
 
@@ -121,13 +124,15 @@ void Scene::handleEvents() {
       // issues as this loop will keep running when it's supposed to stop. This
       // cannot be done with a for loop using iterators, but only making it so
       // it checks for exit_ and breaking before increasing it.
-      if (exit_) break;
+      if (exit_)
+        break;
     }
   }
 }
 
 void Scene::update() {
-  for (auto gameObject : gameObjects_) gameObject->update();
+  for (auto gameObject : gameObjects_)
+    gameObject->update();
 }
 
 void Scene::render() {
@@ -136,7 +141,8 @@ void Scene::render() {
 
   // Render each game object
   for (auto gameObject : gameObjects_) {
-    if (gameObject->getActive()) gameObject->render();
+    if (gameObject->getActive())
+      gameObject->render();
   }
 
   // Render the new frame
@@ -147,7 +153,8 @@ void Scene::destroy() {
   for (auto gameObject : pendingOnDestroy_) {
     // If the gameObject was already deleted from memory,
     // skip this search
-    if (gameObject == nullptr) continue;
+    if (gameObject == nullptr)
+      continue;
 
     auto it = gameObjects_.begin();
     while (it != gameObjects_.end()) {
@@ -183,13 +190,15 @@ void Scene::pause() { paused_ = true; }
 void Scene::skipTurn() {}
 
 void Scene::finish() {
-  if (finished_) return;
+  if (finished_)
+    return;
 
   finished_ = true;
   paused_ = true;
   exit_ = true;
 
-  for (auto gameObject : gameObjects_) delete gameObject;
+  for (auto gameObject : gameObjects_)
+    delete gameObject;
   gameObjects_.clear();
 
   Game::getSceneMachine()->popScene();

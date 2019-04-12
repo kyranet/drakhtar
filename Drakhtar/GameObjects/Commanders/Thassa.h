@@ -7,6 +7,5 @@ class Scene;
 
 class Thassa final : public Commander {
  public:
-  Thassa(Scene* scene, Texture* texture, Box* box, int attack, int defense,
-         int health, int speed, int attackRange, int moveRange, int prize);
+  Thassa(Scene *scene, Texture *texture, Box *box, UnitStats thassaStats);
 };

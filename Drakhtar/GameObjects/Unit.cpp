@@ -8,16 +8,14 @@
 #include "Box.h"
 #include "Text.h"
 
-Unit::Unit(Scene *scene, Texture *texture, Box *box, const int attack,
-           const int defense, const int health, const int speed,
-           const int attackRange, const int moveRange, const int prize,
+Unit::Unit(Scene *scene, Texture *texture, Box *box, UnitStats stats,
            const std::string type)
     : GameObject(scene, texture,
                  Vector2D<int>(box->getRect().x + box->getRect().w / 2,
                                box->getRect().y + box->getRect().h / 2),
                  Vector2D<int>(static_cast<int>(box->getRect().w * 2),
                                static_cast<int>(box->getRect().h * 2))),
-      baseAttack_(attack),
+      /*baseAttack_(attack),
       baseSpeed_(speed),
       attack_(attack),
       defense_(defense),
@@ -25,9 +23,10 @@ Unit::Unit(Scene *scene, Texture *texture, Box *box, const int attack,
       attackRange_(attackRange),
       moveRange_(moveRange),
       speed_(speed),
-      prize_(prize),
+      prize_(prize),*/
       box_(box),
-      health_(health),
+      stats_(stats),
+      baseStats_(stats),
       type_(type) {
   box->setContent(this);
   const SDL_Color textColor = {255, 0, 0, 0};
@@ -60,8 +59,9 @@ void Unit::moveToBox(Box *newBox) {
 }
 
 int Unit::loseHealth(int enemyAttack) {
-  enemyAttack = std::max(enemyAttack - this->getDefense(), 1);
+  enemyAttack = std::max(enemyAttack - getDefense(), 1);
   health_ = std::max(health_ - enemyAttack, 0);
+  stats_.health -= enemyAttack;
   healthText_->setText(healthToString());
   return enemyAttack;
 }
@@ -76,17 +76,17 @@ void Unit::onSelect() { setMoving(true); }
 void Unit::onDeselect() { setMoving(false); }
 
 void Unit::attack(Unit *enemy, const bool counter) {
-  enemy->loseHealth(getAttack());
+  enemy->loseHealth(this->getStats().attack);
 
   // If the attack is not a counter and the enemy is
   // alive and within attack range, counter-attack
-  if (!counter && enemy->getHealth() > 0 &&
+  if (!counter && enemy->getStats().health > 0 &&
       team_->getBoard()->isInRange(box_, enemy->getBox(),
-                                   enemy->getAttackRange())) {
+                                   enemy->getStats().attackRange)) {
     enemy->attack(this, true);
   }
 }
 
 std::string Unit::healthToString() const {
-  return std::to_string(getHealth()) + " HP";
+  return std::to_string(getStats().health) + " HP";
 }

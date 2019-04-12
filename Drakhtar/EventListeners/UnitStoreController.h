@@ -42,8 +42,9 @@ class UnitStoreController final : public ListenerOnClick {
   explicit UnitStoreController(GameObject *gameObject);
   ~UnitStoreController();
 
-  void addUnitToStore(const std::string& type, GameObject *unit, Text *amountText,
-                      GameObject *moreButton, GameObject *lessButton);
+  void addUnitToStore(const std::string &type, GameObject *unit,
+                      Text *amountText, GameObject *moreButton,
+                      GameObject *lessButton);
 
   void onClickStop(SDL_Point) override;
 };

@@ -8,10 +8,11 @@
 
 TurnBar::TurnBar(Scene *scene, std::list<Unit *> allyList,
                  std::list<Unit *> enemyList)
-    : GameObject(scene, TextureManager::get("UI-turnBar"),
-                 Vector2D<int>(static_cast<int>(WIN_WIDTH - WIN_WIDTH / 5.3),
-                               WIN_HEIGHT - WIN_HEIGHT / 13),
-                 Vector2D<int>(WIN_WIDTH / 2, static_cast<int>(WIN_WIDTH / 16.44))) {
+    : GameObject(
+          scene, TextureManager::get("UI-turnBar"),
+          Vector2D<int>(static_cast<int>(WIN_WIDTH - WIN_WIDTH / 5.3),
+                        WIN_HEIGHT - WIN_HEIGHT / 13),
+          Vector2D<int>(WIN_WIDTH / 2, static_cast<int>(WIN_WIDTH / 16.44))) {
   auto allyIt = allyList.begin();
   auto enemyIt = enemyList.begin();
   auto unitCount = 0;
@@ -31,26 +32,27 @@ TurnBar::TurnBar(Scene *scene, std::list<Unit *> allyList,
   auto listIt = unitTurnBar_.begin();
   for (auto i = 0; i < visibleTurnBarSize_; i++) {
     if (i == 0)
-      visibleUnits_[i] =
-          new GameObject(scene_, (*listIt)->getTexture(),
-                         Vector2D<int>(static_cast<int>(WIN_WIDTH - WIN_WIDTH / 1.92 +
-                                           (i + 1.0) * WIN_HEIGHT / 18.18),
-                                       static_cast<int>(WIN_HEIGHT - WIN_HEIGHT / 12.5)),
-                         Vector2D<int>(WIN_HEIGHT / 5, WIN_HEIGHT / 5));
+      visibleUnits_[i] = new GameObject(
+          scene_, (*listIt)->getTexture(),
+          Vector2D<int>(static_cast<int>(WIN_WIDTH - WIN_WIDTH / 1.92 +
+                                         (i + 1.0) * WIN_HEIGHT / 18.18),
+                        static_cast<int>(WIN_HEIGHT - WIN_HEIGHT / 12.5)),
+          Vector2D<int>(WIN_HEIGHT / 5, WIN_HEIGHT / 5));
     else
       visibleUnits_[i] = new GameObject(
           scene_, (*listIt)->getTexture(),
-          Vector2D<int>(static_cast<int>(WIN_WIDTH - WIN_WIDTH / 1.9 + (i + 1.0) * WIN_HEIGHT / 11.0),
+          Vector2D<int>(static_cast<int>(WIN_WIDTH - WIN_WIDTH / 1.9 +
+                                         (i + 1.0) * WIN_HEIGHT / 11.0),
                         static_cast<int>(WIN_HEIGHT - WIN_HEIGHT / 12.5)),
           Vector2D<int>(WIN_HEIGHT / 8, WIN_HEIGHT / 8));
     ++listIt;
   }
 
-  selectedUnitSprite_ =
-      new GameObject(scene_, TextureManager::get("UI-circle"),
-                     Vector2D<int>(static_cast<int>(WIN_WIDTH - WIN_WIDTH / 2.05),
-                                   WIN_HEIGHT - WIN_HEIGHT / 13),   // pos
-                     Vector2D<int>(WIN_WIDTH / 7, WIN_WIDTH / 7));  // tam
+  selectedUnitSprite_ = new GameObject(
+      scene_, TextureManager::get("UI-circle"),
+      Vector2D<int>(static_cast<int>(WIN_WIDTH - WIN_WIDTH / 2.05),
+                    WIN_HEIGHT - WIN_HEIGHT / 13),   // pos
+      Vector2D<int>(WIN_WIDTH / 7, WIN_WIDTH / 7));  // tam
 
   sort();
   unitTurnBar_.front()->onSelect();
@@ -75,13 +77,13 @@ void TurnBar::advanceTurn() {
 
 void TurnBar::sort() {
   unitTurnBar_.sort([](Unit *unit1, Unit *unit2) {
-    return unit1->getSpeed() > unit2->getSpeed();
+    return unit1->getStats().speed > unit2->getStats().speed;
   });
   updateVisibleUnits();
 }
 
 void TurnBar::eraseUnit(Unit *unit) {
-    auto deleted = false;
+  auto deleted = false;
   auto it = unitTurnBar_.begin();
   while (!deleted && it != unitTurnBar_.end()) {
     if (*it == unit) {
@@ -108,7 +110,8 @@ void TurnBar::handleEvents(const SDL_Event event) {
       case SDLK_t:
         advanceTurn();
         break;
-    default: break;
+      default:
+        break;
     }
   }
 }

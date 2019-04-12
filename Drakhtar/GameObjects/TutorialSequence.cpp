@@ -66,7 +66,8 @@ void TutorialSequence::readFromFile(const std::string &filename, Font *textFont,
                                     SDL_Rect dialogueBackground) {
   std::ifstream file;
   file.open(filename);
-  if (!file.is_open()) throw DrakhtarError("Could not find file");
+  if (!file.is_open())
+    throw DrakhtarError("Could not find file");
 
   size_t lines;
   file >> lines;

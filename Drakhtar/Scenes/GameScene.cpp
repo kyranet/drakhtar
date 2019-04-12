@@ -55,7 +55,7 @@ void GameScene::preload() {
   team1_->setCommander(thassa);
   addGameObject(thassa);
 
-  std::map<std::string, int>* army = GameManager::getInstance()->getArmy();
+  std::map<std::string, int> *army = GameManager::getInstance()->getArmy();
 
   addGameObject(
       factory.newSoldier(team1_, board->getBoxAt(0, 2), (*army)["Soldier"]));
