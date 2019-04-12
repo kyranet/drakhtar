@@ -1,20 +1,20 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
+#include <vector>
 #include "../Skill.h"
 #include "../Unit.h"
-#include <vector>
 
 class Scene;
 
 class Commander : public Unit {
-protected:
+ protected:
   /**
    * \brief A vector of all the skills the commander can cast.
    */
   std::vector<Skill *> skills_;
 
-public:
+ public:
   Commander(Scene *scene, Texture *texture, Box *box, UnitStats commanderStats);
   virtual ~Commander();
 

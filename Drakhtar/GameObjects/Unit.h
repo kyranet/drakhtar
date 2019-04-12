@@ -1,8 +1,8 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-#include "GameObject.h"
 #include <string>
+#include "GameObject.h"
 
 class Team;
 class Box;
@@ -19,7 +19,6 @@ struct UnitStats {
   int prize;
 };
 class Unit : public GameObject {
-
   bool moved_ = false;
   bool moving_ = false;
 
@@ -27,7 +26,7 @@ class Unit : public GameObject {
   Team *team_ = nullptr;
   std::string type_;
 
-protected:
+ protected:
   Box *box_ = nullptr;
   Text *healthText_ = nullptr;
   int health_;
@@ -36,7 +35,7 @@ protected:
   const UnitStats baseStats_;
   UnitStats stats_;
 
-public:
+ public:
   Unit(Scene *scene, Texture *texture, Box *box, UnitStats stats,
        std::string type);
   virtual ~Unit();

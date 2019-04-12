@@ -1,10 +1,10 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-#include "GameObject.h"
-#include "SDL.h"
 #include <list>
 #include <vector>
+#include "GameObject.h"
+#include "SDL.h"
 
 class Scene;
 class Unit;
@@ -15,7 +15,7 @@ class TurnBar final : public GameObject {
   std::vector<GameObject *> visibleUnits_;
   GameObject *selectedUnitSprite_ = nullptr;
 
-public:
+ public:
   // constructor interlaces units from each team list into the turn bar (ally
   // -> enemy -> ally -> etc)
   TurnBar(Scene *scene, std::list<Unit *> allyList,

@@ -15,7 +15,6 @@ UnitFactory::UnitFactory(Scene *scene) : scene_(scene) {}
 UnitFactory::~UnitFactory() = default;
 
 Unit *UnitFactory::newSoldier(Team *team, Box *box, const int size) const {
-
   UnitStats soldierStats_ = {soldierAttack * size, soldierDefense,
                              soldierHealth,        soldierAttackRange,
                              soldierMoveRange,     soldierSpeed,
@@ -57,7 +56,6 @@ Unit *UnitFactory::newKnight(Team *team, Box *box, const int size) const {
 }
 
 Unit *UnitFactory::newWizard(Team *team, Box *box, const int size) const {
-
   UnitStats wizardStats_ = {wizardAttack * size, wizardDefense,   wizardHealth,
                             wizardAttackRange,   wizardMoveRange, wizardSpeed,
                             wizardPrize * size};
@@ -71,7 +69,6 @@ Unit *UnitFactory::newWizard(Team *team, Box *box, const int size) const {
 }
 
 Unit *UnitFactory::newMonster(Team *team, Box *box, const int size) const {
-
   UnitStats monsterStats_ = {monsterAttack * size, monsterDefense,
                              monsterHealth,        monsterAttackRange,
                              monsterMoveRange,     monsterSpeed,

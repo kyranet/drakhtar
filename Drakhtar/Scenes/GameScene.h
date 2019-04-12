@@ -12,7 +12,7 @@ class GameScene final : public Scene {
   BoardController *boardController_;
   int battle_;
 
-public:
+ public:
   explicit GameScene(int battle);
   virtual ~GameScene();
   void preload() override;

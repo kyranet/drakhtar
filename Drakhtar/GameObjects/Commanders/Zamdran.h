@@ -6,6 +6,6 @@
 class Scene;
 
 class Zamdran final : public Commander {
-public:
+ public:
   Zamdran(Scene *scene, Texture *texture, Box *box, UnitStats Zamdranstats);
 };

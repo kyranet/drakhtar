@@ -1,8 +1,8 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-#include "Managers/TweenManager.h"
 #include <list>
+#include "Managers/TweenManager.h"
 
 class GameObject;
 
@@ -17,13 +17,13 @@ class Scene {
   bool transition_ = false;
   bool skipDialog_ = false;
 
-protected:
+ protected:
   std::list<GameObject *> gameObjects_;
   std::list<GameObject *> pendingOnCreate_;
   std::list<GameObject *> pendingOnDestroy_;
   std::list<NextTickCallback *> nextTick_;
 
-public:
+ public:
   Scene();
   virtual ~Scene();
 

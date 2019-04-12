@@ -51,16 +51,15 @@ TurnBar::TurnBar(Scene *scene, std::list<Unit *> allyList,
   selectedUnitSprite_ = new GameObject(
       scene_, TextureManager::get("UI-circle"),
       Vector2D<int>(static_cast<int>(WIN_WIDTH - WIN_WIDTH / 2.05),
-                    WIN_HEIGHT - WIN_HEIGHT / 13),  // pos
-      Vector2D<int>(WIN_WIDTH / 7, WIN_WIDTH / 7)); // tam
+                    WIN_HEIGHT - WIN_HEIGHT / 13),   // pos
+      Vector2D<int>(WIN_WIDTH / 7, WIN_WIDTH / 7));  // tam
 
   sort();
   unitTurnBar_.front()->onSelect();
 }
 
 TurnBar::~TurnBar() {
-  for (auto unit : visibleUnits_)
-    delete unit;
+  for (auto unit : visibleUnits_) delete unit;
   delete selectedUnitSprite_;
 }
 
@@ -91,8 +90,7 @@ void TurnBar::eraseUnit(Unit *unit) {
       unitTurnBar_.erase(it);
       deleted = true;
 
-      if (visibleTurnBarSize_ > unitTurnBar_.size())
-        decreaseVisibleUnitsSize();
+      if (visibleTurnBarSize_ > unitTurnBar_.size()) decreaseVisibleUnitsSize();
     } else {
       ++it;
     }
@@ -103,18 +101,17 @@ void TurnBar::eraseUnit(Unit *unit) {
 void TurnBar::render() const {
   GameObject::render();
   selectedUnitSprite_->render();
-  for (auto unit : visibleUnits_)
-    unit->render();
+  for (auto unit : visibleUnits_) unit->render();
 }
 
 void TurnBar::handleEvents(const SDL_Event event) {
   if (event.type == SDL_KEYDOWN) {
     switch (event.key.keysym.sym) {
-    case SDLK_t:
-      advanceTurn();
-      break;
-    default:
-      break;
+      case SDLK_t:
+        advanceTurn();
+        break;
+      default:
+        break;
     }
   }
 }

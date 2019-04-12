@@ -1,8 +1,8 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-#include "Unit.h"
 #include <string>
+#include "Unit.h"
 
 class Scene;
 class Texture;
@@ -14,7 +14,7 @@ class Battalion final : public Unit {
 
   std::string sizeToString() const;
 
-public:
+ public:
   Battalion(Scene *scene, Texture *texture, Box *box, const UnitStats stats,
             std::string type, int battalionSize);
   virtual ~Battalion();
