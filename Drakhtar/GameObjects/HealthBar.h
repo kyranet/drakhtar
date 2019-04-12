@@ -11,7 +11,7 @@ private:
 	GameObject* lifeBar = nullptr;
 	GameObject* damageBar = nullptr;
 
-	int maxHealth = 100;
+	int maxHealth;
 	int currentHealth;
 
 	int damageAnimationSpeed = 2;
@@ -20,7 +20,7 @@ private:
 	int originalWidth;
 
 public:
-	HealthBar(Scene *scene, Vector2D<int> pos);
+	HealthBar(Scene *scene, Vector2D<int> pos, int maxHP);
 	virtual ~HealthBar();
 	virtual void render() const;
 	virtual void update();
