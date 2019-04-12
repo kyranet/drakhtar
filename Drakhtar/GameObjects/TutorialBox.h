@@ -9,6 +9,8 @@ class Font;
 class Scene;
 class TutorialSequence;
 
+enum Color { BLACK, WHITE };
+
 class TutorialBox : public GameObject {
   std::string imageText_;
   std::string dialogText_;

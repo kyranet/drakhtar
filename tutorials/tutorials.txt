@@ -3,8 +3,8 @@ tutorial-1 Welcome to the Fall of Drakhtar tutorial! Before embarking on your ad
 tutorial-2 All interactive objects and units are on the board, which will be clearly shown during the game. .
 tutorial-3 This is the battlefield, your units are blue  and those are who you will be able to play with, in order to win, you need to eliminate the enemy's hero. You lose if your hero dies. .
 tutorial-4 Players alternate their turns depending on each of their unit's speed, which is shown in the turn bar below. .
-tutorial-5 The unit with the highest speed will start first, followed by the units with less speed. .
-tutorial-6 Each unit can attack and/or move on their turn.
-tutorial-7 Units have their own attack and movement range. In their turn, their movement range is highlighted on the board, and if there is any enemy unit in range of its attack, it will also be highlighted. .
-tutorial-8 You can move your units or attack by right-clicking on the target, as long as it is in range. .
-tutorial-9 When you attack an enemy unit, the defender will lose as much HP as the attackers damage. The defender will perform a counterattack if the target is in his attack range, dealing damage to the attacker. .
+tutorial-4 The unit with the highest speed will start first, followed by the units with less speed. .
+tutorial-5 Each unit can attack and/or move on their turn.
+tutorial-6 Units have their own attack and movement range. In their turn, their movement range is highlighted on the board, and if there is any enemy unit in range of its attack, it will also be highlighted. .
+tutorial-7 You can move your units or attack by right-clicking on the target, as long as it is in range. .
+tutorial-8 When you attack an enemy unit, the defender will lose as much HP as the attackers damage. The defender will perform a counterattack if the target is in his attack range, dealing damage to the attacker. .

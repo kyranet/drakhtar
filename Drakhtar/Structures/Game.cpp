@@ -155,7 +155,6 @@ Game::Game() {
   textures->add("Maps-2Battle", "../images/Maps/SecondBattle.png", 1, 1);
 
   // Tutorial images
-  textures->add("Tutorial-Box", "../images/Tutorials/tutorial_Box.png", 1, 1);
   textures->add("tutorial-1", "../images/Tutorials/tutorial_1.png", 1, 1);
   textures->add("tutorial-2", "../images/Tutorials/tutorial_2.png", 1, 1);
   textures->add("tutorial-3", "../images/Tutorials/tutorial_3.png", 1, 1);
@@ -164,7 +163,6 @@ Game::Game() {
   textures->add("tutorial-6", "../images/Tutorials/tutorial_6.png", 1, 1);
   textures->add("tutorial-7", "../images/Tutorials/tutorial_7.png", 1, 1);
   textures->add("tutorial-8", "../images/Tutorials/tutorial_8.png", 1, 1);
-  textures->add("tutorial-9", "../images/Tutorials/tutorial_9.png", 1, 1);
 
   // Transition
   textures->add("Transition-Map1", "../images/Maps/TestMap.png", 1, 1);
