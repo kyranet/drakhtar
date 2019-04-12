@@ -1,9 +1,9 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-#include <list>
 #include "../Utils/Matrix.h"
 #include "GameObject.h"
+#include <list>
 
 class Box;
 
@@ -20,7 +20,7 @@ enum class ObjectType {
 };
 
 class Board final : public GameObject {
- protected:
+protected:
   /**
    * \brief The number of rows and columns this board is composed of.
    */
@@ -38,7 +38,7 @@ class Board final : public GameObject {
    */
   Matrix<ObjectType> *objectTypeMatrix_ = nullptr;
 
- public:
+public:
   Board(Scene *scene, int rows, int columns, float cellSize);
   virtual ~Board();
 
@@ -142,6 +142,6 @@ class Board final : public GameObject {
    * \param path: An ordered list of the indexes of the cells the path follows.
    * \return An ordered list of the window coordinates the path must follow.
    */
-  std::vector<Vector2D<double>> pathToRoute(
-      std::list<Vector2D<int>> path) const;
+  std::vector<Vector2D<double>>
+  pathToRoute(std::list<Vector2D<int>> path) const;
 };

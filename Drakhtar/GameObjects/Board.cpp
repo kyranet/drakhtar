@@ -9,9 +9,7 @@
 Board::Board(Scene *scene, const int rows, const int columns,
              const float cellSize)
     : GameObject(scene, nullptr, Vector2D<int>(0, 0), Vector2D<int>(0, 0)),
-      rows_(rows),
-      columns_(columns),
-      cellSize_(cellSize) {
+      rows_(rows), columns_(columns), cellSize_(cellSize) {
   // Calculates margins to center the board on screen
   size_.set(static_cast<int>(floor(columns_ * cellSize_)),
             static_cast<int>(floor(rows_ * cellSize_)));
@@ -45,11 +43,13 @@ Box *Board::getBoxAt(const int x, const int y) const {
 Box *Board::getBoxAtCoordinates(const SDL_Point point) const {
   const auto x =
       static_cast<int>(floor((point.x - position_.getX()) / cellSize_));
-  if (x < 0 || x >= columns_) return nullptr;
+  if (x < 0 || x >= columns_)
+    return nullptr;
 
   const auto y =
       static_cast<int>(floor((point.y - position_.getY()) / cellSize_));
-  if (y < 0 || y >= rows_) return nullptr;
+  if (y < 0 || y >= rows_)
+    return nullptr;
 
   return getBoxAt(x, y);
 }
@@ -150,7 +150,7 @@ std::list<Vector2D<int>> Board::findPath(const Vector2D<int> &start,
   AStar::Generator generator;
   generator.setWorldSize({columns_, rows_});
   generator.setHeuristic(
-      AStar::Heuristic::euclidean);  // manhattan, euclidean or octagonal
+      AStar::Heuristic::euclidean); // manhattan, euclidean or octagonal
   generator.setDiagonalMovement(false);
 
   // Load board obstacles
@@ -177,8 +177,8 @@ std::list<Vector2D<int>> Board::findPath(const Vector2D<int> &start,
   return pathList;
 }
 
-std::vector<Vector2D<double>> Board::pathToRoute(
-    std::list<Vector2D<int>> path) const {
+std::vector<Vector2D<double>>
+Board::pathToRoute(std::list<Vector2D<int>> path) const {
   std::vector<Vector2D<double>> vector;
   vector.reserve(path.size());
   for (const auto &element : path) {

@@ -1,9 +1,9 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-#include <queue>
 #include "../EventListeners/ListenerOnClick.h"
 #include "GameObject.h"
+#include <queue>
 
 class TutorialBox;
 class Scene;
@@ -15,7 +15,7 @@ class TutorialSequence final : public GameObject {
                     SDL_Rect tutorialArea, SDL_Rect dialogueBackground);
   static TutorialSequence *instance_;
 
- public:
+public:
   TutorialSequence(Scene *scene, const std::string &filename,
                    const std::string &fontFile);
   ~TutorialSequence();
@@ -24,7 +24,7 @@ class TutorialSequence final : public GameObject {
 };
 
 class TutorialSceneOnClick final : public ListenerOnClick {
- public:
+public:
   explicit TutorialSceneOnClick(GameObject *gameObject)
       : ListenerOnClick(gameObject) {}
   void onClickStop(SDL_Point point) override;
