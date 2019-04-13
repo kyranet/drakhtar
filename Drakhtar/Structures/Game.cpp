@@ -162,7 +162,6 @@ Game::Game() {
   textures->add("tutorial-5", "../images/Tutorials/tutorial_5.png", 1, 1);
   textures->add("tutorial-6", "../images/Tutorials/tutorial_6.png", 1, 1);
   textures->add("tutorial-7", "../images/Tutorials/tutorial_7.png", 1, 1);
-  textures->add("tutorial-8", "../images/Tutorials/tutorial_8.png", 1, 1);
 
   // Transition
   textures->add("Transition-Map1", "../images/Maps/TestMap.png", 1, 1);

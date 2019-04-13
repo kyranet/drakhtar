@@ -16,7 +16,7 @@ TutorialBox::TutorialBox(Scene *scene, std::ifstream &file, Font *textFont,
                  Vector2D<int>(1, 1)) {
   readFromFile(file);
 
-  const auto lineJumpLimit = static_cast<int>(dialogueBackground.w * 0.95);
+  const auto lineJumpLimit = static_cast<int>(dialogueBackground.w * 0.75);
 
   const auto tutorialImage = new GameObject(
       scene, TextureManager::get(imageText_),
