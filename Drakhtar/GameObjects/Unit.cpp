@@ -37,7 +37,7 @@ Unit::Unit(Scene *scene, Texture *texture, Box *box, UnitStats stats,
                          {rect.x + rect.w / 2, rect.y + rect.h / 6}, textColor,
                          healthToString(), rect.w * 2);
 
-  healthBar_ = new HealthBar(scene, Vector2D<int>(rect.x + rect.w / 2, rect.y), baseStats_.health);
+  healthBar_ = new HealthBar(scene, Vector2D<int>(rect.x + rect.w / 2, rect.y - rect.h/3), baseStats_.health);
 
   healthText_->setColor(textColor);
 }
@@ -63,7 +63,7 @@ void Unit::moveToBox(Box *newBox) {
   newBox->setContent(this);
   const auto rect = box_->getRect();
   healthText_->setPosition({rect.x + rect.w / 2, rect.y + rect.h / 6});
-  healthBar_->moveBar(Vector2D<int>(rect.x + rect.w / 2, rect.y));
+  healthBar_->moveBar(Vector2D<int>(rect.x + rect.w / 2, rect.y - rect.h / 3));
   setMoved(true);
   setMoving(false);
 }
