@@ -12,7 +12,6 @@ class HealthBar;
 class Battalion final : public Unit {
   int battalionSize_;
   Text *sizeText_ = nullptr;
-  HealthBar* healthBarGroup_ = nullptr;
 
   std::string sizeToString() const;
 
@@ -32,5 +31,4 @@ class Battalion final : public Unit {
 
   void moveToBox(Box *box) override;
   void render() const override;
-  void update() override;
 };

@@ -73,6 +73,7 @@ int Unit::loseHealth(int enemyAttack) {
   health_ = std::max(health_ - enemyAttack, 0);
   stats_.health -= enemyAttack;
   healthText_->setText(healthToString());
+  healthBar_->takeDamage(getStats().health);
   return enemyAttack;
 }
 

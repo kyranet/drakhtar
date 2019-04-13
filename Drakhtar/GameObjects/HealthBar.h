@@ -24,6 +24,7 @@ public:
 	virtual ~HealthBar();
 	virtual void render() const;
 	virtual void update();
-	void takeDamage(int damage);
+	void takeDamage(int newHealth);
 	void moveBar(Vector2D<int> pos);
+	void setMaxHP(int hp);
 };

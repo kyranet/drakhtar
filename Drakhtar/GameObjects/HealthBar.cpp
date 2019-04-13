@@ -50,9 +50,11 @@ void HealthBar::update()
 	}
 }
 
-void HealthBar::takeDamage(int damage)
+void HealthBar::takeDamage(int newHealth)
 {
-	currentHealth -= damage;
+	int damage = currentHealth - newHealth;
+
+	currentHealth = newHealth;
 	double lifeProportion = (double)currentHealth / maxHealth;
 	int oldX = lifeBar->getRect().x;
 	int oldY = lifeBar->getRect().y;
@@ -71,4 +73,10 @@ void HealthBar::moveBar(Vector2D<int> pos)
 	setPosition(pos);
 	lifeBar->setPosition(pos);
 	damageBar->setPosition(pos);
+}
+
+void HealthBar::setMaxHP(int hp)
+{
+	maxHealth = hp;
+	currentHealth = maxHealth;
 }

@@ -25,19 +25,13 @@ Battalion::Battalion(Scene *scene, Texture *texture, Box *box,
                        {rect.x + rect.w / 2, rect.y + rect.h * 5 / 6},
                        textColor, sizeToString(), rect.w * 2);
 
-  healthBarGroup_ = new HealthBar(scene, Vector2D<int>(rect.x + rect.w / 2, rect.y), baseStats_.health * battalionSize);
+  healthBar_->setMaxHP(baseStats_.health * battalionSize);
 }
 
 Battalion::~Battalion() {
   if (sizeText_ != nullptr) {
     delete sizeText_;
     sizeText_ = nullptr;
-  }
-
-  if (healthBarGroup_ != nullptr)
-  {
-	  delete healthBarGroup_;
-	  healthBarGroup_ = nullptr;
   }
 }
 
@@ -80,17 +74,9 @@ void Battalion::moveToBox(Box *box) {
 
   sizeText_->setPosition(
       Vector2D<int>(rect.x + rect.w / 2, rect.y + rect.h * 4 / 5));
-
-  healthBarGroup_->moveBar(Vector2D<int>(rect.x + rect.w / 2, rect.y));
 }
 
 void Battalion::render() const {
   Unit::render();
   sizeText_->render();
-  healthBarGroup_->render();
-}
-
-void Battalion::update()
-{
-	healthBarGroup_->update();
 }
