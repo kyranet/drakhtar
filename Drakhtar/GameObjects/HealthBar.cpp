@@ -65,3 +65,10 @@ void HealthBar::takeDamage(int damage)
 	damageBar->setActive(true);
 	damageAnimationPlaying = true;
 }
+
+void HealthBar::moveBar(Vector2D<int> pos)
+{
+	setPosition(pos);
+	lifeBar->setPosition(pos);
+	damageBar->setPosition(pos);
+}

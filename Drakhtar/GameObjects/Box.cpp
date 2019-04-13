@@ -45,6 +45,10 @@ void Box::render() const {
 void Box::update() {
   const auto area = getRect();
   hovered_ = Input::isMouseInside(&area);
+
+  if (!isEmpty()) {
+	  getContent()->update();
+  }
 }
 
 // ---------- Getters and Setters ----------

@@ -7,6 +7,7 @@
 #include "../Utils/Vector2D.h"
 #include "Box.h"
 #include "Text.h"
+#include "HealthBar.h"
 
 Unit::Unit(Scene *scene, Texture *texture, Box *box, UnitStats stats,
            const std::string type)
@@ -36,6 +37,8 @@ Unit::Unit(Scene *scene, Texture *texture, Box *box, UnitStats stats,
                          {rect.x + rect.w / 2, rect.y + rect.h / 6}, textColor,
                          healthToString(), rect.w * 2);
 
+  healthBar_ = new HealthBar(scene, Vector2D<int>(rect.x + rect.w / 2, rect.y), baseStats_.health);
+
   healthText_->setColor(textColor);
 }
 
@@ -43,6 +46,12 @@ Unit::~Unit() {
   if (healthText_ != nullptr) {
     delete healthText_;
     healthText_ = nullptr;
+  }
+
+  if (healthBar_ != nullptr)
+  {
+	  delete healthBar_;
+	  healthBar_ = nullptr;
   }
 }
 
@@ -54,6 +63,7 @@ void Unit::moveToBox(Box *newBox) {
   newBox->setContent(this);
   const auto rect = box_->getRect();
   healthText_->setPosition({rect.x + rect.w / 2, rect.y + rect.h / 6});
+  healthBar_->moveBar(Vector2D<int>(rect.x + rect.w / 2, rect.y));
   setMoved(true);
   setMoving(false);
 }
@@ -69,6 +79,12 @@ int Unit::loseHealth(int enemyAttack) {
 void Unit::render() const {
   GameObject::render();
   healthText_->render();
+  healthBar_->render();
+}
+
+void Unit::update()
+{
+	healthBar_->update();
 }
 
 void Unit::onSelect() { setMoving(true); }

@@ -25,4 +25,5 @@ public:
 	virtual void render() const;
 	virtual void update();
 	void takeDamage(int damage);
+	void moveBar(Vector2D<int> pos);
 };
