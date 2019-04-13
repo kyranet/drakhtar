@@ -1,4 +1,5 @@
-9
+10
+tutorial-1 A .
 tutorial-1 Welcome to the Fall of Drakhtar tutorial! Before embarking on your adventure, you should get acquainted with basic game mechanics! .
 tutorial-2 All interactive objects and units are on the board, which will be clearly shown during the game. .
 tutorial-3 This is the battlefield, your units are blue  and those are who you will be able to play with. In order to win, you need to eliminate the enemy's hero. You lose if your hero dies. .

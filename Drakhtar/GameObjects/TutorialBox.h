@@ -9,12 +9,9 @@ class Font;
 class Scene;
 class TutorialSequence;
 
-enum Color { BLACK, WHITE };
-
 class TutorialBox : public GameObject {
   std::string imageText_;
   std::string dialogText_;
-
  public:
   TutorialBox(Scene *scene, std::ifstream &file, Font *textFont,
               SDL_Rect tutorialArea, SDL_Rect dialogueBackground);
