@@ -9,25 +9,18 @@
 #include "Text.h"
 
 Unit::Unit(Scene *scene, Texture *texture, Box *box, UnitStats stats,
-           const std::string type)
+           const std::string& type)
     : GameObject(scene, texture,
                  Vector2D<int>(box->getRect().x + box->getRect().w / 2,
                                box->getRect().y + box->getRect().h / 2),
                  Vector2D<int>(static_cast<int>(box->getRect().w * 2),
                                static_cast<int>(box->getRect().h * 2))),
-      /*baseAttack_(attack),
-      baseSpeed_(speed),
-      attack_(attack),
-      defense_(defense),
-      maxHealth_(health),
-      attackRange_(attackRange),
-      moveRange_(moveRange),
-      speed_(speed),
-      prize_(prize),*/
+      boxPosition_(box->getPosition()),
+      type_(type),
       box_(box),
-      stats_(stats),
+      health_(stats.health),
       baseStats_(stats),
-      type_(type) {
+      stats_(stats) {
   box->setContent(this);
   const SDL_Color textColor = {255, 0, 0, 0};
   const auto rect = box_->getRect();

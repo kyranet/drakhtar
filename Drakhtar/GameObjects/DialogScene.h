@@ -27,7 +27,7 @@ class DialogScene final : public GameObject {
 
 class DialogSceneOnClick final : public ListenerOnClick {
  public:
-  explicit DialogSceneOnClick::DialogSceneOnClick(GameObject *gameObject)
+  explicit DialogSceneOnClick(GameObject *gameObject)
       : ListenerOnClick(gameObject) {}
   void onClickStop(SDL_Point point) override;
 };

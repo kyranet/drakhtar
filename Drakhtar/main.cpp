@@ -10,9 +10,13 @@
 #include "Structures/Game.h"
 #include "checkML.h"
 
-int main(int argc, char *argv[]) {
+#undef main
+
+int main(int, char *[]) {
+#if _DEBUG
   _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF |
                  _CRTDBG_LEAK_CHECK_DF);  // Check Memory Leaks
+#endif
   try {
     const auto game = Game::getInstance();
     game->run();
@@ -23,8 +27,8 @@ int main(int argc, char *argv[]) {
     Input::destroy();
     delete game;
     return 0;
-  } catch (std::exception e) {
-    std::cout << e.what();
-    return -1;
+  } catch (std::exception& e) {
+    std::cerr << e.what();
+    return 1;
   }
 }

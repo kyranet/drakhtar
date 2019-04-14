@@ -51,9 +51,9 @@ std::list<Unit *> Team::getUnitList() const { return units_; }
 
 Color Team::getColor() const { return color_; }
 
-std::list<Unit *>::iterator Team::findInsertPosition(Unit *unit) {
+std::list<Unit *>::iterator Team::findInsertPosition(Unit *) {
   // auto i = 0;
-  auto it = units_.begin();
+  // auto it = units_.begin();
   auto end = units_.end();
   /*
   while (it != end)

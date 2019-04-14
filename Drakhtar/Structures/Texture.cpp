@@ -4,9 +4,10 @@
 #include "../Errors/SDLError.h"
 #include "SDL_image.h"
 
-Texture::Texture() = default;
+Texture::Texture() : size_(0, 0), frameSize_(0, 0) {}
 
-Texture::Texture(SDL_Renderer *r) : renderer_(r) {}
+Texture::Texture(SDL_Renderer *r)
+    : renderer_(r), size_(0, 0), frameSize_(0, 0) {}
 
 Uint16 Texture::getColumnAmount() const { return columnAmount_; }
 
@@ -33,12 +34,13 @@ Texture::~Texture() {
 
 Vector2D<Uint16> Texture::getFramePosition(const Uint16 frame) const {
   return Vector2D<Uint16>(frame % columnAmount_,
-                          static_cast<Uint16>(floor(frame / columnAmount_)));
+                          Uint16(floor(double(frame) / double(columnAmount_))));
 }
 
 Texture *Texture::setTexture(SDL_Texture *const &texture) {
   if (texture != texture_) {
-    if (texture_ != nullptr) SDL_DestroyTexture(texture_);
+    if (texture_ != nullptr)
+      SDL_DestroyTexture(texture_);
     texture_ = texture;
   }
 
@@ -127,7 +129,8 @@ bool Texture::hasAnimation(const std::string &name) const {
 
 void Texture::tick() {
   const auto size = animation_.size();
-  if (size == 0) return;
+  if (size == 0)
+    return;
   if (frame_ == size - 1)
     frame_ = 0;
   else
@@ -140,7 +143,7 @@ void Texture::render(const Vector2D<int> &position) const {
   render(dest);
 }
 
-void Texture::render(const SDL_Rect &dest, double angle, SDL_Rect *clip) const {
+void Texture::render(const SDL_Rect &dest, double, SDL_Rect *clip) const {
   if (texture_ != nullptr) {
     if (clip == nullptr) {
       SDL_Rect defaultClip = {0, 0, size_.getX(), size_.getY()};

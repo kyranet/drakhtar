@@ -3,7 +3,7 @@
 #include "Input.h"
 #include "SDL.h"
 
-Input::Input() = default;
+Input::Input(): mousePosition_(0, 0) {}
 Input::~Input() = default;
 
 Input* Input::instance_ = nullptr;

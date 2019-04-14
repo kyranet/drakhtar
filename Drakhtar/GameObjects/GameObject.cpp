@@ -1,7 +1,4 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
-
-#pragma once
-
 #include "GameObject.h"
 #include "../EventListeners/EventListener.h"
 #include "../Scenes/Scene.h"
@@ -10,9 +7,10 @@
 
 GameObject::GameObject(Scene *scene, Texture *texture)
     : scene_(scene),
-      position_(Vector2D<int>(0, 0)),
-      size_(Vector2D<int>(0, 0)),
+      position_(0, 0),
+      size_(0, 0),
       texture_(texture) {}
+
 GameObject::GameObject(Scene *scene, Texture *texture, const Vector2D<int>& position,
                        const Vector2D<int>& size)
     : scene_(scene), position_(position), size_(size), texture_(texture) {}
