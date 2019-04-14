@@ -96,9 +96,11 @@ Game::Game() {
 
   textures->add("UI-turnBar", "../images/UI/rock_bar.png", 1, 1);
   textures->add("UI-circle", "../images/UI/circle.png", 1, 1);
-  textures->add("UI-healthBar_background", "../images/UI/healthBar_background.png", 1, 1);
+  textures->add("UI-healthBar_background",
+                "../images/UI/healthBar_background.png", 1, 1);
   textures->add("UI-healthBar_life", "../images/UI/healthBar_life.png", 1, 1);
-  textures->add("UI-healthBar_damage", "../images/UI/healthBar_damage.png", 1, 1);
+  textures->add("UI-healthBar_damage", "../images/UI/healthBar_damage.png", 1,
+                1);
   textures->add("UI-commanderIcon", "../images/UI/goldskull.png", 1, 1);
 
   // Button
@@ -198,8 +200,7 @@ Game::Game() {
              WIN_WIDTH);
   fonts->add("TutorialFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 100,
              WIN_WIDTH);
-  fonts->add("UnitFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 120,
-	  WIN_WIDTH);
+  fonts->add("UnitFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 120, WIN_WIDTH);
   fonts->init();
 
   auto audio = SDLAudioManager::getInstance();

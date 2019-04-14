@@ -7,24 +7,24 @@
 class Scene;
 
 class HealthBar : public GameObject {
-private:
-	GameObject* lifeBar = nullptr;
-	GameObject* damageBar = nullptr;
+ private:
+  GameObject *lifeBar = nullptr;
+  GameObject *damageBar = nullptr;
 
-	int maxHealth;
-	int currentHealth;
+  int maxHealth;
+  int currentHealth;
 
-	int damageAnimationSpeed = 2;
-	bool damageAnimationPlaying = false;
+  int damageAnimationSpeed = 2;
+  bool damageAnimationPlaying = false;
 
-	int originalWidth;
+  int originalWidth;
 
-public:
-	HealthBar(Scene *scene, Vector2D<int> pos, int maxHP);
-	virtual ~HealthBar();
-	virtual void render() const;
-	virtual void update();
-	void takeDamage(int newHealth);
-	void moveBar(Vector2D<int> pos);
-	void setMaxHP(int hp);
+ public:
+  HealthBar(Scene *scene, Vector2D<int> pos, int maxHP);
+  virtual ~HealthBar();
+  virtual void render() const;
+  virtual void update();
+  void takeDamage(int newHealth);
+  void moveBar(Vector2D<int> pos);
+  void setMaxHP(int hp);
 };
