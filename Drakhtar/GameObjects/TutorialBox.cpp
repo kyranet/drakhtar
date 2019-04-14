@@ -22,7 +22,7 @@ TutorialBox::TutorialBox(Scene *scene, std::ifstream &file, Font *textFont,
       scene, TextureManager::get(imageText_),
       Vector2D<int>(tutorialArea.x,
                     dialogueBackground.y + dialogueBackground.h / 3),
-      Vector2D<int>(tutorialArea.h * WIN_WIDTH /3,
+      Vector2D<int>(tutorialArea.h * WIN_WIDTH / 3,
                     tutorialArea.h * WIN_HEIGHT / 3));
 
   const SDL_Color textColor = {0, 0, 0, 255};
@@ -40,11 +40,12 @@ TutorialBox::TutorialBox(Scene *scene, std::ifstream &file, Font *textFont,
 void TutorialBox::readFromFile(std::ifstream &file) {
   file >> imageText_;
 
-  std::string text;  // full dialog text
-  std::string word;  // word added to text each iteration
+  std::string text; // full dialog text
+  std::string word; // word added to text each iteration
   while (word != ".") {
     file >> word;
-    if (word != ".") text += word + " ";
+    if (word != ".")
+      text += word + " ";
   }
   dialogText_ = text;
 }

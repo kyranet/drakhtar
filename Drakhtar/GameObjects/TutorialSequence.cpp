@@ -22,7 +22,7 @@ TutorialSequence::TutorialSequence(Scene* scene, const std::string& filename,
       scene_, TextureManager::get("UI-tutorialBackground"),
       Vector2D<int>(tutorialArea_.x, tutorialArea_.y - WIN_HEIGHT / 10),
       Vector2D<int>(tutorialArea_.w * WIN_WIDTH / 2,
-                    tutorialArea_.h * WIN_HEIGHT/1.5));
+                    tutorialArea_.h * WIN_HEIGHT / 1.5));
 
   const auto nextButton = new Button(
       scene_, TextureManager::get("Button-Next"),
@@ -59,7 +59,8 @@ void TutorialSequence::readFromFile(const std::string& filename, Font* textFont,
                                     SDL_Rect dialogueBackground) {
   std::ifstream file;
   file.open(filename);
-  if (!file.is_open()) throw DrakhtarError("Could not find file");
+  if (!file.is_open())
+    throw DrakhtarError("Could not find file");
 
   size_t lines;
   file >> lines;
@@ -86,4 +87,9 @@ void TutorialSequence::skip() { destroy(); }
 void TutorialSequence::render() const {
   GameObject::render();
   tutorials_.front()->render();
+}
+
+void TutorialSceneOnClick::onClickStop(SDL_Point point) {
+  static_cast<TutorialSequence *>(getGameObject()->getParent())
+      ->createNextTutorial(); // NOLINT
 }
