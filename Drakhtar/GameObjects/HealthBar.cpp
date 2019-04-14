@@ -4,7 +4,7 @@
 #include "../Utils/Constants.h"
 
 HealthBar::HealthBar(Scene * scene, Vector2D<int> pos, int maxHP):
-	GameObject(scene, TextureManager::get("UI-healthBar_background"), pos, Vector2D<int>(WIN_WIDTH/17, WIN_HEIGHT/60))
+	GameObject(scene, TextureManager::get("UI-healthBar_background"), pos, Vector2D<int>(WIN_WIDTH/20, WIN_HEIGHT/60))
 {
 	lifeBar = new GameObject(scene, TextureManager::get("UI-healthBar_life"), pos, Vector2D<int>(getRect().w, getRect().h));
 	damageBar = new GameObject(scene, TextureManager::get("UI-healthBar_damage"), pos, Vector2D<int>(getRect().w, getRect().h));
