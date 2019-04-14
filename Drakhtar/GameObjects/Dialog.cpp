@@ -19,7 +19,7 @@ Dialog::Dialog(Scene *scene, std::ifstream &file, Font *textFont,
                                    dialogueArea_.y - dialogueArea_.h / 2),
                      Vector2D<int>(dialogueArea_.h / 1, dialogueArea_.h / 1));
 
-  const SDL_Color textColor = { 0, 0, 0, 255 };
+  const SDL_Color textColor = {0, 0, 0, 255};
 
   const auto characterNameSprite = new Text(
       scene_, textFont,
