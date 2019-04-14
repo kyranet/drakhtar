@@ -197,6 +197,8 @@ Game::Game() {
              WIN_WIDTH);
   fonts->add("TutorialFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 100,
              WIN_WIDTH);
+  fonts->add("UnitFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 120,
+	  WIN_WIDTH);
   fonts->init();
 
   auto audio = SDLAudioManager::getInstance();

@@ -30,11 +30,11 @@ Unit::Unit(Scene *scene, Texture *texture, Box *box, UnitStats stats,
       baseStats_(stats),
       type_(type) {
   box->setContent(this);
-  const SDL_Color textColor = {255, 0, 0, 0};
+  const SDL_Color textColor = {255, 255, 255, 0};
   const auto rect = box_->getRect();
 
-  healthText_ = new Text(scene, FontManager::get("Retron2000"),
-                         {rect.x + rect.w / 2, rect.y + rect.h / 6}, textColor,
+  healthText_ = new Text(scene, FontManager::get("UnitFont"),
+                         {rect.x + rect.w / 2, rect.y - rect.h / 3 }, textColor,
                          healthToString(), rect.w * 2);
 
   healthBar_ = new HealthBar(scene, Vector2D<int>(rect.x + rect.w / 2, rect.y - rect.h/3), baseStats_.health);
@@ -62,7 +62,7 @@ void Unit::moveToBox(Box *newBox) {
   box_ = newBox;
   newBox->setContent(this);
   const auto rect = box_->getRect();
-  healthText_->setPosition({rect.x + rect.w / 2, rect.y + rect.h / 6});
+  healthText_->setPosition({rect.x + rect.w / 2, rect.y - rect.h / 3 });
   healthBar_->moveBar(Vector2D<int>(rect.x + rect.w / 2, rect.y - rect.h / 3));
   setMoved(true);
   setMoving(false);
@@ -79,8 +79,8 @@ int Unit::loseHealth(int enemyAttack) {
 
 void Unit::render() const {
   GameObject::render();
-  healthText_->render();
   healthBar_->render();
+  healthText_->render();
 }
 
 void Unit::update()

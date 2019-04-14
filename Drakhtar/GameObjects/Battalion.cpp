@@ -15,15 +15,17 @@ Battalion::Battalion(Scene *scene, Texture *texture, Box *box,
     : Unit(scene, texture, box, stats, type), battalionSize_(battalionSize) {
   stats_.health = baseStats_.health * battalionSize_;
 
-  const SDL_Color textColor = {255, 255, 255, 255};
+  const SDL_Color textColor = {255, 255, 255, 0};
 
   healthText_->setText(healthToString());
 
   const auto rect = box_->getRect();
 
-  sizeText_ = new Text(scene, FontManager::get("Retron2000"),
-                       {rect.x + rect.w / 2, rect.y + rect.h * 5 / 6},
+  sizeText_ = new Text(scene, FontManager::get("UnitFont"),
+                       {rect.x + rect.h/5, rect.y - rect.h/3},
                        textColor, sizeToString(), rect.w * 2);
+
+  sizeText_->setColor(textColor);
 
   healthBar_->setMaxHP(baseStats_.health * battalionSize);
 }
@@ -73,7 +75,7 @@ void Battalion::moveToBox(Box *box) {
   const auto rect = box_->getRect();
 
   sizeText_->setPosition(
-      Vector2D<int>(rect.x + rect.w / 2, rect.y + rect.h * 4 / 5));
+      Vector2D<int>(rect.x + rect.h / 5, rect.y - rect.h / 3));
 }
 
 void Battalion::render() const {
