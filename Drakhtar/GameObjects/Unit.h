@@ -37,7 +37,7 @@ class Unit : public GameObject {
 
  public:
   Unit(Scene *scene, Texture *texture, Box *box, UnitStats stats,
-       std::string type);
+       const std::string& type);
   virtual ~Unit();
 
   /*int getBaseAttack() const { return baseAttack_; }

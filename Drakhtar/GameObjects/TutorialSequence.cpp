@@ -102,7 +102,7 @@ void TutorialSequence::render() const {
   }
 }
 
-void TutorialSceneOnClick::onClickStop(SDL_Point point) {
+void TutorialSceneOnClick::onClickStop(SDL_Point) {
   reinterpret_cast<TutorialSequence *>(getGameObject()->getParent())
       ->createNextTutorial();
 }

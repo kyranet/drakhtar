@@ -5,32 +5,34 @@
 #include "Tween.h"
 #include <algorithm>
 
-Tween::Tween(TweenManager* tweenManager) : tweenManager_(tweenManager) {}
+Tween::Tween(TweenManager *tweenManager)
+    : tweenManager_(tweenManager), from_(0.0, 0.0), to_(0.0, 0.0) {}
 Tween::~Tween() = default;
 
-Tween* Tween::from(const Vector2D<int>& start) {
+Tween *Tween::from(const Vector2D<int> &start) {
   from_.set(static_cast<double>(start.getX()),
             static_cast<double>(start.getY()));
   return this;
 }
 
-Tween* Tween::to(const Vector2D<int>& end) {
+Tween *Tween::to(const Vector2D<int> &end) {
   to_.set(static_cast<double>(end.getX()), static_cast<double>(end.getY()));
   return this;
 }
 
-Tween* Tween::setRoute(const std::vector<Vector2D<double>>& route) {
+Tween *Tween::setRoute(const std::vector<Vector2D<double>> &route) {
   route_ = route;
   return this;
 }
 
-Tween* Tween::setLoops(const int loops) {
+Tween *Tween::setLoops(const int loops) {
   loop_ = loops;
   return this;
 }
 
-Tween* Tween::play() {
-  if (state_ == TweenState::ACTIVE) return this;
+Tween *Tween::play() {
+  if (state_ == TweenState::ACTIVE)
+    return this;
   if (state_ == TweenState::PENDING_REMOVE || state_ == TweenState::REMOVED) {
     init();
     tweenManager_->makeActive(this);
@@ -40,13 +42,14 @@ Tween* Tween::play() {
     tweenManager_->makeActive(this);
   } else {
     state_ = TweenState::ACTIVE;
-    if (onStart_ != nullptr) onStart_();
+    if (onStart_ != nullptr)
+      onStart_();
     tweenManager_->makeActive(this);
   }
   return this;
 }
 
-Tween* Tween::resume() {
+Tween *Tween::resume() {
   if (state_ == TweenState::PAUSED) {
     paused_ = false;
     state_ = pausedState_;
@@ -56,7 +59,7 @@ Tween* Tween::resume() {
   return this;
 }
 
-Tween* Tween::restart() {
+Tween *Tween::restart() {
   if (state_ == TweenState::REMOVED) {
     seek(0);
   } else {
@@ -66,7 +69,7 @@ Tween* Tween::restart() {
   return this;
 }
 
-Tween* Tween::pause() {
+Tween *Tween::pause() {
   if (state_ == TweenState::PAUSED) {
     paused_ = true;
     pausedState_ = state_;
@@ -75,30 +78,32 @@ Tween* Tween::pause() {
   return this;
 }
 
-Tween* Tween::seek(const double position) {
+Tween *Tween::seek(const double position) {
   progress_ = position;
   return this;
 }
 
-Tween* Tween::complete(const int delay) {
+Tween *Tween::complete(const int delay) {
   if (delay) {
     countdown_ = delay;
     state_ = TweenState::COMPLETE_DELAY;
   } else {
-    if (onComplete_ != nullptr) onComplete_();
+    if (onComplete_ != nullptr)
+      onComplete_();
     state_ = TweenState::PENDING_REMOVE;
   }
   return this;
 }
 
-Tween* Tween::remove() {
+Tween *Tween::remove() {
   tweenManager_->remove(this);
   return this;
 }
 
-Tween* Tween::stop(const double position) {
+Tween *Tween::stop(const double position) {
   if (state_ == TweenState::ACTIVE) {
-    if (position != -1) seek(position);
+    if (position != -1)
+      seek(position);
   }
 
   if (state_ != TweenState::REMOVED) {
@@ -128,33 +133,33 @@ bool Tween::init() {
   return true;
 }
 
-Tween* Tween::setOnComplete(const std::function<void()>& callback) {
+Tween *Tween::setOnComplete(const std::function<void()> &callback) {
   onComplete_ = callback;
   return this;
 }
-Tween* Tween::setOnLoop(const std::function<void()>& callback) {
+Tween *Tween::setOnLoop(const std::function<void()> &callback) {
   onLoop_ = callback;
   return this;
 }
-Tween* Tween::setOnRepeat(const std::function<void()>& callback) {
+Tween *Tween::setOnRepeat(const std::function<void()> &callback) {
   onRepeat_ = callback;
   return this;
 }
-Tween* Tween::setOnStart(const std::function<void()>& callback) {
+Tween *Tween::setOnStart(const std::function<void()> &callback) {
   onStart_ = callback;
   return this;
 }
-Tween* Tween::setOnUpdate(
-    const std::function<void(Vector2D<double>)>& callback) {
+Tween *
+Tween::setOnUpdate(const std::function<void(Vector2D<double>)> &callback) {
   onUpdate_ = callback;
   return this;
 }
-Tween* Tween::setState(const TweenState state) {
+Tween *Tween::setState(const TweenState state) {
   state_ = state;
   return this;
 }
 
-Tween* Tween::setDuration(const int duration) {
+Tween *Tween::setDuration(const int duration) {
   duration_ = duration;
   return this;
 }
@@ -162,7 +167,8 @@ Tween* Tween::setDuration(const int duration) {
 int Tween::getDuration() const { return duration_; }
 
 void Tween::update() {
-  if (isPaused()) return;
+  if (isPaused())
+    return;
   elapsed_++;
   progress_ = std::min(
       static_cast<double>(elapsed_) / static_cast<double>(duration_), 1.0);
@@ -171,49 +177,54 @@ void Tween::update() {
   totalProgress_ = std::min(totalElapsed_ / totalDuration_, 1);
 
   switch (state_) {
-    case TweenState::ACTIVE: {
-      if (elapsed_ == duration_) {
-        if (loopCounter_ > 0) {
-          elapsed_ = 0;
-          progress_ = 0;
-          --loopCounter_;
-          if (onLoop_ != nullptr) onLoop_();
-          if (loopDelay_ > 0) {
-            countdown_ = loopDelay_;
-            state_ = TweenState::LOOP_DELAY;
-          } else {
-            state_ = TweenState::ACTIVE;
-          }
-        } else if (completeDelay_ > 0) {
-          countdown_ = completeDelay_;
-          state_ = TweenState::COMPLETE_DELAY;
+  case TweenState::ACTIVE: {
+    if (elapsed_ == duration_) {
+      if (loopCounter_ > 0) {
+        elapsed_ = 0;
+        progress_ = 0;
+        --loopCounter_;
+        if (onLoop_ != nullptr)
+          onLoop_();
+        if (loopDelay_ > 0) {
+          countdown_ = loopDelay_;
+          state_ = TweenState::LOOP_DELAY;
         } else {
-          if (onComplete_ != nullptr) onComplete_();
-          state_ = TweenState::PENDING_REMOVE;
+          state_ = TweenState::ACTIVE;
         }
-      }
-      break;
-    }
-    case TweenState::LOOP_DELAY: {
-      if (--countdown_ <= 0) state_ = TweenState::ACTIVE;
-      break;
-    }
-    case TweenState::OFFSET_DELAY: {
-      if (--countdown_ <= 0) {
-        if (onStart_ != nullptr) onStart_();
-        state_ = TweenState::ACTIVE;
-      }
-      break;
-    }
-    case TweenState::COMPLETE_DELAY: {
-      if (--countdown_ <= 0) {
-        if (onComplete_ != nullptr) onComplete_();
+      } else if (completeDelay_ > 0) {
+        countdown_ = completeDelay_;
+        state_ = TweenState::COMPLETE_DELAY;
+      } else {
+        if (onComplete_ != nullptr)
+          onComplete_();
         state_ = TweenState::PENDING_REMOVE;
       }
-      break;
     }
-    default:
-      break;
+    break;
+  }
+  case TweenState::LOOP_DELAY: {
+    if (--countdown_ <= 0)
+      state_ = TweenState::ACTIVE;
+    break;
+  }
+  case TweenState::OFFSET_DELAY: {
+    if (--countdown_ <= 0) {
+      if (onStart_ != nullptr)
+        onStart_();
+      state_ = TweenState::ACTIVE;
+    }
+    break;
+  }
+  case TweenState::COMPLETE_DELAY: {
+    if (--countdown_ <= 0) {
+      if (onComplete_ != nullptr)
+        onComplete_();
+      state_ = TweenState::PENDING_REMOVE;
+    }
+    break;
+  }
+  default:
+    break;
   }
 
   if (state_ == TweenState::ACTIVE) {

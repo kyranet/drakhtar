@@ -1,6 +1,6 @@
 # Drakhtar
 
-A game built on top of SDLv2.
+A game built on top of SDL2.
 
 ---
 
@@ -9,19 +9,19 @@ A game built on top of SDLv2.
 ### FreeBSD
 
 ```shell
-$ pkg install cmake sdl2 sdl2_ttf sdl2_image sdl2_mixer
+$ pkg install libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev libsdl2-mixer-dev
 ```
 
 ### OS X
 
 ```shell
-$ brew install cmake sdl2 sdl2_ttf sdl2_image sdl2_mixer
+$ brew install libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev libsdl2-mixer-dev
 ```
 
 ### Debian/Ubuntu
 
 ```
-$ apt-get install cmake sdl2 sdl2_ttf sdl2_image sdl2_mixer
+$ apt-get install libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev libsdl2-mixer-dev
 ```
 
 ### Windows
@@ -38,19 +38,18 @@ folder at the root of this project, this will allow the project to link and buil
 Additionally, you must remove the `zlib1.dll` from both binary directories of `SDL2_ttf`, they're older than `SDL2_image`'s
 and cause runtime errors when loading images, as `inflateValidate` does not exist in that version.
 
-
 ---
 
 ## Lint
-
-### Windows
-
-```shell
-$ python .\\tools\\cpplint.py --quiet --recursive Drakhtar
-```
 
 ### Linux or Mac
 
 ```
 $ python ./tools/cpplint.py --quiet --recursive Drakhtar
+```
+
+### Windows
+
+```shell
+$ python .\\tools\\cpplint.py --quiet --recursive Drakhtar
 ```

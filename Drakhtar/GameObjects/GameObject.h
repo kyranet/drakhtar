@@ -20,7 +20,6 @@ class GameObject {
   std::vector<EventListener *> eventListeners_;
   std::vector<GameObject *> children_;
   GameObject *parent_ = nullptr;
-  const Vector2D<int> position;
 
  public:
   GameObject(Scene *scene, Texture *texture);

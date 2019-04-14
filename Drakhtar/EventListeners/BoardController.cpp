@@ -13,10 +13,11 @@
 #include "Structures/Tween.h"
 #include "Utils/Constants.h"
 #include <iostream>
+#include <cmath>
 
 BoardController::BoardController(Board *board, TurnBar *turnBar,
                                  GameScene *scene)
-    : board_(board), turnBar_(turnBar), scene_(scene), ListenerOnClick(board) {
+    : ListenerOnClick(board), board_(board), turnBar_(turnBar), scene_(scene) {
   activeUnit_ = turnBar_->getFrontUnit();
   activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
   board_->highlightCellsInRange(activeUnit_->getBox(),
@@ -67,8 +68,8 @@ void BoardController::onClickMove(Box *boxClicked) {
         ->setDuration(static_cast<int>(
             floor(static_cast<double>(path.size()) * GAME_FRAMERATE * 0.25)))
         ->setOnUpdate([unit](Vector2D<double> updated) {
-          unit->setPosition({static_cast<int>(std::floor(updated.getX())),
-                             static_cast<int>(std::floor(updated.getY()))});
+          unit->setPosition({static_cast<int>(floor(updated.getX())),
+                             static_cast<int>(floor(updated.getY()))});
         })
         ->setOnComplete([this, unit, boxClicked]() {
           unit->moveToBox(boxClicked);
