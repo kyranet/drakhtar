@@ -12,6 +12,7 @@ class Dialog : public GameObject {
   std::string spriteText_;
   std::string dialogText_;
   SDL_Rect dialogueArea_;
+
 public:
   Dialog(Scene* scene, std::ifstream& file, Font* textFont, SDL_Rect dialogRect,
          int lineJumpLimit);

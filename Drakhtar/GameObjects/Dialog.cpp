@@ -42,8 +42,8 @@ void Dialog::readFromFile(std::ifstream &file) {
   file >> characterName_;
   file >> spriteText_;
 
-  std::string text; // full dialog text
-  std::string word; // word added to text each iteration
+  std::string text;  // full dialog text
+  std::string word;  // word added to text each iteration
   while (word != ".") {
     file >> word;
     if (word != ".")
