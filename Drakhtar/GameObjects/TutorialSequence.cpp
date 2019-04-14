@@ -90,6 +90,6 @@ void TutorialSequence::render() const {
 }
 
 void TutorialSceneOnClick::onClickStop(SDL_Point point) {
-  static_cast<TutorialSequence *>(getGameObject()->getParent())
-      ->createNextTutorial(); // NOLINT
+	reinterpret_cast<TutorialSequence *>(getGameObject()->getParent())
+      ->createNextTutorial();
 }

@@ -14,7 +14,7 @@ class TutorialBox : public GameObject {
   std::string imageText_;
   std::string dialogText_;
 
-public:
+ public:
   TutorialBox(Scene *scene, std::ifstream &file, Font *textFont,
               SDL_Rect tutorialArea, SDL_Rect dialogueBackground);
   void readFromFile(std::ifstream &file);
