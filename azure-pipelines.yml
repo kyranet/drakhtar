@@ -13,8 +13,8 @@ steps:
   displayName: 'Lint Stage'
 - script: |
     # Install the dependencies
-    apt-get install cmake sdl2 sdl2_ttf sdl2_image sdl2_mixer
-    
+    sudo apt-get install -y cmake sdl2 sdl2_ttf sdl2_image sdl2_mixer
+
     # Build the project
     make
   displayName: 'Build'
