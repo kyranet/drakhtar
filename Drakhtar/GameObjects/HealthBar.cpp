@@ -55,7 +55,7 @@ void HealthBar::takeDamage(int newHealth) {
   int damage = currentHealth - newHealth;
 
   currentHealth = newHealth;
-  double lifeProportion = static_cast<double> currentHealth / maxHealth;
+  double lifeProportion = static_cast<double>(currentHealth / maxHealth);
   int oldX = lifeBar->getRect().x;
   int oldY = lifeBar->getRect().y;
   lifeBar->setSize(
@@ -63,7 +63,7 @@ void HealthBar::takeDamage(int newHealth) {
   lifeBar->setPosition(Vector2D<int>(oldX + (lifeBar->getRect().w / 2),
                                      oldY + (lifeBar->getRect().h / 2)));
 
-  double damageProportion = static_cast<double> damage / maxHealth;
+  double damageProportion = static_cast<double>(damage / maxHealth);
   damageBar->setSize(
       Vector2D<int>(originalWidth * damageProportion, damageBar->getRect().h));
   damageBar->setPosition(

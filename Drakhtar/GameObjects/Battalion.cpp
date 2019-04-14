@@ -2,12 +2,12 @@
 
 #include "Battalion.h"
 #include "Box.h"
+#include "HealthBar.h"
 #include "Managers/FontManager.h"
 #include "Managers/GameManager.h"
 #include "Scenes/Scene.h"
 #include "Structures/Team.h"
 #include "Text.h"
-#include "HealthBar.h"
 
 Battalion::Battalion(Scene *scene, Texture *texture, Box *box,
                      const UnitStats stats, const std::string type,
@@ -22,8 +22,10 @@ Battalion::Battalion(Scene *scene, Texture *texture, Box *box,
   const auto rect = box_->getRect();
 
   sizeText_ = new Text(scene, FontManager::get("UnitFont"),
-                       {rect.x + rect.h/6, rect.y - rect.h/3},
-                       textColor, sizeToString(), rect.w * 2);
+                       {rect.x + rect.h / 6, rect.y - rect.h / 3}, textColor,
+                       sizeToString(), rect.w * 2);
+
+  healthText_->setColor(textColor);
 
   sizeText_->setColor(textColor);
 
@@ -63,7 +65,8 @@ int Battalion::loseHealth(const int enemyAttack) {
     if (this->getTeam()->getColor() == Color::BLUE)
       (*GameManager::getInstance()->getArmy())[this->getType()] =
           battalionSize_;
-    if (battalionSize_ < 0) battalionSize_ = 0;
+    if (battalionSize_ < 0)
+      battalionSize_ = 0;
     sizeText_->setText(sizeToString());
   }
   return health;
