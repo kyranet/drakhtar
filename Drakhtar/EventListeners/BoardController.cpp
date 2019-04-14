@@ -16,8 +16,8 @@
 #include <cmath>
 
 BoardController::BoardController(Board *board, TurnBar *turnBar,
-                                 GameScene *)
-    : ListenerOnClick(board), board_(board), turnBar_(turnBar) {
+                                 GameScene *scene)
+    : ListenerOnClick(board), board_(board), turnBar_(turnBar), scene_(scene) {
   activeUnit_ = turnBar_->getFrontUnit();
   activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
   board_->highlightCellsInRange(activeUnit_->getBox(),
