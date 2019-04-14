@@ -21,17 +21,20 @@ TutorialBox::TutorialBox(Scene *scene, std::ifstream &file, Font *textFont,
   const auto tutorialImage = new GameObject(
       scene, TextureManager::get(imageText_),
       Vector2D<int>(tutorialArea.x,
-                    dialogueBackground.y + dialogueBackground.h / 3),
+                    dialogueBackground.y + dialogueBackground.h / 3.25),
       Vector2D<int>(tutorialArea.h * WIN_WIDTH / 3,
                     tutorialArea.h * WIN_HEIGHT / 3));
 
-  const SDL_Color textColor = {0, 0, 0, 255};
+  const SDL_Color textColor = {255, 255, 255, 255};
 
   const auto tutorialTextSprite =
       new Text(scene_, textFont,
                Vector2D<int>(tutorialArea.x + dialogueBackground.w / 80,
                              tutorialArea.y - dialogueBackground.h / 80),
                textColor, dialogText_, lineJumpLimit);
+
+  tutorialTextSprite->setColor(textColor);
+  tutorialTextSprite->setText(dialogText_, textColor, lineJumpLimit);
 
   addChild(tutorialImage);
   addChild(tutorialTextSprite);
@@ -40,8 +43,8 @@ TutorialBox::TutorialBox(Scene *scene, std::ifstream &file, Font *textFont,
 void TutorialBox::readFromFile(std::ifstream &file) {
   file >> imageText_;
 
-  std::string text;  // full dialog text
-  std::string word;  // word added to text each iteration
+  std::string text; // full dialog text
+  std::string word; // word added to text each iteration
   while (word != ".") {
     file >> word;
     if (word != ".")
