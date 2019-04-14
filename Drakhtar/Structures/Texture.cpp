@@ -34,7 +34,8 @@ Texture::~Texture() {
 
 Vector2D<Uint16> Texture::getFramePosition(const Uint16 frame) const {
   return Vector2D<Uint16>(frame % columnAmount_,
-                          Uint16(floor(double(frame) / double(columnAmount_))));
+                          Uint16(floor(static_cast<double>(frame) /
+                                       static_cast<double>(columnAmount_))));
 }
 
 Texture *Texture::setTexture(SDL_Texture *const &texture) {
@@ -138,15 +139,15 @@ void Texture::tick() {
 }
 
 void Texture::render(const Vector2D<int> &position) const {
-  const SDL_Rect dest{position.getX(), position.getY(), size_.getX(),
-                      size_.getY()};
+  const SDL_Rect dest{ position.getX(), position.getY(), size_.getX(),
+                       size_.getY() };
   render(dest);
 }
 
 void Texture::render(const SDL_Rect &dest, double, SDL_Rect *clip) const {
   if (texture_ != nullptr) {
     if (clip == nullptr) {
-      SDL_Rect defaultClip = {0, 0, size_.getX(), size_.getY()};
+      SDL_Rect defaultClip = { 0, 0, size_.getX(), size_.getY() };
       clip = &defaultClip;
     }
     SDL_RenderCopy(renderer_, texture_, clip, &dest);
@@ -158,8 +159,8 @@ void Texture::renderFrame(SDL_Rect const &dest, const Uint16 frame,
   auto framePosition = getFramePosition(frame);
   const auto width = frameSize_.getX();
   const auto height = frameSize_.getY();
-  SDL_Rect src{width * framePosition.getX(), height * framePosition.getY(),
-               width, height};
+  SDL_Rect src{ width * framePosition.getX(), height * framePosition.getY(),
+                width, height };
   SDL_RenderCopyEx(renderer_, texture_, &src, &dest, angle, nullptr, flip_);
 }
 

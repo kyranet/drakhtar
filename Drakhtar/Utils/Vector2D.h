@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
+
 #include "SDL_stdinc.h"
 #include <cassert>
 #include <cmath>
@@ -11,9 +12,9 @@
  * \brief The Vector2D class that manages all vectors in the game.
  * \tparam T The value type this instance will hold and use.
  */
-template <typename T,
-          typename =
-              typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
+template<typename T,
+    typename =
+    typename std::enable_if<std::is_arithmetic<T>::value, T>::type>
 class Vector2D final {
   /**
    * \brief The x coordinate.
@@ -24,7 +25,7 @@ class Vector2D final {
    */
   T y_;
 
-public:
+ public:
   /**
    * \brief Create a Vector2D instance with an x and y coordinates.
    * \param x The value for the x coordinate.
