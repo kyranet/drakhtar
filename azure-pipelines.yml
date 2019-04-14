@@ -6,16 +6,23 @@
 pool:
   vmImage: 'Ubuntu-16.04'
 
-steps:
-- script: |
-    # Run CPPLint into the project
-    python ./tools/cpplint.py --quiet --recursive Drakhtar
-  displayName: 'Lint Stage'
-- script: |
-    # Install the dependencies
-    sudo apt-get install -y build-essentials
-    sudo apt-get install -y libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev libsdl2-mixer-dev
+jobs:
+- job: Lint
+  steps:
+  - script: |
+      # Run CPPLint into the project
+      python ./tools/cpplint.py --quiet --recursive Drakhtar
+    displayName: 'Lint Stage'
 
-    # Build the project
-    make
-  displayName: 'Build'
+- job: Build
+  dependsOn: Lint
+  condition: succeeded()
+  steps:
+  - script: |
+      # Install the dependencies
+      sudo apt-get -y update
+      sudo apt-get install -y libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev libsdl2-mixer-dev
+
+      # Build the project
+      make
+    displayName: 'Build'
