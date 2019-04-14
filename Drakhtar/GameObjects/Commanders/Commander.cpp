@@ -1,16 +1,35 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Commander.h"
+#include "../../GameObjects/Box.h"
+#include "../../Managers/TextureManager.h"
 
 Commander::Commander(Scene *scene, Texture *texture, Box *box,
                      const UnitStats commanderStats)
-    : Unit(scene, texture, box, commanderStats, "") {}
+    : Unit(scene, texture, box, commanderStats, "") {
+
+	const auto rect = box_->getRect();
+
+	commanderIcon_ = new GameObject(scene, TextureManager::get("UI-commanderIcon"), Vector2D<int>(rect.x, rect.y - rect.h / 3), Vector2D<int>(rect.h / 2, rect.h / 2));
+}
 
 Commander::~Commander() {
   for (auto skill : skills_) {
     delete skill;
   }
   skills_.clear();
+
+  if (commanderIcon_ != nullptr)
+  {
+	  delete commanderIcon_;
+	  commanderIcon_ = nullptr;
+  }
+}
+
+void Commander::render() const
+{
+	Unit::render();
+	commanderIcon_->render();
 }
 
 void Commander::onSelect() {
@@ -31,4 +50,11 @@ void Commander::onSelect() {
       skill->end();
     }
   }
+}
+
+void Commander::moveToBox(Box * box)
+{
+	Unit::moveToBox(box);
+	const auto rect = box_->getRect();
+	commanderIcon_->setPosition(Vector2D<int>(rect.x, rect.y - rect.h / 3));
 }

@@ -22,7 +22,7 @@ Battalion::Battalion(Scene *scene, Texture *texture, Box *box,
   const auto rect = box_->getRect();
 
   sizeText_ = new Text(scene, FontManager::get("UnitFont"),
-                       {rect.x + rect.h/5, rect.y - rect.h/3},
+                       {rect.x + rect.h/6, rect.y - rect.h/3},
                        textColor, sizeToString(), rect.w * 2);
 
   sizeText_->setColor(textColor);
@@ -75,7 +75,7 @@ void Battalion::moveToBox(Box *box) {
   const auto rect = box_->getRect();
 
   sizeText_->setPosition(
-      Vector2D<int>(rect.x + rect.h / 5, rect.y - rect.h / 3));
+      Vector2D<int>(rect.x + rect.h / 6, rect.y - rect.h / 3));
 }
 
 void Battalion::render() const {

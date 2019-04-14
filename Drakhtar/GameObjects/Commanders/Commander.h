@@ -6,6 +6,7 @@
 #include "../Unit.h"
 
 class Scene;
+class Box;
 
 class Commander : public Unit {
  protected:
@@ -14,9 +15,12 @@ class Commander : public Unit {
    */
   std::vector<Skill *> skills_;
 
+  GameObject* commanderIcon_ = nullptr;
+
  public:
   Commander(Scene *scene, Texture *texture, Box *box, UnitStats commanderStats);
   virtual ~Commander();
+  void render() const override;
 
   /**
    * \return A vector of all the skills the commander can cast.
@@ -28,4 +32,6 @@ class Commander : public Unit {
    * skill's cooldown timer and duration timer.
    */
   void onSelect() override;
+  void moveToBox(Box *box) override;
+
 };

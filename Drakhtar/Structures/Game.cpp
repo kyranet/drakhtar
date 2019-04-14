@@ -99,6 +99,7 @@ Game::Game() {
   textures->add("UI-healthBar_background", "../images/UI/healthBar_background.png", 1, 1);
   textures->add("UI-healthBar_life", "../images/UI/healthBar_life.png", 1, 1);
   textures->add("UI-healthBar_damage", "../images/UI/healthBar_damage.png", 1, 1);
+  textures->add("UI-commanderIcon", "../images/UI/goldskull.png", 1, 1);
 
   // Button
   textures->add("Button-Play", "../images/MainMenu/Play_Button.png", 1, 1);
