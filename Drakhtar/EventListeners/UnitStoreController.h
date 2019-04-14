@@ -46,5 +46,5 @@ class UnitStoreController final : public ListenerOnClick {
                       Text *amountText, GameObject *moreButton,
                       GameObject *lessButton);
 
-  void onClickStop(SDL_Point) override;
+  void onClickStop() override;
 };

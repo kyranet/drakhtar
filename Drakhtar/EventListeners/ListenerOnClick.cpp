@@ -1,25 +1,22 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "ListenerOnClick.h"
+#include "Managers/Input.h"
 
 void ListenerOnClick::run(const SDL_Event event) {
-  auto area = getGameObject()->getRect();
-
-  SDL_Point p = {event.motion.x, event.motion.y};
-
   switch (event.type) {
     case SDL_MOUSEBUTTONDOWN:
-      if (!SDL_PointInRect(&p, &area)) return;
-      if (!clicked_) onClickStart(p);
+      if (Input::screenMouseToRay() != getGameObject()) return;
+      if (!clicked_) onClickStart();
       clicked_ = true;
       break;
     case SDL_MOUSEBUTTONUP:
-      if (!SDL_PointInRect(&p, &area)) return;
-      if (clicked_) onClickStop(p);
+      if (Input::screenMouseToRay() != getGameObject()) return;
+      if (clicked_) onClickStop();
       clicked_ = false;
       break;
     default:
-      if (clicked_) onClickStay(p);
+      if (clicked_) onClickStay();
       break;
   }
 }

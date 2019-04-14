@@ -2,7 +2,6 @@
 
 #pragma once
 #include <fstream>
-#include "../EventListeners/ListenerOnClick.h"
 #include "GameObject.h"
 
 class Text;

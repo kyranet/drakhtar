@@ -2,7 +2,6 @@
 
 #pragma once
 #include <queue>
-#include "../EventListeners/ListenerOnClick.h"
 #include "GameObject.h"
 
 class TutorialBox;
@@ -21,11 +20,4 @@ class TutorialSequence final : public GameObject {
   ~TutorialSequence();
   void createNextTutorial();
   void render() const override;
-};
-
-class TutorialSceneOnClick final : public ListenerOnClick {
- public:
-  explicit TutorialSceneOnClick(GameObject *gameObject)
-      : ListenerOnClick(gameObject) {}
-  void onClickStop(SDL_Point point) override;
 };

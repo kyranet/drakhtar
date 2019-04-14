@@ -12,8 +12,7 @@
 #include "Structures/Texture.h"
 #include "Structures/Tween.h"
 #include "Utils/Constants.h"
-#include <iostream>
-#include <cmath>
+#include "Managers/Input.h"
 
 BoardController::BoardController(Board *board, TurnBar *turnBar,
                                  GameScene *scene)
@@ -36,8 +35,8 @@ void BoardController::run(const SDL_Event event) {
   }
 }
 
-void BoardController::onClickStop(const SDL_Point point) {
-  const auto boxClicked = board_->getBoxAtCoordinates(point);
+void BoardController::onClickStop() {
+  const auto boxClicked = board_->getBoxAtCoordinates(Input::getMousePosition());
 
   if (boxClicked != nullptr) {
     if (boxClicked->isEmpty() && !hasMoved_) {

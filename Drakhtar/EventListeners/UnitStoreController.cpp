@@ -4,6 +4,8 @@
 #include "../Scenes/RecruitScene.h"
 #include "../Structures/Game.h"
 #include "GameObjects/Text.h"
+#include "Managers/Input.h"
+#include "Managers/TextureManager.h"
 #include "Managers/GameManager.h"
 #include "Managers/TextureManager.h"
 #include "Utils/Constants.h"
@@ -90,17 +92,15 @@ void UnitStoreController::addUnitToStore(const std::string &type,
   unitStore_.push_back(storeUnit);
 }
 
-void UnitStoreController::onClickStop(const SDL_Point point) {
+void UnitStoreController::onClickStop() {
   auto rect = acceptButton_->getRect();
-  if (rect.x < point.x && rect.x + rect.w > point.x && rect.y < point.y &&
-      rect.y + rect.h > point.y) {
+  if (Input::isMouseInside(&rect)) {
     buyUnits();
     return;
   }
 
   rect = cancelButton_->getRect();
-  if (rect.x < point.x && rect.x + rect.w > point.x && rect.y < point.y &&
-      rect.y + rect.h > point.y) {
+  if (Input::isMouseInside(&rect)) {
     reset();
     return;
   }
@@ -109,8 +109,7 @@ void UnitStoreController::onClickStop(const SDL_Point point) {
   size_t i;
   for (i = 0; i < unitStore_.size(); i++) {
     auto rectangle = unitStore_[i]->lessButton->getRect();
-    if (rectangle.x < point.x && rectangle.x + rectangle.w > point.x &&
-        rectangle.y < point.y && rectangle.y + rectangle.h > point.y) {
+    if (Input::isMouseInside(&rectangle)) {
       if (unitStore_[i]->amount > 0) {
         reduceAmount(unitStore_[i]);
         return;
@@ -118,15 +117,13 @@ void UnitStoreController::onClickStop(const SDL_Point point) {
     }
 
     rectangle = unitStore_[i]->moreButton->getRect();
-    if (rectangle.x < point.x && rectangle.x + rectangle.w > point.x &&
-        rectangle.y < point.y && rectangle.y + rectangle.h > point.y) {
+    if (Input::isMouseInside(&rectangle)) {
       increaseAmount(unitStore_[i]);
       return;
     }
 
     rectangle = unitStore_[i]->unit->getRect();
-    if (rectangle.x < point.x && rectangle.x + rectangle.w > point.x &&
-        rectangle.y < point.y && rectangle.y + rectangle.h > point.y) {
+    if (Input::isMouseInside(&rectangle)) {
       found = true;
       break;
     }

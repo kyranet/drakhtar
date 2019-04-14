@@ -204,6 +204,8 @@ void Scene::finish() {
   Game::getSceneMachine()->popScene();
 }
 
+std::list<GameObject *> Scene::getGameObjects() const { return gameObjects_; }
+
 void Scene::addGameObject(GameObject *gameObject) {
   pendingOnCreate_.push_back(gameObject);
 }

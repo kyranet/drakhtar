@@ -4,6 +4,7 @@
 #include "../GameObjects/GameObject.h"
 #include "EventListener.h"
 #include "SDL.h"
+#include "Utils/Vector2D.h"
 
 /**
  * \brief The click listener for game objects. This is an abstract class and
@@ -34,17 +35,17 @@ class ListenerOnClick : public EventListener {
    * \brief Runs when this listener has detected a click start to this game
    * object.
    */
-  virtual void onClickStart(const SDL_Point) {}
+  virtual void onClickStart() {}
 
   /**
    * \brief Runs when this listener has detected a click hold to this game
    * object.
    */
-  virtual void onClickStay(const SDL_Point) {}
+  virtual void onClickStay() {}
 
   /**
    * \brief Runs when this listener has detected a click stop from this game
    * object.
    */
-  virtual void onClickStop(const SDL_Point) {}
+  virtual void onClickStop() {}
 };

@@ -2,7 +2,6 @@
 
 #pragma once
 #include <vector>
-#include "../EventListeners/ListenerOnClick.h"
 #include "GameObject.h"
 
 class Dialog;
@@ -23,11 +22,4 @@ class DialogScene final : public GameObject {
   ~DialogScene();
   void next();
   void render() const override;
-};
-
-class DialogSceneOnClick final : public ListenerOnClick {
- public:
-  explicit DialogSceneOnClick(GameObject *gameObject)
-      : ListenerOnClick(gameObject) {}
-  void onClickStop(SDL_Point point) override;
 };

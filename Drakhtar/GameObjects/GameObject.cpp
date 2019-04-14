@@ -10,9 +10,8 @@ GameObject::GameObject(Scene *scene, Texture *texture)
       position_(0, 0),
       size_(0, 0),
       texture_(texture) {}
-
-GameObject::GameObject(Scene *scene, Texture *texture, const Vector2D<int>& position,
-                       const Vector2D<int>& size)
+GameObject::GameObject(Scene *scene, Texture *texture,
+                       const Vector2D<int> &position, const Vector2D<int> &size)
     : scene_(scene), position_(position), size_(size), texture_(texture) {}
 
 GameObject::~GameObject() {
@@ -55,6 +54,8 @@ SDL_Rect GameObject::getRect() const {
           position_.getY() - size_.getY() / 2, size_.getX(), size_.getY()};
 }
 
+Scene *GameObject::getScene() const { return scene_; }
+
 bool GameObject::hasParent() const { return parent_ != nullptr; }
 void GameObject::setParent(GameObject *gameObject) { parent_ = gameObject; }
 GameObject *GameObject::getParent() const { return parent_; }
@@ -68,7 +69,9 @@ bool GameObject::getActive() const { return active_; }
 void GameObject::setSize(Vector2D<int> size) { size_ = size; }
 Vector2D<int> GameObject::getSize() const { return size_; }
 
-void GameObject::setPosition(const Vector2D<int>& position) { position_ = position; }
+void GameObject::setPosition(const Vector2D<int> &position) {
+  position_ = position;
+}
 Vector2D<int> GameObject::getPosition() const { return position_; }
 
 bool GameObject::hasChildren() const { return !children_.empty(); }
@@ -89,3 +92,13 @@ void GameObject::removeChild(GameObject *gameObject) {
 }
 
 void GameObject::destroy() { scene_->removeGameObject(this); }
+
+GameObject *GameObject::clickScan(SDL_Point point) const {
+  const auto children = getChildren();
+  for (auto it = children.rbegin(); it != children.rend(); ++it) {
+    const auto child = *it;
+    if (child->clickScan(point)) return child;
+  }
+  return SDL_PointInRect(&point, &getRect()) ? const_cast<GameObject *>(this)
+                                             : nullptr;
+}

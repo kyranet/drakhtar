@@ -50,6 +50,7 @@ class Scene {
   virtual void resume();
   virtual void finish();
 
+  std::list<GameObject *> getGameObjects() const;
   void addGameObject(GameObject *gameObject);
   void removeGameObject(GameObject *gameObject);
 

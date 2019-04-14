@@ -1,19 +1,20 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "DialogScene.h"
-#include "../Errors/DrakhtarError.h"
-#include "../GameObjects/Button.h"
-#include "../Managers/FontManager.h"
-#include "../Managers/TextureManager.h"
-#include "../Scenes/GameScene.h"
-#include "../Scenes/RecruitScene.h"
-#include "../Scenes/Scene.h"
-#include "../Structures/Font.h"
-#include "../Structures/Game.h"
-#include "../Utils/Constants.h"
-#include "Dialog.h"
 #include <fstream>
 #include <iostream>
+#include "Dialog.h"
+#include "Errors/DrakhtarError.h"
+#include "EventListeners/DialogSceneOnClick.h"
+#include "GameObjects/Button.h"
+#include "Managers/FontManager.h"
+#include "Managers/TextureManager.h"
+#include "Scenes/GameScene.h"
+#include "Scenes/RecruitScene.h"
+#include "Scenes/Scene.h"
+#include "Structures/Font.h"
+#include "Structures/Game.h"
+#include "Utils/Constants.h"
 
 void skipDialog() { Game::getSceneMachine()->getCurrentScene()->setSkip(true); }
 
@@ -103,8 +104,4 @@ void DialogScene::readFromFile(const std::string &filename, Font *textFont,
   }
 
   file.close();
-}
-
-void DialogSceneOnClick::onClickStop(SDL_Point) {
-  reinterpret_cast<DialogScene *>(getGameObject()->getParent())->next();
 }

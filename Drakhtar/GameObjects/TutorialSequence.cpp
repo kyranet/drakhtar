@@ -1,15 +1,16 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "TutorialSequence.h"
-#include "../Errors/DrakhtarError.h"
-#include "../GameObjects/Button.h"
-#include "../Managers/FontManager.h"
-#include "../Managers/TextureManager.h"
-#include "../Scenes/Scene.h"
-#include "../Structures/Font.h"
-#include "../Structures/Game.h"
-#include "../Utils/Constants.h"
+#include "Errors/DrakhtarError.h"
+#include "EventListeners/TutorialSceneOnClick.h"
+#include "GameObjects/Button.h"
+#include "Managers/FontManager.h"
+#include "Managers/TextureManager.h"
+#include "Scenes/Scene.h"
+#include "Structures/Font.h"
+#include "Structures/Game.h"
 #include "TutorialBox.h"
+#include "Utils/Constants.h"
 
 void nextTutorial() {
   Game::getSceneMachine()->getCurrentScene()->setSkip(false);
@@ -100,9 +101,4 @@ void TutorialSequence::render() const {
     GameObject::render();
     tutorials_.front()->render();
   }
-}
-
-void TutorialSceneOnClick::onClickStop(SDL_Point) {
-  reinterpret_cast<TutorialSequence *>(getGameObject()->getParent())
-      ->createNextTutorial();
 }
