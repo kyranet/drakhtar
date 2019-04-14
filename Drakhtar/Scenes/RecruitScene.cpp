@@ -13,9 +13,13 @@
 #include "TransitionScene.h"
 #include "Utils/Constants.h"
 #include "Utils/Vector2D.h"
+#include "GameObjects/RecruitmentStat.h"
 
 void buttonStartGame() {
   Game::getSceneMachine()->changeScene(new TransitionScene(2));
+}
+void loadUnitInfo() {
+	Game::getSceneMachine()->getCurrentScene()->addGameObject(new RecruitmentStat(Game::getSceneMachine()->getCurrentScene(), { 20,20,20,20 }));
 }
 
 void RecruitScene::preload() {
@@ -60,7 +64,8 @@ void RecruitScene::preload() {
   addUnit("Units-BlueSoldier", 1);
   addUnit("Units-BlueArcher", 2);
 
-  if (GameManager::getInstance()->getLevel() >= 2) addUnit("Units-BlueMage", 3);
+  if (GameManager::getInstance()->getLevel() >= 2)
+    addUnit("Units-BlueMage", 3);
 
   if (GameManager::getInstance()->getLevel() >= 3)
     addUnit("Units-BlueKnight", 4);
@@ -74,10 +79,17 @@ void RecruitScene::preload() {
       Vector2D<int>(static_cast<int>(WIN_WIDTH / 7.5), WIN_HEIGHT / 12),
       buttonStartGame);
 
+  const auto betaInfo =
+      new Button(this, TextureManager::get("Button-Play"),
+                 Vector2D<int>(static_cast<int>(WIN_WIDTH / 9.5),
+                               WIN_HEIGHT / 2 + WIN_HEIGHT / 6 * -2),
+                 Vector2D<int>(WIN_HEIGHT / 6, WIN_HEIGHT / 6), loadUnitInfo);
+  addGameObject(betaInfo);
+
   addGameObject(button);
 }
 
-int RecruitScene::getCost(const std::string& type) { return costs_[type]; }
+int RecruitScene::getCost(const std::string &type) { return costs_[type]; }
 
 void RecruitScene::updateTotalCostText(const int amount) const {
   totalCostText_->setText("Total cost: " + std::to_string(amount));
@@ -130,7 +142,8 @@ void RecruitScene::addUnit(std::string textureName, int position) {
 
   auto it = textureName.begin();
 
-  while ((*it) != 'e') ++it;
+  while ((*it) != 'e')
+    ++it;
   ++it;
 
   std::string type;
@@ -147,7 +160,7 @@ std::string RecruitScene::moneyToString() const {
   return "Money: " + std::to_string(GameManager::getInstance()->getMoney());
 }
 
-void RecruitScene::buyUnits(const std::string& type, const int quantity) {
+void RecruitScene::buyUnits(const std::string &type, const int quantity) {
   if (costs_[type] * quantity <= GameManager::getInstance()->getMoney()) {
     GameManager::getInstance()->addUnits(type, quantity);
     GameManager::getInstance()->loseMoney(costs_[type] * quantity);
