@@ -99,6 +99,8 @@ GameObject *GameObject::clickScan(SDL_Point point) const {
     const auto child = *it;
     if (child->clickScan(point)) return child;
   }
-  return SDL_PointInRect(&point, &getRect()) ? const_cast<GameObject *>(this)
+
+  const auto rect = getRect();
+  return SDL_PointInRect(&point, &rect) ? const_cast<GameObject *>(this)
                                              : nullptr;
 }

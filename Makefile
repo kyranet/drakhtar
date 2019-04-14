@@ -13,11 +13,11 @@ build_ninja: mkdir_build
 	ninja -C build
 
 debug: mkdir_build
-	cd build; cmake -DCMAKE_BUILD_TYPE=Debug ..
+	cd build; cmake -CMAKE_BUILD_TYPE=Debug ..
 	make -C build
 
 debug_ninja: mkdir_build
-	cd build; cmake -GNinja -DCMAKE_BUILD_TYPE=Debug ..
+	cd build; cmake -GNinja -CMAKE_BUILD_TYPE=Debug ..
 	ninja -C build
 
 run:
