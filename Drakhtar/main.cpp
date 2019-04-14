@@ -1,6 +1,5 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
-#include <iostream>
 #include "Managers/FontManager.h"
 #include "Managers/GameManager.h"
 #include "Managers/Input.h"
@@ -9,6 +8,7 @@
 #include "SDL.h"
 #include "Structures/Game.h"
 #include "checkML.h"
+#include <iostream>
 
 #undef main
 
@@ -27,7 +27,7 @@ int main(int, char *[]) {
     Input::destroy();
     delete game;
     return 0;
-  } catch (std::exception& e) {
+  } catch (std::exception &e) {
     std::cerr << e.what();
     return 1;
   }
