@@ -3,9 +3,7 @@
 #include "Sequence.h"
 
 Sequence::Sequence(Scene *scene, Texture *texture) : GameObject(scene,
-                                                                texture) {
-
-}
+                                                                texture) {}
 
 Sequence::Sequence(Scene *scene,
                    Texture *texture,
@@ -13,6 +11,4 @@ Sequence::Sequence(Scene *scene,
                    const Vector2D<int> &size) : GameObject(scene,
                                                            texture,
                                                            position,
-                                                           size) {
-
-}
+                                                           size) {}
