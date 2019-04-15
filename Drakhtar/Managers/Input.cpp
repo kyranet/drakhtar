@@ -1,7 +1,10 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Input.h"
+#include "GameObjects/GameObject.h"
 #include "SDL.h"
+#include "Scenes/Scene.h"
+#include "Structures/Game.h"
 
 Input::Input(): mousePosition_(0, 0) {}
 Input::~Input() = default;
@@ -9,10 +12,10 @@ Input::~Input() = default;
 Input* Input::instance_ = nullptr;
 
 Input* Input::instance() {
-    if (instance_ == nullptr) {
-        instance_ = new Input();
-    }
-    return instance_;
+  if (instance_ == nullptr) {
+    instance_ = new Input();
+  }
+  return instance_;
 }
 
 void Input::clear() {
@@ -26,6 +29,10 @@ void Input::clear() {
     mouseDown_[i] = false;
     mouseUp_[i] = false;
   }
+
+  // Though in most cases this is useless, objects may create, destroy, or move,
+  // when a tick happens.
+  casted_ = nullptr;
 }
 
 void Input::update(const SDL_Event event) {
@@ -42,6 +49,7 @@ void Input::update(const SDL_Event event) {
     }
     case SDL_MOUSEMOTION: {
       mousePosition_ = {event.motion.x, event.motion.y};
+      casted_ = nullptr;
       break;
     }
     case SDL_MOUSEBUTTONDOWN: {
@@ -121,6 +129,24 @@ bool Input::getAlt() {
   const auto input = instance();
   return input->isKeyPressed(KeyboardKey::LEFT_ALT) ||
          input->isKeyPressed(KeyboardKey::RIGHT_ALT);
+}
+
+GameObject* Input::screenMouseToRay() {
+  const auto input = instance();
+  if (input->casted_) return input->casted_;
+  const auto position = input->mousePosition_;
+  const auto point = SDL_Point{position.getX(), position.getY()};
+  const auto scene = Game::getSceneMachine()->getCurrentScene();
+  const auto gameObjects = scene->getGameObjects();
+  for (auto it = gameObjects.rbegin(); it != gameObjects.rend(); ++it) {
+    const auto gameObject = *it;
+    const auto scanned = gameObject->clickScan(point);
+    if (scanned) {
+      input->casted_ = scanned;
+      return scanned;
+    }
+  }
+  return nullptr;
 }
 
 bool Input::isMouseInside(const SDL_Rect* rectangle) {

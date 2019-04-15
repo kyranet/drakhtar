@@ -14,7 +14,7 @@ class GameScene final : public Scene {
 
  public:
   explicit GameScene(int battle);
-  virtual ~GameScene();
+  ~GameScene() override;
   void preload() override;
   void pause() override;
   void skipTurn() override;

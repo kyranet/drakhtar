@@ -15,11 +15,7 @@ Scene::~Scene() { Scene::finish(); }
 
 bool Scene::getTransition() const { return transition_; }
 
-bool Scene::getSkip() const { return skipDialog_; }
-
 void Scene::setTransition(const bool transition) { transition_ = transition; }
-
-void Scene::setSkip(const bool skip) { skipDialog_ = skip; }
 
 bool Scene::isFinished() const { return exit_; }
 bool Scene::isRunning() const { return !paused_; }
@@ -203,6 +199,8 @@ void Scene::finish() {
 
   Game::getSceneMachine()->popScene();
 }
+
+std::list<GameObject *> Scene::getGameObjects() const { return gameObjects_; }
 
 void Scene::addGameObject(GameObject *gameObject) {
   pendingOnCreate_.push_back(gameObject);

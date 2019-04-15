@@ -2,30 +2,24 @@
 
 #pragma once
 #include <queue>
-#include "../EventListeners/ListenerOnClick.h"
-#include "GameObject.h"
+#include "GameObjects/Base/Sequence.h"
 
 class TutorialBox;
 class Scene;
 class Font;
 
-class TutorialSequence final : public GameObject {
-  std::queue<TutorialBox *> tutorials_;
-  void readFromFile(const std::string &filename, Font *textFont,
+class TutorialSequence final : public Sequence {
+  std::queue<TutorialBox*> tutorials_;
+  void readFromFile(const std::string& filename, Font* textFont,
                     SDL_Rect tutorialArea, SDL_Rect dialogueBackground);
-  static TutorialSequence *instance_;
+  static TutorialSequence* instance_;
 
  public:
-  TutorialSequence(Scene *scene, const std::string &filename,
-                   const std::string &fontFile);
+  TutorialSequence(Scene* scene, const std::string& filename,
+                   const std::string& fontFile);
   ~TutorialSequence();
-  void createNextTutorial();
   void render() const override;
-};
 
-class TutorialSceneOnClick final : public ListenerOnClick {
- public:
-  explicit TutorialSceneOnClick(GameObject *gameObject)
-      : ListenerOnClick(gameObject) {}
-  void onClickStop(SDL_Point point) override;
+  void next() override;
+  void skip() override;
 };

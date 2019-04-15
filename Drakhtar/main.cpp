@@ -12,7 +12,7 @@
 
 #undef main
 
-int main(int, char *[]) {
+int main(int, char*[]) {
 #if _DEBUG
   _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF |
                  _CRTDBG_LEAK_CHECK_DF);  // Check Memory Leaks

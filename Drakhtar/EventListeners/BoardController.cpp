@@ -6,17 +6,16 @@
 #include "GameObjects/TurnBar.h"
 #include "GameObjects/Unit.h"
 #include "Managers/GameManager.h"
+#include "Managers/Input.h"
 #include "Managers/SDLAudioManager.h"
 #include "Scenes/GameScene.h"
 #include "Structures/Team.h"
 #include "Structures/Texture.h"
 #include "Structures/Tween.h"
 #include "Utils/Constants.h"
-#include <iostream>
-#include <cmath>
 
-BoardController::BoardController(Board *board, TurnBar *turnBar,
-                                 GameScene *scene)
+BoardController::BoardController(Board* board, TurnBar* turnBar,
+                                 GameScene* scene)
     : ListenerOnClick(board), board_(board), turnBar_(turnBar), scene_(scene) {
   activeUnit_ = turnBar_->getFrontUnit();
   activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
@@ -26,9 +25,26 @@ BoardController::BoardController(Board *board, TurnBar *turnBar,
                                   activeUnit_->getStats().attackRange);
 }
 
-void BoardController::run(const SDL_Event event) {
-  // Captures mouse event
-  ListenerOnClick::run(event);
+// TODO(kyranet): This is far from nice, it should be an update method to avoid
+//  calling this many times a tick as it's a expensive operation.
+void BoardController::run(const SDL_Event) {
+  if (!Input::isMouseButtonDown(MouseKey::LEFT)) return;
+
+  const auto gameObject = Input::screenMouseToRay();
+  if (!gameObject) return;
+
+  // Ignore Unit's "hitboxes" and assume it's a click to the board, so get the
+  // box at the mouse's coordinates
+  const auto unit = dynamic_cast<Unit*>(gameObject);
+  const auto box = unit ? board_->getBoxAtCoordinates(Input::getMousePosition())
+                        : dynamic_cast<Box*>(gameObject);
+  if (!box) return;
+
+  if (!hasMoved_ && box->isEmpty()) {
+    onClickMove(box);
+  } else if (!hasAttacked_) {
+    onClickAttack(box);
+  }
 
   // If no actions left, reset and skip turn
   if (hasMoved_ && hasAttacked_) {
@@ -36,22 +52,9 @@ void BoardController::run(const SDL_Event event) {
   }
 }
 
-void BoardController::onClickStop(const SDL_Point point) {
-  const auto boxClicked = board_->getBoxAtCoordinates(point);
-
-  if (boxClicked != nullptr) {
-    if (boxClicked->isEmpty() && !hasMoved_) {
-      onClickMove(boxClicked);
-    } else if (!hasAttacked_) {
-      onClickAttack(boxClicked);
-    }
-  }
-}
-
-void BoardController::onClickMove(Box *boxClicked) {
+void BoardController::onClickMove(Box* boxClicked) {
   // If this BoardController is stopped, don't run
-  if (isTweening_)
-    return;
+  if (isTweening_) return;
 
   // Checks if the box clicked is within movement range
   if (board_->isInMoveRange(activeUnit_->getBox(), boxClicked,
@@ -94,8 +97,8 @@ void BoardController::onClickMove(Box *boxClicked) {
   }
 }
 
-void BoardController::onClickAttack(Box *boxClicked) {
-  Unit *enemyUnit = boxClicked->getContent();
+void BoardController::onClickAttack(Box* boxClicked) {
+  Unit* enemyUnit = boxClicked->getContent();
   if (enemyUnit != nullptr) {
     // Unit clicked if from a different team and in range
     if (enemyUnit->getTeam() != activeUnit_->getTeam() &&

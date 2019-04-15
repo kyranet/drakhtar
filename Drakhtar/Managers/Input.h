@@ -6,6 +6,9 @@
 #include "Utils/Constants.h"
 #include "Utils/Vector2D.h"
 
+class Scene;
+class GameObject;
+
 /**
  * \brief The Input manager that handles keyboard and mouse input. It's the
  * interface between direct SDL2 calls.
@@ -59,6 +62,14 @@ class Input final {
    * \brief The mouse buttons that are currently up.
    */
   std::array<bool, static_cast<size_t>(MouseKey::kKeyLimit)> mouseUp_{};
+
+  /**
+   * \brief The GameObject that was raycasted in the current mouse position.
+   * This is used only to optimize repetitive calls to
+   * Input::screenMouseToRay(), and is assigned to nullptr when the cursor
+   * moves.
+   */
+  GameObject* casted_ = nullptr;
 
  public:
   static Input* instance();
@@ -150,6 +161,8 @@ class Input final {
    * \return Whether or not any alt key is being pressed.
    */
   static bool getAlt();
+
+  static GameObject* screenMouseToRay();
 
   /**
    * \brief Destroys this Input instance, freeing memory.
