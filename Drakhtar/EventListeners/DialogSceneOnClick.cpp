@@ -3,6 +3,6 @@
 #include "DialogSceneOnClick.h"
 #include "GameObjects/DialogScene.h"
 
-void DialogSceneOnClick::onClickStop() {
-  static_cast<DialogScene*>(getGameObject()->getParent())->next();  // NOLINT
+void DialogSceneOnClick::onClickStart() {
+  reinterpret_cast<DialogScene *>(getGameObject()->getParent())->next();
 }

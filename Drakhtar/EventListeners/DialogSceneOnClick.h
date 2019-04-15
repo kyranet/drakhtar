@@ -7,5 +7,5 @@ class DialogSceneOnClick final : public ListenerOnClick {
  public:
   explicit DialogSceneOnClick(GameObject *gameObject)
       : ListenerOnClick(gameObject) {}
-  void onClickStop() override;
+  void onClickStart() override;
 };
