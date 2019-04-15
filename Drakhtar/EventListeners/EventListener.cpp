@@ -2,9 +2,8 @@
 
 #include "EventListener.h"
 
-EventListener::EventListener(GameObject* gameObject) : gameObject_(gameObject) {
-  active_ = true;
-}
+EventListener::EventListener(GameObject* gameObject)
+    : gameObject_(gameObject) {}
 
 GameObject* EventListener::getGameObject() const { return gameObject_; }
 

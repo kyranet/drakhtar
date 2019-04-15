@@ -16,7 +16,7 @@ class EventListener {
   /**
    * \brief Whether or not the listener should process events.
    */
-  bool active_;
+  bool active_ = true;
 
  public:
   /**
