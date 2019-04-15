@@ -12,10 +12,8 @@
 #include "RecruitScene.h"
 
 void buttonPlay() {
-  Game::getSceneMachine()->getCurrentScene()->processNextTick([]() {
-    Game::getSceneMachine()->changeScene(new TransitionScene(1));
-    SDLAudioManager::getInstance()->playChannel(2, 0, 0);
-  });
+  Game::getSceneMachine()->changeScene(new TransitionScene(1));
+  SDLAudioManager::getInstance()->playChannel(2, 0, 0);
 }
 
 void buttonOptions() { std::cout << "Options\n"; }
