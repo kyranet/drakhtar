@@ -135,6 +135,6 @@ void UnitStoreController::onClickStop() {
   const auto scene = reinterpret_cast<RecruitScene *>(
       Game::getSceneMachine()->getCurrentScene());
   scene->addGameObject(
-      new RecruitmentStat(scene, SDL_Rect{100, 100, 110, 110}, selectedUnit_));
+      new RecruitmentStat(scene, SDL_Rect{100, 100, 170, 110}, selectedUnit_));
   // TODO(Carlos): Show and update Unit Parameters Sheet
 }

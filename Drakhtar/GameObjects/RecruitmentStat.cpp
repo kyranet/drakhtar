@@ -22,8 +22,8 @@ RecruitmentStat::RecruitmentStat(Scene *scene, const SDL_Rect BoxArea,
   std::string statText_ = fillText();
   const auto statTextSprite = new Text(
       scene_, FontManager::get("Retron2000"),
-      Vector2D<int>(boxImage->getPosition().getX() - boxImage->getRect().w / 3,
-                    boxImage->getPosition().getY() - boxImage->getRect().h / 3),
+      Vector2D<int>(boxImage->getPosition().getX() - boxImage->getRect().w / 30,
+                    boxImage->getPosition().getY() - boxImage->getRect().h / 10),
       {0, 0, 0, 1}, statText_, BoxArea.w * 0.9);
   addChild(statTextSprite);
   active_ = true;
@@ -37,9 +37,13 @@ void RecruitmentStat::render() const {
 
 std::string RecruitmentStat::fillText() {
   const auto unit = reinterpret_cast<Unit *>(currentSelected_->unit);
-  std::string text = "Amount " + std::to_string(currentSelected_->amount) + "\n" +
-         std::to_string(unit->getBaseStats().attack);
+  std::string text = "Unit type: " + currentSelected_->type + "\n";
+  text+= "Total amount: " + std::to_string(currentSelected_->amount) + "\n";
+  text += "Attack-> " + std::to_string(unit->getBaseStats().attack) + "\n";
+  text += "Defense-> " + std::to_string(unit->getBaseStats().defense) + "\n";
+  text += "Speed-> " + std::to_string(unit->getBaseStats().speed) + "\n";
   return text;
 }
 
 RecruitmentStat::~RecruitmentStat() {}
+
