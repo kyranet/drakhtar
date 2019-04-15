@@ -1,12 +1,12 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
-#include "BoardController.h"
+#include "PlayerController.h"
+#include <iostream>
 #include "GameObjects/Board.h"
 #include "GameObjects/Box.h"
 #include "GameObjects/TurnBar.h"
 #include "GameObjects/Unit.h"
 #include "Managers/GameManager.h"
-#include "Managers/Input.h"
 #include "Managers/SDLAudioManager.h"
 #include "Scenes/GameScene.h"
 #include "Structures/Team.h"
@@ -14,36 +14,19 @@
 #include "Structures/Tween.h"
 #include "Utils/Constants.h"
 
-BoardController::BoardController(Board *board, TurnBar *turnBar,
+PlayerController::PlayerController(Board *board, TurnBar *turnBar,
                                  GameScene *scene)
-    : TeamController(board, turnBar, scene) {
-  activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
+    : ListenerOnClick(board), UnitsController(board, turnBar, scene) {
+	activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
   board_->highlightCellsInRange(activeUnit_->getBox(),
-                                activeUnit_->getStats().moveRange);
+                                activeUnit_->getMoveRange());
   board_->highlightEnemiesInRange(activeUnit_->getBox(),
-                                  activeUnit_->getStats().attackRange);
+                                  activeUnit_->getAttackRange());
 }
 
-// TODO(kyranet): This is far from nice, it should be an update method to avoid
-//  calling this many times a tick as it's a expensive operation.
-void BoardController::run(const SDL_Event) {
-  if (!Input::isMouseButtonDown(MouseKey::LEFT)) return;
-
-  const auto gameObject = Input::screenMouseToRay();
-  if (!gameObject) return;
-
-  // Ignore Unit's "hitboxes" and assume it's a click to the board, so get the
-  // box at the mouse's coordinates
-  const auto unit = dynamic_cast<Unit*>(gameObject);
-  const auto box = unit ? board_->getBoxAtCoordinates(Input::getMousePosition())
-                        : dynamic_cast<Box*>(gameObject);
-  if (!box) return;
-
-  if (!hasMoved_ && box->isEmpty()) {
-    onClickMove(box);
-  } else if (!hasAttacked_) {
-    onClickAttack(box);
-  }
+void PlayerController::run(const SDL_Event event) {
+  // Captures mouse event
+  ListenerOnClick::run(event);
 
   // If no actions left, reset and skip turn
   if (hasMoved_ && hasAttacked_) {
@@ -51,13 +34,25 @@ void BoardController::run(const SDL_Event) {
   }
 }
 
-void BoardController::onClickMove(Box* boxClicked) {
+void PlayerController::onClickStop(const SDL_Point point) {
+  const auto boxClicked = board_->getBoxAtCoordinates(point);
+
+  if (boxClicked != nullptr) {
+    if (boxClicked->isEmpty() && !hasMoved_) {
+      onClickMove(boxClicked);
+    } else if (!hasAttacked_) {
+      onClickAttack(boxClicked);
+    }
+  }
+}
+
+void PlayerController::onClickMove(Box *boxClicked) {
   // If this BoardController is stopped, don't run
   if (isTweening_) return;
 
   // Checks if the box clicked is within movement range
   if (board_->isInMoveRange(activeUnit_->getBox(), boxClicked,
-                            activeUnit_->getStats().moveRange)) {
+                            activeUnit_->getMoveRange())) {
     const auto path = board_->findPath(activeUnit_->getBox()->getIndex(),
                                        boxClicked->getIndex());
 
@@ -70,20 +65,19 @@ void BoardController::onClickMove(Box* boxClicked) {
         ->setDuration(static_cast<int>(
             floor(static_cast<double>(path.size()) * GAME_FRAMERATE * 0.25)))
         ->setOnUpdate([unit](Vector2D<double> updated) {
-          unit->setPosition({static_cast<int>(floor(updated.getX())),
-                             static_cast<int>(floor(updated.getY()))});
+          unit->setPosition({static_cast<int>(std::floor(updated.getX())),
+                             static_cast<int>(std::floor(updated.getY()))});
         })
         ->setOnComplete([this, unit, boxClicked]() {
           unit->moveToBox(boxClicked);
           hasMoved_ = true;
           isTweening_ = false;
           // If there are enemies in range, highlight them, otherwise skip turn
-          if (board_->isEnemyInRange(boxClicked,
-                                     unit->getStats().attackRange)) {
+          if (board_->isEnemyInRange(boxClicked, unit->getAttackRange())) {
             board_->resetCellsToBase();
             unit->getBox()->setCurrentTexture(TextureInd::ACTIVE);
             board_->highlightEnemiesInRange(unit->getBox(),
-                                            unit->getStats().attackRange);
+                                            unit->getAttackRange());
             SDLAudioManager::getInstance()->setChannelVolume(30, 0);
             SDLAudioManager::getInstance()->playChannel(4, 0, 0);
           } else {
@@ -96,21 +90,21 @@ void BoardController::onClickMove(Box* boxClicked) {
   }
 }
 
-void BoardController::onClickAttack(Box* boxClicked) {
-  Unit* enemyUnit = boxClicked->getContent();
+void PlayerController::onClickAttack(Box *boxClicked) {
+  Unit *enemyUnit = boxClicked->getContent();
   if (enemyUnit != nullptr) {
     // Unit clicked if from a different team and in range
     if (enemyUnit->getTeam() != activeUnit_->getTeam() &&
         board_->isInRange(activeUnit_->getBox(), boxClicked,
-                          activeUnit_->getStats().attackRange)) {
+                          activeUnit_->getAttackRange())) {
       // enemyUnit->loseHealth(activeUnit_->getAttack());
       activeUnit_->attack(enemyUnit, false);
       SDLAudioManager::getInstance()->playChannel(5, 0, 0);
 
       // Enemy dies
-      if (enemyUnit->getStats().health <= 0) {
+      if (enemyUnit->getHealth() == 0) {
         if (enemyUnit->getTeam()->getColor() == Color::RED) {
-          GameManager::getInstance()->addMoney(enemyUnit->getStats().prize);
+          GameManager::getInstance()->addMoney(enemyUnit->getPrize());
         }
         boxClicked->setContent(nullptr);
         turnBar_->eraseUnit(enemyUnit);
@@ -121,12 +115,12 @@ void BoardController::onClickAttack(Box* boxClicked) {
       board_->resetCellsToBase();
       activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
       board_->highlightCellsInRange(activeUnit_->getBox(),
-                                    activeUnit_->getStats().moveRange);
+                                    activeUnit_->getMoveRange());
       hasAttacked_ = true;
     }
 
     // Unit dies to counter-attack
-    if (activeUnit_->getStats().health == 0) {
+    if (activeUnit_->getHealth() == 0) {
       activeUnit_->getBox()->setContent(nullptr);
       turnBar_->eraseUnit(activeUnit_);
       scene_->removeGameObject(activeUnit_);
@@ -135,7 +129,7 @@ void BoardController::onClickAttack(Box* boxClicked) {
   }
 }
 
-void BoardController::advanceTurn() {
+void PlayerController::advanceTurn() {
   board_->resetCellsToBase();
   hasMoved_ = hasAttacked_ = false;
   turnBar_->advanceTurn();
@@ -143,7 +137,7 @@ void BoardController::advanceTurn() {
 
   activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
   board_->highlightCellsInRange(activeUnit_->getBox(),
-                                activeUnit_->getStats().moveRange);
+                                activeUnit_->getMoveRange());
   board_->highlightEnemiesInRange(activeUnit_->getBox(),
-                                  activeUnit_->getStats().attackRange);
+                                  activeUnit_->getAttackRange());
 }

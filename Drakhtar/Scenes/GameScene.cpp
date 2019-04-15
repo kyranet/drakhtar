@@ -3,7 +3,7 @@
 #include "GameScene.h"
 #include <fstream>
 #include "Errors/DrakhtarError.h"
-#include "EventListeners/BoardController.h"
+#include "EventListeners/PlayerController.h"
 #include "GameObjects/Button.h"
 #include "GameObjects/Commanders/Thassa.h"
 #include "GameObjects/Commanders/Zamdran.h"
@@ -119,6 +119,8 @@ void GameScene::preload() {
   addGameObject(skipTurnButton);
   addGameObject(pauseButton);
   addGameObject(battleCryButton);
+
+  board->addEventListener(new PlayerController(board, turnBar, this));
 
   if (battle_ == 1) {
     const auto tutorialSequence =

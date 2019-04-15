@@ -1,7 +1,6 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-#include "ListenerOnClick.h"
 #include "SDL.h"
 
 class TurnBar;
@@ -10,7 +9,7 @@ class GameScene;
 class Board;
 class Box;
 
-class TeamController : public ListenerOnClick {
+class UnitsController {
  protected:
   /**
    * \brief A pointer to the game board.
@@ -48,7 +47,7 @@ class TeamController : public ListenerOnClick {
   bool isTweening_ = false;
 
  public:
-  TeamController(Board *board, TurnBar *turnBar, GameScene *scene);
+  UnitsController(Board *board, TurnBar *turnBar, GameScene *scene);
 
   /**
    * \brief Is called every time an event is capture to process it.
