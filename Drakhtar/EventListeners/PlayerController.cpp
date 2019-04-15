@@ -26,7 +26,7 @@ PlayerController::PlayerController(Board* board, TurnBar* turnBar,
 }
 
 void PlayerController::run(const SDL_Event event) {
-  if (getActive()) return;
+  if (!getActive()) return;
   if (!Input::isMouseButtonDown(MouseKey::LEFT)) return;
 
   const auto gameObject = Input::screenMouseToRay();
