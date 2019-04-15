@@ -15,8 +15,7 @@
 #include "Utils/Vector2D.h"
 
 void buttonStartGame() {
-  Game::getSceneMachine()->getCurrentScene()->processNextTick(
-      []() { Game::getSceneMachine()->changeScene(new TransitionScene(2)); });
+  Game::getSceneMachine()->changeScene(new TransitionScene(2));
 }
 
 void RecruitScene::preload() {
