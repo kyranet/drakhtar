@@ -164,6 +164,8 @@ Game::Game() {
   textures->add("Transition-Map1", "../images/Maps/TestMap.png", 1, 1);
   textures->add("Transition-Map2", "../images/Transition/Transition_2.png", 1,
                 1);
+  textures->add("Transition-Menu", "../images/Transition/Transition_1.png", 4,
+                1);
 
   // Recruitment
   textures->add("Recruitment-Background",

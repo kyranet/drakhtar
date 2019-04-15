@@ -23,7 +23,7 @@ void buttonOptions() { std::cout << "Options\n"; }
 void MenuScene::preload() {
   Scene::preload();
   const auto background =
-      new GameObject(this, TextureManager::get("Maps-2Battle"),
+      new GameObject(this, TextureManager::get("Transition-Menu"),
                      Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
                      Vector2D<int>(WIN_WIDTH, WIN_HEIGHT));
   const auto play = new Button(
