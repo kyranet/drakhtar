@@ -98,7 +98,6 @@ void RecruitScene::updateTotalCostText(const int amount) const {
 void RecruitScene::addUnit(std::string textureName, int position) {
   position -= 3;
 
-
   // 4.5 base distance
   // 1280 /  3.47  = 368 = center
   // 1280 / 12.8   = 100 = separator
@@ -146,13 +145,12 @@ void RecruitScene::addUnit(std::string textureName, int position) {
     ++it;
   }
   const auto unit =
-	  new GameObject(this, TextureManager::get(textureName),
-		  Vector2D<int>(static_cast<int>(WIN_WIDTH / 9.5),
-			  WIN_HEIGHT / 2 + WIN_HEIGHT / 6 * position),
-		  Vector2D<int>(WIN_HEIGHT / 6, WIN_HEIGHT / 6));
+      new GameObject(this, TextureManager::get(textureName),
+                     Vector2D<int>(static_cast<int>(WIN_WIDTH / 9.5),
+                                   WIN_HEIGHT / 2 + WIN_HEIGHT / 6 * position),
+                     Vector2D<int>(WIN_HEIGHT / 6, WIN_HEIGHT / 6));
   addGameObject(unit);
   controller_->addUnitToStore(type, unit, text, moreButton, lessButton);
- 
 }
 
 std::string RecruitScene::moneyToString() const {

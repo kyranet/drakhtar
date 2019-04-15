@@ -4,7 +4,7 @@
 #include "../Structures/Font.h"
 #include "../Utils/Constants.h"
 RecruitmentStat::RecruitmentStat(Scene *scene, SDL_Rect BoxArea,
-                                 StoreUnit* controller)
+                                 StoreUnit *controller)
     : GameObject(scene, nullptr, Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
                  Vector2D<int>(1, 1)),
       currentSelected_(controller) {

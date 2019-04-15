@@ -3,12 +3,12 @@
 #include "UnitStoreController.h"
 #include "../Scenes/RecruitScene.h"
 #include "../Structures/Game.h"
+#include "GameObjects/RecruitmentStat.h"
 #include "GameObjects/Text.h"
 #include "Managers/GameManager.h"
 #include "Managers/Input.h"
 #include "Managers/TextureManager.h"
 #include "Utils/Constants.h"
-#include "GameObjects/RecruitmentStat.h"
 
 UnitStoreController::UnitStoreController(GameObject* gameObject)
     : ListenerOnClick(gameObject) {
@@ -132,7 +132,9 @@ void UnitStoreController::onClickStop() {
   if (!found) return;
 
   selectedUnit_ = unitStore_[i];
-  const auto scene = reinterpret_cast<RecruitScene*>(Game::getSceneMachine()->getCurrentScene());
-  scene->addGameObject(new RecruitmentStat(scene, SDL_Rect{ 20,20,20,20 }, selectedUnit_));
+  const auto scene = reinterpret_cast<RecruitScene *>(
+      Game::getSceneMachine()->getCurrentScene());
+  scene->addGameObject(
+      new RecruitmentStat(scene, SDL_Rect{20, 20, 20, 20}, selectedUnit_));
   // TODO(Carlos): Show and update Unit Parameters Sheet
 }
