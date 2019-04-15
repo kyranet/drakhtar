@@ -19,7 +19,7 @@ class PlayerController final : public UnitsController, public ListenerOnClick {
    * if the active unit should move or attack.
    * \param point: The SDL_Point in the window where the click was made.
    */
-  void onClickStop(SDL_Point point) override;
+  void onClickStop() override;
 
   /**
    * \brief Moves active unit to an empty cell within range.

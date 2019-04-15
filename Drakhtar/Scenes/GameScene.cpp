@@ -86,8 +86,8 @@ void GameScene::preload() {
   const auto dialog =
       new DialogScene(this, "dialog" + std::to_string(battle_), "DialogFont");
 
-  boardController_ = new BoardController(board_, turnBar, this);
-  board_->addEventListener(boardController_);
+  playerController_ = new PlayerController(board, turnBar, this);
+  board->addEventListener(playerController_);
 
   const auto skipTurnButton =
       new Button(this, TextureManager::get("Button-SkipTurn"),
@@ -119,8 +119,6 @@ void GameScene::preload() {
   addGameObject(skipTurnButton);
   addGameObject(pauseButton);
   addGameObject(battleCryButton);
-
-  board->addEventListener(new PlayerController(board, turnBar, this));
 
   if (battle_ == 1) {
     const auto tutorialSequence =
