@@ -57,12 +57,6 @@ class BoardController final : public ListenerOnClick {
   void run(SDL_Event event) override;
 
   /**
-   * \brief Checks if the click was in a box or outside the board and determines
-   * if the active unit should move or attack.
-   */
-  void onClickStop() override;
-
-  /**
    * \brief Moves active unit to an empty cell within range.
    * \param boxClicked: The box where the unit should move.
    */

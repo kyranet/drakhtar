@@ -29,21 +29,23 @@ void BoardController::run(const SDL_Event event) {
   // Captures mouse event
   ListenerOnClick::run(event);
 
+  if (!Input::isMouseButtonDown(MouseKey::LEFT)) return;
+
+  const auto gameObject = Input::screenMouseToRay();
+  if (!gameObject) return;
+
+  const auto box = dynamic_cast<Box *>(gameObject);
+  if (!box) return;
+
+  if (box->isEmpty() && !hasMoved_) {
+    onClickMove(box);
+  } else if (!hasAttacked_) {
+    onClickAttack(box);
+  }
+
   // If no actions left, reset and skip turn
   if (hasMoved_ && hasAttacked_) {
     advanceTurn();
-  }
-}
-
-void BoardController::onClickStop() {
-  const auto boxClicked = board_->getBoxAtCoordinates(Input::getMousePosition());
-
-  if (boxClicked != nullptr) {
-    if (boxClicked->isEmpty() && !hasMoved_) {
-      onClickMove(boxClicked);
-    } else if (!hasAttacked_) {
-      onClickAttack(boxClicked);
-    }
   }
 }
 
