@@ -1,3 +1,4 @@
+// Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 #include "RecruitmentStat.h"
 #include "../Managers/FontManager.h"
 #include "../Managers/TextureManager.h"
