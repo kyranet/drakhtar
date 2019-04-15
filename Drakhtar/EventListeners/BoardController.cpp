@@ -25,19 +25,22 @@ BoardController::BoardController(Board *board, TurnBar *turnBar,
                                   activeUnit_->getStats().attackRange);
 }
 
-void BoardController::run(const SDL_Event event) {
-  // Captures mouse event
-  ListenerOnClick::run(event);
-
+// TODO(kyranet): This is far from nice, it should be an update method to avoid
+//  calling this many times a tick as it's a expensive operation.
+void BoardController::run(const SDL_Event) {
   if (!Input::isMouseButtonDown(MouseKey::LEFT)) return;
 
   const auto gameObject = Input::screenMouseToRay();
   if (!gameObject) return;
 
-  const auto box = dynamic_cast<Box *>(gameObject);
+  // Ignore Unit's "hitboxes" and assume it's a click to the board, so get the
+  // box at the mouse's coordinates
+  const auto unit = dynamic_cast<Unit *>(gameObject);
+  const auto box = unit ? board_->getBoxAtCoordinates(Input::getMousePosition())
+                        : dynamic_cast<Box *>(gameObject);
   if (!box) return;
 
-  if (box->isEmpty() && !hasMoved_) {
+  if (!hasMoved_ && box->isEmpty()) {
     onClickMove(box);
   } else if (!hasAttacked_) {
     onClickAttack(box);
@@ -67,7 +70,9 @@ void BoardController::onClickMove(Box *boxClicked) {
         ->create()
         ->setRoute(board_->pathToRoute(path))
         ->setDuration(static_cast<int>(
-            floor(static_cast<double>(path.size()) * GAME_FRAMERATE * 0.25)))
+                          floor(
+                              static_cast<double>(path.size()) * GAME_FRAMERATE
+                                  * 0.25)))
         ->setOnUpdate([unit](Vector2D<double> updated) {
           unit->setPosition({static_cast<int>(floor(updated.getX())),
                              static_cast<int>(floor(updated.getY()))});
