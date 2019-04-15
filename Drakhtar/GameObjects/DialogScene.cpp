@@ -75,16 +75,14 @@ void DialogScene::next() {
   } else {
     destroy();
     if (Game::getSceneMachine()->getCurrentScene()->getTransition())
-      Game::getSceneMachine()->getCurrentScene()->processNextTick(
-          []() { Game::getSceneMachine()->changeScene(new GameScene(1)); });
+      Game::getSceneMachine()->changeScene(new GameScene(1));
   }
 }
 
 void DialogScene::skip() {
   destroy();
   if (Game::getSceneMachine()->getCurrentScene()->getTransition())
-    Game::getSceneMachine()->getCurrentScene()->processNextTick(
-        []() { Game::getSceneMachine()->changeScene(new GameScene(1)); });
+    Game::getSceneMachine()->changeScene(new GameScene(1));
 }
 
 void DialogScene::readFromFile(const std::string& filename, Font* textFont,

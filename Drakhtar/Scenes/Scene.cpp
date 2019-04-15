@@ -1,24 +1,30 @@
+#include <utility>
+
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
-#include "Scene.h"
 #include "../Scenes/RecruitScene.h"
 #include "Errors/SDLError.h"
 #include "GameObjects/GameObject.h"
 #include "Managers/Input.h"
 #include "Managers/TextureManager.h"
 #include "SDL.h"
+#include "Scene.h"
 #include "Structures/Game.h"
 #include "Utils/Constants.h"
 #include "Utils/TimePool.h"
 
 Scene::Scene() = default;
-Scene::~Scene() { Scene::finish(); }
+Scene::~Scene() = default;
 
 bool Scene::getTransition() const { return transition_; }
 
 void Scene::setTransition(const bool transition) { transition_ = transition; }
 
-bool Scene::isFinished() const { return exit_; }
+void Scene::setOnEndHandler(std::function<void()> callback) {
+  onEndHandler_ = std::move(callback);
+}
+
+bool Scene::isFinished() const { return finished_; }
 bool Scene::isRunning() const { return !paused_; }
 bool Scene::isPaused() const { return paused_; }
 bool Scene::isLoaded() const { return loaded_; }
@@ -39,6 +45,8 @@ void Scene::run() {
   auto poolAnimation =
       new TimePool(1000 / ANIMATION_TICKS_PER_SECOND, SDL_GetTicks());
   auto poolFrameRate = new TimePool(1000 / GAME_FRAMERATE, SDL_GetTicks());
+
+  // Run the event loop
   while (!isFinished()) {
     if (poolAnimation->next(SDL_GetTicks())) {
       TextureManager::getInstance()->tick();
@@ -46,11 +54,6 @@ void Scene::run() {
 
     create();
     handleEvents();
-
-    // If it has received a SDL_QUIT, don't process the event loop any further
-    if (exit_) break;
-
-    // Otherwise continue the event loop
     update();
     render();
     destroy();
@@ -92,33 +95,24 @@ void Scene::create() {
 }
 
 void Scene::handleEvents() {
-  SDL_Event event;
+  // Clear the Input's cache
   Input::instance()->clear();
 
+  // Handle all events
+  SDL_Event event;
   while (SDL_PollEvent(&event)) {
-    if (event.type == SDL_QUIT) {
-      exit_ = true;
-      break;
-    }
+    if (event.type == SDL_QUIT) return finish(true);
 
     Input::instance()->update(event);
-    for (auto gameObject : gameObjects_) {
-      gameObject->handleEvents(event);
-
-      // Some event handlers can change the exit_ state, which causes several
-      // issues as this loop will keep running when it's supposed to stop. This
-      // cannot be done with a for loop using iterators, but only making it so
-      // it checks for exit_ and breaking before increasing it.
-      if (exit_) break;
-    }
+    for (auto gameObject : gameObjects_) gameObject->handleEvents(event);
   }
 
-  if (Input::isKeyDown(KeyboardKey::ESCAPE)) {
-    Game::getSceneMachine()->getCurrentScene()->pause();
-  }
+  // If the escape key was pressed, pause the game
+  if (Input::isKeyDown(KeyboardKey::ESCAPE)) pause();
 
+  // If the F key was pressed, toggle fullscreen
   if (Input::isKeyDown(KeyboardKey::F)) {
-    SDL_Window *window_ = Game::getWindow();
+    SDL_Window* window_ = Game::getWindow();
     const auto flags = SDL_GetWindowFlags(window_);
     const auto flag = flags & SDL_WINDOW_FULLSCREEN ? 0 : SDL_WINDOW_FULLSCREEN;
     if (SDL_SetWindowFullscreen(window_, flag) != 0) {
@@ -166,49 +160,42 @@ void Scene::destroy() {
 }
 
 void Scene::end() {
-  finish();
-  // This is logic, as this is run at the end of the event loop, finishing and
-  // deleting the object early can cause several issues as the Scene has not
-  // been done yet with its job, so makes sense to put it here so it finishes
-  // all its remaining tasks.
-  // Also, it's safe to delete this because finish() removes this instance from
-  // the SceneMachine, so there are no memory leaks.
-  delete this;
+  // Delete the Scene's cache.
+  for (auto gameObject : gameObjects_) delete gameObject;
+  gameObjects_.clear();
+
+  onEndHandler_();
 }
 
 void Scene::resume() {
   paused_ = false;
   run();
 }
+
 void Scene::pause() { paused_ = true; }
 
-void Scene::skipTurn() {}
-
-void Scene::finish() {
-  if (finished_) return;
+void Scene::finish(bool force) {
+  if (force) {
+    Game::getSceneMachine()->popScene();
+    return;
+  }
 
   finished_ = true;
   paused_ = true;
-  exit_ = true;
-
-  for (auto gameObject : gameObjects_) delete gameObject;
-  gameObjects_.clear();
-
-  Game::getSceneMachine()->popScene();
 }
 
-std::list<GameObject *> Scene::getGameObjects() const { return gameObjects_; }
+std::list<GameObject*> Scene::getGameObjects() const { return gameObjects_; }
 
-void Scene::addGameObject(GameObject *gameObject) {
+void Scene::addGameObject(GameObject* gameObject) {
   pendingOnCreate_.push_back(gameObject);
 }
 
-void Scene::removeGameObject(GameObject *gameObject) {
+void Scene::removeGameObject(GameObject* gameObject) {
   pendingOnDestroy_.push_back(gameObject);
 }
 
-void Scene::processNextTick(NextTickCallback *callback) {
+void Scene::processNextTick(NextTickCallback* callback) {
   nextTick_.push_back(callback);
 }
 
-TweenManager *Scene::getTweenManager() const { return tweenManager_; }
+TweenManager* Scene::getTweenManager() const { return tweenManager_; }
