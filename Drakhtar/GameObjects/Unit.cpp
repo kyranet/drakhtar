@@ -32,7 +32,7 @@ Unit::Unit(Scene *scene, Texture *texture, Box *box, UnitStats stats,
 
   healthText_ =
       new Text(scene, FontManager::get("UnitFont"),
-               {rect.x + rect.w / 2 + rect.w / 16, rect.y - rect.h / 3},
+               {rect.x + rect.w / 2 + rect.w / 14, rect.y - rect.h / 3},
                textColor, healthToString(), rect.w * 2);
 
   healthBar_ = new HealthBar(
@@ -73,6 +73,8 @@ int Unit::loseHealth(int enemyAttack) {
   health_ = std::max(health_ - enemyAttack, 0);
   stats_.health -= enemyAttack;
   healthText_->setText(healthToString());
+  const SDL_Color textColor = { 255, 255, 255, 0 };
+  healthText_->setColor(textColor);
   healthBar_->takeDamage(getStats().health);
   return enemyAttack;
 }
