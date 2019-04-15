@@ -4,5 +4,5 @@
 #include "GameObjects/Base/Sequence.h"
 
 void DialogSceneOnClick::onClickStop() {
-  reinterpret_cast<Sequence *>(getGameObject()->getParent())->next();
+  reinterpret_cast<Sequence*>(getGameObject()->getParent())->next();
 }

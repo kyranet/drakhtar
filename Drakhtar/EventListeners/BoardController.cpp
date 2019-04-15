@@ -6,16 +6,16 @@
 #include "GameObjects/TurnBar.h"
 #include "GameObjects/Unit.h"
 #include "Managers/GameManager.h"
+#include "Managers/Input.h"
 #include "Managers/SDLAudioManager.h"
 #include "Scenes/GameScene.h"
 #include "Structures/Team.h"
 #include "Structures/Texture.h"
 #include "Structures/Tween.h"
 #include "Utils/Constants.h"
-#include "Managers/Input.h"
 
-BoardController::BoardController(Board *board, TurnBar *turnBar,
-                                 GameScene *scene)
+BoardController::BoardController(Board* board, TurnBar* turnBar,
+                                 GameScene* scene)
     : ListenerOnClick(board), board_(board), turnBar_(turnBar), scene_(scene) {
   activeUnit_ = turnBar_->getFrontUnit();
   activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
@@ -35,9 +35,9 @@ void BoardController::run(const SDL_Event) {
 
   // Ignore Unit's "hitboxes" and assume it's a click to the board, so get the
   // box at the mouse's coordinates
-  const auto unit = dynamic_cast<Unit *>(gameObject);
+  const auto unit = dynamic_cast<Unit*>(gameObject);
   const auto box = unit ? board_->getBoxAtCoordinates(Input::getMousePosition())
-                        : dynamic_cast<Box *>(gameObject);
+                        : dynamic_cast<Box*>(gameObject);
   if (!box) return;
 
   if (!hasMoved_ && box->isEmpty()) {
@@ -52,10 +52,9 @@ void BoardController::run(const SDL_Event) {
   }
 }
 
-void BoardController::onClickMove(Box *boxClicked) {
+void BoardController::onClickMove(Box* boxClicked) {
   // If this BoardController is stopped, don't run
-  if (isTweening_)
-    return;
+  if (isTweening_) return;
 
   // Checks if the box clicked is within movement range
   if (board_->isInMoveRange(activeUnit_->getBox(), boxClicked,
@@ -70,9 +69,7 @@ void BoardController::onClickMove(Box *boxClicked) {
         ->create()
         ->setRoute(board_->pathToRoute(path))
         ->setDuration(static_cast<int>(
-                          floor(
-                              static_cast<double>(path.size()) * GAME_FRAMERATE
-                                  * 0.25)))
+            floor(static_cast<double>(path.size()) * GAME_FRAMERATE * 0.25)))
         ->setOnUpdate([unit](Vector2D<double> updated) {
           unit->setPosition({static_cast<int>(floor(updated.getX())),
                              static_cast<int>(floor(updated.getY()))});
@@ -100,8 +97,8 @@ void BoardController::onClickMove(Box *boxClicked) {
   }
 }
 
-void BoardController::onClickAttack(Box *boxClicked) {
-  Unit *enemyUnit = boxClicked->getContent();
+void BoardController::onClickAttack(Box* boxClicked) {
+  Unit* enemyUnit = boxClicked->getContent();
   if (enemyUnit != nullptr) {
     // Unit clicked if from a different team and in range
     if (enemyUnit->getTeam() != activeUnit_->getTeam() &&

@@ -5,7 +5,7 @@
 
 class TutorialSceneOnClick final : public ListenerOnClick {
  public:
-  explicit TutorialSceneOnClick(GameObject *gameObject)
+  explicit TutorialSceneOnClick(GameObject* gameObject)
       : ListenerOnClick(gameObject) {}
   void onClickStop() override;
 };

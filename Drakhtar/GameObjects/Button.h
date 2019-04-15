@@ -11,6 +11,6 @@ class Button final : public GameObject {
 
  public:
   Button(Scene* scene, Texture* texture, const Vector2D<int>& pos,
-         const Vector2D<int>& size, std::function<void()>  callback);
+         const Vector2D<int>& size, std::function<void()> callback);
   void update() override;
 };

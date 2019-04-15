@@ -5,9 +5,9 @@
 
 class Sequence : public GameObject {
  public:
-  Sequence(Scene *scene, Texture *texture);
-  Sequence(Scene *scene, Texture *texture, const Vector2D<int> &position,
-           const Vector2D<int> &size);
+  Sequence(Scene* scene, Texture* texture);
+  Sequence(Scene* scene, Texture* texture, const Vector2D<int>& position,
+           const Vector2D<int>& size);
 
   virtual void next() = 0;
   virtual void skip() = 0;

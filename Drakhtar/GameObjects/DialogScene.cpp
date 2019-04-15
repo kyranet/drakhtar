@@ -17,8 +17,8 @@
 #include "Utils/Constants.h"
 
 // default position and size(adjust it to move DialogScene)
-DialogScene::DialogScene(Scene *scene, const std::string &filename,
-                         const std::string &fontFile)
+DialogScene::DialogScene(Scene* scene, const std::string& filename,
+                         const std::string& fontFile)
     : Sequence(scene, nullptr, Vector2D<int>(0, 0), Vector2D<int>(1, 1)) {
   const auto area = GameObject::getRect();
   auto dialogueBackground =
@@ -35,19 +35,17 @@ DialogScene::DialogScene(Scene *scene, const std::string &filename,
       Vector2D<int>(area.w * WIN_WIDTH / 8, area.h * WIN_HEIGHT / 20));
   const auto arrow = new GameObject(
       scene_, TextureManager::get("UI-dialogueArrow"),
-      Vector2D<int>(dialogueBackground->getRect().x +
-                        dialogueBackground->getRect().w / 2,
-                    dialogueBackground->getRect().y + 140),
+      Vector2D<int>(
+          dialogueBackground->getRect().x + dialogueBackground->getRect().w / 2,
+          dialogueBackground->getRect().y + 140),
       Vector2D<int>(area.w * WIN_WIDTH / 8, area.h * WIN_HEIGHT / 10));
   const auto skipButton = new Button(
       scene_, TextureManager::get("Button-Skip"),
       Vector2D<int>(static_cast<int>(dialogueBackground->getRect().x +
-                        dialogueBackground->getRect().w / 1.05),
+                                     dialogueBackground->getRect().w / 1.05),
                     dialogueBackground->getRect().y + 140),
       Vector2D<int>(area.w * WIN_WIDTH / 30, area.h * WIN_HEIGHT / 24),
-      [this]() {
-        skip();
-      });
+      [this]() { skip(); });
 
   addChild(nameBackground);
   addChild(dialogueBackground);
@@ -63,8 +61,7 @@ DialogScene::DialogScene(Scene *scene, const std::string &filename,
 }
 
 DialogScene::~DialogScene() {
-  for (auto dialog : dialogues_)
-    delete dialog;
+  for (auto dialog : dialogues_) delete dialog;
 }
 
 void DialogScene::render() const {
@@ -90,13 +87,12 @@ void DialogScene::skip() {
         []() { Game::getSceneMachine()->changeScene(new GameScene(1)); });
 }
 
-void DialogScene::readFromFile(const std::string &filename, Font *textFont,
+void DialogScene::readFromFile(const std::string& filename, Font* textFont,
                                const SDL_Rect rect) {
   std::ifstream file;
   file.open(filename);
 
-  if (!file.is_open())
-    throw DrakhtarError("Could not find file");
+  if (!file.is_open()) throw DrakhtarError("Could not find file");
 
   size_t lines;
   file >> lines;

@@ -22,7 +22,7 @@ class ListenerOnClick : public EventListener {
    * \brief Creates a ListenerOnClick event listener.
    * \param gameObject The GameObject that listens to this instance.
    */
-  explicit ListenerOnClick(GameObject *gameObject)
+  explicit ListenerOnClick(GameObject* gameObject)
       : EventListener(gameObject) {}
 
   /**
