@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "GameScene.h"
+#include <fstream>
 #include "Errors/DrakhtarError.h"
 #include "EventListeners/BoardController.h"
 #include "GameObjects/Button.h"
@@ -18,7 +19,6 @@
 #include "Structures/Team.h"
 #include "Structures/UnitFactory.h"
 #include "Utils/Constants.h"
-#include <fstream>
 
 auto audio = SDLAudioManager::getInstance();
 
@@ -57,7 +57,7 @@ void GameScene::preload() {
   team1_->setCommander(thassa);
   addGameObject(thassa);
 
-  std::map<std::string, int> *army = GameManager::getInstance()->getArmy();
+  std::map<std::string, int>* army = GameManager::getInstance()->getArmy();
 
   if ((*army)["Soldier"] > 0)
     addGameObject(
@@ -117,7 +117,6 @@ void GameScene::preload() {
                                     static_cast<int>(WIN_HEIGHT / 14.4)),
                       board_, thassa, 0);
 
-
   addGameObject(turnBar);
   addGameObject(dialog);
   addGameObject(skipTurnButton);
@@ -143,7 +142,6 @@ void GameScene::loadRedTeam(UnitFactory& factory) {
   std::ifstream file;
   file.open("../levels/level-" + std::to_string(battle_) + ".txt");
 
-  
   if (!file.is_open()) throw DrakhtarError("Could not find file");
 
   std::string captainName;
@@ -157,27 +155,27 @@ void GameScene::loadRedTeam(UnitFactory& factory) {
   // row col (for Monster)
 
   file >> captainName;
-  if (file.fail())
-    throw DrakhtarError("File is not a level file");
+  if (file.fail()) throw DrakhtarError("File is not a level file");
 
   int row, col, size;
 
   file >> row >> col;
-  Commander * commander;
+  Commander* commander;
   if (captainName == "Zamdran") {
     commander = factory.newZamdran(team2_, board_->getBoxAt(row, col));
 
-  const auto arrowRainButton =
-      new SkillButton(this, TextureManager::get("Button-BattleCry"),
-                      Vector2D<int>(WIN_WIDTH / 10, WIN_HEIGHT / 18),
-                      Vector2D<int>(static_cast<int>(WIN_WIDTH / 21.6),
-                                    static_cast<int>(WIN_HEIGHT / 14.4)),
+    const auto arrowRainButton =
+        new SkillButton(this, TextureManager::get("Button-BattleCry"),
+                        Vector2D<int>(WIN_WIDTH / 10, WIN_HEIGHT / 18),
+                        Vector2D<int>(static_cast<int>(WIN_WIDTH / 21.6),
+                                      static_cast<int>(WIN_HEIGHT / 14.4)),
                         board_, commander, 0);
     addGameObject(arrowRainButton);
   }
 
   else
-    throw DrakhtarError("File is not a level file or the captain is not implemented");
+    throw DrakhtarError(
+        "File is not a level file or the captain is not implemented");
 
   team2_->setCommander(commander);
   this->addGameObject(commander);
@@ -185,7 +183,7 @@ void GameScene::loadRedTeam(UnitFactory& factory) {
     file >> size >> row >> col;
     addGameObject(factory.newSoldier(team2_, board_->getBoxAt(row, col), size));
   }
-  
+
   if (!file.eof()) {
     file >> size >> row >> col;
     addGameObject(factory.newArcher(team2_, board_->getBoxAt(row, col), size));
@@ -206,9 +204,5 @@ void GameScene::loadRedTeam(UnitFactory& factory) {
     addGameObject(factory.newMonster(team2_, board_->getBoxAt(row, col), size));
   }
 
-
   file.close();
-
-  
-
 }
