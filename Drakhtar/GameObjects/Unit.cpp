@@ -63,7 +63,7 @@ void Unit::moveToBox(Box *newBox) {
   const auto rect = box_->getRect();
   healthText_->setPosition({rect.x + rect.w / 2, rect.y - rect.h / 3});
   healthBar_->moveBar(
-      Vector2D<int>(rect.x + rect.w / 2 + rect.w / 16, rect.y - rect.h / 3));
+      Vector2D<int>(rect.x + rect.w / 2 + rect.w / 14, rect.y - rect.h / 3));
   setMoved(true);
   setMoving(false);
 }
