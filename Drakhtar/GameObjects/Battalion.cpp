@@ -2,6 +2,7 @@
 
 #include "Battalion.h"
 #include "Box.h"
+#include "HealthBar.h"
 #include "Managers/FontManager.h"
 #include "Managers/GameManager.h"
 #include "Scenes/Scene.h"
@@ -14,15 +15,22 @@ Battalion::Battalion(Scene *scene, Texture *texture, Box *box,
     : Unit(scene, texture, box, stats, type), battalionSize_(battalionSize) {
   stats_.health = baseStats_.health * battalionSize_;
 
-  const SDL_Color textColor = {255, 255, 255, 255};
+  const SDL_Color textColor = {255, 255, 255, 0};
+  const SDL_Color sizeColor = {0, 0, 255, 0};
 
   healthText_->setText(healthToString());
 
   const auto rect = box_->getRect();
 
-  sizeText_ = new Text(scene, FontManager::get("Retron2000"),
-                       {rect.x + rect.w / 2, rect.y + rect.h * 5 / 6},
-                       textColor, sizeToString(), rect.w * 2);
+  sizeText_ = new Text(scene, FontManager::get("TutorialFont"),
+                       {rect.x + rect.h / 6, rect.y - rect.h / 3}, textColor,
+                       sizeToString(), rect.w * 2);
+
+  healthText_->setColor(textColor);
+
+  sizeText_->setColor(sizeColor);
+
+  healthBar_->setMaxHP(baseStats_.health * battalionSize);
 }
 
 Battalion::~Battalion() {
@@ -58,8 +66,11 @@ int Battalion::loseHealth(const int enemyAttack) {
     if (this->getTeam()->getColor() == Color::BLUE)
       (*GameManager::getInstance()->getArmy())[this->getType()] =
           battalionSize_;
-    if (battalionSize_ < 0) battalionSize_ = 0;
+    if (battalionSize_ < 0)
+      battalionSize_ = 0;
     sizeText_->setText(sizeToString());
+    const SDL_Color sizeColor = {0, 0, 255, 0};
+    sizeText_->setColor(sizeColor);
   }
   return health;
 }
@@ -70,7 +81,7 @@ void Battalion::moveToBox(Box *box) {
   const auto rect = box_->getRect();
 
   sizeText_->setPosition(
-      Vector2D<int>(rect.x + rect.w / 2, rect.y + rect.h * 4 / 5));
+      Vector2D<int>(rect.x + rect.h / 6, rect.y - rect.h / 3));
 }
 
 void Battalion::render() const {

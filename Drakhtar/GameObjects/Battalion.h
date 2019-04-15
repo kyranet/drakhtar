@@ -7,6 +7,7 @@
 class Scene;
 class Texture;
 class Text;
+class HealthBar;
 
 class Battalion final : public Unit {
   int battalionSize_;

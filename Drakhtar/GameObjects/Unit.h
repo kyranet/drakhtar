@@ -7,6 +7,7 @@
 class Team;
 class Box;
 class Text;
+class HealthBar;
 class Scene;
 
 struct UnitStats {
@@ -29,6 +30,7 @@ class Unit : public GameObject {
  protected:
   Box *box_ = nullptr;
   Text *healthText_ = nullptr;
+  HealthBar* healthBar_ = nullptr;
   int health_;
   std::string healthToString() const;
 
@@ -70,6 +72,7 @@ class Unit : public GameObject {
   virtual void moveToBox(Box *box);
   virtual int loseHealth(int enemyAttack);
   void render() const override;
+  void update() override;
   virtual void attack(Unit *enemy, bool counter);
 
   virtual void onSelect();
