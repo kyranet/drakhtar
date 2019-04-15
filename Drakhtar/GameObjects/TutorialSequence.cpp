@@ -84,6 +84,8 @@ void TutorialSequence::next() {
 void TutorialSequence::skip() { destroy(); }
 
 void TutorialSequence::render() const {
-  GameObject::render();
-  tutorials_.front()->render();
+  if (!tutorials_.empty()) {
+    GameObject::render();
+    tutorials_.front()->render();
+  }
 }
