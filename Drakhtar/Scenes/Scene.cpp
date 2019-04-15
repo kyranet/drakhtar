@@ -117,7 +117,7 @@ void Scene::handleEvents() {
     Game::getSceneMachine()->getCurrentScene()->pause();
   }
 
-  if (!exit_ && Input::isKeyDown(KeyboardKey::F)) {
+  if (Input::isKeyDown(KeyboardKey::F)) {
     SDL_Window *window_ = Game::getWindow();
     const auto flags = SDL_GetWindowFlags(window_);
     const auto flag = flags & SDL_WINDOW_FULLSCREEN ? 0 : SDL_WINDOW_FULLSCREEN;
