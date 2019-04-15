@@ -69,6 +69,8 @@ int Battalion::loseHealth(const int enemyAttack) {
     if (battalionSize_ < 0)
       battalionSize_ = 0;
     sizeText_->setText(sizeToString());
+	const SDL_Color sizeColor = { 0, 0, 255, 0 };
+	sizeText_->setColor(sizeColor);
   }
   return health;
 }
