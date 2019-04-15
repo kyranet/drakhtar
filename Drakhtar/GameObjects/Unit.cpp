@@ -16,12 +16,12 @@ Unit::Unit(Scene *scene, Texture *texture, Box *box, UnitStats stats,
                                box->getRect().y + box->getRect().h / 2),
                  Vector2D<int>(static_cast<int>(box->getRect().w * 2),
                                static_cast<int>(box->getRect().h * 2))),
-	boxPosition_(box->getPosition()),
-	type_(type),
-	box_(box),
-	health_(stats.health),
-	baseStats_(stats),
-	stats_(stats) {
+		boxPosition_(box->getPosition()),
+		type_(type),
+		box_(box),
+		health_(stats.health),
+		baseStats_(stats),
+		stats_(stats) {
   box->setContent(this);
   const SDL_Color textColor = {255, 255, 255, 0};
   const auto rect = box_->getRect();
