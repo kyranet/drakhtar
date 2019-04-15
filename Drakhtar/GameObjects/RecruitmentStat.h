@@ -7,8 +7,10 @@ class Scene;
 class Text;
 class Font;
 class RecruitmentStat : public GameObject {
+private:
+	StoreUnit* currentSelected_;
 public:
-	RecruitmentStat(Scene *scene,SDL_Rect BoxArea, UnitStoreController controller);
+	RecruitmentStat(Scene *scene,SDL_Rect BoxArea, StoreUnit* controller);
 	void writeStat();
 	~RecruitmentStat();
 };

@@ -4,6 +4,7 @@
 #include "Controllers/UnitStoreController.h"
 #include "GameObjects/Button.h"
 #include "GameObjects/GameObject.h"
+#include "GameObjects/RecruitmentStat.h"
 #include "GameObjects/Text.h"
 #include "GameScene.h"
 #include "Managers/FontManager.h"
@@ -13,13 +14,9 @@
 #include "TransitionScene.h"
 #include "Utils/Constants.h"
 #include "Utils/Vector2D.h"
-#include "GameObjects/RecruitmentStat.h"
 
 void buttonStartGame() {
   Game::getSceneMachine()->changeScene(new TransitionScene(2));
-}
-void loadUnitInfo() {
-	Game::getSceneMachine()->getCurrentScene()->addGameObject(new RecruitmentStat(Game::getSceneMachine()->getCurrentScene(), { 20,20,20,20 }));
 }
 
 void RecruitScene::preload() {
@@ -79,12 +76,15 @@ void RecruitScene::preload() {
       Vector2D<int>(static_cast<int>(WIN_WIDTH / 7.5), WIN_HEIGHT / 12),
       buttonStartGame);
 
-  const auto betaInfo =
+  /*const auto betaInfo =
       new Button(this, TextureManager::get("Button-Play"),
                  Vector2D<int>(static_cast<int>(WIN_WIDTH / 9.5),
                                WIN_HEIGHT / 2 + WIN_HEIGHT / 6 * -2),
-                 Vector2D<int>(WIN_HEIGHT / 6, WIN_HEIGHT / 6), loadUnitInfo);
-  addGameObject(betaInfo);
+                 Vector2D<int>(WIN_HEIGHT / 6, WIN_HEIGHT / 6), [this]() {
+                   addGameObject(new RecruitmentStat(
+                       this, SDL_Rect{20, 20, 20, 20}, controller_));
+                 });
+  addGameObject(betaInfo);*/
 
   addGameObject(button);
 }
@@ -98,13 +98,6 @@ void RecruitScene::updateTotalCostText(const int amount) const {
 void RecruitScene::addUnit(std::string textureName, int position) {
   position -= 3;
 
-  const auto unit =
-      new GameObject(this, TextureManager::get(textureName),
-                     Vector2D<int>(static_cast<int>(WIN_WIDTH / 9.5),
-                                   WIN_HEIGHT / 2 + WIN_HEIGHT / 6 * position),
-                     Vector2D<int>(WIN_HEIGHT / 6, WIN_HEIGHT / 6));
-
-  addGameObject(unit);
 
   // 4.5 base distance
   // 1280 /  3.47  = 368 = center
@@ -152,8 +145,14 @@ void RecruitScene::addUnit(std::string textureName, int position) {
     type += (*it);
     ++it;
   }
-
+  const auto unit =
+	  new GameObject(this, TextureManager::get(textureName),
+		  Vector2D<int>(static_cast<int>(WIN_WIDTH / 9.5),
+			  WIN_HEIGHT / 2 + WIN_HEIGHT / 6 * position),
+		  Vector2D<int>(WIN_HEIGHT / 6, WIN_HEIGHT / 6));
+  addGameObject(unit);
   controller_->addUnitToStore(type, unit, text, moreButton, lessButton);
+ 
 }
 
 std::string RecruitScene::moneyToString() const {
