@@ -30,9 +30,6 @@ GameScene::~GameScene() {
 }
 
 void buttonPause() { Game::getSceneMachine()->getCurrentScene()->pause(); }
-void buttonSkipTurn() {
-  Game::getSceneMachine()->getCurrentScene()->skipTurn();
-}
 
 void GameScene::preload() {
   Scene::preload();
@@ -97,7 +94,7 @@ void GameScene::preload() {
                  Vector2D<int>(WIN_WIDTH / 6, WIN_HEIGHT / 18),
                  Vector2D<int>(static_cast<int>(WIN_WIDTH / 21.6),
                                static_cast<int>(WIN_HEIGHT / 14.4)),
-                 buttonSkipTurn);
+                 [this]() { boardController_->advanceTurn(); });
 
   const auto pauseButton =
       new Button(this, TextureManager::get("Button-Pause"),
@@ -137,8 +134,6 @@ void GameScene::pause() {
     Scene::pause();
   }
 }
-
-void GameScene::skipTurn() { boardController_->advanceTurn(); }
 
 void GameScene::loadRedTeam(UnitFactory& factory) {
   std::ifstream file;

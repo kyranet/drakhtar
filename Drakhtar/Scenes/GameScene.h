@@ -20,6 +20,5 @@ class GameScene final : public Scene {
   ~GameScene() override;
   void preload() override;
   void pause() override;
-  void skipTurn() override;
   void loadRedTeam(UnitFactory &factory);
 };
