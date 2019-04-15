@@ -65,16 +65,6 @@ const auto monsterMoveRange = 2;
 const auto monsterSpeed = 1;
 const auto monsterPrize = 50;
 
-// TODO(Miguel): method to get fullscreen , will be implemented in the near
-// future
-/*int flags = SDL_GetWindowFlags(window_);
-if (flags & SDL_WINDOW_FULLSCREEN) {
-        SDL_SetWindowFullscreen(window_, 0);
-}
-else {
-        SDL_SetWindowFullscreen(window_, SDL_WINDOW_FULLSCREEN);
-}*/
-
 enum class KeyboardKey {
   UNKNOWN = SDL_SCANCODE_UNKNOWN,
   RESERVED1 = 1,
