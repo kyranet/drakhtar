@@ -16,7 +16,7 @@ Battalion::Battalion(Scene *scene, Texture *texture, Box *box,
   stats_.health = baseStats_.health * battalionSize_;
 
   const SDL_Color textColor = {255, 255, 255, 0};
-  const SDL_Color sizeColor = { 0, 0, 255, 0 };
+  const SDL_Color sizeColor = {0, 0, 255, 0};
 
   healthText_->setText(healthToString());
 
@@ -69,8 +69,8 @@ int Battalion::loseHealth(const int enemyAttack) {
     if (battalionSize_ < 0)
       battalionSize_ = 0;
     sizeText_->setText(sizeToString());
-	const SDL_Color sizeColor = { 0, 0, 255, 0 };
-	sizeText_->setColor(sizeColor);
+    const SDL_Color sizeColor = {0, 0, 255, 0};
+    sizeText_->setColor(sizeColor);
   }
   return health;
 }
