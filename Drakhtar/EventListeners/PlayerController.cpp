@@ -26,26 +26,27 @@ PlayerController::PlayerController(Board *board, TurnBar *turnBar,
 }
 
 void PlayerController::run(const SDL_Event event) {
-  // Captures mouse event
-  ListenerOnClick::run(event);
+  if (!Input::isMouseButtonDown(MouseKey::LEFT)) return;
+
+  const auto gameObject = Input::screenMouseToRay();
+  if (!gameObject) return;
+
+  // Ignore Unit's "hitboxes" and assume it's a click to the board, so get the
+  // box at the mouse's coordinates
+  const auto unit = dynamic_cast<Unit *>(gameObject);
+  const auto box = unit ? board_->getBoxAtCoordinates(Input::getMousePosition())
+                        : dynamic_cast<Box *>(gameObject);
+  if (!box) return;
+
+  if (!hasMoved_ && box->isEmpty()) {
+    onClickMove(box);
+  } else if (!hasAttacked_) {
+    onClickAttack(box);
+  }
 
   // If no actions left, reset and skip turn
   if (hasMoved_ && hasAttacked_) {
     advanceTurn();
-  }
-}
-
-void PlayerController::onClickStop() {
-  std::cout << "HURRAY";
-  const auto boxClicked =
-      board_->getBoxAtCoordinates(Input::getMousePosition());
-
-  if (boxClicked != nullptr) {
-    if (boxClicked->isEmpty() && !hasMoved_) {
-      onClickMove(boxClicked);
-    } else if (!hasAttacked_) {
-      onClickAttack(boxClicked);
-    }
   }
 }
 

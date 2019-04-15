@@ -15,13 +15,6 @@ class PlayerController final : public UnitsController, public ListenerOnClick {
   void run(SDL_Event event) override;
 
   /**
-   * \brief Checks if the click was in a box or outside the board and determines
-   * if the active unit should move or attack.
-   * \param point: The SDL_Point in the window where the click was made.
-   */
-  void onClickStop() override;
-
-  /**
    * \brief Moves active unit to an empty cell within range.
    * \param boxClicked: The box where the unit should move.
    */

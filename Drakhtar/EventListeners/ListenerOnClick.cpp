@@ -13,10 +13,7 @@ void ListenerOnClick::run(const SDL_Event event) {
       clicked_ = true;
       break;
     case SDL_MOUSEBUTTONUP:
-      asd = getGameObject();
-      asd2 = Input::screenMouseToRay();
       if (Input::screenMouseToRay() != getGameObject()) return;
-      std::cout << "asd";
       if (clicked_) onClickStop();
       clicked_ = false;
       break;
