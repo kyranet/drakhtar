@@ -80,14 +80,7 @@ void GameScene::preload() {
         factory.newMonster(team1_, board_->getBoxAt(0, 6), (*army)["Monster"]));
 
   // Red Team
-  const auto zamdran = factory.newZamdran(team2_, board_->getBoxAt(11, 0));
-  //team2_->setCommander(zamdran);
-  addGameObject(zamdran);
-  addGameObject(factory.newSoldier(team2_, board_->getBoxAt(11, 2), 10));
-  addGameObject(factory.newArcher(team2_, board_->getBoxAt(11, 3), 10));
-  addGameObject(factory.newWizard(team2_, board_->getBoxAt(11, 4), 5));
-  addGameObject(factory.newKnight(team2_, board_->getBoxAt(11, 5), 5));
-  addGameObject(factory.newMonster(team2_, board_->getBoxAt(11, 6), 2));
+  this->loadRedTeam(factory);
 
   // Add the GUI features now
   const auto turnBar =
@@ -124,19 +117,12 @@ void GameScene::preload() {
                                     static_cast<int>(WIN_HEIGHT / 14.4)),
                       board_, thassa, 0);
 
-  const auto arrowRainButton =
-      new SkillButton(this, TextureManager::get("Button-BattleCry"),
-                      Vector2D<int>(WIN_WIDTH / 10, WIN_HEIGHT / 18),
-                      Vector2D<int>(static_cast<int>(WIN_WIDTH / 21.6),
-                                    static_cast<int>(WIN_HEIGHT / 14.4)),
-                      board_, zamdran, 0);
 
   addGameObject(turnBar);
   addGameObject(dialog);
   addGameObject(skipTurnButton);
   addGameObject(pauseButton);
   addGameObject(battleCryButton);
-  addGameObject(arrowRainButton);
 
   const auto tutorialSequence =
       new TutorialSequence(this, "tutorials", "TutorialFont");
@@ -155,7 +141,7 @@ void GameScene::skipTurn() { boardController_->advanceTurn(); }
 
 void GameScene::loadRedTeam(UnitFactory& factory) {
   std::ifstream file;
-  file.open("level-" + std::to_string(battle_));
+  file.open("../levels/level-" + std::to_string(battle_) + ".txt");
 
   
   if (!file.is_open()) throw DrakhtarError("Could not find file");
@@ -174,18 +160,55 @@ void GameScene::loadRedTeam(UnitFactory& factory) {
   if (file.fail())
     throw DrakhtarError("File is not a level file");
 
-  int row, col;
+  int row, col, size;
 
   file >> row >> col;
   Commander * commander;
-  if (captainName == "Zamdran") 
+  if (captainName == "Zamdran") {
     commander = factory.newZamdran(team2_, board_->getBoxAt(row, col));
+
+  const auto arrowRainButton =
+      new SkillButton(this, TextureManager::get("Button-BattleCry"),
+                      Vector2D<int>(WIN_WIDTH / 10, WIN_HEIGHT / 18),
+                      Vector2D<int>(static_cast<int>(WIN_WIDTH / 21.6),
+                                    static_cast<int>(WIN_HEIGHT / 14.4)),
+                        board_, commander, 0);
+    addGameObject(arrowRainButton);
+  }
+
   else
     throw DrakhtarError("File is not a level file or the captain is not implemented");
 
-  
   team2_->setCommander(commander);
+  this->addGameObject(commander);
+  if (!file.eof()) {
+    file >> size >> row >> col;
+    addGameObject(factory.newSoldier(team2_, board_->getBoxAt(row, col), size));
+  }
+  
+  if (!file.eof()) {
+    file >> size >> row >> col;
+    addGameObject(factory.newArcher(team2_, board_->getBoxAt(row, col), size));
+  }
+
+  if (!file.eof()) {
+    file >> size >> row >> col;
+    addGameObject(factory.newWizard(team2_, board_->getBoxAt(row, col), size));
+  }
+
+  if (!file.eof()) {
+    file >> size >> row >> col;
+    addGameObject(factory.newKnight(team2_, board_->getBoxAt(row, col), size));
+  }
+
+  if (!file.eof()) {
+    file >> size >> row >> col;
+    addGameObject(factory.newMonster(team2_, board_->getBoxAt(row, col), size));
+  }
+
 
   file.close();
+
+  
 
 }
