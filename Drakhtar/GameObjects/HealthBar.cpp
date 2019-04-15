@@ -9,7 +9,7 @@ HealthBar::HealthBar(Scene *scene, Vector2D<int> pos, int maxHP)
     : GameObject(scene, TextureManager::get("UI-healthBar_background"), pos,
                  Vector2D<int>(WIN_WIDTH / 20, WIN_HEIGHT / 60)) {
   lifeBar = new GameObject(scene, TextureManager::get("UI-healthBar_life"), pos,
-                           Vector2D<int>(getRect().w, getRect().h));
+                           Vector2D<int>(getRect().w + 1, getRect().h));
   damageBar = new GameObject(scene, TextureManager::get("UI-healthBar_damage"),
                              pos, Vector2D<int>(getRect().w, getRect().h));
   damageBar->setActive(false);
@@ -76,7 +76,8 @@ void HealthBar::takeDamage(int newHealth) {
 
 void HealthBar::moveBar(Vector2D<int> pos) {
   setPosition(pos);
-  lifeBar->setPosition(pos);
+  int widthDifference = getRect().w - lifeBar->getRect().w;
+  lifeBar->setPosition(Vector2D<int>(pos.getX() - (widthDifference/2), pos.getY()));
   damageBar->setPosition(pos);
 }
 
