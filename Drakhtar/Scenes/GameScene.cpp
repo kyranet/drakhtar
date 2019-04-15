@@ -123,9 +123,11 @@ void GameScene::preload() {
   addGameObject(pauseButton);
   addGameObject(battleCryButton);
 
-  const auto tutorialSequence =
-      new TutorialSequence(this, "tutorials", "TutorialFont");
-  addGameObject(tutorialSequence);
+  if (battle_ == 1) {
+    const auto tutorialSequence =
+        new TutorialSequence(this, "tutorials", "TutorialFont");
+    addGameObject(tutorialSequence);
+  }
 }
 
 void GameScene::pause() {
