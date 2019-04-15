@@ -16,12 +16,10 @@
 #include "Structures/Game.h"
 #include "Utils/Constants.h"
 
-void skipDialog() { Game::getSceneMachine()->getCurrentScene()->setSkip(true); }
-
 // default position and size(adjust it to move DialogScene)
 DialogScene::DialogScene(Scene *scene, const std::string &filename,
                          const std::string &fontFile)
-    : GameObject(scene, nullptr, Vector2D<int>(0, 0), Vector2D<int>(1, 1)) {
+    : Sequence(scene, nullptr, Vector2D<int>(0, 0), Vector2D<int>(1, 1)) {
   const auto area = GameObject::getRect();
   auto dialogueBackground =
       new GameObject(scene_, TextureManager::get("UI-dialogueBackground"),
@@ -41,18 +39,20 @@ DialogScene::DialogScene(Scene *scene, const std::string &filename,
                         dialogueBackground->getRect().w / 2,
                     dialogueBackground->getRect().y + 140),
       Vector2D<int>(area.w * WIN_WIDTH / 8, area.h * WIN_HEIGHT / 10));
-  const auto skip = new Button(
+  const auto skipButton = new Button(
       scene_, TextureManager::get("Button-Skip"),
       Vector2D<int>(static_cast<int>(dialogueBackground->getRect().x +
-                                     dialogueBackground->getRect().w / 1.05),
+                        dialogueBackground->getRect().w / 1.05),
                     dialogueBackground->getRect().y + 140),
       Vector2D<int>(area.w * WIN_WIDTH / 30, area.h * WIN_HEIGHT / 24),
-      skipDialog);
+      [this]() {
+        skip();
+      });
 
   addChild(nameBackground);
   addChild(dialogueBackground);
   addChild(arrow);
-  addChild(skip);
+  addChild(skipButton);
 
   dialogueBackground->addEventListener(
       new DialogSceneOnClick(dialogueBackground));
@@ -73,12 +73,7 @@ void DialogScene::render() const {
 }
 
 void DialogScene::next() {
-  if (Game::getSceneMachine()->getCurrentScene()->getSkip()) {
-    destroy();
-    if (Game::getSceneMachine()->getCurrentScene()->getTransition())
-      Game::getSceneMachine()->getCurrentScene()->processNextTick(
-          []() { Game::getSceneMachine()->changeScene(new GameScene(1)); });
-  } else if (dialogueIndex_ < dialogues_.size() - 1) {
+  if (dialogueIndex_ < dialogues_.size() - 1) {
     ++dialogueIndex_;
   } else {
     destroy();
@@ -86,6 +81,13 @@ void DialogScene::next() {
       Game::getSceneMachine()->getCurrentScene()->processNextTick(
           []() { Game::getSceneMachine()->changeScene(new GameScene(1)); });
   }
+}
+
+void DialogScene::skip() {
+  destroy();
+  if (Game::getSceneMachine()->getCurrentScene()->getTransition())
+    Game::getSceneMachine()->getCurrentScene()->processNextTick(
+        []() { Game::getSceneMachine()->changeScene(new GameScene(1)); });
 }
 
 void DialogScene::readFromFile(const std::string &filename, Font *textFont,

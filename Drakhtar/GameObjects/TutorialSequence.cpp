@@ -12,17 +12,9 @@
 #include "TutorialBox.h"
 #include "Utils/Constants.h"
 
-void nextTutorial() {
-  Game::getSceneMachine()->getCurrentScene()->setSkip(false);
-}
-
-void skipTutorial() {
-  Game::getSceneMachine()->getCurrentScene()->setSkip(true);
-}
-
 TutorialSequence::TutorialSequence(Scene *scene, const std::string &filename,
                                    const std::string &fontFile)
-    : GameObject(scene, nullptr, Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
+    : Sequence(scene, nullptr, Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
                  Vector2D<int>(1, 1)) {
   const auto tutorialArea_ = getRect();
 
@@ -36,13 +28,18 @@ TutorialSequence::TutorialSequence(Scene *scene, const std::string &filename,
       new Button(scene_, TextureManager::get("Button-Next"),
                  Vector2D<int>(tutorialArea_.x - WIN_WIDTH / 10,
                                tutorialArea_.y + WIN_HEIGHT / 10),
-                 Vector2D<int>(WIN_WIDTH / 15, WIN_HEIGHT / 21), nextTutorial);
+                 Vector2D<int>(WIN_WIDTH / 15, WIN_HEIGHT / 21),
+                 [this]() {
+                   next();
+                 });
 
   const auto closeButton =
       new Button(scene_, TextureManager::get("Button-Continue"),
                  Vector2D<int>(tutorialArea_.x + WIN_WIDTH / 10,
                                tutorialArea_.y + WIN_HEIGHT / 10),
-                 Vector2D<int>(WIN_WIDTH / 15, WIN_HEIGHT / 21), skipTutorial);
+                 Vector2D<int>(WIN_WIDTH / 15, WIN_HEIGHT / 21), [this]() {
+            skip();
+          });
 
   addChild(dialogueBackground);
   addChild(closeButton);
@@ -80,25 +77,21 @@ void TutorialSequence::readFromFile(const std::string &filename, Font *textFont,
 
   file.close();
 
-  createNextTutorial();
+  if (tutorials_.empty()) destroy();
 }
 
-void TutorialSequence::createNextTutorial() {
-  if (!tutorials_.empty()) {
-    if (Game::getSceneMachine()->getCurrentScene()->getSkip()) {
-      destroy();
-    } else {
-      delete tutorials_.front();
-      tutorials_.pop();
-    }
-  } else {
-    destroy();
-  }
+void TutorialSequence::next() {
+  delete tutorials_.front();
+  tutorials_.pop();
+
+  if (tutorials_.empty()) skip();
+}
+
+void TutorialSequence::skip() {
+  destroy();
 }
 
 void TutorialSequence::render() const {
-  if (!tutorials_.empty()) {
-    GameObject::render();
-    tutorials_.front()->render();
-  }
+  GameObject::render();
+  tutorials_.front()->render();
 }

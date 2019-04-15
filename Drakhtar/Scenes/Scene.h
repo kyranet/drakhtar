@@ -15,7 +15,6 @@ class Scene {
   bool finished_ = false;
   TweenManager *tweenManager_ = nullptr;
   bool transition_ = false;
-  bool skipDialog_ = false;
 
  protected:
   std::list<GameObject *> gameObjects_;
@@ -32,9 +31,7 @@ class Scene {
   bool isPaused() const;
   bool isLoaded() const;
   bool getTransition() const;
-  bool getSkip() const;
   void setTransition(bool transition);
-  void setSkip(bool skip);
   virtual void run();
   virtual void preload();
   virtual void tick();

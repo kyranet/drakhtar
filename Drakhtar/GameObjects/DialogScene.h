@@ -2,13 +2,13 @@
 
 #pragma once
 #include <vector>
-#include "GameObject.h"
+#include "GameObjects/Base/Sequence.h"
 
 class Dialog;
 class Scene;
 class Font;
 
-class DialogScene final : public GameObject {
+class DialogScene final : virtual public Sequence {
   std::vector<Dialog *> dialogues_;
   size_t dialogueIndex_ = 0;  // index of the current position in vector
   int lineJumpLimit_ = 0;     // text line length
@@ -20,6 +20,7 @@ class DialogScene final : public GameObject {
       const std::string &fontFile);  // we set the position of every component
                                      // of the dialog(text and background)
   ~DialogScene();
-  void next();
+  void next() override;
+  void skip() override;
   void render() const override;
 };

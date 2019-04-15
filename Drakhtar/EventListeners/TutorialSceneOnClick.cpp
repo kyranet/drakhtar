@@ -4,6 +4,6 @@
 #include "GameObjects/TutorialSequence.h"
 
 void TutorialSceneOnClick::onClickStop() {
-  static_cast<TutorialSequence *>(getGameObject()->getParent())  // NOLINT
-      ->createNextTutorial();
+  reinterpret_cast<TutorialSequence *>(getGameObject()->getParent())
+      ->next();
 }
