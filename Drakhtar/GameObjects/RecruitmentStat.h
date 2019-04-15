@@ -7,10 +7,9 @@ class Scene;
 class Text;
 class Font;
 class RecruitmentStat : public GameObject {
-private:
   StoreUnit *currentSelected_;
 
-public:
+ public:
   RecruitmentStat(Scene *scene, SDL_Rect BoxArea, StoreUnit *controller);
   void render() const override;
   std::string fillText();
