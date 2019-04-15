@@ -168,8 +168,7 @@ void GameScene::loadRedTeam(UnitFactory& factory) {
                                       static_cast<int>(WIN_HEIGHT / 14.4)),
                         board_, commander, 0);
     addGameObject(arrowRainButton);
-  } else
-    throw DrakhtarError(
+  } else throw DrakhtarError(
         "File is not a level file or the captain is not implemented");
 
   team2_->setCommander(commander);
