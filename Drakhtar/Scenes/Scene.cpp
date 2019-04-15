@@ -1,14 +1,13 @@
-#include <utility>
-
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
-#include "../Scenes/RecruitScene.h"
+#include "Scene.h"
+#include <utility>
 #include "Errors/SDLError.h"
 #include "GameObjects/GameObject.h"
 #include "Managers/Input.h"
 #include "Managers/TextureManager.h"
 #include "SDL.h"
-#include "Scene.h"
+#include "Scenes/RecruitScene.h"
 #include "Structures/Game.h"
 #include "Utils/Constants.h"
 #include "Utils/TimePool.h"
@@ -175,10 +174,7 @@ void Scene::resume() {
 void Scene::pause() { paused_ = true; }
 
 void Scene::finish(bool force) {
-  if (force) {
-    Game::getSceneMachine()->popScene();
-    return;
-  }
+  if (force) return Game::getSceneMachine()->popScene();
 
   finished_ = true;
   paused_ = true;
