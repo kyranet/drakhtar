@@ -9,9 +9,9 @@ class Font;
 class RecruitmentStat : public GameObject {
 private:
   StoreUnit *currentSelected_;
-
 public:
   RecruitmentStat(Scene *scene, SDL_Rect BoxArea, StoreUnit *controller);
-  void writeStat();
+  void render()const override;
+  std::string fillText();
   ~RecruitmentStat();
 };
