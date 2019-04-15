@@ -1,5 +1,6 @@
 .vscode/
 .vs/
+.idea/
 *.exe
 *.ilk
 *.pdb
@@ -10,3 +11,4 @@
 build/
 deps/
 bin/
+cmake-build-debug/

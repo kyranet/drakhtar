@@ -2,19 +2,18 @@
 
 #include "SkillButton.h"
 
-SkillButton::SkillButton(Scene* scene, Texture* texture, Vector2D<int> pos,
-                         Vector2D<int> size, Board* board, Commander* commander,
+SkillButton::SkillButton(Scene *scene, Texture *texture, Vector2D<int> pos,
+                         Vector2D<int> size, Board *board, Commander *commander,
                          int skill)
-    : GameObject(scene, texture, pos, size),
-      board_(board),
-      commander_(commander),
-      skill_(skill) {}
+    : GameObject(scene, texture, pos, size), commander_(commander),
+      skill_(skill), board_(board) {}
 
 void SkillButton::handleEvents(SDL_Event e) {
   // Only handle when it's a left click
   if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT) {
     SDL_Point p = {e.button.x, e.button.y};
-    if (SDL_PointInRect(&p, &getRect())) {
+    const auto rect = getRect();
+    if (SDL_PointInRect(&p, &rect)) {
       commander_->getSkills().at(skill_)->cast(board_);
     }
   }

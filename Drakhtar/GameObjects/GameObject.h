@@ -20,7 +20,6 @@ class GameObject {
   std::vector<EventListener *> eventListeners_;
   std::vector<GameObject *> children_;
   GameObject *parent_ = nullptr;
-  const Vector2D<int> position;
 
  public:
   GameObject(Scene *scene, Texture *texture);
@@ -32,6 +31,8 @@ class GameObject {
   virtual void handleEvents(SDL_Event event);
   GameObject *addEventListener(EventListener *eventListener);
   virtual SDL_Rect getRect() const;
+
+  Scene *getScene() const;
 
   void setActive(bool active);
   bool getActive() const;
@@ -55,4 +56,6 @@ class GameObject {
   void removeChild(GameObject *gameObject);
 
   void destroy();
+
+  GameObject *clickScan(SDL_Point point) const;
 };

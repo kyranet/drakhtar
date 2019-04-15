@@ -15,22 +15,22 @@ class BoardController final : public ListenerOnClick {
   /**
    * \brief A pointer to the game board.
    */
-  Board *board_;
+  Board* board_;
 
   /**
    * \brief A pointer to the game's turn bar.
    */
-  TurnBar *turnBar_;
+  TurnBar* turnBar_;
 
   /**
    * \brief A pointer to the unit that has the turn.
    */
-  Unit *activeUnit_;
+  Unit* activeUnit_;
 
   /**
    * \brief A pointer to the game scene.
    */
-  GameScene *scene_;
+  GameScene* scene_;
 
   /**
    * \brief Whether or not the active unit has already moved this turn.
@@ -48,7 +48,7 @@ class BoardController final : public ListenerOnClick {
   bool isTweening_ = false;
 
  public:
-  BoardController(Board *board, TurnBar *turnBar, GameScene *scene);
+  BoardController(Board* board, TurnBar* turnBar, GameScene* scene);
 
   /**
    * \brief Is called every time an event is capture to process it.
@@ -57,24 +57,17 @@ class BoardController final : public ListenerOnClick {
   void run(SDL_Event event) override;
 
   /**
-   * \brief Checks if the click was in a box or outside the board and determines
-   * if the active unit should move or attack.
-   * \param point: The SDL_Point in the window where the click was made.
-   */
-  void onClickStop(SDL_Point point) override;
-
-  /**
    * \brief Moves active unit to an empty cell within range.
    * \param boxClicked: The box where the unit should move.
    */
-  void onClickMove(Box *boxClicked);
+  void onClickMove(Box* boxClicked);
 
   /**
    * \brief Makes active unit attack another unit clicked
    * \param boxClicked: The box containing the unit that will receive the
    * attack.
    */
-  void onClickAttack(Box *boxClicked);
+  void onClickAttack(Box* boxClicked);
 
   /**
    * \brief Resets board textures, ends unit's turn and updates active unit.

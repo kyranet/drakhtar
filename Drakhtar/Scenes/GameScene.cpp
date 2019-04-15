@@ -75,9 +75,9 @@ void GameScene::preload() {
         factory.newMonster(team1_, board->getBoxAt(0, 6), (*army)["Monster"]));
 
   // Red Team
-  const auto zamdran_ = factory.newZamdran(team2_, board->getBoxAt(11, 0));
-  team2_->setCommander(zamdran_);
-  addGameObject(zamdran_);
+  const auto zamdran = factory.newZamdran(team2_, board->getBoxAt(11, 0));
+  team2_->setCommander(zamdran);
+  addGameObject(zamdran);
   addGameObject(factory.newSoldier(team2_, board->getBoxAt(11, 2), 10));
   addGameObject(factory.newArcher(team2_, board->getBoxAt(11, 3), 10));
   addGameObject(factory.newWizard(team2_, board->getBoxAt(11, 4), 5));
@@ -124,7 +124,7 @@ void GameScene::preload() {
                       Vector2D<int>(WIN_WIDTH / 10, WIN_HEIGHT / 18),
                       Vector2D<int>(static_cast<int>(WIN_WIDTH / 21.6),
                                     static_cast<int>(WIN_HEIGHT / 14.4)),
-                      board, zamdran_, 0);
+                      board, zamdran, 0);
 
   addGameObject(turnBar);
   addGameObject(dialog);

@@ -42,13 +42,13 @@ Box *Board::getBoxAt(const int x, const int y) const {
   return reinterpret_cast<Box *>(children_[x * rows_ + y]);
 }
 
-Box *Board::getBoxAtCoordinates(const SDL_Point point) const {
+Box *Board::getBoxAtCoordinates(const Vector2D<int>& point) const {
   const auto x =
-      static_cast<int>(floor((point.x - position_.getX()) / cellSize_));
+      static_cast<int>(floor((point.getX() - position_.getX()) / cellSize_));
   if (x < 0 || x >= columns_) return nullptr;
 
   const auto y =
-      static_cast<int>(floor((point.y - position_.getY()) / cellSize_));
+      static_cast<int>(floor((point.getY() - position_.getY()) / cellSize_));
   if (y < 0 || y >= rows_) return nullptr;
 
   return getBoxAt(x, y);

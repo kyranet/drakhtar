@@ -24,4 +24,6 @@ class Game final {
   static Game *getInstance();
   // Get the SceneMachine instance.
   static SceneMachine *getSceneMachine();
+  // Get the SDL_Window instance
+  static SDL_Window *getWindow();
 };

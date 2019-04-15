@@ -266,3 +266,5 @@ Game *Game::getInstance() {
 }
 
 SceneMachine *Game::getSceneMachine() { return getInstance()->sceneMachine_; }
+
+SDL_Window *Game::getWindow() { return getInstance()->window_; }
