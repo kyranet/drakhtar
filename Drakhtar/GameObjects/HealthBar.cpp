@@ -5,7 +5,7 @@
 #include "../Scenes/Scene.h"
 #include "../Utils/Constants.h"
 
-HealthBar::HealthBar(Scene *scene, Vector2D<int> pos, int maxHP)
+HealthBar::HealthBar(Scene* scene, Vector2D<int> pos, int maxHP)
     : GameObject(scene, TextureManager::get("UI-healthBar_background"), pos,
                  Vector2D<int>(WIN_WIDTH / 20, WIN_HEIGHT / 60)) {
   lifeBar = new GameObject(scene, TextureManager::get("UI-healthBar_life"), pos,
@@ -28,8 +28,7 @@ void HealthBar::render() const {
   GameObject::render();
   lifeBar->render();
 
-  if (damageBar->getActive())
-    damageBar->render();
+  if (damageBar->getActive()) damageBar->render();
 }
 
 void HealthBar::update() {
@@ -77,7 +76,8 @@ void HealthBar::takeDamage(int newHealth) {
 void HealthBar::moveBar(Vector2D<int> pos) {
   setPosition(pos);
   int widthDifference = getRect().w - lifeBar->getRect().w;
-  lifeBar->setPosition(Vector2D<int>(pos.getX() - (widthDifference/2), pos.getY()));
+  lifeBar->setPosition(
+      Vector2D<int>(pos.getX() - (widthDifference / 2), pos.getY()));
   damageBar->setPosition(pos);
 }
 
