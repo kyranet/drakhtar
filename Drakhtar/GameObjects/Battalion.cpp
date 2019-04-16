@@ -35,22 +35,22 @@ Battalion::Battalion(Scene* scene, Texture* texture, Box* box,
 
   healthBar_->setMaxHP(baseStats_.health * battalionSize);
 
-  setSize(Vector2D<int>(static_cast<int>(box->getRect().w * 1.25),
-                        static_cast<int>(box->getRect().h * 2)));
+  setPosition(Vector2D<int>(box->getRect().x + box->getRect().w / 1.5,
+                            box->getRect().y + box->getRect().h / 2));
 
   auxiliaryUnit1_ =
       new GameObject(scene, texture,
-                     Vector2D<int>(box->getRect().x + box->getRect().w / 1.8,
-                                   box->getRect().y + box->getRect().h / 2),
-                     Vector2D<int>(static_cast<int>(box->getRect().w * 2),
-                                   static_cast<int>(box->getRect().h * 2)));
+                     Vector2D<int>(box->getRect().x + box->getRect().w / 8,
+                                   box->getRect().y + box->getRect().h / 4),
+                     Vector2D<int>(static_cast<int>(box->getRect().w * 1.25),
+                                   static_cast<int>(box->getRect().h * 1.25)));
 
   auxiliaryUnit2_ =
       new GameObject(scene, texture,
-                     Vector2D<int>(box->getRect().x - box->getRect().w / 4,
-                                   box->getRect().y + box->getRect().h / 2),
-                     Vector2D<int>(static_cast<int>(box->getRect().w * 2),
-                                   static_cast<int>(box->getRect().h * 2)));
+                     Vector2D<int>(box->getRect().x + box->getRect().w / 8,
+                                   box->getRect().y + box->getRect().h / 1.5),
+                     Vector2D<int>(static_cast<int>(box->getRect().w * 1.25),
+                                   static_cast<int>(box->getRect().h * 1.25)));
 }
 
 Battalion::~Battalion() {
@@ -108,18 +108,21 @@ int Battalion::loseHealth(const int enemyAttack) {
 void Battalion::moveToBox(Box* box) {
   Unit::moveToBox(box);
 
+  setPosition(Vector2D<int>(box->getRect().x + box->getRect().w / 1.5,
+                            box->getRect().y + box->getRect().h / 2));
+
   const auto rect = box_->getRect();
 
   sizeText_->setPosition(
       Vector2D<int>(rect.x + rect.h / 6, rect.y - rect.h / 3));
 
   auxiliaryUnit1_->setPosition(
-      Vector2D<int>(box->getRect().x + box->getRect().w / 1.8,
-                    box->getRect().y + box->getRect().h / 2));
+      Vector2D<int>(box->getRect().x + box->getRect().w / 8,
+                    box->getRect().y + box->getRect().h / 4));
 
   auxiliaryUnit2_->setPosition(
-      Vector2D<int>(box->getRect().x - box->getRect().w / 1.8,
-                    box->getRect().y + box->getRect().h / 2));
+      Vector2D<int>(box->getRect().x + box->getRect().w / 8,
+                    box->getRect().y + box->getRect().h / 1.5));
 }
 
 void Battalion::render() const {
