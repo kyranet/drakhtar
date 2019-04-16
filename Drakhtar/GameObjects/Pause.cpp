@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Pause.h"
+
 #include "Button.h"
 #include "Managers/SDLAudioManager.h"
 #include "Managers/TextureManager.h"
@@ -11,9 +12,7 @@
 #include "Utils/Constants.h"
 #include "Utils/Vector2D.h"
 
-void restartGame() {
-  Game::getSceneMachine()->changeScene(new GameScene(1));
-}
+void restartGame() { Game::getSceneMachine()->changeScene(new GameScene(1)); }
 
 void exitGame() {
   Game::getSceneMachine()->getCurrentScene()->processNextTick(
@@ -54,7 +53,7 @@ Pause::Pause(Scene *scene) : GameObject(scene, nullptr) {
 }
 
 void Pause::handleEvents(SDL_Event e) {
-	restart->handleEvents(e);
-	resume->handleEvents(e);
-	exit->handleEvents(e);
+  restart->handleEvents(e);
+  resume->handleEvents(e);
+  exit->handleEvents(e);
 }
