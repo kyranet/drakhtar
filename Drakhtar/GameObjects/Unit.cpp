@@ -2,6 +2,9 @@
 
 #include "Unit.h"
 #include <algorithm>
+#include "../Managers/FontManager.h"
+#include "../Structures/Team.h"
+#include "../Utils/Vector2D.h"
 #include "Board.h"
 #include "Box.h"
 #include "HealthBar.h"
@@ -9,7 +12,6 @@
 #include "Scenes/GameScene.h"
 #include "Structures/Team.h"
 #include "Text.h"
-#include "Utils/Vector2D.h"
 
 Unit::Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
            const std::string& type)
