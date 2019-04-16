@@ -106,6 +106,9 @@ void Scene::handleEvents() {
   // If the escape key was pressed, pause the game
   if (Input::isKeyDown(KeyboardKey::ESCAPE)) pause();
 
+  if (Input::isKeyDown(KeyboardKey::Q))
+    Game::getSceneMachine()->changeScene(new RecruitScene());
+
   // If the F key was pressed, toggle fullscreen
   if (Input::isKeyDown(KeyboardKey::F)) {
     SDL_Window* window_ = Game::getWindow();
