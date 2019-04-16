@@ -51,6 +51,8 @@ Battalion::Battalion(Scene* scene, Texture* texture, Box* box,
                                    box->getRect().y + box->getRect().h / 1.5),
                      Vector2D<int>(static_cast<int>(box->getRect().w * 1.25),
                                    static_cast<int>(box->getRect().h * 1.25)));
+
+  updateBattalionPosition();
 }
 
 Battalion::~Battalion() {
@@ -101,6 +103,7 @@ int Battalion::loseHealth(const int enemyAttack) {
     sizeText_->setText(sizeToString());
     const SDL_Color sizeColor = {0, 0, 255, 0};
     sizeText_->setColor(sizeColor);
+    updateBattalionPosition();
   }
   return health;
 }
@@ -123,6 +126,8 @@ void Battalion::moveToBox(Box* box) {
   auxiliaryUnit2_->setPosition(
       Vector2D<int>(box->getRect().x + box->getRect().w / 8,
                     box->getRect().y + box->getRect().h / 1.5));
+
+  updateBattalionPosition();
 }
 
 void Battalion::render() const {
@@ -132,5 +137,12 @@ void Battalion::render() const {
   if (battalionSize_ > 3) {
     auxiliaryUnit1_->render();
     if (battalionSize_ > 7) auxiliaryUnit2_->render();
+  }
+}
+
+void Battalion::updateBattalionPosition() {
+  if (battalionSize_ < 4) {
+    setPosition(Vector2D<int>(box_->getRect().x + box_->getRect().w / 2,
+                              box_->getRect().y + box_->getRect().h / 2));
   }
 }
