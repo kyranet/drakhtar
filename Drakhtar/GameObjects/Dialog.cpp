@@ -1,12 +1,12 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Dialog.h"
-#include <fstream>
-#include <iostream>
 #include "../Managers/TextureManager.h"
 #include "../Structures/Font.h"
 #include "GameObject.h"
 #include "Text.h"
+#include <fstream>
+#include <iostream>
 
 Dialog::Dialog(Scene *scene, std::ifstream &file, Font *textFont,
                const SDL_Rect dialogRect, const int lineJumpLimit)
@@ -19,7 +19,7 @@ Dialog::Dialog(Scene *scene, std::ifstream &file, Font *textFont,
                                    dialogueArea_.y - dialogueArea_.h / 2),
                      Vector2D<int>(dialogueArea_.h / 1, dialogueArea_.h / 1));
 
-  const SDL_Color textColor = {0, 0, 0, 1};
+  const SDL_Color textColor = {0, 0, 0, 255};
 
   const auto characterNameSprite = new Text(
       scene_, textFont,
@@ -46,7 +46,8 @@ void Dialog::readFromFile(std::ifstream &file) {
   std::string word;  // word added to text each iteration
   while (word != ".") {
     file >> word;
-    if (word != ".") text += word + " ";
+    if (word != ".")
+      text += word + " ";
   }
   dialogText_ = text;
 }

@@ -21,8 +21,8 @@ TutorialSequence::TutorialSequence(Scene* scene, const std::string& filename,
   auto dialogueBackground = new GameObject(
       scene_, TextureManager::get("UI-tutorialBackground"),
       Vector2D<int>(tutorialArea_.x, tutorialArea_.y - WIN_HEIGHT / 10),
-      Vector2D<int>(tutorialArea_.w * WIN_WIDTH / 3,
-                    tutorialArea_.h * WIN_HEIGHT / 2));
+      Vector2D<int>(tutorialArea_.w * WIN_WIDTH / 2,
+                    tutorialArea_.h * WIN_HEIGHT / 1.5));
 
   const auto nextButton = new Button(
       scene_, TextureManager::get("Button-Next"),
@@ -84,6 +84,8 @@ void TutorialSequence::next() {
 void TutorialSequence::skip() { destroy(); }
 
 void TutorialSequence::render() const {
-  GameObject::render();
-  tutorials_.front()->render();
+  if (!tutorials_.empty()) {
+    GameObject::render();
+    tutorials_.front()->render();
+  }
 }

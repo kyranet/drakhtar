@@ -1,8 +1,9 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-#include <fstream>
+#include "../EventListeners/ListenerOnClick.h"
 #include "GameObject.h"
+#include <fstream>
 
 class Text;
 class Font;
