@@ -5,14 +5,14 @@
 
 class Team;
 class Board;
-class BoardController;
 class UnitFactory;
+class PlayerController;
 
 class GameScene final : public Scene {
   Team *team1_ = nullptr;
   Team *team2_ = nullptr;
   Board *board_ = nullptr;
-  BoardController *boardController_;
+  PlayerController* playerController_;
   int battle_;
 
  public:

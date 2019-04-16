@@ -13,6 +13,11 @@ class EventListener {
    */
   GameObject* gameObject_;
 
+  /**
+   * \brief Whether or not the listener should process events.
+   */
+  bool active_ = true;
+
  public:
   /**
    * \brief Construct a new EventListener.
@@ -36,4 +41,14 @@ class EventListener {
    * \return The GameObject that owns this listener.
    */
   GameObject* getGameObject() const;
+
+  /**
+   * \return Whether or not the listener is processing events.
+   */
+  bool getActive();
+
+  /**
+   * \brief Sets the listener to process or stop processing events.
+   */
+  void setActive(bool active);
 };
