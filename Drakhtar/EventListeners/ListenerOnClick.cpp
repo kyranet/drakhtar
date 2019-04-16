@@ -4,6 +4,7 @@
 #include "Managers/Input.h"
 
 void ListenerOnClick::run(const SDL_Event event) {
+  if (!getActive()) return;
   switch (event.type) {
     case SDL_MOUSEBUTTONDOWN:
       if (Input::screenMouseToRay() != getGameObject()) return;

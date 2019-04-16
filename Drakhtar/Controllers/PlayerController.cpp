@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
-#include "BoardController.h"
+#include "PlayerController.h"
+#include <iostream>
 #include "GameObjects/Board.h"
 #include "GameObjects/Box.h"
 #include "GameObjects/TurnBar.h"
@@ -14,10 +15,9 @@
 #include "Structures/Tween.h"
 #include "Utils/Constants.h"
 
-BoardController::BoardController(Board* board, TurnBar* turnBar,
-                                 GameScene* scene)
-    : ListenerOnClick(board), board_(board), turnBar_(turnBar), scene_(scene) {
-  activeUnit_ = turnBar_->getFrontUnit();
+PlayerController::PlayerController(Board* board, TurnBar* turnBar,
+                                   GameScene* scene)
+    : UnitsController(board, turnBar, scene), ListenerOnClick(board) {
   activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
   board_->highlightCellsInRange(activeUnit_->getBox(),
                                 activeUnit_->getStats().moveRange);
@@ -25,9 +25,8 @@ BoardController::BoardController(Board* board, TurnBar* turnBar,
                                   activeUnit_->getStats().attackRange);
 }
 
-// TODO(kyranet): This is far from nice, it should be an update method to avoid
-//  calling this many times a tick as it's a expensive operation.
-void BoardController::run(const SDL_Event) {
+void PlayerController::run(const SDL_Event event) {
+  if (!getActive()) return;
   if (!Input::isMouseButtonDown(MouseKey::LEFT)) return;
 
   const auto gameObject = Input::screenMouseToRay();
@@ -52,7 +51,7 @@ void BoardController::run(const SDL_Event) {
   }
 }
 
-void BoardController::onClickMove(Box* boxClicked) {
+void PlayerController::onClickMove(Box* boxClicked) {
   // If this BoardController is stopped, don't run
   if (isTweening_) return;
 
@@ -71,8 +70,8 @@ void BoardController::onClickMove(Box* boxClicked) {
         ->setDuration(static_cast<int>(
             floor(static_cast<double>(path.size()) * GAME_FRAMERATE * 0.25)))
         ->setOnUpdate([unit](Vector2D<double> updated) {
-          unit->setPosition({static_cast<int>(floor(updated.getX())),
-                             static_cast<int>(floor(updated.getY()))});
+          unit->setPosition({static_cast<int>(std::floor(updated.getX())),
+                             static_cast<int>(std::floor(updated.getY()))});
         })
         ->setOnComplete([this, unit, boxClicked]() {
           unit->moveToBox(boxClicked);
@@ -97,7 +96,7 @@ void BoardController::onClickMove(Box* boxClicked) {
   }
 }
 
-void BoardController::onClickAttack(Box* boxClicked) {
+void PlayerController::onClickAttack(Box* boxClicked) {
   Unit* enemyUnit = boxClicked->getContent();
   if (enemyUnit != nullptr) {
     // Unit clicked if from a different team and in range
@@ -109,7 +108,7 @@ void BoardController::onClickAttack(Box* boxClicked) {
       SDLAudioManager::getInstance()->playChannel(5, 0, 0);
 
       // Enemy dies
-      if (enemyUnit->getStats().health <= 0) {
+      if (enemyUnit->getStats().health == 0) {
         if (enemyUnit->getTeam()->getColor() == Color::RED) {
           GameManager::getInstance()->addMoney(enemyUnit->getStats().prize);
         }
@@ -136,7 +135,7 @@ void BoardController::onClickAttack(Box* boxClicked) {
   }
 }
 
-void BoardController::advanceTurn() {
+void PlayerController::advanceTurn() {
   board_->resetCellsToBase();
   hasMoved_ = hasAttacked_ = false;
   turnBar_->advanceTurn();

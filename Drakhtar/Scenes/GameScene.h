@@ -4,12 +4,15 @@
 #include "Scene.h"
 
 class Team;
-class BoardController;
+class Board;
+class UnitFactory;
+class PlayerController;
 
 class GameScene final : public Scene {
   Team *team1_ = nullptr;
   Team *team2_ = nullptr;
-  BoardController *boardController_;
+  Board *board_ = nullptr;
+  PlayerController* playerController_;
   int battle_;
 
  public:
@@ -17,4 +20,5 @@ class GameScene final : public Scene {
   ~GameScene() override;
   void preload() override;
   void pause() override;
+  void loadRedTeam(UnitFactory &factory);
 };
