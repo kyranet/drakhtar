@@ -11,34 +11,27 @@
 #include "Utils/Constants.h"
 #include "Utils/Vector2D.h"
 
-void restartGame() {
-  Game::getSceneMachine()->changeScene(new GameScene(1));
-}
-
-void exitGame() {
-  Game::getSceneMachine()->getCurrentScene()->processNextTick(
-      []() { Game::getSceneMachine()->changeScene(new MenuScene()); });
-  SDLAudioManager::getInstance()->playChannel(6, 0, 0);
-}
-
-Pause::Pause(Scene *scene) : GameObject(scene, nullptr) {
+Pause::Pause(Scene* scene) : GameObject(scene, nullptr) {
   const auto panel =
       new GameObject(scene_, TextureManager::get("Pause-Panel"),
                      Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
                      Vector2D<int>(static_cast<int>(WIN_WIDTH / 4.68),
                                    static_cast<int>(WIN_HEIGHT / 2.25)));
-  const auto restart =
-      new Button(scene_, TextureManager::get("Button-Restart"),
-                 Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
-                 Vector2D<int>(static_cast<int>(WIN_WIDTH / 8.33),
-                               static_cast<int>(WIN_HEIGHT / 11.25)),
-                 restartGame);
+  const auto restart = new Button(
+      scene_, TextureManager::get("Button-Restart"),
+      Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
+      Vector2D<int>(static_cast<int>(WIN_WIDTH / 8.33),
+                    static_cast<int>(WIN_HEIGHT / 11.25)),
+      []() { Game::getSceneMachine()->changeScene(new GameScene(1)); });
   const auto exit =
       new Button(scene_, TextureManager::get("Button-Exit"),
                  Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2 + 70),
                  Vector2D<int>(static_cast<int>(WIN_WIDTH / 8.33),
                                static_cast<int>(WIN_HEIGHT / 11.25)),
-                 exitGame);
+                 []() {
+                   Game::getSceneMachine()->changeScene(new MenuScene());
+                   SDLAudioManager::getInstance()->playChannel(6, 0, 0);
+                 });
 
   const auto resume =
       new Button(scene_, TextureManager::get("Button-Resume"),

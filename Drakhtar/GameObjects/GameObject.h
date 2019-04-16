@@ -13,6 +13,7 @@ class EventListener;
 class GameObject {
  protected:
   bool active_ = true;
+  bool transparent_ = false;
   Scene *scene_ = nullptr;
   Vector2D<int> position_;
   Vector2D<int> size_;
@@ -36,6 +37,9 @@ class GameObject {
 
   void setActive(bool active);
   bool getActive() const;
+
+  void setTransparent(bool transparent);
+  bool getTransparent() const;
 
   void setSize(Vector2D<int> size);
   Vector2D<int> getSize() const;

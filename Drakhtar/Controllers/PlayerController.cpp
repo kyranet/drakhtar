@@ -25,7 +25,7 @@ PlayerController::PlayerController(Board* board, TurnBar* turnBar,
                                   activeUnit_->getStats().attackRange);
 }
 
-void PlayerController::run(const SDL_Event event) {
+void PlayerController::run(const SDL_Event) {
   if (!getActive()) return;
   if (!Input::isMouseButtonDown(MouseKey::LEFT)) return;
 

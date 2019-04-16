@@ -5,5 +5,5 @@
 
 class Pause : public GameObject {
  public:
-  explicit Pause(Scene *scene);
+  explicit Pause(Scene* scene);
 };

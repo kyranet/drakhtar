@@ -5,6 +5,7 @@
 #include <list>
 #include "Managers/TweenManager.h"
 
+class Pause;
 class GameObject;
 
 using NextTickCallback = void();
@@ -56,4 +57,5 @@ class Scene {
   void processNextTick(NextTickCallback* callback);
 
   TweenManager* getTweenManager() const;
+  Pause *pauseInterface = nullptr;
 };

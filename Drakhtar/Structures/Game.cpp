@@ -95,7 +95,7 @@ Game::Game() {
   textures->add("UI-dialoguePortrait", "../images/UI/portrait.png", 1, 1);
 
   textures->add("UI-turnBar", "../images/UI/rock_bar.png", 1, 1);
-  textures->add("UI-circle", "../images/UI/circle.png", 1, 1);
+  textures->add("UI-circle", "../images/UI/circle.png", 9, 1);
   textures->add("UI-healthBar_background",
                 "../images/UI/healthBar_background.png", 1, 1);
   textures->add("UI-healthBar_life", "../images/UI/healthBar_life.png", 1, 1);
@@ -151,8 +151,8 @@ Game::Game() {
 
   // Maps
   textures->add("Maps-Test", "../images/Maps/TestMap.png", 1, 1);
-  textures->add("Maps-1Battle", "../images/Maps/FirstBattle.png", 1, 1);
-  textures->add("Maps-2Battle", "../images/Maps/SecondBattle.png", 1, 1);
+  textures->add("Maps-1Battle", "../images/Maps/FirstBattle.png", 4, 1);
+  textures->add("Maps-2Battle", "../images/Maps/SecondBattle.png", 4, 1);
 
   // Tutorial images
   textures->add("tutorial-1", "../images/Tutorials/tutorial_1.png", 1, 1);
@@ -166,6 +166,8 @@ Game::Game() {
   // Transition
   textures->add("Transition-Map1", "../images/Maps/TestMap.png", 1, 1);
   textures->add("Transition-Map2", "../images/Transition/Transition_2.png", 1,
+                1);
+  textures->add("Transition-Menu", "../images/Transition/Transition_1.png", 4,
                 1);
 
   // Recruitment

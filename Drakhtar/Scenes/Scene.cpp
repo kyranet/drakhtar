@@ -103,7 +103,8 @@ void Scene::handleEvents() {
     if (event.type == SDL_QUIT) return finish(true);
 
     Input::instance()->update(event);
-    for (auto gameObject : gameObjects_) gameObject->handleEvents(event);
+    for (auto gameObject : gameObjects_)
+      if (gameObject->getActive()) gameObject->handleEvents(event);
   }
 
   // If the escape key was pressed, pause the game
@@ -122,7 +123,8 @@ void Scene::handleEvents() {
 }
 
 void Scene::update() {
-  for (auto gameObject : gameObjects_) gameObject->update();
+  for (auto gameObject : gameObjects_)
+    if (gameObject->getActive()) gameObject->update();
 }
 
 void Scene::render() {
@@ -131,7 +133,7 @@ void Scene::render() {
 
   // Render each game object
   for (auto gameObject : gameObjects_) {
-    if (gameObject->getActive()) gameObject->render();
+    gameObject->render();
   }
 
   // Render the new frame
@@ -168,10 +170,13 @@ void Scene::end() {
 
 void Scene::resume() {
   paused_ = false;
-  run();
+  for (const auto gameObject : getGameObjects()) gameObject->setActive(true);
 }
 
-void Scene::pause() { paused_ = true; }
+void Scene::pause() {
+  paused_ = true;
+  for (const auto gameObject : getGameObjects()) gameObject->setActive(false);
+}
 
 void Scene::finish(bool force) {
   if (force) return Game::getSceneMachine()->popScene();

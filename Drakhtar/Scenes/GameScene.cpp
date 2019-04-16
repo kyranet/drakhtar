@@ -129,9 +129,10 @@ void GameScene::preload() {
 
 void GameScene::pause() {
   if (!isPaused()) {
-    addGameObject(new Pause(this));
-    audio->playChannel(7, 0, 0);
     Scene::pause();
+    pauseInterface = new Pause(this);
+    addGameObject(pauseInterface);
+    audio->playChannel(7, 0, 0);
   }
 }
 
