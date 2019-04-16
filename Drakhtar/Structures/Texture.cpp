@@ -129,9 +129,10 @@ void Texture::setAnimation(const std::string& name) {
     animation_ = next;
     TextureManager::getInstance()->switchPool(previous.frameRate,
                                               next.frameRate, this);
-  } else
+  } else {
     throw DrakhtarError(
         "Cannot set an animation that has not been previously added.");
+  }
 }
 
 bool Texture::hasAnimation(const std::string& name) const {
