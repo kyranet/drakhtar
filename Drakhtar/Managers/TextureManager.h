@@ -1,51 +1,37 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-#include <stack>
-#include <utility>
+#include <list>
+#include <map>
 #include "../Structures/Texture.h"
 #include "ResourceManager.h"
 
-struct AnimationTextureInfo {
-  std::string name;
-  std::vector<Uint16> frames;
-};
+class TimePool;
 
-class TextureInfo final {
- public:
-  TextureInfo(std::string name, std::string path, const Uint16 columns,
-              const Uint16 rows, const SDL_RendererFlip flip = SDL_FLIP_NONE)
-      : name_(std::move(name)),
-        path_(std::move(path)),
-        columns_(columns),
-        rows_(rows),
-        flip_(flip) {}
-  ~TextureInfo() { animations_.clear(); }
-  std::string name_;
-  std::string path_;
-  Uint16 columns_;
-  Uint16 rows_;
-  SDL_RendererFlip flip_;
-  std::vector<AnimationTextureInfo> animations_;
-  TextureInfo *addAnimation(const std::string &name,
-                            const std::vector<Uint16> &frames) {
-    animations_.push_back({name, frames});
-    return this;
-  }
-};
+class TextureManager final : public ResourceManager<Texture*> {
+  struct Pool {
+    TimePool *timePool;
+    std::list<Texture*> textures;
+  };
 
-class TextureManager final : public ResourceManager<Texture *> {
-  static TextureManager *instance_;
+  static TextureManager* instance_;
   TextureManager();
   ~TextureManager();
-  std::stack<TextureInfo *> stack_;
+  std::map<Uint16, Pool> pools_{};
+
+  bool hasPool(Uint16 frameRate);
+  void removePool(Uint16 frameRate);
+  void ensurePool(Uint16 frameRate);
 
  public:
-  TextureInfo *add(std::string name, std::string path, Uint16 columns,
-                   Uint16 rows, SDL_RendererFlip flip = SDL_FLIP_NONE);
-  void init(SDL_Renderer *renderer) override;
+  Texture* add(const std::string& name, const std::string& path, Uint16 columns,
+                   Uint16 rows);
   void tick();
-  static Texture *get(std::string name);
-  static TextureManager *getInstance();
+  void init();
+
+  void switchPool(Uint16 previous, Uint16 now, Texture* texture);
+
+  static Texture* get(const std::string& name);
+  static TextureManager* getInstance();
   static void destroy();
 };
