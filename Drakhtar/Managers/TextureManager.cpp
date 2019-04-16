@@ -35,12 +35,10 @@ void TextureManager::init() {
           texture->getColumnAmount() * texture->getRowAmount();
       std::vector<Uint16> animation(frames);
       for (Uint16 i = 0; i < frames; i++) animation[i] = i;
-      texture->addAnimation("default", animation, animation.size());
+      texture->addAnimation("default", animation);
     }
 
     texture->setAnimation("default");
-    ensurePool(texture->getFrameRate());
-    pools_[texture->getFrameRate()].textures.push_back(texture);
   }
 }
 
@@ -48,7 +46,7 @@ void TextureManager::tick() {
   if (instance_ == nullptr) return;
   for (auto& pair : pools_) {
     if (pair.second.timePool->next(SDL_GetTicks())) {
-      for (auto texture : pair.second.textures) {
+      for (auto& texture : pair.second.textures) {
         texture->tick();
       }
     }
@@ -83,8 +81,10 @@ void TextureManager::switchPool(Uint16 previous, Uint16 now, Texture* texture) {
     pools_[previous].textures.remove(texture);
     if (pools_[previous].textures.empty()) removePool(previous);
   }
-  ensurePool(now);
-  pools_[now].textures.push_back(texture);
+  if (texture->getFrameRate() > 1) {
+    ensurePool(now);
+    pools_[now].textures.push_back(texture);
+  }
 }
 
 bool TextureManager::hasPool(Uint16 frameRate) {

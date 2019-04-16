@@ -116,9 +116,9 @@ Texture* Texture::loadFromText(Font* font, const std::string& text,
 Texture* Texture::addAnimation(const std::string& name,
                                const std::vector<Uint16>& frames,
                                const Uint16 frameRate) {
-  animations_[name] = {
-      name, frames,
-      frameRate == 0 ? static_cast<Uint16>(frames.size()) : frameRate};
+  animations_.insert(std::pair<std::string, AnimationTextureInfo>(
+      name,
+      {name, frames, frameRate == 0 ? Uint16(frames.size()) : frameRate}));
   return this;
 }
 
@@ -140,11 +140,11 @@ bool Texture::hasAnimation(const std::string& name) const {
 
 void Texture::tick() {
   const auto size = animation_.frames.size();
-  if (size == 0) return;
-  if (frame_ == size - 1)
-    frame_ = 0;
-  else
-    frame_++;
+  // Requires at least two frames to "tick"
+  if (size < 2) return;
+
+  // If it is the last tick, set to 0, else add one
+  if (++frame_ == size) frame_ = 0;
 }
 
 void Texture::render(const Vector2D<int>& position) const {
