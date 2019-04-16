@@ -6,7 +6,7 @@
 AIController::AIController(Board* board, TurnBar* turnBar, GameScene* scene)
     : UnitsController(board, turnBar, scene) {}
 
-// void AIController::run(const SDL_Event event) {}
+// void AIController::run() {}
 
 void AIController::advanceTurn() {
   hasMoved_ = hasAttacked_ = false;
