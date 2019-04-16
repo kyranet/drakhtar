@@ -4,8 +4,7 @@
 #include "Managers/Input.h"
 
 void ListenerOnHover::run(const SDL_Event event) {
-  if (!getActive()) return;
-  const hovered = Input::screenMouseToRay() == getGameObject();
+  const auto hovered = Input::screenMouseToRay() == getGameObject();
   if (hovered) {
     if (hovered_) {
       onHoverStay();

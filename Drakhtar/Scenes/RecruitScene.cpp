@@ -53,7 +53,7 @@ void RecruitScene::preload() {
   addGameObject(recruitmentPanel_);
 
   controller_ = new UnitStoreController(recruitmentPanel_);
-  recruitmentPanel_->addEventListener(controller_);
+  recruitmentPanel_->addEventListener(reinterpret_cast<EventListener*>(controller_));
 
   addGameObject(totalCostText_);
   addGameObject(moneyText_);

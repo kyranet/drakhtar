@@ -13,5 +13,6 @@ class RecruitmentStat : public GameObject {
   RecruitmentStat(Scene *scene, SDL_Rect BoxArea, StoreUnit *controller);
   void render() const override;
   std::string fillText();
+  void updateText();
   ~RecruitmentStat();
 };

@@ -11,7 +11,7 @@
 #include "Utils/Constants.h"
 
 UnitStoreController::UnitStoreController(GameObject* gameObject)
-    : ListenerOnClick(gameObject) {
+    : ListenerOnClick(gameObject),ListenerOnHover(gameObject) {
   const auto sceneMachine = Game::getSceneMachine();
   acceptButton_ = new GameObject(
       sceneMachine->getCurrentScene(), TextureManager::get("Accept-Button"),
@@ -92,7 +92,7 @@ void UnitStoreController::addUnitToStore(const std::string& type,
   unitStore_.push_back(storeUnit);
 }
 
-void UnitStoreController::onClickStop() {
+void UnitStoreController::onHoverStop() {
   auto rect = acceptButton_->getRect();
   if (Input::isMouseInside(&rect)) {
     buyUnits();

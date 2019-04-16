@@ -9,8 +9,8 @@
 #include "GameObjects/Button.h"
 #include "GameObjects/Unit.h"
 #include "Text.h"
-RecruitmentStat::RecruitmentStat(Scene *scene, const SDL_Rect BoxArea,
-                                 StoreUnit *controller)
+RecruitmentStat::RecruitmentStat(Scene* scene, const SDL_Rect BoxArea,
+                                 StoreUnit* controller)
     : GameObject(scene, nullptr, Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
                  Vector2D<int>(1, 1)),
       currentSelected_(controller) {
@@ -39,7 +39,7 @@ void RecruitmentStat::render() const {
 }
 
 std::string RecruitmentStat::fillText() {
-  const auto unit = reinterpret_cast<Unit *>(currentSelected_->unit);
+  const auto unit = reinterpret_cast<Unit*>(currentSelected_->unit);
   std::string text = "Unit type: " + currentSelected_->type + "\n";
   text += "Total amount: " + std::to_string(currentSelected_->amount) + "\n";
   text += "Attack-> " + std::to_string(unit->getBaseStats().attack) + "\n";
@@ -47,5 +47,7 @@ std::string RecruitmentStat::fillText() {
   text += "Speed-> " + std::to_string(unit->getBaseStats().speed) + "\n";
   return text;
 }
+
+void RecruitmentStat::updateText() { fillText(); }
 
 RecruitmentStat::~RecruitmentStat() {}
