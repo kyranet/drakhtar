@@ -102,39 +102,29 @@ void Scene::handleEvents() {
   while (SDL_PollEvent(&event)) {
     if (event.type == SDL_QUIT) return finish(true);
 
-    if (!paused_) {
-      Input::instance()->update(event);
-      for (auto gameObject : gameObjects_) {
-        gameObject->handleEvents(event);
-      }
-    } else if (paused_ && pauseInterface != nullptr) {
-      pauseInterface->handleEvents(event);
-    }
+    Input::instance()->update(event);
+    for (auto gameObject : gameObjects_)
+      if (gameObject->getActive()) gameObject->handleEvents(event);
+  }
 
-    // If the escape key was pressed, pause the game
-    if (Input::isKeyDown(KeyboardKey::ESCAPE)) pause();
+  // If the escape key was pressed, pause the game
+  if (Input::isKeyDown(KeyboardKey::ESCAPE)) pause();
 
-    // If the F key was pressed, toggle fullscreen
-    if (Input::isKeyDown(KeyboardKey::F)) {
-      SDL_Window* window_ = Game::getWindow();
-      const auto flags = SDL_GetWindowFlags(window_);
-      const auto flag =
-          flags & SDL_WINDOW_FULLSCREEN ? 0 : SDL_WINDOW_FULLSCREEN;
-      if (SDL_SetWindowFullscreen(window_, flag) != 0) {
-        throw SDLError("Failed to change full screen: " +
-                       std::string(SDL_GetError()));
-      }
-
-      // Some event handlers can change the exit_ state, which causes several
-      // issues as this loop will keep running when it's supposed to stop.
-      // This cannot be done with a for loop using iterators, but only making
-      // it so it checks for exit_ and breaking before increasing it.
+  // If the F key was pressed, toggle fullscreen
+  if (Input::isKeyDown(KeyboardKey::F)) {
+    SDL_Window* window_ = Game::getWindow();
+    const auto flags = SDL_GetWindowFlags(window_);
+    const auto flag = flags & SDL_WINDOW_FULLSCREEN ? 0 : SDL_WINDOW_FULLSCREEN;
+    if (SDL_SetWindowFullscreen(window_, flag) != 0) {
+      throw SDLError("Failed to change full screen: " +
+                     std::string(SDL_GetError()));
     }
   }
 }
 
 void Scene::update() {
-  for (auto gameObject : gameObjects_) gameObject->update();
+  for (auto gameObject : gameObjects_)
+    if (gameObject->getActive()) gameObject->update();
 }
 
 void Scene::render() {
@@ -143,7 +133,7 @@ void Scene::render() {
 
   // Render each game object
   for (auto gameObject : gameObjects_) {
-    if (gameObject->getActive()) gameObject->render();
+    gameObject->render();
   }
 
   // Render the new frame
@@ -180,10 +170,13 @@ void Scene::end() {
 
 void Scene::resume() {
   paused_ = false;
-  run();
+  for (const auto gameObject : getGameObjects()) gameObject->setActive(true);
 }
 
-void Scene::pause() { paused_ = true; }
+void Scene::pause() {
+  paused_ = true;
+  for (const auto gameObject : getGameObjects()) gameObject->setActive(false);
+}
 
 void Scene::finish(bool force) {
   if (force) return Game::getSceneMachine()->popScene();

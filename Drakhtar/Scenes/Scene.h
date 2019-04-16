@@ -3,9 +3,9 @@
 #pragma once
 #include <functional>
 #include <list>
-#include "GameObjects/Pause.h"
 #include "Managers/TweenManager.h"
 
+class Pause;
 class GameObject;
 
 using NextTickCallback = void();
