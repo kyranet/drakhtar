@@ -31,12 +31,39 @@ Battalion::Battalion(Scene *scene, Texture *texture, Box *box,
   sizeText_->setColor(sizeColor);
 
   healthBar_->setMaxHP(baseStats_.health * battalionSize);
+
+  setSize(Vector2D<int>(static_cast<int>(box->getRect().w * 1.25),
+                        static_cast<int>(box->getRect().h * 2)));
+
+  auxiliaryUnit1_ =
+      new GameObject(scene, texture,
+                     Vector2D<int>(box->getRect().x + box->getRect().w / 1.8,
+                                   box->getRect().y + box->getRect().h / 2),
+                     Vector2D<int>(static_cast<int>(box->getRect().w * 2),
+                                   static_cast<int>(box->getRect().h * 2)));
+
+  auxiliaryUnit2_ =
+      new GameObject(scene, texture,
+                     Vector2D<int>(box->getRect().x - box->getRect().w / 4,
+                                   box->getRect().y + box->getRect().h / 2),
+                     Vector2D<int>(static_cast<int>(box->getRect().w * 2),
+                                   static_cast<int>(box->getRect().h * 2)));
 }
 
 Battalion::~Battalion() {
   if (sizeText_ != nullptr) {
     delete sizeText_;
     sizeText_ = nullptr;
+  }
+
+  if (auxiliaryUnit1_ != nullptr) {
+    delete auxiliaryUnit1_;
+    auxiliaryUnit1_ = nullptr;
+  }
+
+  if (auxiliaryUnit2_ != nullptr) {
+    delete auxiliaryUnit2_;
+    auxiliaryUnit2_ = nullptr;
   }
 }
 
@@ -82,9 +109,19 @@ void Battalion::moveToBox(Box *box) {
 
   sizeText_->setPosition(
       Vector2D<int>(rect.x + rect.h / 6, rect.y - rect.h / 3));
+
+  auxiliaryUnit1_->setPosition(
+      Vector2D<int>(box->getRect().x + box->getRect().w / 1.8,
+                    box->getRect().y + box->getRect().h / 2));
+
+  auxiliaryUnit2_->setPosition(
+      Vector2D<int>(box->getRect().x - box->getRect().w / 1.8,
+                    box->getRect().y + box->getRect().h / 2));
 }
 
 void Battalion::render() const {
   Unit::render();
   sizeText_->render();
+  auxiliaryUnit1_->render();
+  auxiliaryUnit2_->render();
 }
