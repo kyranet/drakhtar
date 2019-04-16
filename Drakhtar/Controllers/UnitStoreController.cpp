@@ -11,7 +11,7 @@
 #include "Utils/Constants.h"
 
 UnitStoreController::UnitStoreController(GameObject* gameObject)
-    : ListenerOnClick(gameObject),ListenerOnHover(gameObject) {
+    : ListenerOnHover(gameObject), ListenerOnClick(gameObject) {
   const auto sceneMachine = Game::getSceneMachine();
   acceptButton_ = new GameObject(
       sceneMachine->getCurrentScene(), TextureManager::get("Accept-Button"),
@@ -92,7 +92,7 @@ void UnitStoreController::addUnitToStore(const std::string& type,
   unitStore_.push_back(storeUnit);
 }
 
-void UnitStoreController::onHoverStop() {
+void UnitStoreController::onHoverStart() {
   auto rect = acceptButton_->getRect();
   if (Input::isMouseInside(&rect)) {
     buyUnits();
@@ -132,9 +132,16 @@ void UnitStoreController::onHoverStop() {
   if (!found) return;
 
   selectedUnit_ = unitStore_[i];
+  std::cout << Input::getMousePosition().getX() << Input::getMousePosition().getY();
   const auto scene = reinterpret_cast<RecruitScene *>(
       Game::getSceneMachine()->getCurrentScene());
   scene->addGameObject(
       new RecruitmentStat(scene, SDL_Rect{100, 100, 170, 110}, selectedUnit_));
   // TODO(Carlos): Show and update Unit Parameters Sheet
 }
+
+void UnitStoreController::run(SDL_Event event) {
+	  ListenerOnClick::run(event);
+	  ListenerOnHover::run(event);
+}
+
