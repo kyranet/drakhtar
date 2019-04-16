@@ -53,7 +53,7 @@ class UnitsController {
    * \brief Is called every time an event is capture to process it.
    * \param event: The event to be processed.
    */
-  virtual void run(SDL_Event event) {}
+  virtual void run() {}
 
   /**
    * \brief Only used on PVP mode to close sockets.
