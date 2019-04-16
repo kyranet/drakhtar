@@ -9,7 +9,7 @@
 #include "Structures/Team.h"
 #include "Text.h"
 
-Battalion::Battalion(Scene *scene, Texture *texture, Box *box,
+Battalion::Battalion(Scene* scene, Texture* texture, Box* box,
                      const UnitStats stats, const std::string type,
                      const int battalionSize)
     : Unit(scene, texture, box, stats, type), battalionSize_(battalionSize) {
@@ -93,8 +93,7 @@ int Battalion::loseHealth(const int enemyAttack) {
     if (this->getTeam()->getColor() == Color::BLUE)
       (*GameManager::getInstance()->getArmy())[this->getType()] =
           battalionSize_;
-    if (battalionSize_ < 0)
-      battalionSize_ = 0;
+    if (battalionSize_ < 0) battalionSize_ = 0;
     sizeText_->setText(sizeToString());
     const SDL_Color sizeColor = {0, 0, 255, 0};
     sizeText_->setColor(sizeColor);
@@ -102,7 +101,7 @@ int Battalion::loseHealth(const int enemyAttack) {
   return health;
 }
 
-void Battalion::moveToBox(Box *box) {
+void Battalion::moveToBox(Box* box) {
   Unit::moveToBox(box);
 
   setPosition(Vector2D<int>(box->getRect().x + box->getRect().w / 1.5,
@@ -125,6 +124,9 @@ void Battalion::moveToBox(Box *box) {
 void Battalion::render() const {
   Unit::render();
   sizeText_->render();
-  auxiliaryUnit1_->render();
-  auxiliaryUnit2_->render();
+
+  if (battalionSize_ > 3) {
+    auxiliaryUnit1_->render();
+    if (battalionSize_ > 7) auxiliaryUnit2_->render();
+  }
 }
