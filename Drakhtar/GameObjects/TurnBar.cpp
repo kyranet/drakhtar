@@ -30,7 +30,7 @@ TurnBar::TurnBar(Scene *scene, std::list<Unit *> allyList,
 
   visibleUnits_.resize(visibleTurnBarSize_);
   auto listIt = unitTurnBar_.begin();
-  for (auto i = 0; i < visibleTurnBarSize_; i++) {
+  for (Uint32 i = 0; i < visibleTurnBarSize_; i++) {
     if (i == 0)
       visibleUnits_[i] = new GameObject(
           scene_, (*listIt)->getTexture(),
@@ -118,7 +118,7 @@ void TurnBar::handleEvents(const SDL_Event event) {
 
 void TurnBar::updateVisibleUnits() {
   auto listIt = unitTurnBar_.begin();
-  for (auto i = 0; i < visibleTurnBarSize_; i++) {
+  for (Uint32 i = 0; i < visibleTurnBarSize_; i++) {
     visibleUnits_[i]->setTexture((*listIt)->getTexture());
     ++listIt;
   }

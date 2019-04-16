@@ -1,23 +1,23 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
-#include "BoardController.h"
+#include "PlayerController.h"
+#include <iostream>
 #include "GameObjects/Board.h"
 #include "GameObjects/Box.h"
 #include "GameObjects/TurnBar.h"
 #include "GameObjects/Unit.h"
 #include "Managers/GameManager.h"
+#include "Managers/Input.h"
 #include "Managers/SDLAudioManager.h"
 #include "Scenes/GameScene.h"
 #include "Structures/Team.h"
 #include "Structures/Texture.h"
 #include "Structures/Tween.h"
 #include "Utils/Constants.h"
-#include <iostream>
 
-BoardController::BoardController(Board *board, TurnBar *turnBar,
-                                 GameScene *scene)
-    : board_(board), turnBar_(turnBar), scene_(scene), ListenerOnClick(board) {
-  activeUnit_ = turnBar_->getFrontUnit();
+PlayerController::PlayerController(Board* board, TurnBar* turnBar,
+                                   GameScene* scene)
+    : UnitsController(board, turnBar, scene), ListenerOnClick(board) {
   activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
   board_->highlightCellsInRange(activeUnit_->getBox(),
                                 activeUnit_->getStats().moveRange);
@@ -25,9 +25,25 @@ BoardController::BoardController(Board *board, TurnBar *turnBar,
                                   activeUnit_->getStats().attackRange);
 }
 
-void BoardController::run(const SDL_Event event) {
-  // Captures mouse event
-  ListenerOnClick::run(event);
+void PlayerController::run(const SDL_Event event) {
+  if (!getActive()) return;
+  if (!Input::isMouseButtonDown(MouseKey::LEFT)) return;
+
+  const auto gameObject = Input::screenMouseToRay();
+  if (!gameObject) return;
+
+  // Ignore Unit's "hitboxes" and assume it's a click to the board, so get the
+  // box at the mouse's coordinates
+  const auto unit = dynamic_cast<Unit*>(gameObject);
+  const auto box = unit ? board_->getBoxAtCoordinates(Input::getMousePosition())
+                        : dynamic_cast<Box*>(gameObject);
+  if (!box) return;
+
+  if (!hasMoved_ && box->isEmpty()) {
+    onClickMove(box);
+  } else if (!hasAttacked_) {
+    onClickAttack(box);
+  }
 
   // If no actions left, reset and skip turn
   if (hasMoved_ && hasAttacked_) {
@@ -35,22 +51,9 @@ void BoardController::run(const SDL_Event event) {
   }
 }
 
-void BoardController::onClickStop(const SDL_Point point) {
-  const auto boxClicked = board_->getBoxAtCoordinates(point);
-
-  if (boxClicked != nullptr) {
-    if (boxClicked->isEmpty() && !hasMoved_) {
-      onClickMove(boxClicked);
-    } else if (!hasAttacked_) {
-      onClickAttack(boxClicked);
-    }
-  }
-}
-
-void BoardController::onClickMove(Box *boxClicked) {
+void PlayerController::onClickMove(Box* boxClicked) {
   // If this BoardController is stopped, don't run
-  if (isTweening_)
-    return;
+  if (isTweening_) return;
 
   // Checks if the box clicked is within movement range
   if (board_->isInMoveRange(activeUnit_->getBox(), boxClicked,
@@ -93,8 +96,8 @@ void BoardController::onClickMove(Box *boxClicked) {
   }
 }
 
-void BoardController::onClickAttack(Box *boxClicked) {
-  Unit *enemyUnit = boxClicked->getContent();
+void PlayerController::onClickAttack(Box* boxClicked) {
+  Unit* enemyUnit = boxClicked->getContent();
   if (enemyUnit != nullptr) {
     // Unit clicked if from a different team and in range
     if (enemyUnit->getTeam() != activeUnit_->getTeam() &&
@@ -105,7 +108,7 @@ void BoardController::onClickAttack(Box *boxClicked) {
       SDLAudioManager::getInstance()->playChannel(5, 0, 0);
 
       // Enemy dies
-      if (enemyUnit->getStats().health <= 0) {
+      if (enemyUnit->getStats().health == 0) {
         if (enemyUnit->getTeam()->getColor() == Color::RED) {
           GameManager::getInstance()->addMoney(enemyUnit->getStats().prize);
         }
@@ -132,7 +135,7 @@ void BoardController::onClickAttack(Box *boxClicked) {
   }
 }
 
-void BoardController::advanceTurn() {
+void PlayerController::advanceTurn() {
   board_->resetCellsToBase();
   hasMoved_ = hasAttacked_ = false;
   turnBar_->advanceTurn();

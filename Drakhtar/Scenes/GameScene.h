@@ -4,18 +4,21 @@
 #include "Scene.h"
 
 class Team;
-class BoardController;
+class Board;
+class UnitFactory;
+class PlayerController;
 
 class GameScene final : public Scene {
   Team *team1_ = nullptr;
   Team *team2_ = nullptr;
-  BoardController *boardController_;
+  Board *board_ = nullptr;
+  PlayerController* playerController_;
   int battle_;
 
  public:
   explicit GameScene(int battle);
-  virtual ~GameScene();
+  ~GameScene() override;
   void preload() override;
   void pause() override;
-  void skipTurn() override;
+  void loadRedTeam(UnitFactory &factory);
 };

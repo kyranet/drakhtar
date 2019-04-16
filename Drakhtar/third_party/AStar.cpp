@@ -3,6 +3,7 @@
 
 #include "AStar.h"
 #include <algorithm>
+#include <cmath>
 
 bool AStar::Vec2i::operator==(const Vec2i& coordinates) const {
   return (x == coordinates.x && y == coordinates.y);

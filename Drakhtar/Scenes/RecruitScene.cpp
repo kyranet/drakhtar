@@ -1,7 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "RecruitScene.h"
-#include "EventListeners/UnitStoreController.h"
+#include "Controllers/UnitStoreController.h"
 #include "GameObjects/Button.h"
 #include "GameObjects/GameObject.h"
 #include "GameObjects/Text.h"
@@ -15,8 +15,7 @@
 #include "Utils/Vector2D.h"
 
 void buttonStartGame() {
-  Game::getSceneMachine()->getCurrentScene()->processNextTick(
-      []() { Game::getSceneMachine()->changeScene(new TransitionScene(2)); });
+  Game::getSceneMachine()->changeScene(new TransitionScene(2));
 }
 
 void RecruitScene::preload() {

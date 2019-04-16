@@ -2,32 +2,25 @@
 
 #pragma once
 #include <vector>
-#include "../EventListeners/ListenerOnClick.h"
-#include "GameObject.h"
+#include "GameObjects/Base/Sequence.h"
 
 class Dialog;
 class Scene;
 class Font;
 
-class DialogScene final : public GameObject {
-  std::vector<Dialog *> dialogues_;
+class DialogScene final : virtual public Sequence {
+  std::vector<Dialog*> dialogues_;
   size_t dialogueIndex_ = 0;  // index of the current position in vector
   int lineJumpLimit_ = 0;     // text line length
-  void readFromFile(const std::string &filename, Font *textFont, SDL_Rect rect);
+  void readFromFile(const std::string& filename, Font* textFont, SDL_Rect rect);
 
  public:
   DialogScene(
-      Scene *scene, const std::string &filename,
-      const std::string &fontFile);  // we set the position of every component
+      Scene* scene, const std::string& filename,
+      const std::string& fontFile);  // we set the position of every component
                                      // of the dialog(text and background)
   ~DialogScene();
-  void next();
+  void next() override;
+  void skip() override;
   void render() const override;
-};
-
-class DialogSceneOnClick final : public ListenerOnClick {
- public:
-  explicit DialogSceneOnClick::DialogSceneOnClick(GameObject *gameObject)
-      : ListenerOnClick(gameObject) {}
-  void onClickStop(SDL_Point point) override;
 };

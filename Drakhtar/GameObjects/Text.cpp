@@ -32,6 +32,7 @@ void Text::setColor(const SDL_Color& color) {
 }
 
 void Text::render() const {
+    const auto rect = getRect();
   SDL_RenderCopy(Game::getRenderer(), texture_->getTexture(), nullptr,
-                 &getRect());
+                 &rect);
 }

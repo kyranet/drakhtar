@@ -12,8 +12,7 @@
 #include "Utils/Vector2D.h"
 
 void restartGame() {
-  Game::getSceneMachine()->getCurrentScene()->processNextTick(
-      []() { Game::getSceneMachine()->changeScene(new GameScene(1)); });
+  Game::getSceneMachine()->changeScene(new GameScene(1));
 }
 
 void exitGame() {

@@ -3,7 +3,7 @@
 #pragma once
 #include <utility>
 #include <vector>
-#include "ListenerOnClick.h"
+#include "EventListeners/ListenerOnClick.h"
 #include "SDL.h"
 
 class Unit;
@@ -46,5 +46,5 @@ class UnitStoreController final : public ListenerOnClick {
                       Text *amountText, GameObject *moreButton,
                       GameObject *lessButton);
 
-  void onClickStop(SDL_Point) override;
+  void onClickStop() override;
 };

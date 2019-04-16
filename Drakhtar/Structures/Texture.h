@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
+
 #include <map>
 #include <string>
 #include <vector>
@@ -45,7 +46,7 @@ class Texture final {
   Texture *loadFromImage(const std::string &filename, Uint16 rowAmount = 1,
                          Uint16 columnAmount = 1);
   Texture *loadFromText(Font *font, const std::string &text,
-                        SDL_Color color = {0, 0, 0, 255},
+                        SDL_Color color = { 0, 0, 0, 255 },
                         int lineJumpLimit = 250);
   void addAnimation(const std::string &name, std::vector<Uint16> const &frames);
   void setAnimation(const std::string &name);

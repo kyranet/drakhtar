@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
+#include <functional>
 #include <list>
 #include "GameObjects/Pause.h"
 #include "Managers/TweenManager.h"
@@ -10,19 +11,18 @@ class GameObject;
 using NextTickCallback = void();
 
 class Scene {
-  bool exit_ = false;
   bool loaded_ = false;
   bool paused_ = true;
   bool finished_ = false;
-  TweenManager *tweenManager_ = nullptr;
+  TweenManager* tweenManager_ = nullptr;
   bool transition_ = false;
-  bool skipDialog_ = false;
+  std::function<void()> onEndHandler_;
 
  protected:
-  std::list<GameObject *> gameObjects_;
-  std::list<GameObject *> pendingOnCreate_;
-  std::list<GameObject *> pendingOnDestroy_;
-  std::list<NextTickCallback *> nextTick_;
+  std::list<GameObject*> gameObjects_;
+  std::list<GameObject*> pendingOnCreate_;
+  std::list<GameObject*> pendingOnDestroy_;
+  std::list<NextTickCallback*> nextTick_;
 
  public:
   Scene();
@@ -33,9 +33,8 @@ class Scene {
   bool isPaused() const;
   bool isLoaded() const;
   bool getTransition() const;
-  bool getSkip() const;
   void setTransition(bool transition);
-  void setSkip(bool skip);
+  void setOnEndHandler(std::function<void()> callback);
   virtual void run();
   virtual void preload();
   virtual void tick();
@@ -47,15 +46,16 @@ class Scene {
   virtual void end();
 
   virtual void pause();
-  virtual void skipTurn();
   virtual void resume();
-  virtual void finish();
 
-  void addGameObject(GameObject *gameObject);
-  void removeGameObject(GameObject *gameObject);
+  void finish(bool force = true);
 
-  void processNextTick(NextTickCallback *callback);
+  std::list<GameObject*> getGameObjects() const;
+  void addGameObject(GameObject* gameObject);
+  void removeGameObject(GameObject* gameObject);
 
-  TweenManager *getTweenManager() const;
+  void processNextTick(NextTickCallback* callback);
+
+  TweenManager* getTweenManager() const;
   Pause *pauseInterface = nullptr;
 };

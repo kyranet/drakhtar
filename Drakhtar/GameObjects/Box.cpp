@@ -7,10 +7,8 @@
 
 Box::Box(Scene *scene, const Vector2D<int> &pos, const Vector2D<int> &size,
          const Vector2D<int> &boardIndex, Unit *unit)
-    : GameObject(scene, nullptr, pos, size),
-      boardIndex_(boardIndex),
-      content_(unit),
-      size_(std::move(size)) {
+    : GameObject(scene, nullptr, pos, size), boardIndex_(boardIndex),
+      content_(unit), size_(std::move(size)) {
   cellTextures_[static_cast<int>(TextureInd::BASE)] =
       TextureManager::get("UI-cellFrame");
   cellTextures_[static_cast<int>(TextureInd::HOVER)] =
@@ -45,6 +43,10 @@ void Box::render() const {
 void Box::update() {
   const auto area = getRect();
   hovered_ = Input::isMouseInside(&area);
+
+  if (!isEmpty()) {
+    getContent()->update();
+  }
 }
 
 // ---------- Getters and Setters ----------

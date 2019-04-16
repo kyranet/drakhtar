@@ -69,7 +69,7 @@ class Board final : public GameObject {
    * \param point: A SDL_Point in the game window.
    * \return A pointer to the box the SDL_Point is over.
    */
-  Box *getBoxAtCoordinates(SDL_Point point) const;
+  Box *getBoxAtCoordinates(const Vector2D<int>& point) const;
 
   /**
    * \brief Checks if two cells are within a certain range of each other.

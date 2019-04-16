@@ -1,7 +1,9 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "GameScene.h"
-#include "EventListeners/BoardController.h"
+#include <fstream>
+#include "Errors/DrakhtarError.h"
+#include "Controllers/PlayerController.h"
 #include "GameObjects/Button.h"
 #include "GameObjects/Commanders/Thassa.h"
 #include "GameObjects/Commanders/Zamdran.h"
@@ -28,9 +30,6 @@ GameScene::~GameScene() {
 }
 
 void buttonPause() { Game::getSceneMachine()->getCurrentScene()->pause(); }
-void buttonSkipTurn() {
-  Game::getSceneMachine()->getCurrentScene()->skipTurn();
-}
 
 void GameScene::preload() {
   Scene::preload();
@@ -39,50 +38,46 @@ void GameScene::preload() {
       this, TextureManager::get("Maps-" + std::to_string(battle_) + "Battle"),
       Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
       Vector2D<int>(WIN_WIDTH, WIN_HEIGHT));
-  auto board = new Board(this, 8, 12, static_cast<float>(WIN_HEIGHT / 10.0f));
+  board_ = new Board(this, 8, 12, static_cast<float>(WIN_HEIGHT / 10.0f));
   addGameObject(background);
-  addGameObject(board);
+  addGameObject(board_);
 
   // Create the teams.
-  team1_ = new Team(board, Color::BLUE);
-  team2_ = new Team(board, Color::RED);
+  team1_ = new Team(board_, Color::BLUE);
+  team2_ = new Team(board_, Color::RED);
 
   // Create a temporary factory to create the units easily.
   auto factory = UnitFactory(this);
 
   // Blue Team
-  const auto thassa = factory.newThassa(team1_, board->getBoxAt(0, 0));
+  const auto thassa = factory.newThassa(team1_, board_->getBoxAt(0, 0));
   team1_->setCommander(thassa);
   addGameObject(thassa);
 
-  std::map<std::string, int> *army = GameManager::getInstance()->getArmy();
+  std::map<std::string, int>* army = GameManager::getInstance()->getArmy();
 
-  addGameObject(
-      factory.newSoldier(team1_, board->getBoxAt(0, 2), (*army)["Soldier"]));
-  addGameObject(
-      factory.newArcher(team1_, board->getBoxAt(0, 3), (*army)["Archer"]));
+  if ((*army)["Soldier"] > 0)
+    addGameObject(
+        factory.newSoldier(team1_, board_->getBoxAt(0, 2), (*army)["Soldier"]));
+
+  if ((*army)["Archer"] > 0)
+    addGameObject(
+        factory.newArcher(team1_, board_->getBoxAt(0, 3), (*army)["Archer"]));
 
   if ((*army)["Mage"] > 0)
     addGameObject(
-        factory.newWizard(team1_, board->getBoxAt(0, 4), (*army)["Mage"]));
+        factory.newWizard(team1_, board_->getBoxAt(0, 4), (*army)["Mage"]));
 
   if ((*army)["Knight"] > 0)
     addGameObject(
-        factory.newKnight(team1_, board->getBoxAt(0, 5), (*army)["Knight"]));
+        factory.newKnight(team1_, board_->getBoxAt(0, 5), (*army)["Knight"]));
 
   if ((*army)["Monster"] > 0)
     addGameObject(
-        factory.newMonster(team1_, board->getBoxAt(0, 6), (*army)["Monster"]));
+        factory.newMonster(team1_, board_->getBoxAt(0, 6), (*army)["Monster"]));
 
   // Red Team
-  const auto zamdran_ = factory.newZamdran(team2_, board->getBoxAt(11, 0));
-  team2_->setCommander(zamdran_);
-  addGameObject(zamdran_);
-  addGameObject(factory.newSoldier(team2_, board->getBoxAt(11, 2), 10));
-  addGameObject(factory.newArcher(team2_, board->getBoxAt(11, 3), 10));
-  addGameObject(factory.newWizard(team2_, board->getBoxAt(11, 4), 5));
-  addGameObject(factory.newKnight(team2_, board->getBoxAt(11, 5), 5));
-  addGameObject(factory.newMonster(team2_, board->getBoxAt(11, 6), 2));
+  this->loadRedTeam(factory);
 
   // Add the GUI features now
   const auto turnBar =
@@ -91,15 +86,15 @@ void GameScene::preload() {
   const auto dialog =
       new DialogScene(this, "dialog" + std::to_string(battle_), "DialogFont");
 
-  boardController_ = new BoardController(board, turnBar, this);
-  board->addEventListener(boardController_);
+  playerController_ = new PlayerController(board_, turnBar, this);
+  board_->addEventListener(playerController_);
 
   const auto skipTurnButton =
       new Button(this, TextureManager::get("Button-SkipTurn"),
                  Vector2D<int>(WIN_WIDTH / 6, WIN_HEIGHT / 18),
                  Vector2D<int>(static_cast<int>(WIN_WIDTH / 21.6),
                                static_cast<int>(WIN_HEIGHT / 14.4)),
-                 buttonSkipTurn);
+                 [this]() { playerController_->advanceTurn(); });
 
   const auto pauseButton =
       new Button(this, TextureManager::get("Button-Pause"),
@@ -117,25 +112,19 @@ void GameScene::preload() {
                       Vector2D<int>(WIN_WIDTH / 24, WIN_HEIGHT / 18),
                       Vector2D<int>(static_cast<int>(WIN_WIDTH / 21.6),
                                     static_cast<int>(WIN_HEIGHT / 14.4)),
-                      board, thassa, 0);
-
-  const auto arrowRainButton =
-      new SkillButton(this, TextureManager::get("Button-BattleCry"),
-                      Vector2D<int>(WIN_WIDTH / 10, WIN_HEIGHT / 18),
-                      Vector2D<int>(static_cast<int>(WIN_WIDTH / 21.6),
-                                    static_cast<int>(WIN_HEIGHT / 14.4)),
-                      board, zamdran_, 0);
+                      board_, thassa, 0);
 
   addGameObject(turnBar);
   addGameObject(dialog);
   addGameObject(skipTurnButton);
   addGameObject(pauseButton);
   addGameObject(battleCryButton);
-  addGameObject(arrowRainButton);
 
-  const auto tutorialSequence =
-      new TutorialSequence(this, "tutorials", "TutorialFont");
-  addGameObject(tutorialSequence);
+  if (battle_ == 1) {
+    const auto tutorialSequence =
+        new TutorialSequence(this, "tutorials", "TutorialFont");
+    addGameObject(tutorialSequence);
+  }
 }
 
 void GameScene::pause() {
@@ -147,4 +136,70 @@ void GameScene::pause() {
   }
 }
 
-void GameScene::skipTurn() { boardController_->advanceTurn(); }
+void GameScene::loadRedTeam(UnitFactory& factory) {
+  std::ifstream file;
+  file.open("../levels/level-" + std::to_string(battle_) + ".txt");
+
+  if (!file.is_open()) throw DrakhtarError("Could not find file");
+
+  std::string captainName;
+
+  // File structure:
+  // CaptainName row col
+  // row col (for Soldier)
+  // row col (for Archer)
+  // row col (for Mage)
+  // row col (for Knight)
+  // row col (for Monster)
+
+  file >> captainName;
+  if (file.fail()) throw DrakhtarError("File is not a level file");
+
+  int row, col, size;
+
+  file >> row >> col;
+  Commander* commander;
+  if (captainName == "Zamdran") {
+    commander = factory.newZamdran(team2_, board_->getBoxAt(row, col));
+
+    const auto arrowRainButton =
+        new SkillButton(this, TextureManager::get("Button-BattleCry"),
+                        Vector2D<int>(WIN_WIDTH / 10, WIN_HEIGHT / 18),
+                        Vector2D<int>(static_cast<int>(WIN_WIDTH / 21.6),
+                                      static_cast<int>(WIN_HEIGHT / 14.4)),
+                        board_, commander, 0);
+    addGameObject(arrowRainButton);
+  } else {
+    throw DrakhtarError(
+        "File is not a level file or the captain is not implemented");
+  }
+
+  team2_->setCommander(commander);
+  this->addGameObject(commander);
+  if (!file.eof()) {
+    file >> size >> row >> col;
+    addGameObject(factory.newSoldier(team2_, board_->getBoxAt(row, col), size));
+  }
+
+  if (!file.eof()) {
+    file >> size >> row >> col;
+    addGameObject(factory.newArcher(team2_, board_->getBoxAt(row, col), size));
+  }
+
+  if (!file.eof()) {
+    file >> size >> row >> col;
+    addGameObject(factory.newWizard(team2_, board_->getBoxAt(row, col), size));
+  }
+
+  if (!file.eof()) {
+    file >> size >> row >> col;
+    addGameObject(factory.newKnight(team2_, board_->getBoxAt(row, col), size));
+  }
+
+  if (!file.eof()) {
+    file >> size >> row >> col;
+    addGameObject(factory.newMonster(team2_, board_->getBoxAt(row, col), size));
+  }
+
+  file.close();
+}
