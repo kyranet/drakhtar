@@ -2,6 +2,7 @@
 
 #pragma once
 #include <list>
+#include "GameObjects/Pause.h"
 #include "Managers/TweenManager.h"
 
 class GameObject;
@@ -56,4 +57,5 @@ class Scene {
   void processNextTick(NextTickCallback *callback);
 
   TweenManager *getTweenManager() const;
+  Pause *pauseInterface = nullptr;
 };

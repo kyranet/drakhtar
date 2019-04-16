@@ -28,31 +28,34 @@ Pause::Pause(Scene *scene) : GameObject(scene, nullptr) {
                      Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
                      Vector2D<int>(static_cast<int>(WIN_WIDTH / 4.68),
                                    static_cast<int>(WIN_HEIGHT / 2.25)));
-  const auto restart =
-      new Button(scene_, TextureManager::get("Button-Restart"),
-                 Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
-                 Vector2D<int>(static_cast<int>(WIN_WIDTH / 8.33),
-                               static_cast<int>(WIN_HEIGHT / 11.25)),
-                 restartGame);
-  const auto exit =
-      new Button(scene_, TextureManager::get("Button-Exit"),
-                 Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2 + 70),
-                 Vector2D<int>(static_cast<int>(WIN_WIDTH / 8.33),
-                               static_cast<int>(WIN_HEIGHT / 11.25)),
-                 exitGame);
+  restart = new Button(scene_, TextureManager::get("Button-Restart"),
+                       Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
+                       Vector2D<int>(static_cast<int>(WIN_WIDTH / 8.33),
+                                     static_cast<int>(WIN_HEIGHT / 11.25)),
+                       restartGame);
+  exit = new Button(scene_, TextureManager::get("Button-Exit"),
+                    Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2 + 70),
+                    Vector2D<int>(static_cast<int>(WIN_WIDTH / 8.33),
+                                  static_cast<int>(WIN_HEIGHT / 11.25)),
+                    exitGame);
 
-  const auto resume =
-      new Button(scene_, TextureManager::get("Button-Resume"),
-                 Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2 - 70),
-                 Vector2D<int>(static_cast<int>(WIN_WIDTH / 8.33),
-                               static_cast<int>(WIN_HEIGHT / 11.25)),
-                 [this]() {
-                   destroy();
-                   scene_->resume();
-                 });
+  resume = new Button(scene_, TextureManager::get("Button-Resume"),
+                      Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2 - 70),
+                      Vector2D<int>(static_cast<int>(WIN_WIDTH / 8.33),
+                                    static_cast<int>(WIN_HEIGHT / 11.25)),
+                      [this]() {
+                        destroy();
+                        scene_->resume();
+                      });
 
   addChild(panel);
   addChild(restart);
   addChild(exit);
   addChild(resume);
+}
+
+void Pause::handleEvents(SDL_Event e) {
+	restart->handleEvents(e);
+	resume->handleEvents(e);
+	exit->handleEvents(e);
 }
