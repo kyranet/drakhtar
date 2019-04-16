@@ -128,6 +128,9 @@ void Battalion::moveToBox(Box* box) {
 void Battalion::render() const {
   Unit::render();
   sizeText_->render();
-  auxiliaryUnit1_->render();
-  auxiliaryUnit2_->render();
+
+  if (battalionSize_ > 3) {
+    auxiliaryUnit1_->render();
+    if (battalionSize_ > 7) auxiliaryUnit2_->render();
+  }
 }
