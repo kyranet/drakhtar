@@ -11,7 +11,7 @@
 #include "Utils/Constants.h"
 
 UnitStoreController::UnitStoreController(GameObject* gameObject)
-    : ListenerOnClick(gameObject), ListenerOnHover(gameObject) {
+    : ListenerOnClick(gameObject),ListenerOnHover(gameObject) {
   const auto sceneMachine = Game::getSceneMachine();
   acceptButton_ = new GameObject(
       sceneMachine->getCurrentScene(), TextureManager::get("Accept-Button"),
@@ -132,15 +132,9 @@ void UnitStoreController::onHoverStop() {
   if (!found) return;
 
   selectedUnit_ = unitStore_[i];
-  const auto scene = reinterpret_cast<RecruitScene*>(
+  const auto scene = reinterpret_cast<RecruitScene *>(
       Game::getSceneMachine()->getCurrentScene());
   scene->addGameObject(
       new RecruitmentStat(scene, SDL_Rect{100, 100, 170, 110}, selectedUnit_));
   // TODO(Carlos): Show and update Unit Parameters Sheet
-}
-
-void UnitStoreController::run() {
-  SDL_Event e;
-  ListenerOnClick::run(e);
-  ListenerOnHover::run(e);
 }
