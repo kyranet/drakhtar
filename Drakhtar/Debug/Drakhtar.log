@@ -1,0 +1,44 @@
+﻿  AudioManager.cpp
+  Battalion.cpp
+  Board.cpp
+  Box.cpp
+  Button.cpp
+  BoardController.cpp
+c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\crtdbg.h(303): warning C4005: '_malloca': redefinición de macro
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\malloc.h(122): note: vea la definición anterior de '_malloca'
+  Dialog.cpp
+  DialogController.cpp
+c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\crtdbg.h(303): warning C4005: '_malloca': redefinición de macro
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\malloc.h(122): note: vea la definición anterior de '_malloca'
+  DialogScene.cpp
+  Font.cpp
+  Game.cpp
+c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\crtdbg.h(303): warning C4005: '_malloca': redefinición de macro
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\malloc.h(122): note: vea la definición anterior de '_malloca'
+  GameObject.cpp
+  GameState.cpp
+  GameStateMachine.cpp
+  main.cpp
+c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\crtdbg.h(303): warning C4005: '_malloca': redefinición de macro
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\ucrt\malloc.h(122): note: vea la definición anterior de '_malloca'
+  Pause.cpp
+  SDLAudioManager.cpp
+  MainMenu.cpp
+  State.cpp
+  Team.cpp
+  Generando código...
+  Compilando...
+  Text.cpp
+  Texture.cpp
+  TextureManager.cpp
+  TurnBar.cpp
+  Unit.cpp
+c:\users\beep montilla\documents\github\drakhtar\drakhtar\unit.cpp(8): warning C4244: 'argumento': conversión de 'double' a 'T'; posible pérdida de datos
+          with
+          [
+              T=int
+          ]
+  UnitFactory.cpp
+  Vector2D.cpp
+  Generando código...
+  Drakhtar.vcxproj -> C:\Users\Beep Montilla\Documents\GitHub\Drakhtar\bin\DrakhtarDebug.exe
