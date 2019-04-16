@@ -11,7 +11,7 @@ class AIController final : public UnitsController {
    * \brief Is called every time an event is capture to process it.
    * \param event: The event to be processed.
    */
-  //void run(SDL_Event event) override;
+  // void run(SDL_Event event) override;
 
   /**
    * \brief Ends unit's turn and updates active unit.

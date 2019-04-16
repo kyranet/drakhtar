@@ -3,7 +3,7 @@
 #include "GameScene.h"
 #include <fstream>
 #include "Errors/DrakhtarError.h"
-#include "EventListeners/PlayerController.h"
+#include "Controllers/PlayerController.h"
 #include "GameObjects/Button.h"
 #include "GameObjects/Commanders/Thassa.h"
 #include "GameObjects/Commanders/Zamdran.h"
@@ -86,15 +86,15 @@ void GameScene::preload() {
   const auto dialog =
       new DialogScene(this, "dialog" + std::to_string(battle_), "DialogFont");
 
-  playerController_ = new PlayerController(board, turnBar, this);
-  board->addEventListener(playerController_);
+  playerController_ = new PlayerController(board_, turnBar, this);
+  board_->addEventListener(playerController_);
 
   const auto skipTurnButton =
       new Button(this, TextureManager::get("Button-SkipTurn"),
                  Vector2D<int>(WIN_WIDTH / 6, WIN_HEIGHT / 18),
                  Vector2D<int>(static_cast<int>(WIN_WIDTH / 21.6),
                                static_cast<int>(WIN_HEIGHT / 14.4)),
-                 [this]() { boardController_->advanceTurn(); });
+                 [this]() { playerController_->advanceTurn(); });
 
   const auto pauseButton =
       new Button(this, TextureManager::get("Button-Pause"),
