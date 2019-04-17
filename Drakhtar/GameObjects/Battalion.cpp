@@ -101,11 +101,9 @@ void Battalion::moveToBox(Box* box) {
 
 void Battalion::render() const {
   if (battalionSize_ > 3) {
-    SDL_Rect aux1;
+    SDL_Rect aux1 = getRect();
     aux1.x = box_->getRect().x - box_->getRect().w / 2;
     aux1.y = box_->getRect().y - box_->getRect().h / 3;
-    aux1.w = box_->getRect().w * 1.25;
-    aux1.h = box_->getRect().w * 1.25;
     texture_->renderFrame(aux1, texture_->getAnimation()[texture_->getFrame()]);
   }
   Unit::render();
@@ -113,8 +111,6 @@ void Battalion::render() const {
     SDL_Rect aux2;
     aux2.x = box_->getRect().x - box_->getRect().w / 2;
     aux2.y = box_->getRect().y;
-    aux2.w = box_->getRect().w * 1.25;
-    aux2.h = box_->getRect().w * 1.25;
     texture_->renderFrame(aux2, texture_->getAnimation()[texture_->getFrame()]);
   }
 
