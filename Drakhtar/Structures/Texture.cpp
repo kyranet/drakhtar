@@ -2,8 +2,10 @@
 
 #include "Texture.h"
 #include "Errors/SDLError.h"
+#include "Font.h"
 #include "Managers/TextureManager.h"
 #include "SDL_image.h"
+#include "Utils/TimePool.h"
 
 Texture::Texture() : size_(0, 0), frameSize_(0, 0) {}
 
@@ -129,8 +131,10 @@ void Texture::setAnimation(const std::string& name) {
     const auto next = animations_[name];
     animation_ = next;
     frame_ = 0;
-    TextureManager::getInstance()->switchPool(previous.frameRate,
-                                              next.frameRate, this);
+    delete pool_;
+    pool_ = animation_.frameRate
+                ? new TimePool(1000 / animation_.frameRate, SDL_GetTicks())
+                : nullptr;
   } else {
     throw DrakhtarError(
         "Cannot set an animation that has not been previously added.");
@@ -147,6 +151,11 @@ bool Texture::hasAnimation(const std::string& name) const {
 }
 
 void Texture::tick() {
+  // If no pool is available, omit
+  if (pool_ == nullptr) return;
+
+  if (!pool_->next(SDL_GetTicks())) return;
+
   const auto size = animation_.frames.size();
   // Requires at least two frames to "tick"
   if (size < 2) return;
@@ -155,8 +164,9 @@ void Texture::tick() {
   if (++frame_ == size) {
     frame_ = 0;
     if (!previousAnimation_.empty()) {
-      setAnimation(previousAnimation_);
+      const auto nextAnimation = previousAnimation_;
       previousAnimation_ = "";
+      setAnimation(nextAnimation);
     }
   }
 }

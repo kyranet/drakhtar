@@ -6,8 +6,10 @@
 #include <string>
 #include <vector>
 #include "../Utils/Vector2D.h"
-#include "Font.h"
 #include "SDL.h"
+
+class Font;
+class TimePool;
 
 class Texture final {
   struct AnimationTextureInfo {
@@ -18,6 +20,9 @@ class Texture final {
 
   SDL_Texture* texture_ = nullptr;
   SDL_Renderer* renderer_ = nullptr;
+
+  TimePool* pool_ = nullptr;
+
   Vector2D<Uint16> size_;
   Vector2D<Uint16> frameSize_;
   Uint32 columnAmount_ = 1;
