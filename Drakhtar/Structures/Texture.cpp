@@ -117,8 +117,9 @@ Texture* Texture::addAnimation(const std::string& name,
                                const std::vector<Uint16>& frames,
                                const Uint16 frameRate) {
   animations_.insert(std::pair<std::string, AnimationTextureInfo>(
-      name,
-      {name, frames, frameRate == 0 ? Uint16(frames.size()) : frameRate}));
+      name, {name, frames,
+             frameRate == 0 ? Uint16(frames.size() > 1 ? frames.size() : 0)
+                            : frameRate}));
   return this;
 }
 

@@ -81,7 +81,7 @@ void TextureManager::switchPool(Uint16 previous, Uint16 now, Texture* texture) {
     pools_[previous].textures.remove(texture);
     if (pools_[previous].textures.empty()) removePool(previous);
   }
-  if (texture->getFrameRate() > 1) {
+  if (texture->getFrameRate() > 0) {
     ensurePool(now);
     pools_[now].textures.push_back(texture);
   }
