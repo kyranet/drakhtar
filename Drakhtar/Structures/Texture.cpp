@@ -128,12 +128,18 @@ void Texture::setAnimation(const std::string& name) {
     const auto previous = animation_;
     const auto next = animations_[name];
     animation_ = next;
+    frame_ = 0;
     TextureManager::getInstance()->switchPool(previous.frameRate,
                                               next.frameRate, this);
   } else {
     throw DrakhtarError(
         "Cannot set an animation that has not been previously added.");
   }
+}
+
+void Texture::setAnimationOnce(const std::string& name) {
+  previousAnimation_ = animation_.name;
+  setAnimation(name);
 }
 
 bool Texture::hasAnimation(const std::string& name) const {
@@ -146,7 +152,13 @@ void Texture::tick() {
   if (size < 2) return;
 
   // If it is the last tick, set to 0, else add one
-  if (++frame_ == size) frame_ = 0;
+  if (++frame_ == size) {
+    frame_ = 0;
+    if (!previousAnimation_.empty()) {
+      setAnimation(previousAnimation_);
+      previousAnimation_ = "";
+    }
+  }
 }
 
 void Texture::render(const Vector2D<int>& position) const {

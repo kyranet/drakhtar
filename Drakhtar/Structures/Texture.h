@@ -23,6 +23,7 @@ class Texture final {
   Uint32 columnAmount_ = 1;
   Uint32 rowAmount_ = 1;
   std::map<std::string, AnimationTextureInfo> animations_;
+  std::string previousAnimation_;
   AnimationTextureInfo animation_;
   Uint16 frame_ = 0;
   SDL_RendererFlip flip_ = SDL_FLIP_NONE;
@@ -58,6 +59,7 @@ class Texture final {
   Texture* addAnimation(const std::string& name,
                         const std::vector<Uint16>& frames, Uint16 frameRate = 0);
   void setAnimation(const std::string& name);
+  void setAnimationOnce(const std::string& name);
   bool hasAnimation(const std::string& name) const;
   void tick();
   void render(const Vector2D<int>& position) const;
