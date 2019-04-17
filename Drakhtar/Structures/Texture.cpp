@@ -35,6 +35,7 @@ SDL_RendererFlip Texture::getFlip() const { return flip_; }
 Texture::~Texture() {
   close();
   animations_.clear();
+  delete pool_;
 }
 
 Vector2D<Uint16> Texture::getFramePosition(const Uint16 frame) const {
