@@ -25,15 +25,15 @@ void MenuScene::preload() {
                      Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
                      Vector2D<int>(WIN_WIDTH, WIN_HEIGHT));
   const auto play = new Button(
-      this, TextureManager::get("Button-Play"),
+      this, TextureManager::get("Button"),
       Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2 - WIN_HEIGHT / 18),
       Vector2D<int>(static_cast<int>(floor(WIN_WIDTH / 7.5)), WIN_HEIGHT / 12),
-      buttonPlay);
+      buttonPlay, "Play", "TutorialFont");
   const auto options = new Button(
-      this, TextureManager::get("Button-Options"),
+      this, TextureManager::get("Button"),
       Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2 + WIN_HEIGHT / 18),
       Vector2D<int>(static_cast<int>(floor(WIN_WIDTH / 7.5)), WIN_HEIGHT / 12),
-      buttonOptions);
+      buttonOptions, "Options", "TutorialFont");
 
   auto audio = SDLAudioManager::getInstance();
   audio->haltChannel(0);
