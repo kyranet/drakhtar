@@ -32,5 +32,8 @@ class Commander : public Unit {
    * skill's cooldown timer and duration timer.
    */
   void onSelect() override;
+
+  void update() override;
+
   void moveToBox(Box *box) override;
 };
