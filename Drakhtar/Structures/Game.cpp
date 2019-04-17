@@ -47,6 +47,7 @@ void Game::load() {
   loaded_ = true;
   auto textures = TextureManager::getInstance();
 
+  // TODO(Kreksu): Add BlueValar back.
   // Units
   textures->add("Units-BlueArcher", "../images/Units/BlueArcher.png", 5, 3)
       ->addAnimation("default", {0, 1})
