@@ -19,6 +19,7 @@ int main(int, char*[]) {
 #endif
   try {
     const auto game = Game::getInstance();
+    game->load();
     game->run();
     SDLAudioManager::destroy();
     TextureManager::destroy();

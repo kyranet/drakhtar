@@ -15,9 +15,12 @@ class Game final {
   SceneMachine *sceneMachine_ = nullptr;
   Game();
 
+  bool loaded_ = false;
+
  public:
   ~Game();
   void run() const;
+  void load();
   // Get the SDL_Renderer instance.
   static SDL_Renderer *getRenderer();
   // Get the Game instance.

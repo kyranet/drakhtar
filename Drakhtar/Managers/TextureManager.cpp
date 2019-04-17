@@ -2,10 +2,12 @@
 
 #include "TextureManager.h"
 #include "../Errors/DrakhtarError.h"
+#include "Structures/Game.h"
+#include "Utils/TimePool.h"
 
-TextureManager *TextureManager::instance_ = nullptr;
+TextureManager* TextureManager::instance_ = nullptr;
 
-TextureManager *TextureManager::getInstance() {
+TextureManager* TextureManager::getInstance() {
   if (instance_ == nullptr) {
     instance_ = new TextureManager();
   }
@@ -13,26 +15,19 @@ TextureManager *TextureManager::getInstance() {
   return instance_;
 }
 
-TextureManager::TextureManager() {}
+TextureManager::TextureManager() = default;
 
-TextureInfo *TextureManager::add(const std::string name, const std::string path,
-                                 const Uint16 columns, const Uint16 rows,
-                                 const SDL_RendererFlip flip) {
-  const auto info = new TextureInfo(name, path, columns, rows, flip);
-  stack_.push(info);
-  return info;
+Texture* TextureManager::add(const std::string& name, const std::string& path,
+                             const Uint16 columns, const Uint16 rows) {
+  const auto texture = new Texture(Game::getRenderer());
+  texture->loadFromImage(path, rows, columns);
+  map_.insert(std::pair<std::string, Texture*>(name, texture));
+  return texture;
 }
 
-void TextureManager::init(SDL_Renderer *renderer) {
-  while (!stack_.empty()) {
-    auto info = stack_.top();
-    auto texture = (new Texture(renderer))
-                       ->loadFromImage(info->path_, info->rows_, info->columns_);
-    texture->setFlip(info->flip_);
-
-    // Add all the queued animations
-    for (const auto &animation : info->animations_)
-      texture->addAnimation(animation.name, animation.frames);
+void TextureManager::init() {
+  for (const auto& pair : map_) {
+    const auto texture = pair.second;
 
     // If there was no default animation override, add it
     if (!texture->hasAnimation("default")) {
@@ -44,30 +39,33 @@ void TextureManager::init(SDL_Renderer *renderer) {
     }
 
     texture->setAnimation("default");
-
-    // Insert the texture to the map, pop the stack, and delete the temporary
-    // information
-    map_.insert(std::pair<std::string, Texture *>(info->name_, texture));
-    stack_.pop();
-    delete info;
   }
 }
 
 void TextureManager::tick() {
   if (instance_ == nullptr) return;
-  for (auto pair : map_) {
-    pair.second->tick();
+  for (auto& pair : pools_) {
+    if (pair.second.timePool->next(SDL_GetTicks())) {
+      for (auto& texture : pair.second.textures) {
+        texture->tick();
+      }
+    }
   }
 }
 
-Texture *TextureManager::get(const std::string name) {
+Texture* TextureManager::get(const std::string& name) {
   return getInstance()->map_[name];
 }
 
 TextureManager::~TextureManager() {
-  while (!stack_.empty()) stack_.pop();
-  for (const auto &pair : map_) delete pair.second;
+  for (auto& pair : map_) delete pair.second;
   map_.clear();
+
+  for (auto& pair : pools_) {
+    delete pair.second.timePool;
+    pair.second.textures.clear();
+  }
+  pools_.clear();
 }
 
 void TextureManager::destroy() {
@@ -75,4 +73,33 @@ void TextureManager::destroy() {
     delete instance_;
     instance_ = nullptr;
   }
+}
+
+void TextureManager::switchPool(Uint16 previous, Uint16 now, Texture* texture) {
+  if (previous == now) return;
+  if (hasPool(previous)) {
+    pools_[previous].textures.remove(texture);
+    if (pools_[previous].textures.empty()) removePool(previous);
+  }
+  if (texture->getFrameRate() > 0) {
+    ensurePool(now);
+    pools_[now].textures.push_back(texture);
+  }
+}
+
+bool TextureManager::hasPool(Uint16 frameRate) {
+  return pools_.count(frameRate) != 0;
+}
+
+void TextureManager::removePool(Uint16 frameRate) {
+  for (auto it = pools_.begin(); it != pools_.end(); it++) {
+    if ((*it).first != frameRate) continue;
+    pools_.erase(it);
+  }
+}
+
+void TextureManager::ensurePool(Uint16 frameRate) {
+  if (hasPool(frameRate)) return;
+  Pool pool{new TimePool(1000 / frameRate, SDL_GetTicks()), {}};
+  pools_.insert(std::pair<Uint16, Pool>(frameRate, pool));
 }

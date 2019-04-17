@@ -41,15 +41,12 @@ void Scene::run() {
   // Set current status to resume
   resume();
 
-  auto poolAnimation =
-      new TimePool(1000 / ANIMATION_TICKS_PER_SECOND, SDL_GetTicks());
+  const auto textureManager = TextureManager::getInstance();
   auto poolFrameRate = new TimePool(1000 / GAME_FRAMERATE, SDL_GetTicks());
 
   // Run the event loop
   while (!isFinished()) {
-    if (poolAnimation->next(SDL_GetTicks())) {
-      TextureManager::getInstance()->tick();
-    }
+    textureManager->tick();
 
     create();
     handleEvents();
@@ -63,7 +60,6 @@ void Scene::run() {
     }
   }
 
-  delete poolAnimation;
   delete poolFrameRate;
 
   end();
