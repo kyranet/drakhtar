@@ -2,6 +2,7 @@
 
 #pragma once
 #include <string>
+
 #include "Unit.h"
 
 class Scene;
@@ -12,9 +13,6 @@ class HealthBar;
 class Battalion final : public Unit {
   int battalionSize_;
   Text* sizeText_ = nullptr;
-
-  GameObject* auxiliaryUnit1_ = nullptr;
-  GameObject* auxiliaryUnit2_ = nullptr;
 
   std::string sizeToString() const;
 
