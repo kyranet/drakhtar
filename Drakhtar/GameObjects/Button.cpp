@@ -3,6 +3,9 @@
 #include "Button.h"
 #include <utility>
 #include "Managers/Input.h"
+#include "Text.h"
+#include "../Structures/Font.h"
+#include "Managers/FontManager.h"
 
 Button::Button(Scene* scene, Texture* texture, const Vector2D<int>& pos,
                const Vector2D<int>& size, std::function<void()> callback,
@@ -26,3 +29,5 @@ void Button::update() {
     callback_();
   }
 }
+
+void Button::render() const { GameObject::render(); }
