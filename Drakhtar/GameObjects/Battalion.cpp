@@ -8,6 +8,7 @@
 #include "Managers/GameManager.h"
 #include "Scenes/Scene.h"
 #include "Structures/Team.h"
+#include "Structures/Texture.h"
 #include "Text.h"
 
 Battalion::Battalion(Scene* scene, Texture* texture, Box* box,
@@ -38,20 +39,6 @@ Battalion::Battalion(Scene* scene, Texture* texture, Box* box,
   setPosition(Vector2D<int>(box->getRect().x + box->getRect().w / 1.5,
                             box->getRect().y + box->getRect().h / 2));
 
-  auxiliaryUnit1_ =
-      new GameObject(scene, texture,
-                     Vector2D<int>(box->getRect().x + box->getRect().w / 8,
-                                   box->getRect().y + box->getRect().h / 4),
-                     Vector2D<int>(static_cast<int>(box->getRect().w * 1.25),
-                                   static_cast<int>(box->getRect().h * 1.25)));
-
-  auxiliaryUnit2_ =
-      new GameObject(scene, texture,
-                     Vector2D<int>(box->getRect().x + box->getRect().w / 8,
-                                   box->getRect().y + box->getRect().h / 1.5),
-                     Vector2D<int>(static_cast<int>(box->getRect().w * 1.25),
-                                   static_cast<int>(box->getRect().h * 1.25)));
-
   updateBattalionPosition();
 }
 
@@ -59,16 +46,6 @@ Battalion::~Battalion() {
   if (sizeText_ != nullptr) {
     delete sizeText_;
     sizeText_ = nullptr;
-  }
-
-  if (auxiliaryUnit1_ != nullptr) {
-    delete auxiliaryUnit1_;
-    auxiliaryUnit1_ = nullptr;
-  }
-
-  if (auxiliaryUnit2_ != nullptr) {
-    delete auxiliaryUnit2_;
-    auxiliaryUnit2_ = nullptr;
   }
 }
 
@@ -119,25 +96,29 @@ void Battalion::moveToBox(Box* box) {
   sizeText_->setPosition(
       Vector2D<int>(rect.x + rect.h / 6, rect.y - rect.h / 3));
 
-  auxiliaryUnit1_->setPosition(
-      Vector2D<int>(box->getRect().x + box->getRect().w / 8,
-                    box->getRect().y + box->getRect().h / 4));
-
-  auxiliaryUnit2_->setPosition(
-      Vector2D<int>(box->getRect().x + box->getRect().w / 8,
-                    box->getRect().y + box->getRect().h / 1.5));
-
   updateBattalionPosition();
 }
 
 void Battalion::render() const {
-  Unit::render();
-  sizeText_->render();
-
   if (battalionSize_ > 3) {
-    auxiliaryUnit1_->render();
-    if (battalionSize_ > 7) auxiliaryUnit2_->render();
+    SDL_Rect aux1;
+    aux1.x = box_->getRect().x - box_->getRect().w / 2;
+    aux1.y = box_->getRect().y - box_->getRect().h / 3;
+    aux1.w = box_->getRect().w * 1.25;
+    aux1.h = box_->getRect().w * 1.25;
+    texture_->renderFrame(aux1, texture_->getAnimation()[texture_->getFrame()]);
   }
+  Unit::render();
+  if (battalionSize_ > 7) {
+    SDL_Rect aux2;
+    aux2.x = box_->getRect().x - box_->getRect().w / 2;
+    aux2.y = box_->getRect().y;
+    aux2.w = box_->getRect().w * 1.25;
+    aux2.h = box_->getRect().w * 1.25;
+    texture_->renderFrame(aux2, texture_->getAnimation()[texture_->getFrame()]);
+  }
+
+  sizeText_->render();
 }
 
 void Battalion::updateBattalionPosition() {
