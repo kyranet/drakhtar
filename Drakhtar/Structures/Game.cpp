@@ -56,7 +56,8 @@ void Game::load() {
   textures->add("Units-BlueKnight", "../images/Units/BlueKnight.png", 5, 3)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12})
-      ->setFlip(SDL_FLIP_HORIZONTAL);
+      ->setFlip(SDL_FLIP_HORIZONTAL)
+      ->setScale({1.5, 1.5});
   textures->add("Units-BlueMage", "../images/Units/BlueMage.png", 3, 3)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8});
@@ -82,7 +83,8 @@ void Game::load() {
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});
   textures->add("Units-RedKnight", "../images/Units/RedKnight.png", 5, 3)
       ->addAnimation("default", {0, 1})
-      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});
+      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12})
+      ->setScale({1.5, 1.5});
   textures->add("Units-RedMage", "../images/Units/RedMage.png", 4, 3)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10})
