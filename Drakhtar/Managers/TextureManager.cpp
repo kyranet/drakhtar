@@ -44,12 +44,8 @@ void TextureManager::init() {
 
 void TextureManager::tick() {
   if (instance_ == nullptr) return;
-  for (auto& pair : pools_) {
-    if (pair.second.timePool->next(SDL_GetTicks())) {
-      for (auto& texture : pair.second.textures) {
-        texture->tick();
-      }
-    }
+  for (auto& pair : map_) {
+    pair.second->tick();
   }
 }
 
@@ -60,12 +56,6 @@ Texture* TextureManager::get(const std::string& name) {
 TextureManager::~TextureManager() {
   for (auto& pair : map_) delete pair.second;
   map_.clear();
-
-  for (auto& pair : pools_) {
-    delete pair.second.timePool;
-    pair.second.textures.clear();
-  }
-  pools_.clear();
 }
 
 void TextureManager::destroy() {
@@ -73,33 +63,4 @@ void TextureManager::destroy() {
     delete instance_;
     instance_ = nullptr;
   }
-}
-
-void TextureManager::switchPool(Uint16 previous, Uint16 now, Texture* texture) {
-  if (previous == now) return;
-  if (hasPool(previous)) {
-    pools_[previous].textures.remove(texture);
-    if (pools_[previous].textures.empty()) removePool(previous);
-  }
-  if (texture->getFrameRate() > 0) {
-    ensurePool(now);
-    pools_[now].textures.push_back(texture);
-  }
-}
-
-bool TextureManager::hasPool(Uint16 frameRate) {
-  return pools_.count(frameRate) != 0;
-}
-
-void TextureManager::removePool(Uint16 frameRate) {
-  for (auto it = pools_.begin(); it != pools_.end(); it++) {
-    if ((*it).first != frameRate) continue;
-    pools_.erase(it);
-  }
-}
-
-void TextureManager::ensurePool(Uint16 frameRate) {
-  if (hasPool(frameRate)) return;
-  Pool pool{new TimePool(1000 / frameRate, SDL_GetTicks()), {}};
-  pools_.insert(std::pair<Uint16, Pool>(frameRate, pool));
 }

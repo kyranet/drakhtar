@@ -41,11 +41,6 @@ class UnitsController {
    */
   bool hasAttacked_ = false;
 
-  /**
-   * \brief Whether or not the active unit currently moving.
-   */
-  bool isTweening_ = false;
-
  public:
   UnitsController(Board *board, TurnBar *turnBar, GameScene *scene);
 
