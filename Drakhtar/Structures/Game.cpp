@@ -66,8 +66,6 @@ void Game::load() {
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10, 11})
       ->setFlip(SDL_FLIP_HORIZONTAL);
-  textures->add("Units-BlueValar", "../images/Units/BlueValar.png", 2, 1)
-      ->setFlip(SDL_FLIP_HORIZONTAL);
   textures->add("Units-Thassa", "../images/Units/Thassa.png", 4, 3)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10, 11})
@@ -86,10 +84,12 @@ void Game::load() {
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});
   textures->add("Units-RedMage", "../images/Units/RedMage.png", 4, 3)
       ->addAnimation("default", {0, 1})
-      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10});
+      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10})
+      ->setFlip(SDL_FLIP_HORIZONTAL);
   textures->add("Units-RedMonster", "../images/Units/RedMonster.png", 4, 3)
       ->addAnimation("default", {0, 1})
-      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10});
+      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10})
+      ->setFlip(SDL_FLIP_HORIZONTAL);
   textures->add("Units-RedSoldier", "../images/Units/RedSoldier.png", 4, 3)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10, 11});
@@ -148,7 +148,6 @@ void Game::load() {
   textures->add("Portraits-Archer", "../images/Portraits/Archer.png", 1, 1);
   textures->add("Portraits-ArcherEnemy", "../images/Portraits/ArcherEnemy.png",
                 1, 1);
-  // TODO(Javi): Nuke this
   textures->add("Portraits-Valar", "../images/Portraits/Valar.png", 1, 1);
   textures->add("Portraits-EvilValar", "../images/Portraits/EvilValar.png", 1,
                 1);
