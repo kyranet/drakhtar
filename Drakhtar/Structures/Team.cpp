@@ -31,7 +31,6 @@ std::vector<Unit*> Team::getUnits() const { return units_; }
 
 void Team::addCommander(Commander* commander) {
   commanders_.push_back(commander);
-  addUnit(commander);
 }
 
 void Team::removeCommander(Commander* commander) {

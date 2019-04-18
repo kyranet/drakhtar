@@ -73,6 +73,7 @@ class Unit : public GameObject {
   virtual int loseHealth(int enemyAttack);
   void update() override;
   virtual void attack(Unit *enemy, bool counter);
+  virtual void kill();
 
   virtual void onSelect();
   virtual void onDeselect();

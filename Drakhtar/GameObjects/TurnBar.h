@@ -17,12 +17,15 @@ class TurnBar final : public GameObject {
   std::array<Turn, 2> teams_;
   size_t turn_ = 0;
 
-  std::vector<Unit*> calculated_;
+  std::array<Unit*, 8> calculated_{};
 
  public:
-  TurnBar(Scene* scene);
+  TurnBar(Scene* scene, std::vector<Unit*> team1, std::vector<Unit*> team2);
   ~TurnBar();
   void next();
   void prepare();
   void render() const override;
+
+  void remove(Unit* unit);
+  Unit* getTurnFor() const;
 };

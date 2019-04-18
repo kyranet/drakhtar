@@ -102,6 +102,10 @@ void Unit::attack(Unit* enemy, const bool counter) {
   }
 }
 
+void Unit::kill() {
+  getTeam()->removeUnit(this);
+}
+
 std::string Unit::healthToString() const {
   return std::to_string(getStats().health) + " HP";
 }
