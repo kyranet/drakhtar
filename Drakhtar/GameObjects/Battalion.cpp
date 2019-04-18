@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Battalion.h"
+
 #include "Box.h"
 #include "HealthBar.h"
 #include "Managers/FontManager.h"
@@ -9,11 +10,13 @@
 #include "Structures/Team.h"
 #include "Text.h"
 
-Battalion::Battalion(Scene *scene, Texture *texture, Box *box,
+Battalion::Battalion(Scene* scene, Texture* texture, Box* box,
                      const UnitStats stats, const std::string type,
                      const int battalionSize)
     : Unit(scene, texture, box, stats, type), battalionSize_(battalionSize) {
   stats_.health = baseStats_.health * battalionSize_;
+  stats_.attack = baseStats_.attack * battalionSize_;
+  stats_.prize = baseStats_.prize * battalionSize_;
 
   const SDL_Color textColor = {255, 255, 255, 0};
   const SDL_Color sizeColor = {0, 0, 255, 0};
@@ -63,11 +66,11 @@ int Battalion::loseHealth(const int enemyAttack) {
   const auto health = Unit::loseHealth(enemyAttack);
   if (baseStats_.health <= health) {
     battalionSize_ -= health / baseStats_.health;
+    stats_.attack = baseStats_.attack * battalionSize_;
     if (this->getTeam()->getColor() == Color::BLUE)
       (*GameManager::getInstance()->getArmy())[this->getType()] =
           battalionSize_;
-    if (battalionSize_ < 0)
-      battalionSize_ = 0;
+    if (battalionSize_ < 0) battalionSize_ = 0;
     sizeText_->setText(sizeToString());
     const SDL_Color sizeColor = {0, 0, 255, 0};
     sizeText_->setColor(sizeColor);
@@ -75,7 +78,7 @@ int Battalion::loseHealth(const int enemyAttack) {
   return health;
 }
 
-void Battalion::moveToBox(Box *box) {
+void Battalion::moveToBox(Box* box) {
   Unit::moveToBox(box);
 
   const auto rect = box_->getRect();
