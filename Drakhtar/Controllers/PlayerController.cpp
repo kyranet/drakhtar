@@ -1,7 +1,9 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "PlayerController.h"
+
 #include <iostream>
+
 #include "GameObjects/Board.h"
 #include "GameObjects/Box.h"
 #include "GameObjects/TurnBar.h"
@@ -43,11 +45,6 @@ void PlayerController::run(const SDL_Event) {
   } else if (!hasAttacked_) {
     onClickAttack(box);
   }
-
-  // If no actions left, reset and skip turn
-  if (hasMoved_ && hasAttacked_) {
-    advanceTurn();
-  }
 }
 
 void PlayerController::onClickMove(Box* boxClicked) {
@@ -83,6 +80,11 @@ void PlayerController::onClickMove(Box* boxClicked) {
             SDLAudioManager::getInstance()->setChannelVolume(30, 0);
             SDLAudioManager::getInstance()->playChannel(4, 0, 0);
           } else {
+            advanceTurn();
+          }
+
+          // If no actions left, reset and skip turn
+          if (hasMoved_ && hasAttacked_) {
             advanceTurn();
           }
         });
@@ -125,6 +127,11 @@ void PlayerController::onClickAttack(Box* boxClicked) {
         activeUnit_->getBox()->setContent(nullptr);
         turnBar_->eraseUnit(activeUnit_);
         scene_->removeGameObject(activeUnit_);
+        advanceTurn();
+      }
+
+      // If no actions left, reset and skip turn
+      if (hasMoved_ && hasAttacked_) {
         advanceTurn();
       }
     }
