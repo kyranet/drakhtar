@@ -1,15 +1,15 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Unit.h"
-
 #include <algorithm>
-
-#include "../Managers/FontManager.h"
-#include "../Structures/Team.h"
-#include "../Utils/Vector2D.h"
+#include "Board.h"
 #include "Box.h"
 #include "HealthBar.h"
+#include "Managers/FontManager.h"
+#include "Scenes/GameScene.h"
+#include "Structures/Team.h"
 #include "Text.h"
+#include "Utils/Vector2D.h"
 
 Unit::Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
            const std::string& type)
@@ -38,19 +38,12 @@ Unit::Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
       baseStats_.health);
 
   healthText_->setColor(textColor);
+
+  addChild(healthBar_);
+  addChild(healthText_);
 }
 
-Unit::~Unit() {
-  if (healthText_ != nullptr) {
-    delete healthText_;
-    healthText_ = nullptr;
-  }
-
-  if (healthBar_ != nullptr) {
-    delete healthBar_;
-    healthBar_ = nullptr;
-  }
-}
+Unit::~Unit() = default;
 
 void Unit::moveToBox(Box* newBox) {
   box_->setContent(nullptr);
@@ -80,12 +73,6 @@ int Unit::loseHealth(int enemyAttack) {
   return enemyAttack;
 }
 
-void Unit::render() const {
-  GameObject::render();
-  healthBar_->render();
-  healthText_->render();
-}
-
 void Unit::update() { healthBar_->update(); }
 
 void Unit::onSelect() { setMoving(true); }
@@ -93,16 +80,19 @@ void Unit::onSelect() { setMoving(true); }
 void Unit::onDeselect() { setMoving(false); }
 
 void Unit::attack(Unit* enemy, const bool counter) {
-  enemy->loseHealth(this->getStats().attack);
+  enemy->loseHealth(getStats().attack);
 
+  const auto scene = reinterpret_cast<GameScene*>(getScene());
   // If the attack is not a counter and the enemy is
   // alive and within attack range, counter-attack
   if (!counter && enemy->getStats().health > 0 &&
-      team_->getBoard()->isInRange(box_, enemy->getBox(),
+      scene->getBoard()->isInRange(box_, enemy->getBox(),
                                    enemy->getStats().attackRange)) {
     enemy->attack(this, true);
   }
 }
+
+void Unit::kill() { getTeam()->removeUnit(this); }
 
 std::string Unit::healthToString() const {
   return std::to_string(getStats().health) + " HP";

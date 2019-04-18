@@ -43,15 +43,15 @@ void GameScene::preload() {
   addGameObject(board_);
 
   // Create the teams.
-  team1_ = new Team(board_, Color::BLUE);
-  team2_ = new Team(board_, Color::RED);
+  team1_ = new Team(Color::BLUE);
+  team2_ = new Team(Color::RED);
 
   // Create a temporary factory to create the units easily.
   auto factory = UnitFactory(this);
 
   // Blue Team
   const auto thassa = factory.newThassa(team1_, board_->getBoxAt(0, 0));
-  team1_->setCommander(thassa);
+  team1_->addCommander(thassa);
   addGameObject(thassa);
 
   std::map<std::string, int>* army = GameManager::getInstance()->getArmy();
@@ -79,9 +79,13 @@ void GameScene::preload() {
   // Red Team
   this->loadRedTeam(factory);
 
+  // Sort both teams by their speeds
+  team1_->sortUnits();
+  team2_->sortUnits();
+
   // Add the GUI features now
   const auto turnBar =
-      new TurnBar(this, team1_->getUnitList(), team2_->getUnitList());
+      new TurnBar(this, team1_->getUnits(), team2_->getUnits());
 
   const auto dialog =
       new DialogScene(this, "dialog" + std::to_string(battle_), "DialogFont");
@@ -168,8 +172,8 @@ void GameScene::loadRedTeam(UnitFactory& factory) {
         "File is not a level file or the captain is not implemented");
   }
 
-  team2_->setCommander(commander);
-  this->addGameObject(commander);
+  team2_->addCommander(commander);
+  addGameObject(commander);
   if (!file.eof()) {
     file >> size >> row >> col;
     addGameObject(factory.newSoldier(team2_, board_->getBoxAt(row, col), size));
@@ -197,3 +201,5 @@ void GameScene::loadRedTeam(UnitFactory& factory) {
 
   file.close();
 }
+
+Board* GameScene::getBoard() const { return board_; }

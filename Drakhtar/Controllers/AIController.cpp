@@ -10,6 +10,6 @@ void AIController::run() {}
 
 void AIController::advanceTurn() {
   hasMoved_ = hasAttacked_ = false;
-  turnBar_->advanceTurn();
-  activeUnit_ = turnBar_->getFrontUnit();
+  turnBar_->next();
+  activeUnit_ = turnBar_->getTurnFor();
 }
