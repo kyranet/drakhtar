@@ -43,17 +43,7 @@ Unit::Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
   addChild(healthText_);
 }
 
-Unit::~Unit() {
-  if (healthText_ != nullptr) {
-    delete healthText_;
-    healthText_ = nullptr;
-  }
-
-  if (healthBar_ != nullptr) {
-    delete healthBar_;
-    healthBar_ = nullptr;
-  }
-}
+Unit::~Unit() = default;
 
 void Unit::moveToBox(Box* newBox) {
   box_->setContent(nullptr);
@@ -102,9 +92,7 @@ void Unit::attack(Unit* enemy, const bool counter) {
   }
 }
 
-void Unit::kill() {
-  getTeam()->removeUnit(this);
-}
+void Unit::kill() { getTeam()->removeUnit(this); }
 
 std::string Unit::healthToString() const {
   return std::to_string(getStats().health) + " HP";

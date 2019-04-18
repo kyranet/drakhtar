@@ -12,9 +12,6 @@ GameObject::GameObject(Scene* scene, Texture* texture,
     : scene_(scene), position_(position), size_(size), texture_(texture) {}
 
 GameObject::~GameObject() {
-  scene_ = nullptr;
-  texture_ = nullptr;
-
   // Clean up event listeners
   for (auto listener : eventListeners_) delete listener;
   eventListeners_.clear();
