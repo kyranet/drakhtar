@@ -10,7 +10,7 @@ const int GAME_FRAMERATE = 25;
 
 // Thassa
 const auto thassaAttack = 30;
-const auto thassaDefense = 30; // Percent
+const auto thassaDefense = 30;  // Percent
 const auto thassaHealth = 100;
 const auto thassaAttackRange = 1;
 const auto thassaMoveRange = 3;
@@ -330,6 +330,4 @@ enum class KeyboardKey {
   kKeyLimit
 };
 
-enum class MouseKey {
-  LEFT, MIDDLE, RIGHT, kKeyLimit
-};
+enum class MouseKey { LEFT, MIDDLE, RIGHT, kKeyLimit };

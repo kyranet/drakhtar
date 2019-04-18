@@ -53,7 +53,6 @@ int Battalion::getAttack() const { return stats_.attack * battalionSize_; }
 
 int Battalion::getDefense() const {
   return Unit::getDefense();
-  //*battalionSize_;
 }
 
 int Battalion::getMaxHealth() const {
