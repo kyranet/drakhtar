@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Game.h"
+
 #include "../Errors/SDLError.h"
 #include "../Managers/FontManager.h"
 #include "../Managers/SDLAudioManager.h"
@@ -221,7 +222,7 @@ void Game::load() {
   fonts->init();
 
   auto audio = SDLAudioManager::getInstance();
-
+  audio->init();
   // Background music
   audio->loadMusic(
       0, "../audio/background/MenuSceneMusic - by AShamaluevMusic.ogg");
@@ -229,6 +230,11 @@ void Game::load() {
       1, "../audio/background/FirstGameSceneMusic - by Always Music.ogg");
 
   // Sound effects
+  /*
+             channel 0 = UI sounds
+             channel 1 = unit sounds
+
+*/
   audio->loadSound(0, "../audio/sound/UI-sounds/basic_click.mp3");
   audio->loadSound(1, "../audio/sound/UI-sounds/button_click.mp3");
   audio->loadSound(2, "../audio/sound/UI-sounds/hitPlayMenu.mp3");
@@ -237,8 +243,6 @@ void Game::load() {
   audio->loadSound(5, "../audio/sound/UI-sounds/attackConfirm.mp3");
   audio->loadSound(6, "../audio/sound/UI-sounds/quitButton.mp3");
   audio->loadSound(7, "../audio/sound/UI-sounds/pauseButton.mp3");
-
-  audio->init();
 
   sceneMachine_ = new SceneMachine();
   sceneMachine_->pushScene(new MenuScene());
