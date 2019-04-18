@@ -120,6 +120,8 @@ void TurnBar::remove(Unit* unit) {
     // Stop the loop
     break;
   }
+
+  prepare();
 }
 
 Unit* TurnBar::getTurnFor() const {
