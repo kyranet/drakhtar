@@ -18,7 +18,7 @@ Pause::Pause(Scene* scene) : GameObject(scene, nullptr) {
                      Vector2D<int>(static_cast<int>(WIN_WIDTH / 4.68),
                                    static_cast<int>(WIN_HEIGHT / 2.25)));
   const auto restart = 
-	  new Button(scene_, TextureManager::get("Vanilla-Button"),
+	  new Button(scene_, nullptr,
 				 Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
 				 Vector2D<int>(static_cast<int>(WIN_WIDTH / 8.33),
 			   				   static_cast<int>(WIN_HEIGHT / 11.25)),

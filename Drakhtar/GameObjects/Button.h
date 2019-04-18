@@ -17,5 +17,4 @@ class Button final : public GameObject {
          const Vector2D<int>& size, std::function<void()> callback,
          const std::string& text, const std::string& fontFile);
   void update() override;
-  void render() const override;
 };

@@ -29,5 +29,3 @@ void Button::update() {
     callback_();
   }
 }
-
-void Button::render() const { GameObject::render(); }
