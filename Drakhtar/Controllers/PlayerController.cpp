@@ -111,7 +111,7 @@ void PlayerController::onClickAttack(Box* boxClicked) {
           GameManager::getInstance()->addMoney(enemyUnit->getStats().prize);
         }
         boxClicked->setContent(nullptr);
-        turnBar_->eraseUnit(enemyUnit);
+        enemyUnit->getTeam()->removeUnit(enemyUnit);
         scene_->removeGameObject(enemyUnit);
       }
 
@@ -125,7 +125,7 @@ void PlayerController::onClickAttack(Box* boxClicked) {
       // Unit dies to counter-attack
       if (activeUnit_->getStats().health == 0) {
         activeUnit_->getBox()->setContent(nullptr);
-        turnBar_->eraseUnit(activeUnit_);
+        activeUnit_->getTeam()->removeUnit(activeUnit_);
         scene_->removeGameObject(activeUnit_);
         advanceTurn();
       }
@@ -141,8 +141,8 @@ void PlayerController::onClickAttack(Box* boxClicked) {
 void PlayerController::advanceTurn() {
   board_->resetCellsToBase();
   hasMoved_ = hasAttacked_ = false;
-  turnBar_->advanceTurn();
-  activeUnit_ = turnBar_->getFrontUnit();
+  turnBar_->next();
+  // activeUnit_ = turnBar_->getFrontUnit();
 
   activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
   board_->highlightCellsInRange(activeUnit_->getBox(),

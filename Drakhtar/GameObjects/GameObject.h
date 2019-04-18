@@ -27,6 +27,7 @@ class GameObject {
   GameObject(Scene *scene, Texture *texture, const Vector2D<int> &position,
              const Vector2D<int> &size);
   virtual ~GameObject();
+  virtual void render(SDL_Rect) const;
   virtual void render() const;
   virtual void update();
   virtual void handleEvents(SDL_Event event);

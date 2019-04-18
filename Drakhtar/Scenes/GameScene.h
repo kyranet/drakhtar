@@ -9,9 +9,9 @@ class UnitFactory;
 class PlayerController;
 
 class GameScene final : public Scene {
-  Team *team1_ = nullptr;
-  Team *team2_ = nullptr;
-  Board *board_ = nullptr;
+  Team* team1_ = nullptr;
+  Team* team2_ = nullptr;
+  Board* board_ = nullptr;
   PlayerController* playerController_;
   int battle_;
 
@@ -20,5 +20,9 @@ class GameScene final : public Scene {
   ~GameScene() override;
   void preload() override;
   void pause() override;
-  void loadRedTeam(UnitFactory &factory);
+  void loadRedTeam(UnitFactory& factory);
+
+  Board* getBoard() const;
+  Team* getTeam1() const;
+  Team* getTeam2() const;
 };

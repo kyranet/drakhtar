@@ -1,131 +1,85 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "TurnBar.h"
-#include "../Managers/TextureManager.h"
-#include "../Scenes/Scene.h"
-#include "../Utils/Constants.h"
+#include <Scenes/GameScene.h>
+#include "Managers/TextureManager.h"
+#include "Scenes/Scene.h"
+#include "Structures/Team.h"
 #include "Unit.h"
+#include "Utils/Constants.h"
 
-TurnBar::TurnBar(Scene *scene, std::list<Unit *> allyList,
-                 std::list<Unit *> enemyList)
+TurnBar::TurnBar(Scene* scene)
     : GameObject(
           scene, TextureManager::get("UI-turnBar"),
           Vector2D<int>(static_cast<int>(WIN_WIDTH - WIN_WIDTH / 5.3),
                         WIN_HEIGHT - WIN_HEIGHT / 13),
           Vector2D<int>(WIN_WIDTH / 2, static_cast<int>(WIN_WIDTH / 16.44))) {
-  auto allyIt = allyList.begin();
-  auto enemyIt = enemyList.begin();
-  auto unitCount = 0;
+  calculated_.resize(8);
+  addChild(new GameObject(scene_, TextureManager::get("UI-circle"),
+                          {static_cast<int>(WIN_WIDTH - WIN_WIDTH / 2.05),
+                           WIN_HEIGHT - WIN_HEIGHT / 13},
+                          {WIN_WIDTH / 7, WIN_WIDTH / 7}));
 
-  while (allyIt != allyList.end() || enemyIt != enemyList.end()) {
-    if (unitCount % 2 == 0 && allyIt != allyList.end()) {
-      unitTurnBar_.push_back(*allyIt);
-      ++allyIt;
-    } else if (enemyIt != enemyList.end()) {
-      unitTurnBar_.push_back(*enemyIt);
-      ++enemyIt;
+  prepare();
+}
+
+TurnBar::~TurnBar() = default;
+
+void TurnBar::prepare() {
+  const auto scene = reinterpret_cast<GameScene*>(getScene());
+  const auto blue = scene->getTeam1();
+  const auto red = scene->getTeam2();
+  if (!blue || !red) return;
+
+  const auto blueUnits = blue->getUnits();
+  const auto redUnits = red->getUnits();
+
+  calculated_.clear();
+  if (blueUnits.empty()) {
+    if (redUnits.empty()) return;
+    for (size_t i = 0, x = 0, m = calculated_.capacity(); i < m; i++) {
+      calculated_.push_back(blueUnits[x]);
+      if (++x == blueUnits.size()) x = 0;
     }
-    unitCount++;
-  }
+  } else if (redUnits.empty()) {
+    if (blueUnits.empty()) return;
+    for (size_t i = 0, x = 0, m = calculated_.capacity(); i < m; i++) {
+      calculated_.push_back(redUnits[x]);
+      if (++x == redUnits.size()) x = 0;
+    }
+  } else {
+    auto a = turn_ == 0 ? blueUnits : redUnits;
+    auto b = turn_ == 0 ? redUnits : blueUnits;
 
-  visibleUnits_.resize(visibleTurnBarSize_);
-  auto listIt = unitTurnBar_.begin();
-  for (Uint32 i = 0; i < visibleTurnBarSize_; i++) {
-    if (i == 0)
-      visibleUnits_[i] = new GameObject(
-          scene_, (*listIt)->getTexture(),
-          Vector2D<int>(static_cast<int>(WIN_WIDTH - WIN_WIDTH / 1.92 +
-                                         (i + 1.0) * WIN_HEIGHT / 18.18),
-                        static_cast<int>(WIN_HEIGHT - WIN_HEIGHT / 12.5)),
-          Vector2D<int>(WIN_HEIGHT / 5, WIN_HEIGHT / 5));
-    else
-      visibleUnits_[i] = new GameObject(
-          scene_, (*listIt)->getTexture(),
-          Vector2D<int>(static_cast<int>(WIN_WIDTH - WIN_WIDTH / 1.9 +
-                                         (i + 1.0) * WIN_HEIGHT / 11.0),
-                        static_cast<int>(WIN_HEIGHT - WIN_HEIGHT / 12.5)),
-          Vector2D<int>(WIN_HEIGHT / 8, WIN_HEIGHT / 8));
-    ++listIt;
-  }
-
-  selectedUnitSprite_ = new GameObject(
-      scene_, TextureManager::get("UI-circle"),
-      Vector2D<int>(static_cast<int>(WIN_WIDTH - WIN_WIDTH / 2.05),
-                    WIN_HEIGHT - WIN_HEIGHT / 13),   // pos
-      Vector2D<int>(WIN_WIDTH / 7, WIN_WIDTH / 7));  // tam
-
-  sort();
-  unitTurnBar_.front()->onSelect();
-}
-
-TurnBar::~TurnBar() {
-  for (auto unit : visibleUnits_) delete unit;
-  delete selectedUnitSprite_;
-}
-
-// takes out the unit in the front of the queue and puts it in the back
-void TurnBar::advanceTurn() {
-  Unit *frontUnit = unitTurnBar_.front();
-  if (frontUnit != nullptr) {
-    frontUnit->onDeselect();
-  }
-  unitTurnBar_.pop_front();
-  unitTurnBar_.push_back(frontUnit);
-  updateVisibleUnits();
-  unitTurnBar_.front()->onSelect();
-}
-
-void TurnBar::sort() {
-  unitTurnBar_.sort([](Unit *unit1, Unit *unit2) {
-    return unit1->getStats().speed > unit2->getStats().speed;
-  });
-  updateVisibleUnits();
-}
-
-void TurnBar::eraseUnit(Unit *unit) {
-  auto deleted = false;
-  auto it = unitTurnBar_.begin();
-  while (!deleted && it != unitTurnBar_.end()) {
-    if (*it == unit) {
-      unitTurnBar_.erase(it);
-      deleted = true;
-
-      if (visibleTurnBarSize_ > unitTurnBar_.size()) decreaseVisibleUnitsSize();
-    } else {
-      ++it;
+    auto aIt = blueUnits.begin();
+    auto bIt = redUnits.begin();
+    for (size_t i = 0, m = calculated_.capacity(); i < m; i++) {
+      calculated_.push_back(*aIt);
+      if (++aIt == a.end()) aIt = a.begin();
+      calculated_.push_back(*bIt);
+      if (++bIt == b.end()) bIt = b.begin();
     }
   }
-  updateVisibleUnits();
+}
+
+void TurnBar::next() {
+  if (++turn_ == teams_.size()) turn_ = 0;
+  prepare();
 }
 
 void TurnBar::render() const {
   GameObject::render();
-  selectedUnitSprite_->render();
-  for (auto unit : visibleUnits_) unit->render();
-}
 
-void TurnBar::handleEvents(const SDL_Event event) {
-  if (event.type == SDL_KEYDOWN) {
-    switch (event.key.keysym.sym) {
-      case SDLK_t:
-        advanceTurn();
-        break;
-      default:
-        break;
-    }
+  size_t i = 0;
+  calculated_[i]->render({static_cast<int>(WIN_WIDTH - WIN_WIDTH / 1.92 +
+                                           1.0 * WIN_HEIGHT / 18.18),
+                          static_cast<int>(WIN_HEIGHT - WIN_HEIGHT / 12.5),
+                          WIN_HEIGHT / 5, WIN_HEIGHT / 5});
+  ++i;
+  for (const auto max = calculated_.capacity(); i < max; ++i) {
+    calculated_[i]->render({static_cast<int>(WIN_WIDTH - WIN_WIDTH / 1.9 +
+                                             (i + 1.0) * WIN_HEIGHT / 11.0),
+                            static_cast<int>(WIN_HEIGHT - WIN_HEIGHT / 12.5),
+                            WIN_HEIGHT / 8, WIN_HEIGHT / 8});
   }
-}
-
-void TurnBar::updateVisibleUnits() {
-  auto listIt = unitTurnBar_.begin();
-  for (Uint32 i = 0; i < visibleTurnBarSize_; i++) {
-    visibleUnits_[i]->setTexture((*listIt)->getTexture());
-    ++listIt;
-  }
-}
-
-void TurnBar::decreaseVisibleUnitsSize() {
-  visibleTurnBarSize_--;
-  delete visibleUnits_[visibleTurnBarSize_];
-  visibleUnits_.resize(visibleTurnBarSize_);
 }
