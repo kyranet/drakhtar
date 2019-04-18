@@ -29,13 +29,11 @@ TurnBar::TurnBar(Scene* scene, std::vector<Unit*> team1,
 TurnBar::~TurnBar() = default;
 
 void TurnBar::prepare() {
-  const auto scene = reinterpret_cast<GameScene*>(getScene());
-  const auto blue = scene->getTeam1();
-  const auto red = scene->getTeam2();
-  if (!blue || !red) return;
+  const auto blueTeam = teams_[0];
+  const auto redTeam = teams_[1];
 
-  const auto blueUnits = blue->getUnits();
-  const auto redUnits = red->getUnits();
+  const auto blueUnits = blueTeam.units;
+  const auto redUnits = redTeam.units;
 
   if (blueUnits.empty()) {
     if (redUnits.empty()) return;
@@ -55,18 +53,23 @@ void TurnBar::prepare() {
     auto a = turn_ == 0 ? blueUnits : redUnits;
     auto b = turn_ == 0 ? redUnits : blueUnits;
 
-    auto aIt = a.begin();
-    auto bIt = b.begin();
-    for (auto& i : calculated_) {
-      i = *aIt;
+    auto aIt = a.begin() + (turn_ == 0 ? blueTeam.position : redTeam.position);
+    auto bIt = b.begin() + (turn_ == 0 ? redTeam.position : blueTeam.position);
+    size_t i = 0;
+    while (true) {
+      calculated_[i] = *aIt;
       if (++aIt == a.end()) aIt = a.begin();
-      i = *bIt;
+      if (++i == calculated_.size()) break;
+
+      calculated_[i] = *bIt;
       if (++bIt == b.end()) bIt = b.begin();
+      if (++i == calculated_.size()) break;
     }
   }
 }
 
 void TurnBar::next() {
+  ++teams_[turn_].position;
   if (++turn_ == teams_.size()) turn_ = 0;
   prepare();
 }
@@ -75,27 +78,35 @@ void TurnBar::render() const {
   GameObject::render();
 
   size_t i = 0;
-  calculated_[i]->render({static_cast<int>(WIN_WIDTH - WIN_WIDTH / 1.92 +
-                                           1.0 * WIN_HEIGHT / 18.18),
-                          static_cast<int>(WIN_HEIGHT - WIN_HEIGHT / 12.5),
-                          WIN_HEIGHT / 5, WIN_HEIGHT / 5});
+  Vector2D<int> position(0, 0);
+  Vector2D<int> size(0, 0);
+
+  position.set(
+      static_cast<int>(WIN_WIDTH - WIN_WIDTH / 1.92 + 1.0 * WIN_HEIGHT / 18.18),
+      static_cast<int>(WIN_HEIGHT - WIN_HEIGHT / 12.5));
+  size.set(WIN_HEIGHT / 5, WIN_HEIGHT / 5);
+  calculated_[i]->render({position.getX() - size.getX() / 2,
+                          position.getY() - size.getY() / 2, size.getX(),
+                          size.getY()});
   ++i;
   for (const auto max = calculated_.size(); i < max; ++i) {
-    calculated_[i]->render({static_cast<int>(WIN_WIDTH - WIN_WIDTH / 1.9 +
-                                             (i + 1.0) * WIN_HEIGHT / 11.0),
-                            static_cast<int>(WIN_HEIGHT - WIN_HEIGHT / 12.5),
-                            WIN_HEIGHT / 8, WIN_HEIGHT / 8});
+    position.set(WIN_WIDTH - WIN_WIDTH / 2 + (i + 1) * WIN_HEIGHT / 11,
+                 static_cast<int>(WIN_HEIGHT - WIN_HEIGHT / 12.5));
+    size.set(WIN_HEIGHT / 8, WIN_HEIGHT / 8);
+    calculated_[i]->render({position.getX() - size.getX() / 2,
+                            position.getY() - size.getY() / 2, size.getX(),
+                            size.getY()});
   }
 }
 
 void TurnBar::remove(Unit* unit) {
   const auto team = unit->getTeam();
-  auto turn = teams_[team->getColor() == Color::BLUE ? 0 : 1];
+  auto turn = &teams_[team->getColor() == Color::BLUE ? 0 : 1];
 
   size_t x = 0;
-  for (auto it = turn.units.begin(); it != turn.units.end(); ++it, ++x) {
+  for (auto it = turn->units.begin(); it != turn->units.end(); ++it, ++x) {
     if (*it != unit) continue;
-    turn.units.erase(it);
+    turn->units.erase(it);
     // If the unit's turn was behind the cursor, we want the cursor to go back.
     // So when I have:
     // 1 2 3 4 5
@@ -103,12 +114,13 @@ void TurnBar::remove(Unit* unit) {
     // And I remove the second, the cursor must decrease:
     // 1 3 4 5
     //   ^
-    if (x < turn.position) --turn.position;
+    if (x < turn->position) --turn->position;
 
     // Stop the loop
     break;
   }
 }
+
 Unit* TurnBar::getTurnFor() const {
   const auto turn = teams_[turn_];
   return turn.units[turn.position];

@@ -82,7 +82,6 @@ void GameScene::preload() {
   // Add the GUI features now
   const auto turnBar =
       new TurnBar(this, team1_->getUnits(), team2_->getUnits());
-  turnBar->prepare();
 
   const auto dialog =
       new DialogScene(this, "dialog" + std::to_string(battle_), "DialogFont");
