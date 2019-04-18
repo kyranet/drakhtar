@@ -67,7 +67,8 @@ void Unit::moveToBox(Box *newBox) {
 int Unit::loseHealth(int enemyAttack) {
   enemyAttack = std::max(enemyAttack - getDefense(), 1);
   health_ = std::max(health_ - enemyAttack, 0);
-  stats_.health -= enemyAttack;
+  //stats_.health -= enemyAttack;
+  stats_.health = std::max(stats_.health - enemyAttack, 0);
   healthText_->setText(healthToString());
   const SDL_Color textColor = { 255, 255, 255, 0 };
   healthText_->setColor(textColor);
