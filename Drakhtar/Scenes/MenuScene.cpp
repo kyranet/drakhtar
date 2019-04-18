@@ -18,8 +18,6 @@ void buttonPlay() {
   SDLAudioManager::getInstance()->playChannel(2, 0, 0);
 }
 
-void buttonOptions() { std::cout << "Options\n"; }
-
 void MenuScene::preload() {
   Scene::preload();
   const auto background =
