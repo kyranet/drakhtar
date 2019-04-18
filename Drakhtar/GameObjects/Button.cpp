@@ -17,11 +17,19 @@ Button::Button(Scene* scene, Texture* texture, const Vector2D<int>& pos,
 
   const auto buttonText_ = new Text(
       scene, FontManager::get(fontFile),
-      Vector2D<int>(size.getX() + pos.getX(), size.getY() - pos.getY()),
-      textColor, spriteText_, 2);
+               Vector2D<int>(this->getRect().x + this->getRect().w / 10,
+                             this->getRect().y + this->getRect().h / 200),
+      textColor, spriteText_, this->getRect().w*0.95);
 
   buttonText_->setColor(textColor);
-  buttonText_->setText(spriteText_, textColor, 2);
+  buttonText_->setText(spriteText_, textColor, this->getRect().w * 0.75);
+  buttonText_->setPosition(
+      Vector2D<int>(this->getRect().x + buttonText_->getRect().w/ 50,
+                    this->getRect().y - buttonText_->getRect().h/ 50));
+  buttonText_->setSize({100, 70});
+  //buttonText_->setSize(
+  //    Vector2D<int>(this->getRect().x + buttonText_->getRect().w / 10,
+    //                this->getRect().y - buttonText_->getRect().h / 10));
 
   addChild(buttonText_);
 }
@@ -29,10 +37,9 @@ Button::Button(Scene* scene, Texture* texture, const Vector2D<int>& pos,
 void Button::update() {
   GameObject::update();
 
-  if (Input::isMouseButtonDown(MouseKey::LEFT) &&
+  if ((Input::isMouseButtonDown(MouseKey::LEFT) ||
+      Input::isMouseButtonDown(MouseKey::RIGHT)) &&
       reinterpret_cast<Button*>(Input::screenMouseToRay()) == this) {
     callback_();
   }
 }
-
-void Button::render() const { GameObject::render(); }
