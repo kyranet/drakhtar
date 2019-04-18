@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "UnitFactory.h"
+
 #include "../GameObjects/Battalion.h"
 #include "../GameObjects/Commanders/Thassa.h"
 #include "../GameObjects/Commanders/Zamdran.h"
@@ -15,12 +16,11 @@ UnitFactory::UnitFactory(Scene* scene) : scene_(scene) {}
 UnitFactory::~UnitFactory() = default;
 
 Unit* UnitFactory::newSoldier(Team* team, Box* box, const int size) const {
-  UnitStats soldierStats_ = {soldierAttack * size, soldierDefense,
-                             soldierHealth,        soldierAttackRange,
-                             soldierMoveRange,     soldierSpeed,
-                             soldierPrize * size};
-  const auto textureName = team->getColor() == Color::BLUE ? "Units-BlueSoldier"
-                                                           : "Units-RedSoldier";
+  UnitStats soldierStats_ = {
+      soldierAttack,    soldierDefense, soldierHealth, soldierAttackRange,
+      soldierMoveRange, soldierSpeed,   soldierPrize};
+  const auto textureName =
+      team->getColor() == BLUE ? "Units-BlueSoldier" : "Units-RedSoldier";
 
   const auto unit = new Battalion(scene_, TextureManager::get(textureName), box,
                                   soldierStats_, "Soldier", size);
@@ -29,9 +29,9 @@ Unit* UnitFactory::newSoldier(Team* team, Box* box, const int size) const {
 }
 
 Unit* UnitFactory::newArcher(Team* team, Box* box, const int size) const {
-  UnitStats archerStats_ = {archerAttack * size, archerDefense,   archerHealth,
-                            archerAttackRange,   archerMoveRange, archerSpeed,
-                            archerPrize * size};
+  UnitStats archerStats_ = {archerAttack,      archerDefense,   archerHealth,
+                            archerAttackRange, archerMoveRange, archerSpeed,
+                            archerPrize};
   const auto textureName =
       team->getColor() == Color::BLUE ? "Units-BlueArcher" : "Units-RedArcher";
 
@@ -42,9 +42,9 @@ Unit* UnitFactory::newArcher(Team* team, Box* box, const int size) const {
 }
 
 Unit* UnitFactory::newKnight(Team* team, Box* box, const int size) const {
-  UnitStats knightStats_ = {knightAttack * size, knightDefense,   knightHealth,
-                            knightAttackRange,   knightMoveRange, knightSpeed,
-                            knightPrize * size};
+  UnitStats knightStats_ = {knightAttack,      knightDefense,   knightHealth,
+                            knightAttackRange, knightMoveRange, knightSpeed,
+                            knightPrize};
 
   const auto textureName =
       team->getColor() == Color::BLUE ? "Units-BlueKnight" : "Units-RedKnight";
@@ -56,9 +56,9 @@ Unit* UnitFactory::newKnight(Team* team, Box* box, const int size) const {
 }
 
 Unit* UnitFactory::newWizard(Team* team, Box* box, const int size) const {
-  UnitStats wizardStats_ = {wizardAttack * size, wizardDefense,   wizardHealth,
-                            wizardAttackRange,   wizardMoveRange, wizardSpeed,
-                            wizardPrize * size};
+  UnitStats wizardStats_ = {wizardAttack,      wizardDefense,   wizardHealth,
+                            wizardAttackRange, wizardMoveRange, wizardSpeed,
+                            wizardPrize};
   const auto textureName =
       team->getColor() == Color::BLUE ? "Units-BlueMage" : "Units-RedMage";
 
@@ -69,10 +69,9 @@ Unit* UnitFactory::newWizard(Team* team, Box* box, const int size) const {
 }
 
 Unit* UnitFactory::newMonster(Team* team, Box* box, const int size) const {
-  UnitStats monsterStats_ = {monsterAttack * size, monsterDefense,
-                             monsterHealth,        monsterAttackRange,
-                             monsterMoveRange,     monsterSpeed,
-                             monsterPrize * size};
+  UnitStats monsterStats_ = {
+      monsterAttack,    monsterDefense, monsterHealth, monsterAttackRange,
+      monsterMoveRange, monsterSpeed,   monsterPrize};
 
   const auto textureName = team->getColor() == Color::BLUE ? "Units-BlueMonster"
                                                            : "Units-RedMonster";
