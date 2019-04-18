@@ -20,7 +20,7 @@ Unit* UnitFactory::newSoldier(Team* team, Box* box, const int size) const {
       soldierAttack,    soldierDefense, soldierHealth, soldierAttackRange,
       soldierMoveRange, soldierSpeed,   soldierPrize};
   const auto textureName =
-      team->getColor() == BLUE ? "Units-BlueSoldier" : "Units-RedSoldier";
+      team->getColor() == Color::BLUE ? "Units-BlueSoldier" : "Units-RedSoldier";
 
   const auto unit = new Battalion(scene_, TextureManager::get(textureName), box,
                                   soldierStats_, "Soldier", size);
