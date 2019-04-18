@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "MenuScene.h"
+
 #include "../GameObjects/Button.h"
 #include "../GameObjects/GameObject.h"
 #include "../Managers/TextureManager.h"
@@ -8,6 +9,7 @@
 #include "../Structures/Game.h"
 #include "../Utils/Constants.h"
 #include "../Utils/Vector2D.h"
+#include "GameObjects/OptionsMenu.h"
 #include "Managers/SDLAudioManager.h"
 #include "RecruitScene.h"
 
@@ -33,7 +35,12 @@ void MenuScene::preload() {
       this, TextureManager::get("Button-Options"),
       Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2 + WIN_HEIGHT / 18),
       Vector2D<int>(static_cast<int>(floor(WIN_WIDTH / 7.5)), WIN_HEIGHT / 12),
-      buttonOptions);
+      [this]() {
+        Game::getInstance()
+            ->getSceneMachine()
+            ->getCurrentScene()
+            ->addGameObject(new OptionsMenu(this));
+      });
 
   auto audio = SDLAudioManager::getInstance();
   audio->haltChannel(0);
