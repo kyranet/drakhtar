@@ -26,7 +26,6 @@ PlayerController::PlayerController(Board* board, TurnBar* turnBar,
 }
 
 void PlayerController::run(const SDL_Event) {
-  if (!getActive()) return;
   if (!Input::isMouseButtonDown(MouseKey::LEFT)) return;
 
   const auto gameObject = Input::screenMouseToRay();
@@ -52,16 +51,13 @@ void PlayerController::run(const SDL_Event) {
 }
 
 void PlayerController::onClickMove(Box* boxClicked) {
-  // If this BoardController is stopped, don't run
-  if (isTweening_) return;
-
   // Checks if the box clicked is within movement range
   if (board_->isInMoveRange(activeUnit_->getBox(), boxClicked,
                             activeUnit_->getStats().moveRange)) {
     const auto path = board_->findPath(activeUnit_->getBox()->getIndex(),
                                        boxClicked->getIndex());
 
-    isTweening_ = true;
+    setActive(false);
     SDLAudioManager::getInstance()->playChannel(0, 0, 0);
     const auto unit = activeUnit_;
     scene_->getTweenManager()
@@ -76,7 +72,7 @@ void PlayerController::onClickMove(Box* boxClicked) {
         ->setOnComplete([this, unit, boxClicked]() {
           unit->moveToBox(boxClicked);
           hasMoved_ = true;
-          isTweening_ = false;
+          setActive(true);
           // If there are enemies in range, highlight them, otherwise skip turn
           if (board_->isEnemyInRange(boxClicked,
                                      unit->getStats().attackRange)) {
@@ -103,7 +99,7 @@ void PlayerController::onClickAttack(Box* boxClicked) {
     if (enemyUnit->getTeam() != activeUnit_->getTeam() &&
         board_->isInRange(activeUnit_->getBox(), boxClicked,
                           activeUnit_->getStats().attackRange)) {
-      // enemyUnit->loseHealth(activeUnit_->getAttack());
+      activeUnit_->getTexture()->setAnimationOnce("attack");
       activeUnit_->attack(enemyUnit, false);
       SDLAudioManager::getInstance()->playChannel(5, 0, 0);
 
@@ -123,14 +119,14 @@ void PlayerController::onClickAttack(Box* boxClicked) {
       board_->highlightCellsInRange(activeUnit_->getBox(),
                                     activeUnit_->getStats().moveRange);
       hasAttacked_ = true;
-    }
 
-    // Unit dies to counter-attack
-    if (activeUnit_->getStats().health == 0) {
-      activeUnit_->getBox()->setContent(nullptr);
-      turnBar_->eraseUnit(activeUnit_);
-      scene_->removeGameObject(activeUnit_);
-      advanceTurn();
+      // Unit dies to counter-attack
+      if (activeUnit_->getStats().health == 0) {
+        activeUnit_->getBox()->setContent(nullptr);
+        turnBar_->eraseUnit(activeUnit_);
+        scene_->removeGameObject(activeUnit_);
+        advanceTurn();
+      }
     }
   }
 }

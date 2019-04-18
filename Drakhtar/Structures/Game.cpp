@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Game.h"
+
 #include "../Errors/SDLError.h"
 #include "../Managers/FontManager.h"
 #include "../Managers/SDLAudioManager.h"
@@ -30,56 +31,81 @@ Game::Game() {
     throw SDLError(message);
   }
 
+  // Create the window and renderer
+  window_ = SDL_CreateWindow("Drakhtar", SDL_WINDOWPOS_CENTERED,
+                             SDL_WINDOWPOS_CENTERED, WIN_WIDTH, WIN_HEIGHT,
+                             SDL_WINDOW_SHOWN);
+  renderer_ = SDL_CreateRenderer(
+      window_, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+
+  // If window or renderer is a null pointer, throw a SDLError
+  if (window_ == nullptr || renderer_ == nullptr)
+    throw SDLError("Error loading the SDL window or renderer");
+}
+
+void Game::load() {
+  if (loaded_) throw DrakhtarError("Cannot run Game::load twice.");
+  loaded_ = true;
   auto textures = TextureManager::getInstance();
 
+  // TODO(Kreksu): Add BlueValar back.
   // Units
-  textures
-      ->add("Units-BlueArcher", "../images/Units/BlueArcher.png", 4, 3,
-            SDL_FLIP_HORIZONTAL)
+  textures->add("Units-BlueArcher", "../images/Units/BlueArcher.png", 5, 3)
+      ->addAnimation("default", {0, 1})
+      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10})
+      ->setFlip(SDL_FLIP_HORIZONTAL);
+  textures->add("Units-BlueKnight", "../images/Units/BlueKnight.png", 5, 3)
+      ->addAnimation("default", {0, 1})
+      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12})
+      ->setFlip(SDL_FLIP_HORIZONTAL)
+      ->setScale({1.5, 1.5});
+  textures->add("Units-BlueMage", "../images/Units/BlueMage.png", 3, 3)
+      ->addAnimation("default", {0, 1})
+      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8});
+  textures->add("Units-BlueMonster", "../images/Units/BlueMonster.png", 4, 3)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10});
-  textures->add("Units-BlueKnight", "../images/Units/BlueKnight.png", 2, 1,
-                SDL_FLIP_HORIZONTAL);
-  textures->add("Units-BlueMage", "../images/Units/BlueMage.png", 4, 2)
+  textures->add("Units-BlueSoldier", "../images/Units/BlueSoldier.png", 4, 3)
       ->addAnimation("default", {0, 1})
-      ->addAnimation("attack", {2, 3, 4, 5, 6});
-  textures->add("Units-BlueMonster", "../images/Units/BlueMonster.png", 3, 3)
+      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10, 11})
+      ->setFlip(SDL_FLIP_HORIZONTAL);
+  textures->add("Units-Thassa", "../images/Units/Thassa.png", 4, 3)
       ->addAnimation("default", {0, 1})
-      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8});
-  textures
-      ->add("Units-BlueSoldier", "../images/Units/BlueSoldier.png", 5, 2,
-            SDL_FLIP_HORIZONTAL)
-      ->addAnimation("default", {0, 1})
-      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9});
-  textures->add("Units-BlueValar", "../images/Units/BlueValar.png", 2, 1,
-                SDL_FLIP_HORIZONTAL);
-  textures
-      ->add("Units-Thassa", "../images/Units/Thassa.png", 3, 3,
-            SDL_FLIP_HORIZONTAL)
-      ->addAnimation("default", {0, 1})
-      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8});
+      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10, 11})
+      ->setFlip(SDL_FLIP_HORIZONTAL);
   textures->add("Units-Abeizhul", "../images/Units/Abeizhul.png", 5, 2)
       ->addAnimation("default", {0, 1})
-      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9});
-  textures->add("Units-Dreilay", "../images/Units/Dreilay.png", 2, 1);
-  textures->add("Units-RedArcher", "../images/Units/RedArcher.png", 4, 3)
+      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});
+  textures->add("Units-Dreilay", "../images/Units/Dreilay.png", 5, 3)
+      ->addAnimation("default", {0, 1})
+      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});
+  textures->add("Units-RedArcher", "../images/Units/RedArcher.png", 5, 3)
+      ->addAnimation("default", {0, 1})
+      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});
+  textures->add("Units-RedKnight", "../images/Units/RedKnight.png", 5, 3)
+      ->addAnimation("default", {0, 1})
+      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12})
+      ->setScale({1.5, 1.5});
+  textures->add("Units-RedMage", "../images/Units/RedMage.png", 4, 3)
+      ->addAnimation("default", {0, 1})
+      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10})
+      ->setFlip(SDL_FLIP_HORIZONTAL);
+  textures->add("Units-RedMonster", "../images/Units/RedMonster.png", 4, 3)
+      ->addAnimation("default", {0, 1})
+      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10})
+      ->setFlip(SDL_FLIP_HORIZONTAL);
+  textures->add("Units-RedSoldier", "../images/Units/RedSoldier.png", 4, 3)
+      ->addAnimation("default", {0, 1})
+      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10, 11});
+  textures->add("Units-Sheissa", "../images/Units/Sheissa.png", 4, 3)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10});
-  textures->add("Units-RedKnight", "../images/Units/RedKnight.png", 2, 1);
-  textures->add("Units-RedMage", "../images/Units/RedMage.png", 3, 3)
+  textures->add("Units-Valar", "../images/Units/RedValar.png", 5, 3)
       ->addAnimation("default", {0, 1})
-      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8});
-  textures->add("Units-RedMonster", "../images/Units/RedMonster.png", 2, 1);
-  textures->add("Units-RedSoldier", "../images/Units/RedSoldier.png", 5, 2)
+      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});
+  textures->add("Units-Zamdran", "../images/Units/Zamdran.png", 2, 1)
       ->addAnimation("default", {0, 1})
-      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9});
-  textures->add("Units-Sheissa", "../images/Units/Sheissa.png", 3, 3)
-      ->addAnimation("default", {0, 1})
-      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8});
-  textures->add("Units-Valar", "../images/Units/RedValar.png", 4, 3)
-      ->addAnimation("default", {0, 1})
-      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10});
-  textures->add("Units-Zamdran", "../images/Units/Zamdran.png", 2, 1);
+      ->addAnimation("attack", {0, 1});
 
   // UI
   textures->add("UI-cellFrame", "../images/UI/cellFrame.png", 1, 1);
@@ -126,7 +152,6 @@ Game::Game() {
   textures->add("Portraits-Archer", "../images/Portraits/Archer.png", 1, 1);
   textures->add("Portraits-ArcherEnemy", "../images/Portraits/ArcherEnemy.png",
                 1, 1);
-  // TODO(Javi): Nuke this
   textures->add("Portraits-Valar", "../images/Portraits/Valar.png", 1, 1);
   textures->add("Portraits-EvilValar", "../images/Portraits/EvilValar.png", 1,
                 1);
@@ -151,7 +176,8 @@ Game::Game() {
 
   // Maps
   textures->add("Maps-Test", "../images/Maps/TestMap.png", 1, 1);
-  textures->add("Maps-1Battle", "../images/Maps/FirstBattle.png", 4, 1);
+  textures->add("Maps-1Battle", "../images/Maps/FirstBattle.png", 4, 1)
+      ->addAnimation("default", {0, 1, 2, 3}, 1);
   textures->add("Maps-2Battle", "../images/Maps/SecondBattle.png", 4, 1);
 
   // Tutorial images
@@ -183,14 +209,7 @@ Game::Game() {
                 1);
 
   auto fonts = FontManager::getInstance();
-
-  // Create the window and renderer
-  window_ = SDL_CreateWindow("Drakhtar", SDL_WINDOWPOS_CENTERED,
-                             SDL_WINDOWPOS_CENTERED, WIN_WIDTH, WIN_HEIGHT,
-                             SDL_WINDOW_SHOWN);
-  renderer_ = SDL_CreateRenderer(
-      window_, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-  textures->init(renderer_);
+  textures->init();
 
   // Fonts
   fonts->add("DialogFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 66,
@@ -204,20 +223,18 @@ Game::Game() {
 
   auto audio = SDLAudioManager::getInstance();
   audio->init();
-
-  // background music
+  // Background music
   audio->loadMusic(
       0, "../audio/background/MenuSceneMusic - by AShamaluevMusic.ogg");
   audio->loadMusic(
       1, "../audio/background/FirstGameSceneMusic - by Always Music.ogg");
 
-  // sound effects
-
+  // Sound effects
   /*
-                channel 0 = UI sounds
-                channel 1 = unit sounds
+             channel 0 = UI sounds
+             channel 1 = unit sounds
 
-  */
+*/
   audio->loadSound(0, "../audio/sound/UI-sounds/basic_click.mp3");
   audio->loadSound(1, "../audio/sound/UI-sounds/button_click.mp3");
   audio->loadSound(2, "../audio/sound/UI-sounds/hitPlayMenu.mp3");
@@ -226,10 +243,6 @@ Game::Game() {
   audio->loadSound(5, "../audio/sound/UI-sounds/attackConfirm.mp3");
   audio->loadSound(6, "../audio/sound/UI-sounds/quitButton.mp3");
   audio->loadSound(7, "../audio/sound/UI-sounds/pauseButton.mp3");
-
-  // If window or renderer is a null pointer, throw a SDLError
-  if (window_ == nullptr || renderer_ == nullptr)
-    throw SDLError("Error loading the SDL window or renderer");
 
   sceneMachine_ = new SceneMachine();
   sceneMachine_->pushScene(new MenuScene());
@@ -252,11 +265,11 @@ void Game::run() const {
   }
 }
 
-SDL_Renderer *Game::getRenderer() { return getInstance()->renderer_; }
+SDL_Renderer* Game::getRenderer() { return getInstance()->renderer_; }
 
-Game *Game::instance_ = nullptr;
+Game* Game::instance_ = nullptr;
 
-Game *Game::getInstance() {
+Game* Game::getInstance() {
   if (instance_ == nullptr) {
     instance_ = new Game();
   }
@@ -264,6 +277,6 @@ Game *Game::getInstance() {
   return instance_;
 }
 
-SceneMachine *Game::getSceneMachine() { return getInstance()->sceneMachine_; }
+SceneMachine* Game::getSceneMachine() { return getInstance()->sceneMachine_; }
 
-SDL_Window *Game::getWindow() { return getInstance()->window_; }
+SDL_Window* Game::getWindow() { return getInstance()->window_; }

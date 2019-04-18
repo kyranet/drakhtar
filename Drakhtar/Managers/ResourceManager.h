@@ -12,5 +12,4 @@ class ResourceManager {
  public:
   ResourceManager() {}
   virtual ~ResourceManager() {}
-  virtual void init(SDL_Renderer *renderer) = 0;
 };
