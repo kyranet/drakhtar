@@ -199,5 +199,3 @@ void GameScene::loadRedTeam(UnitFactory& factory) {
 }
 
 Board* GameScene::getBoard() const { return board_; }
-Team* GameScene::getTeam1() const { return team1_; }
-Team* GameScene::getTeam2() const { return team2_; }

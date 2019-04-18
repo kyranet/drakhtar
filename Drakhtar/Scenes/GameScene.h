@@ -23,6 +23,4 @@ class GameScene final : public Scene {
   void loadRedTeam(UnitFactory& factory);
 
   Board* getBoard() const;
-  Team* getTeam1() const;
-  Team* getTeam2() const;
 };
