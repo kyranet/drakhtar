@@ -127,6 +127,7 @@ void Game::load() {
   textures->add("UI-healthBar_damage", "../images/UI/healthBar_damage.png", 1,
                 1);
   textures->add("UI-commanderIcon", "../images/UI/goldskull.png", 1, 1);
+  textures->add("UI-OptionsMenu", "../images/UI/OptionsMenu.png", 1, 1);
 
   // Button
   textures->add("Button-Play", "../images/MainMenu/Play_Button.png", 1, 1);
