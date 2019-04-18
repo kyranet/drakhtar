@@ -2,8 +2,8 @@
 
 #include "GameScene.h"
 #include <fstream>
-#include "Errors/DrakhtarError.h"
 #include "Controllers/PlayerController.h"
+#include "Errors/DrakhtarError.h"
 #include "GameObjects/Button.h"
 #include "GameObjects/Commanders/Thassa.h"
 #include "GameObjects/Commanders/Zamdran.h"
@@ -91,9 +91,9 @@ void GameScene::preload() {
 
   const auto skipTurnButton =
       new Button(this, TextureManager::get("Button-SkipTurn"),
-                 Vector2D<int>(WIN_WIDTH / 6, WIN_HEIGHT / 18),
-                 Vector2D<int>(static_cast<int>(WIN_WIDTH / 21.6),
-                               static_cast<int>(WIN_HEIGHT / 14.4)),
+                 Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT - WIN_HEIGHT / 8),
+                 Vector2D<int>(static_cast<int>(WIN_WIDTH / 7),
+                               static_cast<int>(WIN_HEIGHT / 4.5)),
                  [this]() { playerController_->advanceTurn(); });
 
   const auto pauseButton =
@@ -106,19 +106,20 @@ void GameScene::preload() {
   audio->haltMusic();
   audio->setMusicVolume(10);
   audio->playMusic(1, 999);
-
+  /*
+   // Reactivar cuando se implementen las habilidades definitivamente
   const auto battleCryButton =
       new SkillButton(this, TextureManager::get("Button-BattleCry"),
                       Vector2D<int>(WIN_WIDTH / 24, WIN_HEIGHT / 18),
                       Vector2D<int>(static_cast<int>(WIN_WIDTH / 21.6),
                                     static_cast<int>(WIN_HEIGHT / 14.4)),
                       board_, thassa, 0);
-
+  */
   addGameObject(turnBar);
   addGameObject(dialog);
   addGameObject(skipTurnButton);
   addGameObject(pauseButton);
-  addGameObject(battleCryButton);
+  // addGameObject(battleCryButton);
 
   if (battle_ == 1) {
     const auto tutorialSequence =
@@ -162,13 +163,6 @@ void GameScene::loadRedTeam(UnitFactory& factory) {
   if (captainName == "Zamdran") {
     commander = factory.newZamdran(team2_, board_->getBoxAt(row, col));
 
-    const auto arrowRainButton =
-        new SkillButton(this, TextureManager::get("Button-BattleCry"),
-                        Vector2D<int>(WIN_WIDTH / 10, WIN_HEIGHT / 18),
-                        Vector2D<int>(static_cast<int>(WIN_WIDTH / 21.6),
-                                      static_cast<int>(WIN_HEIGHT / 14.4)),
-                        board_, commander, 0);
-    addGameObject(arrowRainButton);
   } else {
     throw DrakhtarError(
         "File is not a level file or the captain is not implemented");
