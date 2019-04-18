@@ -69,7 +69,8 @@ void TurnBar::prepare() {
 }
 
 void TurnBar::next() {
-  ++teams_[turn_].position;
+  if (++teams_[turn_].position == teams_[turn_].units.size())
+    teams_[turn_].position = 0;
   if (++turn_ == teams_.size()) turn_ = 0;
   prepare();
 }
