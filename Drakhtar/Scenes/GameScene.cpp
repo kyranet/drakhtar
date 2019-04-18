@@ -79,6 +79,10 @@ void GameScene::preload() {
   // Red Team
   this->loadRedTeam(factory);
 
+  // Sort both teams by their speeds
+  team1_->sortUnits();
+  team2_->sortUnits();
+
   // Add the GUI features now
   const auto turnBar =
       new TurnBar(this, team1_->getUnits(), team2_->getUnits());
