@@ -6,5 +6,5 @@
 
 UnitsController::UnitsController(Board *board, TurnBar *turnBar, GameScene *scene)
     : board_(board), turnBar_(turnBar), scene_(scene) {
-  activeUnit_ = turnBar_->getFrontUnit();
+  activeUnit_ = turnBar_->getTurnFor();
 }

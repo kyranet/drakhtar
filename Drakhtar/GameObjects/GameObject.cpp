@@ -12,9 +12,6 @@ GameObject::GameObject(Scene* scene, Texture* texture,
     : scene_(scene), position_(position), size_(size), texture_(texture) {}
 
 GameObject::~GameObject() {
-  scene_ = nullptr;
-  texture_ = nullptr;
-
   // Clean up event listeners
   for (auto listener : eventListeners_) delete listener;
   eventListeners_.clear();
@@ -24,13 +21,14 @@ GameObject::~GameObject() {
   children_.clear();
 }
 
-void GameObject::render() const {
+void GameObject::render(SDL_Rect rect) const {
   if (texture_ != nullptr) {
-    texture_->renderFrame(getRect(),
-                          texture_->getAnimation()[texture_->getFrame()]);
+    texture_->renderFrame(rect, texture_->getAnimation()[texture_->getFrame()]);
   }
   for (auto child : children_) child->render();
 }
+
+void GameObject::render() const { render(getRect()); }
 
 void GameObject::update() {
   for (auto child : children_)

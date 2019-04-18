@@ -106,12 +106,13 @@ void PlayerController::onClickAttack(Box* boxClicked) {
       SDLAudioManager::getInstance()->playChannel(5, 0, 0);
 
       // Enemy dies
-      if (enemyUnit->getStats().health == 0) {
+      if (enemyUnit->getStats().health <= 0) {
         if (enemyUnit->getTeam()->getColor() == Color::RED) {
           GameManager::getInstance()->addMoney(enemyUnit->getStats().prize);
         }
         boxClicked->setContent(nullptr);
-        turnBar_->eraseUnit(enemyUnit);
+        enemyUnit->kill();
+        turnBar_->remove(enemyUnit);
         scene_->removeGameObject(enemyUnit);
       }
 
@@ -123,9 +124,10 @@ void PlayerController::onClickAttack(Box* boxClicked) {
       hasAttacked_ = true;
 
       // Unit dies to counter-attack
-      if (activeUnit_->getStats().health == 0) {
+      if (activeUnit_->getStats().health <= 0) {
         activeUnit_->getBox()->setContent(nullptr);
-        turnBar_->eraseUnit(activeUnit_);
+        activeUnit_->kill();
+        turnBar_->remove(activeUnit_);
         scene_->removeGameObject(activeUnit_);
         advanceTurn();
       }
@@ -141,8 +143,8 @@ void PlayerController::onClickAttack(Box* boxClicked) {
 void PlayerController::advanceTurn() {
   board_->resetCellsToBase();
   hasMoved_ = hasAttacked_ = false;
-  turnBar_->advanceTurn();
-  activeUnit_ = turnBar_->getFrontUnit();
+  turnBar_->next();
+  activeUnit_ = turnBar_->getTurnFor();
 
   activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
   board_->highlightCellsInRange(activeUnit_->getBox(),

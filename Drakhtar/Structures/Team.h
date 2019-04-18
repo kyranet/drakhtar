@@ -1,31 +1,31 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-#include <list>
-#include "../GameObjects/Board.h"
-#include "../GameObjects/Unit.h"
+#include <vector>
 
 class Unit;
 class Commander;
+class Board;
 
-enum Color { BLUE, RED };
+enum class Color { BLUE, RED };
 
 class Team final {
-  std::list<Unit *> units_;
-  Board *board_ = nullptr;
-  std::list<Unit *>::iterator findInsertPosition(Unit *unit);
+  std::vector<Unit*> units_{};
+  std::vector<Commander*> commanders_{};
   Color color_;
-  Commander *commander_ = nullptr;
 
  public:
-  Team(Board *board, Color color);
+  explicit Team(Color color);
   ~Team();
-  Board *getBoard() const;
-  Commander *getCommander() const { return commander_; }
-  void setCommander(Commander* commander) { commander_ = commander; }
-  void addUnit(Unit *unit);
-  void removeUnit(Unit *unit);
-  Unit *pickUnit() const;
-  std::list<Unit *> getUnitList() const;
+
+  void addCommander(Commander* commander);
+  void removeCommander(Commander* commander);
+  std::vector<Commander*> getCommanders() const;
+
+  void addUnit(Unit* unit);
+  void removeUnit(Unit* unit);
+  std::vector<Unit*> getUnits() const;
+  void sortUnits();
+
   Color getColor() const;
 };

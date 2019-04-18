@@ -13,7 +13,7 @@ void BattleCry::cast(Board*) {
   if (remainingCooldown_ == 0 && caster_->getMoving()) {
     std::cout << "Casted <BattleCry> by Thassa" << std::endl;
     active_ = true;
-    for (auto unit : caster_->getTeam()->getUnitList()) {
+    for (auto unit : caster_->getTeam()->getUnits()) {
       unit->setAttack(
           static_cast<int>(floor(unit->getStats().attack * 1.2)));
       // TODO(onaranjoUCM): Uncomment when we get access to turnBar
@@ -27,7 +27,7 @@ void BattleCry::cast(Board*) {
 void BattleCry::end() {
   std::cout << "<BattleCry> ended" << std::endl;
   active_ = false;
-  for (auto unit : caster_->getTeam()->getUnitList()) {
+  for (auto unit : caster_->getTeam()->getUnits()) {
     unit->setAttack(unit->getBaseStats().attack);
     // TODO(onaranjoUCM): Uncomment when we get access to turnBar
     // unit->setSpeed(unit->getBaseSpeed());
@@ -37,7 +37,7 @@ void BattleCry::end() {
 void BattleCry::resetAttack() {
   if (remainingCooldown_ == 0) {
     std::cout << "Casted <BattleCry>" << std::endl;
-    for (auto unit : caster_->getTeam()->getUnitList()) {
+    for (auto unit : caster_->getTeam()->getUnits()) {
       unit->setAttack(
           static_cast<int>(floor(unit->getStats().attack * 1.2)));
     }
@@ -52,7 +52,7 @@ void ArrowRain::cast(Board*) {
   if (remainingCooldown_ == 0 && caster_->getMoving()) {
     std::cout << "Casted <ArrowRain> by Zamdran" << std::endl;
     active_ = true;
-    for (auto unit : caster_->getTeam()->getUnitList()) {
+    for (auto unit : caster_->getTeam()->getUnits()) {
       unit->setAttack(
           static_cast<int>(floor(unit->getStats().attack * 1.2)));
     }
