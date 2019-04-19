@@ -39,14 +39,14 @@ void TurnBar::prepare() {
     if (redUnits.empty()) return;
     size_t x = 0;
     for (auto& i : calculated_) {
-      i = blueUnits[x];
+      i = redUnits[x];
       if (++x == blueUnits.size()) x = 0;
     }
   } else if (redUnits.empty()) {
     if (blueUnits.empty()) return;
     size_t x = 0;
     for (auto& i : calculated_) {
-      i = redUnits[x];
+      i = blueUnits[x];
       if (++x == redUnits.size()) x = 0;
     }
   } else {

@@ -19,7 +19,8 @@
 #include "Utils/Constants.h"
 
 PlayerController::PlayerController(Board* board, TurnBar* turnBar,
-                                   GameScene* scene, Team* team, Team* oppositeTeam)
+                                   GameScene* scene, Team* team,
+                                   Team* oppositeTeam)
     : UnitsController(board, turnBar, scene, team, oppositeTeam) {
   const auto handler = new PlayerHandler(this);
   handler->setActive(false);
@@ -64,7 +65,7 @@ void PlayerController::onClickMove(Box* boxClicked) {
           }
 
           // If no actions left, reset and skip turn
-          if (hasMoved_ && hasAttacked_) {
+          if (hasAttacked_) {
             finish();
           }
         });
@@ -85,28 +86,31 @@ void PlayerController::onClickAttack(Box* boxClicked) {
       activeUnit_->attack(enemyUnit, false);
       SDLAudioManager::getInstance()->playChannel(5, 0, 0);
 
+      hasAttacked_ = true;
+
       // Enemy dies
       if (enemyUnit->getStats().health <= 0) {
+        // Unit dies to attack
         if (enemyUnit->getTeam()->getColor() == Color::RED) {
           GameManager::getInstance()->addMoney(enemyUnit->getStats().prize);
         }
         boxClicked->destroyContent();
-      }
-
-      // Re-highlight board
-      board_->resetCellsToBase();
-      activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
-      board_->highlightCellsInRange(activeUnit_->getBox(),
-                                    activeUnit_->getStats().moveRange);
-      hasAttacked_ = true;
-
-      // Unit dies to counter-attack
-      if (activeUnit_->getStats().health <= 0) {
+      } else if (activeUnit_->getStats().health <= 0) {
+        // Unit dies to counter-attack
         activeUnit_->getBox()->destroyContent();
         finish();
-      } else if (hasMoved_ && hasAttacked_) {
+        return;
+      }
+
+      if (hasMoved_) {
         // If no actions left, reset and skip turn
         finish();
+      } else {
+        // Re-highlight board
+        board_->resetCellsToBase();
+        activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
+        board_->highlightCellsInRange(activeUnit_->getBox(),
+                                      activeUnit_->getStats().moveRange);
       }
     }
   }
