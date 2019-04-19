@@ -1,7 +1,9 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Scene.h"
+
 #include <utility>
+
 #include "Errors/SDLError.h"
 #include "GameObjects/GameObject.h"
 #include "Managers/Input.h"
@@ -161,7 +163,9 @@ void Scene::destroy() {
 
 void Scene::end() {
   // Delete the Scene's cache.
-  for (auto gameObject : gameObjects_) delete gameObject;
+  for (auto gameObject : gameObjects_) {
+    delete gameObject;
+  }
   gameObjects_.clear();
 
   onEndHandler_();

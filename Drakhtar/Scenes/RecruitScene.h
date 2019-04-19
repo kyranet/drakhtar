@@ -27,7 +27,6 @@ class RecruitScene final : public Scene {
 
  public:
   void preload() override;
-  ~RecruitScene();
   int getCost(const std::string& type);
   int getTotalCost() const { return totalCost_; }
   void updateTotalCost(int amount);

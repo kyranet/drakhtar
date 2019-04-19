@@ -75,13 +75,14 @@ void RecruitScene::preload() {
       [this]() {
         for (StoreListener* i : store) {
           auto unit = i->getStoreUnit();
-
-          GameManager::getInstance()->addUnits(unit.type, unit.amount_);
-          GameManager::getInstance()->loseMoney(unit.cost_ * unit.amount_);
-          moneyText_->setText(moneyToString());
-
-          reset();
+          if (unit.amount_ > 0) {
+            GameManager::getInstance()->addUnits(unit.type, unit.amount_);
+            GameManager::getInstance()->loseMoney(unit.cost_ * unit.amount_);
+            moneyText_->setText(moneyToString());
+          }
         }
+
+        reset();
       });
 
   recruitmentPanel_->addChild(acceptButton);
@@ -114,13 +115,6 @@ void RecruitScene::preload() {
   addGameObject(button);
 }
 
-RecruitScene::~RecruitScene() {
-  while (!store.empty()) {
-    delete store.back();
-    store.pop_back();
-  }
-}
-
 int RecruitScene::getCost(const std::string& type) { return costs_[type]; }
 
 void RecruitScene::updateTotalCost(const int amount) {
@@ -136,8 +130,6 @@ void RecruitScene::addUnit(std::string textureName, int position, int cost) {
   // 1280 / 12.8   = 100 = separator
   // const auto nx = static_cast<int>(WIN_WIDTH / 3.47 - WIN_WIDTH / 12.8);
   //
-  // const auto y =
-  //    static_cast<int>(WIN_HEIGHT / 2.0 + WIN_HEIGHT / 6.0 * position);
 
   auto it = textureName.begin();
 
