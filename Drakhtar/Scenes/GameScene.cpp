@@ -1,7 +1,9 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "GameScene.h"
+
 #include <fstream>
+
 #include "Controllers/PlayerController.h"
 #include "Errors/DrakhtarError.h"
 #include "GameObjects/Button.h"
@@ -108,7 +110,7 @@ void GameScene::preload() {
                  buttonPause);
 
   audio->haltMusic();
-  audio->setMusicVolume(10);
+  if (!audio->getMuted()) audio->setMusicVolume(10);
   audio->playMusic(1, 999);
   /*
    // Reactivar cuando se implementen las habilidades definitivamente

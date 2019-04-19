@@ -3,6 +3,7 @@
 #pragma once
 #include <map>
 #include <string>
+
 #include "AudioManager.h"
 #include "SDL_mixer.h"
 
@@ -12,14 +13,14 @@ class SDLAudioManager final : public AudioManager {
   // IMPORTANT NOTES:
   // Channel means one sound, meaning for example a footstep
   // Music means a background sound or a song
-  static SDLAudioManager *instance_;
+  static SDLAudioManager* instance_;
 
  public:
   SDLAudioManager();
   explicit SDLAudioManager(int channels);
   ~SDLAudioManager();
 
-  static SDLAudioManager *getInstance();
+  static SDLAudioManager* getInstance();
   static void destroy();
 
   // Supposed to be called before start using the object
@@ -47,9 +48,15 @@ class SDLAudioManager final : public AudioManager {
   void fadeOutChannel(int channel, int ticks);
   void fadeOutMusic(int ticks);
 
+  // check if its muted
+  bool getMuted();
+  void setMute(bool mute);
+  void checkMuted();
+
  private:
   bool initialized_;
+  bool muted_;
   int channels_;
-  std::map<int, Mix_Chunk *> chunks_;
-  std::map<int, Mix_Music *> music_;
+  std::map<int, Mix_Chunk*> chunks_;
+  std::map<int, Mix_Music*> music_;
 };

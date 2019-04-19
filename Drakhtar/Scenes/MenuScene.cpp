@@ -1,5 +1,4 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
-
 #include "MenuScene.h"
 
 #include "../GameObjects/Button.h"
@@ -44,7 +43,7 @@ void MenuScene::preload() {
   audio->haltChannel(0);
   audio->haltMusic();
   audio->playMusic(0, -1);
-  audio->setMusicVolume(30);
+  if (!audio->getMuted()) audio->setMusicVolume(30);
   addGameObject(background);
   addGameObject(play);
   addGameObject(options);

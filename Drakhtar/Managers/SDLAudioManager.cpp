@@ -1,27 +1,30 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "SDLAudioManager.h"
+
 #include <iostream>
 #include <string>
 
-SDLAudioManager *SDLAudioManager::instance_ = nullptr;
+SDLAudioManager* SDLAudioManager::instance_ = nullptr;
 
 SDLAudioManager::SDLAudioManager() : SDLAudioManager(8) {}
 
 SDLAudioManager::SDLAudioManager(const int channels)
-    : initialized_(false), channels_(channels) {}
+    : initialized_(false), channels_(channels) {
+  muted_ = false;
+}
 
 SDLAudioManager::~SDLAudioManager() {
   if (!initialized_) return;
 
   // free all sound effect chucks
-  for (const auto &pair : chunks_) {
+  for (const auto& pair : chunks_) {
     if (pair.second != nullptr) Mix_FreeChunk(pair.second);
   }
   chunks_.clear();
 
   // free all music sound effect
-  for (const auto &pair : music_) {
+  for (const auto& pair : music_) {
     if (pair.second != nullptr) Mix_FreeMusic(pair.second);
   }
   music_.clear();
@@ -30,7 +33,7 @@ SDLAudioManager::~SDLAudioManager() {
   Mix_Quit();
 }
 
-SDLAudioManager *SDLAudioManager::getInstance() {
+SDLAudioManager* SDLAudioManager::getInstance() {
   if (instance_ == nullptr) instance_ = new SDLAudioManager();
   return instance_;
 }
@@ -117,7 +120,7 @@ bool SDLAudioManager::loadMusic(const int tag, std::string fileName) {
 }
 
 void SDLAudioManager::playMusic(const int tag, const int loops) {
-  Mix_Music *music = music_[tag];
+  Mix_Music* music = music_[tag];
   if (music != nullptr) {
     Mix_PlayMusic(music, loops);
   } else {
@@ -141,3 +144,22 @@ void SDLAudioManager::fadeOutChannel(const int channel, const int ticks) {
 }
 
 void SDLAudioManager::fadeOutMusic(const int ticks) { Mix_FadeOutMusic(ticks); }
+
+bool SDLAudioManager::getMuted() { return muted_; }
+
+void SDLAudioManager::setMute(bool mute) {
+  muted_ = mute;
+  checkMuted();
+}
+
+void SDLAudioManager::checkMuted() {
+  if (getMuted()) {
+    getInstance()->setChannelVolume(0, 0);
+    getInstance()->setChannelVolume(0, 1);
+    getInstance()->setMusicVolume(0);
+  } else if (!getMuted()) {
+    getInstance()->setChannelVolume(80, 0);
+    getInstance()->setChannelVolume(80, 1);
+    getInstance()->setMusicVolume(80);
+  }
+}
