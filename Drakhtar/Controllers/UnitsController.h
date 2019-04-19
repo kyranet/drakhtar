@@ -14,22 +14,22 @@ class UnitsController {
   /**
    * \brief A pointer to the game board.
    */
-  Board *board_;
+  Board* board_;
 
   /**
    * \brief A pointer to the game's turn bar.
    */
-  TurnBar *turnBar_;
+  TurnBar* turnBar_;
 
   /**
    * \brief A pointer to the unit that has the turn.
    */
-  Unit *activeUnit_;
+  Unit* activeUnit_;
 
   /**
    * \brief A pointer to the game scene.
    */
-  GameScene *scene_;
+  GameScene* scene_;
 
   /**
    * \brief Whether or not the active unit has already moved this turn.
@@ -42,7 +42,7 @@ class UnitsController {
   bool hasAttacked_ = false;
 
  public:
-  UnitsController(Board *board, TurnBar *turnBar, GameScene *scene);
+  UnitsController(Board* board, TurnBar* turnBar, GameScene* scene);
 
   /**
    * \brief Is called every time an event is capture to process it.
@@ -54,4 +54,8 @@ class UnitsController {
    * \brief Only used on PVP mode to close sockets.
    */
   virtual void end() {}
+
+  Board* getBoard();
+  TurnBar* getTurnBar();
+  Unit* getActiveUnit();
 };

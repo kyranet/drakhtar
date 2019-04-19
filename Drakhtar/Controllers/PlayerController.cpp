@@ -110,10 +110,7 @@ void PlayerController::onClickAttack(Box* boxClicked) {
         if (enemyUnit->getTeam()->getColor() == Color::RED) {
           GameManager::getInstance()->addMoney(enemyUnit->getStats().prize);
         }
-        boxClicked->setContent(nullptr);
-        enemyUnit->kill();
-        turnBar_->remove(enemyUnit);
-        scene_->removeGameObject(enemyUnit);
+        boxClicked->destroyContent();
       }
 
       // Re-highlight board
@@ -125,10 +122,7 @@ void PlayerController::onClickAttack(Box* boxClicked) {
 
       // Unit dies to counter-attack
       if (activeUnit_->getStats().health <= 0) {
-        activeUnit_->getBox()->setContent(nullptr);
-        activeUnit_->kill();
-        turnBar_->remove(activeUnit_);
-        scene_->removeGameObject(activeUnit_);
+        activeUnit_->getBox()->destroyContent();
         advanceTurn();
       }
 

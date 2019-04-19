@@ -100,4 +100,9 @@ class Box final : public GameObject {
    * textures array.
    */
   void setCurrentTexture(TextureInd cellTexture);
+
+  /**
+   * \brief Queues its contents to destroy.
+   */
+  void destroyContent();
 };
