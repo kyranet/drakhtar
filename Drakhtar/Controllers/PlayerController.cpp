@@ -29,95 +29,100 @@ PlayerController::PlayerController(Board* board, TurnBar* turnBar,
 }
 
 void PlayerController::onClickMove(Box* boxClicked) {
+  if (locked_) return;
   // Checks if the box clicked is within movement range
-  if (!locked_ && board_->isInMoveRange(activeUnit_->getBox(), boxClicked,
-                                        activeUnit_->getStats().moveRange)) {
-    const auto path = board_->findPath(activeUnit_->getBox()->getIndex(),
-                                       boxClicked->getIndex());
-
-    locked_ = true;
-    SDLAudioManager::getInstance()->playChannel(0, 0, 0);
-    const auto unit = activeUnit_;
-    scene_->getTweenManager()
-        ->create()
-        ->setRoute(board_->pathToRoute(path))
-        ->setDuration(static_cast<int>(
-            floor(static_cast<double>(path.size()) * GAME_FRAMERATE * 0.25)))
-        ->setOnUpdate([unit](Vector2D<double> updated) {
-          unit->setPosition({static_cast<int>(std::floor(updated.getX())),
-                             static_cast<int>(std::floor(updated.getY()))});
-        })
-        ->setOnComplete([this, unit, boxClicked]() {
-          unit->moveToBox(boxClicked);
-          hasMoved_ = true;
-          locked_ = false;
-          // If there are enemies in range, highlight them, otherwise skip turn
-          if (board_->isEnemyInRange(boxClicked,
-                                     unit->getStats().attackRange)) {
-            board_->resetCellsToBase();
-            unit->getBox()->setCurrentTexture(TextureInd::ACTIVE);
-            board_->highlightEnemiesInRange(unit->getBox(),
-                                            unit->getStats().attackRange);
-            SDLAudioManager::getInstance()->setChannelVolume(30, 0);
-            SDLAudioManager::getInstance()->playChannel(4, 0, 0);
-          } else {
-            finish();
-          }
-
-          // If no actions left, reset and skip turn
-          if (hasAttacked_) {
-            finish();
-          }
-        });
-  } else {
-    std::cout << "Out of movement range!\n";
+  if (!board_->isInMoveRange(activeUnit_->getBox(), boxClicked,
+                             activeUnit_->getStats().moveRange)) {
     SDLAudioManager::getInstance()->playChannel(3, 0, 0);
+    return;
   }
+
+  const auto path = board_->findPath(activeUnit_->getBox()->getIndex(),
+                                     boxClicked->getIndex());
+
+  locked_ = true;
+  SDLAudioManager::getInstance()->playChannel(0, 0, 0);
+  const auto unit = activeUnit_;
+  unit->moveToBox(boxClicked);
+
+  scene_->getTweenManager()
+      ->create()
+      ->setRoute(board_->pathToRoute(path))
+      ->setDuration(static_cast<int>(
+          floor(static_cast<double>(path.size()) * GAME_FRAMERATE * 0.25)))
+      ->setOnUpdate([unit](Vector2D<double> updated) {
+        unit->setPosition({static_cast<int>(std::floor(updated.getX())),
+                           static_cast<int>(std::floor(updated.getY()))});
+      })
+      ->setOnComplete([this, unit, boxClicked]() {
+        hasMoved_ = true;
+        locked_ = false;
+        // If there are enemies in range, highlight them, otherwise skip turn
+        if (!hasAttacked_ &&
+            board_->isEnemyInRange(boxClicked, unit->getStats().attackRange)) {
+          board_->resetCellsToBase();
+          unit->getBox()->setCurrentTexture(TextureInd::ACTIVE);
+          board_->highlightEnemiesInRange(unit->getBox(),
+                                          unit->getStats().attackRange);
+          SDLAudioManager::getInstance()->setChannelVolume(30, 0);
+          SDLAudioManager::getInstance()->playChannel(4, 0, 0);
+        } else {
+          finish();
+        }
+      });
 }
 
 void PlayerController::onClickAttack(Box* boxClicked) {
-  Unit* enemyUnit = boxClicked->getContent();
-  if (enemyUnit != nullptr) {
-    // Unit clicked if from a different team and in range
-    if (enemyUnit->getTeam() != activeUnit_->getTeam() &&
-        board_->isInRange(activeUnit_->getBox(), boxClicked,
-                          activeUnit_->getStats().attackRange)) {
-      activeUnit_->getTexture()->setAnimationOnce("attack");
-      activeUnit_->attack(enemyUnit, false);
-      SDLAudioManager::getInstance()->playChannel(5, 0, 0);
+  auto unit = boxClicked->getContent();
+  // If the box clicked was empty, skip
+  if (!unit) return;
 
-      hasAttacked_ = true;
+  // If the unit is from the same team, skip
+  if (unit->getTeam() == team_) return;
 
-      // Enemy dies
-      if (enemyUnit->getStats().health <= 0) {
-        // Unit dies to attack
-        if (enemyUnit->getTeam()->getColor() == Color::RED) {
-          GameManager::getInstance()->addMoney(enemyUnit->getStats().prize);
-        }
-        boxClicked->destroyContent();
-      } else if (activeUnit_->getStats().health <= 0) {
-        // Unit dies to counter-attack
-        activeUnit_->getBox()->destroyContent();
-        finish();
-        return;
-      }
+  const auto currentStats = activeUnit_->getStats();
+  const auto currentBox = activeUnit_->getBox();
 
-      if (hasMoved_) {
-        // If no actions left, reset and skip turn
-        finish();
-      } else {
-        // Re-highlight board
-        board_->resetCellsToBase();
-        activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
-        board_->highlightCellsInRange(activeUnit_->getBox(),
-                                      activeUnit_->getStats().moveRange);
-      }
+  // If the selected unit is not in the attack range, skip
+  if (!board_->isInRange(currentBox, boxClicked, currentStats.attackRange))
+    return;
+
+  hasAttacked_ = true;
+
+  activeUnit_->getTexture()->setAnimationOnce("attack");
+  activeUnit_->attack(unit, false);
+  SDLAudioManager::getInstance()->playChannel(5, 0, 0);
+
+  const auto unitStats = unit->getStats();
+
+  // Enemy dies
+  if (unitStats.health <= 0) {
+    // Unit dies to attack
+    if (unit->getTeam()->getColor() == Color::RED) {
+      GameManager::getInstance()->addMoney(unitStats.prize);
     }
+    boxClicked->destroyContent();
+  } else if (activeUnit_->getStats().health <= 0) {
+    // Unit dies to counter-attack
+    currentBox->destroyContent();
+    finish();
+    return;
+  }
+
+  if (hasMoved_) {
+    // If no actions left, reset and skip turn
+    finish();
+  } else {
+    // Re-highlight board
+    board_->resetCellsToBase();
+    currentBox->setCurrentTexture(TextureInd::ACTIVE);
+    board_->highlightCellsInRange(currentBox, currentStats.moveRange);
   }
 }
 
 void PlayerController::start() {
   UnitsController::start();
+  if (!activeUnit_) return UnitsController::finish();
 
   activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
   board_->highlightCellsInRange(activeUnit_->getBox(),

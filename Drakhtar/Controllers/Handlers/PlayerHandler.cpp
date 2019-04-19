@@ -11,7 +11,7 @@ PlayerHandler::PlayerHandler(PlayerController* controller)
     : EventListener(nullptr), controller_(controller) {}
 
 void PlayerHandler::run(const SDL_Event) {
-  if (controller_->getLocked() || !Input::isMouseButtonDown(MouseKey::LEFT))
+  if (controller_->getLocked() || !Input::isMouseButtonUp(MouseKey::LEFT))
     return;
 
   const auto gameObject = Input::screenMouseToRay();

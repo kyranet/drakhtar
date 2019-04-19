@@ -1,9 +1,11 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "UnitsController.h"
+#include "Errors/DrakhtarError.h"
 #include "EventListeners/EventListener.h"
 #include "GameObjects/Board.h"
 #include "GameObjects/TurnBar.h"
+#include "GameObjects/Unit.h"
 #include "Structures/Team.h"
 
 UnitsController::UnitsController(Board* board, TurnBar* turnBar,
@@ -33,6 +35,8 @@ void UnitsController::finish() {
 
   // Update the turn bar
   turnBar_->next();
+
+  if (turnBar_->getTurnFor()->getTeam() != oppositeTeam_) return start();
 
   // Once this controller is finished, start the controller of the opposite
   // team.
