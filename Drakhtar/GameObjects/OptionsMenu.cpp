@@ -21,7 +21,17 @@ OptionsMenu::OptionsMenu(Scene* scene) : GameObject(scene, nullptr) {
                  Vector2D<int>(static_cast<int>(WIN_WIDTH / 10),
                                static_cast<int>(WIN_HEIGHT / 12)),
                  [this]() { destroy(); });
+  const auto noSoundButton =
+      new Button(scene_, TextureManager::get("Button-Exit"),
+                 Vector2D<int>(WIN_WIDTH / 1.5, WIN_HEIGHT / 1.85),
+                 Vector2D<int>(static_cast<int>(WIN_WIDTH / 10),
+                               static_cast<int>(WIN_HEIGHT / 12)),
+                 [this]() {
+                   SDLAudioManager::getInstance()->setChannelVolume(0, 0);
+                   SDLAudioManager::getInstance()->setMusicVolume(0);
+                 });
 
   addChild(panel);
   addChild(returnButton);
+  addChild(noSoundButton);
 }
