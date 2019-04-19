@@ -19,15 +19,18 @@
 #include "Utils/Constants.h"
 
 PlayerController::PlayerController(Board* board, TurnBar* turnBar,
-                                   GameScene* scene)
-    : UnitsController(board, turnBar, scene) {
-  listeners_.push_back(new PlayerHandler(this));
+                                   GameScene* scene, Team* team, Team* oppositeTeam)
+    : UnitsController(board, turnBar, scene, team, oppositeTeam) {
+  const auto handler = new PlayerHandler(this);
+  handler->setActive(false);
+  listeners_.push_back(handler);
+  board->addEventListener(handler);
 }
 
 void PlayerController::onClickMove(Box* boxClicked) {
   // Checks if the box clicked is within movement range
-  if (board_->isInMoveRange(activeUnit_->getBox(), boxClicked,
-                            activeUnit_->getStats().moveRange)) {
+  if (!locked_ && board_->isInMoveRange(activeUnit_->getBox(), boxClicked,
+                                        activeUnit_->getStats().moveRange)) {
     const auto path = board_->findPath(activeUnit_->getBox()->getIndex(),
                                        boxClicked->getIndex());
 
@@ -65,7 +68,6 @@ void PlayerController::onClickMove(Box* boxClicked) {
             finish();
           }
         });
-
   } else {
     std::cout << "Out of movement range!\n";
     SDLAudioManager::getInstance()->playChannel(3, 0, 0);

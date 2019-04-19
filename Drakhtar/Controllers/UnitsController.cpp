@@ -4,10 +4,18 @@
 #include "EventListeners/EventListener.h"
 #include "GameObjects/Board.h"
 #include "GameObjects/TurnBar.h"
+#include "Structures/Team.h"
 
 UnitsController::UnitsController(Board* board, TurnBar* turnBar,
-                                 GameScene* scene)
-    : board_(board), turnBar_(turnBar), activeUnit_(nullptr), scene_(scene) {}
+                                 GameScene* scene, Team* team,
+                                 Team* oppositeTeam)
+    : board_(board),
+      turnBar_(turnBar),
+      scene_(scene),
+      team_(team),
+      oppositeTeam_(oppositeTeam) {}
+
+UnitsController::~UnitsController() = default;
 
 void UnitsController::start() {
   // Reset this controller's state
@@ -25,6 +33,10 @@ void UnitsController::finish() {
 
   // Update the turn bar
   turnBar_->next();
+
+  // Once this controller is finished, start the controller of the opposite
+  // team.
+  oppositeTeam_->getController()->start();
 }
 
 Board* UnitsController::getBoard() const { return board_; }

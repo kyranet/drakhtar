@@ -5,10 +5,11 @@
 #include "UnitsController.h"
 
 class PlayerController final : public UnitsController {
-  bool locked_ = true;
+  bool locked_ = false;
 
  public:
-  PlayerController(Board* board, TurnBar* turnBar, GameScene* scene);
+  PlayerController(Board* board, TurnBar* turnBar, GameScene* scene, Team* team,
+                   Team* oppositeTeam);
 
   /**
    * \brief Moves active unit to an empty cell within range.

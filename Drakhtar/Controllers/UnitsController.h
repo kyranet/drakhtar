@@ -1,8 +1,8 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-#include "SDL.h"
 #include <vector>
+#include "SDL.h"
 
 class TurnBar;
 class Unit;
@@ -10,6 +10,7 @@ class GameScene;
 class Board;
 class Box;
 class EventListener;
+class Team;
 
 class UnitsController {
  protected:
@@ -26,12 +27,22 @@ class UnitsController {
   /**
    * \brief A pointer to the unit that has the turn.
    */
-  Unit* activeUnit_;
+  Unit* activeUnit_ = nullptr;
 
   /**
    * \brief A pointer to the game scene.
    */
   GameScene* scene_;
+
+  /**
+   * \brief The team that manages this controller.
+   */
+  Team* team_;
+
+  /**
+   * \brief The opposite team.
+   */
+  Team* oppositeTeam_;
 
   /**
    * \brief All the event listeners this controller depends on to run.
@@ -50,7 +61,10 @@ class UnitsController {
   bool hasAttacked_ = false;
 
  public:
-  UnitsController(Board* board, TurnBar* turnBar, GameScene* scene);
+  UnitsController(Board* board, TurnBar* turnBar, GameScene* scene, Team* team,
+                  Team* oppositeTeam);
+
+  virtual ~UnitsController();
 
   /**
    * \brief Is called when this controller is ready to process data.

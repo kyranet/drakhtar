@@ -14,7 +14,7 @@ class Team final {
   std::vector<Unit*> units_{};
   std::vector<Commander*> commanders_{};
   Color color_;
-  UnitsController* controller_;
+  UnitsController* controller_ = nullptr;
 
  public:
   explicit Team(Color color);

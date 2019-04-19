@@ -90,6 +90,11 @@ void GameScene::preload() {
   const auto dialog =
       new DialogScene(this, "dialog" + std::to_string(battle_), "DialogFont");
 
+  team1_->setController(
+      new PlayerController(board_, turnBar, this, team1_, team2_));
+  team2_->setController(
+      new PlayerController(board_, turnBar, this, team2_, team1_));
+
   // TODO(kyranet): Move this to PlayerController
   // const auto skipTurnButton =
   //     new Button(this, TextureManager::get("Button-SkipTurn"),
@@ -127,6 +132,8 @@ void GameScene::preload() {
         new TutorialSequence(this, "tutorials", "TutorialFont");
     addGameObject(tutorialSequence);
   }
+
+  team1_->getController()->start();
 }
 
 void GameScene::pause() {
