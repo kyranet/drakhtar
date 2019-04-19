@@ -2,12 +2,14 @@
 
 #pragma once
 #include "SDL.h"
+#include <vector>
 
 class TurnBar;
 class Unit;
 class GameScene;
 class Board;
 class Box;
+class EventListener;
 
 class UnitsController {
  protected:
@@ -32,6 +34,12 @@ class UnitsController {
   GameScene* scene_;
 
   /**
+   * \brief All the event listeners this controller depends on to run.
+   * \attention The listeners must not be deleted in this class, but in Scene.
+   */
+  std::vector<EventListener*> listeners_{};
+
+  /**
    * \brief Whether or not the active unit has already moved this turn.
    */
   bool hasMoved_ = false;
@@ -45,13 +53,17 @@ class UnitsController {
   UnitsController(Board* board, TurnBar* turnBar, GameScene* scene);
 
   /**
-   * \brief Is called every time an event is capture to process it.
-   * \param event: The event to be processed.
+   * \brief Is called when this controller is ready to process data.
    */
-  virtual void run() {}
+  virtual void start();
 
   /**
-   * \brief Only used on PVP mode to close sockets.
+   * \brief Is called when this controller has finished processing this turn.
+   */
+  virtual void finish();
+
+  /**
+   * \brief Only used on multi-player mode to close the network sockets.
    */
   virtual void end() {}
 

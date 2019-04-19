@@ -31,4 +31,7 @@ class PlayerController final : public UnitsController, public ListenerOnClick {
    * \brief Resets board textures, ends unit's turn and updates active unit.
    */
   void advanceTurn();
+
+  void start() override;
+  void finish() override;
 };

@@ -123,22 +123,17 @@ void PlayerController::onClickAttack(Box* boxClicked) {
       // Unit dies to counter-attack
       if (activeUnit_->getStats().health <= 0) {
         activeUnit_->getBox()->destroyContent();
-        advanceTurn();
-      }
-
-      // If no actions left, reset and skip turn
-      if (hasMoved_ && hasAttacked_) {
-        advanceTurn();
+        finish();
+      } else if (hasMoved_ && hasAttacked_) {
+        // If no actions left, reset and skip turn
+        finish();
       }
     }
   }
 }
 
-void PlayerController::advanceTurn() {
-  board_->resetCellsToBase();
-  hasMoved_ = hasAttacked_ = false;
-  turnBar_->next();
-  activeUnit_ = turnBar_->getTurnFor();
+void PlayerController::start() {
+  UnitsController::start();
 
   activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
   board_->highlightCellsInRange(activeUnit_->getBox(),
@@ -146,3 +141,5 @@ void PlayerController::advanceTurn() {
   board_->highlightEnemiesInRange(activeUnit_->getBox(),
                                   activeUnit_->getStats().attackRange);
 }
+
+void PlayerController::finish() { board_->resetCellsToBase(); }
