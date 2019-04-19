@@ -1,7 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "RecruitScene.h"
-#include "EventListeners/UnitStoreController.h"
+#include "EventListeners/StoreListener.h"
 #include "GameObjects/Button.h"
 #include "GameObjects/GameObject.h"
 #include "GameObjects/RecruitmentStat.h"
@@ -73,7 +73,7 @@ void RecruitScene::preload() {
                     WIN_HEIGHT - WIN_HEIGHT / 13),
       Vector2D<int>(static_cast<int>(WIN_WIDTH / 26.6), WIN_HEIGHT / 15),
       [this]() {
-        for (UnitStoreController* i : store) {
+        for (StoreListener* i : store) {
           auto unit = i->getStoreUnit();
 
           GameManager::getInstance()->addUnits(unit.type, unit.amount_);
@@ -158,7 +158,7 @@ void RecruitScene::addUnit(std::string textureName, int position, int cost) {
 
   addGameObject(unit);
 
-  store.push_back(new UnitStoreController(unit, type, cost));
+  store.push_back(new StoreListener(unit, type, cost));
   unit->addEventListener(store.back());
 }
 

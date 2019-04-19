@@ -8,12 +8,12 @@
 #include "Scene.h"
 
 class GameObject;
-class UnitStoreController;
+class StoreListener;
 class Text;
 
 class RecruitScene final : public Scene {
   GameObject* recruitmentPanel_ = nullptr;
-  std::vector<UnitStoreController*> store;
+  std::vector<StoreListener*> store;
   std::map<std::string, int> costs_;
   Text* moneyText_ = nullptr;
   Text* totalCostText_ = nullptr;

@@ -1,7 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-#include "EventListeners/UnitStoreController.h"
+#include "EventListeners/StoreListener.h"
 #include "GameObject.h"
 class Scene;
 class Text;
