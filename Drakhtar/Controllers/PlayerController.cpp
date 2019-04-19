@@ -123,8 +123,8 @@ void PlayerController::start() {
 }
 
 void PlayerController::finish() {
-  UnitsController::finish();
   board_->resetCellsToBase();
+  UnitsController::finish();
 }
 
 bool PlayerController::getLocked() const { return locked_; }
