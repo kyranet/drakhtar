@@ -35,18 +35,23 @@ void TurnBar::prepare() {
   const auto blueUnits = blueTeam.units;
   const auto redUnits = redTeam.units;
 
+  // Clear up all calculated values
+  for (auto& i : calculated_) {
+    i = nullptr;
+  }
+
   if (blueUnits.empty()) {
     if (redUnits.empty()) return;
     size_t x = 0;
     for (auto& i : calculated_) {
-      i = blueUnits[x];
+      i = redUnits[x];
       if (++x == blueUnits.size()) x = 0;
     }
   } else if (redUnits.empty()) {
     if (blueUnits.empty()) return;
     size_t x = 0;
     for (auto& i : calculated_) {
-      i = redUnits[x];
+      i = blueUnits[x];
       if (++x == redUnits.size()) x = 0;
     }
   } else {
@@ -58,24 +63,26 @@ void TurnBar::prepare() {
     size_t i = 0;
     while (true) {
       calculated_[i] = *aIt;
-      if (++aIt == a.end()) aIt = a.begin();
       if (++i == calculated_.size()) break;
+      if (++aIt == a.end()) aIt = a.begin();
 
       calculated_[i] = *bIt;
-      if (++bIt == b.end()) bIt = b.begin();
       if (++i == calculated_.size()) break;
+      if (++bIt == b.end()) bIt = b.begin();
     }
   }
 }
 
 void TurnBar::next() {
-  if (++teams_[turn_].position == teams_[turn_].units.size())
+  if (++teams_[turn_].position >= teams_[turn_].units.size())
     teams_[turn_].position = 0;
   if (++turn_ == teams_.size()) turn_ = 0;
   prepare();
 }
 
 void TurnBar::render() const {
+  // Do nothing if there are no calculated units.
+  if (calculated_.front() == nullptr) return;
   GameObject::render();
 
   size_t i = 0;
@@ -91,6 +98,7 @@ void TurnBar::render() const {
                           size.getY()});
   ++i;
   for (const auto max = calculated_.size(); i < max; ++i) {
+    if (calculated_[i] == nullptr) continue;
     position.set(WIN_WIDTH - WIN_WIDTH / 2 + (i + 1) * WIN_HEIGHT / 11,
                  static_cast<int>(WIN_HEIGHT - WIN_HEIGHT / 12.5));
     size.set(WIN_HEIGHT / 8, WIN_HEIGHT / 8);
@@ -126,5 +134,6 @@ void TurnBar::remove(Unit* unit) {
 
 Unit* TurnBar::getTurnFor() const {
   const auto turn = teams_[turn_];
-  return turn.units[turn.position];
+  return turn.units.size() > turn.position ? turn.units[turn.position]
+                                           : nullptr;
 }

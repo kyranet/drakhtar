@@ -6,6 +6,7 @@
 class Unit;
 class Commander;
 class Board;
+class UnitsController;
 
 enum class Color { BLUE, RED };
 
@@ -13,6 +14,7 @@ class Team final {
   std::vector<Unit*> units_{};
   std::vector<Commander*> commanders_{};
   Color color_;
+  UnitsController* controller_ = nullptr;
 
  public:
   explicit Team(Color color);
@@ -26,6 +28,9 @@ class Team final {
   void removeUnit(Unit* unit);
   std::vector<Unit*> getUnits() const;
   void sortUnits();
+
+  void setController(UnitsController* controller);
+  UnitsController* getController() const;
 
   Color getColor() const;
 };

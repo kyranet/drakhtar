@@ -1,14 +1,21 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Box.h"
-#include "../Managers/TextureManager.h"
+#include "Board.h"
+#include "Controllers/UnitsController.h"
+#include "GameObjects/TurnBar.h"
 #include "Managers/Input.h"
+#include "Managers/TextureManager.h"
+#include "Scenes/Scene.h"
+#include "Structures/Team.h"
 #include "Unit.h"
 
-Box::Box(Scene *scene, const Vector2D<int> &pos, const Vector2D<int> &size,
-         const Vector2D<int> &boardIndex, Unit *unit)
-    : GameObject(scene, nullptr, pos, size), boardIndex_(boardIndex),
-      content_(unit), size_(std::move(size)) {
+Box::Box(Scene* scene, const Vector2D<int>& pos, const Vector2D<int>& size,
+         const Vector2D<int>& boardIndex, Unit* unit)
+    : GameObject(scene, nullptr, pos, size),
+      boardIndex_(boardIndex),
+      content_(unit),
+      size_(std::move(size)) {
   cellTextures_[static_cast<int>(TextureInd::BASE)] =
       TextureManager::get("UI-cellFrame");
   cellTextures_[static_cast<int>(TextureInd::HOVER)] =
@@ -54,12 +61,20 @@ bool Box::isEmpty() const { return content_ == nullptr; }
 
 Vector2D<int> Box::getIndex() const { return boardIndex_; }
 
-Unit *Box::getContent() const { return content_; }
+Unit* Box::getContent() const { return content_; }
 
-void Box::setContent(Unit *content) { content_ = content; }
+void Box::setContent(Unit* content) { content_ = content; }
 
 TextureInd Box::getCurrentTexture() const { return cellTexture_; }
 
 void Box::setCurrentTexture(TextureInd cellTexture) {
   cellTexture_ = cellTexture;
+}
+
+void Box::destroyContent() {
+  const auto unit = getContent();
+  unit->kill();
+  unit->getTeam()->getController()->getTurnBar()->remove(unit);
+  getScene()->removeGameObject(unit);
+  setContent(nullptr);
 }
