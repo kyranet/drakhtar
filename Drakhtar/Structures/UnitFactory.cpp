@@ -11,7 +11,27 @@
 #include "../Utils/Constants.h"
 #include "Team.h"
 
-UnitFactory::UnitFactory(Scene* scene) : scene_(scene) {}
+UnitFactory::UnitFactory(Scene *scene) : scene_(scene) {
+  statMap["Soldier"] = {soldierAttack,      soldierDefense,   soldierHealth,
+                        soldierAttackRange, soldierMoveRange, soldierSpeed,
+                        soldierPrize};
+
+  statMap["Archer"] = {archerAttack,      archerDefense,   archerHealth,
+                       archerAttackRange, archerMoveRange, archerSpeed,
+                       archerPrize};
+
+  statMap["Mage"] = {wizardAttack,      wizardDefense,   wizardHealth,
+                     wizardAttackRange, wizardMoveRange, wizardSpeed,
+                     wizardPrize};
+
+  statMap["Knight"] = {knightAttack,      knightDefense,   knightHealth,
+                       knightAttackRange, knightMoveRange, knightSpeed,
+                       knightPrize};
+
+  statMap["Monster"] = {monsterAttack,      monsterDefense,   monsterHealth,
+                        monsterAttackRange, monsterMoveRange, monsterSpeed,
+                        monsterPrize};
+}
 
 UnitFactory::~UnitFactory() = default;
 
@@ -108,3 +128,5 @@ Zamdran* UnitFactory::newZamdran(Team* team, Box* box) const {
   team->addUnit(unit);
   return unit;
 }
+
+UnitStats UnitFactory::getStats(std::string type) { return statMap[type]; }

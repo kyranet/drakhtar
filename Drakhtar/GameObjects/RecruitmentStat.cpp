@@ -2,6 +2,7 @@
 #include "RecruitmentStat.h"
 
 #include "../Managers/FontManager.h"
+#include "../Managers/GameManager.h"
 #include "../Managers/TextureManager.h"
 #include "../Scenes/Scene.h"
 #include "../Structures/Font.h"
@@ -9,7 +10,10 @@
 #include "../Utils/Vector2D.h"
 #include "GameObjects/Button.h"
 #include "GameObjects/Unit.h"
+#include "Structures/Game.h"
+#include "Structures/UnitFactory.h"
 #include "Text.h"
+
 RecruitmentStat::RecruitmentStat(Scene* scene, const SDL_Rect BoxArea,
                                  StoreUnit* controller)
     : GameObject(scene, nullptr, Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
@@ -40,12 +44,16 @@ void RecruitmentStat::render() const {
 }
 
 std::string RecruitmentStat::fillText() {
-  const auto unit = reinterpret_cast<Unit*>(currentSelected_->unit);
   std::string text = "Unit type: " + currentSelected_->type + "\n";
-  text += "Total amount: " + std::to_string(currentSelected_->amount_) + "\n";
-  text += "Attack-> " + std::to_string(unit->getBaseStats().attack) + "\n";
-  text += "Defense-> " + std::to_string(unit->getBaseStats().defense) + "\n";
-  text += "Speed-> " + std::to_string(unit->getBaseStats().speed) + "\n";
+  auto map = GameManager::getInstance()->getArmy();
+  auto stats = UnitFactory(Game::getSceneMachine()->getCurrentScene())
+                   .getStats(currentSelected_->type);
+  text += "Total amount: " + std::to_string(map[currentSelected_->type]) + "\n";
+  text += "Attack-> " + std::to_string(stats.attack) + " (" +
+          std::to_string(stats.attack * map[currentSelected_->type]) + ")\n ";
+  text += "Defense-> " + std::to_string(stats.defense) + " (" +
+          std::to_string(stats.defense * map[currentSelected_->type]) + ")\n";
+  text += "Speed-> " + std::to_string(stats.speed) + "\n";
   return text;
 }
 

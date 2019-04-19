@@ -82,17 +82,16 @@ void StoreListener::onHoverStart() {
               << Input::getMousePosition().getY();
     const auto scene = reinterpret_cast<RecruitScene*>(
         Game::getSceneMachine()->getCurrentScene());
-    stats_ = new RecruitmentStat(scene, SDL_Rect{100, 100, 170, 110}, &storeUnit);
+    stats_ =
+        new RecruitmentStat(scene, SDL_Rect{100, 100, 170, 110}, &storeUnit);
     scene->addGameObject(stats_);
     return;
   }
 }
 
-void StoreListener::onHoverStop() {  
+void StoreListener::onHoverStop() {
   if (stats_ != nullptr) {
     stats_->destroy();
     stats_ = nullptr;
   }
-
-
 }
