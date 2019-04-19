@@ -1,7 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "RecruitScene.h"
-#include "Controllers/UnitStoreController.h"
+#include "EventListeners/UnitStoreController.h"
 #include "GameObjects/Button.h"
 #include "GameObjects/GameObject.h"
 #include "GameObjects/RecruitmentStat.h"
@@ -16,7 +16,7 @@
 #include "Utils/Vector2D.h"
 
 void buttonStartGame() {
-  Game::getSceneMachine()->changeScene(new TransitionScene(2));
+  Game::getSceneMachine()->changeScene(new TransitionScene(1));
 }
 
 void RecruitScene::preload() {
@@ -52,23 +52,48 @@ void RecruitScene::preload() {
   addGameObject(background);
   addGameObject(recruitmentPanel_);
 
-  controller_ = new UnitStoreController(recruitmentPanel_);
-  recruitmentPanel_->addEventListener(reinterpret_cast<EventListener*>(controller_));
+  addUnit("Units-BlueSoldier", 1, costs_["Soldier"]);
+  addUnit("Units-BlueArcher", 2, costs_["Archer"]);
+
+  if (GameManager::getInstance()->getLevel() >= 2)
+    addUnit("Units-BlueMage", 3, costs_["Mage"]);
+
+  if (GameManager::getInstance()->getLevel() >= 3)
+    addUnit("Units-BlueKnight", 4, costs_["Knight"]);
+
+  if (GameManager::getInstance()->getLevel() >= 4)
+    addUnit("Units-BlueMonster", 5, costs_["Monster"]);
 
   addGameObject(totalCostText_);
   addGameObject(moneyText_);
 
-  addUnit("Units-BlueSoldier", 1);
-  addUnit("Units-BlueArcher", 2);
+  auto acceptButton = new Button(
+      this, TextureManager::get("Accept-Button"),
+      Vector2D<int>(WIN_WIDTH / 4 + WIN_WIDTH / 20,
+                    WIN_HEIGHT - WIN_HEIGHT / 13),
+      Vector2D<int>(static_cast<int>(WIN_WIDTH / 26.6), WIN_HEIGHT / 15),
+      [this]() {
+        for (UnitStoreController* i : store) {
+          auto unit = i->getStoreUnit();
 
-  if (GameManager::getInstance()->getLevel() >= 2)
-    addUnit("Units-BlueMage", 3);
+          GameManager::getInstance()->addUnits(unit.type, unit.amount_);
+          GameManager::getInstance()->loseMoney(unit.cost_ * unit.amount_);
+          moneyText_->setText(moneyToString());
 
-  if (GameManager::getInstance()->getLevel() >= 3)
-    addUnit("Units-BlueKnight", 4);
+          reset();
+        }
+      });
 
-  if (GameManager::getInstance()->getLevel() >= 4)
-    addUnit("Units-BlueMonster", 5);
+  recruitmentPanel_->addChild(acceptButton);
+
+  auto cancelButton = new Button(
+      this, TextureManager::get("Cancel-Button"),
+      Vector2D<int>(WIN_WIDTH / 4 - WIN_WIDTH / 20,
+                    WIN_HEIGHT - WIN_HEIGHT / 13),
+      Vector2D<int>(static_cast<int>(WIN_WIDTH / 26.6), WIN_HEIGHT / 15),
+      [this]() { reset(); });
+
+  recruitmentPanel_->addChild(cancelButton);
 
   const auto button = new Button(
       this, TextureManager::get("Button-Play"),
@@ -89,53 +114,34 @@ void RecruitScene::preload() {
   addGameObject(button);
 }
 
-int RecruitScene::getCost(const std::string &type) { return costs_[type]; }
-
-void RecruitScene::updateTotalCostText(const int amount) const {
-  totalCostText_->setText("Total cost: " + std::to_string(amount));
+RecruitScene::~RecruitScene() {
+  while (!store.empty()) {
+    delete store.back();
+    store.pop_back();
+  }
 }
 
-void RecruitScene::addUnit(std::string textureName, int position) {
+int RecruitScene::getCost(const std::string& type) { return costs_[type]; }
+
+void RecruitScene::updateTotalCost(const int amount) {
+  totalCost_ += amount;
+  totalCostText_->setText("Total cost: " + std::to_string(totalCost_));
+}
+
+void RecruitScene::addUnit(std::string textureName, int position, int cost) {
   position -= 3;
 
   // 4.5 base distance
   // 1280 /  3.47  = 368 = center
   // 1280 / 12.8   = 100 = separator
-  const auto nx = static_cast<int>(WIN_WIDTH / 3.47 - WIN_WIDTH / 12.8);
-  const auto px = static_cast<int>(WIN_WIDTH / 3.47 + WIN_WIDTH / 12.8);
-  const auto y =
-      static_cast<int>(WIN_HEIGHT / 2.0 + WIN_HEIGHT / 6.0 * position);
-  auto lessButton = new GameObject(
-      this, TextureManager::get("Quantity-Button"), Vector2D<int>(nx, y),
-      Vector2D<int>(static_cast<int>(WIN_WIDTH / 12.92 * 1.5),
-                    static_cast<int>(WIN_HEIGHT / 10.14 * 1.5)));
-
-  lessButton->addChild(new Text(this, FontManager::get("Retron2000"),
-                                Vector2D<int>(nx, y), {0, 0, 0, 255}, "-", 10));
-
-  addGameObject(lessButton);
-
-  auto moreButton = new GameObject(
-      this, TextureManager::get("Quantity-Button"), Vector2D<int>(px, y),
-      Vector2D<int>(static_cast<int>(WIN_WIDTH / 12.92 * 1.5),
-                    static_cast<int>(WIN_HEIGHT / 10.14 * 1.5)));
-
-  moreButton->addChild(new Text(this, FontManager::get("Retron2000"),
-                                Vector2D<int>(px, y), {0, 0, 0, 255}, "+", 10));
-
-  addGameObject(moreButton);
-
-  const auto text =
-      new Text(this, FontManager::get("Retron2000"),
-               Vector2D<int>(static_cast<int>(WIN_WIDTH / 3.47), y),
-               {0, 0, 0, 255}, "0", 10);
-
-  addGameObject(text);
+  // const auto nx = static_cast<int>(WIN_WIDTH / 3.47 - WIN_WIDTH / 12.8);
+  //
+  // const auto y =
+  //    static_cast<int>(WIN_HEIGHT / 2.0 + WIN_HEIGHT / 6.0 * position);
 
   auto it = textureName.begin();
 
-  while ((*it) != 'e')
-    ++it;
+  while ((*it) != 'e') ++it;
   ++it;
 
   std::string type;
@@ -149,18 +155,21 @@ void RecruitScene::addUnit(std::string textureName, int position) {
                      Vector2D<int>(static_cast<int>(WIN_WIDTH / 9.5),
                                    WIN_HEIGHT / 2 + WIN_HEIGHT / 6 * position),
                      Vector2D<int>(WIN_HEIGHT / 6, WIN_HEIGHT / 6));
+
   addGameObject(unit);
-  controller_->addUnitToStore(type, unit, text, moreButton, lessButton);
+
+  store.push_back(new UnitStoreController(unit, type, cost));
+  unit->addEventListener(store.back());
 }
 
 std::string RecruitScene::moneyToString() const {
   return "Money: " + std::to_string(GameManager::getInstance()->getMoney());
 }
 
-void RecruitScene::buyUnits(const std::string &type, const int quantity) {
-  if (costs_[type] * quantity <= GameManager::getInstance()->getMoney()) {
-    GameManager::getInstance()->addUnits(type, quantity);
-    GameManager::getInstance()->loseMoney(costs_[type] * quantity);
-    moneyText_->setText(moneyToString());
-  }
+void RecruitScene::reset() {
+  for (auto i : store)
+    if (i->getStoreUnit().amount_ > 0) i->reset();
+
+  totalCost_ = 0;
+  updateTotalCost(-totalCost_);
 }

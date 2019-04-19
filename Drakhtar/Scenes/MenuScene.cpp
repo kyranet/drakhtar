@@ -12,7 +12,7 @@
 #include "RecruitScene.h"
 
 void buttonPlay() {
-  Game::getSceneMachine()->changeScene(new TransitionScene(1));
+  Game::getSceneMachine()->changeScene(new RecruitScene());
   SDLAudioManager::getInstance()->playChannel(2, 0, 0);
 }
 

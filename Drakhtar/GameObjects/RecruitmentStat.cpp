@@ -1,5 +1,6 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 #include "RecruitmentStat.h"
+
 #include "../Managers/FontManager.h"
 #include "../Managers/TextureManager.h"
 #include "../Scenes/Scene.h"
@@ -41,7 +42,7 @@ void RecruitmentStat::render() const {
 std::string RecruitmentStat::fillText() {
   const auto unit = reinterpret_cast<Unit*>(currentSelected_->unit);
   std::string text = "Unit type: " + currentSelected_->type + "\n";
-  text += "Total amount: " + std::to_string(currentSelected_->amount) + "\n";
+  text += "Total amount: " + std::to_string(currentSelected_->amount_) + "\n";
   text += "Attack-> " + std::to_string(unit->getBaseStats().attack) + "\n";
   text += "Defense-> " + std::to_string(unit->getBaseStats().defense) + "\n";
   text += "Speed-> " + std::to_string(unit->getBaseStats().speed) + "\n";
