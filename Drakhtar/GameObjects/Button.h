@@ -10,7 +10,6 @@ class Button final : public GameObject {
  private:
   std::function<void()> callback_;
   std::string buttonText_;
-  std::string spriteText_;
 
  public:
   Button(Scene* scene, Texture* texture, const Vector2D<int>& pos,

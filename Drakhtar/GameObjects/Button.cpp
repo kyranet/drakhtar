@@ -1,13 +1,8 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Button.h"
-
 #include <utility>
-
-#include "../Structures/Font.h"
-#include "Managers/FontManager.h"
 #include "Managers/Input.h"
-#include "Text.h"
 
 Button::Button(Scene* scene, Texture* texture, const Vector2D<int>& pos,
                const Vector2D<int>& size, std::function<void()> callback,
