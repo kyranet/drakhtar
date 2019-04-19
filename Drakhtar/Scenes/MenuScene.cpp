@@ -1,7 +1,6 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "MenuScene.h"
-
 #include "../GameObjects/Button.h"
 #include "../GameObjects/GameObject.h"
 #include "../Managers/TextureManager.h"
@@ -13,7 +12,7 @@
 #include "RecruitScene.h"
 
 void buttonPlay() {
-  Game::getSceneMachine()->changeScene(new TransitionScene(1));
+  Game::getSceneMachine()->changeScene(new RecruitScene());
   SDLAudioManager::getInstance()->playChannel(2, 0, 0);
 }
 
