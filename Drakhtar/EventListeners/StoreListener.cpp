@@ -77,13 +77,22 @@ void StoreListener::reset() {
 
 void StoreListener::onHoverStart() {
   auto rectangle = storeUnit.unit->getRect();
-  if (Input::isMouseInside(&rectangle)) {
+  if (Input::isMouseInside(&rectangle) && stats_ == nullptr) {
     std::cout << Input::getMousePosition().getX()
               << Input::getMousePosition().getY();
     const auto scene = reinterpret_cast<RecruitScene*>(
         Game::getSceneMachine()->getCurrentScene());
-    scene->addGameObject(
-        new RecruitmentStat(scene, SDL_Rect{100, 100, 170, 110}, &storeUnit));
+    stats_ = new RecruitmentStat(scene, SDL_Rect{100, 100, 170, 110}, &storeUnit);
+    scene->addGameObject(stats_);
     return;
   }
+}
+
+void StoreListener::onHoverStop() {  
+  if (stats_ != nullptr) {
+    stats_->destroy();
+    stats_ = nullptr;
+  }
+
+
 }

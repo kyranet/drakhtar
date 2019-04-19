@@ -10,6 +10,7 @@
 
 class Unit;
 class Text;
+class RecruitmentStat;
 
 struct StoreUnit {
   std::string type;
@@ -26,6 +27,7 @@ class StoreListener final : public ListenerOnHover {
   StoreUnit storeUnit;
   std::vector<Text*> sizeTexts_;
   StoreUnit* selectedUnit_ = nullptr;
+  RecruitmentStat* stats_ = nullptr;
   int sizeToBuy;
 
  public:
@@ -33,6 +35,7 @@ class StoreListener final : public ListenerOnHover {
   ~StoreListener();
 
   void onHoverStart() override;
+  void onHoverStop() override;
 
   void reset();
 
