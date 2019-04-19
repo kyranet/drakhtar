@@ -5,11 +5,3 @@
 
 AIController::AIController(Board* board, TurnBar* turnBar, GameScene* scene)
     : UnitsController(board, turnBar, scene) {}
-
-void AIController::run() {}
-
-void AIController::advanceTurn() {
-  hasMoved_ = hasAttacked_ = false;
-  turnBar_->next();
-  activeUnit_ = turnBar_->getTurnFor();
-}

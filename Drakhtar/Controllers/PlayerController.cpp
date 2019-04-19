@@ -4,6 +4,7 @@
 
 #include <iostream>
 
+#include "Controllers/Handlers/PlayerHandler.h"
 #include "GameObjects/Board.h"
 #include "GameObjects/Box.h"
 #include "GameObjects/TurnBar.h"
@@ -19,32 +20,8 @@
 
 PlayerController::PlayerController(Board* board, TurnBar* turnBar,
                                    GameScene* scene)
-    : UnitsController(board, turnBar, scene), ListenerOnClick(board) {
-  activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
-  board_->highlightCellsInRange(activeUnit_->getBox(),
-                                activeUnit_->getStats().moveRange);
-  board_->highlightEnemiesInRange(activeUnit_->getBox(),
-                                  activeUnit_->getStats().attackRange);
-}
-
-void PlayerController::run(const SDL_Event) {
-  if (!Input::isMouseButtonDown(MouseKey::LEFT)) return;
-
-  const auto gameObject = Input::screenMouseToRay();
-  if (!gameObject) return;
-
-  // Ignore Unit's "hitboxes" and assume it's a click to the board, so get the
-  // box at the mouse's coordinates
-  const auto unit = dynamic_cast<Unit*>(gameObject);
-  const auto box = unit ? board_->getBoxAtCoordinates(Input::getMousePosition())
-                        : dynamic_cast<Box*>(gameObject);
-  if (!box) return;
-
-  if (!hasMoved_ && box->isEmpty()) {
-    onClickMove(box);
-  } else if (!hasAttacked_) {
-    onClickAttack(box);
-  }
+    : UnitsController(board, turnBar, scene) {
+  listeners_.push_back(new PlayerHandler(this));
 }
 
 void PlayerController::onClickMove(Box* boxClicked) {
@@ -54,7 +31,7 @@ void PlayerController::onClickMove(Box* boxClicked) {
     const auto path = board_->findPath(activeUnit_->getBox()->getIndex(),
                                        boxClicked->getIndex());
 
-    setActive(false);
+    locked_ = true;
     SDLAudioManager::getInstance()->playChannel(0, 0, 0);
     const auto unit = activeUnit_;
     scene_->getTweenManager()
@@ -69,7 +46,7 @@ void PlayerController::onClickMove(Box* boxClicked) {
         ->setOnComplete([this, unit, boxClicked]() {
           unit->moveToBox(boxClicked);
           hasMoved_ = true;
-          setActive(true);
+          locked_ = false;
           // If there are enemies in range, highlight them, otherwise skip turn
           if (board_->isEnemyInRange(boxClicked,
                                      unit->getStats().attackRange)) {
@@ -80,14 +57,15 @@ void PlayerController::onClickMove(Box* boxClicked) {
             SDLAudioManager::getInstance()->setChannelVolume(30, 0);
             SDLAudioManager::getInstance()->playChannel(4, 0, 0);
           } else {
-            advanceTurn();
+            finish();
           }
 
           // If no actions left, reset and skip turn
           if (hasMoved_ && hasAttacked_) {
-            advanceTurn();
+            finish();
           }
         });
+
   } else {
     std::cout << "Out of movement range!\n";
     SDLAudioManager::getInstance()->playChannel(3, 0, 0);
@@ -142,4 +120,9 @@ void PlayerController::start() {
                                   activeUnit_->getStats().attackRange);
 }
 
-void PlayerController::finish() { board_->resetCellsToBase(); }
+void PlayerController::finish() {
+  UnitsController::finish();
+  board_->resetCellsToBase();
+}
+
+bool PlayerController::getLocked() const { return locked_; }

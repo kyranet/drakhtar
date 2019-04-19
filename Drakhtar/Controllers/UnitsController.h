@@ -67,7 +67,9 @@ class UnitsController {
    */
   virtual void end() {}
 
-  Board* getBoard();
-  TurnBar* getTurnBar();
-  Unit* getActiveUnit();
+  Board* getBoard() const;
+  TurnBar* getTurnBar() const;
+  Unit* getActiveUnit() const;
+  bool hasMoved() const;
+  bool hasAttacked() const;
 };

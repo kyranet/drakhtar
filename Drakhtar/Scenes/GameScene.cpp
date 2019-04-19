@@ -90,15 +90,13 @@ void GameScene::preload() {
   const auto dialog =
       new DialogScene(this, "dialog" + std::to_string(battle_), "DialogFont");
 
-  playerController_ = new PlayerController(board_, turnBar, this);
-  board_->addEventListener(playerController_);
-
-  const auto skipTurnButton =
-      new Button(this, TextureManager::get("Button-SkipTurn"),
-                 Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT - WIN_HEIGHT / 8),
-                 Vector2D<int>(static_cast<int>(WIN_WIDTH / 7),
-                               static_cast<int>(WIN_HEIGHT / 4.5)),
-                 [this]() { playerController_->advanceTurn(); });
+  // TODO(kyranet): Move this to PlayerController
+  // const auto skipTurnButton =
+  //     new Button(this, TextureManager::get("Button-SkipTurn"),
+  //                Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT - WIN_HEIGHT / 8),
+  //                Vector2D<int>(static_cast<int>(WIN_WIDTH / 7),
+  //                              static_cast<int>(WIN_HEIGHT / 4.5)),
+  //                [this]() { playerController_->advanceTurn(); });
 
   const auto pauseButton =
       new Button(this, TextureManager::get("Button-Pause"),
@@ -121,7 +119,6 @@ void GameScene::preload() {
   */
   addGameObject(turnBar);
   addGameObject(dialog);
-  addGameObject(skipTurnButton);
   addGameObject(pauseButton);
   // addGameObject(battleCryButton);
 

@@ -27,6 +27,8 @@ void UnitsController::finish() {
   turnBar_->next();
 }
 
-Board* UnitsController::getBoard() { return board_; }
-TurnBar* UnitsController::getTurnBar() { return turnBar_; }
-Unit* UnitsController::getActiveUnit() { return activeUnit_; }
+Board* UnitsController::getBoard() const { return board_; }
+TurnBar* UnitsController::getTurnBar() const { return turnBar_; }
+Unit* UnitsController::getActiveUnit() const { return activeUnit_; }
+bool UnitsController::hasAttacked() const { return hasAttacked_; }
+bool UnitsController::hasMoved() const { return hasMoved_; }
