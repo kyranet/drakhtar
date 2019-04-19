@@ -18,13 +18,13 @@ Pause::Pause(Scene* scene) : GameObject(scene, nullptr) {
                      Vector2D<int>(static_cast<int>(WIN_WIDTH / 4.68),
                                    static_cast<int>(WIN_HEIGHT / 2.25)));
   const auto restart = 
-	  new Button(scene_, nullptr,
+	  new Button(scene_, TextureManager::get("Vanilla-Button"),
 				 Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
 				 Vector2D<int>(static_cast<int>(WIN_WIDTH / 8.33),
 			   				   static_cast<int>(WIN_HEIGHT / 11.25)),
 				 []() { Game::getSceneMachine()->changeScene(new GameScene(1)); 
 				 },
-				 "Restart", "TutorialFont");
+				 "Restart", "ButtonFont");
   const auto exit =
       new Button(scene_, TextureManager::get("Vanilla-Button"),
                  Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2 + 70),
@@ -34,7 +34,7 @@ Pause::Pause(Scene* scene) : GameObject(scene, nullptr) {
                    Game::getSceneMachine()->changeScene(new MenuScene());
                    SDLAudioManager::getInstance()->playChannel(6, 0, 0);
                  },
-                 "Exit", "TutorialFont");
+                 "Exit", "ButtonFont");
 
   const auto resume =
       new Button(scene_, TextureManager::get("Vanilla-Button"),
@@ -45,7 +45,7 @@ Pause::Pause(Scene* scene) : GameObject(scene, nullptr) {
                    destroy();
                    scene_->resume();
                  },
-                 "Resume", "TutorialFont");
+                 "Resume", "ButtonFont");
 
   addChild(panel);
   addChild(restart);

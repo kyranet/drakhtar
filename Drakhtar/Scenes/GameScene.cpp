@@ -102,7 +102,7 @@ void GameScene::preload() {
                  Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 24, WIN_HEIGHT / 18),
                  Vector2D<int>(static_cast<int>(WIN_WIDTH / 21.6),
                                static_cast<int>(WIN_HEIGHT / 14.4)),
-                 buttonPause, " ", "TutorialFont");
+                 buttonPause, " ", "ButtonFont");
 
   audio->haltMusic();
   audio->setMusicVolume(10);

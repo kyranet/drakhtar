@@ -45,7 +45,7 @@ DialogScene::DialogScene(Scene* scene, const std::string& filename,
                                      dialogueBackground->getRect().w / 1.05),
                     dialogueBackground->getRect().y + 140),
       Vector2D<int>(area.w * WIN_WIDTH / 30, area.h * WIN_HEIGHT / 24),
-      [this]() { skip(); }, " ", "TutorialFont");
+      [this]() { skip(); }, " ", "ButtonFont");
 
   addChild(nameBackground);
   addChild(dialogueBackground);

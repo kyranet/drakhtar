@@ -14,20 +14,18 @@ ButtonText::ButtonText(Scene* scene, const std::string& text,
                  Vector2D<int>(1, 1)) {
   spriteText_ = text;
 
-    const auto lineJumpLimit = static_cast<int>(buttonArea.w * 0.95);
+    const auto lineJumpLimit = static_cast<int>(buttonArea.w * 1.25);
 
   const SDL_Color textColor = {225, 225, 225, 255};
 
   const auto buttonText_ =
-      new Text(scene, FontManager::get(fontFile),
-               Vector2D<int>(buttonArea.x + WIN_WIDTH / 20,
-                             buttonArea.y + WIN_HEIGHT / 200),
-               textColor, spriteText_, lineJumpLimit);
+      new Text(scene, FontManager::get(fontFile), Vector2D<int>(1, 1),
+               textColor, spriteText_, 1);
 
   buttonText_->setColor(textColor);
   buttonText_->setText(spriteText_, textColor, lineJumpLimit);
-  buttonText_->setSize(Vector2D<int>(buttonArea.x/10 + WIN_WIDTH / 20,
-                                     buttonArea.y/10 + WIN_HEIGHT / 20));
+  buttonText_->setSize(Vector2D<int>(buttonArea.x/5 + buttonArea.h / 20,
+                                     buttonArea.y/5 - buttonArea.w / 20));
   buttonText_->setPosition(Vector2D<int>(posX, posY));
 
   addChild(buttonText_);

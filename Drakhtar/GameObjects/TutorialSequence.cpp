@@ -29,14 +29,14 @@ TutorialSequence::TutorialSequence(Scene* scene, const std::string& filename,
       Vector2D<int>(tutorialArea_.x - WIN_WIDTH / 10,
                     tutorialArea_.y + WIN_HEIGHT / 10),
       Vector2D<int>(WIN_WIDTH / 15, WIN_HEIGHT / 21), [this]() { next(); }, 
-	  "Next", "TutorialFont");
+	  "Next", "ButtonFont");
 
   const auto closeButton = new Button(
       scene_, TextureManager::get("Button"),
       Vector2D<int>(tutorialArea_.x + WIN_WIDTH / 10,
                     tutorialArea_.y + WIN_HEIGHT / 10),
                  Vector2D<int>(WIN_WIDTH / 15, WIN_HEIGHT / 21),
-                 [this]() { skip(); }, "Close", "TutorialFont");
+                 [this]() { skip(); }, "Close", "ButtonFont");
 
   addChild(dialogueBackground);
   addChild(closeButton);

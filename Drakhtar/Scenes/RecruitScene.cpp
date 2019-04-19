@@ -100,7 +100,7 @@ void RecruitScene::preload() {
       this, TextureManager::get("Button"),
       Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 4, WIN_HEIGHT / 2),
       Vector2D<int>(static_cast<int>(WIN_WIDTH / 7.5), WIN_HEIGHT / 12),
-      buttonStartGame, "Play", "TutorialFont");
+      buttonStartGame, "Play", "ButtonFont");
 
   /*const auto betaInfo =
       new Button(this, TextureManager::get("Button-Play"),
