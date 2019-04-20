@@ -16,23 +16,19 @@
 
 RecruitmentStat::RecruitmentStat(Scene* scene, const SDL_Rect BoxArea,
                                  StoreUnit* controller)
-    : GameObject(scene, nullptr, Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
-                 Vector2D<int>(1, 1)),
+    : GameObject(scene, TextureManager::get("Reward-Panel"),
+                 Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 3.2, WIN_HEIGHT / 2),
+                 Vector2D<int>(static_cast<int>(WIN_WIDTH / 2.184),
+                               static_cast<int>(WIN_HEIGHT / 1.058))),
       currentSelected_(controller) {
   auto pos = currentSelected_->unit->getPosition();
-  const auto boxImage = new Button(
-      scene, TextureManager::get("UI-tutorialBackground"),
-      Vector2D<int>(pos.getX() + 510, pos.getY()),
-      Vector2D<int>(BoxArea.w, BoxArea.h), [this]() { setActive(false); });
-  addChild(boxImage);
 
   std::string statText_ = fillText();
-  const auto statTextSprite =
-      new Text(scene_, FontManager::get("Retron2000"),
-               Vector2D<int>(
-                   boxImage->getPosition().getX() - boxImage->getRect().w / 30,
-                   boxImage->getPosition().getY() - boxImage->getRect().h / 20),
-               {0, 0, 0, 1}, statText_, BoxArea.w * 0.9);
+  const auto statTextSprite = new Text(
+      scene_, FontManager::get("StatsFont"),
+      Vector2D<int>(this->getPosition().getX() + this->getRect().w / 7.6,
+                    this->getPosition().getY() - this->getRect().h / 3.8),
+      {0, 0, 0, 1}, statText_, this->getRect().w * 0.9);
   addChild(statTextSprite);
   active_ = true;
 }
@@ -44,13 +40,13 @@ void RecruitmentStat::render() const {
 }
 
 std::string RecruitmentStat::fillText() {
-  std::string text = "Unit type: " + currentSelected_->type + "\n";
+  std::string text = currentSelected_->type + "\n";
   auto map = GameManager::getInstance()->getArmy();
   auto stats = UnitFactory(Game::getSceneMachine()->getCurrentScene())
                    .getStats(currentSelected_->type);
   text += "Total amount: " + std::to_string(map[currentSelected_->type]) + "\n";
   text += "Attack-> " + std::to_string(stats.attack) + " (" +
-          std::to_string(stats.attack * map[currentSelected_->type]) + ")\n ";
+          std::to_string(stats.attack * map[currentSelected_->type]) + ")\n";
   text += "Defense-> " + std::to_string(stats.defense) + " (" +
           std::to_string(stats.defense * map[currentSelected_->type]) + ")\n";
   text += "Speed-> " + std::to_string(stats.speed) + "\n";
