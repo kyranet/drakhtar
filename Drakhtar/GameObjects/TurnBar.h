@@ -1,7 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-#include <list>
+#include <array>
 #include <vector>
 #include "GameObject.h"
 #include "SDL.h"
@@ -10,23 +10,22 @@ class Scene;
 class Unit;
 
 class TurnBar final : public GameObject {
-  std::list<Unit *> unitTurnBar_;
-  size_t visibleTurnBarSize_ = 9;
-  std::vector<GameObject *> visibleUnits_;
-  GameObject *selectedUnitSprite_ = nullptr;
+  struct Turn {
+    std::vector<Unit*> units;
+    size_t position;
+  };
+  std::array<Turn, 2> teams_;
+  size_t turn_ = 0;
+
+  std::array<Unit*, 8> calculated_{};
 
  public:
-  // constructor interlaces units from each team list into the turn bar (ally
-  // -> enemy -> ally -> etc)
-  TurnBar(Scene *scene, std::list<Unit *> allyList,
-          std::list<Unit *> enemyList);
-  virtual ~TurnBar();
-  Unit *getFrontUnit() { return unitTurnBar_.front(); }
-  void advanceTurn();
-  void sort();
-  void eraseUnit(Unit *unit);
+  TurnBar(Scene* scene, std::vector<Unit*> team1, std::vector<Unit*> team2);
+  ~TurnBar();
+  void next();
+  void prepare();
   void render() const override;
-  void handleEvents(SDL_Event event) override;
-  void updateVisibleUnits();
-  void decreaseVisibleUnitsSize();
+
+  void remove(Unit* unit);
+  Unit* getTurnFor() const;
 };

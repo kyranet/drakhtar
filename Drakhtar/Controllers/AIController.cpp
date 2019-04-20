@@ -3,13 +3,6 @@
 #include "AIController.h"
 #include "GameObjects/TurnBar.h"
 
-AIController::AIController(Board* board, TurnBar* turnBar, GameScene* scene)
-    : UnitsController(board, turnBar, scene) {}
-
-void AIController::run() {}
-
-void AIController::advanceTurn() {
-  hasMoved_ = hasAttacked_ = false;
-  turnBar_->advanceTurn();
-  activeUnit_ = turnBar_->getFrontUnit();
-}
+AIController::AIController(Board* board, TurnBar* turnBar, GameScene* scene,
+                           Team* team, Team* oppositeTeam)
+    : UnitsController(board, turnBar, scene, team, oppositeTeam) {}
