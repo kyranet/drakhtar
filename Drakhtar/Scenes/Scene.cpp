@@ -113,9 +113,9 @@ void Scene::handleEvents() {
 
   // If the escape key was pressed, pause the game
   if (getGame() && Input::isKeyDown(KeyboardKey::ESCAPE)) {
-    if (!isPaused())
+    if (!isPaused()) {
       pause();
-    else if (isPaused()) {
+    } else {
       int size = gameObjects_.size();
       int x = 0;
       for (auto gameObject : gameObjects_) {
