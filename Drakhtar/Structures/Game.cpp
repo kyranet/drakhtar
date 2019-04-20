@@ -132,20 +132,10 @@ void Game::load() {
   textures->add("UI-commanderIcon", "../images/UI/goldskull.png", 1, 1);
 
   // Button
-  textures->add("Button-Play", "../images/MainMenu/Play_Button.png", 1, 1);
-  textures->add("Button-Options", "../images/MainMenu/Options_Button.png", 1,
-                1);
   textures->add("Button-BattleCry", "../images/UI/battlecry_icon.png", 1, 1);
   textures->add("Button-Pause", "../images/Pause/Pause_Button.png", 1, 1);
-  textures->add("Button-Resume", "../images/Pause/Resume_Button.png", 1, 1);
-  textures->add("Button-Restart", "../images/Pause/Restart_Button.png", 1, 1);
-  textures->add("Button-Exit", "../images/Pause/Exit_Button.png", 1, 1);
   textures->add("Button-Skip", "../images/UI/skipButton.png", 1, 1);
-  textures->add("Button-Continue", "../images/Tutorials/Continue_Button.png", 1,
-                1);
-  textures->add("Button-Next", "../images/Tutorials/Next_Button.png", 1, 1);
   textures->add("Button-SkipTurn", "../images/UI/skipTurnButton.png", 1, 1);
-  textures->add("Button", "../images/MainMenu/Button1.png", 1, 1);
   textures->add("Vanilla-Button", "../images/Pause/Button.png", 1, 1);
 
   // Pause

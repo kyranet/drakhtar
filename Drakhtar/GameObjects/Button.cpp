@@ -11,7 +11,7 @@ Button::Button(Scene* scene, Texture* texture, const Vector2D<int>& pos,
   const auto area = getRect();
 
   const auto buttonText_ =
-      new ButtonText(scene, text, fontFile, area, pos.getX(), pos.getY());
+      new ButtonText(scene, text, fontFile, size, pos);
 
   addChild(buttonText_);
 }

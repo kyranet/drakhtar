@@ -97,7 +97,7 @@ void RecruitScene::preload() {
   recruitmentPanel_->addChild(cancelButton);
 
   const auto button = new Button(
-      this, TextureManager::get("Button"),
+      this, TextureManager::get("Vanilla-Button"),
       Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 4, WIN_HEIGHT / 2),
       Vector2D<int>(static_cast<int>(WIN_WIDTH / 7.5), WIN_HEIGHT / 12),
       buttonStartGame, "Play", "ButtonFont");

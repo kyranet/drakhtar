@@ -18,5 +18,5 @@ class ButtonText : public GameObject {
 
  public:
   ButtonText(Scene* scene, const std::string& text, const std::string& fontFile,
-             const SDL_Rect buttonArea, int posX, int posY);
+             Vector2D<int>(size), Vector2D<int>(pos));
 };

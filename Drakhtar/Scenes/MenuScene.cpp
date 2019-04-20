@@ -25,12 +25,12 @@ void MenuScene::preload() {
                      Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
                      Vector2D<int>(WIN_WIDTH, WIN_HEIGHT));
   const auto play = new Button(
-      this, TextureManager::get("Button"),
+      this, TextureManager::get("Vanilla-Button"),
       Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2 - WIN_HEIGHT / 18),
       Vector2D<int>(static_cast<int>(floor(WIN_WIDTH / 7.5)), WIN_HEIGHT / 12),
       buttonPlay, "Play", "ButtonFont");
   const auto options = new Button(
-      this, TextureManager::get("Button"),
+      this, TextureManager::get("Vanilla-Button"),
       Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2 + WIN_HEIGHT / 18),
       Vector2D<int>(static_cast<int>(floor(WIN_WIDTH / 7.5)), WIN_HEIGHT / 12),
       buttonOptions, "Options", "ButtonFont");
