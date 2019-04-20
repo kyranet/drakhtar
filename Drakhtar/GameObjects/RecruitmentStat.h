@@ -10,7 +10,7 @@ class RecruitmentStat : public GameObject {
   StoreUnit *currentSelected_;
 
  public:
-  RecruitmentStat(Scene *scene, SDL_Rect BoxArea, StoreUnit *controller);
+  RecruitmentStat(Scene *scene, StoreUnit *controller);
   void render() const override;
   std::string fillText();
   void updateText();

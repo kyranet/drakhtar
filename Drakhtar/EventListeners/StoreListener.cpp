@@ -83,7 +83,7 @@ void StoreListener::onHoverStart() {
     const auto scene = reinterpret_cast<RecruitScene*>(
         Game::getSceneMachine()->getCurrentScene());
     stats_ =
-        new RecruitmentStat(scene, SDL_Rect{100, 100, 170, 110}, &storeUnit);
+        new RecruitmentStat(scene, &storeUnit);
     scene->addGameObject(stats_);
     return;
   }

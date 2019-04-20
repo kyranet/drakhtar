@@ -14,7 +14,7 @@
 #include "Structures/UnitFactory.h"
 #include "Text.h"
 
-RecruitmentStat::RecruitmentStat(Scene* scene, const SDL_Rect BoxArea,
+RecruitmentStat::RecruitmentStat(Scene* scene,
                                  StoreUnit* controller)
     : GameObject(scene, TextureManager::get("Reward-Panel"),
                  Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 3.2, WIN_HEIGHT / 2),

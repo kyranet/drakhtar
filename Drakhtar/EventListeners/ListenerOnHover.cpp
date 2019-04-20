@@ -3,7 +3,7 @@
 #include "ListenerOnHover.h"
 #include "Managers/Input.h"
 
-void ListenerOnHover::run(const SDL_Event event) {
+void ListenerOnHover::run(const SDL_Event) {
   const auto hovered = Input::screenMouseToRay() == getGameObject();
   if (hovered) {
     if (hovered_) {

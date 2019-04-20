@@ -14,9 +14,9 @@ class RecruitmentStat;
 
 struct StoreUnit {
   std::string type;
-  int amount_ = 0;
+  GameObject* unit = nullptr;
   int cost_;
-  GameObject* unit;
+  int amount_ = 0;
   Text* amountText = nullptr;
 
   StoreUnit(std::string type, GameObject* unit, int cost)
