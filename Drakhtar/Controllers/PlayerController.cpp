@@ -26,7 +26,6 @@ PlayerController::PlayerController(Board* board, TurnBar* turnBar,
   handler->setActive(false);
   listeners_.push_back(handler);
   board->addEventListener(handler);
-
 }
 
 void PlayerController::onClickMove(Box* boxClicked) {
