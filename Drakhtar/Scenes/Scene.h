@@ -3,6 +3,7 @@
 #pragma once
 #include <functional>
 #include <list>
+
 #include "Managers/TweenManager.h"
 
 class Pause;
@@ -16,6 +17,7 @@ class Scene {
   bool finished_ = false;
   TweenManager* tweenManager_ = nullptr;
   bool transition_ = false;
+  bool game_ = false;
   std::function<void()> onEndHandler_;
 
  protected:
@@ -57,5 +59,5 @@ class Scene {
   void processNextTick(NextTickCallback* callback);
 
   TweenManager* getTweenManager() const;
-  Pause *pauseInterface = nullptr;
+  Pause* pauseInterface = nullptr;
 };

@@ -1,9 +1,13 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Scene.h"
+
 #include <utility>
+
 #include "Errors/SDLError.h"
 #include "GameObjects/GameObject.h"
+#include "GameObjects/Pause.h"
+#include "GameScene.h"
 #include "Managers/Input.h"
 #include "Managers/TextureManager.h"
 #include "SDL.h"
@@ -104,7 +108,21 @@ void Scene::handleEvents() {
   }
 
   // If the escape key was pressed, pause the game
-  if (Input::isKeyDown(KeyboardKey::ESCAPE)) pause();
+  if (Input::isKeyDown(KeyboardKey::ESCAPE)) {
+    if (!isPaused())
+      pause();
+    else {
+      int size = gameObjects_.size();
+      int x = 0;
+      for (auto gameObject : gameObjects_) {
+        if (x == size - 1) {
+          resume();
+          gameObject->destroy();
+        }
+        x++;
+      }
+    }
+  }
 
   // If the F key was pressed, toggle fullscreen
   if (Input::isKeyDown(KeyboardKey::F)) {
