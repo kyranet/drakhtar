@@ -1,9 +1,11 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "GameScene.h"
+
 #include <fstream>
-#include "Errors/DrakhtarError.h"
+
 #include "Controllers/PlayerController.h"
+#include "Errors/DrakhtarError.h"
 #include "GameObjects/Button.h"
 #include "GameObjects/Commanders/Thassa.h"
 #include "GameObjects/Commanders/Zamdran.h"
@@ -125,6 +127,8 @@ void GameScene::preload() {
         new TutorialSequence(this, "tutorials", "TutorialFont");
     addGameObject(tutorialSequence);
   }
+
+  setGame(true);
 }
 
 void GameScene::pause() {

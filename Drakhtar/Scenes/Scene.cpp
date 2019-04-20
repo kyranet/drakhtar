@@ -21,7 +21,11 @@ Scene::~Scene() = default;
 
 bool Scene::getTransition() const { return transition_; }
 
+bool Scene::getGame() const { return game_; }
+
 void Scene::setTransition(const bool transition) { transition_ = transition; }
+
+void Scene::setGame(bool game) { game_ = game; }
 
 void Scene::setOnEndHandler(std::function<void()> callback) {
   onEndHandler_ = std::move(callback);
@@ -108,7 +112,7 @@ void Scene::handleEvents() {
   }
 
   // If the escape key was pressed, pause the game
-  if (Input::isKeyDown(KeyboardKey::ESCAPE)) {
+  if (getGame() && Input::isKeyDown(KeyboardKey::ESCAPE)) {
     if (!isPaused())
       pause();
     else {

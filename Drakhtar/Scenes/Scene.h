@@ -35,7 +35,9 @@ class Scene {
   bool isPaused() const;
   bool isLoaded() const;
   bool getTransition() const;
+  bool getGame() const;
   void setTransition(bool transition);
+  void setGame(bool game);
   void setOnEndHandler(std::function<void()> callback);
   virtual void run();
   virtual void preload();
