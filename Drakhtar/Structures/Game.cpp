@@ -129,6 +129,8 @@ void Game::load() {
                 1);
   textures->add("UI-commanderIcon", "../images/UI/goldskull.png", 1, 1);
   textures->add("UI-OptionsMenu", "../images/UI/OptionsMenu.png", 1, 1);
+  textures->add("UI-ActiveSound", "../images/UI/ActiveSound.png", 1, 1);
+  textures->add("UI-MuteSound", "../images/UI/MuteSound.png", 1, 1);
 
   // Button
   textures->add("Button-Play", "../images/MainMenu/Play_Button.png", 1, 1);
