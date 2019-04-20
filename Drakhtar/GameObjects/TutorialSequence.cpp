@@ -28,8 +28,8 @@ TutorialSequence::TutorialSequence(Scene* scene, const std::string& filename,
       scene_, TextureManager::get("Vanilla-Button"),
       Vector2D<int>(tutorialArea_.x - WIN_WIDTH / 10,
                     tutorialArea_.y + WIN_HEIGHT / 10),
-      Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT / 19), [this]() { next(); }, 
-	  "Next", "ButtonFont");
+				  Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT / 19), [this]() { next(); },
+				  "Next", "ButtonFont");
 
   const auto closeButton = new Button(
       scene_, TextureManager::get("Vanilla-Button"),
