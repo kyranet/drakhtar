@@ -115,7 +115,7 @@ void Scene::handleEvents() {
   if (getGame() && Input::isKeyDown(KeyboardKey::ESCAPE)) {
     if (!isPaused())
       pause();
-    else {
+    else if (isPaused()) {
       int size = gameObjects_.size();
       int x = 0;
       for (auto gameObject : gameObjects_) {
