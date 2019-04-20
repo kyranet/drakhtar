@@ -2,12 +2,14 @@
 
 #include "Team.h"
 #include <algorithm>
+#include "Controllers/UnitsController.h"
 #include "Errors/TeamedUnitError.h"
 #include "GameObjects/Commanders/Commander.h"
 #include "GameObjects/Unit.h"
 
 Team::Team(const Color color) : color_(color) {}
-Team::~Team() = default;
+
+Team::~Team() { delete controller_; }
 
 Color Team::getColor() const { return color_; }
 
@@ -49,3 +51,9 @@ void Team::sortUnits() {
     return a->getBaseStats().speed > b->getBaseStats().speed;
   });
 }
+
+void Team::setController(UnitsController* controller) {
+  controller_ = controller;
+}
+
+UnitsController* Team::getController() const { return controller_; }

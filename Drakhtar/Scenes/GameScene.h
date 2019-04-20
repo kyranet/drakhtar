@@ -12,7 +12,6 @@ class GameScene final : public Scene {
   Team* team1_ = nullptr;
   Team* team2_ = nullptr;
   Board* board_ = nullptr;
-  PlayerController* playerController_;
   int battle_;
 
  public:
