@@ -3,7 +3,6 @@
 #include "GameScene.h"
 
 #include <fstream>
-
 #include "Controllers/PlayerController.h"
 #include "Errors/DrakhtarError.h"
 #include "GameObjects/Button.h"
@@ -45,15 +44,15 @@ void GameScene::preload() {
   addGameObject(board_);
 
   // Create the teams.
-  team1_ = new Team(board_, Color::BLUE);
-  team2_ = new Team(board_, Color::RED);
+  team1_ = new Team(Color::BLUE);
+  team2_ = new Team(Color::RED);
 
   // Create a temporary factory to create the units easily.
   auto factory = UnitFactory(this);
 
   // Blue Team
   const auto thassa = factory.newThassa(team1_, board_->getBoxAt(0, 0));
-  team1_->setCommander(thassa);
+  team1_->addCommander(thassa);
   addGameObject(thassa);
 
   std::map<std::string, int>* army = GameManager::getInstance()->getArmy();
@@ -81,22 +80,29 @@ void GameScene::preload() {
   // Red Team
   this->loadRedTeam(factory);
 
+  // Sort both teams by their speeds
+  team1_->sortUnits();
+  team2_->sortUnits();
+
   // Add the GUI features now
   const auto turnBar =
-      new TurnBar(this, team1_->getUnitList(), team2_->getUnitList());
+      new TurnBar(this, team1_->getUnits(), team2_->getUnits());
 
   const auto dialog =
       new DialogScene(this, "dialog" + std::to_string(battle_), "DialogFont");
 
-  playerController_ = new PlayerController(board_, turnBar, this);
-  board_->addEventListener(playerController_);
+  team1_->setController(
+      new PlayerController(board_, turnBar, this, team1_, team2_));
+  team2_->setController(
+      new PlayerController(board_, turnBar, this, team2_, team1_));
 
-  const auto skipTurnButton =
-      new Button(this, TextureManager::get("Button-SkipTurn"),
-                 Vector2D<int>(WIN_WIDTH / 6, WIN_HEIGHT / 18),
-                 Vector2D<int>(static_cast<int>(WIN_WIDTH / 21.6),
-                               static_cast<int>(WIN_HEIGHT / 14.4)),
-                 [this]() { playerController_->advanceTurn(); });
+  // TODO(kyranet): Move this to PlayerController
+  // const auto skipTurnButton =
+  //     new Button(this, TextureManager::get("Button-SkipTurn"),
+  //                Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT - WIN_HEIGHT / 8),
+  //                Vector2D<int>(static_cast<int>(WIN_WIDTH / 7),
+  //                              static_cast<int>(WIN_HEIGHT / 4.5)),
+  //                [this]() { playerController_->advanceTurn(); });
 
   const auto pauseButton =
       new Button(this, TextureManager::get("Button-Pause"),
@@ -108,19 +114,19 @@ void GameScene::preload() {
   audio->haltMusic();
   audio->setMusicVolume(10);
   audio->playMusic(1, 999);
-
+  /*
+   // Reactivar cuando se implementen las habilidades definitivamente
   const auto battleCryButton =
       new SkillButton(this, TextureManager::get("Button-BattleCry"),
                       Vector2D<int>(WIN_WIDTH / 24, WIN_HEIGHT / 18),
                       Vector2D<int>(static_cast<int>(WIN_WIDTH / 21.6),
                                     static_cast<int>(WIN_HEIGHT / 14.4)),
                       board_, thassa, 0);
-
+  */
   addGameObject(turnBar);
   addGameObject(dialog);
-  addGameObject(skipTurnButton);
   addGameObject(pauseButton);
-  addGameObject(battleCryButton);
+  // addGameObject(battleCryButton);
 
   if (battle_ == 1) {
     const auto tutorialSequence =
@@ -129,6 +135,8 @@ void GameScene::preload() {
   }
 
   setGame(true);
+
+  team1_->getController()->start();
 }
 
 void GameScene::pause() {
@@ -166,20 +174,13 @@ void GameScene::loadRedTeam(UnitFactory& factory) {
   if (captainName == "Zamdran") {
     commander = factory.newZamdran(team2_, board_->getBoxAt(row, col));
 
-    const auto arrowRainButton =
-        new SkillButton(this, TextureManager::get("Button-BattleCry"),
-                        Vector2D<int>(WIN_WIDTH / 10, WIN_HEIGHT / 18),
-                        Vector2D<int>(static_cast<int>(WIN_WIDTH / 21.6),
-                                      static_cast<int>(WIN_HEIGHT / 14.4)),
-                        board_, commander, 0);
-    addGameObject(arrowRainButton);
   } else {
     throw DrakhtarError(
         "File is not a level file or the captain is not implemented");
   }
 
-  team2_->setCommander(commander);
-  this->addGameObject(commander);
+  team2_->addCommander(commander);
+  addGameObject(commander);
   if (!file.eof()) {
     file >> size >> row >> col;
     addGameObject(factory.newSoldier(team2_, board_->getBoxAt(row, col), size));
@@ -207,3 +208,5 @@ void GameScene::loadRedTeam(UnitFactory& factory) {
 
   file.close();
 }
+
+Board* GameScene::getBoard() const { return board_; }

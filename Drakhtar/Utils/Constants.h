@@ -10,7 +10,7 @@ const int GAME_FRAMERATE = 25;
 
 // Thassa
 const auto thassaAttack = 30;
-const auto thassaDefense = 30;
+const auto thassaDefense = 30;  // Percent
 const auto thassaHealth = 100;
 const auto thassaAttackRange = 1;
 const auto thassaMoveRange = 3;
@@ -18,7 +18,7 @@ const auto thassaSpeed = 3;
 const auto thassaPrize = 100;
 // Zamdran
 const auto zamdranAttack = 25;
-const auto zamdranDefense = 20;
+const auto zamdranDefense = 20;  // Percent
 const auto zamdranHealth = 100;
 const auto zamdranAttackRange = 3;
 const auto zamdranMoveRange = 2;
@@ -26,7 +26,7 @@ const auto zamdranSpeed = 5;
 const auto zamdranPrize = 100;
 // wizard
 const int wizardAttack = 8;
-const int wizardDefense = 1;
+const int wizardDefense = 0;  // Percent
 const int wizardHealth = 7;
 const int wizardAttackRange = 2;
 const int wizardMoveRange = 2;
@@ -34,7 +34,7 @@ const int wizardSpeed = 2;
 const int wizardPrize = 7;
 // knight
 const auto knightAttack = 8;
-const auto knightDefense = 7;
+const auto knightDefense = 30;  // Percent
 const auto knightHealth = 15;
 const auto knightAttackRange = 1;
 const auto knightMoveRange = 5;
@@ -42,7 +42,7 @@ const auto knightSpeed = 5;
 const auto knightPrize = 12;
 // archer
 const auto archerAttack = 4;
-const auto archerDefense = 3;
+const auto archerDefense = 10;  // Percent
 const auto archerHealth = 10;
 const auto archerAttackRange = 3;
 const auto archerMoveRange = 2;
@@ -50,7 +50,7 @@ const auto archerSpeed = 3;
 const auto archerPrize = 5;
 // soldier
 const auto soldierAttack = 5;
-const auto soldierDefense = 5;
+const auto soldierDefense = 30;  // Percent
 const auto soldierHealth = 10;
 const auto soldierAttackRange = 1;
 const auto soldierMoveRange = 3;
@@ -58,7 +58,7 @@ const auto soldierSpeed = 3;
 const auto soldierPrize = 5;
 // monster
 const auto monsterAttack = 20;
-const auto monsterDefense = 10;
+const auto monsterDefense = 40;  // Percent
 const auto monsterHealth = 50;
 const auto monsterAttackRange = 1;
 const auto monsterMoveRange = 2;
@@ -330,6 +330,4 @@ enum class KeyboardKey {
   kKeyLimit
 };
 
-enum class MouseKey {
-  LEFT, MIDDLE, RIGHT, kKeyLimit
-};
+enum class MouseKey { LEFT, MIDDLE, RIGHT, kKeyLimit };
