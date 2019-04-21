@@ -35,7 +35,7 @@ StoreListener::StoreListener(GameObject* gameObject, std::string type, int cost)
               ->updateTotalCost(-storeUnit.cost_);
           storeUnit.amountText->setText(std::to_string(storeUnit.amount_));
         }
-      });
+      }, " ", "ButtonFont");
 
   minusButton->addChild(new Text(scene, FontManager::get("Retron2000"),
                                  Vector2D<int>(nx, y), {0, 0, 0, 255}, "-",
@@ -53,7 +53,7 @@ StoreListener::StoreListener(GameObject* gameObject, std::string type, int cost)
           storeUnit.amount_++;
           storeUnit.amountText->setText(std::to_string(storeUnit.amount_));
         }
-      });
+      }, " ", "ButtonFont");
 
   plusButton->addChild(new Text(scene, FontManager::get("Retron2000"),
                                 Vector2D<int>(px, y), {0, 0, 0, 255}, "+", 10));

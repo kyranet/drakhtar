@@ -131,7 +131,7 @@ void PlayerController::start() {
                  Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT - WIN_HEIGHT / 8),
                  Vector2D<int>(static_cast<int>(WIN_WIDTH / 7),
                                static_cast<int>(WIN_HEIGHT / 4.5)),
-                 [this]() { finish(); });
+                 [this]() { finish(); }, " ", "ButtonFont");
   scene_->addGameObject(skipTurnButton_);
 
   activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);

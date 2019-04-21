@@ -83,7 +83,7 @@ void RecruitScene::preload() {
         }
 
         reset();
-      });
+      }, " ", "ButtonFont");
 
   recruitmentPanel_->addChild(acceptButton);
 
@@ -92,7 +92,7 @@ void RecruitScene::preload() {
       Vector2D<int>(WIN_WIDTH / 4 - WIN_WIDTH / 20,
                     WIN_HEIGHT - WIN_HEIGHT / 13),
       Vector2D<int>(static_cast<int>(WIN_WIDTH / 26.6), WIN_HEIGHT / 15),
-      [this]() { reset(); });
+      [this]() { reset(); }, " ", "ButtonFont");
 
   recruitmentPanel_->addChild(cancelButton);
 
