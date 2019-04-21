@@ -1,11 +1,12 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Commander.h"
+
 #include "../../GameObjects/Box.h"
 #include "../../Managers/TextureManager.h"
 #include "Scenes/GameScene.h"
-#include "Scenes/TransitionScene.h"
 #include "Scenes/Scene.h"
+#include "Scenes/TransitionScene.h"
 #include "Structures/Game.h"
 #include "Structures/Team.h"
 
@@ -57,8 +58,8 @@ void Commander::onSelect() {
   }
 }
 
-void Commander::update() {
-  Unit::update();
+void Commander::kill() {
+  Unit::kill();
   if (health_ == 0) {
     int currentScene =
         reinterpret_cast<GameScene*>(Game::getSceneMachine()->getCurrentScene())
@@ -66,7 +67,8 @@ void Commander::update() {
     if (getTeam()->getColor() == Color::BLUE) {
       Game::getSceneMachine()->changeScene(new GameScene(currentScene));
     } else if (getTeam()->getColor() == Color::RED) {
-      Game::getSceneMachine()->changeScene(new TransitionScene(currentScene + 1));
+      Game::getSceneMachine()->changeScene(
+          new TransitionScene(currentScene + 1));
     }
   }
 }

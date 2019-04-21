@@ -1,9 +1,10 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
+#include <vector>
+
 #include "../Skill.h"
 #include "../Unit.h"
-#include <vector>
 
 class Scene;
 class Box;
@@ -13,19 +14,19 @@ class Commander : public Unit {
   /**
    * \brief A vector of all the skills the commander can cast.
    */
-  std::vector<Skill *> skills_;
+  std::vector<Skill*> skills_;
 
-  GameObject *commanderIcon_ = nullptr;
+  GameObject* commanderIcon_ = nullptr;
 
  public:
-  Commander(Scene *scene, Texture *texture, Box *box, UnitStats commanderStats);
+  Commander(Scene* scene, Texture* texture, Box* box, UnitStats commanderStats);
   virtual ~Commander();
   void render() const override;
 
   /**
    * \return A vector of all the skills the commander can cast.
    */
-  std::vector<Skill *> getSkills() const { return skills_; }
+  std::vector<Skill*> getSkills() const { return skills_; }
 
   /**
    * \brief Is called every time it's the commander's turn to lower every
@@ -33,7 +34,7 @@ class Commander : public Unit {
    */
   void onSelect() override;
 
-  void update() override;
+  void moveToBox(Box* box) override;
 
-  void moveToBox(Box *box) override;
+  void kill() override;
 };
