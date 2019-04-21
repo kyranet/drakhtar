@@ -98,10 +98,3 @@ void Battalion::render() const {
     texture_->renderFrame(aux, texture_->getAnimation()[texture_->getFrame()]);
   }
 }
-
-void Battalion::centerLoneUnit() {
-  if (battalionSize_ < 4) {
-    setPosition(Vector2D<int>(box_->getRect().x + box_->getRect().w / 2,
-                              box_->getRect().y + box_->getRect().h / 2));
-  }
-}
