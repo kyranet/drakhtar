@@ -30,24 +30,18 @@ Battalion::Battalion(Scene* scene, Texture* texture, Box* box,
                        {rect.x + rect.h / 6, rect.y - rect.h / 3}, textColor,
                        sizeToString(), rect.w * 2);
 
+  addChild(sizeText_);
+
   healthText_->setColor(textColor);
 
   sizeText_->setColor(sizeColor);
 
   healthBar_->setMaxHP(baseStats_.health * battalionSize);
 
- /* setPosition(Vector2D<int>(box->getRect().x + box->getRect().w / 1.5,
-                            box->getRect().y + box->getRect().h / 2));*/
-
-  updateBattalionPosition();
+  centerLoneUnit();
 }
 
-Battalion::~Battalion() {
-  if (sizeText_ != nullptr) {
-    delete sizeText_;
-    sizeText_ = nullptr;
-  }
-}
+Battalion::~Battalion() {}
 
 std::string Battalion::sizeToString() const {
   return std::to_string(battalionSize_);
@@ -60,9 +54,7 @@ void Battalion::setBattalionSize(const int battalionSize) {
 
 int Battalion::getAttack() const { return stats_.attack * battalionSize_; }
 
-int Battalion::getDefense() const {
-  return Unit::getDefense();
-}
+int Battalion::getDefense() const { return Unit::getDefense(); }
 
 int Battalion::getMaxHealth() const {
   return baseStats_.health * battalionSize_;
@@ -77,7 +69,7 @@ int Battalion::loseHealth(const int enemyAttack) {
     sizeText_->setText(sizeToString());
     const SDL_Color sizeColor = {0, 0, 255, 0};
     sizeText_->setColor(sizeColor);
-    updateBattalionPosition();
+    centerLoneUnit();
   }
   return health;
 }
@@ -85,15 +77,12 @@ int Battalion::loseHealth(const int enemyAttack) {
 void Battalion::moveToBox(Box* box) {
   Unit::moveToBox(box);
 
-  setPosition(Vector2D<int>(box->getRect().x + box->getRect().w / 1.5,
-                            box->getRect().y + box->getRect().h / 2));
-
   const auto rect = box_->getRect();
 
   sizeText_->setPosition(
       Vector2D<int>(rect.x + rect.h / 6, rect.y - rect.h / 3));
 
-  updateBattalionPosition();
+  centerLoneUnit();
 }
 
 void Battalion::render() const {
@@ -108,10 +97,9 @@ void Battalion::render() const {
     aux.y += box_->getRect().h / 2;
     texture_->renderFrame(aux, texture_->getAnimation()[texture_->getFrame()]);
   }
-  sizeText_->render();
 }
 
-void Battalion::updateBattalionPosition() {
+void Battalion::centerLoneUnit() {
   if (battalionSize_ < 4) {
     setPosition(Vector2D<int>(box_->getRect().x + box_->getRect().w / 2,
                               box_->getRect().y + box_->getRect().h / 2));

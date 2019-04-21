@@ -33,5 +33,5 @@ class Battalion final : public Unit {
   void moveToBox(Box* box) override;
   void render() const override;
 
-  void updateBattalionPosition();
+  void centerLoneUnit();
 };
