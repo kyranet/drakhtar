@@ -24,6 +24,8 @@ Unit::Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
       health_(stats.health),
       baseStats_(stats),
       stats_(stats) {
+  // Units must be ignored in the mouse raycasts.
+  setTransparent(true);
   box->setContent(this);
   const SDL_Color textColor = {255, 255, 255, 0};
   const auto rect = box_->getRect();
@@ -38,6 +40,9 @@ Unit::Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
       baseStats_.health);
 
   healthText_->setColor(textColor);
+
+  healthText_->setTransparent(true);
+  healthBar_->setTransparent(true);
 
   addChild(healthBar_);
   addChild(healthText_);

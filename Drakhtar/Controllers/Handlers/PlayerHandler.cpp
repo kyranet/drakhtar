@@ -17,12 +17,7 @@ void PlayerHandler::run(const SDL_Event) {
   const auto gameObject = Input::screenMouseToRay();
   if (!gameObject) return;
 
-  // Ignore Unit's "hitboxes" and assume it's a click to the board, so get the
-  // box at the mouse's coordinates
-  const auto unit = dynamic_cast<Unit*>(gameObject);
-  const auto box = unit ? controller_->getBoard()->getBoxAtCoordinates(
-                              Input::getMousePosition())
-                        : dynamic_cast<Box*>(gameObject);
+  const auto box = dynamic_cast<Box*>(gameObject);
   if (!box) return;
 
   if (!controller_->hasMoved() && box->isEmpty()) {
