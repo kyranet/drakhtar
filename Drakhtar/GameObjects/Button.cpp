@@ -22,7 +22,7 @@ void Button::update() {
   if ((Input::isMouseButtonDown(MouseKey::LEFT) ||
        Input::isMouseButtonDown(MouseKey::RIGHT)) &&
       (reinterpret_cast<Button*>(Input::screenMouseToRay()) == this ||
-	  reinterpret_cast<Button*>(Input::isMouseInside(&this->getRect())))) {
+       reinterpret_cast<Button*>(Input::isMouseInside(&this->getRect())))) {
     callback_();
   }
 }
