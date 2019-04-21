@@ -132,19 +132,11 @@ void Game::load() {
   textures->add("UI-commanderIcon", "../images/UI/goldskull.png", 1, 1);
 
   // Button
-  textures->add("Button-Play", "../images/MainMenu/Play_Button.png", 1, 1);
-  textures->add("Button-Options", "../images/MainMenu/Options_Button.png", 1,
-                1);
   textures->add("Button-BattleCry", "../images/UI/battlecry_icon.png", 1, 1);
   textures->add("Button-Pause", "../images/Pause/Pause_Button.png", 1, 1);
-  textures->add("Button-Resume", "../images/Pause/Resume_Button.png", 1, 1);
-  textures->add("Button-Restart", "../images/Pause/Restart_Button.png", 1, 1);
-  textures->add("Button-Exit", "../images/Pause/Exit_Button.png", 1, 1);
   textures->add("Button-Skip", "../images/UI/skipButton.png", 1, 1);
-  textures->add("Button-Continue", "../images/Tutorials/Continue_Button.png", 1,
-                1);
-  textures->add("Button-Next", "../images/Tutorials/Next_Button.png", 1, 1);
   textures->add("Button-SkipTurn", "../images/UI/skipTurnButton.png", 1, 1);
+  textures->add("Vanilla-Button", "../images/Pause/Button.png", 1, 1);
 
   // Pause
   textures->add("Pause-Panel", "../images/Pause/Panel.png", 1, 1);
@@ -203,6 +195,7 @@ void Game::load() {
                 "../images/Recruitment/recruitment.png", 1, 1);
   textures->add("Recruitment-Panel",
                 "../images/Recruitment/recruitment_Panel.png", 1, 1);
+  textures->add("Reward-Panel", "../images/Recruitment/reward_Panel.png", 1, 1);
   textures->add("Quantity-Button", "../images/Recruitment/quantity_Button.png",
                 1, 1);
   textures->add("Accept-Button", "../images/Recruitment/accept_Button.png", 1,
@@ -221,6 +214,8 @@ void Game::load() {
   fonts->add("TutorialFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 100,
              WIN_WIDTH);
   fonts->add("UnitFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 120, WIN_WIDTH);
+  fonts->add("StatsFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 37, WIN_WIDTH);
+  fonts->add("ButtonFont", "../fonts/AURORA.ttf", WIN_WIDTH / 50, WIN_WIDTH);
   fonts->init();
 
   auto audio = SDLAudioManager::getInstance();

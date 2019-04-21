@@ -4,25 +4,30 @@
 
 #include <map>
 #include <string>
+
 #include "Scene.h"
 
 class GameObject;
-class UnitStoreController;
+class StoreListener;
 class Text;
 
 class RecruitScene final : public Scene {
   GameObject* recruitmentPanel_ = nullptr;
-  UnitStoreController* controller_ = nullptr;
+  std::vector<StoreListener*> store;
   std::map<std::string, int> costs_;
   Text* moneyText_ = nullptr;
   Text* totalCostText_ = nullptr;
 
-  void addUnit(std::string textureName, int position);
+  int totalCost_ = 0;
+
+  void addUnit(std::string textureName, int position, int cost);
   std::string moneyToString() const;
+
+  void reset();
 
  public:
   void preload() override;
-  void buyUnits(const std::string& type, int quantity);
   int getCost(const std::string& type);
-  void updateTotalCostText(int amount) const;
+  int getTotalCost() const { return totalCost_; }
+  void updateTotalCost(int amount);
 };

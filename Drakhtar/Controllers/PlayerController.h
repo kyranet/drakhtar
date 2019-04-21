@@ -4,8 +4,11 @@
 #include "EventListeners/ListenerOnClick.h"
 #include "UnitsController.h"
 
+class Button;
+
 class PlayerController final : public UnitsController {
   bool locked_ = false;
+  Button* skipTurnButton_;
 
  public:
   PlayerController(Board* board, TurnBar* turnBar, GameScene* scene, Team* team,
