@@ -153,13 +153,10 @@ void SDLAudioManager::setMute(bool mute) {
 }
 
 void SDLAudioManager::checkMuted() {
-  if (getMuted()) {
-    getInstance()->setChannelVolume(0, 0);
-    getInstance()->setChannelVolume(0, 1);
-    getInstance()->setMusicVolume(0);
-  } else if (!getMuted()) {
-    getInstance()->setChannelVolume(80, 0);
-    getInstance()->setChannelVolume(80, 1);
-    getInstance()->setMusicVolume(80);
-  }
+  const auto volume = muted_ ? 0 : 80;
+  const auto instance = getInstance();
+
+  instance->setChannelVolume(volume, 0);
+  instance->setChannelVolume(volume, 1);
+  instance->setMusicVolume(volume);
 }
