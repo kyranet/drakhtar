@@ -18,10 +18,13 @@ TurnBar::TurnBar(Scene* scene, std::vector<Unit*> team1,
           Vector2D<int>(WIN_WIDTH / 2, static_cast<int>(WIN_WIDTH / 16.44))) {
   teams_[0] = {std::move(team1), 0};
   teams_[1] = {std::move(team2), 0};
-  addChild(new GameObject(scene_, TextureManager::get("UI-circle"),
-                          {static_cast<int>(WIN_WIDTH - WIN_WIDTH / 2.05),
-                           WIN_HEIGHT - WIN_HEIGHT / 13},
-                          {WIN_WIDTH / 7, WIN_WIDTH / 7}));
+
+  const auto circle = new GameObject(scene_, TextureManager::get("UI-circle"),
+                                     {static_cast<int>(WIN_WIDTH - WIN_WIDTH / 2.05),
+                                      WIN_HEIGHT - WIN_HEIGHT / 13},
+                                     {WIN_WIDTH / 7, WIN_WIDTH / 7});
+  circle->setTransparent(true);
+  addChild(circle);
 
   prepare();
 }
