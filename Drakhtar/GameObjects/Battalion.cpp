@@ -37,8 +37,6 @@ Battalion::Battalion(Scene* scene, Texture* texture, Box* box,
   sizeText_->setColor(sizeColor);
 
   healthBar_->setMaxHP(baseStats_.health * battalionSize);
-
-  centerLoneUnit();
 }
 
 Battalion::~Battalion() {}
@@ -69,7 +67,6 @@ int Battalion::loseHealth(const int enemyAttack) {
     sizeText_->setText(sizeToString());
     const SDL_Color sizeColor = {0, 0, 255, 0};
     sizeText_->setColor(sizeColor);
-    centerLoneUnit();
   }
   return health;
 }
@@ -81,8 +78,6 @@ void Battalion::moveToBox(Box* box) {
 
   sizeText_->setPosition(
       Vector2D<int>(rect.x + rect.h / 6, rect.y - rect.h / 3));
-
-  centerLoneUnit();
 }
 
 void Battalion::render() const {
