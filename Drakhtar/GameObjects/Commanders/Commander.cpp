@@ -60,12 +60,10 @@ void Commander::onSelect() {
 
 void Commander::kill() {
   Unit::kill();
-  int currentScene =
-      reinterpret_cast<GameScene*>(Game::getSceneMachine()->getCurrentScene())
-          ->getBattleInd();
+  int currentScene = reinterpret_cast<GameScene*>(getScene())->getBattleInd();
   if (getTeam()->getColor() == Color::BLUE) {
     Game::getSceneMachine()->changeScene(new GameScene(currentScene));
-  } else if (getTeam()->getColor() == Color::RED) {
+  } else {
     Game::getSceneMachine()->changeScene(new TransitionScene(currentScene + 1));
   }
 }
