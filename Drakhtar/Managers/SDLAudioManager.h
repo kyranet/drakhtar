@@ -52,11 +52,14 @@ class SDLAudioManager final : public AudioManager {
   bool getMuted();
   void setMute(bool mute);
   void checkMuted();
+  int getChannelVolume();
+  int getMusicVolume();
 
  private:
   bool initialized_;
   bool muted_;
   int channels_;
+  int musicVolume_ = 80, channelVolume_ = 80;
   std::map<int, Mix_Chunk*> chunks_;
   std::map<int, Mix_Music*> music_;
 };

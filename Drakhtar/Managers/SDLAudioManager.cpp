@@ -99,6 +99,7 @@ void SDLAudioManager::haltChannel(const int channel) {
 }
 
 int SDLAudioManager::setChannelVolume(const int volume, const int channel) {
+  channelVolume_ = volume;
   return Mix_Volume(channel, volume);
 }
 
@@ -130,6 +131,7 @@ void SDLAudioManager::playMusic(const int tag, const int loops) {
 
 int SDLAudioManager::setMusicVolume(const int volume) {
   // volume = 2 is quite low already, play with that number
+  musicVolume_ = volume;
   return Mix_VolumeMusic(volume);
 }
 
@@ -160,3 +162,7 @@ void SDLAudioManager::checkMuted() {
   instance->setChannelVolume(volume, 1);
   instance->setMusicVolume(volume);
 }
+
+int SDLAudioManager::getChannelVolume() { return channelVolume_; }
+
+int SDLAudioManager::getMusicVolume() { return musicVolume_; }
