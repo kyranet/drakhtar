@@ -8,19 +8,19 @@ Button::Button(Scene* scene, Texture* texture, const Vector2D<int>& pos,
                const Vector2D<int>& size, std::function<void()> callback,
                const std::string& text, const std::string& fontFile)
     : GameObject(scene, texture, pos, size), callback_(std::move(callback)) {
-  const auto buttonText_ =
-      new ButtonText(scene, text, fontFile, size, pos);
+  const auto buttonText_ = new ButtonText(scene, text, fontFile, size, pos);
 
   addChild(buttonText_);
 }
 
 void Button::update() {
+  const auto area = this->getRect();
   GameObject::update();
 
   if ((Input::isMouseButtonDown(MouseKey::LEFT) ||
        Input::isMouseButtonDown(MouseKey::RIGHT)) &&
       (reinterpret_cast<Button*>(Input::screenMouseToRay()) == this ||
-       reinterpret_cast<Button*>(Input::isMouseInside(&this->getRect())))) {
+       reinterpret_cast<Button*>(Input::isMouseInside(&area)))) {
     callback_();
   }
 }
