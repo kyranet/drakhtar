@@ -8,8 +8,6 @@ Button::Button(Scene* scene, Texture* texture, const Vector2D<int>& pos,
                const Vector2D<int>& size, std::function<void()> callback,
                const std::string& text, const std::string& fontFile)
     : GameObject(scene, texture, pos, size), callback_(std::move(callback)) {
-  const auto area = getRect();
-
   const auto buttonText_ =
       new ButtonText(scene, text, fontFile, size, pos);
 
