@@ -3,6 +3,7 @@
 #include "GameScene.h"
 
 #include <fstream>
+
 #include "Controllers/PlayerController.h"
 #include "Errors/DrakhtarError.h"
 #include "GameObjects/Button.h"
@@ -95,14 +96,6 @@ void GameScene::preload() {
       new PlayerController(board_, turnBar, this, team1_, team2_));
   team2_->setController(
       new PlayerController(board_, turnBar, this, team2_, team1_));
-
-  // TODO(kyranet): Move this to PlayerController
-  // const auto skipTurnButton =
-  //     new Button(this, TextureManager::get("Button-SkipTurn"),
-  //                Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT - WIN_HEIGHT / 8),
-  //                Vector2D<int>(static_cast<int>(WIN_WIDTH / 7),
-  //                              static_cast<int>(WIN_HEIGHT / 4.5)),
-  //                [this]() { playerController_->advanceTurn(); });
 
   const auto pauseButton =
       new Button(this, TextureManager::get("Button-Pause"),
