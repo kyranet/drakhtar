@@ -21,3 +21,5 @@ void TransitionScene::preload() {
   addGameObject(dialog);
   setTransition(true);
 }
+
+int TransitionScene::getBattleInd() { return battle_; }
