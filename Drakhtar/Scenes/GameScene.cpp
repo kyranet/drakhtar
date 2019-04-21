@@ -201,3 +201,5 @@ void GameScene::loadRedTeam(UnitFactory& factory) {
 }
 
 Board* GameScene::getBoard() const { return board_; }
+
+int GameScene::getBattleInd() { return battle_; }
