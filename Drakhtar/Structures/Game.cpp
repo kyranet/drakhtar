@@ -203,6 +203,7 @@ void Game::load() {
                 "../images/Recruitment/recruitment.png", 1, 1);
   textures->add("Recruitment-Panel",
                 "../images/Recruitment/recruitment_Panel.png", 1, 1);
+  textures->add("Reward-Panel", "../images/Recruitment/reward_Panel.png", 1, 1);
   textures->add("Quantity-Button", "../images/Recruitment/quantity_Button.png",
                 1, 1);
   textures->add("Accept-Button", "../images/Recruitment/accept_Button.png", 1,
@@ -221,6 +222,7 @@ void Game::load() {
   fonts->add("TutorialFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 100,
              WIN_WIDTH);
   fonts->add("UnitFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 120, WIN_WIDTH);
+  fonts->add("StatsFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 37, WIN_WIDTH);
   fonts->init();
 
   auto audio = SDLAudioManager::getInstance();

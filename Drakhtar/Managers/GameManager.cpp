@@ -34,7 +34,9 @@ void GameManager::destroy() {
 
 int GameManager::getMoney() const { return money_; }
 
-std::map<std::string, int>* GameManager::getArmy() const { return army_; }
+const std::map<std::string, int>& GameManager::getArmy() const {
+  return (*army_);
+}
 
 int GameManager::getLevel() const { return level_; }
 

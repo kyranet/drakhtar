@@ -1,5 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
+#include <map>
+
 #pragma once
 
 class Scene;
@@ -8,9 +10,11 @@ class Box;
 class Unit;
 class Thassa;
 class Zamdran;
+struct UnitStats;
 
 class UnitFactory {
   Scene *scene_;
+  std::map<std::string, UnitStats> statMap;
 
  public:
   explicit UnitFactory(Scene *scene);
@@ -23,4 +27,6 @@ class UnitFactory {
 
   Thassa *newThassa(Team *team, Box *box) const;
   Zamdran *newZamdran(Team *team, Box *box) const;
+
+  UnitStats getStats(std::string type);
 };
