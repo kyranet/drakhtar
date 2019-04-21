@@ -1,7 +1,9 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Scene.h"
+
 #include <utility>
+
 #include "Errors/SDLError.h"
 #include "GameObjects/GameObject.h"
 #include "Managers/Input.h"
@@ -106,6 +108,9 @@ void Scene::handleEvents() {
   // If the escape key was pressed, pause the game
   if (Input::isKeyDown(KeyboardKey::ESCAPE)) pause();
 
+  if (Input::isKeyDown(KeyboardKey::Q))
+    Game::getSceneMachine()->changeScene(new RecruitScene());
+
   // If the F key was pressed, toggle fullscreen
   if (Input::isKeyDown(KeyboardKey::F)) {
     SDL_Window* window_ = Game::getWindow();
@@ -158,7 +163,9 @@ void Scene::destroy() {
 
 void Scene::end() {
   // Delete the Scene's cache.
-  for (auto gameObject : gameObjects_) delete gameObject;
+  for (auto gameObject : gameObjects_) {
+    delete gameObject;
+  }
   gameObjects_.clear();
 
   onEndHandler_();
