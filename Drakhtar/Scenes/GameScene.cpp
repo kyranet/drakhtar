@@ -52,31 +52,24 @@ void GameScene::preload() {
   auto factory = UnitFactory(this);
 
   // Blue Team
-  const auto thassa = factory.newThassa(team1_, board_->getBoxAt(0, 0));
+  const auto thassa =
+      factory.newCommander("Thassa", team1_, board_->getBoxAt(0, 0));
   team1_->addCommander(thassa);
   addGameObject(thassa);
 
   auto army = GameManager::getInstance()->getArmy();
 
-  if (army["Soldier"] > 0)
-    addGameObject(
-        factory.newSoldier(team1_, board_->getBoxAt(0, 2), army["Soldier"]));
+  auto it = army.cbegin();
 
-  if (army["Archer"] > 0)
-    addGameObject(
-        factory.newArcher(team1_, board_->getBoxAt(0, 3), army["Archer"]));
-
-  if (army["Mage"] > 0)
-    addGameObject(
-        factory.newWizard(team1_, board_->getBoxAt(0, 4), army["Mage"]));
-
-  if (army["Knight"] > 0)
-    addGameObject(
-        factory.newKnight(team1_, board_->getBoxAt(0, 5), army["Knight"]));
-
-  if (army["Monster"] > 0)
-    addGameObject(
-        factory.newMonster(team1_, board_->getBoxAt(0, 6), army["Monster"]));
+  int y = 1;
+  while (it != army.cend()) {
+    if (it->second > 0) {
+      addGameObject(factory.newBattalion(it->first, team1_,
+                                         board_->getBoxAt(0, y), it->second));
+      y++;
+    }
+    it++;
+  }
 
   // Red Team
   this->loadRedTeam(factory);
