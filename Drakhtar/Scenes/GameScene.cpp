@@ -54,27 +54,27 @@ void GameScene::preload() {
   team1_->addCommander(thassa);
   addGameObject(thassa);
 
-  std::map<std::string, int>* army = GameManager::getInstance()->getArmy();
+  auto army = GameManager::getInstance()->getArmy();
 
-  if ((*army)["Soldier"] > 0)
+  if (army["Soldier"] > 0)
     addGameObject(
-        factory.newSoldier(team1_, board_->getBoxAt(0, 2), (*army)["Soldier"]));
+        factory.newSoldier(team1_, board_->getBoxAt(0, 2), army["Soldier"]));
 
-  if ((*army)["Archer"] > 0)
+  if (army["Archer"] > 0)
     addGameObject(
-        factory.newArcher(team1_, board_->getBoxAt(0, 3), (*army)["Archer"]));
+        factory.newArcher(team1_, board_->getBoxAt(0, 3), army["Archer"]));
 
-  if ((*army)["Mage"] > 0)
+  if (army["Mage"] > 0)
     addGameObject(
-        factory.newWizard(team1_, board_->getBoxAt(0, 4), (*army)["Mage"]));
+        factory.newWizard(team1_, board_->getBoxAt(0, 4), army["Mage"]));
 
-  if ((*army)["Knight"] > 0)
+  if (army["Knight"] > 0)
     addGameObject(
-        factory.newKnight(team1_, board_->getBoxAt(0, 5), (*army)["Knight"]));
+        factory.newKnight(team1_, board_->getBoxAt(0, 5), army["Knight"]));
 
-  if ((*army)["Monster"] > 0)
+  if (army["Monster"] > 0)
     addGameObject(
-        factory.newMonster(team1_, board_->getBoxAt(0, 6), (*army)["Monster"]));
+        factory.newMonster(team1_, board_->getBoxAt(0, 6), army["Monster"]));
 
   // Red Team
   this->loadRedTeam(factory);
@@ -90,15 +90,18 @@ void GameScene::preload() {
   const auto dialog =
       new DialogScene(this, "dialog" + std::to_string(battle_), "DialogFont");
 
-  playerController_ = new PlayerController(board_, turnBar, this);
-  board_->addEventListener(playerController_);
+  team1_->setController(
+      new PlayerController(board_, turnBar, this, team1_, team2_));
+  team2_->setController(
+      new PlayerController(board_, turnBar, this, team2_, team1_));
 
-  const auto skipTurnButton =
-      new Button(this, TextureManager::get("Button-SkipTurn"),
-                 Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT - WIN_HEIGHT / 8),
-                 Vector2D<int>(static_cast<int>(WIN_WIDTH / 7),
-                               static_cast<int>(WIN_HEIGHT / 4.5)),
-                 [this]() { playerController_->advanceTurn(); });
+  // TODO(kyranet): Move this to PlayerController
+  // const auto skipTurnButton =
+  //     new Button(this, TextureManager::get("Button-SkipTurn"),
+  //                Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT - WIN_HEIGHT / 8),
+  //                Vector2D<int>(static_cast<int>(WIN_WIDTH / 7),
+  //                              static_cast<int>(WIN_HEIGHT / 4.5)),
+  //                [this]() { playerController_->advanceTurn(); });
 
   const auto pauseButton =
       new Button(this, TextureManager::get("Button-Pause"),
@@ -121,7 +124,6 @@ void GameScene::preload() {
   */
   addGameObject(turnBar);
   addGameObject(dialog);
-  addGameObject(skipTurnButton);
   addGameObject(pauseButton);
   // addGameObject(battleCryButton);
 
@@ -130,6 +132,8 @@ void GameScene::preload() {
         new TutorialSequence(this, "tutorials", "TutorialFont");
     addGameObject(tutorialSequence);
   }
+
+  team1_->getController()->start();
 }
 
 void GameScene::pause() {

@@ -73,9 +73,6 @@ int Battalion::loseHealth(const int enemyAttack) {
   if (baseStats_.health <= health) {
     battalionSize_ -= health / baseStats_.health;
     stats_.attack = baseStats_.attack * battalionSize_;
-    if (this->getTeam()->getColor() == Color::BLUE)
-      (*GameManager::getInstance()->getArmy())[this->getType()] =
-          battalionSize_;
     if (battalionSize_ < 0) battalionSize_ = 0;
     sizeText_->setText(sizeToString());
     const SDL_Color sizeColor = {0, 0, 255, 0};

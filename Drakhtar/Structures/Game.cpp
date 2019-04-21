@@ -48,7 +48,6 @@ void Game::load() {
   loaded_ = true;
   auto textures = TextureManager::getInstance();
 
-  // TODO(Kreksu): Add BlueValar back.
   // Units
   textures->add("Units-BlueArcher", "../images/Units/BlueArcher.png", 5, 3)
       ->addAnimation("default", {0, 1})
@@ -71,11 +70,11 @@ void Game::load() {
       ->setFlip(SDL_FLIP_HORIZONTAL);
   textures->add("Units-Thassa", "../images/Units/Thassa.png", 4, 3)
       ->addAnimation("default", {0, 1})
-      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10, 11})
+      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10})
       ->setFlip(SDL_FLIP_HORIZONTAL);
-  textures->add("Units-Abeizhul", "../images/Units/Abeizhul.png", 5, 2)
+  textures->add("Units-Abeizhul", "../images/Units/Abeizhul.png", 4, 3)
       ->addAnimation("default", {0, 1})
-      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});
+      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10, 11});
   textures->add("Units-Dreilay", "../images/Units/Dreilay.png", 5, 3)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});
@@ -100,12 +99,15 @@ void Game::load() {
   textures->add("Units-Sheissa", "../images/Units/Sheissa.png", 4, 3)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10});
-  textures->add("Units-Valar", "../images/Units/RedValar.png", 5, 3)
+  textures->add("Units-BlueValar", "../images/Units/BlueValar.png", 5, 3)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});
-  textures->add("Units-Zamdran", "../images/Units/Zamdran.png", 2, 1)
+  textures->add("Units-RedValar", "../images/Units/RedValar.png", 5, 3)
       ->addAnimation("default", {0, 1})
-      ->addAnimation("attack", {0, 1});
+      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12});
+  textures->add("Units-Zamdran", "../images/Units/Zamdran.png", 4, 4)
+      ->addAnimation("default", {0, 1})
+      ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14});
 
   // UI
   textures->add("UI-cellFrame", "../images/UI/cellFrame.png", 1, 1);
@@ -201,6 +203,7 @@ void Game::load() {
                 "../images/Recruitment/recruitment.png", 1, 1);
   textures->add("Recruitment-Panel",
                 "../images/Recruitment/recruitment_Panel.png", 1, 1);
+  textures->add("Reward-Panel", "../images/Recruitment/reward_Panel.png", 1, 1);
   textures->add("Quantity-Button", "../images/Recruitment/quantity_Button.png",
                 1, 1);
   textures->add("Accept-Button", "../images/Recruitment/accept_Button.png", 1,
@@ -219,6 +222,7 @@ void Game::load() {
   fonts->add("TutorialFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 100,
              WIN_WIDTH);
   fonts->add("UnitFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 120, WIN_WIDTH);
+  fonts->add("StatsFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 37, WIN_WIDTH);
   fonts->init();
 
   auto audio = SDLAudioManager::getInstance();
