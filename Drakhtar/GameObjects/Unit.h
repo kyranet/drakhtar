@@ -2,6 +2,7 @@
 
 #pragma once
 #include <string>
+
 #include "GameObject.h"
 
 class Team;
@@ -30,7 +31,7 @@ class Unit : public GameObject {
  protected:
   Box *box_ = nullptr;
   Text *healthText_ = nullptr;
-  HealthBar* healthBar_ = nullptr;
+  HealthBar *healthBar_ = nullptr;
   int health_;
   std::string healthToString() const;
 
@@ -39,7 +40,7 @@ class Unit : public GameObject {
 
  public:
   Unit(Scene *scene, Texture *texture, Box *box, UnitStats stats,
-       const std::string& type);
+       const std::string &type);
   virtual ~Unit();
 
   /*int getBaseAttack() const { return baseAttack_; }

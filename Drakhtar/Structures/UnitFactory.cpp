@@ -11,7 +11,7 @@
 #include "../Utils/Constants.h"
 #include "Team.h"
 
-UnitFactory::UnitFactory(Scene *scene) : scene_(scene) {
+UnitFactory::UnitFactory(Scene* scene) : scene_(scene) {
   statMap["Soldier"] = {soldierAttack,      soldierDefense,   soldierHealth,
                         soldierAttackRange, soldierMoveRange, soldierSpeed,
                         soldierPrize};
@@ -31,102 +31,51 @@ UnitFactory::UnitFactory(Scene *scene) : scene_(scene) {
   statMap["Monster"] = {monsterAttack,      monsterDefense,   monsterHealth,
                         monsterAttackRange, monsterMoveRange, monsterSpeed,
                         monsterPrize};
+
+  commanderMap["Thassa"] = {thassaAttack,      thassaDefense,   thassaHealth,
+                            thassaAttackRange, thassaMoveRange, thassaSpeed,
+                            thassaPrize};
+
+  commanderSwitch["Thassa"] = CommanderType::THASSA;
+
+  commanderMap["Zamdran"] = {
+      zamdranAttack,    zamdranDefense, zamdranHealth, zamdranAttackRange,
+      zamdranMoveRange, zamdranSpeed,   zamdranPrize};
+
+  commanderSwitch["Zamdran"] = CommanderType::ZAMRAN;
 }
 
 UnitFactory::~UnitFactory() = default;
 
-Unit* UnitFactory::newSoldier(Team* team, Box* box, const int size) const {
-  UnitStats soldierStats_ = {
-      soldierAttack,    soldierDefense, soldierHealth, soldierAttackRange,
-      soldierMoveRange, soldierSpeed,   soldierPrize};
+Unit* UnitFactory::newBattalion(const std::string type, Team* team, Box* box,
+                                int size) {
+  if (statMap.find(type) == statMap.end()) return nullptr;
   const auto textureName =
-      team->getColor() == Color::BLUE ? "Units-BlueSoldier" : "Units-RedSoldier";
-
-  const auto unit = new Battalion(scene_, TextureManager::get(textureName), box,
-                                  soldierStats_, "Soldier", size);
+      (team->getColor() == Color::BLUE ? "Units-Blue" : "Units-Red") + type;
+  auto unit = new Battalion(scene_, TextureManager::get(textureName), box,
+                            statMap[type], type, size);
   team->addUnit(unit);
+
   return unit;
 }
 
-Unit* UnitFactory::newArcher(Team* team, Box* box, const int size) const {
-  UnitStats archerStats_ = {archerAttack,      archerDefense,   archerHealth,
-                            archerAttackRange, archerMoveRange, archerSpeed,
-                            archerPrize};
-  const auto textureName =
-      team->getColor() == Color::BLUE ? "Units-BlueArcher" : "Units-RedArcher";
+Commander* UnitFactory::newCommander(const std::string type, Team* team,
+                                     Box* box) {
+  Commander* commander = nullptr;
+  auto textureName = "Units-" + type;
+  switch (commanderSwitch[type]) {
+    case CommanderType::THASSA:
+      commander = new Thassa(scene_, TextureManager::get(textureName), box,
+                             commanderMap[type]);
+      break;
+    default:
+      return nullptr;
+  }
 
-  const auto unit = new Battalion(scene_, TextureManager::get(textureName), box,
-                                  archerStats_, "Archer", size);
-  team->addUnit(unit);
-  return unit;
+  team->addUnit(commander);
+  return commander;
 }
 
-Unit* UnitFactory::newKnight(Team* team, Box* box, const int size) const {
-  UnitStats knightStats_ = {knightAttack,      knightDefense,   knightHealth,
-                            knightAttackRange, knightMoveRange, knightSpeed,
-                            knightPrize};
-
-  const auto textureName =
-      team->getColor() == Color::BLUE ? "Units-BlueKnight" : "Units-RedKnight";
-
-  const auto unit = new Battalion(scene_, TextureManager::get(textureName), box,
-                                  knightStats_, "Knight", size);
-  team->addUnit(unit);
-  return unit;
+const UnitStats UnitFactory::getStats(std::string type) {
+  return statMap[type];
 }
-
-Unit* UnitFactory::newWizard(Team* team, Box* box, const int size) const {
-  UnitStats wizardStats_ = {wizardAttack,      wizardDefense,   wizardHealth,
-                            wizardAttackRange, wizardMoveRange, wizardSpeed,
-                            wizardPrize};
-  const auto textureName =
-      team->getColor() == Color::BLUE ? "Units-BlueMage" : "Units-RedMage";
-
-  const auto unit = new Battalion(scene_, TextureManager::get(textureName), box,
-                                  wizardStats_, "Mage", size);
-  team->addUnit(unit);
-  return unit;
-}
-
-Unit* UnitFactory::newMonster(Team* team, Box* box, const int size) const {
-  UnitStats monsterStats_ = {
-      monsterAttack,    monsterDefense, monsterHealth, monsterAttackRange,
-      monsterMoveRange, monsterSpeed,   monsterPrize};
-
-  const auto textureName = team->getColor() == Color::BLUE ? "Units-BlueMonster"
-                                                           : "Units-RedMonster";
-
-  const auto unit = new Battalion(scene_, TextureManager::get(textureName), box,
-                                  monsterStats_, "Monster", size);
-  team->addUnit(unit);
-  return unit;
-}
-
-//---------- COMMANDERS ----------
-
-Thassa* UnitFactory::newThassa(Team* team, Box* box) const {
-  UnitStats thassaStats_ = {thassaAttack,      thassaDefense,   thassaHealth,
-                            thassaAttackRange, thassaMoveRange, thassaSpeed,
-                            thassaPrize};
-
-  const auto textureName = "Units-Thassa";
-
-  const auto unit =
-      new Thassa(scene_, TextureManager::get(textureName), box, thassaStats_);
-  team->addUnit(unit);
-  return unit;
-}
-
-Zamdran* UnitFactory::newZamdran(Team* team, Box* box) const {
-  UnitStats zamdranStats_ = {
-      zamdranAttack,    zamdranDefense, zamdranHealth, zamdranAttackRange,
-      zamdranMoveRange, zamdranSpeed,   zamdranPrize};
-  const auto textureName = "Units-Zamdran";
-
-  const auto unit =
-      new Zamdran(scene_, TextureManager::get(textureName), box, zamdranStats_);
-  team->addUnit(unit);
-  return unit;
-}
-
-UnitStats UnitFactory::getStats(std::string type) { return statMap[type]; }
