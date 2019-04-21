@@ -25,16 +25,18 @@ TutorialSequence::TutorialSequence(Scene* scene, const std::string& filename,
                     tutorialArea_.h * WIN_HEIGHT / 1.5));
 
   const auto nextButton = new Button(
-      scene_, TextureManager::get("Button-Next"),
+      scene_, TextureManager::get("Vanilla-Button"),
       Vector2D<int>(tutorialArea_.x - WIN_WIDTH / 10,
                     tutorialArea_.y + WIN_HEIGHT / 10),
-      Vector2D<int>(WIN_WIDTH / 15, WIN_HEIGHT / 21), [this]() { next(); });
+      Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT / 19), [this]() { next(); },
+      "Next", "ButtonFont");
 
   const auto closeButton = new Button(
-      scene_, TextureManager::get("Button-Continue"),
+      scene_, TextureManager::get("Vanilla-Button"),
       Vector2D<int>(tutorialArea_.x + WIN_WIDTH / 10,
                     tutorialArea_.y + WIN_HEIGHT / 10),
-      Vector2D<int>(WIN_WIDTH / 15, WIN_HEIGHT / 21), [this]() { skip(); });
+                 Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT / 19),
+                 [this]() { skip(); }, "Close", "ButtonFont");
 
   addChild(dialogueBackground);
   addChild(closeButton);

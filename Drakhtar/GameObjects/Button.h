@@ -2,6 +2,8 @@
 
 #pragma once
 #include <functional>
+
+#include "../GameObjects/ButtonText.h"
 #include "GameObject.h"
 #include "SDL.h"
 
@@ -11,6 +13,7 @@ class Button final : public GameObject {
 
  public:
   Button(Scene* scene, Texture* texture, const Vector2D<int>& pos,
-         const Vector2D<int>& size, std::function<void()> callback);
-  void update() override;
+         const Vector2D<int>& size, std::function<void()> callback,
+         const std::string& text, const std::string& fontFile);
+  void call();
 };
