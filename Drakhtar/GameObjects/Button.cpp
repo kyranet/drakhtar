@@ -1,7 +1,9 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Button.h"
+
 #include <utility>
+
 #include "Managers/Input.h"
 
 Button::Button(Scene* scene, Texture* texture, const Vector2D<int>& pos,

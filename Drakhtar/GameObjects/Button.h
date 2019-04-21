@@ -2,9 +2,10 @@
 
 #pragma once
 #include <functional>
+
+#include "../GameObjects/ButtonText.h"
 #include "GameObject.h"
 #include "SDL.h"
-#include "../GameObjects/ButtonText.h"
 
 class Button final : public GameObject {
  private:

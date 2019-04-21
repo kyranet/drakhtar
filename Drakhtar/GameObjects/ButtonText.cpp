@@ -1,10 +1,12 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "ButtonText.h"
-#include "Text.h"
+
+#include <utility>
+
 #include "../Structures/Font.h"
 #include "Managers/FontManager.h"
-#include <utility>
+#include "Text.h"
 #include "Utils/Constants.h"
 
 ButtonText::ButtonText(Scene* scene, const std::string& text,

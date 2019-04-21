@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Pause.h"
+
 #include "Button.h"
 #include "Managers/SDLAudioManager.h"
 #include "Managers/TextureManager.h"
@@ -24,32 +25,30 @@ Pause::Pause(Scene* scene) : GameObject(scene, nullptr) {
                     static_cast<int>(WIN_HEIGHT / 11.25)),
       []() { Game::getSceneMachine()->changeScene(new GameScene(1)); },
       "Restart", "ButtonFont");
+  const auto exit = new Button(
+      scene_, TextureManager::get("Vanilla-Button"),
+      Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2 + 70),
+      Vector2D<int>(static_cast<int>(WIN_WIDTH / 8.33),
+                    static_cast<int>(WIN_HEIGHT / 11.25)),
+      []() {
+        Game::getSceneMachine()->changeScene(new MenuScene());
+        SDLAudioManager::getInstance()->playChannel(6, 0, 0);
+      },
+      "Exit", "ButtonFont");
 
-  const auto exit =
-      new Button(scene_, TextureManager::get("Vanilla-Button"),
-                 Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2 + 70),
-                 Vector2D<int>(static_cast<int>(WIN_WIDTH / 8.33),
-                               static_cast<int>(WIN_HEIGHT / 11.25)),
-                 []() {
-                   Game::getSceneMachine()->changeScene(new MenuScene());
-                   SDLAudioManager::getInstance()->playChannel(6, 0, 0);
-                 },
-                 "Exit", "ButtonFont");
-
-  const auto resume =
-      new Button(scene_, TextureManager::get("Vanilla-Button"),
-                 Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2 - 70),
-                 Vector2D<int>(static_cast<int>(WIN_WIDTH / 8.33),
-                               static_cast<int>(WIN_HEIGHT / 11.25)),
-                 [this]() {
-                   destroy();
-                   scene_->resume();
-                 },
-                 "Resume", "ButtonFont");
+  const auto resume = new Button(
+      scene_, TextureManager::get("Vanilla-Button"),
+      Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2 - 70),
+      Vector2D<int>(static_cast<int>(WIN_WIDTH / 8.33),
+                    static_cast<int>(WIN_HEIGHT / 11.25)),
+      [this]() {
+        destroy();
+        scene_->resume();
+      },
+      "Resume", "ButtonFont");
 
   addChild(panel);
   addChild(restart);
   addChild(exit);
   addChild(resume);
 }
-
