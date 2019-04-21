@@ -36,8 +36,8 @@ Battalion::Battalion(Scene* scene, Texture* texture, Box* box,
 
   healthBar_->setMaxHP(baseStats_.health * battalionSize);
 
-  setPosition(Vector2D<int>(box->getRect().x + box->getRect().w / 1.5,
-                            box->getRect().y + box->getRect().h / 2));
+ /* setPosition(Vector2D<int>(box->getRect().x + box->getRect().w / 1.5,
+                            box->getRect().y + box->getRect().h / 2));*/
 
   updateBattalionPosition();
 }
@@ -99,13 +99,13 @@ void Battalion::moveToBox(Box* box) {
 void Battalion::render() const {
   SDL_Rect aux = getRect();
   if (battalionSize_ > 3) {
-    aux.x = box_->getRect().x - box_->getRect().w / 2;
-    aux.y = box_->getRect().y - box_->getRect().h / 3;
+    aux.x -= box_->getRect().w / 2;
+    aux.y -= box_->getRect().h / 3;
     texture_->renderFrame(aux, texture_->getAnimation()[texture_->getFrame()]);
   }
   Unit::render();
   if (battalionSize_ > 7) {
-    aux.y = box_->getRect().y;
+    aux.y += box_->getRect().h / 2;
     texture_->renderFrame(aux, texture_->getAnimation()[texture_->getFrame()]);
   }
   sizeText_->render();
