@@ -116,6 +116,7 @@ void Scene::handleEvents() {
     if (!isPaused()) {
       pause();
     } else {
+      getGameObjects().back()->destroy();
       resume();
     }
   }
@@ -180,10 +181,7 @@ void Scene::end() {
 
 void Scene::resume() {
   paused_ = false;
-  for (const auto gameObject : getGameObjects()) {
-    gameObject->setActive(true);
-    if (getGameObjects().back() == gameObject) gameObject->destroy();
-  }
+  for (const auto gameObject : getGameObjects()) gameObject->setActive(true);
 }
 
 void Scene::pause() {
