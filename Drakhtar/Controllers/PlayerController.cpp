@@ -143,7 +143,7 @@ void PlayerController::start() {
 
 void PlayerController::finish() {
   board_->resetCellsToBase();
-  //scene_->removeGameObject(skipTurnButton_);
+  scene_->removeGameObject(skipTurnButton_);
   UnitsController::finish();
 }
 
