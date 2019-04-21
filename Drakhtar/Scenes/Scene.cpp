@@ -116,15 +116,7 @@ void Scene::handleEvents() {
     if (!isPaused()) {
       pause();
     } else {
-      int size = gameObjects_.size();
-      int x = 0;
-      for (auto gameObject : gameObjects_) {
-        if (x == size - 1) {
-          resume();
-          gameObject->destroy();
-        }
-        x++;
-      }
+      resume();
     }
   }
 
@@ -188,7 +180,10 @@ void Scene::end() {
 
 void Scene::resume() {
   paused_ = false;
-  for (const auto gameObject : getGameObjects()) gameObject->setActive(true);
+  for (const auto gameObject : getGameObjects()) {
+    gameObject->setActive(true);
+    if (getGameObjects().back() == gameObject) gameObject->destroy();
+  }
 }
 
 void Scene::pause() {
