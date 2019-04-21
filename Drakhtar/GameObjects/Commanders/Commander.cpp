@@ -60,16 +60,13 @@ void Commander::onSelect() {
 
 void Commander::kill() {
   Unit::kill();
-  if (health_ == 0) {
-    int currentScene =
-        reinterpret_cast<GameScene*>(Game::getSceneMachine()->getCurrentScene())
-            ->getBattleInd();
-    if (getTeam()->getColor() == Color::BLUE) {
-      Game::getSceneMachine()->changeScene(new GameScene(currentScene));
-    } else if (getTeam()->getColor() == Color::RED) {
-      Game::getSceneMachine()->changeScene(
-          new TransitionScene(currentScene + 1));
-    }
+  int currentScene =
+      reinterpret_cast<GameScene*>(Game::getSceneMachine()->getCurrentScene())
+          ->getBattleInd();
+  if (getTeam()->getColor() == Color::BLUE) {
+    Game::getSceneMachine()->changeScene(new GameScene(currentScene));
+  } else if (getTeam()->getColor() == Color::RED) {
+    Game::getSceneMachine()->changeScene(new TransitionScene(currentScene + 1));
   }
 }
 
