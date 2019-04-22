@@ -2,6 +2,7 @@
 
 #pragma once
 #include <string>
+
 #include "Unit.h"
 
 class Scene;
@@ -27,7 +28,9 @@ class Battalion final : public Unit {
   int getDefense() const override;
   int getMaxHealth() const;
 
-  int loseHealth(int enemyAttack) override;
+  void setAttack(const int attack) override;
+
+  int loseHealth(int enemyAttack, int minDamage) override;
 
   void moveToBox(Box* box) override;
   void render() const override;

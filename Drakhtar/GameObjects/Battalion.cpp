@@ -2,6 +2,8 @@
 
 #include "Battalion.h"
 
+#include <algorithm>
+
 #include "Box.h"
 #include "HealthBar.h"
 #include "Managers/FontManager.h"
@@ -15,9 +17,12 @@ Battalion::Battalion(Scene* scene, Texture* texture, Box* box,
                      const UnitStats stats, const std::string type,
                      const int battalionSize)
     : Unit(scene, texture, box, stats, type), battalionSize_(battalionSize) {
-  stats_.health = baseStats_.health * battalionSize_;
+  stats_.maxHealth = baseStats_.maxHealth * battalionSize_;
+  stats_.defense = baseStats_.defense * battalionSize_;
   stats_.attack = baseStats_.attack * battalionSize_;
   stats_.prize = baseStats_.prize * battalionSize_;
+  health_ = stats_.maxHealth;
+  minDamage_ = battalionSize_;
 
   const SDL_Color textColor = {255, 255, 255, 0};
   const SDL_Color sizeColor = {0, 0, 255, 0};
@@ -36,7 +41,7 @@ Battalion::Battalion(Scene* scene, Texture* texture, Box* box,
 
   sizeText_->setColor(sizeColor);
 
-  healthBar_->setMaxHP(baseStats_.health * battalionSize);
+  healthBar_->setMaxHP(baseStats_.maxHealth * battalionSize);
 }
 
 Battalion::~Battalion() = default;
@@ -52,18 +57,24 @@ void Battalion::setBattalionSize(const int battalionSize) {
 
 int Battalion::getAttack() const { return stats_.attack * battalionSize_; }
 
-int Battalion::getDefense() const { return Unit::getDefense(); }
+int Battalion::getDefense() const { return stats_.defense * battalionSize_; }
 
 int Battalion::getMaxHealth() const {
-  return baseStats_.health * battalionSize_;
+  return baseStats_.maxHealth * battalionSize_;
 }
 
-int Battalion::loseHealth(const int enemyAttack) {
-  const auto health = Unit::loseHealth(enemyAttack);
-  if (baseStats_.health <= health) {
-    battalionSize_ -= health / baseStats_.health;
+void Battalion::setAttack(const int attack) {
+  stats_.attack = attack * battalionSize_;
+}
+
+int Battalion::loseHealth(const int enemyAttack, int minDamage) {
+  const auto health = Unit::loseHealth(enemyAttack, minDamage);
+  if (baseStats_.maxHealth * (battalionSize_ - 1) >= health_) {
+    battalionSize_ -= std::max(health / baseStats_.maxHealth, 1);
     stats_.attack = baseStats_.attack * battalionSize_;
+    stats_.defense = baseStats_.defense * battalionSize_;
     if (battalionSize_ < 0) battalionSize_ = 0;
+    minDamage_ = battalionSize_;
     sizeText_->setText(sizeToString());
     const SDL_Color sizeColor = {0, 0, 255, 0};
     sizeText_->setColor(sizeColor);
