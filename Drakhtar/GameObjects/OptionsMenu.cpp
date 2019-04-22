@@ -11,7 +11,9 @@
 #include "Structures/Game.h"
 #include "Utils/Constants.h"
 #include "Utils/Vector2D.h"
-
+GameObject* greenTick;
+GameObject* soundIcon;
+GameObject* muteIcon;
 void highervolume() {
   SDLAudioManager::getInstance()->setChannelVolume(
       SDLAudioManager::getInstance()->getChannelVolume() + 10, 0);
@@ -41,7 +43,7 @@ OptionsMenu::OptionsMenu(Scene* scene) : GameObject(scene, nullptr) {
       Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 1.65),
       Vector2D<int>(static_cast<int>(WIN_WIDTH / 10),
                     static_cast<int>(WIN_HEIGHT / 8)),
-      [this]() { destroy(); }, "Return", "ButtonFont");
+      [this]() { this->destroy(); }, "Return", "ButtonFont");
   soundIcon = new GameObject(scene_, TextureManager::get("UI-ActiveSound"),
                              Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2.25),
                              Vector2D<int>(static_cast<int>(WIN_WIDTH / 25),
