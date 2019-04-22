@@ -59,7 +59,7 @@ OptionsMenu::OptionsMenu(Scene* scene) : GameObject(scene, nullptr) {
       Vector2D<int>(static_cast<int>(WIN_WIDTH / 15),
                     static_cast<int>(WIN_HEIGHT / 8)),
       [this]() {
-        SDLAudioManager::getInstance()->getDefault() ? highervolume() : NULL;
+        SDLAudioManager::getInstance()->getDefault() ? highervolume() : nullptr;
       },
       "+", "StatsFont");
   const auto LessSoundBox = new Button(
@@ -68,7 +68,7 @@ OptionsMenu::OptionsMenu(Scene* scene) : GameObject(scene, nullptr) {
       Vector2D<int>(static_cast<int>(WIN_WIDTH / 15),
                     static_cast<int>(WIN_HEIGHT / 8)),
       [this]() {
-        SDLAudioManager::getInstance()->getDefault() ? lowervolume() : NULL;
+        SDLAudioManager::getInstance()->getDefault() ? lowervolume() : nullptr;
       },
       "-", "StatsFont");
 
