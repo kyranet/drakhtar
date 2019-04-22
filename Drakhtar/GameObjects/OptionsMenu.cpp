@@ -12,6 +12,9 @@
 #include "Utils/Constants.h"
 #include "Utils/Vector2D.h"
 GameObject* greenTick = nullptr;
+GameObject* soundIcon = nullptr;
+GameObject* muteIcon = nullptr;
+
 void highervolume() {
   SDLAudioManager::getInstance()->setChannelVolume(
       SDLAudioManager::getInstance()->getChannelVolume() + 10, 0);
@@ -21,12 +24,14 @@ void highervolume() {
       SDLAudioManager::getInstance()->getMusicVolume() + 10);
 }
 void lowervolume() {
-  SDLAudioManager::getInstance()->setChannelVolume(
-      SDLAudioManager::getInstance()->getChannelVolume() - 10, 0);
-  SDLAudioManager::getInstance()->setChannelVolume(
-      SDLAudioManager::getInstance()->getChannelVolume() - 10, 1);
-  SDLAudioManager::getInstance()->setMusicVolume(
-      SDLAudioManager::getInstance()->getMusicVolume() - 10);
+  if (SDLAudioManager::getInstance()->getMusicVolume() > 0) {
+    SDLAudioManager::getInstance()->setChannelVolume(
+        SDLAudioManager::getInstance()->getChannelVolume() - 10, 0);
+    SDLAudioManager::getInstance()->setChannelVolume(
+        SDLAudioManager::getInstance()->getChannelVolume() - 10, 1);
+    SDLAudioManager::getInstance()->setMusicVolume(
+        SDLAudioManager::getInstance()->getMusicVolume() - 10);
+  }
 }
 OptionsMenu::OptionsMenu(Scene* scene) : GameObject(scene, nullptr) {
   const auto panel =
@@ -40,11 +45,14 @@ OptionsMenu::OptionsMenu(Scene* scene) : GameObject(scene, nullptr) {
       Vector2D<int>(static_cast<int>(WIN_WIDTH / 10),
                     static_cast<int>(WIN_HEIGHT / 8)),
       [this]() { destroy(); }, "Return", "ButtonFont");
-  const auto soundIcon =
-      new GameObject(scene_, TextureManager::get("UI-ActiveSound"),
-                     Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2.25),
-                     Vector2D<int>(static_cast<int>(WIN_WIDTH / 25),
-                                   static_cast<int>(WIN_HEIGHT / 20)));
+  soundIcon = new GameObject(scene_, TextureManager::get("UI-ActiveSound"),
+                             Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2.25),
+                             Vector2D<int>(static_cast<int>(WIN_WIDTH / 25),
+                                           static_cast<int>(WIN_HEIGHT / 20)));
+  muteIcon = new GameObject(scene_, TextureManager::get("UI-MuteSound"),
+                            Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2.25),
+                            Vector2D<int>(static_cast<int>(WIN_WIDTH / 25),
+                                          static_cast<int>(WIN_HEIGHT / 20)));
   const auto moreSoundBox = new Button(
       scene_, TextureManager::get("Quantity-Button"),
       Vector2D<int>(WIN_WIDTH / 1.75, WIN_HEIGHT / 2.25),
@@ -88,7 +96,6 @@ OptionsMenu::OptionsMenu(Scene* scene) : GameObject(scene, nullptr) {
   addChild(returnButton);
   addChild(moreSoundBox);
   addChild(LessSoundBox);
-  addChild(soundIcon);
   addChild(DefaultText);
   addChild(defaultButton);
   // addChild(greenTick);
@@ -96,6 +103,10 @@ OptionsMenu::OptionsMenu(Scene* scene) : GameObject(scene, nullptr) {
 
 OptionsMenu::~OptionsMenu() {
   delete greenTick;
+  delete soundIcon;
+  delete muteIcon;
+  soundIcon = nullptr;
+  muteIcon = nullptr;
   greenTick = nullptr;
 }
 
@@ -104,4 +115,6 @@ void OptionsMenu::render() const {
   if (!SDLAudioManager::getInstance()->getDefault()) {
     greenTick->render(greenTick->getRect());
   }
+  SDLAudioManager::getInstance()->getMusicVolume() == 0 ? muteIcon->render()
+                                                        : soundIcon->render();
 }
