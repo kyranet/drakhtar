@@ -1,9 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "PlayerController.h"
-
 #include <iostream>
-
 #include "Controllers/Handlers/PlayerHandler.h"
 #include "GameObjects/Board.h"
 #include "GameObjects/Box.h"
@@ -98,13 +96,13 @@ void PlayerController::onClickAttack(Box* boxClicked) {
   const auto unitStats = unit->getStats();
 
   // Enemy dies
-  if (unitStats.health <= 0) {
+  if (unit->getHealth() <= 0) {
     // Unit dies to attack
     if (unit->getTeam()->getColor() == Color::RED) {
       GameManager::getInstance()->addMoney(unitStats.prize);
     }
     boxClicked->destroyContent();
-  } else if (activeUnit_->getStats().health <= 0) {
+  } else if (activeUnit_->getHealth() <= 0) {
     // Unit dies to counter-attack
     currentBox->destroyContent();
     finish();

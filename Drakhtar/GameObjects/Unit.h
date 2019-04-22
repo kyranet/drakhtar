@@ -2,6 +2,7 @@
 
 #pragma once
 #include <string>
+
 #include "GameObject.h"
 
 class Team;
@@ -13,7 +14,7 @@ class Scene;
 struct UnitStats {
   int attack;
   int defense;
-  int health;
+  int maxHealth;
   int attackRange;
   int moveRange;
   int speed;
@@ -30,16 +31,17 @@ class Unit : public GameObject {
  protected:
   Box *box_ = nullptr;
   Text *healthText_ = nullptr;
-  HealthBar* healthBar_ = nullptr;
+  HealthBar *healthBar_ = nullptr;
   int health_;
   std::string healthToString() const;
+  int minDamage_ = 1;
 
   const UnitStats baseStats_;
   UnitStats stats_;
 
  public:
   Unit(Scene *scene, Texture *texture, Box *box, UnitStats stats,
-       const std::string& type);
+       const std::string &type);
   virtual ~Unit();
 
   /*int getBaseAttack() const { return baseAttack_; }
@@ -53,6 +55,7 @@ class Unit : public GameObject {
   virtual int getPrize() const { return prize_; }
     int getSpeed() const { return speed_; }*/
 
+  int getHealth() const { return health_; }
   virtual int getDefense() const { return stats_.defense; }
   UnitStats getBaseStats() const { return baseStats_; }
   UnitStats getStats() const { return stats_; }
@@ -63,14 +66,14 @@ class Unit : public GameObject {
   Vector2D<int> getBoxPosition() const { return boxPosition_; }
   std::string getType() const { return type_; }
 
-  void setAttack(const int attack) { stats_.attack = attack; }
+  virtual void setAttack(const int attack) { stats_.attack = attack; }
   void setSpeed(const int speed) { stats_.speed = speed; }
   void setMoving(const bool moving) { moving_ = moving; }
   void setMoved(const bool moved) { moved_ = moved; }
   void setTeam(Team *team) { team_ = team; }
 
   virtual void moveToBox(Box *box);
-  virtual int loseHealth(int enemyAttack);
+  virtual int loseHealth(int enemyAttack, int minDamage);
   void update() override;
   virtual void attack(Unit *enemy, bool counter);
   virtual void kill();
