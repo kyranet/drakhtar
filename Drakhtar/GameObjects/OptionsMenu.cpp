@@ -11,9 +11,6 @@
 #include "Structures/Game.h"
 #include "Utils/Constants.h"
 #include "Utils/Vector2D.h"
-GameObject* greenTick = nullptr;
-GameObject* soundIcon = nullptr;
-GameObject* muteIcon = nullptr;
 
 void highervolume() {
   SDLAudioManager::getInstance()->setChannelVolume(

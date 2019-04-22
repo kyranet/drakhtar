@@ -3,6 +3,10 @@
 
 #include "GameObject.h"
 class OptionsMenu : public GameObject {
+  GameObject* greenTick = nullptr;
+  GameObject* soundIcon = nullptr;
+  GameObject* muteIcon = nullptr;
+
  public:
   explicit OptionsMenu(Scene* scene);
   ~OptionsMenu();
