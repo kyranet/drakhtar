@@ -4,8 +4,6 @@
 #include <array>
 #include <vector>
 
-#include "SDL.h"
-
 class Scene;
 class Unit;
 
@@ -14,7 +12,7 @@ class TurnManager final {
     std::vector<Unit*> units;
     size_t position;
   };
-  std::array<Turn, 2> teams_;
+  Turn allUnits_;
   size_t turn_ = 0;
 
   std::array<Unit*, 8> calculated_{};
@@ -24,11 +22,8 @@ class TurnManager final {
   ~TurnManager();
   void next();
   void prepare();
-
   void remove(Unit* unit);
   Unit* getTurnFor() const;
-
-  std::array<Turn, 2> getTeams() { return teams_; }
-  void setTeam(Turn team, int pos) { teams_[pos] = team; }
   std::array<Unit*, 8> getCalculated() { return calculated_; }
+  void sortTurn();
 };

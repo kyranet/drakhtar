@@ -1,11 +1,9 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-#include <array>
 #include <vector>
 
 #include "GameObject.h"
-#include "SDL.h"
 
 class Scene;
 class Unit;
