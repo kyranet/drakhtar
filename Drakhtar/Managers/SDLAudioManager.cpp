@@ -170,8 +170,8 @@ int SDLAudioManager::getChannelVolume() { return channelVolume_; }
 
 int SDLAudioManager::getMusicVolume() { return musicVolume_; }
 
-void SDLAudioManager::setDefault(bool default) {
-  default_ = default;
+void SDLAudioManager::setDefault(bool value_) {
+  default_ = value_;
   defaultSound();
 }
 
