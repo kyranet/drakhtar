@@ -5,4 +5,6 @@
 class OptionsMenu : public GameObject {
  public:
   explicit OptionsMenu(Scene* scene);
+  ~OptionsMenu();
+  void render() const override;
 };

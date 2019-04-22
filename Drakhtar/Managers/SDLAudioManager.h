@@ -48,15 +48,18 @@ class SDLAudioManager final : public AudioManager {
   void fadeOutChannel(int channel, int ticks);
   void fadeOutMusic(int ticks);
 
-  // check if its muted
+  // check sound propertiees: default system and muted
   bool getMuted();
   void setMute(bool mute);
-  void checkMuted();
+  void defaultSound();
   int getChannelVolume();
   int getMusicVolume();
+  void setDefault(bool default);
+  bool getDefault();
 
  private:
   bool initialized_;
+  bool default_;
   bool muted_;
   int channels_;
   int musicVolume_ = 80, channelVolume_ = 80;

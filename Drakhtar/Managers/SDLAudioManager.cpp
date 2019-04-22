@@ -151,18 +151,27 @@ bool SDLAudioManager::getMuted() { return muted_; }
 
 void SDLAudioManager::setMute(bool mute) {
   muted_ = mute;
-  checkMuted();
+  defaultSound();
 }
 
-void SDLAudioManager::checkMuted() {
-  const auto volume = muted_ ? 0 : 80;
-  const auto instance = getInstance();
+void SDLAudioManager::defaultSound() {
+  if (!getDefault()) {
+    const auto volume = muted_ ? 0 : 80;
+    const auto instance = getInstance();
 
-  instance->setChannelVolume(volume, 0);
-  instance->setChannelVolume(volume, 1);
-  instance->setMusicVolume(volume);
+    instance->setChannelVolume(volume, 0);
+    instance->setChannelVolume(volume, 1);
+    instance->setMusicVolume(volume);
+  }
 }
 
 int SDLAudioManager::getChannelVolume() { return channelVolume_; }
 
 int SDLAudioManager::getMusicVolume() { return musicVolume_; }
+
+void SDLAudioManager::setDefault(bool default) {
+  default_ = default;
+  defaultSound();
+}
+
+bool SDLAudioManager::getDefault() { return default_; }
