@@ -21,7 +21,6 @@ class Commander : public Unit {
  public:
   Commander(Scene* scene, Texture* texture, Box* box, UnitStats commanderStats);
   virtual ~Commander();
-  void render() const override;
 
   /**
    * \return A vector of all the skills the commander can cast.
