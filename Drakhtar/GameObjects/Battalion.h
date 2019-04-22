@@ -11,12 +11,12 @@ class HealthBar;
 
 class Battalion final : public Unit {
   int battalionSize_;
-  Text *sizeText_ = nullptr;
+  Text* sizeText_ = nullptr;
 
   std::string sizeToString() const;
 
  public:
-  Battalion(Scene *scene, Texture *texture, Box *box, const UnitStats stats,
+  Battalion(Scene* scene, Texture* texture, Box* box, const UnitStats stats,
             std::string type, int battalionSize);
   virtual ~Battalion();
 
@@ -27,8 +27,10 @@ class Battalion final : public Unit {
   int getDefense() const override;
   int getMaxHealth() const;
 
-  int loseHealth(int enemyAttack) override;
+  void setAttack(int attack) override;
 
-  void moveToBox(Box *box) override;
+  int loseHealth(int enemyAttack, int minDamage) override;
+
+  void moveToBox(Box* box) override;
   void render() const override;
 };

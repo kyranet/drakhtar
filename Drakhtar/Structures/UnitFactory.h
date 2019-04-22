@@ -1,32 +1,29 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
-#include <map>
-
 #pragma once
+#include <map>
+#include <string>
 
 class Scene;
 class Team;
 class Box;
 class Unit;
-class Thassa;
-class Zamdran;
+class Commander;
 struct UnitStats;
 
+enum class CommanderType { THASSA, ZAMDRAN };
+
 class UnitFactory {
-  Scene *scene_;
+  Scene* scene_;
   std::map<std::string, UnitStats> statMap;
+  std::map<std::string, UnitStats> commanderMap;
+  std::map<std::string, CommanderType> commanderSwitch;
 
  public:
-  explicit UnitFactory(Scene *scene);
+  explicit UnitFactory(Scene* scene);
   ~UnitFactory();
-  Unit *newSoldier(Team *team, Box *box, int size) const;
-  Unit *newArcher(Team *team, Box *box, int size) const;
-  Unit *newKnight(Team *team, Box *box, int size) const;
-  Unit *newWizard(Team *team, Box *box, int size) const;
-  Unit *newMonster(Team *team, Box *box, int size) const;
+  Unit* newBattalion(const std::string& type, Team* team, Box* box, int size);
+  Commander* newCommander(const std::string& type, Team* team, Box* box);
 
-  Thassa *newThassa(Team *team, Box *box) const;
-  Zamdran *newZamdran(Team *team, Box *box) const;
-
-  UnitStats getStats(std::string type);
+  const UnitStats getStats(const std::string& type);
 };

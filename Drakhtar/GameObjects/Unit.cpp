@@ -16,12 +16,12 @@ Unit::Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
     : GameObject(scene, texture,
                  Vector2D<int>(box->getRect().x + box->getRect().w / 2,
                                box->getRect().y + box->getRect().h / 2),
-                 Vector2D<int>(static_cast<int>(box->getRect().w * 2),
-                               static_cast<int>(box->getRect().h * 2))),
+                 Vector2D<int>(static_cast<int>(box->getRect().w * 1.25),
+                               static_cast<int>(box->getRect().h * 1.25))),
       boxPosition_(box->getPosition()),
       type_(type),
       box_(box),
-      health_(stats.health),
+      health_(stats.maxHealth),
       baseStats_(stats),
       stats_(stats) {
   // Units must be ignored in the mouse raycasts.
@@ -37,7 +37,7 @@ Unit::Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
 
   healthBar_ = new HealthBar(
       scene, Vector2D<int>(rect.x + rect.w / 2, rect.y - rect.h / 3),
-      baseStats_.health);
+      baseStats_.maxHealth);
 
   healthText_->setColor(textColor);
 
@@ -64,16 +64,16 @@ void Unit::moveToBox(Box* newBox) {
   setMoving(false);
 }
 
-int Unit::loseHealth(int enemyAttack) {
-  enemyAttack = enemyAttack * (1 - static_cast<float>(getDefense()) / 100);
+int Unit::loseHealth(int enemyAttack, int minDamage) {
+  enemyAttack = static_cast<int>(enemyAttack * (1.0 - stats_.defense / 100.0));
+  enemyAttack = std::max(enemyAttack, minDamage);
 
   health_ = std::max(health_ - enemyAttack, 0);
-  stats_.health = std::max(stats_.health - enemyAttack, 0);
 
   healthText_->setText(healthToString());
   const SDL_Color textColor = {255, 255, 255, 0};
   healthText_->setColor(textColor);
-  healthBar_->takeDamage(getStats().health);
+  healthBar_->takeDamage(health_);
 
   return enemyAttack;
 }
@@ -85,12 +85,12 @@ void Unit::onSelect() { setMoving(true); }
 void Unit::onDeselect() { setMoving(false); }
 
 void Unit::attack(Unit* enemy, const bool counter) {
-  enemy->loseHealth(getStats().attack);
+  enemy->loseHealth(getStats().attack, minDamage_);
 
   const auto scene = reinterpret_cast<GameScene*>(getScene());
   // If the attack is not a counter and the enemy is
   // alive and within attack range, counter-attack
-  if (!counter && enemy->getStats().health > 0 &&
+  if (!counter && enemy->getStats().maxHealth > 0 &&
       scene->getBoard()->isInRange(box_, enemy->getBox(),
                                    enemy->getStats().attackRange)) {
     enemy->attack(this, true);
@@ -100,5 +100,5 @@ void Unit::attack(Unit* enemy, const bool counter) {
 void Unit::kill() { getTeam()->removeUnit(this); }
 
 std::string Unit::healthToString() const {
-  return std::to_string(getStats().health) + " HP";
+  return std::to_string(health_) + " HP";
 }

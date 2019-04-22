@@ -19,6 +19,8 @@ Commander::Commander(Scene* scene, Texture* texture, Box* box,
       new GameObject(scene, TextureManager::get("UI-commanderIcon"),
                      Vector2D<int>(rect.x, rect.y - rect.h / 3),
                      Vector2D<int>(rect.h / 2, rect.h / 2));
+
+  addChild(commanderIcon_);
 }
 
 Commander::~Commander() {
@@ -26,16 +28,6 @@ Commander::~Commander() {
     delete skill;
   }
   skills_.clear();
-
-  if (commanderIcon_ != nullptr) {
-    delete commanderIcon_;
-    commanderIcon_ = nullptr;
-  }
-}
-
-void Commander::render() const {
-  Unit::render();
-  commanderIcon_->render();
 }
 
 void Commander::onSelect() {

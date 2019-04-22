@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "TutorialSequence.h"
+
 #include "Errors/DrakhtarError.h"
 #include "EventListeners/TutorialSceneOnClick.h"
 #include "GameObjects/Button.h"
