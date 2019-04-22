@@ -1,10 +1,8 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "TurnManager.h"
-
-#include <utility>
 #include <algorithm>
-
+#include <utility>
 #include "GameObjects/Unit.h"
 #include "Scenes/GameScene.h"
 #include "Scenes/Scene.h"
@@ -12,42 +10,29 @@
 #include "TextureManager.h"
 #include "Utils/Constants.h"
 
-TurnManager::TurnManager(std::vector<Unit*> team1,
-                         std::vector<Unit*> team2) {
-  std::vector<Unit*> allVector;
-  allVector.reserve(team1.size() + team2.size());  // preallocate memory
-  allVector.insert(allVector.end(), team1.begin(), team1.end());
-  allVector.insert(allVector.end(), team2.begin(), team2.end());
-  allUnits_ = {std::move(allVector), 0};
+TurnManager::TurnManager(std::vector<Unit*> team1, std::vector<Unit*> team2)
+    : position_(0) {
+  units_.reserve(team1.size() + team2.size());  // preallocate memory
+  units_.insert(units_.end(), team1.begin(), team1.end());
+  units_.insert(units_.end(), team2.begin(), team2.end());
 
-  sortTurn();
-  prepare();
+  // Sort the units
+  std::sort(units_.begin(), units_.end(), [](Unit* a, Unit* b) {
+    return a->getBaseStats().speed > b->getBaseStats().speed;
+  });
 }
 
 TurnManager::~TurnManager() = default;
 
-void TurnManager::prepare() {
-  auto aIt = allUnits_.units.begin() + allUnits_.position;
-  size_t i = 0;
-  while (true) {
-    calculated_[i] = *aIt;
-    if (++i == calculated_.size()) break;
-    if (++aIt == allUnits_.units.end()) aIt = allUnits_.units.begin();
-  }
-}
-
 void TurnManager::next() {
-  if (++allUnits_.position >= allUnits_.units.size()) allUnits_.position = 0;
-  prepare();
+  if (++position_ >= units_.size()) position_ = 0;
 }
 
 void TurnManager::remove(Unit* unit) {
-  auto turn = &allUnits_;
-
   size_t x = 0;
-  for (auto it = turn->units.begin(); it != turn->units.end(); ++it, ++x) {
+  for (auto it = units_.begin(); it != units_.end(); ++it, ++x) {
     if (*it != unit) continue;
-    turn->units.erase(it);
+    units_.erase(it);
     // If the unit's turn was behind the cursor, we want the cursor to go back.
     // So when I have:
     // 1 2 3 4 5
@@ -55,24 +40,11 @@ void TurnManager::remove(Unit* unit) {
     // And I remove the second, the cursor must decrease:
     // 1 3 4 5
     //   ^
-    if (x < turn->position) --turn->position;
+    if (x < position_) --position_;
 
     // Stop the loop
     break;
   }
-
-  prepare();
 }
 
-Unit* TurnManager::getTurnFor() const {
-  const auto turn = allUnits_;
-  return turn.units.size() > turn.position ? turn.units[turn.position]
-                                           : nullptr;
-}
-
-void TurnManager::sortTurn() {
-  std::sort(allUnits_.units.begin(), allUnits_.units.end(),
-            [](Unit* a, Unit* b) {
-              return a->getBaseStats().speed > b->getBaseStats().speed;
-            });
-}
+Unit* TurnManager::getTurnFor() const { return units_[position_]; }

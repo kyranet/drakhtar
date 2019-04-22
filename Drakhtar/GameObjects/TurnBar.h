@@ -1,8 +1,6 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-#include <vector>
-
 #include "GameObject.h"
 
 class Scene;

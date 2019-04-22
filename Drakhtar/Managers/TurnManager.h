@@ -8,22 +8,27 @@ class Scene;
 class Unit;
 
 class TurnManager final {
-  struct Turn {
-    std::vector<Unit*> units;
-    size_t position;
-  };
-  Turn allUnits_;
-  size_t turn_ = 0;
-
-  std::array<Unit*, 8> calculated_{};
+  std::vector<Unit*> units_;
+  size_t position_;
 
  public:
   TurnManager(std::vector<Unit*> team1, std::vector<Unit*> team2);
   ~TurnManager();
   void next();
-  void prepare();
   void remove(Unit* unit);
+
   Unit* getTurnFor() const;
-  std::array<Unit*, 8> getCalculated() { return calculated_; }
-  void sortTurn();
+
+  template<size_t N>
+  std::array<Unit*, N> getNextUnits() const {
+    std::array<Unit*, N> units;
+
+    auto it = units_.begin() + position_;
+    for (size_t i = 0, max = units.size(); i < max; i++) {
+      units[i] = *it;
+      if (++it == units_.end()) it = units_.begin();
+    }
+
+    return units;
+  }
 };

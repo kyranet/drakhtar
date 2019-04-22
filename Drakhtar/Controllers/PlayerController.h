@@ -7,7 +7,7 @@ class Button;
 
 class PlayerController final : public UnitsController {
   bool locked_ = false;
-  Button* skipTurnButton_;
+  Button* skipTurnButton_ = nullptr;
 
  public:
   PlayerController(Board* board, TurnManager* turnManager, GameScene* scene,
