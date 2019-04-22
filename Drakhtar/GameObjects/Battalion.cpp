@@ -75,21 +75,24 @@ void Battalion::moveToBox(Box* box) {
   Unit::moveToBox(box);
 
   const auto rect = box_->getRect();
-
   sizeText_->setPosition(
       Vector2D<int>(rect.x + rect.h / 6, rect.y - rect.h / 3));
 }
 
 void Battalion::render() const {
-  SDL_Rect aux = getRect();
   if (battalionSize_ > 3) {
-    aux.x -= box_->getRect().w / 2;
-    aux.y -= box_->getRect().h / 3;
+    auto aux = getRect();
+    aux.x += getTexture()->getFlip() == SDL_FLIP_HORIZONTAL ? -size_.getX() / 4
+                                                            : size_.getX() / 4;
+    aux.y -= size_.getY() / 5;
     texture_->renderFrame(aux, texture_->getAnimation()[texture_->getFrame()]);
   }
   Unit::render();
   if (battalionSize_ > 7) {
-    aux.y += box_->getRect().h / 2;
+    auto aux = getRect();
+    aux.x += getTexture()->getFlip() == SDL_FLIP_HORIZONTAL ? -size_.getX() / 4
+                                                            : size_.getX() / 4;
+    aux.y += size_.getY() / 5;
     texture_->renderFrame(aux, texture_->getAnimation()[texture_->getFrame()]);
   }
 }
