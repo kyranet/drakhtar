@@ -1,18 +1,17 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-#include "EventListeners/ListenerOnClick.h"
 #include "UnitsController.h"
 
 class Button;
 
 class PlayerController final : public UnitsController {
   bool locked_ = false;
-  Button* skipTurnButton_;
+  Button* skipTurnButton_ = nullptr;
 
  public:
-  PlayerController(Board* board, TurnBar* turnBar, GameScene* scene, Team* team,
-                   Team* oppositeTeam);
+  PlayerController(Board* board, TurnManager* turnManager, GameScene* scene,
+                   Team* team, Team* oppositeTeam);
 
   /**
    * \brief Moves active unit to an empty cell within range.

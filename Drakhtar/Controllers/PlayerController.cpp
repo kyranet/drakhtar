@@ -18,10 +18,10 @@
 #include "Structures/Tween.h"
 #include "Utils/Constants.h"
 
-PlayerController::PlayerController(Board* board, TurnBar* turnBar,
+PlayerController::PlayerController(Board* board, TurnManager* turnManager,
                                    GameScene* scene, Team* team,
                                    Team* oppositeTeam)
-    : UnitsController(board, turnBar, scene, team, oppositeTeam) {
+    : UnitsController(board, turnManager, scene, team, oppositeTeam) {
   const auto handler = new PlayerHandler(this);
   handler->setActive(false);
   listeners_.push_back(handler);

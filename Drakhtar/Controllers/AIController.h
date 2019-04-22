@@ -5,6 +5,6 @@
 
 class AIController final : public UnitsController {
  public:
-  AIController(Board* board, TurnBar* turnBar, GameScene* scene, Team* team,
-               Team* oppositeTeam);
+  AIController(Board* board, TurnManager* turnManager, GameScene* scene,
+               Team* team, Team* oppositeTeam);
 };
