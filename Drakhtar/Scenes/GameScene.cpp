@@ -129,6 +129,8 @@ void GameScene::preload() {
     addGameObject(tutorialSequence);
   }
 
+  setGame(true);
+
   team1_->getController()->start();
 }
 
