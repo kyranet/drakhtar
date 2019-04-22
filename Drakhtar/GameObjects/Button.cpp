@@ -15,6 +15,8 @@ Button::Button(Scene* scene, Texture* texture, const Vector2D<int>& pos,
   const auto buttonText = new ButtonText(scene, text, fontFile, size, pos);
   buttonText->setTransparent(true);
 
+  increSize_ = 15;
+
   addChild(buttonText);
   addEventListener(new ButtonListener(this));
 }
@@ -23,8 +25,7 @@ void Button::call() { callback_(); }
 
 void Button::render() const {
   if (hovered_) {
-    GameObject::render({position_.getX(), position_.getY(), size_.getX() + 5,
-                        size_.getY() + 5});
+    GameObject::render(changeRect());
   } else {
     GameObject::render(getRect());
   }
@@ -37,5 +38,12 @@ void Button::update() {
 }
 
 SDL_Rect Button::getRect() const {
-  return {position_.getX(), position_.getY(), size_.getX(), size_.getY()};
+  return {position_.getX() - size_.getX() / 2,
+          position_.getY() - size_.getY() / 2, size_.getX(), size_.getY()};
+}
+
+SDL_Rect Button::changeRect() const {
+  return {position_.getX() - (size_.getX() + increSize_) / 2,
+          position_.getY() - (size_.getY() + increSize_) / 2,
+          size_.getX() + increSize_, size_.getY() + increSize_};
 }

@@ -13,6 +13,7 @@ class Button final : public GameObject {
 
  protected:
   bool hovered_ = false;
+  int increSize_;
 
  public:
   Button(Scene* scene, Texture* texture, const Vector2D<int>& pos,
@@ -22,4 +23,5 @@ class Button final : public GameObject {
   void render() const override;
   void update() override;
   SDL_Rect getRect() const override;
+  SDL_Rect changeRect() const;
 };
