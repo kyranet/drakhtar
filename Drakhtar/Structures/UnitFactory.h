@@ -1,8 +1,8 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
+#pragma once
 #include <map>
 #include <string>
-#pragma once
 
 class Scene;
 class Team;
@@ -11,7 +11,7 @@ class Unit;
 class Commander;
 struct UnitStats;
 
-enum CommanderType { THASSA, ZAMRAN };
+enum class CommanderType { THASSA, ZAMDRAN };
 
 class UnitFactory {
   Scene* scene_;
@@ -22,8 +22,8 @@ class UnitFactory {
  public:
   explicit UnitFactory(Scene* scene);
   ~UnitFactory();
-  Unit* newBattalion(const std::string type, Team* team, Box* box, int size);
-  Commander* newCommander(const std::string type, Team* team, Box* box);
+  Unit* newBattalion(const std::string& type, Team* team, Box* box, int size);
+  Commander* newCommander(const std::string& type, Team* team, Box* box);
 
-  const UnitStats getStats(std::string type);
+  const UnitStats getStats(const std::string& type);
 };

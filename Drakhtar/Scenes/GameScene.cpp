@@ -60,16 +60,13 @@ void GameScene::preload() {
   auto army = GameManager::getInstance()->getArmy();
   auto typeOrder = GameManager::getInstance()->getTypeOrder();
 
-  auto it = typeOrder.cbegin();
-
   int y = 2;
-  while (it != typeOrder.cend()) {
-    if (army[it->second] > 0) {
+  for (const auto& pair : typeOrder) {
+    if (army[pair.second] > 0) {
       addGameObject(factory.newBattalion(
-          it->second, team1_, board_->getBoxAt(0, y), army[it->second]));
+          pair.second, team1_, board_->getBoxAt(0, y), army[pair.second]));
       y++;
     }
-    it++;
   }
 
   // Red Team

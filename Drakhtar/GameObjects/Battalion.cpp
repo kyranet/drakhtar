@@ -1,9 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Battalion.h"
-
 #include <algorithm>
-
 #include "Box.h"
 #include "HealthBar.h"
 #include "Managers/FontManager.h"

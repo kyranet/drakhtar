@@ -1,15 +1,14 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "UnitFactory.h"
-
-#include "../GameObjects/Battalion.h"
-#include "../GameObjects/Commanders/Thassa.h"
-#include "../GameObjects/Commanders/Zamdran.h"
-#include "../GameObjects/Unit.h"
-#include "../Managers/TextureManager.h"
-#include "../Scenes/Scene.h"
-#include "../Utils/Constants.h"
+#include "GameObjects/Battalion.h"
+#include "GameObjects/Commanders/Thassa.h"
+#include "GameObjects/Commanders/Zamdran.h"
+#include "GameObjects/Unit.h"
+#include "Managers/TextureManager.h"
+#include "Scenes/Scene.h"
 #include "Team.h"
+#include "Utils/Constants.h"
 
 UnitFactory::UnitFactory(Scene* scene) : scene_(scene) {
   statMap["Soldier"] = {soldierAttack,      soldierDefense,   soldierHealth,
@@ -42,12 +41,12 @@ UnitFactory::UnitFactory(Scene* scene) : scene_(scene) {
       zamdranAttack,    zamdranDefense, zamdranHealth, zamdranAttackRange,
       zamdranMoveRange, zamdranSpeed,   zamdranPrize};
 
-  commanderSwitch["Zamdran"] = CommanderType::ZAMRAN;
+  commanderSwitch["Zamdran"] = CommanderType::ZAMDRAN;
 }
 
 UnitFactory::~UnitFactory() = default;
 
-Unit* UnitFactory::newBattalion(const std::string type, Team* team, Box* box,
+Unit* UnitFactory::newBattalion(const std::string& type, Team* team, Box* box,
                                 int size) {
   if (statMap.find(type) == statMap.end()) return nullptr;
   const auto textureName =
@@ -59,7 +58,7 @@ Unit* UnitFactory::newBattalion(const std::string type, Team* team, Box* box,
   return unit;
 }
 
-Commander* UnitFactory::newCommander(const std::string type, Team* team,
+Commander* UnitFactory::newCommander(const std::string& type, Team* team,
                                      Box* box) {
   Commander* commander = nullptr;
   auto textureName = "Units-" + type;
@@ -68,7 +67,7 @@ Commander* UnitFactory::newCommander(const std::string type, Team* team,
       commander = new Thassa(scene_, TextureManager::get(textureName), box,
                              commanderMap[type]);
       break;
-    case CommanderType::ZAMRAN:
+    case CommanderType::ZAMDRAN:
       commander = new Zamdran(scene_, TextureManager::get(textureName), box,
                               commanderMap[type]);
       break;
@@ -80,6 +79,6 @@ Commander* UnitFactory::newCommander(const std::string type, Team* team,
   return commander;
 }
 
-const UnitStats UnitFactory::getStats(std::string type) {
+const UnitStats UnitFactory::getStats(const std::string& type) {
   return statMap[type];
 }

@@ -1,11 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Unit.h"
-
 #include <algorithm>
-#include "Managers/FontManager.h"
-#include "Structures/Team.h"
-#include "Utils/Vector2D.h"
 #include "Board.h"
 #include "Box.h"
 #include "HealthBar.h"
@@ -13,6 +9,7 @@
 #include "Scenes/GameScene.h"
 #include "Structures/Team.h"
 #include "Text.h"
+#include "Utils/Vector2D.h"
 
 Unit::Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
            const std::string& type)
@@ -68,7 +65,7 @@ void Unit::moveToBox(Box* newBox) {
 }
 
 int Unit::loseHealth(int enemyAttack, int minDamage) {
-  enemyAttack = enemyAttack * (1 - stats_.defense / 100.0);
+  enemyAttack = static_cast<int>(enemyAttack * (1.0 - stats_.defense / 100.0));
   enemyAttack = std::max(enemyAttack, minDamage);
 
   health_ = std::max(health_ - enemyAttack, 0);
