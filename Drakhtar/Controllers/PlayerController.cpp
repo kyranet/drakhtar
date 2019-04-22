@@ -1,7 +1,9 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "PlayerController.h"
+
 #include <iostream>
+
 #include "Controllers/Handlers/PlayerHandler.h"
 #include "GameObjects/Board.h"
 #include "GameObjects/Box.h"
@@ -18,10 +20,10 @@
 #include "Structures/Tween.h"
 #include "Utils/Constants.h"
 
-PlayerController::PlayerController(Board* board, TurnBar* turnBar,
+PlayerController::PlayerController(Board* board, TurnManager* turnManager,
                                    GameScene* scene, Team* team,
                                    Team* oppositeTeam)
-    : UnitsController(board, turnBar, scene, team, oppositeTeam) {
+    : UnitsController(board, turnManager, scene, team, oppositeTeam) {
   const auto handler = new PlayerHandler(this);
   handler->setActive(false);
   listeners_.push_back(handler);
@@ -124,12 +126,12 @@ void PlayerController::start() {
   UnitsController::start();
   if (!activeUnit_) return UnitsController::finish();
 
-  skipTurnButton_ =
-      new Button(scene_, TextureManager::get("Button-SkipTurn"),
-                 Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT - WIN_HEIGHT / 8),
-                 Vector2D<int>(static_cast<int>(WIN_WIDTH / 7),
-                               static_cast<int>(WIN_HEIGHT / 4.5)),
-                 [this]() { finish(); }, " ", "ButtonFont");
+  skipTurnButton_ = new Button(
+      scene_, TextureManager::get("Button-SkipTurn"),
+      Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT - WIN_HEIGHT / 8),
+      Vector2D<int>(static_cast<int>(WIN_WIDTH / 7),
+                    static_cast<int>(WIN_HEIGHT / 4.5)),
+      [this]() { finish(); }, " ", "ButtonFont");
   scene_->addGameObject(skipTurnButton_);
 
   activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);

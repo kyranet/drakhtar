@@ -2,9 +2,10 @@
 
 #pragma once
 #include <vector>
+
 #include "SDL.h"
 
-class TurnBar;
+class TurnManager;
 class Unit;
 class GameScene;
 class Board;
@@ -20,9 +21,9 @@ class UnitsController {
   Board* board_;
 
   /**
-   * \brief A pointer to the game's turn bar.
+   * \brief A pointer to the game's turn manager.
    */
-  TurnBar* turnBar_;
+  TurnManager* turnManager_;
 
   /**
    * \brief A pointer to the unit that has the turn.
@@ -61,8 +62,8 @@ class UnitsController {
   bool hasAttacked_ = false;
 
  public:
-  UnitsController(Board* board, TurnBar* turnBar, GameScene* scene, Team* team,
-                  Team* oppositeTeam);
+  UnitsController(Board* board, TurnManager* turnManager, GameScene* scene,
+                  Team* team, Team* oppositeTeam);
 
   virtual ~UnitsController();
 
@@ -82,7 +83,7 @@ class UnitsController {
   virtual void end() {}
 
   Board* getBoard() const;
-  TurnBar* getTurnBar() const;
+  TurnManager* getTurnManager() const;
   Unit* getActiveUnit() const;
   bool hasMoved() const;
   bool hasAttacked() const;
