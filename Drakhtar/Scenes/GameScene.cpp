@@ -58,14 +58,15 @@ void GameScene::preload() {
   addGameObject(thassa);
 
   auto army = GameManager::getInstance()->getArmy();
+  auto typeOrder = GameManager::getInstance()->getTypeOrder();
 
-  auto it = army.cbegin();
+  auto it = typeOrder.cbegin();
 
   int y = 2;
-  while (it != army.cend()) {
-    if (it->second > 0) {
-      addGameObject(factory.newBattalion(it->first, team1_,
-                                         board_->getBoxAt(0, y), it->second));
+  while (it != typeOrder.cend()) {
+    if (army[it->second] > 0) {
+      addGameObject(factory.newBattalion(
+          it->second, team1_, board_->getBoxAt(0, y), army[it->second]));
       y++;
     }
     it++;
