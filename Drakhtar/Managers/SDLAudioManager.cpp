@@ -12,6 +12,7 @@ SDLAudioManager::SDLAudioManager() : SDLAudioManager(8) {}
 SDLAudioManager::SDLAudioManager(const int channels)
     : initialized_(false), channels_(channels) {
   muted_ = false;
+  default_ = true;
 }
 
 SDLAudioManager::~SDLAudioManager() {

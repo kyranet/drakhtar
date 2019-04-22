@@ -45,18 +45,22 @@ OptionsMenu::OptionsMenu(Scene* scene) : GameObject(scene, nullptr) {
                      Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2.25),
                      Vector2D<int>(static_cast<int>(WIN_WIDTH / 22),
                                    static_cast<int>(WIN_HEIGHT / 20)));
-  const auto moreSoundBox =
-      new Button(scene_, TextureManager::get("Quantity-Button"),
-                 Vector2D<int>(WIN_WIDTH / 1.75, WIN_HEIGHT / 2.25),
-                 Vector2D<int>(static_cast<int>(WIN_WIDTH / 15),
-                               static_cast<int>(WIN_HEIGHT / 8)),
-                 [this]() { highervolume(); });
-  const auto LessSoundBox =
-      new Button(scene_, TextureManager::get("Quantity-Button"),
-                 Vector2D<int>(WIN_WIDTH / 2.35, WIN_HEIGHT / 2.25),
-                 Vector2D<int>(static_cast<int>(WIN_WIDTH / 15),
-                               static_cast<int>(WIN_HEIGHT / 8)),
-                 [this]() { lowervolume(); });
+  const auto moreSoundBox = new Button(
+      scene_, TextureManager::get("Quantity-Button"),
+      Vector2D<int>(WIN_WIDTH / 1.75, WIN_HEIGHT / 2.25),
+      Vector2D<int>(static_cast<int>(WIN_WIDTH / 15),
+                    static_cast<int>(WIN_HEIGHT / 8)),
+      [this]() {
+        SDLAudioManager::getInstance()->getDefault() ? NULL : highervolume();
+      });
+  const auto LessSoundBox = new Button(
+      scene_, TextureManager::get("Quantity-Button"),
+      Vector2D<int>(WIN_WIDTH / 2.35, WIN_HEIGHT / 2.25),
+      Vector2D<int>(static_cast<int>(WIN_WIDTH / 15),
+                    static_cast<int>(WIN_HEIGHT / 8)),
+      [this]() {
+        SDLAudioManager::getInstance()->getDefault() ? NULL : lowervolume();
+      });
 
   const auto plusText =
       new Text(scene_, FontManager::get("StatsFont"),
