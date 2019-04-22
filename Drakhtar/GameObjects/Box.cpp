@@ -1,11 +1,13 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Box.h"
+
 #include "Board.h"
 #include "Controllers/UnitsController.h"
 #include "GameObjects/TurnBar.h"
 #include "Managers/Input.h"
 #include "Managers/TextureManager.h"
+#include "Managers/TurnManager.h"
 #include "Scenes/Scene.h"
 #include "Structures/Team.h"
 #include "Unit.h"
@@ -74,7 +76,7 @@ void Box::setCurrentTexture(TextureInd cellTexture) {
 void Box::destroyContent() {
   const auto unit = getContent();
   unit->kill();
-  unit->getTeam()->getController()->getTurnBar()->remove(unit);
+  unit->getTeam()->getController()->getTurnManager()->remove(unit);
   getScene()->removeGameObject(unit);
   setContent(nullptr);
 }
