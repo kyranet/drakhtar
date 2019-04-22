@@ -39,7 +39,7 @@ Battalion::Battalion(Scene* scene, Texture* texture, Box* box,
   healthBar_->setMaxHP(baseStats_.health * battalionSize);
 }
 
-Battalion::~Battalion() {}
+Battalion::~Battalion() = default;
 
 std::string Battalion::sizeToString() const {
   return std::to_string(battalionSize_);

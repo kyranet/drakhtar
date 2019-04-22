@@ -2,7 +2,6 @@
 
 #pragma once
 #include <string>
-
 #include "Unit.h"
 
 class Scene;

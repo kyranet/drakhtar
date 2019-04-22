@@ -2,9 +2,9 @@
 
 #include "Unit.h"
 #include <algorithm>
-#include "../Managers/FontManager.h"
-#include "../Structures/Team.h"
-#include "../Utils/Vector2D.h"
+#include "Managers/FontManager.h"
+#include "Structures/Team.h"
+#include "Utils/Vector2D.h"
 #include "Board.h"
 #include "Box.h"
 #include "HealthBar.h"
