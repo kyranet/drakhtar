@@ -34,12 +34,12 @@ OptionsMenu::OptionsMenu(Scene* scene) : GameObject(scene, nullptr) {
                      Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
                      Vector2D<int>(static_cast<int>(WIN_WIDTH / 4),
                                    static_cast<int>(WIN_HEIGHT / 3)));
-  const auto returnButton =
-      new Button(scene_, TextureManager::get("Button-Exit"),
-                 Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 1.65),
-                 Vector2D<int>(static_cast<int>(WIN_WIDTH / 14),
-                               static_cast<int>(WIN_HEIGHT / 12)),
-                 [this]() { destroy(); });
+  const auto returnButton = new Button(
+      scene_, TextureManager::get("Button-Exit"),
+      Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 1.65),
+      Vector2D<int>(static_cast<int>(WIN_WIDTH / 14),
+                    static_cast<int>(WIN_HEIGHT / 12)),
+      [this]() { destroy(); }, "Return", "StatsFont");
   const auto soundIcon =
       new GameObject(scene_, TextureManager::get("UI-ActiveSound"),
                      Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2.25),
@@ -52,7 +52,8 @@ OptionsMenu::OptionsMenu(Scene* scene) : GameObject(scene, nullptr) {
                     static_cast<int>(WIN_HEIGHT / 8)),
       [this]() {
         SDLAudioManager::getInstance()->getDefault() ? NULL : highervolume();
-      });
+      },
+      "More Sound", "StatsFont");
   const auto LessSoundBox = new Button(
       scene_, TextureManager::get("Quantity-Button"),
       Vector2D<int>(WIN_WIDTH / 2.35, WIN_HEIGHT / 2.25),
@@ -60,7 +61,8 @@ OptionsMenu::OptionsMenu(Scene* scene) : GameObject(scene, nullptr) {
                     static_cast<int>(WIN_HEIGHT / 8)),
       [this]() {
         SDLAudioManager::getInstance()->getDefault() ? NULL : lowervolume();
-      });
+      },
+      "Less Sound", "StatsFont");
 
   const auto plusText =
       new Text(scene_, FontManager::get("StatsFont"),
@@ -79,15 +81,16 @@ OptionsMenu::OptionsMenu(Scene* scene) : GameObject(scene, nullptr) {
                              Vector2D<int>(static_cast<int>(WIN_WIDTH / 17),
                                            static_cast<int>(WIN_HEIGHT / 12)));
   greenTick->setTransparent(true);
-  const auto defaultButton =
-      new Button(scene_, TextureManager::get("UI-cellFrame"),
-                 Vector2D<int>(WIN_WIDTH / 2.25, WIN_HEIGHT / 1.9),
-                 Vector2D<int>(static_cast<int>(WIN_WIDTH / 35),
-                               static_cast<int>(WIN_WIDTH / 35)),
-                 [this]() {
-                   SDLAudioManager::getInstance()->setDefault(
-                       !SDLAudioManager::getInstance()->getDefault());
-                 });
+  const auto defaultButton = new Button(
+      scene_, TextureManager::get("UI-cellFrame"),
+      Vector2D<int>(WIN_WIDTH / 2.25, WIN_HEIGHT / 1.9),
+      Vector2D<int>(static_cast<int>(WIN_WIDTH / 35),
+                    static_cast<int>(WIN_WIDTH / 35)),
+      [this]() {
+        SDLAudioManager::getInstance()->setDefault(
+            !SDLAudioManager::getInstance()->getDefault());
+      },
+      "Default", "StatsFont");
 
   addChild(panel);
   moreSoundBox->addChild(plusText);

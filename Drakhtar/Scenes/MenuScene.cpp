@@ -32,12 +32,8 @@ void MenuScene::preload() {
       this, TextureManager::get("Vanilla-Button"),
       Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2 + WIN_HEIGHT / 18),
       Vector2D<int>(static_cast<int>(floor(WIN_WIDTH / 7.5)), WIN_HEIGHT / 12),
-      [this]() {
-        Game::getInstance()
-            ->getSceneMachine()
-            ->getCurrentScene()
-            ->addGameObject(new OptionsMenu(this));
-      });, "Options", "ButtonFont");
+      [this]() { this->addGameObject(new OptionsMenu(this)); }, "Options",
+      "ButtonFont");
 
   auto audio = SDLAudioManager::getInstance();
   audio->haltChannel(0);
