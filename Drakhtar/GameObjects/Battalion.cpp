@@ -16,7 +16,7 @@ Battalion::Battalion(Scene* scene, Texture* texture, Box* box,
                      const int battalionSize)
     : Unit(scene, texture, box, stats, type), battalionSize_(battalionSize) {
   stats_.maxHealth = baseStats_.maxHealth * battalionSize_;
-  stats_.defense = baseStats_.defense * battalionSize_;
+  stats_.defense = baseStats_.defense;
   stats_.attack = baseStats_.attack * battalionSize_;
   stats_.prize = baseStats_.prize * battalionSize_;
   health_ = stats_.maxHealth;
@@ -55,7 +55,7 @@ void Battalion::setBattalionSize(const int battalionSize) {
 
 int Battalion::getAttack() const { return stats_.attack * battalionSize_; }
 
-int Battalion::getDefense() const { return stats_.defense * battalionSize_; }
+int Battalion::getDefense() const { return stats_.defense; }
 
 int Battalion::getMaxHealth() const {
   return baseStats_.maxHealth * battalionSize_;
@@ -70,7 +70,6 @@ int Battalion::loseHealth(const int enemyAttack, int minDamage) {
   if (baseStats_.maxHealth * (battalionSize_ - 1) >= health_) {
     battalionSize_ -= std::max(health / baseStats_.maxHealth, 1);
     stats_.attack = baseStats_.attack * battalionSize_;
-    stats_.defense = baseStats_.defense * battalionSize_;
     if (battalionSize_ < 0) battalionSize_ = 0;
     minDamage_ = battalionSize_;
     sizeText_->setText(sizeToString());
