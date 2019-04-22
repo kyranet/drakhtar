@@ -98,13 +98,13 @@ void PlayerController::onClickAttack(Box* boxClicked) {
   const auto unitStats = unit->getStats();
 
   // Enemy dies
-  if (unitStats.maxHealth <= 0) {
+  if (unit->getHealth() <= 0) {
     // Unit dies to attack
     if (unit->getTeam()->getColor() == Color::RED) {
       GameManager::getInstance()->addMoney(unitStats.prize);
     }
     boxClicked->destroyContent();
-  } else if (activeUnit_->getStats().maxHealth <= 0) {
+  } else if (activeUnit_->getHealth() <= 0) {
     // Unit dies to counter-attack
     currentBox->destroyContent();
     finish();

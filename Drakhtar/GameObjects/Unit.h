@@ -55,6 +55,7 @@ class Unit : public GameObject {
   virtual int getPrize() const { return prize_; }
     int getSpeed() const { return speed_; }*/
 
+  int getHealth() const { return health_; }
   virtual int getDefense() const { return stats_.defense; }
   UnitStats getBaseStats() const { return baseStats_; }
   UnitStats getStats() const { return stats_; }
