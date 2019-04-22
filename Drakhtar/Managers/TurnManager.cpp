@@ -3,6 +3,7 @@
 #include "TurnManager.h"
 
 #include <utility>
+#include <algorithm>
 
 #include "GameObjects/Unit.h"
 #include "Scenes/GameScene.h"
@@ -11,7 +12,7 @@
 #include "TextureManager.h"
 #include "Utils/Constants.h"
 
-TurnManager::TurnManager(Scene* scene, std::vector<Unit*> team1,
+TurnManager::TurnManager(std::vector<Unit*> team1,
                          std::vector<Unit*> team2) {
   std::vector<Unit*> allVector;
   allVector.reserve(team1.size() + team2.size());  // preallocate memory
@@ -41,7 +42,6 @@ void TurnManager::next() {
 }
 
 void TurnManager::remove(Unit* unit) {
-  const auto team = unit->getTeam();
   auto turn = &allUnits_;
 
   size_t x = 0;

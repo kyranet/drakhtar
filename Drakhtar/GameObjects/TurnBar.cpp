@@ -19,7 +19,7 @@ TurnBar::TurnBar(Scene* scene, std::vector<Unit*> team1,
           Vector2D<int>(static_cast<int>(WIN_WIDTH - WIN_WIDTH / 5.3),
                         WIN_HEIGHT - WIN_HEIGHT / 13),
           Vector2D<int>(WIN_WIDTH / 2, static_cast<int>(WIN_WIDTH / 16.44))) {
-  turnManager_ = new TurnManager(scene, team1, team2);
+  turnManager_ = new TurnManager(team1, team2);
 
   const auto circle =
       new GameObject(scene_, TextureManager::get("UI-circle"),

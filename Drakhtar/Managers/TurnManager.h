@@ -18,7 +18,7 @@ class TurnManager final {
   std::array<Unit*, 8> calculated_{};
 
  public:
-  TurnManager(Scene* scene, std::vector<Unit*> team1, std::vector<Unit*> team2);
+  TurnManager(std::vector<Unit*> team1, std::vector<Unit*> team2);
   ~TurnManager();
   void next();
   void prepare();
