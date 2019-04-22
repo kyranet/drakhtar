@@ -68,6 +68,10 @@ Commander* UnitFactory::newCommander(const std::string type, Team* team,
       commander = new Thassa(scene_, TextureManager::get(textureName), box,
                              commanderMap[type]);
       break;
+    case CommanderType::ZAMRAN:
+      commander = new Zamdran(scene_, TextureManager::get(textureName), box,
+                              commanderMap[type]);
+      break;
     default:
       return nullptr;
   }

@@ -61,7 +61,7 @@ void GameScene::preload() {
 
   auto it = army.cbegin();
 
-  int y = 1;
+  int y = 2;
   while (it != army.cend()) {
     if (it->second > 0) {
       addGameObject(factory.newBattalion(it->first, team1_,
@@ -140,56 +140,33 @@ void GameScene::loadRedTeam(UnitFactory& factory) {
 
   if (!file.is_open()) throw DrakhtarError("Could not find file");
 
-  std::string captainName;
+  std::string commanderName;
 
   // File structure:
-  // CaptainName row col
-  // row col (for Soldier)
-  // row col (for Archer)
-  // row col (for Mage)
-  // row col (for Knight)
-  // row col (for Monster)
+  // CommanderName row col
+  // UnitType battalionSize row col
+  // ...
+  // UnitType battalionSize row col
 
-  file >> captainName;
+  file >> commanderName;
   if (file.fail()) throw DrakhtarError("File is not a level file");
 
   int row, col, size;
 
   file >> row >> col;
-  Commander* commander;
-  if (captainName == "Zamdran") {
-    commander = factory.newZamdran(team2_, board_->getBoxAt(row, col));
-
-  } else {
+  Commander* commander =
+      factory.newCommander(commanderName, team2_, board_->getBoxAt(row, col));
+  if (commander == nullptr)
     throw DrakhtarError(
         "File is not a level file or the captain is not implemented");
-  }
 
   team2_->addCommander(commander);
   addGameObject(commander);
-  if (!file.eof()) {
-    file >> size >> row >> col;
-    addGameObject(factory.newSoldier(team2_, board_->getBoxAt(row, col), size));
-  }
-
-  if (!file.eof()) {
-    file >> size >> row >> col;
-    addGameObject(factory.newArcher(team2_, board_->getBoxAt(row, col), size));
-  }
-
-  if (!file.eof()) {
-    file >> size >> row >> col;
-    addGameObject(factory.newWizard(team2_, board_->getBoxAt(row, col), size));
-  }
-
-  if (!file.eof()) {
-    file >> size >> row >> col;
-    addGameObject(factory.newKnight(team2_, board_->getBoxAt(row, col), size));
-  }
-
-  if (!file.eof()) {
-    file >> size >> row >> col;
-    addGameObject(factory.newMonster(team2_, board_->getBoxAt(row, col), size));
+  while (!file.eof()) {
+    std::string unitType;
+    file >> unitType >> size >> row >> col;
+    addGameObject(factory.newBattalion(unitType, team2_,
+                                       board_->getBoxAt(row, col), size));
   }
 
   file.close();
