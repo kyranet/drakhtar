@@ -2,6 +2,9 @@
 
 #include "Unit.h"
 #include <algorithm>
+#include "Managers/FontManager.h"
+#include "Structures/Team.h"
+#include "Utils/Vector2D.h"
 #include "Board.h"
 #include "Box.h"
 #include "HealthBar.h"
@@ -9,21 +12,22 @@
 #include "Scenes/GameScene.h"
 #include "Structures/Team.h"
 #include "Text.h"
-#include "Utils/Vector2D.h"
 
 Unit::Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
            const std::string& type)
     : GameObject(scene, texture,
                  Vector2D<int>(box->getRect().x + box->getRect().w / 2,
                                box->getRect().y + box->getRect().h / 2),
-                 Vector2D<int>(static_cast<int>(box->getRect().w * 2),
-                               static_cast<int>(box->getRect().h * 2))),
+                 Vector2D<int>(static_cast<int>(box->getRect().w * 1.25),
+                               static_cast<int>(box->getRect().h * 1.25))),
       boxPosition_(box->getPosition()),
       type_(type),
       box_(box),
       health_(stats.health),
       baseStats_(stats),
       stats_(stats) {
+  // Units must be ignored in the mouse raycasts.
+  setTransparent(true);
   box->setContent(this);
   const SDL_Color textColor = {255, 255, 255, 0};
   const auto rect = box_->getRect();
@@ -38,6 +42,9 @@ Unit::Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
       baseStats_.health);
 
   healthText_->setColor(textColor);
+
+  healthText_->setTransparent(true);
+  healthBar_->setTransparent(true);
 
   addChild(healthBar_);
   addChild(healthText_);

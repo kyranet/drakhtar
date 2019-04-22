@@ -22,4 +22,5 @@ class GameScene final : public Scene {
   void loadRedTeam(UnitFactory& factory);
 
   Board* getBoard() const;
+  int getBattleInd();
 };

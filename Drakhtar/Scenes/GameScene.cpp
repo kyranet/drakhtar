@@ -89,6 +89,8 @@ void GameScene::preload() {
   const auto turnBar =
       new TurnBar(this, team1_->getUnits(), team2_->getUnits());
 
+  turnBar->setTransparent(true);
+
   const auto dialog =
       new DialogScene(this, "dialog" + std::to_string(battle_), "DialogFont");
 
@@ -102,7 +104,7 @@ void GameScene::preload() {
                  Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 24, WIN_HEIGHT / 18),
                  Vector2D<int>(static_cast<int>(WIN_WIDTH / 21.6),
                                static_cast<int>(WIN_HEIGHT / 14.4)),
-                 buttonPause);
+                 buttonPause, " ", "ButtonFont");
 
   audio->haltMusic();
   if (audio->getDefault()) audio->setMusicVolume(10);
@@ -126,6 +128,8 @@ void GameScene::preload() {
         new TutorialSequence(this, "tutorials", "TutorialFont");
     addGameObject(tutorialSequence);
   }
+
+  setGame(true);
 
   team1_->getController()->start();
 }
@@ -201,3 +205,5 @@ void GameScene::loadRedTeam(UnitFactory& factory) {
 }
 
 Board* GameScene::getBoard() const { return board_; }
+
+int GameScene::getBattleInd() { return battle_; }

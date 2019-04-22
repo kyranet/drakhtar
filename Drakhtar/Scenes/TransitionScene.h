@@ -8,6 +8,8 @@ class TransitionScene final : public Scene {
   explicit TransitionScene(int battle);
   void preload() override;
   // void run();
+  int getBattleInd();
+
  private:
   int battle_;
   // DialogScene dialog;
