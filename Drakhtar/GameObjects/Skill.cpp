@@ -1,25 +1,37 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Skill.h"
-#include "../Structures/Team.h"
 
-Skill::Skill(std::string id, int cooldown, int duration, Unit* caster)
-    : id_(std::move(id)), caster_(caster), cooldown_(cooldown), duration_(duration) {}
+#include "../Controllers/UnitsController.h"
+#include "../Managers/TurnManager.h"
+#include "../Structures/Team.h"
+#include "Commanders/Commander.h"
+
+Skill::Skill(std::string id, int cooldown, int duration, Commander* caster)
+    : id_(std::move(id)),
+      caster_(caster),
+      cooldown_(cooldown),
+      duration_(duration) {}
 
 // ---------- BATTLECRY ----------
-BattleCry::BattleCry(Unit* caster) : Skill("BattleCry", 3, 1, caster) {}
+#pragma region BattleCry
 
-void BattleCry::cast(Board*) {
+BattleCry::BattleCry(Commander* caster) : Skill("BattleCry", 3, 1, caster) {}
+
+void BattleCry::cast(GameScene* scene) {
   if (remainingCooldown_ == 0 && caster_->getMoving()) {
     std::cout << "Casted <BattleCry> by Thassa" << std::endl;
     active_ = true;
+    // Boost attack and speed of every unit in the same team
     for (auto unit : caster_->getTeam()->getUnits()) {
-      unit->setAttack(
+      unit->Unit::setAttack(
           static_cast<int>(floor(unit->getStats().attack * 1.2)));
-      // TODO(onaranjoUCM): Uncomment when we get access to turnBar
-      // unit->setSpeed(unit->getSpeed() + 1);
-      // turnBar.sort()
+      unit->setSpeed(unit->getStats().speed + 10);
     }
+
+    // Update turn priority
+    caster_->getTeam()->getController()->getTurnManager()->sortUnits();
+
     remainingCooldown_ = cooldown_;
   }
 }
@@ -27,40 +39,58 @@ void BattleCry::cast(Board*) {
 void BattleCry::end() {
   std::cout << "<BattleCry> ended" << std::endl;
   active_ = false;
+
+  // Reset every unit's attack and speed to base
   for (auto unit : caster_->getTeam()->getUnits()) {
     unit->setAttack(unit->getBaseStats().attack);
-    // TODO(onaranjoUCM): Uncomment when we get access to turnBar
-    // unit->setSpeed(unit->getBaseSpeed());
+    unit->setSpeed(unit->getBaseStats().speed);
   }
-}
 
-void BattleCry::resetAttack() {
-  if (remainingCooldown_ == 0) {
-    std::cout << "Casted <BattleCry>" << std::endl;
-    for (auto unit : caster_->getTeam()->getUnits()) {
-      unit->setAttack(
-          static_cast<int>(floor(unit->getStats().attack * 1.2)));
-    }
-    remainingCooldown_ = cooldown_;
-  }
+  // Update turn priority
+  caster_->getTeam()->getController()->getTurnManager()->sortUnits();
 }
+#pragma endregion BattleCry
 
 // ---------- ARROW RAIN ----------
-ArrowRain::ArrowRain(Unit* caster) : Skill("ArrowRain", 2, 0, caster) {}
+#pragma region ArrowRain
+ArrowRain::ArrowRain(Commander* caster) : Skill("ArrowRain", 2, 0, caster) {}
 
-void ArrowRain::cast(Board*) {
+void ArrowRain::cast(GameScene* scene) {
   if (remainingCooldown_ == 0 && caster_->getMoving()) {
     std::cout << "Casted <ArrowRain> by Zamdran" << std::endl;
     active_ = true;
-    for (auto unit : caster_->getTeam()->getUnits()) {
-      unit->setAttack(
-          static_cast<int>(floor(unit->getStats().attack * 1.2)));
+
+    // Caster deal half damage to every enemy unit
+    for (auto unit : scene->getTeam1_()->getUnits()) {
+      unit->loseHealth(caster_->getStats().attack / 2, 1);
     }
     remainingCooldown_ = cooldown_;
+    end();
   }
 }
 
-void ArrowRain::end() {
-  active_ = false;
-  std::cout << "<ArrowRain> ended" << std::endl;
+void ArrowRain::end() { active_ = false; }
+#pragma endregion ArrowRain
+
+// ---------- HEROIC STRIKE ----------
+#pragma region HeroicStrike
+HeroicStrike::HeroicStrike(Commander* caster)
+    : Skill("HeroicStrike", 2, 0, caster) {}
+
+void HeroicStrike::cast(GameScene* scene) {
+  if (remainingCooldown_ == 0 && caster_->getMoving()) {
+    active_ = true;
+    std::cout << "Casted <HeroicStrike> by Thassa" << std::endl;
+    attackIncrement_ = caster_->getStats().attack * 0.5;
+    caster_->setAttack(caster_->getStats().attack + attackIncrement_);
+    caster_->setUnstoppable(true);
+  }
 }
+
+void HeroicStrike::end() {
+  active_ = false;
+  std::cout << "<HeroicStrike> ended" << std::endl;
+  caster_->setAttack(caster_->getStats().attack - attackIncrement_);
+  caster_->setUnstoppable(false);
+}
+#pragma endregion HeroicStrike

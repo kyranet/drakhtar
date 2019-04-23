@@ -1,12 +1,12 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-#include "Board.h"
-#include "Commanders/Commander.h"
 #include "GameObject.h"
 
+class Commander;
+class GameScene;
+
 class SkillButton : public GameObject {
- private:
   /**
    * \brief The commander whose skill this button triggers.
    */
@@ -20,11 +20,11 @@ class SkillButton : public GameObject {
   /**
    * \brief The game board, required info for most skills.
    */
-  Board* board_;
+  GameScene* gameScene_;
 
  public:
-  SkillButton(Scene* scene, Texture* texture, Vector2D<int> pos,
-              Vector2D<int> size, Board* board, Commander* commander,
+  SkillButton(GameScene* scene, Texture* texture, Vector2D<int> pos,
+              Vector2D<int> size, Commander* commander,
               int skill);
 
   /**

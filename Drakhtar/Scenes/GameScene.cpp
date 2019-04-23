@@ -8,6 +8,7 @@
 #include "Errors/DrakhtarError.h"
 #include "GameObjects/Battalion.h"
 #include "GameObjects/Button.h"
+#include "GameObjects/Board.h"
 #include "GameObjects/Commanders/Thassa.h"
 #include "GameObjects/Commanders/Zamdran.h"
 #include "GameObjects/DialogScene.h"
@@ -101,19 +102,18 @@ void GameScene::preload() {
   audio->haltMusic();
   if (audio->getDefault()) audio->setMusicVolume(10);
   audio->playMusic(1, 999);
-  /*
-   // Reactivar cuando se implementen las habilidades definitivamente
+
   const auto battleCryButton =
       new SkillButton(this, TextureManager::get("Button-BattleCry"),
                       Vector2D<int>(WIN_WIDTH / 24, WIN_HEIGHT / 18),
                       Vector2D<int>(static_cast<int>(WIN_WIDTH / 21.6),
                                     static_cast<int>(WIN_HEIGHT / 14.4)),
-                      board_, thassa, 0);
-  */
+                      thassa, 1);
+
   addGameObject(turnBar);
   addGameObject(dialog);
   addGameObject(pauseButton);
-  // addGameObject(battleCryButton);
+  addGameObject(battleCryButton);
 
   if (battle_ == 1) {
     const auto tutorialSequence =

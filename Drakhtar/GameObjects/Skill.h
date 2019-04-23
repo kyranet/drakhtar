@@ -2,13 +2,15 @@
 
 #pragma once
 #include <string>
-#include "Board.h"
-#include "Unit.h"
+
+#include "Scenes/GameScene.h"
+
+class Commander;
 
 class Skill {
  protected:
   std::string id_;
-  Unit* caster_;
+  Commander* caster_;
   int cooldown_;
   int duration_;
   int remainingCooldown_ = 0;
@@ -16,34 +18,45 @@ class Skill {
   bool active_ = false;
 
  public:
-  Skill(std::string id, int cooldown, int duration, Unit* caster);
-  virtual ~Skill() {}
+  Skill(std::string id, int cooldown, int duration, Commander* caster);
+  virtual ~Skill() = default;
 
-  virtual void cast(Board* board) = 0;
+  virtual void cast(GameScene* scene) = 0;
   virtual void end() = 0;
 
-  bool getActive() { return active_; }
-  int getRemainingCooldown() { return remainingCooldown_; }
-  int getRemainingDuration() { return remainingDuration_; }
-  void setRemainingCooldown(int turns) { remainingCooldown_ = turns; }
-  void setRemainingDuration(int turns) { remainingDuration_ = turns; }
+  bool getActive() const { return active_; }
+  int getRemainingCooldown() const { return remainingCooldown_; }
+  int getRemainingDuration() const { return remainingDuration_; }
+  void setRemainingCooldown(const int turns) { remainingCooldown_ = turns; }
+  void setRemainingDuration(const int turns) { remainingDuration_ = turns; }
 };
 
-class BattleCry : public Skill {
+class BattleCry final : public Skill {
  public:
-  explicit BattleCry(Unit* caster);
-  virtual ~BattleCry() {}
+  explicit BattleCry(Commander* caster);
+  virtual ~BattleCry() = default;
 
-  virtual void cast(Board* board);
-  virtual void end();
+  void cast(GameScene* scene) override;
+  void end() override;
   void resetAttack();
 };
 
-class ArrowRain : public Skill {
+class ArrowRain final : public Skill {
  public:
-  explicit ArrowRain(Unit* caster);
-  virtual ~ArrowRain() {}
+  explicit ArrowRain(Commander* caster);
+  virtual ~ArrowRain() = default;
 
-  virtual void cast(Board* board);
-  virtual void end();
+  void cast(GameScene* scene) override;
+  void end() override;
+};
+
+class HeroicStrike final : public Skill {
+  double attackIncrement_;
+
+ public:
+  explicit HeroicStrike(Commander* caster);
+  virtual ~HeroicStrike() = default;
+
+  void cast(GameScene* scene) override;
+  void end() override;
 };

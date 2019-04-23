@@ -90,7 +90,7 @@ void PlayerController::onClickAttack(Box* boxClicked) {
   hasAttacked_ = true;
 
   activeUnit_->getTexture()->setAnimationOnce("attack");
-  activeUnit_->attack(unit, false);
+  activeUnit_->attack(unit, true);
   SDLAudioManager::getInstance()->playChannel(5, 0, 0);
 
   const auto unitStats = unit->getStats();

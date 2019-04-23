@@ -28,9 +28,11 @@ void UnitsController::start() {
   // Deactivate all listeners
   for (auto& listener : listeners_) listener->setActive(true);
   activeUnit_ = turnManager_->getTurnFor();
+  activeUnit_->onSelect();
 }
 
 void UnitsController::finish() {
+  activeUnit_->onDeselect();
   for (auto& listener : listeners_) listener->setActive(false);
   activeUnit_ = nullptr;
 

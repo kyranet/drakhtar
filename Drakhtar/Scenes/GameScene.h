@@ -26,4 +26,7 @@ class GameScene final : public Scene {
 
   Board* getBoard() const;
   int getBattleInd();
+
+  Team* getTeam1_() const { return team1_; }
+  Team* getTeam2_() const { return team2_; }
 };

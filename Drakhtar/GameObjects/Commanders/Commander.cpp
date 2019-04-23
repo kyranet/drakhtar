@@ -2,6 +2,7 @@
 
 #include "Commander.h"
 
+#include "../../GameObjects/Board.h"
 #include "../../GameObjects/Box.h"
 #include "../../Managers/TextureManager.h"
 #include "Scenes/GameScene.h"
@@ -50,6 +51,17 @@ void Commander::onSelect() {
   }
 }
 
+void Commander::onDeselect() {
+  Unit::onDeselect();
+
+  for (auto skill : skills_) {
+    // Ends skill if it was active and its duration finished
+    if (skill->getActive() && skill->getRemainingDuration() == 0) {
+      skill->end();
+    }
+  }
+}
+
 void Commander::kill() {
   Unit::kill();
   int currentScene = reinterpret_cast<GameScene*>(getScene())->getBattleInd();
@@ -68,4 +80,13 @@ void Commander::moveToBox(Box* box) {
   Unit::moveToBox(box);
   const auto rect = box_->getRect();
   commanderIcon_->setPosition(Vector2D<int>(rect.x, rect.y - rect.h / 3));
+}
+
+void Commander::attack(Unit* enemy, bool allowsCounter) {
+  // If the attack would allow a counter but the commander is unstoppable_, the
+  // attack does not allow counter
+  if (allowsCounter && unstoppable_) {
+    allowsCounter = false;
+  }
+  Unit::attack(enemy, allowsCounter);
 }
