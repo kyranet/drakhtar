@@ -3,12 +3,6 @@
 
 #include "GameObject.h"
 class OptionsMenu : public GameObject {
-  /*GameObject* greenTick;
-  GameObject* soundIcon;
-  GameObject* muteIcon;
-  */
  public:
   explicit OptionsMenu(Scene* scene);
-  ~OptionsMenu();
-  void render() const override;
 };
