@@ -96,7 +96,7 @@ void Game::load() {
   textures->add("Units-RedSoldier", "../images/Units/RedSoldier.png", 4, 3)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10, 11});
-  textures->add("Units-Sheissa", "../images/Units/Sheissa.png", 4, 3)
+  textures->add("Units-Sheissah", "../images/Units/Sheissah.png", 4, 3)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10});
   textures->add("Units-BlueValar", "../images/Units/BlueValar.png", 5, 3)

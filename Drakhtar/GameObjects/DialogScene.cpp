@@ -10,6 +10,7 @@
 #include "Managers/FontManager.h"
 #include "Managers/TextureManager.h"
 #include "Scenes/GameScene.h"
+#include "Scenes/TransitionScene.h"
 #include "Scenes/RecruitScene.h"
 #include "Scenes/Scene.h"
 #include "Structures/Font.h"
@@ -74,16 +75,27 @@ void DialogScene::next() {
     ++dialogueIndex_;
   } else {
     destroy();
-    if (Game::getSceneMachine()->getCurrentScene()->getTransition())
-      Game::getSceneMachine()->changeScene(new GameScene(1));
+    auto currentScene = Game::getSceneMachine()->getCurrentScene();
+    if (currentScene->getTransition())
+		{
+      int scene =
+          reinterpret_cast<TransitionScene*>(getScene())->getBattleInd();
+
+      Game::getSceneMachine()->changeScene(new GameScene(scene));
+	  }
   }
 }
 
 void DialogScene::skip() {
   destroy();
   if (Game::getSceneMachine()->getCurrentScene()->getTransition())
-    Game::getSceneMachine()->changeScene(new GameScene(1));
+	  {
+    int scene = reinterpret_cast<TransitionScene*>(getScene())->getBattleInd();
+
+    Game::getSceneMachine()->changeScene(new GameScene(scene));
+  }
 }
+
 
 void DialogScene::readFromFile(const std::string& filename, Font* textFont,
                                const SDL_Rect rect) {
