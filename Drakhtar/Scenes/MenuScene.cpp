@@ -1,16 +1,16 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
-#include "MenuScene.h"
 
-#include "../GameObjects/Button.h"
-#include "../GameObjects/GameObject.h"
-#include "../Managers/TextureManager.h"
-#include "../Scenes/TransitionScene.h"
-#include "../Structures/Game.h"
-#include "../Utils/Constants.h"
-#include "../Utils/Vector2D.h"
+#include "MenuScene.h"
+#include "GameObjects/Button.h"
+#include "GameObjects/GameObject.h"
 #include "GameObjects/OptionsMenu.h"
 #include "Managers/SDLAudioManager.h"
+#include "Managers/TextureManager.h"
 #include "RecruitScene.h"
+#include "Scenes/TransitionScene.h"
+#include "Structures/Game.h"
+#include "Utils/Constants.h"
+#include "Utils/Vector2D.h"
 
 void buttonPlay() {
   Game::getSceneMachine()->changeScene(new RecruitScene());

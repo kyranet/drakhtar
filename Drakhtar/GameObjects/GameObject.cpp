@@ -22,12 +22,11 @@ GameObject::~GameObject() {
 }
 
 void GameObject::render(SDL_Rect rect) const {
-  if (getRenderizable()) {
-  if (texture_ != nullptr) {
+  if (getRenderizable() && texture_ != nullptr) {
     texture_->renderFrame(rect, texture_->getAnimation()[texture_->getFrame()]);
   }
-  }
-  for (auto child : children_) if(child->getRenderizable())child->render();
+  for (auto child : children_)
+    if (child->getRenderizable()) child->render();
 }
 
 void GameObject::render() const { render(getRect()); }
