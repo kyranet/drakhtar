@@ -14,24 +14,6 @@
 GameObject* greenTick;
 GameObject* soundIcon;
 GameObject* muteIcon;
-void highervolume() {
-  SDLAudioManager::getInstance()->setChannelVolume(
-      SDLAudioManager::getInstance()->getChannelVolume() + 10, 0);
-  SDLAudioManager::getInstance()->setChannelVolume(
-      SDLAudioManager::getInstance()->getChannelVolume() + 10, 1);
-  SDLAudioManager::getInstance()->setMusicVolume(
-      SDLAudioManager::getInstance()->getMusicVolume() + 10);
-}
-void lowervolume() {
-  if (SDLAudioManager::getInstance()->getMusicVolume() > 0) {
-    SDLAudioManager::getInstance()->setChannelVolume(
-        SDLAudioManager::getInstance()->getChannelVolume() - 10, 0);
-    SDLAudioManager::getInstance()->setChannelVolume(
-        SDLAudioManager::getInstance()->getChannelVolume() - 10, 1);
-    SDLAudioManager::getInstance()->setMusicVolume(
-        SDLAudioManager::getInstance()->getMusicVolume() - 10);
-  }
-}
 OptionsMenu::OptionsMenu(Scene* scene) : GameObject(scene, nullptr) {
   const auto panel =
       new GameObject(scene_, TextureManager::get("UI-WhiteBox"),
@@ -43,7 +25,7 @@ OptionsMenu::OptionsMenu(Scene* scene) : GameObject(scene, nullptr) {
       Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 1.65),
       Vector2D<int>(static_cast<int>(WIN_WIDTH / 10),
                     static_cast<int>(WIN_HEIGHT / 8)),
-      [this]() { this->destroy(); }, "Return", "ButtonFont");
+      [this]() { destroy(); }, "Return", "ButtonFont");
   soundIcon = new GameObject(scene_, TextureManager::get("UI-ActiveSound"),
                              Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2.25),
                              Vector2D<int>(static_cast<int>(WIN_WIDTH / 25),
@@ -58,7 +40,14 @@ OptionsMenu::OptionsMenu(Scene* scene) : GameObject(scene, nullptr) {
       Vector2D<int>(static_cast<int>(WIN_WIDTH / 15),
                     static_cast<int>(WIN_HEIGHT / 8)),
       [this]() {
-        SDLAudioManager::getInstance()->getDefault() ? highervolume() : nullptr;
+        if (SDLAudioManager::getInstance()->getDefault()) {
+          SDLAudioManager::getInstance()->setChannelVolume(
+              SDLAudioManager::getInstance()->getChannelVolume() + 10, 0);
+          SDLAudioManager::getInstance()->setChannelVolume(
+              SDLAudioManager::getInstance()->getChannelVolume() + 10, 1);
+          SDLAudioManager::getInstance()->setMusicVolume(
+              SDLAudioManager::getInstance()->getMusicVolume() + 10);
+        };
       },
       "+", "StatsFont");
   const auto LessSoundBox = new Button(
@@ -67,7 +56,16 @@ OptionsMenu::OptionsMenu(Scene* scene) : GameObject(scene, nullptr) {
       Vector2D<int>(static_cast<int>(WIN_WIDTH / 15),
                     static_cast<int>(WIN_HEIGHT / 8)),
       [this]() {
-        SDLAudioManager::getInstance()->getDefault() ? lowervolume() : nullptr;
+        if (SDLAudioManager::getInstance()->getDefault()) {
+          if (SDLAudioManager::getInstance()->getMusicVolume() > 0) {
+            SDLAudioManager::getInstance()->setChannelVolume(
+                SDLAudioManager::getInstance()->getChannelVolume() - 10, 0);
+            SDLAudioManager::getInstance()->setChannelVolume(
+                SDLAudioManager::getInstance()->getChannelVolume() - 10, 1);
+            SDLAudioManager::getInstance()->setMusicVolume(
+                SDLAudioManager::getInstance()->getMusicVolume() - 10);
+          }
+        };
       },
       "-", "StatsFont");
 
