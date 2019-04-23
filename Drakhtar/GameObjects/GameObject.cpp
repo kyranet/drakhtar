@@ -22,10 +22,11 @@ GameObject::~GameObject() {
 }
 
 void GameObject::render(SDL_Rect rect) const {
-  if (texture_ != nullptr) {
+  if (getRenderizable() && texture_ != nullptr) {
     texture_->renderFrame(rect, texture_->getAnimation()[texture_->getFrame()]);
   }
-  for (auto child : children_) child->render();
+  for (auto child : children_)
+    if (child->getRenderizable()) child->render();
 }
 
 void GameObject::render() const { render(getRect()); }
@@ -69,6 +70,12 @@ void GameObject::setTransparent(const bool transparent) {
 }
 
 bool GameObject::getTransparent() const { return transparent_; }
+
+void GameObject::setRenderizable(bool renderizable) {
+  renderizable_ = renderizable;
+}
+
+bool GameObject::getRenderizable() const { return renderizable_; }
 
 void GameObject::setSize(Vector2D<int> size) { size_ = size; }
 Vector2D<int> GameObject::getSize() const { return size_; }

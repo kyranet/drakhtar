@@ -8,6 +8,7 @@
 #include "GameObjects/Unit.h"
 
 Team::Team(const Color color) : color_(color) {}
+
 Team::~Team() { delete controller_; }
 
 Color Team::getColor() const { return color_; }

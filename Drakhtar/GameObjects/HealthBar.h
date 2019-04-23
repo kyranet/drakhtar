@@ -14,7 +14,7 @@ class HealthBar : public GameObject {
   int maxHealth;
   int currentHealth;
 
-  int damageAnimationSpeed = 2;
+  double damageAnimationSpeed = 0.5;
   bool damageAnimationPlaying = false;
 
   int originalWidth;

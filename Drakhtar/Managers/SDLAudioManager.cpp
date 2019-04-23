@@ -1,27 +1,31 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "SDLAudioManager.h"
+
 #include <iostream>
 #include <string>
 
-SDLAudioManager *SDLAudioManager::instance_ = nullptr;
+SDLAudioManager* SDLAudioManager::instance_ = nullptr;
 
 SDLAudioManager::SDLAudioManager() : SDLAudioManager(8) {}
 
 SDLAudioManager::SDLAudioManager(const int channels)
-    : initialized_(false), channels_(channels) {}
+    : initialized_(false), channels_(channels) {
+  muted_ = false;
+  default_ = true;
+}
 
 SDLAudioManager::~SDLAudioManager() {
   if (!initialized_) return;
 
   // free all sound effect chucks
-  for (const auto &pair : chunks_) {
+  for (const auto& pair : chunks_) {
     if (pair.second != nullptr) Mix_FreeChunk(pair.second);
   }
   chunks_.clear();
 
   // free all music sound effect
-  for (const auto &pair : music_) {
+  for (const auto& pair : music_) {
     if (pair.second != nullptr) Mix_FreeMusic(pair.second);
   }
   music_.clear();
@@ -30,7 +34,7 @@ SDLAudioManager::~SDLAudioManager() {
   Mix_Quit();
 }
 
-SDLAudioManager *SDLAudioManager::getInstance() {
+SDLAudioManager* SDLAudioManager::getInstance() {
   if (instance_ == nullptr) instance_ = new SDLAudioManager();
   return instance_;
 }
@@ -96,6 +100,7 @@ void SDLAudioManager::haltChannel(const int channel) {
 }
 
 int SDLAudioManager::setChannelVolume(const int volume, const int channel) {
+  channelVolume_ = volume;
   return Mix_Volume(channel, volume);
 }
 
@@ -117,7 +122,7 @@ bool SDLAudioManager::loadMusic(const int tag, std::string fileName) {
 }
 
 void SDLAudioManager::playMusic(const int tag, const int loops) {
-  Mix_Music *music = music_[tag];
+  Mix_Music* music = music_[tag];
   if (music != nullptr) {
     Mix_PlayMusic(music, loops);
   } else {
@@ -127,6 +132,7 @@ void SDLAudioManager::playMusic(const int tag, const int loops) {
 
 int SDLAudioManager::setMusicVolume(const int volume) {
   // volume = 2 is quite low already, play with that number
+  musicVolume_ = volume;
   return Mix_VolumeMusic(volume);
 }
 
@@ -141,3 +147,32 @@ void SDLAudioManager::fadeOutChannel(const int channel, const int ticks) {
 }
 
 void SDLAudioManager::fadeOutMusic(const int ticks) { Mix_FadeOutMusic(ticks); }
+
+bool SDLAudioManager::getMuted() { return muted_; }
+
+void SDLAudioManager::setMute(bool mute) {
+  muted_ = mute;
+  defaultSound();
+}
+
+void SDLAudioManager::defaultSound() {
+  if (!getDefault()) {
+    const auto volume = muted_ ? 0 : 80;
+    const auto instance = getInstance();
+
+    instance->setChannelVolume(volume, 0);
+    instance->setChannelVolume(volume, 1);
+    instance->setMusicVolume(volume);
+  }
+}
+
+int SDLAudioManager::getChannelVolume() { return channelVolume_; }
+
+int SDLAudioManager::getMusicVolume() { return musicVolume_; }
+
+void SDLAudioManager::setDefault(bool value_) {
+  default_ = value_;
+  defaultSound();
+}
+
+bool SDLAudioManager::getDefault() { return default_; }

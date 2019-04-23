@@ -98,7 +98,7 @@ void GameScene::preload() {
                  buttonPause, " ", "ButtonFont");
 
   audio->haltMusic();
-  audio->setMusicVolume(10);
+  if (audio->getDefault()) audio->setMusicVolume(10);
   audio->playMusic(1, 999);
   /*
    // Reactivar cuando se implementen las habilidades definitivamente

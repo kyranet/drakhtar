@@ -130,6 +130,11 @@ void Game::load() {
   textures->add("UI-healthBar_damage", "../images/UI/healthBar_damage.png", 1,
                 1);
   textures->add("UI-commanderIcon", "../images/UI/goldskull.png", 1, 1);
+  textures->add("UI-OptionsMenu", "../images/UI/OptionsMenu.png", 1, 1);
+  textures->add("UI-ActiveSound", "../images/UI/ActiveSound.png", 1, 1);
+  textures->add("UI-MuteSound", "../images/UI/MuteSound.png", 1, 1);
+  textures->add("UI-WhiteBox", "../images/UI/WhiteBox.png", 1, 1);
+  textures->add("UI-greenTick", "../images/UI/green-check.png", 1, 1);
 
   // Button
   textures->add("Button-BattleCry", "../images/UI/battlecry_icon.png", 1, 1);
