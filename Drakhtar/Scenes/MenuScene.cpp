@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "MenuScene.h"
+
 #include "../GameObjects/Button.h"
 #include "../GameObjects/GameObject.h"
 #include "../Managers/TextureManager.h"
@@ -27,12 +28,12 @@ void MenuScene::preload() {
   const auto play = new Button(
       this, TextureManager::get("Vanilla-Button"),
       Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2 - WIN_HEIGHT / 18),
-      Vector2D<int>(static_cast<int>(floor(WIN_WIDTH / 7.5)), WIN_HEIGHT / 12),
+      Vector2D<int>(static_cast<int>(floor(WIN_WIDTH / 6.5)), WIN_HEIGHT / 11),
       buttonPlay, "Play", "ButtonFont");
   const auto options = new Button(
       this, TextureManager::get("Vanilla-Button"),
       Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2 + WIN_HEIGHT / 18),
-      Vector2D<int>(static_cast<int>(floor(WIN_WIDTH / 7.5)), WIN_HEIGHT / 12),
+      Vector2D<int>(static_cast<int>(floor(WIN_WIDTH / 6.5)), WIN_HEIGHT / 11),
       buttonOptions, "Options", "ButtonFont");
 
   auto audio = SDLAudioManager::getInstance();
