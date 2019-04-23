@@ -6,10 +6,15 @@ GameManager* GameManager::instance_ = nullptr;
 
 GameManager::GameManager() {
   army_ = new std::map<std::string, int>();
+  typeOrder[SOLDIER] = "Soldier";
   (*army_)["Soldier"] = 10;
+  typeOrder[ARCHER] = "Archer";
   (*army_)["Archer"] = 10;
+  typeOrder[MAGE] = "Mage";
   (*army_)["Mage"] = 5;
+  typeOrder[KNIGHT] = "Knight";
   (*army_)["Knight"] = 5;
+  typeOrder[MONSTER] = "Monster";
   (*army_)["Monster"] = 2;
 }
 
@@ -36,6 +41,10 @@ int GameManager::getMoney() const { return money_; }
 
 const std::map<std::string, int>& GameManager::getArmy() const {
   return (*army_);
+}
+
+const std::map<UnitType, std::string>& GameManager::getTypeOrder() const {
+  return typeOrder;
 }
 
 int GameManager::getLevel() const { return level_; }

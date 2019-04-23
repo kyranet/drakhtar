@@ -52,31 +52,22 @@ void GameScene::preload() {
   auto factory = UnitFactory(this);
 
   // Blue Team
-  const auto thassa = factory.newThassa(team1_, board_->getBoxAt(0, 0));
+  const auto thassa =
+      factory.newCommander("Thassa", team1_, board_->getBoxAt(0, 0));
   team1_->addCommander(thassa);
   addGameObject(thassa);
 
   auto army = GameManager::getInstance()->getArmy();
+  auto typeOrder = GameManager::getInstance()->getTypeOrder();
 
-  if (army["Soldier"] > 0)
-    addGameObject(
-        factory.newSoldier(team1_, board_->getBoxAt(0, 2), army["Soldier"]));
-
-  if (army["Archer"] > 0)
-    addGameObject(
-        factory.newArcher(team1_, board_->getBoxAt(0, 3), army["Archer"]));
-
-  if (army["Mage"] > 0)
-    addGameObject(
-        factory.newWizard(team1_, board_->getBoxAt(0, 4), army["Mage"]));
-
-  if (army["Knight"] > 0)
-    addGameObject(
-        factory.newKnight(team1_, board_->getBoxAt(0, 5), army["Knight"]));
-
-  if (army["Monster"] > 0)
-    addGameObject(
-        factory.newMonster(team1_, board_->getBoxAt(0, 6), army["Monster"]));
+  int y = 2;
+  for (const auto& pair : typeOrder) {
+    if (army[pair.second] > 0) {
+      addGameObject(factory.newBattalion(
+          pair.second, team1_, board_->getBoxAt(0, y), army[pair.second]));
+      y++;
+    }
+  }
 
   // Red Team
   this->loadRedTeam(factory);
@@ -94,10 +85,10 @@ void GameScene::preload() {
   const auto dialog =
       new DialogScene(this, "dialog" + std::to_string(battle_), "DialogFont");
 
-  team1_->setController(
-      new PlayerController(board_, turnBar, this, team1_, team2_));
-  team2_->setController(
-      new PlayerController(board_, turnBar, this, team2_, team1_));
+  team1_->setController(new PlayerController(board_, turnBar->getTurnManager(),
+                                             this, team1_, team2_));
+  team2_->setController(new PlayerController(board_, turnBar->getTurnManager(),
+                                             this, team2_, team1_));
 
   const auto pauseButton =
       new Button(this, TextureManager::get("Button-Pause"),
@@ -149,56 +140,33 @@ void GameScene::loadRedTeam(UnitFactory& factory) {
 
   if (!file.is_open()) throw DrakhtarError("Could not find file");
 
-  std::string captainName;
+  std::string commanderName;
 
   // File structure:
-  // CaptainName row col
-  // row col (for Soldier)
-  // row col (for Archer)
-  // row col (for Mage)
-  // row col (for Knight)
-  // row col (for Monster)
+  // CommanderName row col
+  // UnitType battalionSize row col
+  // ...
+  // UnitType battalionSize row col
 
-  file >> captainName;
+  file >> commanderName;
   if (file.fail()) throw DrakhtarError("File is not a level file");
 
   int row, col, size;
 
   file >> row >> col;
-  Commander* commander;
-  if (captainName == "Zamdran") {
-    commander = factory.newZamdran(team2_, board_->getBoxAt(row, col));
-
-  } else {
+  Commander* commander =
+      factory.newCommander(commanderName, team2_, board_->getBoxAt(row, col));
+  if (commander == nullptr)
     throw DrakhtarError(
         "File is not a level file or the captain is not implemented");
-  }
 
   team2_->addCommander(commander);
   addGameObject(commander);
-  if (!file.eof()) {
-    file >> size >> row >> col;
-    addGameObject(factory.newSoldier(team2_, board_->getBoxAt(row, col), size));
-  }
-
-  if (!file.eof()) {
-    file >> size >> row >> col;
-    addGameObject(factory.newArcher(team2_, board_->getBoxAt(row, col), size));
-  }
-
-  if (!file.eof()) {
-    file >> size >> row >> col;
-    addGameObject(factory.newWizard(team2_, board_->getBoxAt(row, col), size));
-  }
-
-  if (!file.eof()) {
-    file >> size >> row >> col;
-    addGameObject(factory.newKnight(team2_, board_->getBoxAt(row, col), size));
-  }
-
-  if (!file.eof()) {
-    file >> size >> row >> col;
-    addGameObject(factory.newMonster(team2_, board_->getBoxAt(row, col), size));
+  while (!file.eof()) {
+    std::string unitType;
+    file >> unitType >> size >> row >> col;
+    addGameObject(factory.newBattalion(unitType, team2_,
+                                       board_->getBoxAt(row, col), size));
   }
 
   file.close();
