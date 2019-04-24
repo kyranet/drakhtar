@@ -33,8 +33,6 @@ class Skill {
 };
 
 class BattleCry final : public Skill {
-  Texture* attackUp;
-  Texture* speedUp;
  public:
   explicit BattleCry(Commander* caster);
   virtual ~BattleCry() = default;

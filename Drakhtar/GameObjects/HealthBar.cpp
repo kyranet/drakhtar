@@ -13,7 +13,18 @@ HealthBar::HealthBar(Scene* scene, Vector2D<int> pos, int maxHP)
                            Vector2D<int>(getRect().w + 1, getRect().h));
   damageBar = new GameObject(scene, TextureManager::get("UI-healthBar_damage"),
                              pos, Vector2D<int>(getRect().w, getRect().h));
+  statUp =
+      new GameObject(scene, TextureManager::get("UI-statUp"),
+                     Vector2D<int>(position_.getX() + 37, position_.getY() - 7),
+                     Vector2D<int>(size_.getX() / 5, size_.getY()) * 2);
+  statDown =
+      new GameObject(scene, TextureManager::get("UI-statDown"),
+                     Vector2D<int>(position_.getX() + 43, position_.getY() + 4),
+                     Vector2D<int>(size_.getX() / 5, size_.getY()) * 2);
+
   damageBar->setActive(false);
+  statUp->setRenderizable(false);
+  statDown->setRenderizable(false);
 
   originalWidth = lifeBar->getRect().w;
   maxHealth = maxHP;
@@ -23,11 +34,15 @@ HealthBar::HealthBar(Scene* scene, Vector2D<int> pos, int maxHP)
 HealthBar::~HealthBar() {
   delete lifeBar;
   delete damageBar;
+  delete statUp;
+  delete statDown;
 }
 
 void HealthBar::render() const {
   GameObject::render();
   lifeBar->render();
+  statUp->render();
+  statDown->render();
 
   if (damageBar->getActive()) damageBar->render();
 }
@@ -80,7 +95,7 @@ void HealthBar::moveBar(Vector2D<int> pos) {
   lifeBar->setPosition(
       Vector2D<int>(pos.getX() - (widthDifference / 2), pos.getY()));
   damageBar->setPosition(pos);
-  
+
   if (children_.size() >= 1) {
     children_[0]->setPosition({pos.getX() + 45, pos.getY()});
   }
@@ -92,4 +107,12 @@ void HealthBar::moveBar(Vector2D<int> pos) {
 void HealthBar::setMaxHP(int hp) {
   maxHealth = hp;
   currentHealth = maxHealth;
+}
+
+void HealthBar::setStatUpRenderizable(const bool active) const {
+  statUp->setRenderizable(active);
+}
+
+void HealthBar::setStatDownRenderizable(const bool active) const {
+  statDown->setRenderizable(active);
 }

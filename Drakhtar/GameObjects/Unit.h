@@ -82,4 +82,7 @@ class Unit : public GameObject {
 
   virtual void onSelect();
   virtual void onDeselect();
+
+  virtual void setBuffed(bool buffed);
+  virtual void setDebuffed(bool debuffed);
 };

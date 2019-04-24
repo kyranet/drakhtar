@@ -18,10 +18,7 @@ Skill::Skill(std::string id, int cooldown, int duration, Commander* caster)
 // ---------- BATTLECRY ----------
 #pragma region BattleCry
 
-BattleCry::BattleCry(Commander* caster) : Skill("BattleCry", 3, 1, caster) {
-  attackUp = TextureManager::get("UI-attackUp");
-  speedUp = TextureManager::get("UI-speedUp");
-}
+BattleCry::BattleCry(Commander* caster) : Skill("BattleCry", 3, 1, caster) {}
 
 void BattleCry::cast(GameScene* scene) {
   if (remainingCooldown_ == 0 && caster_->getMoving()) {
@@ -32,17 +29,7 @@ void BattleCry::cast(GameScene* scene) {
       unit->Unit::setAttack(
           static_cast<int>(floor(unit->getStats().attack * 1.2)));
       unit->setSpeed(unit->getStats().speed + 10);
-
-      // Adds "boosted" icons to the unit's healthbar
-      Vector2D<int> pos =
-          Vector2D<int>(unit->getHealthBar()->getPosition().getX() + 45,
-                        unit->getHealthBar()->getPosition().getY());
-      unit->getHealthBar()->addChild(
-          new GameObject(scene, attackUp, pos, unit->getSize() / 4));
-      pos = Vector2D<int>(unit->getHealthBar()->getPosition().getX() + 70,
-                          unit->getHealthBar()->getPosition().getY());
-      unit->getHealthBar()->addChild(
-          new GameObject(scene, speedUp, pos, unit->getSize() / 4));
+      unit->setBuffed(true);
     }
 
     // Update turn priority
@@ -61,12 +48,7 @@ void BattleCry::end() {
   for (auto unit : caster_->getTeam()->getUnits()) {
     unit->setAttack(unit->getBaseStats().attack);
     unit->setSpeed(unit->getBaseStats().speed);
-
-    // Removes "boosted" icons from the unit's healthbar
-    delete unit->getHealthBar()->getChildren()[1];
-    unit->getHealthBar()->removeChild(unit->getHealthBar()->getChildren()[1]);
-    delete unit->getHealthBar()->getChildren()[0];
-    unit->getHealthBar()->removeChild(unit->getHealthBar()->getChildren()[0]);
+    unit->setBuffed(false);
   }
 
   // Update turn priority
