@@ -246,6 +246,14 @@ void Game::load() {
       1, "../audio/background/FirstGameSceneMusic - by Always Music.ogg");
   audio->loadMusic(
       2, "../audio/background/Most Wondrous Battle Music Ever Light And Darkness.ogg");
+  audio->loadMusic(3,
+                   "../audio/background/Epic Dark Battle Music - Escape [Powerful Fantasy Horror by Ebunny].ogg");
+  audio->loadMusic(4,
+                   "../audio/background/Epic Music Orchestra  Cinematic Battle Music  Dragon Castle by Symphony (Copyright Free Music).ogg");
+  audio->loadMusic(5,
+                   "../audio/background/[No Copyright Music] Endless Storm - (Royalty Free Epic Battle Music).ogg");
+  audio->loadMusic(6,
+                   "../audio/background/(Epic Pirate Battle Music) - Escaping The Kraken -.ogg");
 
   // Sound effects
   /*
