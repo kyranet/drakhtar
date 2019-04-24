@@ -111,10 +111,19 @@ void GameScene::preload() {
                                     static_cast<int>(WIN_HEIGHT / 8)),
                       thassa, 0);
 
+  const auto heroicStrikeButton =
+      new SkillButton(this, TextureManager::get("Button-HeroicStrike"),
+                      TextureManager::get("Button-HeroicStrike-disabled"),
+                      Vector2D<int>(WIN_WIDTH / 20, WIN_HEIGHT / 4),
+                      Vector2D<int>(static_cast<int>(WIN_WIDTH / 12),
+                                    static_cast<int>(WIN_HEIGHT / 8)),
+                      thassa, 1);
+
   addGameObject(turnBar);
   addGameObject(dialog);
   addGameObject(pauseButton);
   addGameObject(battleCryButton);
+  addGameObject(heroicStrikeButton);
 
   if (battle_ == 1) {
     const auto tutorialSequence =

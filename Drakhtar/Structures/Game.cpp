@@ -140,7 +140,11 @@ void Game::load() {
 
   // Button
   textures->add("Button-BattleCry", "../images/UI/battlecry_icon.png", 1, 1);
-  textures->add("Button-BattleCry-disabled", "../images/UI/battlecry_icon_disabled.png", 1, 1);
+  textures->add("Button-BattleCry-disabled",
+                "../images/UI/battlecry_icon_disabled.png", 1, 1);
+  textures->add("Button-HeroicStrike", "../images/UI/heroic_strike_icon.png", 1, 1);
+  textures->add("Button-HeroicStrike-disabled",
+                "../images/UI/heroic_strike_icon_disabled.png", 1, 1);
   textures->add("Button-Pause", "../images/Pause/Pause_Button.png", 1, 1);
   textures->add("Button-Skip", "../images/UI/skipButton.png", 1, 1);
   textures->add("Button-SkipTurn", "../images/UI/skipTurnButton.png", 1, 1);

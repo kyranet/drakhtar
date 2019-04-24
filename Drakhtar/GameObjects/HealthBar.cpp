@@ -96,12 +96,8 @@ void HealthBar::moveBar(Vector2D<int> pos) {
       Vector2D<int>(pos.getX() - (widthDifference / 2), pos.getY()));
   damageBar->setPosition(pos);
 
-  if (children_.size() >= 1) {
-    children_[0]->setPosition({pos.getX() + 45, pos.getY()});
-  }
-  if (children_.size() >= 2) {
-    children_[1]->setPosition({pos.getX() + 70, pos.getY()});
-  }
+  statUp->setPosition({position_.getX() + 37, position_.getY() - 7});
+  statDown->setPosition({position_.getX() + 43, position_.getY() + 4});
 }
 
 void HealthBar::setMaxHP(int hp) {

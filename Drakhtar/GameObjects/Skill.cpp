@@ -90,6 +90,7 @@ void HeroicStrike::cast(GameScene* scene) {
     attackIncrement_ = caster_->getStats().attack * 0.5;
     caster_->setAttack(caster_->getStats().attack + attackIncrement_);
     caster_->setUnstoppable(true);
+    caster_->setBuffed(true);
 
     remainingCooldown_ = cooldown_;
     remainingDuration_ = duration_;
@@ -101,5 +102,6 @@ void HeroicStrike::end() {
   std::cout << "<HeroicStrike> ended" << std::endl;
   caster_->setAttack(caster_->getStats().attack - attackIncrement_);
   caster_->setUnstoppable(false);
+  caster_->setBuffed(false);
 }
 #pragma endregion HeroicStrike
