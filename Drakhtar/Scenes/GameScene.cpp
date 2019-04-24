@@ -52,8 +52,13 @@ void GameScene::preload() {
   team1_ = new Team(Color::BLUE);
   team2_ = new Team(Color::RED);
 
+
   // Create a temporary factory to create the units easily.
   auto factory = UnitFactory(this);
+
+  
+  // Red Team
+  this->loadRedTeam(factory);
 
    // Blue Team
   const auto thassa =
@@ -179,15 +184,22 @@ void GameScene::loadRedTeam(UnitFactory& factory) {
   // ...
   // UnitType battalionSize row col
 
-  file >> commanderName;
   if (file.fail()) throw DrakhtarError("File is not a level file");
 
   int rowSize, columnSize;
 
   file >> rowSize >> columnSize;
 
+  int trackNumber;
+
+  file >> trackNumber;
+
+  delete board_;
+  board_ = nullptr;
   board_ = new Board(this, rowSize, columnSize, static_cast<float>(WIN_HEIGHT / 10.0f));
   addGameObject(board_);
+
+  file >> commanderName;
 
   int row, col, size;
 
@@ -206,10 +218,6 @@ void GameScene::loadRedTeam(UnitFactory& factory) {
     addGameObject(factory.newBattalion(unitType, team2_,
                                        board_->getBoxAt(row, col), size));
   }
-
-  int trackNumber;
-
-  file >> trackNumber;
 
   audio->haltMusic();
   if (audio->getDefault()) audio->setMusicVolume(10);
