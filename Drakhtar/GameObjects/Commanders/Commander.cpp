@@ -56,6 +56,8 @@ void Commander::kill() {
   if (getTeam()->getColor() == Color::BLUE) {
     Game::getSceneMachine()->changeScene(new GameScene(currentScene));
   } else {
+    reinterpret_cast<GameScene*>(Game::getSceneMachine()->getCurrentScene())
+        ->addPrize(baseStats_.prize);
     Game::getSceneMachine()->changeScene(new TransitionScene(currentScene + 1));
   }
 }
