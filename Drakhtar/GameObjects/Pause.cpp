@@ -3,10 +3,12 @@
 #include "Pause.h"
 
 #include "Button.h"
+#include "Managers/GameManager.h"
 #include "Managers/SDLAudioManager.h"
 #include "Managers/TextureManager.h"
 #include "Scenes/GameScene.h"
 #include "Scenes/MenuScene.h"
+#include "Scenes/RecruitScene.h"
 #include "Scenes/Scene.h"
 #include "Structures/Game.h"
 #include "Utils/Constants.h"
@@ -31,6 +33,7 @@ Pause::Pause(Scene* scene) : GameObject(scene, nullptr) {
       Vector2D<int>(static_cast<int>(WIN_WIDTH / 8.33),
                     static_cast<int>(WIN_HEIGHT / 11.25)),
       []() {
+        GameManager::reset();
         Game::getSceneMachine()->changeScene(new MenuScene());
         SDLAudioManager::getInstance()->playChannel(6, 0, 0);
       },

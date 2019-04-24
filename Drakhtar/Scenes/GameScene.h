@@ -21,7 +21,8 @@ class GameScene final : public Scene {
   void preload() override;
   void pause() override;
   void loadRedTeam(UnitFactory& factory);
-  void addPrize(int prize) const;
+  void addPrize(int prize);
+  void saveStatus();
 
   Board* getBoard() const;
   int getBattleInd();
