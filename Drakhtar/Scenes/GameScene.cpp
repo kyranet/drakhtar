@@ -172,6 +172,8 @@ void GameScene::loadRedTeam(UnitFactory& factory) {
   file.close();
 }
 
+void GameScene::addPrize(int prize) const { prize_ += prize; }
+
 Board* GameScene::getBoard() const { return board_; }
 
 int GameScene::getBattleInd() { return battle_; }

@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "RecruitScene.h"
+
 #include "EventListeners/StoreListener.h"
 #include "GameObjects/Button.h"
 #include "GameObjects/GameObject.h"
@@ -15,13 +16,7 @@
 #include "Utils/Constants.h"
 #include "Utils/Vector2D.h"
 
-void buttonStartGame() {
-  Game::getSceneMachine()->changeScene(new TransitionScene(1));
-}
-
 void RecruitScene::preload() {
-  GameManager::getInstance()->addMoney(100);
-
   costs_["Soldier"] = 10;
   costs_["Archer"] = 10;
   costs_["Mage"] = 18;
@@ -83,7 +78,8 @@ void RecruitScene::preload() {
         }
 
         reset();
-      }, " ", "ButtonFont");
+      },
+      " ", "ButtonFont");
 
   recruitmentPanel_->addChild(acceptButton);
 
@@ -100,7 +96,11 @@ void RecruitScene::preload() {
       this, TextureManager::get("Vanilla-Button"),
       Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 4, WIN_HEIGHT / 2),
       Vector2D<int>(static_cast<int>(WIN_WIDTH / 7.5), WIN_HEIGHT / 12),
-      buttonStartGame, "Play", "ButtonFont");
+      [this]() {
+        reset();
+        Game::getSceneMachine()->changeScene(new TransitionScene(1));
+      },
+      "Play", "ButtonFont");
 
   /*const auto betaInfo =
       new Button(this, TextureManager::get("Button-Play"),

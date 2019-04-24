@@ -4,12 +4,14 @@
 #include <map>
 #include <string>
 
+#define BASE_MONEY 1000
+
 enum UnitType { SOLDIER, ARCHER, MAGE, KNIGHT, MONSTER };
 
 class GameManager final {
   static GameManager* instance_;
 
-  int money_ = 0;
+  int money_ = BASE_MONEY;
   int level_ = 5;
 
   std::map<std::string, int>* army_ = nullptr;
@@ -20,6 +22,7 @@ class GameManager final {
  public:
   static GameManager* getInstance();
   static void destroy();
+  static void reset();
 
   int getMoney() const;
   const std::map<std::string, int>& getArmy() const;

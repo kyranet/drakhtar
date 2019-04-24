@@ -1,7 +1,9 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Unit.h"
+
 #include <algorithm>
+
 #include "Board.h"
 #include "Box.h"
 #include "HealthBar.h"
@@ -66,7 +68,7 @@ void Unit::moveToBox(Box* newBox) {
 
 int Unit::loseHealth(int enemyAttack, int minDamage) {
   enemyAttack = static_cast<int>(enemyAttack * (1.0 - stats_.defense / 100.0));
-  enemyAttack = std::max(enemyAttack, minDamage);
+  enemyAttack = std::min(std::max(enemyAttack, minDamage), stats_.maxHealth);
 
   health_ = std::max(health_ - enemyAttack, 0);
 

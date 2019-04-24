@@ -7,15 +7,15 @@ GameManager* GameManager::instance_ = nullptr;
 GameManager::GameManager() {
   army_ = new std::map<std::string, int>();
   typeOrder[SOLDIER] = "Soldier";
-  (*army_)["Soldier"] = 10;
+  (*army_)["Soldier"] = 0;
   typeOrder[ARCHER] = "Archer";
-  (*army_)["Archer"] = 10;
+  (*army_)["Archer"] = 0;
   typeOrder[MAGE] = "Mage";
-  (*army_)["Mage"] = 5;
+  (*army_)["Mage"] = 0;
   typeOrder[KNIGHT] = "Knight";
-  (*army_)["Knight"] = 5;
+  (*army_)["Knight"] = 0;
   typeOrder[MONSTER] = "Monster";
-  (*army_)["Monster"] = 2;
+  (*army_)["Monster"] = 0;
 }
 
 GameManager::~GameManager() {
@@ -35,6 +35,18 @@ void GameManager::destroy() {
     delete instance_;
     instance_ = nullptr;
   }
+}
+
+void GameManager::reset() {
+  if (instance_ == nullptr){
+    getInstance();
+    return;
+  }
+  for (auto pair : instance_->getArmy()){
+    pair.second = 0;
+  }
+  instance_->loseMoney(instance_->getMoney());
+  instance_->addMoney(BASE_MONEY);
 }
 
 int GameManager::getMoney() const { return money_; }

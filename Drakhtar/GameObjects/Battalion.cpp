@@ -1,12 +1,16 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Battalion.h"
+
 #include <algorithm>
+
 #include "Box.h"
 #include "HealthBar.h"
 #include "Managers/FontManager.h"
 #include "Managers/GameManager.h"
+#include "Scenes/GameScene.h"
 #include "Scenes/Scene.h"
+#include "Structures/Game.h"
 #include "Structures/Team.h"
 #include "Structures/Texture.h"
 #include "Text.h"
@@ -68,7 +72,12 @@ void Battalion::setAttack(const int attack) {
 int Battalion::loseHealth(const int enemyAttack, int minDamage) {
   const auto health = Unit::loseHealth(enemyAttack, minDamage);
   if (baseStats_.maxHealth * (battalionSize_ - 1) >= health_) {
-    battalionSize_ -= std::max(health / baseStats_.maxHealth, 1);
+    int lostUnits = std::max(health / baseStats_.maxHealth, 1);
+    battalionSize_ -= lostUnits;
+    if (this->getTeam()->getColor == Color::RED)
+      reinterpret_cast<GameScene*>(Game::getSceneMachine()->getCurrentScene())
+          ->addPrize(lostUnits * baseStats_.prize);
+
     stats_.attack = baseStats_.attack * battalionSize_;
     if (battalionSize_ < 0) battalionSize_ = 0;
     minDamage_ = battalionSize_;
