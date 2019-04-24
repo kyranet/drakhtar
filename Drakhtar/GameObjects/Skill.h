@@ -11,6 +11,7 @@ class Texture;
 class Skill {
  protected:
   std::string id_;
+  std::string description_ = " ";
   Commander* caster_;
   int cooldown_;
   int duration_;
@@ -25,6 +26,8 @@ class Skill {
   virtual void cast(GameScene* scene) = 0;
   virtual void end() = 0;
 
+  std::string getId() const { return id_; }
+  std::string getDescription() const { return description_; }
   bool getActive() const { return active_; }
   int getRemainingCooldown() const { return remainingCooldown_; }
   int getRemainingDuration() const { return remainingDuration_; }

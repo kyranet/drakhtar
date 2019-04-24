@@ -4,7 +4,9 @@
 
 #include "../Structures/Texture.h"
 #include "Commanders/Commander.h"
+#include "EventListeners/SkillButtonListener.h"
 #include "GameObjects/ButtonText.h"
+#include "SkillDescriptionBox.h"
 
 SkillButton::SkillButton(GameScene* scene, Texture* texture,
                          Texture* disabledText, Vector2D<int> pos,
@@ -12,8 +14,17 @@ SkillButton::SkillButton(GameScene* scene, Texture* texture,
     : GameObject(scene, texture, pos, size),
       disabledText_(disabledText),
       gameScene_(scene),
-      commander_(commander),
-      skill_(skill) {
+      commander_(commander) {
+  skill_ = commander_->getSkills().at(skill);
+
+  skillDescriptionBox_ = new SkillDescriptionBox(scene, this);
+  skillDescriptionBox_->setRenderizable(false);
+  skillDescriptionBox_->setTransparent(true);
+  addChild(skillDescriptionBox_);
+
+  hoverListener_ = new SkillButtonListener(this, skillDescriptionBox_);
+  addEventListener(hoverListener_);
+
   buttonText_ = new ButtonText(scene, " ", "SkillButtonFont", size,
                                Vector2D<int>(pos.getX() + 3, pos.getY() - 8));
   buttonText_->setTransparent(true);
@@ -21,17 +32,19 @@ SkillButton::SkillButton(GameScene* scene, Texture* texture,
 }
 
 void SkillButton::handleEvents(SDL_Event e) {
+  hoverListener_->run(e);
+
   // Only handle when it's a left click
   if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT) {
     SDL_Point p = {e.button.x, e.button.y};
     const auto rect = getRect();
     if (SDL_PointInRect(&p, &rect)) {
-      commander_->getSkills().at(skill_)->cast(gameScene_);
+      skill_->cast(gameScene_);
     }
   }
 
   // Update button text
-  int CD = commander_->getSkills().at(skill_)->getRemainingCooldown();
+  int CD = skill_->getRemainingCooldown();
   if (CD == 0) {
     buttonText_->setText(" ");
   } else {
@@ -41,7 +54,7 @@ void SkillButton::handleEvents(SDL_Event e) {
 
 void SkillButton::render(SDL_Rect rect) const {
   // Disable button if the skill is in CD or its not the unit's turn
-  if (!commander_->getMoving() || commander_->getSkills().at(skill_)->getRemainingCooldown() != 0) {
+  if (!commander_->getMoving() || skill_->getRemainingCooldown() != 0) {
     if (getRenderizable() && disabledText_ != nullptr) {
       disabledText_->renderFrame(
           rect, texture_->getAnimation()[texture_->getFrame()]);

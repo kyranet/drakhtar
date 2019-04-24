@@ -18,7 +18,11 @@ Skill::Skill(std::string id, int cooldown, int duration, Commander* caster)
 // ---------- BATTLECRY ----------
 #pragma region BattleCry
 
-BattleCry::BattleCry(Commander* caster) : Skill("BattleCry", 3, 1, caster) {}
+BattleCry::BattleCry(Commander* caster) : Skill("BattleCry", 3, 1, caster) {
+  description_ =
+      "An inspiring command that increases every ally's attack and speed by "
+      "20% for 1 turn";
+}
 
 void BattleCry::cast(GameScene* scene) {
   if (remainingCooldown_ == 0 && caster_->getMoving()) {
@@ -58,7 +62,11 @@ void BattleCry::end() {
 
 // ---------- ARROW RAIN ----------
 #pragma region ArrowRain
-ArrowRain::ArrowRain(Commander* caster) : Skill("ArrowRain", 2, 0, caster) {}
+ArrowRain::ArrowRain(Commander* caster) : Skill("ArrowRain", 2, 0, caster) {
+  description_ =
+      "Fire an volley of arrows that deal half damage to ALL enemies in the "
+      "battlefield";
+}
 
 void ArrowRain::cast(GameScene* scene) {
   if (remainingCooldown_ == 0 && caster_->getMoving()) {
@@ -81,7 +89,11 @@ void ArrowRain::end() { active_ = false; }
 // ---------- HEROIC STRIKE ----------
 #pragma region HeroicStrike
 HeroicStrike::HeroicStrike(Commander* caster)
-    : Skill("HeroicStrike", 2, 0, caster) {}
+    : Skill("Heroic Strike", 2, 0, caster) {
+  description_ =
+      "The next attack this turn will deal 50% increased damage and will not "
+      "trigger a counter-attack";
+}
 
 void HeroicStrike::cast(GameScene* scene) {
   if (remainingCooldown_ == 0 && caster_->getMoving()) {
