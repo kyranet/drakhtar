@@ -82,6 +82,7 @@ Commander* UnitFactory::newCommander(const std::string& type, Team* team,
     case CommanderType::SHEISSAH:
       commander = new Sheissah(scene_, TextureManager::get(textureName), box,
                               commanderMap[type]);
+      break;
     default:
       return nullptr;
   }
