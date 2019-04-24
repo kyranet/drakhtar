@@ -109,7 +109,7 @@ void GameScene::preload() {
                       Vector2D<int>(WIN_WIDTH / 20, WIN_HEIGHT / 12),
                       Vector2D<int>(static_cast<int>(WIN_WIDTH / 12),
                                     static_cast<int>(WIN_HEIGHT / 8)),
-                      thassa, 1);
+                      thassa, 0);
 
   addGameObject(turnBar);
   addGameObject(dialog);

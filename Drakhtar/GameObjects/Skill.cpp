@@ -3,9 +3,11 @@
 #include "Skill.h"
 
 #include "../Controllers/UnitsController.h"
+#include "../Managers/TextureManager.h"
 #include "../Managers/TurnManager.h"
 #include "../Structures/Team.h"
 #include "Commanders/Commander.h"
+#include "GameObjects/HealthBar.h"
 
 Skill::Skill(std::string id, int cooldown, int duration, Commander* caster)
     : id_(std::move(id)),
@@ -16,7 +18,10 @@ Skill::Skill(std::string id, int cooldown, int duration, Commander* caster)
 // ---------- BATTLECRY ----------
 #pragma region BattleCry
 
-BattleCry::BattleCry(Commander* caster) : Skill("BattleCry", 3, 1, caster) {}
+BattleCry::BattleCry(Commander* caster) : Skill("BattleCry", 3, 1, caster) {
+  attackUp = TextureManager::get("UI-attackUp");
+  speedUp = TextureManager::get("UI-speedUp");
+}
 
 void BattleCry::cast(GameScene* scene) {
   if (remainingCooldown_ == 0 && caster_->getMoving()) {
@@ -27,12 +32,24 @@ void BattleCry::cast(GameScene* scene) {
       unit->Unit::setAttack(
           static_cast<int>(floor(unit->getStats().attack * 1.2)));
       unit->setSpeed(unit->getStats().speed + 10);
+
+      // Adds "boosted" icons to the unit's healthbar
+      Vector2D<int> pos =
+          Vector2D<int>(unit->getHealthBar()->getPosition().getX() + 45,
+                        unit->getHealthBar()->getPosition().getY());
+      unit->getHealthBar()->addChild(
+          new GameObject(scene, attackUp, pos, unit->getSize() / 4));
+      pos = Vector2D<int>(unit->getHealthBar()->getPosition().getX() + 70,
+                          unit->getHealthBar()->getPosition().getY());
+      unit->getHealthBar()->addChild(
+          new GameObject(scene, speedUp, pos, unit->getSize() / 4));
     }
 
     // Update turn priority
     caster_->getTeam()->getController()->getTurnManager()->sortUnits();
 
     remainingCooldown_ = cooldown_;
+    remainingDuration_ = duration_;
   }
 }
 
@@ -44,6 +61,12 @@ void BattleCry::end() {
   for (auto unit : caster_->getTeam()->getUnits()) {
     unit->setAttack(unit->getBaseStats().attack);
     unit->setSpeed(unit->getBaseStats().speed);
+
+    // Removes "boosted" icons from the unit's healthbar
+    delete unit->getHealthBar()->getChildren()[1];
+    unit->getHealthBar()->removeChild(unit->getHealthBar()->getChildren()[1]);
+    delete unit->getHealthBar()->getChildren()[0];
+    unit->getHealthBar()->removeChild(unit->getHealthBar()->getChildren()[0]);
   }
 
   // Update turn priority
@@ -65,6 +88,7 @@ void ArrowRain::cast(GameScene* scene) {
       unit->loseHealth(caster_->getStats().attack / 2, 1);
     }
     remainingCooldown_ = cooldown_;
+    remainingDuration_ = duration_;
     end();
   }
 }
@@ -84,7 +108,9 @@ void HeroicStrike::cast(GameScene* scene) {
     attackIncrement_ = caster_->getStats().attack * 0.5;
     caster_->setAttack(caster_->getStats().attack + attackIncrement_);
     caster_->setUnstoppable(true);
+
     remainingCooldown_ = cooldown_;
+    remainingDuration_ = duration_;
   }
 }
 

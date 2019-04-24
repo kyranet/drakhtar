@@ -72,6 +72,8 @@ class Unit : public GameObject {
   void setMoved(const bool moved) { moved_ = moved; }
   void setTeam(Team *team) { team_ = team; }
 
+  HealthBar* getHealthBar() const { return healthBar_; }
+
   virtual void moveToBox(Box *box);
   virtual int loseHealth(int enemyAttack, int minDamage);
   void update() override;

@@ -135,6 +135,8 @@ void Game::load() {
   textures->add("UI-MuteSound", "../images/UI/MuteSound.png", 1, 1);
   textures->add("UI-WhiteBox", "../images/UI/WhiteBox.png", 1, 1);
   textures->add("UI-greenTick", "../images/UI/green-check.png", 1, 1);
+  textures->add("UI-attackUp", "../images/UI/attack_up.png", 1, 1);
+  textures->add("UI-speedUp", "../images/UI/speed_up.png", 1, 1);
 
   // Button
   textures->add("Button-BattleCry", "../images/UI/battlecry_icon.png", 1, 1);

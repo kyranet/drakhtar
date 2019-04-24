@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "HealthBar.h"
+
 #include "../Managers/TextureManager.h"
 #include "../Scenes/Scene.h"
 #include "../Utils/Constants.h"
@@ -79,6 +80,13 @@ void HealthBar::moveBar(Vector2D<int> pos) {
   lifeBar->setPosition(
       Vector2D<int>(pos.getX() - (widthDifference / 2), pos.getY()));
   damageBar->setPosition(pos);
+  
+  if (children_.size() >= 1) {
+    children_[0]->setPosition({pos.getX() + 45, pos.getY()});
+  }
+  if (children_.size() >= 2) {
+    children_[1]->setPosition({pos.getX() + 70, pos.getY()});
+  }
 }
 
 void HealthBar::setMaxHP(int hp) {
