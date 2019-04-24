@@ -244,6 +244,8 @@ void Game::load() {
       0, "../audio/background/MenuSceneMusic - by AShamaluevMusic.ogg");
   audio->loadMusic(
       1, "../audio/background/FirstGameSceneMusic - by Always Music.ogg");
+  audio->loadMusic(
+      2, "../audio/background/Most Wondrous Battle Music Ever Light And Darkness.ogg");
 
   // Sound effects
   /*

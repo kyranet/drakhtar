@@ -1,6 +1,8 @@
+7 12
 Sheissah 11 0
 Archer 5 11 2
 Soldier 20 11 3
 Soldier 5 11 4
 Archer 5 11 5
 Monster 2 11 6
+2
