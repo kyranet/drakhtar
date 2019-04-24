@@ -43,10 +43,7 @@ void GameScene::preload() {
       this, TextureManager::get("Maps-" + std::to_string(battle_) + "Battle"),
       Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
       Vector2D<int>(WIN_WIDTH, WIN_HEIGHT));
-  board_ = new Board(this, 8, 12, static_cast<float>(WIN_HEIGHT / 10.0f));
-
   addGameObject(background);
-  addGameObject(board_);
 
   // Create the teams.
   team1_ = new Team(Color::BLUE);
@@ -194,8 +191,6 @@ void GameScene::loadRedTeam(UnitFactory& factory) {
 
   file >> trackNumber;
 
-  delete board_;
-  board_ = nullptr;
   board_ = new Board(this, rowSize, columnSize, static_cast<float>(WIN_HEIGHT / 10.0f));
   addGameObject(board_);
 
