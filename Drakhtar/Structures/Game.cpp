@@ -138,6 +138,7 @@ void Game::load() {
 
   // Button
   textures->add("Button-BattleCry", "../images/UI/battlecry_icon.png", 1, 1);
+  textures->add("Button-BattleCry-disabled", "../images/UI/battlecry_icon_disabled.png", 1, 1);
   textures->add("Button-Pause", "../images/Pause/Pause_Button.png", 1, 1);
   textures->add("Button-Skip", "../images/UI/skipButton.png", 1, 1);
   textures->add("Button-SkipTurn", "../images/UI/skipTurnButton.png", 1, 1);
@@ -213,6 +214,8 @@ void Game::load() {
 
   // Fonts
   fonts->add("DialogFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 66,
+             WIN_WIDTH);
+  fonts->add("SkillButtonFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 40,
              WIN_WIDTH);
   fonts->add("Retron2000", "../fonts/Retron2000.ttf", WIN_WIDTH / 88,
              WIN_WIDTH);

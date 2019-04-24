@@ -105,9 +105,10 @@ void GameScene::preload() {
 
   const auto battleCryButton =
       new SkillButton(this, TextureManager::get("Button-BattleCry"),
-                      Vector2D<int>(WIN_WIDTH / 24, WIN_HEIGHT / 18),
-                      Vector2D<int>(static_cast<int>(WIN_WIDTH / 21.6),
-                                    static_cast<int>(WIN_HEIGHT / 14.4)),
+                      TextureManager::get("Button-BattleCry-disabled"),
+                      Vector2D<int>(WIN_WIDTH / 20, WIN_HEIGHT / 12),
+                      Vector2D<int>(static_cast<int>(WIN_WIDTH / 12),
+                                    static_cast<int>(WIN_HEIGHT / 8)),
                       thassa, 1);
 
   addGameObject(turnBar);

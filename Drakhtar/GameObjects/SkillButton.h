@@ -5,6 +5,8 @@
 
 class Commander;
 class GameScene;
+class Texture;
+class ButtonText;
 
 class SkillButton : public GameObject {
   /**
@@ -22,8 +24,13 @@ class SkillButton : public GameObject {
    */
   GameScene* gameScene_;
 
+  Texture* disabledText_;
+
+  ButtonText* buttonText_;
+
  public:
-  SkillButton(GameScene* scene, Texture* texture, Vector2D<int> pos,
+  SkillButton(GameScene* scene, Texture* texture, Texture* disabledText,
+              Vector2D<int> pos,
               Vector2D<int> size, Commander* commander,
               int skill);
 
@@ -32,4 +39,5 @@ class SkillButton : public GameObject {
    * \param The event to be processed.
    */
   void handleEvents(SDL_Event e) override;
+  void render(SDL_Rect) const override;
 };

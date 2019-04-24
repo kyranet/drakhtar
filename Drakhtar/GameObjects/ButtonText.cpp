@@ -12,21 +12,36 @@
 ButtonText::ButtonText(Scene* scene, const std::string& text,
                        const std::string& fontFile, Vector2D<int>(size),
                        Vector2D<int>(pos))
-    : GameObject(scene, nullptr, pos, size) {
-  const auto lineJumpLimit = static_cast<int>(size.getX() * 1.5);
+    : GameObject(scene, nullptr, pos, size), fontFile_(fontFile) {
+  lineJumpLimit = static_cast<int>(size.getX() * 1.5);
 
-  const SDL_Color textColor = {225, 225, 225, 255};
+  textColor = {225, 225, 225, 255};
 
-  const auto buttonText = new Text(scene, FontManager::get(fontFile),
-                                   Vector2D<int>(1, 1), textColor, text, 1);
+  const auto text_ = new Text(scene, FontManager::get(fontFile), Vector2D<int>(1, 1),
+                        textColor, text, 1);
 
-  buttonText->setColor(textColor);
-  buttonText->setSize(
+  text_->setColor(textColor);
+  text_->setSize(
       {static_cast<int>(floor(size.getX() + WIN_HEIGHT / 1.48)),
        static_cast<int>(floor(size.getY() - WIN_WIDTH / 5.45))});
-  buttonText->setPosition(pos);
-  buttonText->setText(text, textColor, lineJumpLimit);
-  buttonText->setTransparent(true);
+  text_->setPosition(pos);
+  text_->setText(text, textColor, lineJumpLimit);
+  text_->setTransparent(true);
 
-  addChild(buttonText);
+  addChild(text_);
+}
+
+void ButtonText::setText(std::string text) {
+  delete children_[0];
+  removeChild(children_[0]);
+  const auto text_ = new Text(getScene(), FontManager::get(fontFile_),
+                              Vector2D<int>(1, 1), textColor, text, 1);
+  text_->setColor(textColor);
+  text_->setSize({static_cast<int>(floor(getSize().getX() + WIN_HEIGHT / 1.48)),
+                  static_cast<int>(floor(getSize().getY() - WIN_WIDTH / 5.45))});
+  text_->setPosition(getPosition());
+  text_->setText(text, textColor, lineJumpLimit);
+  text_->setTransparent(true);
+
+  addChild(text_);
 }

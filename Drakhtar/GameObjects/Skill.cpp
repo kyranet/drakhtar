@@ -84,6 +84,7 @@ void HeroicStrike::cast(GameScene* scene) {
     attackIncrement_ = caster_->getStats().attack * 0.5;
     caster_->setAttack(caster_->getStats().attack + attackIncrement_);
     caster_->setUnstoppable(true);
+    remainingCooldown_ = cooldown_;
   }
 }
 
