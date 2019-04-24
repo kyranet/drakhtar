@@ -3,6 +3,9 @@
 #pragma once
 #include <map>
 #include <string>
+#include <vector>
+
+class Unit;
 
 #define BASE_MONEY 1000
 
@@ -22,7 +25,8 @@ class GameManager final {
  public:
   static GameManager* getInstance();
   static void destroy();
-  static void reset();
+  void reset();
+  void updateUnits(std::vector<Unit*>& units);
 
   int getMoney() const;
   const std::map<std::string, int>& getArmy() const;

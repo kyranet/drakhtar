@@ -33,7 +33,7 @@ Pause::Pause(Scene* scene) : GameObject(scene, nullptr) {
       Vector2D<int>(static_cast<int>(WIN_WIDTH / 8.33),
                     static_cast<int>(WIN_HEIGHT / 11.25)),
       []() {
-        GameManager::reset();
+        GameManager::getInstance()->reset();
         Game::getSceneMachine()->changeScene(new MenuScene());
         SDLAudioManager::getInstance()->playChannel(6, 0, 0);
       },

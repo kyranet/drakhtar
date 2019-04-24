@@ -74,7 +74,7 @@ int Battalion::loseHealth(const int enemyAttack, int minDamage) {
   if (baseStats_.maxHealth * (battalionSize_ - 1) >= health_) {
     int lostUnits = std::max(health / baseStats_.maxHealth, 1);
     battalionSize_ -= lostUnits;
-    if (this->getTeam()->getColor == Color::RED)
+    if (this->getTeam()->getColor() == Color::RED)
       reinterpret_cast<GameScene*>(Game::getSceneMachine()->getCurrentScene())
           ->addPrize(lostUnits * baseStats_.prize);
 

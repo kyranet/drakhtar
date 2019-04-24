@@ -178,12 +178,7 @@ void GameScene::addPrize(int prize) { prize_ += prize; }
 void GameScene::saveStatus() {
   auto army = GameManager::getInstance()->getArmy();
   auto units = team1_->getUnits();
-  for (auto unit : units) {
-    if (army.find(unit->getType()) != army.end()) {
-      army[unit->getType()] =
-          reinterpret_cast<Battalion*>(unit)->getBattalionSize();
-    }
-  }
+  GameManager::getInstance()->updateUnits(units);
   GameManager::getInstance()->addMoney(prize_);
 }
 

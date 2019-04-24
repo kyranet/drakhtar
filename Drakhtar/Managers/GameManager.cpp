@@ -2,6 +2,8 @@
 
 #include "GameManager.h"
 
+#include "GameObjects/Battalion.h"
+
 GameManager* GameManager::instance_ = nullptr;
 
 GameManager::GameManager() {
@@ -38,15 +40,19 @@ void GameManager::destroy() {
 }
 
 void GameManager::reset() {
-  if (instance_ == nullptr){
-    getInstance();
-    return;
+  for (auto pair : (*army_)) {
+    (*army_)[pair.first] = 0;
   }
-  for (auto pair : instance_->getArmy()){
-    pair.second = 0;
+  money_ = BASE_MONEY;
+}
+
+void GameManager::updateUnits(std::vector<Unit*>& units) {
+  for (auto unit : units) {
+    if (army_->find(unit->getType()) != army_->end()) {
+      (*army_)[unit->getType()] =
+          reinterpret_cast<Battalion*>(unit)->getBattalionSize();
+    }
   }
-  instance_->loseMoney(instance_->getMoney());
-  instance_->addMoney(BASE_MONEY);
 }
 
 int GameManager::getMoney() const { return money_; }
