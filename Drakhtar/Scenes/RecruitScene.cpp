@@ -94,23 +94,13 @@ void RecruitScene::preload() {
 
   const auto button = new Button(
       this, TextureManager::get("Vanilla-Button"),
-      Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 4, WIN_HEIGHT / 2),
-      Vector2D<int>(static_cast<int>(WIN_WIDTH / 7.5), WIN_HEIGHT / 12),
+      Vector2D<int>(WIN_WIDTH * 0.69, WIN_HEIGHT * 0.75),
+      Vector2D<int>(static_cast<int>(WIN_WIDTH / 4), WIN_HEIGHT / 6),
       [this]() {
         reset();
         Game::getSceneMachine()->changeScene(new TransitionScene(1));
       },
       "Play", "ButtonFont");
-
-  /*const auto betaInfo =
-      new Button(this, TextureManager::get("Button-Play"),
-                 Vector2D<int>(static_cast<int>(WIN_WIDTH / 9.5),
-                               WIN_HEIGHT / 2 + WIN_HEIGHT / 6 * -2),
-                 Vector2D<int>(WIN_HEIGHT / 6, WIN_HEIGHT / 6), [this]() {
-                   addGameObject(new RecruitmentStat(
-                       this, SDL_Rect{20, 20, 20, 20}, controller_));
-                 });
-  addGameObject(betaInfo);*/
 
   addGameObject(button);
 }

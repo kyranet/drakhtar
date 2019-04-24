@@ -17,17 +17,16 @@
 RecruitmentStat::RecruitmentStat(Scene* scene,
                                  StoreUnit* controller)
     : GameObject(scene, TextureManager::get("Reward-Panel"),
-                 Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 3.2, WIN_HEIGHT / 2),
-                 Vector2D<int>(static_cast<int>(WIN_WIDTH / 2.184),
-                               static_cast<int>(WIN_HEIGHT / 1.058))),
+                 Vector2D<int>(WIN_WIDTH * 0.68, WIN_HEIGHT * 0.3),
+                 Vector2D<int>(WIN_WIDTH * 0.38, WIN_HEIGHT * 0.5)),
       currentSelected_(controller) {
   auto pos = currentSelected_->unit->getPosition();
 
   std::string statText_ = fillText();
   const auto statTextSprite = new Text(
       scene_, FontManager::get("StatsFont"),
-      Vector2D<int>(this->getPosition().getX() + this->getRect().w / 7.6,
-                    this->getPosition().getY() - this->getRect().h / 3.8),
+      Vector2D<int>(this->getPosition().getX() + WIN_WIDTH * 0.04,
+                    this->getPosition().getY()),
       {0, 0, 0, 1}, statText_, this->getRect().w * 0.9);
   addChild(statTextSprite);
   active_ = true;
@@ -40,7 +39,7 @@ void RecruitmentStat::render() const {
 }
 
 std::string RecruitmentStat::fillText() {
-  std::string text = currentSelected_->type + "\n";
+  std::string text = "<" + currentSelected_->type + ">\n";
   auto map = GameManager::getInstance()->getArmy();
   auto stats = UnitFactory(Game::getSceneMachine()->getCurrentScene())
                    .getStats(currentSelected_->type);
@@ -50,6 +49,8 @@ std::string RecruitmentStat::fillText() {
   text += "Defense-> " + std::to_string(stats.defense) + " (" +
           std::to_string(stats.defense * map[currentSelected_->type]) + ")\n";
   text += "Speed-> " + std::to_string(stats.speed) + "\n";
+  text += "Attack range-> " + std::to_string(stats.attackRange) + "\n";
+  text += "Move range-> " + std::to_string(stats.moveRange) + "\n";
   return text;
 }
 

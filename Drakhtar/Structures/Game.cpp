@@ -230,6 +230,7 @@ void Game::load() {
   fonts->add("UnitFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 120, WIN_WIDTH);
   fonts->add("StatsFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 37, WIN_WIDTH);
   fonts->add("ButtonFont", "../fonts/AURORA.ttf", WIN_WIDTH / 50, WIN_WIDTH);
+  fonts->add("ButtonFontBig", "../fonts/AURORA.ttf", WIN_WIDTH / 20, WIN_WIDTH);
   fonts->init();
 
   auto audio = SDLAudioManager::getInstance();
