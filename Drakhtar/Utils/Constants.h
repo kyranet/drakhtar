@@ -11,6 +11,13 @@ const int GAME_FRAMERATE = 25;
 /*
  * \brief This is displaying all the stats each unit has.
  * \Speed is capped at 10, meaning 10 is the max amount of speed one unit can have
+ * \ataque		10	
+	defensa		10	
+	hp			10	
+	attackrange	1	
+	moverange	3	
+	speed		4	
+	Base price	20
  * \Mage: Squishy glass cannon that deals good damage but dies very fast
  */
 // Thassa
@@ -24,7 +31,7 @@ const auto thassaPrize = 100;
 // Zamdran
 const auto zamdranAttack = 45;
 const auto zamdranDefense = 10;  // Percent
-const auto zamdranHealth =190;
+const auto zamdranHealth = 170;
 const auto zamdranAttackRange = 3;
 const auto zamdranMoveRange = 10;  // 2;
 const auto zamdranSpeed = 6;
@@ -34,9 +41,9 @@ const int wizardAttack = 20;
 const int wizardDefense = 0;  // Percent
 const int wizardHealth = 10;
 const int wizardAttackRange = 2;
-const int wizardMoveRange = 10;  // 2;
+const int wizardMoveRange = 10;  // 3;
 const int wizardSpeed = 6;
-const int wizardPrize = 7;
+const int wizardPrize = 36;
 // knight
 const auto knightAttack = 11;
 const auto knightDefense = 30;  // Percent
@@ -44,7 +51,7 @@ const auto knightHealth = 20;
 const auto knightAttackRange = 1;
 const auto knightMoveRange = 10;  // 5;
 const auto knightSpeed = 8;
-const auto knightPrize = 12;
+const auto knightPrize = 48;
 // archer
 const auto archerAttack = 6;
 const auto archerDefense = 10;  // Percent
@@ -52,23 +59,23 @@ const auto archerHealth = 9;
 const auto archerAttackRange = 3;
 const auto archerMoveRange = 10; //2;
 const auto archerSpeed = 4;
-const auto archerPrize = 5;
+const auto archerPrize = 26;
 // soldier
 const auto soldierAttack = 8;
-const auto soldierDefense = 30;  // Percent
+const auto soldierDefense = 25;  // Percent
 const auto soldierHealth = 12;
 const auto soldierAttackRange = 1;
 const auto soldierMoveRange = 10;  // 3;
 const auto soldierSpeed = 5;
-const auto soldierPrize = 5;
+const auto soldierPrize = 28;
 // monster
-const auto monsterAttack = 21;
+const auto monsterAttack = 19;
 const auto monsterDefense = 50;  // Percent
 const auto monsterHealth = 85;
 const auto monsterAttackRange = 1;
 const auto monsterMoveRange = 10;  // 2;
 const auto monsterSpeed = 3;
-const auto monsterPrize = 50;
+const auto monsterPrize = 110;
 
 enum class KeyboardKey {
   UNKNOWN = SDL_SCANCODE_UNKNOWN,
@@ -336,3 +343,4 @@ enum class KeyboardKey {
 };
 
 enum class MouseKey { LEFT, MIDDLE, RIGHT, kKeyLimit };
+

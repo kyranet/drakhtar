@@ -7,9 +7,9 @@ GameManager* GameManager::instance_ = nullptr;
 GameManager::GameManager() {
   army_ = new std::map<std::string, int>();
   typeOrder[SOLDIER] = "Soldier";
-  (*army_)["Soldier"] = 10;
+  (*army_)["Soldier"] = 5;
   typeOrder[ARCHER] = "Archer";
-  (*army_)["Archer"] = 10;
+  (*army_)["Archer"] = 5;
   typeOrder[MAGE] = "Mage";
   (*army_)["Mage"] = 5;
   typeOrder[KNIGHT] = "Knight";

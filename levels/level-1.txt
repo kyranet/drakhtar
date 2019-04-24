@@ -1,6 +1,6 @@
 Zamdran 11 0
 Soldier 10 11 2
 Archer 10 11 3
-Mage 5 11 4
-Knight 5 11 5
+Mage 6 11 4
+Knight 4 11 5
 Monster 2 11 6
