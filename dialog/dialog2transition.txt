@@ -1,7 +1,9 @@
-6
-Narrator Portraits-Narrator Valar rode at the column's head. Once close to Drakhtar, his wary eye proved useful. .
-Valar Portraits-Valar Your Majesty! Something is besieging our realm?! .
-Thassa Portraits-Thassa What! Who!? .
-Valar Portraits-Valar  I don't ... know your majesty, some sort of skeletons?  .
-Narrator Portraits-Narrator Thassa barely care what she was facing, something was attacking her beloved home, and they were about to pay. .
-Thassa Portraits-Thassa We shall discuss that later, provided we survive. Attaaack!! .
+8
+Thassa Portraits-Thassa For the love of the gods... What happened here? .
+Narrator Portraits-Narrator Thassa was heartbroken. The remaining survivors were speechless, all waiting for Thassa to say something. But she couldn't. .
+Valar Portraits-Valar Yo-your majesty… I know the city's deepest secrets and paths, I-I can look for the safest routes to get to the castle and regroup there. .
+Thassa Portraits-Thassa Guide us then Valar, I trust you more than anyone. .
+Narrator Portraits-Narrator Drakhtar was hers no more. Our future queen saw the city from a slightly different vantage point, running through sewer tunnels and tight streets, she wanted to rage and shout. Who once was a proud, strong woman, now could only pinch her nose and whinge not at all. .
+Narrator Portraits-Narrator They managed to sneak through the undead army without being seen. Valar's knowledge proved to be very useful. .
+Narrator Portraits-Narrator The view ahead was not pleasant at all, the main entrance of the castle was empty, doors broken and no soul around. Thassa feared the worst. .
+Thassa Portraits-Thassa No... my father... hurry up drakhtarians -- look for enemies, we must clear the castle and find the king! Attack!! .
