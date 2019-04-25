@@ -47,13 +47,13 @@ const int wizardMoveRange = 3;  // 3;
 const int wizardSpeed = 6;
 const int wizardPrize = 36;
 // knight
-const auto knightAttack = 11;
+const auto knightAttack = 12;
 const auto knightDefense = 30;  // Percent
-const auto knightHealth = 20;
+const auto knightHealth = 30;
 const auto knightAttackRange = 1;
 const auto knightMoveRange = 5;  // 5;
 const auto knightSpeed = 8;
-const auto knightPrize = 48;
+const auto knightPrize = 55;
 // archer
 const auto archerAttack = 6;
 const auto archerDefense = 10;  // Percent
@@ -77,7 +77,7 @@ const auto monsterHealth = 85;
 const auto monsterAttackRange = 1;
 const auto monsterMoveRange = 2;  // 2;
 const auto monsterSpeed = 3;
-const auto monsterPrize = 110;
+const auto monsterPrize = 125;
 
 enum class KeyboardKey {
   UNKNOWN = SDL_SCANCODE_UNKNOWN,
