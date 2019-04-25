@@ -46,8 +46,7 @@ std::string RecruitmentStat::fillText() {
   text += "Total amount: " + std::to_string(map[currentSelected_->type]) + "\n";
   text += "Attack-> " + std::to_string(stats.attack) + " (" +
           std::to_string(stats.attack * map[currentSelected_->type]) + ")\n";
-  text += "Defense-> " + std::to_string(stats.defense) + " (" +
-          std::to_string(stats.defense * map[currentSelected_->type]) + ")\n";
+  text += "Defense-> " + std::to_string(stats.defense) + "%\n";
   text += "Speed-> " + std::to_string(stats.speed) + "\n";
   text += "Attack range-> " + std::to_string(stats.attackRange) + "\n";
   text += "Move range-> " + std::to_string(stats.moveRange) + "\n";

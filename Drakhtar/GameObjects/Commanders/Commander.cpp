@@ -11,9 +11,9 @@
 #include "Structures/Game.h"
 #include "Structures/Team.h"
 
-Commander::Commander(Scene* scene, Texture* texture, Box* box,
+Commander::Commander(std::string name, Scene* scene, Texture* texture, Box* box,
                      const UnitStats commanderStats)
-    : Unit(scene, texture, box, commanderStats, "") {
+    : Unit(scene, texture, box, commanderStats, ""), name_(name) {
   const auto rect = box_->getRect();
 
   commanderIcon_ =
@@ -46,7 +46,7 @@ void Commander::onSelect() {
 
     // Ends skill if it was active and its duration finished
     if (skill->getActive() && skill->getRemainingDuration() == 0) {
-      skill->end();
+      skill->end(reinterpret_cast<GameScene*>(scene_));
     }
   }
 }
@@ -57,7 +57,7 @@ void Commander::onDeselect() {
   for (auto skill : skills_) {
     // Ends skill if it was active and its duration finished
     if (skill->getActive() && skill->getRemainingDuration() == 0) {
-      skill->end();
+      skill->end(reinterpret_cast<GameScene*>(scene_));
     }
   }
 }

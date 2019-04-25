@@ -16,14 +16,17 @@ SkillDescriptionBox::SkillDescriptionBox(Scene* scene, SkillButton* skillButton)
           Vector2D<int>(static_cast<int>(WIN_WIDTH / 2),
                         static_cast<int>(WIN_HEIGHT / 3))),
       skillButton_(skillButton) {
+  setTransparent(true);
+  setRenderizable(false);
   Vector2D<int> pos = skillButton_->getPosition();
 
   std::string statText_ = fillText();
-  const auto statTextSprite = new Text(
+  const auto skillTextSprite = new Text(
       scene_, FontManager::get("StatsFont"),
       Vector2D<int>(this->getPosition().getX(), this->getPosition().getY()),
       {0, 0, 0, 1}, statText_, this->getRect().w * 0.9);
-  addChild(statTextSprite);
+  addChild(skillTextSprite);
+  skillTextSprite->setTransparent(true);
   active_ = true;
 }
 

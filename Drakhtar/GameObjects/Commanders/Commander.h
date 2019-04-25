@@ -15,12 +15,14 @@ class Commander : public Unit {
    * \brief A vector of all the skills the commander can cast.
    */
   std::vector<Skill*> skills_;
+
   bool unstoppable_ = false;
 
+  std::string name_;
   GameObject* commanderIcon_ = nullptr;
 
  public:
-  Commander(Scene* scene, Texture* texture, Box* box, UnitStats commanderStats);
+  Commander(std::string name, Scene* scene, Texture* texture, Box* box, UnitStats commanderStats);
   virtual ~Commander();
 
   /**
@@ -43,4 +45,6 @@ class Commander : public Unit {
 
   bool getUnstoppable() const { return unstoppable_; }
   void setUnstoppable(const bool unstoppable) { unstoppable_ = unstoppable; }
+
+  std::string getName() { return name_; }
 };

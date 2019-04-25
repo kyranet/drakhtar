@@ -23,8 +23,8 @@ class Skill {
   Skill(std::string id, int cooldown, int duration, Commander* caster);
   virtual ~Skill() = default;
 
-  virtual void cast(GameScene* scene) = 0;
-  virtual void end() = 0;
+  virtual void cast(GameScene* scene);
+  virtual void end(GameScene* scene);
 
   std::string getId() const { return id_; }
   std::string getDescription() const { return description_; }
@@ -41,8 +41,7 @@ class BattleCry final : public Skill {
   virtual ~BattleCry() = default;
 
   void cast(GameScene* scene) override;
-  void end() override;
-  void resetAttack();
+  void end(GameScene* scene) override;
 };
 
 class ArrowRain final : public Skill {
@@ -51,7 +50,7 @@ class ArrowRain final : public Skill {
   virtual ~ArrowRain() = default;
 
   void cast(GameScene* scene) override;
-  void end() override;
+  void end(GameScene* scene) override;
 };
 
 class HeroicStrike final : public Skill {
@@ -62,5 +61,14 @@ class HeroicStrike final : public Skill {
   virtual ~HeroicStrike() = default;
 
   void cast(GameScene* scene) override;
-  void end() override;
+  void end(GameScene* scene) override;
+};
+
+class WitheringCurse final : public Skill {
+ public:
+  explicit WitheringCurse(Commander* caster);
+  virtual ~WitheringCurse() = default;
+
+  void cast(GameScene* scene) override;
+  void end(GameScene* scene) override;
 };

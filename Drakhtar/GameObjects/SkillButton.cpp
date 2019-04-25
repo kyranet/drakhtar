@@ -18,8 +18,6 @@ SkillButton::SkillButton(GameScene* scene, Texture* texture,
   skill_ = commander_->getSkills().at(skill);
 
   skillDescriptionBox_ = new SkillDescriptionBox(scene, this);
-  skillDescriptionBox_->setRenderizable(false);
-  skillDescriptionBox_->setTransparent(true);
   addChild(skillDescriptionBox_);
 
   hoverListener_ = new SkillButtonListener(this, skillDescriptionBox_);

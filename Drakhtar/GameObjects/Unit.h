@@ -68,6 +68,9 @@ class Unit : public GameObject {
 
   virtual void setAttack(const int attack) { stats_.attack = attack; }
   void setSpeed(const int speed) { stats_.speed = speed; }
+  void setDefense(const int defense) { stats_.defense = defense; }
+  void setMoveRange(const int range) { stats_.moveRange = range; }
+
   void setMoving(const bool moving) { moving_ = moving; }
   void setMoved(const bool moved) { moved_ = moved; }
   void setTeam(Team *team) { team_ = team; }

@@ -6,9 +6,9 @@
 
 #include "Controllers/PlayerController.h"
 #include "Errors/DrakhtarError.h"
+#include "GameObjects/Board.h"
 #include "GameObjects/Battalion.h"
 #include "GameObjects/Button.h"
-#include "GameObjects/Board.h"
 #include "GameObjects/Commanders/Thassa.h"
 #include "GameObjects/Commanders/Zamdran.h"
 #include "GameObjects/DialogScene.h"
@@ -195,3 +195,13 @@ void GameScene::saveStatus() {
 Board* GameScene::getBoard() const { return board_; }
 
 int GameScene::getBattleInd() { return battle_; }
+
+Team* GameScene::getAlliedTeam(Unit* unit) {
+  if (unit->getTeam() == team1_) return team1_;
+  if (unit->getTeam() == team2_) return team2_;
+}
+
+Team* GameScene::getEnemyTeam(Unit* unit) {
+  if (unit->getTeam() != team1_) return team1_;
+  if (unit->getTeam() != team2_) return team2_;
+}
