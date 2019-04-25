@@ -106,7 +106,6 @@ void Unit::attack(Unit* enemy, const bool allowsCounter) {
       !enemy->getHasCounterAttacked()) {
     enemy->attack(this, true);
     enemy->setHasCounterAttacked(true);
-
   }
 }
 
