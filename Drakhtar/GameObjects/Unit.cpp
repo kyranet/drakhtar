@@ -97,8 +97,8 @@ void Unit::attack(Unit* enemy, const bool counter) {
   // alive and within attack range, counter-attack
   if (!counter && enemy->getStats().maxHealth > 0 &&
       scene->getBoard()->isInRange(box_, enemy->getBox(),
-                                   enemy->getStats().attackRange) && 
-	  !enemy->getHasCounterAttacked()) {
+                                   enemy->getStats().attackRange) &&
+      !enemy->getHasCounterAttacked()) {
     enemy->attack(this, true);
     enemy->setHasCounterAttacked(true);
   }
