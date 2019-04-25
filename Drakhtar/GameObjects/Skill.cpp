@@ -11,6 +11,7 @@
 #include "Commanders/Commander.h"
 #include "GameObjects/HealthBar.h"
 #include "Managers/SDLAudioManager.h"
+#include "GameObjects/Box.h"
 
 Skill::Skill(std::string id, int cooldown, int duration, Commander* caster)
     : id_(std::move(id)),
@@ -79,6 +80,9 @@ void ArrowRain::cast(GameScene* scene) {
     // Caster deals half damage to every enemy unit
     for (auto unit : scene->getEnemyTeam(caster_)->getUnits()) {
       unit->loseHealth(caster_->getStats().attack / 2, 1);
+      if (unit->getHealth() <= 0) {
+        unit->getBox()->destroyContent();
+      }
     }
     end(scene);
   }
