@@ -66,7 +66,7 @@ addGameObject(thassa);
 auto army = GameManager::getInstance() -> getArmy();
 auto typeOrder = GameManager::getInstance() -> getTypeOrder();
 
-int y = 2;
+int y = 1;
 for (const auto& pair : typeOrder) {
   if (army[pair.second] > 0) {
     addGameObject(factory.newBattalion(

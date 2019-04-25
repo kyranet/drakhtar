@@ -188,7 +188,7 @@ void Game::load() {
   textures->add("Maps-Test", "../images/Maps/TestMap.png", 1, 1);
   textures->add("Maps-1Battle", "../images/Maps/FirstBattle.png", 4, 1)
       ->addAnimation("default", {0, 1, 2, 3}, 1);
-  textures->add("Maps-2Battle", "../images/Maps/ThirdBattle.png", 1, 1);
+  textures->add("Maps-2Battle", "../images/Maps/SecondBattle.png", 1, 1);
 
   // Tutorial images
   textures->add("tutorial-1", "../images/Tutorials/tutorial_1.png", 1, 1);
