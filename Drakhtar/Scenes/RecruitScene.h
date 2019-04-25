@@ -10,6 +10,7 @@
 class GameObject;
 class StoreListener;
 class Text;
+class Button;
 
 class RecruitScene final : public Scene {
   GameObject* recruitmentPanel_ = nullptr;
@@ -17,6 +18,7 @@ class RecruitScene final : public Scene {
   std::map<std::string, int> costs_;
   Text* moneyText_ = nullptr;
   Text* totalCostText_ = nullptr;
+  Button* playButton;
 
   int totalCost_ = 0;
 

@@ -56,6 +56,9 @@ class SDLAudioManager final : public AudioManager {
   int getMusicVolume();
   void setDefault(bool value_);
   bool getDefault();
+  bool getChannelPlaying(int channel);
+  bool getAllChannelPlaying();
+  bool getMusicPlaying();
 
  private:
   bool initialized_;

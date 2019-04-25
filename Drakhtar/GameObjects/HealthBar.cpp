@@ -1,9 +1,11 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "HealthBar.h"
+
 #include "../Managers/TextureManager.h"
 #include "../Scenes/Scene.h"
 #include "../Utils/Constants.h"
+#include "Managers/SDLAudioManager.h"
 
 HealthBar::HealthBar(Scene* scene, Vector2D<int> pos, int maxHP)
     : GameObject(scene, TextureManager::get("UI-healthBar_background"), pos,
@@ -12,7 +14,18 @@ HealthBar::HealthBar(Scene* scene, Vector2D<int> pos, int maxHP)
                            Vector2D<int>(getRect().w + 1, getRect().h));
   damageBar = new GameObject(scene, TextureManager::get("UI-healthBar_damage"),
                              pos, Vector2D<int>(getRect().w, getRect().h));
+  statUp =
+      new GameObject(scene, TextureManager::get("UI-statUp"),
+                     Vector2D<int>(position_.getX() + 37, position_.getY() - 7),
+                     Vector2D<int>(size_.getX() / 5, size_.getY()) * 2);
+  statDown =
+      new GameObject(scene, TextureManager::get("UI-statDown"),
+                     Vector2D<int>(position_.getX() + 43, position_.getY() + 4),
+                     Vector2D<int>(size_.getX() / 5, size_.getY()) * 2);
+
   damageBar->setActive(false);
+  statUp->setRenderizable(false);
+  statDown->setRenderizable(false);
 
   originalWidth = lifeBar->getRect().w;
   maxHealth = maxHP;
@@ -22,17 +35,23 @@ HealthBar::HealthBar(Scene* scene, Vector2D<int> pos, int maxHP)
 HealthBar::~HealthBar() {
   delete lifeBar;
   delete damageBar;
+  delete statUp;
+  delete statDown;
 }
 
 void HealthBar::render() const {
   GameObject::render();
   lifeBar->render();
+  statUp->render();
+  statDown->render();
 
   if (damageBar->getActive()) damageBar->render();
 }
 
 void HealthBar::update() {
-  if (damageAnimationPlaying && damageBar->getRect().w > 0) {
+  auto audio = SDLAudioManager::getInstance();
+  if (damageAnimationPlaying && damageBar->getRect().w > 0 &&
+      !audio->getChannelPlaying(1) && !audio->getChannelPlaying(0)) {
     if (damageBar->getRect().w > damageAnimationSpeed) {
       int oldX = damageBar->getRect().x;
       int oldY = damageBar->getRect().y;
@@ -79,9 +98,20 @@ void HealthBar::moveBar(Vector2D<int> pos) {
   lifeBar->setPosition(
       Vector2D<int>(pos.getX() - (widthDifference / 2), pos.getY()));
   damageBar->setPosition(pos);
+
+  statUp->setPosition({position_.getX() + 37, position_.getY() - 7});
+  statDown->setPosition({position_.getX() + 43, position_.getY() + 4});
 }
 
 void HealthBar::setMaxHP(int hp) {
   maxHealth = hp;
   currentHealth = maxHealth;
+}
+
+void HealthBar::setStatUpRenderizable(const bool active) const {
+  statUp->setRenderizable(active);
+}
+
+void HealthBar::setStatDownRenderizable(const bool active) const {
+  statDown->setRenderizable(active);
 }

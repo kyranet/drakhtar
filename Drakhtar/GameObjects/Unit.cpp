@@ -63,7 +63,6 @@ void Unit::moveToBox(Box* newBox) {
       {rect.x + rect.w / 2 + rect.w / 14, rect.y - rect.h / 3});
   healthBar_->moveBar(Vector2D<int>(rect.x + rect.w / 2, rect.y - rect.h / 3));
   setMoved(true);
-  setMoving(false);
 }
 
 int Unit::loseHealth(int enemyAttack, int minDamage) {
@@ -89,18 +88,25 @@ void Unit::onSelect() {
 
 void Unit::onDeselect() { setMoving(false); }
 
-void Unit::attack(Unit* enemy, const bool counter) {
+void Unit::setBuffed(bool buffed) { healthBar_->setStatUpRenderizable(buffed); }
+
+void Unit::setDebuffed(bool debuffed) {
+  healthBar_->setStatDownRenderizable(debuffed);
+}
+
+void Unit::attack(Unit* enemy, const bool allowsCounter) {
   enemy->loseHealth(getStats().attack, minDamage_);
 
   const auto scene = reinterpret_cast<GameScene*>(getScene());
-  // If the attack is not a counter and the enemy is
+  // If the attack allows a counter and the enemy is
   // alive and within attack range, counter-attack
-  if (!counter && enemy->getStats().maxHealth > 0 &&
+  if (allowsCounter && enemy->getStats().maxHealth > 0 &&
       scene->getBoard()->isInRange(box_, enemy->getBox(),
                                    enemy->getStats().attackRange) &&
       !enemy->getHasCounterAttacked()) {
     enemy->attack(this, true);
     enemy->setHasCounterAttacked(true);
+
   }
 }
 

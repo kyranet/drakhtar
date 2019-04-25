@@ -2,17 +2,17 @@
 
 #include "Commander.h"
 
+#include "../../GameObjects/Board.h"
 #include "../../GameObjects/Box.h"
 #include "../../Managers/TextureManager.h"
 #include "Scenes/GameScene.h"
 #include "Scenes/Scene.h"
-#include "Scenes/TransitionScene.h"
 #include "Structures/Game.h"
 #include "Structures/Team.h"
 
-Commander::Commander(Scene* scene, Texture* texture, Box* box,
+Commander::Commander(std::string name, Scene* scene, Texture* texture, Box* box,
                      const UnitStats commanderStats)
-    : Unit(scene, texture, box, commanderStats, "") {
+    : Unit(scene, texture, box, commanderStats, name) {
   const auto rect = box_->getRect();
 
   commanderIcon_ =
@@ -45,22 +45,28 @@ void Commander::onSelect() {
 
     // Ends skill if it was active and its duration finished
     if (skill->getActive() && skill->getRemainingDuration() == 0) {
-      skill->end();
+      skill->end(reinterpret_cast<GameScene*>(scene_));
+    }
+  }
+}
+
+void Commander::onDeselect() {
+  Unit::onDeselect();
+
+  for (auto skill : skills_) {
+    // Ends skill if it was active and its duration finished
+    if (skill->getActive() && skill->getRemainingDuration() == 0) {
+      skill->end(reinterpret_cast<GameScene*>(scene_));
     }
   }
 }
 
 void Commander::kill() {
   Unit::kill();
-  int currentScene = reinterpret_cast<GameScene*>(getScene())->getBattleInd();
   if (getTeam()->getColor() == Color::BLUE) {
-    Game::getSceneMachine()->changeScene(new GameScene(currentScene));
+    reinterpret_cast<GameScene*>(getScene())->gameOver(false);
   } else {
-    auto scene = reinterpret_cast<GameScene*>(
-        Game::getSceneMachine()->getCurrentScene());
-    scene->addPrize(baseStats_.prize);
-    scene->saveStatus();
-    Game::getSceneMachine()->changeScene(new TransitionScene(currentScene + 1));
+    reinterpret_cast<GameScene*>(getScene())->gameOver(true);
   }
 }
 
@@ -68,4 +74,13 @@ void Commander::moveToBox(Box* box) {
   Unit::moveToBox(box);
   const auto rect = box_->getRect();
   commanderIcon_->setPosition(Vector2D<int>(rect.x, rect.y - rect.h / 3));
+}
+
+void Commander::attack(Unit* enemy, bool allowsCounter) {
+  // If the attack would allow a counter but the commander is unstoppable_, the
+  // attack does not allow counter
+  if (allowsCounter && unstoppable_) {
+    allowsCounter = false;
+  }
+  Unit::attack(enemy, allowsCounter);
 }

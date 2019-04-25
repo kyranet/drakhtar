@@ -176,3 +176,11 @@ void SDLAudioManager::setDefault(bool value_) {
 }
 
 bool SDLAudioManager::getDefault() { return default_; }
+
+bool SDLAudioManager::getChannelPlaying(int channel) {
+  return Mix_Playing(channel);
+}
+
+bool SDLAudioManager::getAllChannelPlaying() { return Mix_Playing; }
+
+bool SDLAudioManager::getMusicPlaying() { return Mix_PlayingMusic; }
