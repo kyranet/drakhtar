@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "MenuScene.h"
+
 #include "GameObjects/Button.h"
 #include "GameObjects/GameObject.h"
 #include "GameObjects/OptionsMenu.h"
@@ -34,6 +35,11 @@ void MenuScene::preload() {
       Vector2D<int>(static_cast<int>(floor(WIN_WIDTH / 6.5)), WIN_HEIGHT / 11),
       [this]() { this->addGameObject(new OptionsMenu(this)); }, "Options",
       "ButtonFont");
+  const auto exitButton = new Button(
+      this, TextureManager::get("Vanilla-Button"),
+      Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2 + 2 * (WIN_HEIGHT / 13)),
+      Vector2D<int>(static_cast<int>(floor(WIN_WIDTH / 6.5)), WIN_HEIGHT / 11),
+      [this]() { finish(true); }, "Exit Game", "ButtonFont");
 
   auto audio = SDLAudioManager::getInstance();
   audio->haltChannel(0);
@@ -43,4 +49,5 @@ void MenuScene::preload() {
   addGameObject(background);
   addGameObject(play);
   addGameObject(options);
+  addGameObject(exitButton);
 }
