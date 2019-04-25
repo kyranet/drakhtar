@@ -7,13 +7,12 @@
 #include "../../Managers/TextureManager.h"
 #include "Scenes/GameScene.h"
 #include "Scenes/Scene.h"
-#include "Scenes/TransitionScene.h"
 #include "Structures/Game.h"
 #include "Structures/Team.h"
 
 Commander::Commander(std::string name, Scene* scene, Texture* texture, Box* box,
                      const UnitStats commanderStats)
-    : Unit(scene, texture, box, commanderStats, ""), name_(name) {
+    : Unit(scene, texture, box, commanderStats, name) {
   const auto rect = box_->getRect();
 
   commanderIcon_ =

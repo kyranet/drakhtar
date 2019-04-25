@@ -18,11 +18,11 @@ class Commander : public Unit {
 
   bool unstoppable_ = false;
 
-  std::string name_;
   GameObject* commanderIcon_ = nullptr;
 
  public:
-  Commander(std::string name, Scene* scene, Texture* texture, Box* box, UnitStats commanderStats);
+  Commander(std::string name, Scene* scene, Texture* texture, Box* box,
+            UnitStats commanderStats);
   virtual ~Commander();
 
   /**
@@ -45,6 +45,4 @@ class Commander : public Unit {
 
   bool getUnstoppable() const { return unstoppable_; }
   void setUnstoppable(const bool unstoppable) { unstoppable_ = unstoppable; }
-
-  std::string getName() { return name_; }
 };

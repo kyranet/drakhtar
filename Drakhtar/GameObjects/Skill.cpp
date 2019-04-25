@@ -18,7 +18,7 @@ Skill::Skill(std::string id, int cooldown, int duration, Commander* caster)
       duration_(duration) {}
 
 void Skill::cast(GameScene* scene) {
-  std::cout << "Casted <" + id_ + "> by " + caster_->getName() << std::endl;
+  std::cout << "Casted <" + id_ + "> by " + caster_->getType() << std::endl;
   active_ = true;
   remainingCooldown_ = cooldown_;
   remainingDuration_ = duration_;
