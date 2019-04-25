@@ -49,8 +49,9 @@ void HealthBar::render() const {
 }
 
 void HealthBar::update() {
+  auto audio = SDLAudioManager::getInstance();
   if (damageAnimationPlaying && damageBar->getRect().w > 0 &&
-      !SDLAudioManager::getInstance()->getChannelPlaying(1)) {
+      !audio->getChannelPlaying(1) && !audio->getChannelPlaying(0)) {
     if (damageBar->getRect().w > damageAnimationSpeed) {
       int oldX = damageBar->getRect().x;
       int oldY = damageBar->getRect().y;
