@@ -26,7 +26,6 @@ Unit::Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
       health_(stats.maxHealth),
       baseStats_(stats),
       stats_(stats) {
-
   // Units must be ignored in the mouse raycasts.
   setTransparent(true);
   box->setContent(this);
@@ -88,7 +87,9 @@ void Unit::onDeselect() { setMoving(false); }
 
 void Unit::setBuffed(bool buffed) { healthBar_->setStatUpRenderizable(buffed); }
 
-void Unit::setDebuffed(bool debuffed) { healthBar_->setStatDownRenderizable(debuffed); }
+void Unit::setDebuffed(bool debuffed) {
+  healthBar_->setStatDownRenderizable(debuffed);
+}
 
 void Unit::attack(Unit* enemy, const bool allowsCounter) {
   enemy->loseHealth(getStats().attack, minDamage_);
