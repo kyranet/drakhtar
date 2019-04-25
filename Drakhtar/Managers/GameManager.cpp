@@ -32,6 +32,10 @@ GameManager::~GameManager() {
     delete army_;
     army_ = nullptr;
   }
+  if (buyingCap_ != nullptr){
+    delete buyingCap_;
+    buyingCap_ = nullptr;
+  }
 }
 
 GameManager* GameManager::getInstance() {
