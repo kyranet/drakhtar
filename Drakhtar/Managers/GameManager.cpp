@@ -20,11 +20,11 @@ GameManager::GameManager() {
   (*army_)["Monster"] = 0;
 
   buyingCap_ = new std::map<std::string, int>();
-  (*buyingCap_)["Soldier"] = 10;
-  (*buyingCap_)["Archer"] = 8;
-  (*buyingCap_)["Mage"] = 7;
-  (*buyingCap_)["Knight"] = 5;
-  (*buyingCap_)["Monster"] = 4;
+  (*buyingCap_)["Soldier"] = 20;
+  (*buyingCap_)["Archer"] = 18;
+  (*buyingCap_)["Mage"] = 12;
+  (*buyingCap_)["Knight"] = 10;
+  (*buyingCap_)["Monster"] = 6;
 }
 
 GameManager::~GameManager() {

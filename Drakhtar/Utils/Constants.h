@@ -33,7 +33,7 @@ const auto thassaHealth = 150;
 const auto thassaAttackRange = 1;
 const auto thassaMoveRange = 3;  // 10;
 const auto thassaSpeed = 5;
-const auto thassaPrize = 100;
+const auto thassaPrice = 100;
 // Zamdran
 const auto zamdranAttack = 50;
 const auto zamdranDefense = 10;  // Percent
@@ -41,7 +41,7 @@ const auto zamdranHealth = 200;
 const auto zamdranAttackRange = 3;
 const auto zamdranMoveRange = 2;  // 2;
 const auto zamdranSpeed = 6;
-const auto zamdranPrize = 100;
+const auto zamdranPrice = 100;
 // wizard
 const int wizardAttack = 20;
 const int wizardDefense = 0;  // Percent
@@ -49,7 +49,7 @@ const int wizardHealth = 10;
 const int wizardAttackRange = 2;
 const int wizardMoveRange = 3;  // 3;
 const int wizardSpeed = 6;
-const int wizardPrize = 36;
+const int wizardPrice = 36;
 // knight
 const auto knightAttack = 13;
 const auto knightDefense = 30;  // Percent
@@ -57,7 +57,7 @@ const auto knightHealth = 30;
 const auto knightAttackRange = 1;
 const auto knightMoveRange = 5;  // 5;
 const auto knightSpeed = 8;
-const auto knightPrize = 55;
+const auto knightPrice = 55;
 // archer
 const auto archerAttack = 6;
 const auto archerDefense = 10;  // Percent
@@ -65,7 +65,7 @@ const auto archerHealth = 9;
 const auto archerAttackRange = 3;
 const auto archerMoveRange = 2;  // 2;
 const auto archerSpeed = 4;
-const auto archerPrize = 26;
+const auto archerPrice = 26;
 // soldier
 const auto soldierAttack = 8;
 const auto soldierDefense = 25;  // Percent
@@ -73,7 +73,7 @@ const auto soldierHealth = 12;
 const auto soldierAttackRange = 1;
 const auto soldierMoveRange = 3;  // 3;
 const auto soldierSpeed = 5;
-const auto soldierPrize = 28;
+const auto soldierPrice = 28;
 // monster
 const auto monsterAttack = 19;
 const auto monsterDefense = 50;  // Percent
@@ -81,7 +81,7 @@ const auto monsterHealth = 85;
 const auto monsterAttackRange = 1;
 const auto monsterMoveRange = 2;  // 2;
 const auto monsterSpeed = 3;
-const auto monsterPrize = 125;
+const auto monsterPrice = 125;
 
 enum class KeyboardKey {
   UNKNOWN = SDL_SCANCODE_UNKNOWN,
