@@ -6,11 +6,13 @@
 
 #include "Controllers/PlayerController.h"
 #include "Errors/DrakhtarError.h"
+#include "GameObjects/Board.h"
 #include "GameObjects/Battalion.h"
 #include "GameObjects/Button.h"
 #include "GameObjects/Commanders/Thassa.h"
 #include "GameObjects/Commanders/Zamdran.h"
 #include "GameObjects/DialogScene.h"
+#include "GameObjects/GameOverPanel.h"
 #include "GameObjects/Pause.h"
 #include "GameObjects/SkillButton.h"
 #include "GameObjects/TurnBar.h"
@@ -42,6 +44,7 @@ void GameScene::preload() {
       Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
       Vector2D<int>(WIN_WIDTH, WIN_HEIGHT));
   board_ = new Board(this, 8, 12, static_cast<float>(WIN_HEIGHT / 10.0f));
+
   addGameObject(background);
   addGameObject(board_);
 
@@ -98,22 +101,29 @@ void GameScene::preload() {
                                static_cast<int>(WIN_HEIGHT / 14.4)),
                  buttonPause, " ", "ButtonFont");
 
-  audio->haltMusic();
-  if (audio->getDefault()) audio->setMusicVolume(10);
-  audio->playMusic(1, 999);
-  /*
-   // Reactivar cuando se implementen las habilidades definitivamente
   const auto battleCryButton =
       new SkillButton(this, TextureManager::get("Button-BattleCry"),
-                      Vector2D<int>(WIN_WIDTH / 24, WIN_HEIGHT / 18),
-                      Vector2D<int>(static_cast<int>(WIN_WIDTH / 21.6),
-                                    static_cast<int>(WIN_HEIGHT / 14.4)),
-                      board_, thassa, 0);
-  */
-  addGameObject(turnBar);
-  addGameObject(dialog);
-  addGameObject(pauseButton);
-  // addGameObject(battleCryButton);
+                      TextureManager::get("Button-BattleCry-disabled"),
+                      Vector2D<int>(WIN_WIDTH / 20, 80),
+                      Vector2D<int>(static_cast<int>(WIN_WIDTH / 12),
+                                    static_cast<int>(WIN_HEIGHT / 8)),
+                      thassa, 0);
+
+  const auto heroicStrikeButton =
+      new SkillButton(this, TextureManager::get("Button-HeroicStrike"),
+                      TextureManager::get("Button-HeroicStrike-disabled"),
+                      Vector2D<int>(WIN_WIDTH / 20, 180),
+                      Vector2D<int>(static_cast<int>(WIN_WIDTH / 12),
+                                    static_cast<int>(WIN_HEIGHT / 8)),
+                      thassa, 1);
+
+  const auto enemySkillButton =
+      new SkillButton(this, TextureManager::get("Button-Enemy-Skill"),
+                      TextureManager::get("Button-Enemy-Skill-disabled"),
+                      Vector2D<int>(WIN_WIDTH / 20, 280),
+                      Vector2D<int>(static_cast<int>(WIN_WIDTH / 12),
+                                    static_cast<int>(WIN_HEIGHT / 8)),
+                      team2_->getCommanders()[0], 0);
 
   if (battle_ == 1) {
     const auto tutorialSequence =
@@ -121,8 +131,18 @@ void GameScene::preload() {
     addGameObject(tutorialSequence);
   }
 
-  setGame(true);
+  addGameObject(turnBar);
+  addGameObject(dialog);
+  addGameObject(pauseButton);
+  addGameObject(battleCryButton);
+  addGameObject(heroicStrikeButton);
+  addGameObject(enemySkillButton);
 
+  audio->haltMusic();
+  if (audio->getDefault()) audio->setMusicVolume(10);
+  audio->playMusic(1, 999);
+
+  setGame(true);
   team1_->getController()->start();
 }
 
@@ -173,6 +193,14 @@ void GameScene::loadRedTeam(UnitFactory& factory) {
   file.close();
 }
 
+void GameScene::gameOver(bool victory) {
+  Scene::pause();
+  const auto gameOverPanel_ = new GameOverPanel(
+      this, TextureManager::get("UI-OptionsMenu"),
+      {WIN_WIDTH / 2, WIN_HEIGHT / 2}, {WIN_WIDTH / 2, WIN_HEIGHT / 2}, victory);
+  addGameObject(gameOverPanel_);
+}
+
 void GameScene::addPrize(int prize) { prize_ += prize; }
 
 void GameScene::saveStatus() {
@@ -185,3 +213,15 @@ void GameScene::saveStatus() {
 Board* GameScene::getBoard() const { return board_; }
 
 int GameScene::getBattleInd() { return battle_; }
+
+Team* GameScene::getAlliedTeam(Unit* unit) {
+  if (unit->getTeam() == team1_) return team1_;
+  if (unit->getTeam() == team2_) return team2_;
+  return nullptr;
+}
+
+Team* GameScene::getEnemyTeam(Unit* unit) {
+  if (unit->getTeam() != team1_) return team1_;
+  if (unit->getTeam() != team2_) return team2_;
+  return nullptr;
+}

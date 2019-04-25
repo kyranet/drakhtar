@@ -1,8 +1,10 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "TurnManager.h"
+
 #include <algorithm>
 #include <utility>
+
 #include "GameObjects/Unit.h"
 #include "Scenes/GameScene.h"
 #include "Scenes/Scene.h"
@@ -16,10 +18,7 @@ TurnManager::TurnManager(std::vector<Unit*> team1, std::vector<Unit*> team2)
   units_.insert(units_.end(), team1.begin(), team1.end());
   units_.insert(units_.end(), team2.begin(), team2.end());
 
-  // Sort the units
-  std::sort(units_.begin(), units_.end(), [](Unit* a, Unit* b) {
-    return a->getBaseStats().speed > b->getBaseStats().speed;
-  });
+  sortUnits();
 }
 
 TurnManager::~TurnManager() = default;
@@ -48,3 +47,9 @@ void TurnManager::remove(Unit* unit) {
 }
 
 Unit* TurnManager::getTurnFor() const { return units_[position_]; }
+
+void TurnManager::sortUnits() {
+  std::sort(units_.begin(), units_.end(), [](Unit* a, Unit* b) {
+    return a->getStats().speed > b->getStats().speed;
+  });
+}

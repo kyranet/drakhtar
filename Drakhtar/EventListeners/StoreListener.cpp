@@ -78,8 +78,6 @@ void StoreListener::reset() {
 void StoreListener::onHoverStart() {
   auto rectangle = storeUnit.unit->getRect();
   if (Input::isMouseInside(&rectangle) && stats_ == nullptr) {
-    std::cout << Input::getMousePosition().getX()
-              << Input::getMousePosition().getY();
     const auto scene = reinterpret_cast<RecruitScene*>(
         Game::getSceneMachine()->getCurrentScene());
     stats_ =

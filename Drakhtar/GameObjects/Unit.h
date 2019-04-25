@@ -68,16 +68,24 @@ class Unit : public GameObject {
 
   virtual void setAttack(const int attack) { stats_.attack = attack; }
   void setSpeed(const int speed) { stats_.speed = speed; }
+  void setDefense(const int defense) { stats_.defense = defense; }
+  void setMoveRange(const int range) { stats_.moveRange = range; }
+
   void setMoving(const bool moving) { moving_ = moving; }
   void setMoved(const bool moved) { moved_ = moved; }
   void setTeam(Team *team) { team_ = team; }
 
+  HealthBar* getHealthBar() const { return healthBar_; }
+
   virtual void moveToBox(Box *box);
   virtual int loseHealth(int enemyAttack, int minDamage);
   void update() override;
-  virtual void attack(Unit *enemy, bool counter);
+  virtual void attack(Unit *enemy, bool allowsCounter);
   virtual void kill();
 
   virtual void onSelect();
   virtual void onDeselect();
+
+  virtual void setBuffed(bool buffed);
+  virtual void setDebuffed(bool debuffed);
 };

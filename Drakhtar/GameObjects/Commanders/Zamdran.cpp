@@ -4,6 +4,6 @@
 
 Zamdran::Zamdran(Scene *scene, Texture *texture, Box *box,
                  const UnitStats Zamdranstats)
-    : Commander(scene, texture, box, Zamdranstats) {
+    : Commander("Zamdran", scene, texture, box, Zamdranstats) {
   skills_.push_back(new ArrowRain(this));
 }

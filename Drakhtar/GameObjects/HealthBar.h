@@ -10,6 +10,8 @@ class HealthBar : public GameObject {
  private:
   GameObject *lifeBar = nullptr;
   GameObject *damageBar = nullptr;
+  GameObject* statUp = nullptr;
+  GameObject* statDown = nullptr;
 
   int maxHealth;
   int currentHealth;
@@ -27,4 +29,7 @@ class HealthBar : public GameObject {
   void takeDamage(int newHealth);
   void moveBar(Vector2D<int> pos);
   void setMaxHP(int hp);
+
+  void setStatUpRenderizable(bool active) const;
+  void setStatDownRenderizable(bool active) const;
 };

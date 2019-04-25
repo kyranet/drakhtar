@@ -1,66 +1,149 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Skill.h"
-#include "../Structures/Team.h"
 
-Skill::Skill(std::string id, int cooldown, int duration, Unit* caster)
-    : id_(std::move(id)), caster_(caster), cooldown_(cooldown), duration_(duration) {}
+#include <algorithm>
+
+#include "../Controllers/UnitsController.h"
+#include "../Managers/TextureManager.h"
+#include "../Managers/TurnManager.h"
+#include "../Structures/Team.h"
+#include "Commanders/Commander.h"
+#include "GameObjects/HealthBar.h"
+#include "Managers/SDLAudioManager.h"
+#include "GameObjects/Box.h"
+
+Skill::Skill(std::string id, int cooldown, int duration, Commander* caster)
+    : id_(std::move(id)),
+      caster_(caster),
+      cooldown_(cooldown),
+      duration_(duration) {}
+
+void Skill::cast(GameScene*) {
+  std::cout << "Casted <" + id_ + "> by " + caster_->getType() << std::endl;
+  active_ = true;
+  remainingCooldown_ = cooldown_;
+  remainingDuration_ = duration_;
+}
+
+void Skill::end(GameScene*) {}
 
 // ---------- BATTLECRY ----------
-BattleCry::BattleCry(Unit* caster) : Skill("BattleCry", 3, 1, caster) {}
+BattleCry::BattleCry(Commander* caster) : Skill("BattleCry", 3, 1, caster) {
+  description_ =
+      "An inspiring command that increases every ally's attack by "
+      "20% and move range by 1 for 1 turn";
+}
 
-void BattleCry::cast(Board*) {
+void BattleCry::cast(GameScene* scene) {
   if (remainingCooldown_ == 0 && caster_->getMoving()) {
-    std::cout << "Casted <BattleCry> by Thassa" << std::endl;
-    active_ = true;
-    for (auto unit : caster_->getTeam()->getUnits()) {
-      unit->setAttack(
+    Skill::cast(scene);
+    // Boost attack and movement range of every unit in the same team
+    for (auto unit : scene->getAlliedTeam(caster_)->getUnits()) {
+      unit->Unit::setAttack(
           static_cast<int>(floor(unit->getStats().attack * 1.2)));
-      // TODO(onaranjoUCM): Uncomment when we get access to turnBar
-      // unit->setSpeed(unit->getSpeed() + 1);
-      // turnBar.sort()
+      unit->setMoveRange(unit->getStats().moveRange + 1);
+      unit->setBuffed(true);
     }
-    remainingCooldown_ = cooldown_;
+    SDLAudioManager::getInstance()->playChannel(10, 0, 1);
+    // Update turn priority
+    caster_->getTeam()->getController()->getTurnManager()->sortUnits();
   }
 }
 
-void BattleCry::end() {
-  std::cout << "<BattleCry> ended" << std::endl;
+void BattleCry::end(GameScene* scene) {
+  std::cout << "<Battle Cry> ended" << std::endl;
   active_ = false;
-  for (auto unit : caster_->getTeam()->getUnits()) {
-    unit->setAttack(unit->getBaseStats().attack);
-    // TODO(onaranjoUCM): Uncomment when we get access to turnBar
-    // unit->setSpeed(unit->getBaseSpeed());
-  }
-}
 
-void BattleCry::resetAttack() {
-  if (remainingCooldown_ == 0) {
-    std::cout << "Casted <BattleCry>" << std::endl;
-    for (auto unit : caster_->getTeam()->getUnits()) {
-      unit->setAttack(
-          static_cast<int>(floor(unit->getStats().attack * 1.2)));
-    }
-    remainingCooldown_ = cooldown_;
+  // Reset every unit's attack and move range to base
+  for (auto unit : scene->getAlliedTeam(caster_)->getUnits()) {
+    unit->setAttack(unit->getBaseStats().attack);
+    unit->setMoveRange(unit->getStats().moveRange - 1);
+    unit->setBuffed(false);
   }
+
+  // Update turn priority
+  caster_->getTeam()->getController()->getTurnManager()->sortUnits();
 }
 
 // ---------- ARROW RAIN ----------
-ArrowRain::ArrowRain(Unit* caster) : Skill("ArrowRain", 2, 0, caster) {}
+ArrowRain::ArrowRain(Commander* caster) : Skill("ArrowRain", 2, 0, caster) {
+  description_ =
+      "Fire an volley of arrows that deal half damage to ALL enemies in the "
+      "battlefield";
+}
 
-void ArrowRain::cast(Board*) {
+void ArrowRain::cast(GameScene* scene) {
   if (remainingCooldown_ == 0 && caster_->getMoving()) {
-    std::cout << "Casted <ArrowRain> by Zamdran" << std::endl;
-    active_ = true;
-    for (auto unit : caster_->getTeam()->getUnits()) {
-      unit->setAttack(
-          static_cast<int>(floor(unit->getStats().attack * 1.2)));
+    Skill::cast(scene);
+    SDLAudioManager::getInstance()->playChannel(11, 0, 1);
+    // Caster deals half damage to every enemy unit
+    for (auto unit : scene->getEnemyTeam(caster_)->getUnits()) {
+      unit->loseHealth(caster_->getStats().attack / 2, 1);
+      if (unit->getHealth() <= 0) {
+        unit->getBox()->destroyContent();
+      }
     }
-    remainingCooldown_ = cooldown_;
+    end(scene);
   }
 }
 
-void ArrowRain::end() {
+void ArrowRain::end(GameScene*) { active_ = false; }
+
+// ---------- HEROIC STRIKE ----------
+HeroicStrike::HeroicStrike(Commander* caster)
+    : Skill("Heroic Strike", 2, 0, caster) {
+  description_ =
+      "The next attack this turn will deal 50% increased damage and will not "
+      "trigger a counter-attack";
+}
+
+void HeroicStrike::cast(GameScene* scene) {
+  if (remainingCooldown_ == 0 && caster_->getMoving()) {
+    Skill::cast(scene);
+    attackIncrement_ = caster_->getStats().attack * 0.5;
+    caster_->setAttack(caster_->getStats().attack + attackIncrement_);
+    caster_->setUnstoppable(true);
+    caster_->setBuffed(true);
+    SDLAudioManager::getInstance()->playChannel(8, 0, 1);
+  }
+}
+
+void HeroicStrike::end(GameScene*) {
   active_ = false;
-  std::cout << "<ArrowRain> ended" << std::endl;
+  std::cout << "<HeroicStrike> ended" << std::endl;
+  caster_->setAttack(caster_->getStats().attack - attackIncrement_);
+  caster_->setUnstoppable(false);
+  caster_->setBuffed(false);
+}
+
+// ---------- WITHERING CURSE ----------
+WitheringCurse::WitheringCurse(Commander* caster)
+    : Skill("Withering Curse", 3, 1, caster) {
+  description_ =
+      "Casts a curse over the enemy team, lowering their attack by 20% and "
+      "their defense by 10.";
+}
+
+void WitheringCurse::cast(GameScene* scene) {
+  if (remainingCooldown_ == 0 && caster_->getMoving()) {
+    Skill::cast(scene);
+
+    for (auto unit : scene->getEnemyTeam(caster_)->getUnits()) {
+      unit->Unit::setAttack(
+          static_cast<int>(floor(unit->getStats().attack * 0.8)));
+      unit->setDefense(std::max(unit->getStats().defense - 10, 0));
+      unit->setDebuffed(true);
+    }
+  }
+}
+
+void WitheringCurse::end(GameScene* scene) {
+  std::cout << "<" + id_ + "> ended" << std::endl;
+  active_ = false;
+  for (auto unit : scene->getEnemyTeam(caster_)->getUnits()) {
+    unit->setAttack(unit->getBaseStats().attack);
+    unit->setDefense(unit->getBaseStats().defense);
+    unit->setDebuffed(false);
+  }
 }

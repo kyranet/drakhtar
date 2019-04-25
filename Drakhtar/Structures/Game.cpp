@@ -135,9 +135,20 @@ void Game::load() {
   textures->add("UI-MuteSound", "../images/UI/MuteSound.png", 1, 1);
   textures->add("UI-WhiteBox", "../images/UI/WhiteBox.png", 1, 1);
   textures->add("UI-greenTick", "../images/UI/green-check.png", 1, 1);
+  textures->add("UI-statUp", "../images/UI/statUp.png", 1, 1);
+  textures->add("UI-statDown", "../images/UI/statDown.png", 1, 1);
 
   // Button
   textures->add("Button-BattleCry", "../images/UI/battlecry_icon.png", 1, 1);
+  textures->add("Button-BattleCry-disabled",
+                "../images/UI/battlecry_icon_disabled.png", 1, 1);
+  textures->add("Button-HeroicStrike", "../images/UI/heroic_strike_icon.png", 1, 1);
+  textures->add("Button-HeroicStrike-disabled",
+                "../images/UI/heroic_strike_icon_disabled.png", 1, 1);
+  textures->add("Button-Enemy-Skill", "../images/UI/enemy_skill_icon.png", 1,
+                1);
+  textures->add("Button-Enemy-Skill-disabled",
+                "../images/UI/enemy_skill_disabled_icon.png", 1, 1);
   textures->add("Button-Pause", "../images/Pause/Pause_Button.png", 1, 1);
   textures->add("Button-Skip", "../images/UI/skipButton.png", 1, 1);
   textures->add("Button-SkipTurn", "../images/UI/skipTurnButton.png", 1, 1);
@@ -214,6 +225,8 @@ void Game::load() {
   // Fonts
   fonts->add("DialogFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 66,
              WIN_WIDTH);
+  fonts->add("SkillButtonFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 40,
+             WIN_WIDTH);
   fonts->add("Retron2000", "../fonts/Retron2000.ttf", WIN_WIDTH / 88,
              WIN_WIDTH);
   fonts->add("TutorialFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 100,
@@ -221,6 +234,7 @@ void Game::load() {
   fonts->add("UnitFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 120, WIN_WIDTH);
   fonts->add("StatsFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 37, WIN_WIDTH);
   fonts->add("ButtonFont", "../fonts/AURORA.ttf", WIN_WIDTH / 50, WIN_WIDTH);
+  fonts->add("ButtonFontBig", "../fonts/AURORA.ttf", WIN_WIDTH / 20, WIN_WIDTH);
   fonts->init();
 
   auto audio = SDLAudioManager::getInstance();
@@ -245,6 +259,10 @@ void Game::load() {
   audio->loadSound(5, "../audio/sound/UI-sounds/attackConfirm.mp3");
   audio->loadSound(6, "../audio/sound/UI-sounds/quitButton.mp3");
   audio->loadSound(7, "../audio/sound/UI-sounds/pauseButton.mp3");
+  audio->loadSound(8, "../audio/sound/Unit-sounds/Heroes/Thassa/HeroicStrikeShout.mp3");
+  audio->loadSound(9, "../audio/sound/Unit-sounds/Heroes/Thassa/hittingwithHeroicStrike.mp3");
+  audio->loadSound(10, "../audio/sound/Unit-sounds/Heroes/Thassa/battleCrySound.mp3");
+  audio->loadSound(11, "../audio/sound/Unit-sounds/Heroes/Zamdran/ArrowRainSkill.mp3");
 
   sceneMachine_ = new SceneMachine();
   sceneMachine_->pushScene(new MenuScene());
