@@ -7,7 +7,7 @@
 
 class Unit;
 
-#define BASE_MONEY 1000
+#define BASE_MONEY 1250
 
 enum UnitType { SOLDIER, ARCHER, MAGE, KNIGHT, MONSTER };
 
@@ -18,6 +18,7 @@ class GameManager final {
   int level_ = 5;
 
   std::map<std::string, int>* army_ = nullptr;
+  std::map<std::string, int>* buyingCap_ = nullptr;
   std::map<UnitType, std::string> typeOrder;
   GameManager();
   ~GameManager();
@@ -30,6 +31,7 @@ class GameManager final {
 
   int getMoney() const;
   const std::map<std::string, int>& getArmy() const;
+  const std::map<std::string, int>& getCap() const;
   const std::map<UnitType, std::string>& getTypeOrder() const;
   int getLevel() const;
   void increaseLevel();

@@ -13,33 +13,33 @@
 UnitFactory::UnitFactory(Scene* scene) : scene_(scene) {
   statMap["Soldier"] = {soldierAttack,      soldierDefense,   soldierHealth,
                         soldierAttackRange, soldierMoveRange, soldierSpeed,
-                        soldierPrize};
+                        soldierPrice};
 
   statMap["Archer"] = {archerAttack,      archerDefense,   archerHealth,
                        archerAttackRange, archerMoveRange, archerSpeed,
-                       archerPrize};
+                       archerPrice};
 
   statMap["Mage"] = {wizardAttack,      wizardDefense,   wizardHealth,
                      wizardAttackRange, wizardMoveRange, wizardSpeed,
-                     wizardPrize};
+                     wizardPrice};
 
   statMap["Knight"] = {knightAttack,      knightDefense,   knightHealth,
                        knightAttackRange, knightMoveRange, knightSpeed,
-                       knightPrize};
+                       knightPrice};
 
   statMap["Monster"] = {monsterAttack,      monsterDefense,   monsterHealth,
                         monsterAttackRange, monsterMoveRange, monsterSpeed,
-                        monsterPrize};
+                        monsterPrice};
 
   commanderMap["Thassa"] = {thassaAttack,      thassaDefense,   thassaHealth,
                             thassaAttackRange, thassaMoveRange, thassaSpeed,
-                            thassaPrize};
+                            thassaPrice};
 
   commanderSwitch["Thassa"] = CommanderType::THASSA;
 
   commanderMap["Zamdran"] = {
       zamdranAttack,    zamdranDefense, zamdranHealth, zamdranAttackRange,
-      zamdranMoveRange, zamdranSpeed,   zamdranPrize};
+      zamdranMoveRange, zamdranSpeed,   zamdranPrice};
 
   commanderSwitch["Zamdran"] = CommanderType::ZAMDRAN;
 }

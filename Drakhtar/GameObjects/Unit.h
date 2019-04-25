@@ -23,6 +23,7 @@ struct UnitStats {
 class Unit : public GameObject {
   bool moved_ = false;
   bool moving_ = false;
+  bool hasCounterAttacked_ = false;
 
   Vector2D<int> boxPosition_;
   Team *team_ = nullptr;
@@ -65,6 +66,9 @@ class Unit : public GameObject {
   Box *getBox() const { return box_; }
   Vector2D<int> getBoxPosition() const { return boxPosition_; }
   std::string getType() const { return type_; }
+
+  bool getHasCounterAttacked() const { return hasCounterAttacked_; }
+  void setHasCounterAttacked(const bool counter) { hasCounterAttacked_ = counter; }
 
   virtual void setAttack(const int attack) { stats_.attack = attack; }
   void setSpeed(const int speed) { stats_.speed = speed; }

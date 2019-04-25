@@ -18,12 +18,23 @@ GameManager::GameManager() {
   (*army_)["Knight"] = 0;
   typeOrder[MONSTER] = "Monster";
   (*army_)["Monster"] = 0;
+
+  buyingCap_ = new std::map<std::string, int>();
+  (*buyingCap_)["Soldier"] = 20;
+  (*buyingCap_)["Archer"] = 18;
+  (*buyingCap_)["Mage"] = 12;
+  (*buyingCap_)["Knight"] = 10;
+  (*buyingCap_)["Monster"] = 6;
 }
 
 GameManager::~GameManager() {
   if (army_ != nullptr) {
     delete army_;
     army_ = nullptr;
+  }
+  if (buyingCap_ != nullptr) {
+    delete buyingCap_;
+    buyingCap_ = nullptr;
   }
 }
 
@@ -59,6 +70,10 @@ int GameManager::getMoney() const { return money_; }
 
 const std::map<std::string, int>& GameManager::getArmy() const {
   return (*army_);
+}
+
+const std::map<std::string, int>& GameManager::getCap() const {
+  return (*buyingCap_);
 }
 
 const std::map<UnitType, std::string>& GameManager::getTypeOrder() const {

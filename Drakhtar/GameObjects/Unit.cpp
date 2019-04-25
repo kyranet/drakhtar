@@ -81,7 +81,10 @@ int Unit::loseHealth(int enemyAttack, int minDamage) {
 
 void Unit::update() { healthBar_->update(); }
 
-void Unit::onSelect() { setMoving(true); }
+void Unit::onSelect() {
+  setMoving(true);
+  setHasCounterAttacked(false);
+}
 
 void Unit::onDeselect() { setMoving(false); }
 
@@ -99,8 +102,10 @@ void Unit::attack(Unit* enemy, const bool allowsCounter) {
   // alive and within attack range, counter-attack
   if (allowsCounter && enemy->getStats().maxHealth > 0 &&
       scene->getBoard()->isInRange(box_, enemy->getBox(),
-                                   enemy->getStats().attackRange)) {
+                                   enemy->getStats().attackRange) &&
+      !enemy->getHasCounterAttacked()) {
     enemy->attack(this, false);
+    enemy->setHasCounterAttacked(true);
   }
 }
 

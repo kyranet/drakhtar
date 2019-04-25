@@ -8,62 +8,80 @@ const int WIN_HEIGHT = 720;
 const int ANIMATION_TICKS_PER_SECOND = 1;
 const int GAME_FRAMERATE = 25;
 
+/*
+ * \brief This is displaying all the stats each unit has.
+ * \Speed is capped at 10, meaning 10 is the max amount of speed one unit can
+ have
+ * \ataque		10
+        defensa		10
+        hp			10
+        attackrange	1
+        moverange	3
+        speed		4
+        Base price	20
+ * \Mage: Squishy glass cannon that deals good damage but dies very fast
+   \Knight: Quick unit to burst through ranged units, fails to kill melee units fast
+   \Archer: Longest ranged unit, attacks to up to 3 cells of distance, can kite golems well
+   \Monster: A tank that hits hard if you step into his zone,defends key zones very well
+   \Soldier: A little good in everything, can serve for various purposes
+ */
+
 // Thassa
-const auto thassaAttack = 30;
-const auto thassaDefense = 30;  // Percent
-const auto thassaHealth = 100;
+const auto thassaAttack = 35;
+const auto thassaDefense = 35;  // Percent
+const auto thassaHealth = 150;
 const auto thassaAttackRange = 1;
-const auto thassaMoveRange = 3;
-const auto thassaSpeed = 3;
-const auto thassaPrize = 100;
+const auto thassaMoveRange = 3;  // 10;
+const auto thassaSpeed = 5;
+const auto thassaPrice = 100;
 // Zamdran
-const auto zamdranAttack = 25;
-const auto zamdranDefense = 20;  // Percent
-const auto zamdranHealth = 100;
+const auto zamdranAttack = 50;
+const auto zamdranDefense = 10;  // Percent
+const auto zamdranHealth = 200;
 const auto zamdranAttackRange = 3;
-const auto zamdranMoveRange = 2;
-const auto zamdranSpeed = 5;
-const auto zamdranPrize = 100;
-// wizard
-const int wizardAttack = 8;
+const auto zamdranMoveRange = 2;  // 2;
+const auto zamdranSpeed = 6;
+const auto zamdranPrice = 100;
+// Mage
+const int wizardAttack = 20;
 const int wizardDefense = 0;  // Percent
-const int wizardHealth = 7;
+const int wizardHealth = 10;
 const int wizardAttackRange = 2;
-const int wizardMoveRange = 2;
-const int wizardSpeed = 2;
-const int wizardPrize = 7;
+const int wizardMoveRange = 3;  // 3;
+const int wizardSpeed = 6;
+const int wizardPrice = 38/2;
 // knight
-const auto knightAttack = 8;
+const auto knightAttack = 13;
 const auto knightDefense = 30;  // Percent
-const auto knightHealth = 15;
+const auto knightHealth = 30;
 const auto knightAttackRange = 1;
-const auto knightMoveRange = 5;
-const auto knightSpeed = 5;
-const auto knightPrize = 12;
+const auto knightMoveRange = 5;  // 5;
+const auto knightSpeed = 8;
+const auto knightPrice = 55/2;
 // archer
-const auto archerAttack = 4;
+const auto archerAttack = 6;
 const auto archerDefense = 10;  // Percent
-const auto archerHealth = 10;
+const auto archerHealth = 9;
 const auto archerAttackRange = 3;
-const auto archerMoveRange = 2;
-const auto archerSpeed = 3;
-const auto archerPrize = 5;
+const auto archerMoveRange = 2;  // 2;
+const auto archerSpeed = 4;
+const auto archerPrice = 26/2;
 // soldier
-const auto soldierAttack = 5;
-const auto soldierDefense = 30;  // Percent
-const auto soldierHealth = 10;
+const auto soldierAttack = 8;
+const auto soldierDefense = 25;  // Percent
+const auto soldierHealth = 12;
 const auto soldierAttackRange = 1;
-const auto soldierMoveRange = 3;
-const auto soldierSpeed = 3;
-const auto soldierPrize = 5;
+const auto soldierMoveRange = 3;  // 3;
+const auto soldierSpeed = 5;
+const auto soldierPrice = 28/2;
 // monster
-const auto monsterAttack = 20;
-const auto monsterDefense = 40;  // Percent
-const auto monsterHealth = 50;
+const auto monsterAttack = 19;
+const auto monsterDefense = 50;  // Percent
+const auto monsterHealth = 85;
 const auto monsterAttackRange = 1;
-const auto monsterMoveRange = 2;
-const auto monsterSpeed = 1;
-const auto monsterPrize = 50;
+const auto monsterMoveRange = 2;  // 2;
+const auto monsterSpeed = 3;
+const auto monsterPrice = 125/2;
 
 enum class KeyboardKey {
   UNKNOWN = SDL_SCANCODE_UNKNOWN,
