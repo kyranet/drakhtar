@@ -17,18 +17,16 @@ Skill::Skill(std::string id, int cooldown, int duration, Commander* caster)
       cooldown_(cooldown),
       duration_(duration) {}
 
-void Skill::cast(GameScene* scene) {
+void Skill::cast(GameScene*) {
   std::cout << "Casted <" + id_ + "> by " + caster_->getType() << std::endl;
   active_ = true;
   remainingCooldown_ = cooldown_;
   remainingDuration_ = duration_;
 }
 
-void Skill::end(GameScene* scene) {}
+void Skill::end(GameScene*) {}
 
 // ---------- BATTLECRY ----------
-#pragma region BattleCry
-
 BattleCry::BattleCry(Commander* caster) : Skill("BattleCry", 3, 1, caster) {
   description_ =
       "An inspiring command that increases every ally's attack by "
@@ -65,10 +63,8 @@ void BattleCry::end(GameScene* scene) {
   // Update turn priority
   caster_->getTeam()->getController()->getTurnManager()->sortUnits();
 }
-#pragma endregion BattleCry
 
 // ---------- ARROW RAIN ----------
-#pragma region ArrowRain
 ArrowRain::ArrowRain(Commander* caster) : Skill("ArrowRain", 2, 0, caster) {
   description_ =
       "Fire an volley of arrows that deal half damage to ALL enemies in the "
@@ -87,11 +83,9 @@ void ArrowRain::cast(GameScene* scene) {
   }
 }
 
-void ArrowRain::end(GameScene* scene) { active_ = false; }
-#pragma endregion ArrowRain
+void ArrowRain::end(GameScene*) { active_ = false; }
 
 // ---------- HEROIC STRIKE ----------
-#pragma region HeroicStrike
 HeroicStrike::HeroicStrike(Commander* caster)
     : Skill("Heroic Strike", 2, 0, caster) {
   description_ =
@@ -109,17 +103,15 @@ void HeroicStrike::cast(GameScene* scene) {
   }
 }
 
-void HeroicStrike::end(GameScene* scene) {
+void HeroicStrike::end(GameScene*) {
   active_ = false;
   std::cout << "<HeroicStrike> ended" << std::endl;
   caster_->setAttack(caster_->getStats().attack - attackIncrement_);
   caster_->setUnstoppable(false);
   caster_->setBuffed(false);
 }
-#pragma endregion HeroicStrike
 
 // ---------- WITHERING CURSE ----------
-#pragma region WitheringCurse
 WitheringCurse::WitheringCurse(Commander* caster)
     : Skill("Withering Curse", 3, 1, caster) {
   description_ =
@@ -149,4 +141,3 @@ void WitheringCurse::end(GameScene* scene) {
     unit->setDebuffed(false);
   }
 }
-#pragma endregion WitheringCurse

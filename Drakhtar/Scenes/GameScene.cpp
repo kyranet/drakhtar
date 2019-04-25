@@ -48,7 +48,6 @@ void GameScene::preload() {
   addGameObject(background);
   addGameObject(board_);
 
-#pragma region Teams
   // Create the teams.
   team1_ = new Team(Color::BLUE);
   team2_ = new Team(Color::RED);
@@ -80,9 +79,7 @@ void GameScene::preload() {
   // Sort both teams by their speeds
   team1_->sortUnits();
   team2_->sortUnits();
-#pragma endregion Teams
 
-#pragma region GUI
   // Add the GUI features now
   const auto turnBar =
       new TurnBar(this, team1_->getUnits(), team2_->getUnits());
@@ -140,7 +137,6 @@ void GameScene::preload() {
   addGameObject(battleCryButton);
   addGameObject(heroicStrikeButton);
   addGameObject(enemySkillButton);
-#pragma endregion GUI
 
   audio->haltMusic();
   if (audio->getDefault()) audio->setMusicVolume(10);
@@ -221,9 +217,11 @@ int GameScene::getBattleInd() { return battle_; }
 Team* GameScene::getAlliedTeam(Unit* unit) {
   if (unit->getTeam() == team1_) return team1_;
   if (unit->getTeam() == team2_) return team2_;
+  return nullptr;
 }
 
 Team* GameScene::getEnemyTeam(Unit* unit) {
   if (unit->getTeam() != team1_) return team1_;
   if (unit->getTeam() != team2_) return team2_;
+  return nullptr;
 }

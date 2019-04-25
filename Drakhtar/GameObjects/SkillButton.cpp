@@ -1,8 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "SkillButton.h"
-
-#include "../Structures/Texture.h"
+#include "Structures/Texture.h"
 #include "Commanders/Commander.h"
 #include "EventListeners/SkillButtonListener.h"
 #include "GameObjects/ButtonText.h"
@@ -12,9 +11,9 @@ SkillButton::SkillButton(GameScene* scene, Texture* texture,
                          Texture* disabledText, Vector2D<int> pos,
                          Vector2D<int> size, Commander* commander, int skill)
     : GameObject(scene, texture, pos, size),
-      disabledText_(disabledText),
+      commander_(commander),
       gameScene_(scene),
-      commander_(commander) {
+      disabledText_(disabledText) {
   skill_ = commander_->getSkills().at(skill);
 
   skillDescriptionBox_ = new SkillDescriptionBox(scene, this);
@@ -51,7 +50,7 @@ void SkillButton::handleEvents(SDL_Event e) {
 }
 
 void SkillButton::render(SDL_Rect rect) const {
-  if (commander_->getSkills().size() == 0) {  // Temporary fix
+  if (commander_->getSkills().empty()) {  // Temporary fix
     disabledText_->renderFrame(rect,
                                texture_->getAnimation()[texture_->getFrame()]);
   } else {
