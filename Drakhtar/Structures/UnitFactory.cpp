@@ -49,7 +49,6 @@ UnitFactory::UnitFactory(Scene* scene) : scene_(scene) {
       sheissahMoveRange, sheissahSpeed,   sheissahPrize};
 
   commanderSwitch["Sheissah"] = CommanderType::SHEISSAH;
-
 }
 
 UnitFactory::~UnitFactory() = default;

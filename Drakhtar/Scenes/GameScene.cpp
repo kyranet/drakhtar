@@ -53,26 +53,25 @@ void GameScene::preload() {
   // Create a temporary factory to create the units easily.
   auto factory = UnitFactory(this);
 
-  
   // Red Team
   this->readLevel(factory);
 
    // Blue Team
   const auto thassa =
-    factory.newCommander("Thassa", team1_, board_->getBoxAt(0, 0));
-team1_->addCommander(thassa);
-addGameObject(thassa);
+      factory.newCommander("Thassa", team1_, board_->getBoxAt(0, 0));
+  team1_->addCommander(thassa);
+  addGameObject(thassa);
 
-auto army = GameManager::getInstance() -> getArmy();
-auto typeOrder = GameManager::getInstance() -> getTypeOrder();
+  auto army = GameManager::getInstance()->getArmy();
+  auto typeOrder = GameManager::getInstance()->getTypeOrder();
 
-int y = 1;
-for (const auto& pair : typeOrder) {
-  if (army[pair.second] > 0) {
-    addGameObject(factory.newBattalion(
-        pair.second, team1_, board_->getBoxAt(0, y), army[pair.second]));
-    y++;
-  }
+  int y = 1;
+  for (const auto& pair : typeOrder) {
+    if (army[pair.second] > 0) {
+      addGameObject(factory.newBattalion(
+          pair.second, team1_, board_->getBoxAt(0, y), army[pair.second]));
+      y++;
+    }
 }
 
 // Sort both teams by their speeds
