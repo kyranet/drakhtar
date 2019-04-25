@@ -21,6 +21,7 @@ const int GAME_FRAMERATE = 25;
         Base price	20
  * \Mage: Squishy glass cannon that deals good damage but dies very fast
  */
+
 // Thassa
 const auto thassaAttack = 35;
 const auto thassaDefense = 30;  // Percent
