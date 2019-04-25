@@ -104,7 +104,7 @@ void Unit::attack(Unit* enemy, const bool allowsCounter) {
       scene->getBoard()->isInRange(box_, enemy->getBox(),
                                    enemy->getStats().attackRange) &&
       !enemy->getHasCounterAttacked()) {
-    enemy->attack(this, true);
+    enemy->attack(this, false);
     enemy->setHasCounterAttacked(true);
   }
 }
