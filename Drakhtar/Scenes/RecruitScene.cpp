@@ -78,6 +78,9 @@ void RecruitScene::preload() {
         }
 
         reset();
+        playButton->setTransparent(false);
+        playButton->setRenderizable(true);
+        playButton->getChildren()[0]->setRenderizable(true);
       },
       " ", "ButtonFont");
 
@@ -92,7 +95,7 @@ void RecruitScene::preload() {
 
   recruitmentPanel_->addChild(cancelButton);
 
-  const auto button = new Button(
+  playButton = new Button(
       this, TextureManager::get("Vanilla-Button"),
       Vector2D<int>(WIN_WIDTH * 0.69, WIN_HEIGHT * 0.75),
       Vector2D<int>(static_cast<int>(WIN_WIDTH / 4), WIN_HEIGHT / 6),
@@ -102,7 +105,11 @@ void RecruitScene::preload() {
       },
       "Play", "ButtonFont");
 
-  addGameObject(button);
+  addGameObject(playButton);
+  playButton->setTransparent(true);
+  playButton->setRenderizable(false);
+  playButton->getChildren()[0]->setTransparent(true);
+  playButton->getChildren()[0]->setRenderizable(false);
 }
 
 int RecruitScene::getCost(const std::string& type) { return costs_[type]; }
