@@ -78,14 +78,6 @@ void DialogScene::next() {
   } else {
     destroy();
     auto currentScene = Game::getSceneMachine()->getCurrentScene();
-    if (currentScene->getTransition()) {
-      int scene =
-          reinterpret_cast<TransitionScene*>(getScene())->getBattleInd();
-      if (scene < 3)
-        Game::getSceneMachine()->changeScene(new GameScene(scene));
-      else
-        Game::getSceneMachine()->changeScene(new RecruitScene());
-    }
   }
 }
 
