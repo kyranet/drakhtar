@@ -262,6 +262,7 @@ void Game::load() {
   audio->loadSound(8, "../audio/sound/Unit-sounds/Heroes/Thassa/HeroicStrikeShout.mp3");
   audio->loadSound(9, "../audio/sound/Unit-sounds/Heroes/Thassa/hittingwithHeroicStrike.mp3");
   audio->loadSound(10, "../audio/sound/Unit-sounds/Heroes/Thassa/battleCrySound.mp3");
+  audio->loadSound(11, "../audio/sound/Unit-sounds/Heroes/Zamdran/ArrowRainSkill.mp3");
 
   sceneMachine_ = new SceneMachine();
   sceneMachine_->pushScene(new MenuScene());

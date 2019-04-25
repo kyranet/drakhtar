@@ -75,7 +75,7 @@ ArrowRain::ArrowRain(Commander* caster) : Skill("ArrowRain", 2, 0, caster) {
 void ArrowRain::cast(GameScene* scene) {
   if (remainingCooldown_ == 0 && caster_->getMoving()) {
     Skill::cast(scene);
-
+    SDLAudioManager::getInstance()->playChannel(11, 0, 1);
     // Caster deals half damage to every enemy unit
     for (auto unit : scene->getEnemyTeam(caster_)->getUnits()) {
       unit->loseHealth(caster_->getStats().attack / 2, 1);
