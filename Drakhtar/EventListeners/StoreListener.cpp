@@ -47,7 +47,10 @@ StoreListener::StoreListener(GameObject* gameObject, std::string type, int cost)
       Vector2D<int>(w, h), [this]() {
         auto scene = reinterpret_cast<RecruitScene*>(
             Game::getSceneMachine()->getCurrentScene());
-        if (GameManager::getInstance()->getMoney() >=
+        auto army = GameManager::getInstance()->getArmy();
+        auto capMap = GameManager::getInstance()->getCap();
+        if (storeUnit.amount_ + army[storeUnit.type] < capMap[storeUnit.type] &&
+          GameManager::getInstance()->getMoney() >=
             scene->getTotalCost() + storeUnit.cost_) {
           scene->updateTotalCost(storeUnit.cost_);
           storeUnit.amount_++;

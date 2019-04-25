@@ -20,7 +20,7 @@ class RecruitScene final : public Scene {
 
   int totalCost_ = 0;
 
-  void addUnit(std::string textureName, int position, int cost);
+  void addUnit(std::string textureName, int position);
   std::string moneyToString() const;
 
   void reset();

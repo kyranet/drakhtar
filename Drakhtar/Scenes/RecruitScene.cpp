@@ -47,17 +47,17 @@ void RecruitScene::preload() {
   addGameObject(background);
   addGameObject(recruitmentPanel_);
 
-  addUnit("Units-BlueSoldier", 1, costs_["Soldier"]);
-  addUnit("Units-BlueArcher", 2, costs_["Archer"]);
+  addUnit("Units-BlueSoldier", 1);
+  addUnit("Units-BlueArcher", 2);
 
   if (GameManager::getInstance()->getLevel() >= 2)
-    addUnit("Units-BlueMage", 3, costs_["Mage"]);
+    addUnit("Units-BlueMage", 3);
 
   if (GameManager::getInstance()->getLevel() >= 3)
-    addUnit("Units-BlueKnight", 4, costs_["Knight"]);
+    addUnit("Units-BlueKnight", 4);
 
   if (GameManager::getInstance()->getLevel() >= 4)
-    addUnit("Units-BlueMonster", 5, costs_["Monster"]);
+    addUnit("Units-BlueMonster", 5);
 
   addGameObject(totalCostText_);
   addGameObject(moneyText_);
@@ -122,7 +122,7 @@ void RecruitScene::updateTotalCost(const int amount) {
   totalCostText_->setText("Total cost: " + std::to_string(totalCost_));
 }
 
-void RecruitScene::addUnit(std::string textureName, int position, int cost) {
+void RecruitScene::addUnit(std::string textureName, int position) {
   position -= 3;
 
   // 4.5 base distance
@@ -150,7 +150,7 @@ void RecruitScene::addUnit(std::string textureName, int position, int cost) {
 
   addGameObject(unit);
 
-  store.push_back(new StoreListener(unit, type, cost));
+  store.push_back(new StoreListener(unit, type, costs_[type]));
   unit->addEventListener(store.back());
 }
 
