@@ -6,6 +6,7 @@
 
 #include "Controllers/PlayerController.h"
 #include "Errors/DrakhtarError.h"
+#include "GameObjects/Battalion.h"
 #include "GameObjects/Button.h"
 #include "GameObjects/Commanders/Thassa.h"
 #include "GameObjects/Commanders/Zamdran.h"
@@ -170,6 +171,15 @@ void GameScene::loadRedTeam(UnitFactory& factory) {
   }
 
   file.close();
+}
+
+void GameScene::addPrize(int prize) { prize_ += prize; }
+
+void GameScene::saveStatus() {
+  auto army = GameManager::getInstance()->getArmy();
+  auto units = team1_->getUnits();
+  GameManager::getInstance()->updateUnits(units);
+  GameManager::getInstance()->addMoney(prize_);
 }
 
 Board* GameScene::getBoard() const { return board_; }
