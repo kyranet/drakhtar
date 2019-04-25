@@ -6,8 +6,8 @@
 
 #include "Controllers/PlayerController.h"
 #include "Errors/DrakhtarError.h"
-#include "GameObjects/Board.h"
 #include "GameObjects/Battalion.h"
+#include "GameObjects/Board.h"
 #include "GameObjects/Button.h"
 #include "GameObjects/Commanders/Thassa.h"
 #include "GameObjects/Commanders/Zamdran.h"
@@ -212,9 +212,10 @@ void GameScene::readLevel(UnitFactory& factory) {
 
 void GameScene::gameOver(bool victory) {
   Scene::pause();
-  const auto gameOverPanel_ = new GameOverPanel(
-      this, TextureManager::get("UI-OptionsMenu"),
-      {WIN_WIDTH / 2, WIN_HEIGHT / 2}, {WIN_WIDTH / 2, WIN_HEIGHT / 2}, victory);
+  const auto gameOverPanel_ =
+      new GameOverPanel(this, TextureManager::get("UI-OptionsMenu"),
+                        {WIN_WIDTH / 2, WIN_HEIGHT / 2},
+                        {WIN_WIDTH / 2, WIN_HEIGHT / 2}, victory);
   addGameObject(gameOverPanel_);
 }
 
