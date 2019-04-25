@@ -2,20 +2,22 @@
 
 #include "GameManager.h"
 
+#include "GameObjects/Battalion.h"
+
 GameManager* GameManager::instance_ = nullptr;
 
 GameManager::GameManager() {
   army_ = new std::map<std::string, int>();
   typeOrder[SOLDIER] = "Soldier";
-  (*army_)["Soldier"] = 10;
+  (*army_)["Soldier"] = 0;
   typeOrder[ARCHER] = "Archer";
-  (*army_)["Archer"] = 10;
+  (*army_)["Archer"] = 0;
   typeOrder[MAGE] = "Mage";
-  (*army_)["Mage"] = 5;
+  (*army_)["Mage"] = 0;
   typeOrder[KNIGHT] = "Knight";
-  (*army_)["Knight"] = 5;
+  (*army_)["Knight"] = 0;
   typeOrder[MONSTER] = "Monster";
-  (*army_)["Monster"] = 2;
+  (*army_)["Monster"] = 0;
 }
 
 GameManager::~GameManager() {
@@ -34,6 +36,22 @@ void GameManager::destroy() {
   if (instance_ != nullptr) {
     delete instance_;
     instance_ = nullptr;
+  }
+}
+
+void GameManager::reset() {
+  for (auto pair : (*army_)) {
+    (*army_)[pair.first] = 0;
+  }
+  money_ = BASE_MONEY;
+}
+
+void GameManager::updateUnits(std::vector<Unit*>& units) {
+  for (auto unit : units) {
+    if (army_->find(unit->getType()) != army_->end()) {
+      (*army_)[unit->getType()] =
+          reinterpret_cast<Battalion*>(unit)->getBattalionSize();
+    }
   }
 }
 
