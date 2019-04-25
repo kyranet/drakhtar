@@ -25,6 +25,7 @@ class GameScene final : public Scene {
   void gameOver(bool victory);
   void addPrize(int prize);
   void saveStatus();
+  void readLevel(UnitFactory& factory);
 
   Board* getBoard() const;
   int getBattleInd();

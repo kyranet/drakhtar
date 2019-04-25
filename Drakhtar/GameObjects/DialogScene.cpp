@@ -1,8 +1,10 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "DialogScene.h"
+
 #include <fstream>
 #include <iostream>
+
 #include "Dialog.h"
 #include "Errors/DrakhtarError.h"
 #include "EventListeners/DialogSceneOnClick.h"
@@ -10,9 +12,9 @@
 #include "Managers/FontManager.h"
 #include "Managers/TextureManager.h"
 #include "Scenes/GameScene.h"
-#include "Scenes/TransitionScene.h"
 #include "Scenes/RecruitScene.h"
 #include "Scenes/Scene.h"
+#include "Scenes/TransitionScene.h"
 #include "Structures/Font.h"
 #include "Structures/Game.h"
 #include "Utils/Constants.h"
@@ -76,26 +78,28 @@ void DialogScene::next() {
   } else {
     destroy();
     auto currentScene = Game::getSceneMachine()->getCurrentScene();
-    if (currentScene->getTransition())
-		{
+    if (currentScene->getTransition()) {
       int scene =
           reinterpret_cast<TransitionScene*>(getScene())->getBattleInd();
-
-      Game::getSceneMachine()->changeScene(new GameScene(scene));
-	  }
+      if (scene < 3)
+        Game::getSceneMachine()->changeScene(new GameScene(scene));
+      else
+        Game::getSceneMachine()->changeScene(new RecruitScene());
+    }
   }
 }
 
 void DialogScene::skip() {
   destroy();
-  if (Game::getSceneMachine()->getCurrentScene()->getTransition())
-	  {
+  if (Game::getSceneMachine()->getCurrentScene()->getTransition()) {
     int scene = reinterpret_cast<TransitionScene*>(getScene())->getBattleInd();
 
-    Game::getSceneMachine()->changeScene(new GameScene(scene));
+    if (scene < 3)
+      Game::getSceneMachine()->changeScene(new GameScene(scene));
+    else
+      Game::getSceneMachine()->changeScene(new RecruitScene());
   }
 }
-
 
 void DialogScene::readFromFile(const std::string& filename, Font* textFont,
                                const SDL_Rect rect) {

@@ -43,7 +43,7 @@ const auto zamdranMoveRange = 2;
 const auto zamdranSpeed = 5;
 const auto zamdranPrize = 100;
 // Sheissah
-const auto sheissahAttacks = 250;
+const auto sheissahAttacks = 25;
 const auto sheissahDefense = 20;  // Percent
 const auto sheissahHealth = 100;
 const auto sheissahAttackRange = 3;

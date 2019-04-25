@@ -55,7 +55,7 @@ void GameScene::preload() {
 
   
   // Red Team
-  this->loadRedTeam(factory);
+  this->readLevel(factory);
 
    // Blue Team
   const auto thassa =
@@ -167,7 +167,7 @@ void GameScene::pause() {
   }
 }
 
-void GameScene::loadRedTeam(UnitFactory& factory) {
+void GameScene::readLevel(UnitFactory& factory) {
   std::ifstream file;
   file.open("../levels/level-" + std::to_string(battle_) + ".txt");
 
@@ -190,6 +190,9 @@ void GameScene::loadRedTeam(UnitFactory& factory) {
   int trackNumber;
 
   file >> trackNumber;
+
+  delete board_;
+  board_ = nullptr;
 
   board_ = new Board(this, rowSize, columnSize, static_cast<float>(WIN_HEIGHT / 10.0f));
   addGameObject(board_);
