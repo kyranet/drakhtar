@@ -12,6 +12,7 @@
 #include "GameObjects/Commanders/Thassa.h"
 #include "GameObjects/Commanders/Zamdran.h"
 #include "GameObjects/DialogScene.h"
+#include "GameObjects/GameOverPanel.h"
 #include "GameObjects/Pause.h"
 #include "GameObjects/SkillButton.h"
 #include "GameObjects/TurnBar.h"
@@ -43,9 +44,11 @@ void GameScene::preload() {
       Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
       Vector2D<int>(WIN_WIDTH, WIN_HEIGHT));
   board_ = new Board(this, 8, 12, static_cast<float>(WIN_HEIGHT / 10.0f));
+
   addGameObject(background);
   addGameObject(board_);
 
+#pragma region Teams
   // Create the teams.
   team1_ = new Team(Color::BLUE);
   team2_ = new Team(Color::RED);
@@ -77,7 +80,9 @@ void GameScene::preload() {
   // Sort both teams by their speeds
   team1_->sortUnits();
   team2_->sortUnits();
+#pragma endregion Teams
 
+#pragma region GUI
   // Add the GUI features now
   const auto turnBar =
       new TurnBar(this, team1_->getUnits(), team2_->getUnits());
@@ -99,10 +104,6 @@ void GameScene::preload() {
                                static_cast<int>(WIN_HEIGHT / 14.4)),
                  buttonPause, " ", "ButtonFont");
 
-  audio->haltMusic();
-  if (audio->getDefault()) audio->setMusicVolume(10);
-  audio->playMusic(1, 999);
-
   const auto battleCryButton =
       new SkillButton(this, TextureManager::get("Button-BattleCry"),
                       TextureManager::get("Button-BattleCry-disabled"),
@@ -118,7 +119,7 @@ void GameScene::preload() {
                       Vector2D<int>(static_cast<int>(WIN_WIDTH / 12),
                                     static_cast<int>(WIN_HEIGHT / 8)),
                       thassa, 1);
-  
+
   const auto enemySkillButton =
       new SkillButton(this, TextureManager::get("Button-Enemy-Skill"),
                       TextureManager::get("Button-Enemy-Skill-disabled"),
@@ -126,13 +127,6 @@ void GameScene::preload() {
                       Vector2D<int>(static_cast<int>(WIN_WIDTH / 12),
                                     static_cast<int>(WIN_HEIGHT / 8)),
                       team2_->getCommanders()[0], 0);
-  
-  addGameObject(turnBar);
-  addGameObject(dialog);
-  addGameObject(pauseButton);
-  addGameObject(battleCryButton);
-  addGameObject(heroicStrikeButton);
-  addGameObject(enemySkillButton);
 
   if (battle_ == 1) {
     const auto tutorialSequence =
@@ -140,8 +134,19 @@ void GameScene::preload() {
     addGameObject(tutorialSequence);
   }
 
-  setGame(true);
+  addGameObject(turnBar);
+  addGameObject(dialog);
+  addGameObject(pauseButton);
+  addGameObject(battleCryButton);
+  addGameObject(heroicStrikeButton);
+  addGameObject(enemySkillButton);
+#pragma endregion GUI
 
+  audio->haltMusic();
+  if (audio->getDefault()) audio->setMusicVolume(10);
+  audio->playMusic(1, 999);
+
+  setGame(true);
   team1_->getController()->start();
 }
 
@@ -190,6 +195,14 @@ void GameScene::loadRedTeam(UnitFactory& factory) {
   }
 
   file.close();
+}
+
+void GameScene::gameOver(bool victory) {
+  Scene::pause();
+  const auto gameOverPanel_ = new GameOverPanel(
+      this, TextureManager::get("UI-OptionsMenu"),
+      {WIN_WIDTH / 2, WIN_HEIGHT / 2}, {WIN_WIDTH / 2, WIN_HEIGHT / 2}, victory);
+  addGameObject(gameOverPanel_);
 }
 
 void GameScene::addPrize(int prize) { prize_ += prize; }

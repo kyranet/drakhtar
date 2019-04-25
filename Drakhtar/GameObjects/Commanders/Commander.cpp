@@ -64,15 +64,10 @@ void Commander::onDeselect() {
 
 void Commander::kill() {
   Unit::kill();
-  int currentScene = reinterpret_cast<GameScene*>(getScene())->getBattleInd();
   if (getTeam()->getColor() == Color::BLUE) {
-    Game::getSceneMachine()->changeScene(new GameScene(currentScene));
+    reinterpret_cast<GameScene*>(getScene())->gameOver(false);
   } else {
-    auto scene = reinterpret_cast<GameScene*>(
-        Game::getSceneMachine()->getCurrentScene());
-    scene->addPrize(baseStats_.prize);
-    scene->saveStatus();
-    Game::getSceneMachine()->changeScene(new TransitionScene(currentScene + 1));
+    reinterpret_cast<GameScene*>(getScene())->gameOver(true);
   }
 }
 

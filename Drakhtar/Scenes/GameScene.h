@@ -22,6 +22,7 @@ class GameScene final : public Scene {
   void preload() override;
   void pause() override;
   void loadRedTeam(UnitFactory& factory);
+  void gameOver(bool victory);
   void addPrize(int prize);
   void saveStatus();
 

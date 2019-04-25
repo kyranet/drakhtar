@@ -9,13 +9,14 @@ class Text;
 class Font;
 class SkillButton;
 
-class SkillDescriptionBox : public GameObject {
+class SkillDescriptionBox final : public GameObject {
   SkillButton* skillButton_;
+
  public:
   SkillDescriptionBox(Scene* scene, SkillButton* skillButton);
   ~SkillDescriptionBox() = default;
 
   void render() const override;
-  std::string fillText();
-  void updateText();
+  std::string fillText() const;
+  void updateText() const;
 };

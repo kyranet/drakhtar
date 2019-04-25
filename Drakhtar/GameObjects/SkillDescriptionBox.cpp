@@ -36,12 +36,12 @@ void SkillDescriptionBox::render() const {
   }
 }
 
-std::string SkillDescriptionBox::fillText() {
-  Skill* skill = skillButton_->getSkill();
-  std::string description = skill->getDescription();
-  std::string text = "<" + skill->getId() + ">\n";
+std::string SkillDescriptionBox::fillText() const {
+  const auto skill = skillButton_->getSkill();
+  const auto description = skill->getDescription();
+  auto text = "<" + skill->getId() + ">\n";
   text += description + "\n";
   return text;
 }
 
-void SkillDescriptionBox::updateText() { fillText(); }
+void SkillDescriptionBox::updateText() const { fillText(); }

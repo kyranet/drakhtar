@@ -51,19 +51,24 @@ void SkillButton::handleEvents(SDL_Event e) {
 }
 
 void SkillButton::render(SDL_Rect rect) const {
-  // Disable button if the skill is in CD or its not the unit's turn
-  if (!commander_->getMoving() || skill_->getRemainingCooldown() != 0) {
-    if (getRenderizable() && disabledText_ != nullptr) {
-      disabledText_->renderFrame(
-          rect, texture_->getAnimation()[texture_->getFrame()]);
-    }
+  if (commander_->getSkills().size() == 0) {  // Temporary fix
+    disabledText_->renderFrame(rect,
+                               texture_->getAnimation()[texture_->getFrame()]);
   } else {
-    if (getRenderizable() && texture_ != nullptr) {
-      texture_->renderFrame(rect,
-                            texture_->getAnimation()[texture_->getFrame()]);
+    // Disable button if the skill is in CD or its not the unit's turn
+    if (!commander_->getMoving() || skill_->getRemainingCooldown() != 0) {
+      if (getRenderizable() && disabledText_ != nullptr) {
+        disabledText_->renderFrame(
+            rect, texture_->getAnimation()[texture_->getFrame()]);
+      }
+    } else {
+      if (getRenderizable() && texture_ != nullptr) {
+        texture_->renderFrame(rect,
+                              texture_->getAnimation()[texture_->getFrame()]);
+      }
     }
-  }
 
-  for (auto child : children_)
-    if (child->getRenderizable()) child->render();
+    for (auto child : children_)
+      if (child->getRenderizable()) child->render();
+  }
 }
