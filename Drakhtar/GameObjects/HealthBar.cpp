@@ -5,6 +5,7 @@
 #include "../Managers/TextureManager.h"
 #include "../Scenes/Scene.h"
 #include "../Utils/Constants.h"
+#include "Managers/SDLAudioManager.h"
 
 HealthBar::HealthBar(Scene* scene, Vector2D<int> pos, int maxHP)
     : GameObject(scene, TextureManager::get("UI-healthBar_background"), pos,
@@ -48,7 +49,7 @@ void HealthBar::render() const {
 }
 
 void HealthBar::update() {
-  if (damageAnimationPlaying && damageBar->getRect().w > 0) {
+  if (damageAnimationPlaying && damageBar->getRect().w > 0 && !SDLAudioManager::getInstance()->getChannelPlaying(1)) {
     if (damageBar->getRect().w > damageAnimationSpeed) {
       int oldX = damageBar->getRect().x;
       int oldY = damageBar->getRect().y;
