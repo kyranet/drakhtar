@@ -11,10 +11,12 @@
 #include "GameObjects/Button.h"
 #include "Managers/FontManager.h"
 #include "Managers/TextureManager.h"
+#include "Managers/GameManager.h"
 #include "Scenes/GameScene.h"
 #include "Scenes/RecruitScene.h"
 #include "Scenes/Scene.h"
 #include "Scenes/TransitionScene.h"
+#include "Scenes/MenuScene.h"
 #include "Structures/Font.h"
 #include "Structures/Game.h"
 #include "Utils/Constants.h"
@@ -77,7 +79,7 @@ void DialogScene::next() {
     ++dialogueIndex_;
   } else {
     destroy();
-    auto currentScene = Game::getSceneMachine()->getCurrentScene();
+    skip();
   }
 }
 
@@ -86,10 +88,14 @@ void DialogScene::skip() {
   if (Game::getSceneMachine()->getCurrentScene()->getTransition()) {
     int scene = reinterpret_cast<TransitionScene*>(getScene())->getBattleInd();
 
-    if (scene < 3)
+    if (scene < 3) {
       Game::getSceneMachine()->changeScene(new GameScene(scene));
-    else
-      Game::getSceneMachine()->changeScene(new RecruitScene());
+    }     
+    else {
+      GameManager::getInstance()->reset();
+      Game::getSceneMachine()->changeScene(new MenuScene());	
+    }
+      
   }
 }
 
