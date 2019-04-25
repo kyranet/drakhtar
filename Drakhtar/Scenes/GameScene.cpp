@@ -49,14 +49,13 @@ void GameScene::preload() {
   team1_ = new Team(Color::BLUE);
   team2_ = new Team(Color::RED);
 
-
   // Create a temporary factory to create the units easily.
   auto factory = UnitFactory(this);
 
   // Red Team
   this->readLevel(factory);
 
-   // Blue Team
+  // Blue Team
   const auto thassa =
       factory.newCommander("Thassa", team1_, board_->getBoxAt(0, 0));
   team1_->addCommander(thassa);
@@ -72,45 +71,46 @@ void GameScene::preload() {
           pair.second, team1_, board_->getBoxAt(0, y), army[pair.second]));
       y++;
     }
-}
+  }
 
-// Sort both teams by their speeds
-team1_->sortUnits();
-team2_->sortUnits();
+  // Sort both teams by their speeds
+  team1_->sortUnits();
+  team2_->sortUnits();
 
-// Add the GUI features now
-const auto turnBar = new TurnBar(this, team1_->getUnits(), team2_->getUnits());
+  // Add the GUI features now
+  const auto turnBar =
+      new TurnBar(this, team1_->getUnits(), team2_->getUnits());
 
-turnBar->setTransparent(true);
+  turnBar->setTransparent(true);
 
-const auto dialog =
-    new DialogScene(this, "dialog" + std::to_string(battle_), "DialogFont");
+  const auto dialog =
+      new DialogScene(this, "dialog" + std::to_string(battle_), "DialogFont");
 
-team1_->setController(new PlayerController(board_, turnBar->getTurnManager(),
-                                           this, team1_, team2_));
-team2_->setController(new PlayerController(board_, turnBar->getTurnManager(),
-                                           this, team2_, team1_));
+  team1_->setController(new PlayerController(board_, turnBar->getTurnManager(),
+                                             this, team1_, team2_));
+  team2_->setController(new PlayerController(board_, turnBar->getTurnManager(),
+                                             this, team2_, team1_));
 
-const auto pauseButton =
-    new Button(this, TextureManager::get("Button-Pause"),
-               Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 24, WIN_HEIGHT / 18),
-               Vector2D<int>(static_cast<int>(WIN_WIDTH / 21.6),
-                             static_cast<int>(WIN_HEIGHT / 14.4)),
-               buttonPause, " ", "ButtonFont");
+  const auto pauseButton =
+      new Button(this, TextureManager::get("Button-Pause"),
+                 Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 24, WIN_HEIGHT / 18),
+                 Vector2D<int>(static_cast<int>(WIN_WIDTH / 21.6),
+                               static_cast<int>(WIN_HEIGHT / 14.4)),
+                 buttonPause, " ", "ButtonFont");
 
-/*
- // Reactivar cuando se implementen las habilidades definitivamente
-const auto battleCryButton =
-    new SkillButton(this, TextureManager::get("Button-BattleCry"),
-                    Vector2D<int>(WIN_WIDTH / 24, WIN_HEIGHT / 18),
-                    Vector2D<int>(static_cast<int>(WIN_WIDTH / 21.6),
-                                  static_cast<int>(WIN_HEIGHT / 14.4)),
-                    board_, thassa, 0);
-*/
-addGameObject(turnBar);
-addGameObject(dialog);
-addGameObject(pauseButton);
-// addGameObject(battleCryButton);
+  /*
+   // Reactivar cuando se implementen las habilidades definitivamente
+  const auto battleCryButton =
+      new SkillButton(this, TextureManager::get("Button-BattleCry"),
+                      Vector2D<int>(WIN_WIDTH / 24, WIN_HEIGHT / 18),
+                      Vector2D<int>(static_cast<int>(WIN_WIDTH / 21.6),
+                                    static_cast<int>(WIN_HEIGHT / 14.4)),
+                      board_, thassa, 0);
+  */
+  addGameObject(turnBar);
+  addGameObject(dialog);
+  addGameObject(pauseButton);
+  // addGameObject(battleCryButton);
 
   const auto battleCryButton =
       new SkillButton(this, TextureManager::get("Button-BattleCry"),
@@ -193,7 +193,8 @@ void GameScene::readLevel(UnitFactory& factory) {
   delete board_;
   board_ = nullptr;
 
-  board_ = new Board(this, rowSize, columnSize, static_cast<float>(WIN_HEIGHT / 10.0f));
+  board_ = new Board(this, rowSize, columnSize,
+                     static_cast<float>(WIN_HEIGHT / 10.0f));
   addGameObject(board_);
 
   file >> commanderName;
