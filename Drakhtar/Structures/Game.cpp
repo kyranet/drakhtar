@@ -259,6 +259,9 @@ void Game::load() {
   audio->loadSound(5, "../audio/sound/UI-sounds/attackConfirm.mp3");
   audio->loadSound(6, "../audio/sound/UI-sounds/quitButton.mp3");
   audio->loadSound(7, "../audio/sound/UI-sounds/pauseButton.mp3");
+  audio->loadSound(8, "../audio/sound/Unit-sounds/Heroes/Thassa/HeroicStrikeShout.mp3");
+  audio->loadSound(9, "../audio/sound/Unit-sounds/Heroes/Thassa/hittingwithHeroicStrike.mp3");
+  audio->loadSound(10, "../audio/sound/Unit-sounds/Heroes/Thassa/battleCrySound.mp3");
 
   sceneMachine_ = new SceneMachine();
   sceneMachine_->pushScene(new MenuScene());

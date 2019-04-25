@@ -8,4 +8,5 @@ class Scene;
 class Thassa final : public Commander {
  public:
   Thassa(Scene *scene, Texture *texture, Box *box, UnitStats thassaStats);
+  void attack(Unit* enemy, bool allowsCounter) override;
 };

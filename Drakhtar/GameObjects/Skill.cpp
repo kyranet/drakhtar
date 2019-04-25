@@ -10,6 +10,7 @@
 #include "../Structures/Team.h"
 #include "Commanders/Commander.h"
 #include "GameObjects/HealthBar.h"
+#include "Managers/SDLAudioManager.h"
 
 Skill::Skill(std::string id, int cooldown, int duration, Commander* caster)
     : id_(std::move(id)),
@@ -43,7 +44,7 @@ void BattleCry::cast(GameScene* scene) {
       unit->setMoveRange(unit->getStats().moveRange + 1);
       unit->setBuffed(true);
     }
-
+    SDLAudioManager::getInstance()->playChannel(10, 0, 1);
     // Update turn priority
     caster_->getTeam()->getController()->getTurnManager()->sortUnits();
   }
@@ -100,6 +101,7 @@ void HeroicStrike::cast(GameScene* scene) {
     caster_->setAttack(caster_->getStats().attack + attackIncrement_);
     caster_->setUnstoppable(true);
     caster_->setBuffed(true);
+    SDLAudioManager::getInstance()->playChannel(8, 0, 1);
   }
 }
 
