@@ -20,20 +20,24 @@ const int GAME_FRAMERATE = 25;
         speed		4
         Base price	20
  * \Mage: Squishy glass cannon that deals good damage but dies very fast
+   \Knight: Quick unit to burst through ranged units, fails to kill melee units fast
+   \Archer: Longest ranged unit, attacks to up to 3 cells of distance, can kite golems well
+   \Monster: A tank that hits hard if you step into his zone,defends key zones very well
+   \Soldier: A little good in everything, can serve for various purposes
  */
 
 // Thassa
 const auto thassaAttack = 35;
-const auto thassaDefense = 30;  // Percent
+const auto thassaDefense = 35;  // Percent
 const auto thassaHealth = 150;
 const auto thassaAttackRange = 1;
 const auto thassaMoveRange = 3;  // 10;
 const auto thassaSpeed = 5;
 const auto thassaPrize = 100;
 // Zamdran
-const auto zamdranAttack = 45;
+const auto zamdranAttack = 50;
 const auto zamdranDefense = 10;  // Percent
-const auto zamdranHealth = 170;
+const auto zamdranHealth = 200;
 const auto zamdranAttackRange = 3;
 const auto zamdranMoveRange = 2;  // 2;
 const auto zamdranSpeed = 6;
@@ -47,7 +51,7 @@ const int wizardMoveRange = 3;  // 3;
 const int wizardSpeed = 6;
 const int wizardPrize = 36;
 // knight
-const auto knightAttack = 12;
+const auto knightAttack = 13;
 const auto knightDefense = 30;  // Percent
 const auto knightHealth = 30;
 const auto knightAttackRange = 1;
