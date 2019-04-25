@@ -106,7 +106,7 @@ void GameScene::preload() {
   const auto battleCryButton =
       new SkillButton(this, TextureManager::get("Button-BattleCry"),
                       TextureManager::get("Button-BattleCry-disabled"),
-                      Vector2D<int>(WIN_WIDTH / 20, WIN_HEIGHT / 12),
+                      Vector2D<int>(WIN_WIDTH / 20, 80),
                       Vector2D<int>(static_cast<int>(WIN_WIDTH / 12),
                                     static_cast<int>(WIN_HEIGHT / 8)),
                       thassa, 0);
@@ -114,16 +114,25 @@ void GameScene::preload() {
   const auto heroicStrikeButton =
       new SkillButton(this, TextureManager::get("Button-HeroicStrike"),
                       TextureManager::get("Button-HeroicStrike-disabled"),
-                      Vector2D<int>(WIN_WIDTH / 20, WIN_HEIGHT / 4),
+                      Vector2D<int>(WIN_WIDTH / 20, 180),
                       Vector2D<int>(static_cast<int>(WIN_WIDTH / 12),
                                     static_cast<int>(WIN_HEIGHT / 8)),
                       thassa, 1);
-
+  
+  const auto enemySkillButton =
+      new SkillButton(this, TextureManager::get("Button-Enemy-Skill"),
+                      TextureManager::get("Button-Enemy-Skill-disabled"),
+                      Vector2D<int>(WIN_WIDTH / 20, 280),
+                      Vector2D<int>(static_cast<int>(WIN_WIDTH / 12),
+                                    static_cast<int>(WIN_HEIGHT / 8)),
+                      team2_->getCommanders()[0], 0);
+  
   addGameObject(turnBar);
   addGameObject(dialog);
   addGameObject(pauseButton);
   addGameObject(battleCryButton);
   addGameObject(heroicStrikeButton);
+  addGameObject(enemySkillButton);
 
   if (battle_ == 1) {
     const auto tutorialSequence =
