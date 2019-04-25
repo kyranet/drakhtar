@@ -17,11 +17,11 @@
 #include "Utils/Vector2D.h"
 
 void RecruitScene::preload() {
-  costs_["Soldier"] = soldierPrice;
-  costs_["Archer"] = archerPrice;
-  costs_["Mage"] = wizardPrice;
-  costs_["Knight"] = knightPrice;
-  costs_["Monster"] = monsterPrice;
+  costs_["Soldier"] = 28;
+  costs_["Archer"] = 26;
+  costs_["Mage"] = 38;
+  costs_["Knight"] = 55;
+  costs_["Monster"] = 125;
 
   const auto background =
       new GameObject(this, TextureManager::get("Recruitment-Background"),
