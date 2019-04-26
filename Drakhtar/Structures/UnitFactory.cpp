@@ -40,7 +40,7 @@ UnitFactory::UnitFactory(Scene* scene) : scene_(scene) {
 
   commanderMap["Zamdran"] = {
       zamdranAttack,    zamdranDefense, zamdranHealth, zamdranAttackRange,
-      zamdranMoveRange, zamdranSpeed,   zamdranPrice};
+      zamdranMoveRange, zamdranSpeed, zamdranPrize};
 
   commanderSwitch["Zamdran"] = CommanderType::ZAMDRAN;
 
