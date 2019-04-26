@@ -4,6 +4,7 @@
 #include "GameObjects/Battalion.h"
 #include "GameObjects/Commanders/Thassa.h"
 #include "GameObjects/Commanders/Zamdran.h"
+#include "GameObjects/Commanders/Sheissah.h"
 #include "GameObjects/Unit.h"
 #include "Managers/TextureManager.h"
 #include "Scenes/Scene.h"
@@ -39,9 +40,15 @@ UnitFactory::UnitFactory(Scene* scene) : scene_(scene) {
 
   commanderMap["Zamdran"] = {
       zamdranAttack,    zamdranDefense, zamdranHealth, zamdranAttackRange,
-      zamdranMoveRange, zamdranSpeed,   zamdranPrice};
+      zamdranMoveRange, zamdranSpeed, zamdranPrize};
 
   commanderSwitch["Zamdran"] = CommanderType::ZAMDRAN;
+
+  commanderMap["Sheissah"] = {
+      sheissahAttack,    sheissahDefense, sheissahHealth, sheissahAttackRange,
+      sheissahMoveRange, sheissahSpeed,   sheissahPrize};
+
+  commanderSwitch["Sheissah"] = CommanderType::SHEISSAH;
 }
 
 UnitFactory::~UnitFactory() = default;
@@ -69,6 +76,10 @@ Commander* UnitFactory::newCommander(const std::string& type, Team* team,
       break;
     case CommanderType::ZAMDRAN:
       commander = new Zamdran(scene_, TextureManager::get(textureName), box,
+                              commanderMap[type]);
+      break;
+    case CommanderType::SHEISSAH:
+      commander = new Sheissah(scene_, TextureManager::get(textureName), box,
                               commanderMap[type]);
       break;
     default:

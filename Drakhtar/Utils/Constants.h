@@ -39,10 +39,18 @@ const auto zamdranAttack = 50;
 const auto zamdranDefense = 10;  // Percent
 const auto zamdranHealth = 200;
 const auto zamdranAttackRange = 3;
-const auto zamdranMoveRange = 2;  // 2;
+const auto zamdranMoveRange = 2;
 const auto zamdranSpeed = 6;
-const auto zamdranPrice = 100;
-// Mage
+const auto zamdranPrize = 100;
+// Sheissah
+const auto sheissahAttack = 60;
+const auto sheissahDefense = 10;  // Percent
+const auto sheissahHealth = 220;
+const auto sheissahAttackRange = 2;
+const auto sheissahMoveRange = 2;
+const auto sheissahSpeed = 5;
+const auto sheissahPrize = 100;
+// wizard
 const int wizardAttack = 20;
 const int wizardDefense = 0;  // Percent
 const int wizardHealth = 10;

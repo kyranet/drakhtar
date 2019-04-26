@@ -6,8 +6,8 @@
 
 #include "Controllers/PlayerController.h"
 #include "Errors/DrakhtarError.h"
-#include "GameObjects/Board.h"
 #include "GameObjects/Battalion.h"
+#include "GameObjects/Board.h"
 #include "GameObjects/Button.h"
 #include "GameObjects/Commanders/Thassa.h"
 #include "GameObjects/Commanders/Zamdran.h"
@@ -43,10 +43,7 @@ void GameScene::preload() {
       this, TextureManager::get("Maps-" + std::to_string(battle_) + "Battle"),
       Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
       Vector2D<int>(WIN_WIDTH, WIN_HEIGHT));
-  board_ = new Board(this, 8, 12, static_cast<float>(WIN_HEIGHT / 10.0f));
-
   addGameObject(background);
-  addGameObject(board_);
 
   // Create the teams.
   team1_ = new Team(Color::BLUE);
@@ -54,6 +51,9 @@ void GameScene::preload() {
 
   // Create a temporary factory to create the units easily.
   auto factory = UnitFactory(this);
+
+  // Red Team
+  this->readLevel(factory);
 
   // Blue Team
   const auto thassa =
@@ -64,7 +64,7 @@ void GameScene::preload() {
   auto army = GameManager::getInstance()->getArmy();
   auto typeOrder = GameManager::getInstance()->getTypeOrder();
 
-  int y = 2;
+  int y = 1;
   for (const auto& pair : typeOrder) {
     if (army[pair.second] > 0) {
       addGameObject(factory.newBattalion(
@@ -72,9 +72,6 @@ void GameScene::preload() {
       y++;
     }
   }
-
-  // Red Team
-  this->loadRedTeam(factory);
 
   // Sort both teams by their speeds
   team1_->sortUnits();
@@ -155,7 +152,7 @@ void GameScene::pause() {
   }
 }
 
-void GameScene::loadRedTeam(UnitFactory& factory) {
+void GameScene::readLevel(UnitFactory& factory) {
   std::ifstream file;
   file.open("../levels/level-" + std::to_string(battle_) + ".txt");
 
@@ -169,8 +166,24 @@ void GameScene::loadRedTeam(UnitFactory& factory) {
   // ...
   // UnitType battalionSize row col
 
-  file >> commanderName;
   if (file.fail()) throw DrakhtarError("File is not a level file");
+
+  int rowSize, columnSize;
+
+  file >> rowSize >> columnSize;
+
+  int trackNumber;
+
+  file >> trackNumber;
+
+  delete board_;
+  board_ = nullptr;
+
+  board_ = new Board(this, rowSize, columnSize,
+                     static_cast<float>(WIN_HEIGHT / 10.0f));
+  addGameObject(board_);
+
+  file >> commanderName;
 
   int row, col, size;
 
@@ -190,14 +203,19 @@ void GameScene::loadRedTeam(UnitFactory& factory) {
                                        board_->getBoxAt(row, col), size));
   }
 
+  audio->haltMusic();
+  if (audio->getDefault()) audio->setMusicVolume(10);
+  audio->playMusic(trackNumber, 999);
+
   file.close();
 }
 
 void GameScene::gameOver(bool victory) {
   Scene::pause();
-  const auto gameOverPanel_ = new GameOverPanel(
-      this, TextureManager::get("UI-OptionsMenu"),
-      {WIN_WIDTH / 2, WIN_HEIGHT / 2}, {WIN_WIDTH / 2, WIN_HEIGHT / 2}, victory);
+  const auto gameOverPanel_ =
+      new GameOverPanel(this, TextureManager::get("UI-OptionsMenu"),
+                        {WIN_WIDTH / 2, WIN_HEIGHT / 2},
+                        {WIN_WIDTH / 2, WIN_HEIGHT / 2}, victory);
   addGameObject(gameOverPanel_);
 }
 

@@ -96,7 +96,7 @@ void Game::load() {
   textures->add("Units-RedSoldier", "../images/Units/RedSoldier.png", 4, 3)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10, 11});
-  textures->add("Units-Sheissa", "../images/Units/Sheissa.png", 4, 3)
+  textures->add("Units-Sheissah", "../images/Units/Sheissah.png", 4, 3)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10});
   textures->add("Units-BlueValar", "../images/Units/BlueValar.png", 5, 3)
@@ -188,7 +188,7 @@ void Game::load() {
   textures->add("Maps-Test", "../images/Maps/TestMap.png", 1, 1);
   textures->add("Maps-1Battle", "../images/Maps/FirstBattle.png", 4, 1)
       ->addAnimation("default", {0, 1, 2, 3}, 1);
-  textures->add("Maps-2Battle", "../images/Maps/SecondBattle.png", 4, 1);
+  textures->add("Maps-2Battle", "../images/Maps/SecondBattle.png", 1, 1);
 
   // Tutorial images
   textures->add("tutorial-1", "../images/Tutorials/tutorial_1.png", 1, 1);
@@ -203,6 +203,8 @@ void Game::load() {
   textures->add("Transition-Map1", "../images/Maps/TestMap.png", 1, 1);
   textures->add("Transition-Map2", "../images/Transition/Transition_2.png", 1,
                 1);
+  textures->add("Transition-Map3", "../images/Transition/GuerrillaSpecial.png",
+                1, 1);
   textures->add("Transition-Menu", "../images/Transition/Transition_1.png", 4,
                 1);
 
@@ -244,6 +246,22 @@ void Game::load() {
       0, "../audio/background/MenuSceneMusic - by AShamaluevMusic.ogg");
   audio->loadMusic(
       1, "../audio/background/FirstGameSceneMusic - by Always Music.ogg");
+  audio->loadMusic(2,
+                   "../audio/background/Most Wondrous Battle Music Ever Light "
+                   "And Darkness.ogg");
+  audio->loadMusic(3,
+                   "../audio/background/Epic Dark Battle Music - Escape "
+                   "[Powerful Fantasy Horror by Ebunny].ogg");
+  audio->loadMusic(
+      4,
+      "../audio/background/Epic Music Orchestra  Cinematic Battle Music  "
+      "Dragon Castle by Symphony (Copyright Free Music).ogg");
+  audio->loadMusic(5,
+                   "../audio/background/[No Copyright Music] Endless Storm - "
+                   "(Royalty Free Epic Battle Music).ogg");
+  audio->loadMusic(6,
+                   "../audio/background/(Epic Pirate Battle Music) - Escaping "
+                   "The Kraken -.ogg");
 
   // Sound effects
   /*
