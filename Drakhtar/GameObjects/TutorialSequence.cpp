@@ -25,7 +25,7 @@ TutorialSequence::TutorialSequence(Scene* scene, const std::string& filename,
       Vector2D<int>(tutorialArea_.w * WIN_WIDTH / 2,
                     tutorialArea_.h * WIN_HEIGHT / 1.5));
 
-  const auto nextButton = new Button(
+  nextButton = new Button(
       scene_, TextureManager::get("Vanilla-Button"),
       Vector2D<int>(tutorialArea_.x - WIN_WIDTH / 10,
                     tutorialArea_.y + WIN_HEIGHT / 10),
@@ -83,7 +83,10 @@ void TutorialSequence::next() {
   delete tutorials_.front();
   tutorials_.pop();
 
-  if (tutorials_.empty()) skip();
+  if (tutorials_.empty()) {
+    nextButton->setRenderizable(false);
+    nextButton->setTransparent(true);
+  }
 }
 
 void TutorialSequence::skip() { destroy(); }

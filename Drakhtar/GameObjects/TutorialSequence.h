@@ -7,12 +7,15 @@
 class TutorialBox;
 class Scene;
 class Font;
+class Button;
 
 class TutorialSequence final : public Sequence {
   std::queue<TutorialBox*> tutorials_;
   void readFromFile(const std::string& filename, Font* textFont,
                     SDL_Rect tutorialArea, SDL_Rect dialogueBackground);
   static TutorialSequence* instance_;
+
+  Button* nextButton;
 
  public:
   TutorialSequence(Scene* scene, const std::string& filename,
