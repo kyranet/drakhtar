@@ -29,15 +29,15 @@ const int GAME_FRAMERATE = 60;
 // Thassa
 const auto thassaAttack = 35;
 const auto thassaDefense = 35;  // Percent
-const auto thassaHealth = 150;
+const auto thassaHealth = 180;
 const auto thassaAttackRange = 1;
 const auto thassaMoveRange = 3;  // 10;
 const auto thassaSpeed = 5;
 const auto thassaPrice = 100;
 // Zamdran
-const auto zamdranAttack = 50;
+const auto zamdranAttack = 35;
 const auto zamdranDefense = 10;  // Percent
-const auto zamdranHealth = 200;
+const auto zamdranHealth = 150;
 const auto zamdranAttackRange = 3;
 const auto zamdranMoveRange = 2;
 const auto zamdranSpeed = 6;
