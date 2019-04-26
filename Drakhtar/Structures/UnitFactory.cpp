@@ -45,7 +45,7 @@ UnitFactory::UnitFactory(Scene* scene) : scene_(scene) {
   commanderSwitch["Zamdran"] = CommanderType::ZAMDRAN;
 
   commanderMap["Sheissah"] = {
-      sheissahAttacks,    sheissahDefense, sheissahHealth, sheissahAttackRange,
+      sheissahAttack,    sheissahDefense, sheissahHealth, sheissahAttackRange,
       sheissahMoveRange, sheissahSpeed,   sheissahPrize};
 
   commanderSwitch["Sheissah"] = CommanderType::SHEISSAH;
