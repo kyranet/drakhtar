@@ -32,9 +32,11 @@ void UnitsController::start() {
 }
 
 void UnitsController::finish() {
-  activeUnit_->onDeselect();
-  for (auto& listener : listeners_) listener->setActive(false);
-  activeUnit_ = nullptr;
+  if (activeUnit_ != nullptr) {
+    activeUnit_->onDeselect();
+    for (auto& listener : listeners_) listener->setActive(false);
+    activeUnit_ = nullptr;
+  }
 
   // Update the turn bar
   turnManager_->next();
