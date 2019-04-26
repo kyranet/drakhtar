@@ -67,9 +67,9 @@ const auto knightMoveRange = 5;  // 5;
 const auto knightSpeed = 8;
 const auto knightPrice = 55/2;
 // archer
-const auto archerAttack = 6;
+const auto archerAttack = 8;
 const auto archerDefense = 10;  // Percent
-const auto archerHealth = 9;
+const auto archerHealth = 10;
 const auto archerAttackRange = 3;
 const auto archerMoveRange = 2;  // 2;
 const auto archerSpeed = 4;
@@ -83,7 +83,7 @@ const auto soldierMoveRange = 3;  // 3;
 const auto soldierSpeed = 5;
 const auto soldierPrice = 28/2;
 // monster
-const auto monsterAttack = 19;
+const auto monsterAttack = 15;
 const auto monsterDefense = 50;  // Percent
 const auto monsterHealth = 85;
 const auto monsterAttackRange = 1;
