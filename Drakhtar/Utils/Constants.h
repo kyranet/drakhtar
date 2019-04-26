@@ -6,7 +6,7 @@
 const int WIN_WIDTH = 1280;
 const int WIN_HEIGHT = 720;
 const int ANIMATION_TICKS_PER_SECOND = 1;
-const int GAME_FRAMERATE = 25;
+const int GAME_FRAMERATE = 60;
 
 /*
  * \brief This is displaying all the stats each unit has.
