@@ -3,6 +3,6 @@
 #include "ButtonListener.h"
 #include "GameObjects/Button.h"
 
-void ButtonListener::onClickStart() {
+void ButtonListener::onClickStop() {
   reinterpret_cast<Button*>(getGameObject())->call();
 }

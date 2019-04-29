@@ -9,8 +9,6 @@
 class Pause;
 class GameObject;
 
-using NextTickCallback = void();
-
 class Scene {
   bool loaded_ = false;
   bool paused_ = true;
@@ -24,7 +22,7 @@ class Scene {
   std::list<GameObject*> gameObjects_;
   std::list<GameObject*> pendingOnCreate_;
   std::list<GameObject*> pendingOnDestroy_;
-  std::list<NextTickCallback*> nextTick_;
+  std::list<std::function<void()>> nextTick_;
 
  public:
   Scene();
@@ -58,7 +56,7 @@ class Scene {
   void addGameObject(GameObject* gameObject);
   void removeGameObject(GameObject* gameObject);
 
-  void processNextTick(NextTickCallback* callback);
+  void processNextTick(std::function<void()> callback);
 
   TweenManager* getTweenManager() const;
   Pause* pauseInterface = nullptr;

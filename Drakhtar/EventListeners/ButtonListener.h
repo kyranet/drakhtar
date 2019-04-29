@@ -8,5 +8,5 @@ class ButtonListener : public ListenerOnClick {
   explicit ButtonListener(GameObject* gameObject)
       : ListenerOnClick(gameObject) {}
 
-  void onClickStart() override;
+  void onClickStop() override;
 };
