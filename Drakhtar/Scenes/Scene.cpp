@@ -121,9 +121,6 @@ void Scene::handleEvents() {
     }
   }
 
-  if (Input::isKeyDown(KeyboardKey::Q))
-    Game::getSceneMachine()->changeScene(new RecruitScene());
-
   // If the F key was pressed, toggle fullscreen
   if (Input::isKeyDown(KeyboardKey::F)) {
     SDL_Window* window_ = Game::getWindow();

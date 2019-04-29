@@ -16,6 +16,10 @@
 #include "TransitionScene.h"
 #include "Utils/Constants.h"
 #include "Utils/Vector2D.h"
+
+
+RecruitScene::RecruitScene(int currentScene): currentScene_(currentScene) {}
+
 void RecruitScene::preload() {
   costs_["Soldier"] = 28;
   costs_["Archer"] = 26;
@@ -51,12 +55,13 @@ void RecruitScene::preload() {
   addUnit("Units-BlueSoldier", 1);
   addUnit("Units-BlueArcher", 2);
 
-  if (GameManager::getInstance()->getLevel() >= 2) addUnit("Units-BlueMage", 3);
+  if (currentScene_ >= 2)
+    addUnit("Units-BlueMage", 3);
 
-  if (GameManager::getInstance()->getLevel() >= 3)
+  if (currentScene_ >= 3)
     addUnit("Units-BlueKnight", 4);
 
-  if (GameManager::getInstance()->getLevel() >= 4)
+  if (currentScene_ >= 4)
     addUnit("Units-BlueMonster", 5);
 
   addGameObject(totalCostText_);
@@ -97,15 +102,16 @@ void RecruitScene::preload() {
 
   recruitmentPanel_->addChild(cancelButton);
 
-  playButton =
-      new Button(this, TextureManager::get("Vanilla-Button"),
-                 Vector2D<int>(WIN_WIDTH * 0.69, WIN_HEIGHT * 0.75),
-                 Vector2D<int>(static_cast<int>(WIN_WIDTH / 4), WIN_HEIGHT / 6),
-                 [this]() {
-                   reset();
-                   Game::getSceneMachine()->changeScene(new TransitionScene(1));
-                 },
-                 "Play", "ButtonFont");
+  playButton = new Button(
+      this, TextureManager::get("Vanilla-Button"),
+      Vector2D<int>(WIN_WIDTH * 0.69, WIN_HEIGHT * 0.75),
+      Vector2D<int>(static_cast<int>(WIN_WIDTH / 4), WIN_HEIGHT / 6),
+      [this]() {
+        reset();
+                   Game::getSceneMachine()->changeScene(
+                       new TransitionScene(currentScene_));
+      },
+      "Play", "ButtonFont");
 
   addGameObject(playButton);
   playButton->setTransparent(true);

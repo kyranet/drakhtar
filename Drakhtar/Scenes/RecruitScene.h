@@ -21,6 +21,7 @@ class RecruitScene final : public Scene {
   Button* playButton;
 
   int totalCost_ = 0;
+  int currentScene_ = 1;
 
   void addUnit(const std::string& textureName, int position);
   std::string moneyToString() const;
@@ -28,6 +29,7 @@ class RecruitScene final : public Scene {
   void reset();
 
  public:
+  RecruitScene(int currentScene);
   void preload() override;
   int getCost(const std::string& type);
   int getTotalCost() const { return totalCost_; }
