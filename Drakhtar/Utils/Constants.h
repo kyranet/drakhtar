@@ -50,6 +50,30 @@ const auto sheissahAttackRange = 2;
 const auto sheissahMoveRange = 2;
 const auto sheissahSpeed = 5;
 const auto sheissahPrize = 100;
+// Dreilay
+const auto dreilayAttack = 60;
+const auto dreilayDefense = 10;  // Percent
+const auto dreilayHealth = 220;
+const auto dreilayAttackRange = 2;
+const auto dreilayMoveRange = 2;
+const auto dreilaySpeed = 5;
+const auto dreilayPrize = 100;
+// Abeizhul
+const auto abeizhulAttack = 60;
+const auto abeizhulDefense = 10;  // Percent
+const auto abeizhulHealth = 220;
+const auto abeizhulAttackRange = 2;
+const auto abeizhulMoveRange = 2;
+const auto abeizhulSpeed = 5;
+const auto abeizhulPrize = 100;
+// Valar
+const auto valarAttack = 60;
+const auto valarDefense = 10;  // Percent
+const auto valarHealth = 220;
+const auto valarAttackRange = 2;
+const auto valarMoveRange = 2;
+const auto valarSpeed = 5;
+const auto valarPrize = 100;
 // wizard
 const int wizardAttack = 20;
 const int wizardDefense = 0;  // Percent
