@@ -14,7 +14,7 @@
 #include "Utils/Vector2D.h"
 
 void buttonPlay() {
-  Game::getSceneMachine()->changeScene(new RecruitScene());
+  Game::getSceneMachine()->changeScene(new TransitionScene(1));
   SDLAudioManager::getInstance()->playChannel(2, 0, 0);
 }
 
