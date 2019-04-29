@@ -189,6 +189,9 @@ void Game::load() {
   textures->add("Maps-1Battle", "../images/Maps/FirstBattle.png", 4, 1)
       ->addAnimation("default", {0, 1, 2, 3}, 1);
   textures->add("Maps-2Battle", "../images/Maps/SecondBattle.png", 1, 1);
+  textures->add("Map-3Battle", "../images/Maps/ThirdBattle.png", 1, 1);
+  textures->add("Map-4Battle", "../images/Maps/ThirdBattle.png", 1, 1);
+  textures->add("Map-5Battle", "../images/Maps/ThirdBattle.png", 1, 1);
 
   // Tutorial images
   textures->add("tutorial-1", "../images/Tutorials/tutorial_1.png", 1, 1);
@@ -204,6 +207,10 @@ void Game::load() {
   textures->add("Transition-Map2", "../images/Transition/Transition_2.png", 1,
                 1);
   textures->add("Transition-Map3", "../images/Transition/GuerrillaSpecial.png",
+                1, 1);
+  textures->add("Transition-Map4", "../images/Transition/GuerrillaSpecial.png",
+                1, 1);
+  textures->add("Transition-Map5", "../images/Transition/GuerrillaSpecial.png",
                 1, 1);
   textures->add("Transition-Menu", "../images/Transition/Transition_1.png", 4,
                 1);
