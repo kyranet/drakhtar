@@ -6,6 +6,7 @@
 #include "EventListeners/SkillButtonListener.h"
 #include "GameObjects/ButtonText.h"
 #include "SkillDescriptionBox.h"
+#include "Managers/Input.h"
 
 SkillButton::SkillButton(GameScene* scene, Texture* texture,
                          Texture* disabledText, Vector2D<int> pos,
@@ -49,7 +50,19 @@ void SkillButton::handleEvents(SDL_Event e) {
   }
 }
 
+void SkillButton::update() {
+  const auto area = getRect();
+  hovered_ = Input::isMouseInside(&area);
+  GameObject::update();
+}
+
 void SkillButton::render(SDL_Rect rect) const {
+  if (hovered_) {
+    rect = {position_.getX() - (size_.getX() + increSize_) / 2,
+            position_.getY() - (size_.getY() + increSize_) / 2,
+            size_.getX() + increSize_, size_.getY() + increSize_};
+  }
+
   if (commander_->getSkills().empty()) {  // Temporary fix
     disabledText_->renderFrame(rect,
                                texture_->getAnimation()[texture_->getFrame()]);

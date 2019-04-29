@@ -41,6 +41,10 @@ class SkillButton : public GameObject {
 
   SkillDescriptionBox* skillDescriptionBox_;
 
+  bool hovered_ = false;
+
+  int increSize_ = 15;
+
  public:
   SkillButton(GameScene* scene, Texture* texture, Texture* disabledText,
               Vector2D<int> pos,
@@ -52,6 +56,7 @@ class SkillButton : public GameObject {
    * \param e: The event to be processed.
    */
   void handleEvents(SDL_Event e) override;
+  void update() override;
   void render(SDL_Rect) const override;
 
   Skill* getSkill() const { return skill_; }
