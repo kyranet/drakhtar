@@ -67,7 +67,7 @@ void BattleCry::end(GameScene* scene) {
 }
 
 // ---------- ARROW RAIN ----------
-ArrowRain::ArrowRain(Commander* caster) : Skill("ArrowRain", 2, 0, caster) {
+ArrowRain::ArrowRain(Commander* caster) : Skill("ArrowRain", 4, 0, caster) {
   description_ =
       "Fire an volley of arrows that deal half damage to ALL enemies in the "
       "battlefield";

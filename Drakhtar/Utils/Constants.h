@@ -6,7 +6,7 @@
 const int WIN_WIDTH = 1280;
 const int WIN_HEIGHT = 720;
 const int ANIMATION_TICKS_PER_SECOND = 1;
-const int GAME_FRAMERATE = 25;
+const int GAME_FRAMERATE = 60;
 
 /*
  * \brief This is displaying all the stats each unit has.
@@ -29,15 +29,15 @@ const int GAME_FRAMERATE = 25;
 // Thassa
 const auto thassaAttack = 35;
 const auto thassaDefense = 35;  // Percent
-const auto thassaHealth = 150;
+const auto thassaHealth = 180;
 const auto thassaAttackRange = 1;
 const auto thassaMoveRange = 3;  // 10;
 const auto thassaSpeed = 5;
 const auto thassaPrice = 100;
 // Zamdran
-const auto zamdranAttack = 50;
+const auto zamdranAttack = 35;
 const auto zamdranDefense = 10;  // Percent
-const auto zamdranHealth = 200;
+const auto zamdranHealth = 150;
 const auto zamdranAttackRange = 3;
 const auto zamdranMoveRange = 2;
 const auto zamdranSpeed = 6;
@@ -67,9 +67,9 @@ const auto knightMoveRange = 5;  // 5;
 const auto knightSpeed = 8;
 const auto knightPrice = 55/2;
 // archer
-const auto archerAttack = 6;
+const auto archerAttack = 8;
 const auto archerDefense = 10;  // Percent
-const auto archerHealth = 9;
+const auto archerHealth = 10;
 const auto archerAttackRange = 3;
 const auto archerMoveRange = 2;  // 2;
 const auto archerSpeed = 4;
@@ -83,7 +83,7 @@ const auto soldierMoveRange = 3;  // 3;
 const auto soldierSpeed = 5;
 const auto soldierPrice = 28/2;
 // monster
-const auto monsterAttack = 19;
+const auto monsterAttack = 15;
 const auto monsterDefense = 50;  // Percent
 const auto monsterHealth = 85;
 const auto monsterAttackRange = 1;
