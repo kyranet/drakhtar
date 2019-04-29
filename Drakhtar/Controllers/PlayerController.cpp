@@ -127,8 +127,8 @@ void PlayerController::start() {
   skipTurnButton_ =
       new Button(scene_, TextureManager::get("Button-SkipTurn"),
                  Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT - WIN_HEIGHT / 8),
-                 Vector2D<int>(static_cast<int>(WIN_WIDTH / 7),
-                               static_cast<int>(WIN_HEIGHT / 4.5)),
+                 Vector2D<int>(static_cast<int>(WIN_WIDTH / 10.5),
+                               static_cast<int>(WIN_HEIGHT / 6.75)),
                  [this]() { finish(); }, " ", "ButtonFont");
   scene_->addGameObject(skipTurnButton_);
 
