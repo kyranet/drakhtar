@@ -72,7 +72,9 @@ void Battalion::setAttack(const int attack) {
 int Battalion::loseHealth(const int enemyAttack, int minDamage) {
   const auto health = Unit::loseHealth(enemyAttack, minDamage);
   if (baseStats_.maxHealth * (battalionSize_ - 1) >= health_) {
-    int lostUnits = std::max(health / baseStats_.maxHealth, 1);
+    int lostUnits = 1;
+    while (baseStats_.maxHealth * (battalionSize_ - lostUnits - 1) > health_)
+      lostUnits++;
     battalionSize_ -= lostUnits;
     if (this->getTeam()->getColor() == Color::RED)
       reinterpret_cast<GameScene*>(Game::getSceneMachine()->getCurrentScene())
