@@ -38,12 +38,14 @@ DialogScene::DialogScene(Scene* scene, const std::string& filename,
                         dialogueBackground->getRect().w - WIN_WIDTH / 12,
                     dialogueBackground->getRect().y - WIN_WIDTH / 70),
       Vector2D<int>(area.w * WIN_WIDTH / 8, area.h * WIN_HEIGHT / 20));
-  const auto arrow = new GameObject(
+  const auto arrow = new Button(
       scene_, TextureManager::get("UI-dialogueArrow"),
       Vector2D<int>(
           dialogueBackground->getRect().x + dialogueBackground->getRect().w / 2,
           dialogueBackground->getRect().y + 140),
-      Vector2D<int>(area.w * WIN_WIDTH / 8, area.h * WIN_HEIGHT / 10));
+      Vector2D<int>(area.w * WIN_WIDTH / 8, area.h * WIN_HEIGHT / 10), {}, " ",
+      "ButtonFont");
+  arrow->setTransparent(true);
   const auto skipButton = new Button(
       scene_, TextureManager::get("Button-Skip"),
       Vector2D<int>(static_cast<int>(dialogueBackground->getRect().x +
