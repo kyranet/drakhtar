@@ -211,7 +211,7 @@ void Scene::removeGameObject(GameObject* gameObject) {
   pendingOnDestroy_.push_back(gameObject);
 }
 
-void Scene::processNextTick(NextTickCallback* callback) {
+void Scene::processNextTick(std::function<void()> callback) {
   nextTick_.push_back(callback);
 }
 

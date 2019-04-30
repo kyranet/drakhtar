@@ -25,17 +25,17 @@ TutorialSequence::TutorialSequence(Scene* scene, const std::string& filename,
       Vector2D<int>(tutorialArea_.w * WIN_WIDTH / 2,
                     tutorialArea_.h * WIN_HEIGHT / 1.5));
 
-  const auto nextButton = new Button(
-      scene_, TextureManager::get("Vanilla-Button"),
-      Vector2D<int>(tutorialArea_.x - WIN_WIDTH / 10,
-                    tutorialArea_.y + WIN_HEIGHT / 10),
-      Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT / 19), [this]() { next(); },
-      "Next", "ButtonFont");
+  const auto nextButton =
+      new Button(scene_, TextureManager::get("Vanilla-Button"),
+                 Vector2D<int>(tutorialArea_.x - WIN_WIDTH / 10,
+                               tutorialArea_.y + WIN_HEIGHT / 10),
+                 Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT / 19),
+                 [this]() { next(); }, "Next", "ButtonFont");
 
-  const auto closeButton = new Button(
-      scene_, TextureManager::get("Vanilla-Button"),
-      Vector2D<int>(tutorialArea_.x + WIN_WIDTH / 10,
-                    tutorialArea_.y + WIN_HEIGHT / 10),
+  const auto closeButton =
+      new Button(scene_, TextureManager::get("Vanilla-Button"),
+                 Vector2D<int>(tutorialArea_.x + WIN_WIDTH / 10,
+                               tutorialArea_.y + WIN_HEIGHT / 10),
                  Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT / 19),
                  [this]() { skip(); }, "Close", "ButtonFont");
 
@@ -84,7 +84,9 @@ void TutorialSequence::next() {
   if (tutorials_.empty()) skip();
 }
 
-void TutorialSequence::skip() { destroy(); }
+void TutorialSequence::skip() {
+  getScene()->processNextTick([this]() { destroy(); });
+}
 
 void TutorialSequence::render() const {
   if (!tutorials_.empty()) {

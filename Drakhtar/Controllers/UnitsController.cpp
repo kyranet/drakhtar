@@ -7,6 +7,7 @@
 #include "GameObjects/Board.h"
 #include "GameObjects/Unit.h"
 #include "Managers/TurnManager.h"
+#include "Scenes/Scene.h"
 #include "Structures/Team.h"
 
 UnitsController::UnitsController(Board* board, TurnManager* turnManager,
@@ -41,11 +42,14 @@ void UnitsController::finish() {
   // Update the turn bar
   turnManager_->next();
 
-  if (turnManager_->getTurnFor()->getTeam() != oppositeTeam_) return start();
-
-  // Once this controller is finished, start the controller of the opposite
-  // team.
-  oppositeTeam_->getController()->start();
+  if (turnManager_->getTurnFor()->getTeam() != oppositeTeam_) {
+    getBoard()->getScene()->processNextTick([this]() { start(); });
+  } else {
+    // Once this controller is finished, start the controller of the opposite
+    // team.
+    getBoard()->getScene()->processNextTick(
+        [this]() { oppositeTeam_->getController()->start(); });
+  }
 }
 
 Board* UnitsController::getBoard() const { return board_; }

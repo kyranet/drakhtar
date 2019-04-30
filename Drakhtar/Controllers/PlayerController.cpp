@@ -50,11 +50,13 @@ void PlayerController::onClickMove(Box* boxClicked) {
       ->setRoute(board_->pathToRoute(path))
       ->setDuration(static_cast<int>(
           floor(static_cast<double>(path.size()) * GAME_FRAMERATE * 0.25)))
+      ->setOnStart([unit]() { unit->getTexture()->setAnimation("walk"); })
       ->setOnUpdate([unit](Vector2D<double> updated) {
         unit->setPosition({static_cast<int>(std::floor(updated.getX())),
                            static_cast<int>(std::floor(updated.getY()))});
       })
       ->setOnComplete([this, unit, boxClicked]() {
+        unit->getTexture()->setAnimation("default");
         hasMoved_ = true;
         locked_ = false;
         // If there are enemies in range, highlight them, otherwise skip turn
