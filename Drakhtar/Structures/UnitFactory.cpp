@@ -1,10 +1,11 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "UnitFactory.h"
+
 #include "GameObjects/Battalion.h"
+#include "GameObjects/Commanders/Sheissah.h"
 #include "GameObjects/Commanders/Thassa.h"
 #include "GameObjects/Commanders/Zamdran.h"
-#include "GameObjects/Commanders/Sheissah.h"
 #include "GameObjects/Unit.h"
 #include "Managers/TextureManager.h"
 #include "Scenes/Scene.h"
@@ -12,41 +13,25 @@
 #include "Utils/Constants.h"
 
 UnitFactory::UnitFactory(Scene* scene) : scene_(scene) {
-  statMap["Soldier"] = {soldierAttack,      soldierDefense,   soldierHealth,
-                        soldierAttackRange, soldierMoveRange, soldierSpeed,
-                        soldierPrice};
+  statMap["Soldier"] = SOLDIER_STATS;
 
-  statMap["Archer"] = {archerAttack,      archerDefense,   archerHealth,
-                       archerAttackRange, archerMoveRange, archerSpeed,
-                       archerPrice};
+  statMap["Archer"] = ARCHER_STATS;
 
-  statMap["Mage"] = {wizardAttack,      wizardDefense,   wizardHealth,
-                     wizardAttackRange, wizardMoveRange, wizardSpeed,
-                     wizardPrice};
+  statMap["Mage"] = MAGE_STATS;
 
-  statMap["Knight"] = {knightAttack,      knightDefense,   knightHealth,
-                       knightAttackRange, knightMoveRange, knightSpeed,
-                       knightPrice};
+  statMap["Knight"] = KNIGHT_STATS;
 
-  statMap["Monster"] = {monsterAttack,      monsterDefense,   monsterHealth,
-                        monsterAttackRange, monsterMoveRange, monsterSpeed,
-                        monsterPrice};
+  statMap["Monster"] = MONSTER_STATS;
 
-  commanderMap["Thassa"] = {thassaAttack,      thassaDefense,   thassaHealth,
-                            thassaAttackRange, thassaMoveRange, thassaSpeed,
-                            thassaPrice};
+  commanderMap["Thassa"] = THASSA_STATS;
 
   commanderSwitch["Thassa"] = CommanderType::THASSA;
 
-  commanderMap["Zamdran"] = {
-      zamdranAttack,    zamdranDefense, zamdranHealth, zamdranAttackRange,
-      zamdranMoveRange, zamdranSpeed, zamdranPrize};
+  commanderMap["Zamdran"] = ZAMDRAN_STATS;
 
   commanderSwitch["Zamdran"] = CommanderType::ZAMDRAN;
 
-  commanderMap["Sheissah"] = {
-      sheissahAttack,    sheissahDefense, sheissahHealth, sheissahAttackRange,
-      sheissahMoveRange, sheissahSpeed,   sheissahPrize};
+  commanderMap["Sheissah"] = SHEISSAH_STATS;
 
   commanderSwitch["Sheissah"] = CommanderType::SHEISSAH;
 }
@@ -80,7 +65,7 @@ Commander* UnitFactory::newCommander(const std::string& type, Team* team,
       break;
     case CommanderType::SHEISSAH:
       commander = new Sheissah(scene_, TextureManager::get(textureName), box,
-                              commanderMap[type]);
+                               commanderMap[type]);
       break;
     default:
       return nullptr;

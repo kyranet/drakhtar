@@ -4,6 +4,7 @@
 #include <string>
 
 #include "GameObject.h"
+#include "Utils/Constants.h"
 
 class Team;
 class Box;
@@ -11,28 +12,19 @@ class Text;
 class HealthBar;
 class Scene;
 
-struct UnitStats {
-  int attack;
-  int defense;
-  int maxHealth;
-  int attackRange;
-  int moveRange;
-  int speed;
-  int prize;
-};
 class Unit : public GameObject {
   bool moved_ = false;
   bool moving_ = false;
   bool hasCounterAttacked_ = false;
 
   Vector2D<int> boxPosition_;
-  Team *team_ = nullptr;
+  Team* team_ = nullptr;
   std::string type_;
 
  protected:
-  Box *box_ = nullptr;
-  Text *healthText_ = nullptr;
-  HealthBar *healthBar_ = nullptr;
+  Box* box_ = nullptr;
+  Text* healthText_ = nullptr;
+  HealthBar* healthBar_ = nullptr;
   int health_;
   std::string healthToString() const;
   int minDamage_ = 1;
@@ -41,8 +33,8 @@ class Unit : public GameObject {
   UnitStats stats_;
 
  public:
-  Unit(Scene *scene, Texture *texture, Box *box, UnitStats stats,
-       const std::string &type);
+  Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
+       const std::string& type);
   virtual ~Unit();
 
   /*int getBaseAttack() const { return baseAttack_; }
@@ -62,13 +54,15 @@ class Unit : public GameObject {
   UnitStats getStats() const { return stats_; }
   virtual bool getMoved() { return moved_; }
   virtual bool getMoving() { return moving_; }
-  Team *getTeam() const { return team_; }
-  Box *getBox() const { return box_; }
+  Team* getTeam() const { return team_; }
+  Box* getBox() const { return box_; }
   Vector2D<int> getBoxPosition() const { return boxPosition_; }
   std::string getType() const { return type_; }
 
   bool getHasCounterAttacked() const { return hasCounterAttacked_; }
-  void setHasCounterAttacked(const bool counter) { hasCounterAttacked_ = counter; }
+  void setHasCounterAttacked(const bool counter) {
+    hasCounterAttacked_ = counter;
+  }
 
   virtual void setAttack(const int attack) { stats_.attack = attack; }
   void setSpeed(const int speed) { stats_.speed = speed; }
@@ -77,14 +71,14 @@ class Unit : public GameObject {
 
   void setMoving(const bool moving) { moving_ = moving; }
   void setMoved(const bool moved) { moved_ = moved; }
-  void setTeam(Team *team) { team_ = team; }
+  void setTeam(Team* team) { team_ = team; }
 
   HealthBar* getHealthBar() const { return healthBar_; }
 
-  virtual void moveToBox(Box *box);
+  virtual void moveToBox(Box* box);
   virtual int loseHealth(int enemyAttack, int minDamage);
   void update() override;
-  virtual void attack(Unit *enemy, bool allowsCounter);
+  virtual void attack(Unit* enemy, bool allowsCounter);
   virtual void kill();
 
   virtual void onSelect();
