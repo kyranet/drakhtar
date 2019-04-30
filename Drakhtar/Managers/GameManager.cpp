@@ -24,7 +24,7 @@ GameManager::GameManager() {
   (*buyingCap_)["Archer"] = 18;
   (*buyingCap_)["Mage"] = 12;
   (*buyingCap_)["Knight"] = 10;
-  (*buyingCap_)["Monster"] = 6;
+  (*buyingCap_)["Monster"] = 3;
 }
 
 GameManager::~GameManager() {
