@@ -36,3 +36,7 @@ void Text::render() const {
   SDL_RenderCopy(Game::getRenderer(), texture_->getTexture(), nullptr,
                  &rect);
 }
+
+void Text::render(SDL_Rect rect) const {
+  SDL_RenderCopy(Game::getRenderer(), texture_->getTexture(), nullptr, &rect);
+}
