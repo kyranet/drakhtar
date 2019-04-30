@@ -170,6 +170,7 @@ void Game::load() {
   textures->add("UI-healthBar_life", "../images/UI/healthBar_life.png", 1, 1);
   textures->add("UI-healthBar_damage", "../images/UI/healthBar_damage.png", 1,
                 1);
+  textures->add("UI-healthBar_blue", "../images/UI/healthBar_blue.png", 1, 1);
   textures->add("UI-commanderIcon", "../images/UI/goldskull.png", 1, 1);
   textures->add("UI-OptionsMenu", "../images/UI/OptionsMenu.png", 1, 1);
   textures->add("UI-ActiveSound", "../images/UI/ActiveSound.png", 1, 1);

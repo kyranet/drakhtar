@@ -19,7 +19,10 @@ void Team::addUnit(Unit* unit) {
   }
   units_.push_back(unit);
   unit->setTeam(this);
-}
+  if (color_ == Color::BLUE) {
+    unit->setAlliedHealthBar();
+  }
+  }
 
 void Team::removeUnit(Unit* unit) {
   for (auto it = units_.begin(), end = units_.end(); it != end; ++it) {

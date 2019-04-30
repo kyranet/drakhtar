@@ -8,6 +8,7 @@
 #include "Box.h"
 #include "HealthBar.h"
 #include "Managers/FontManager.h"
+#include "Managers/TextureManager.h"
 #include "Scenes/GameScene.h"
 #include "Structures/Team.h"
 #include "Text.h"
@@ -43,11 +44,10 @@ Unit::Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
       new Text(scene, FontManager::get("UnitFont"),
                {rect.x + rect.w / 2 + rect.w / 14, rect.y - rect.h / 3},
                textColor, healthToString(), rect.w * 2);
-
-  healthBar_ = new HealthBar(
-      scene, Vector2D<int>(rect.x + rect.w / 2, rect.y - rect.h / 3),
-      baseStats_.maxHealth);
-
+   healthBar_ = new HealthBar(
+        scene, Vector2D<int>(rect.x + rect.w / 2, rect.y - rect.h / 3),
+        baseStats_.maxHealth, Color::RED);
+ 
   healthText_->setColor(textColor);
 
   healthText_->setTransparent(true);
@@ -58,6 +58,10 @@ Unit::Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
 }
 
 Unit::~Unit() = default;
+
+void Unit::setAlliedHealthBar() {
+  healthBar_->setTexture(TextureManager::get("UI-healthBar_blue"));
+}
 
 void Unit::moveToBox(Box* newBox) {
   box_->setContent(nullptr);
