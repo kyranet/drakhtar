@@ -18,7 +18,7 @@ Commander::Commander(std::string name, Scene* scene, Texture* texture, Box* box,
   commanderIcon_ =
       new GameObject(scene, TextureManager::get("UI-commanderIcon"),
                      Vector2D<int>(rect.x, rect.y - rect.h / 3),
-                     Vector2D<int>(rect.h / 2, rect.h / 2));
+                     Vector2D<int>(rect.h / 1.5, rect.h / 1.5));
 
   addChild(commanderIcon_);
 }

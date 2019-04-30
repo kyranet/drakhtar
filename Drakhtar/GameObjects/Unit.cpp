@@ -32,6 +32,12 @@ Unit::Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
   const SDL_Color textColor = {255, 255, 255, 0};
   const auto rect = box_->getRect();
 
+  if (type == "Thassa" || type == "Zamdran" || type == "Sheissah" ||
+      type == "Abeizhul" || type == "Dreilay") {
+    size_.setX(static_cast<int>(box->getRect().w * 2));
+    size_.setY(static_cast<int>(box->getRect().h * 2));
+  }
+
   healthText_ =
       new Text(scene, FontManager::get("UnitFont"),
                {rect.x + rect.w / 2 + rect.w / 14, rect.y - rect.h / 3},
