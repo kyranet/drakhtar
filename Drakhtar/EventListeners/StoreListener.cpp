@@ -35,11 +35,9 @@ StoreListener::StoreListener(GameObject* gameObject, std::string type, int cost)
               ->updateTotalCost(-storeUnit.cost_);
           storeUnit.amountText->setText(std::to_string(storeUnit.amount_));
         }
-      }, " ", "ButtonFont");
+      }, "-", "SkillButtonFont");
+  minusButton->setColor({0, 0, 255, 0});
 
-  minusButton->addChild(new Text(scene, FontManager::get("Retron2000"),
-                                 Vector2D<int>(nx, y), {0, 0, 0, 255}, "-",
-                                 10));
   gameObject->addChild(minusButton);
 
   auto plusButton = new Button(
@@ -56,17 +54,15 @@ StoreListener::StoreListener(GameObject* gameObject, std::string type, int cost)
           storeUnit.amount_++;
           storeUnit.amountText->setText(std::to_string(storeUnit.amount_));
         }
-      }, " ", "ButtonFont");
-
-  plusButton->addChild(new Text(scene, FontManager::get("Retron2000"),
-                                Vector2D<int>(px, y), {0, 0, 0, 255}, "+", 10));
-
+      }, "+", "SkillButtonFont");
+  plusButton->setColor({255, 0, 0, 0});
   gameObject->addChild(plusButton);
 
   storeUnit.amountText =
       new Text(scene, FontManager::get("Retron2000"),
                Vector2D<int>(static_cast<int>(WIN_WIDTH / 3.47), y),
                {0, 0, 0, 255}, "0", 10);
+  storeUnit.amountText->setColor({255, 255, 255, 0});
 
   gameObject->addChild(storeUnit.amountText);
 }

@@ -18,4 +18,5 @@ class ButtonText : public GameObject {
              Vector2D<int>(size), Vector2D<int>(pos));
 
   void setText(std::string text);
+  void setColor(const SDL_Color& color);
 };

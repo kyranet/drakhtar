@@ -32,12 +32,13 @@ void RecruitScene::preload() {
                         Vector2D<int>(static_cast<int>(WIN_WIDTH / 2.55),
                                       WIN_HEIGHT - WIN_HEIGHT / 13),
                         {0, 0, 0, 0}, moneyToString(), WIN_WIDTH);
+  moneyText_->setColor({255, 255, 255, 0});
 
   totalCostText_ = new Text(this, FontManager::get("Retron2000"),
                             Vector2D<int>(static_cast<int>(WIN_WIDTH / 9.5),
                                           WIN_HEIGHT - WIN_HEIGHT / 13),
                             {0, 0, 0, 0}, "Total cost: 0", 500);
-
+  totalCostText_->setColor({255,255,255,0});
   recruitmentPanel_ =
       new GameObject(this, TextureManager::get("Recruitment-Panel"),
                      Vector2D<int>(WIN_WIDTH / 4, WIN_HEIGHT / 2),

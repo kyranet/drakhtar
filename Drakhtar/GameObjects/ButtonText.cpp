@@ -45,3 +45,7 @@ void ButtonText::setText(std::string text) {
 
   addChild(text_);
 }
+
+void ButtonText::setColor(const SDL_Color& color) { 
+	reinterpret_cast<Text*>(children_[0])->setColor(color);
+}
