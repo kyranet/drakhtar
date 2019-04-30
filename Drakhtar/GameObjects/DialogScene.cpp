@@ -80,13 +80,12 @@ void DialogScene::next() {
   if (dialogueIndex_ < dialogues_.size() - 1) {
     ++dialogueIndex_;
   } else {
-    destroy();
     skip();
   }
 }
 
 void DialogScene::skip() {
-  destroy();
+  getScene()->processNextTick([this]() { destroy(); });
   if (Game::getSceneMachine()->getCurrentScene()->getTransition()) {
     int scene = reinterpret_cast<TransitionScene*>(getScene())->getBattleInd();
 
