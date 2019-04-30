@@ -52,97 +52,102 @@ void Game::load() {
   textures->add("Units-BlueArcher", "../images/Units/BlueArcher.png", 5, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10})
-      ->addAnimation("walk", {11, 12})
-      ->addAnimation("death", {13, 14, 15, 16, 17})
-      ->setFlip(SDL_FLIP_HORIZONTAL);
+      ->addAnimation("walk", {11, 12}, 4)
+      ->addAnimation("death", {13, 14, 15, 16, 17});
   textures->add("Units-BlueKnight", "../images/Units/BlueKnight.png", 5, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10})
-      ->addAnimation("walk", {11, 12, 13, 14})
+      ->addAnimation("walk", {11, 12, 13, 14}, 4)
       ->addAnimation("death", {15, 16, 17, 18, 19})
-      ->setFlip(SDL_FLIP_HORIZONTAL)
       ->setScale({1.5, 1.5});
   textures->add("Units-BlueMage", "../images/Units/BlueMage.png", 4, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6})
-      ->addAnimation("walk", {7, 8})
+      ->addAnimation("walk", {7, 8}, 4)
       ->addAnimation("death", {9, 10, 11, 12});
   textures->add("Units-BlueMonster", "../images/Units/BlueMonster.png", 4, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8})
-      ->addAnimation("walk", {9, 10})
+      ->addAnimation("walk", {9, 10}, 4)
       ->addAnimation("death", {11, 12, 13, 14, 15});
   textures->add("Units-BlueSoldier", "../images/Units/BlueSoldier.png", 4, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8})
-      ->addAnimation("walk", {9, 10})
-      ->addAnimation("death", {11, 12, 13, 14, 15})
-      ->setFlip(SDL_FLIP_HORIZONTAL);
+      ->addAnimation("walk", {9, 10}, 4)
+      ->addAnimation("death", {11, 12, 13, 14, 15});
   textures->add("Units-Thassa", "../images/Units/Thassa.png", 5, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8})
-      ->addAnimation("walk", {9, 10, 11, 12, 13})
-      ->addAnimation("death", {14, 15, 16, 17, 18})
-      ->setFlip(SDL_FLIP_HORIZONTAL);
+      ->addAnimation("walk", {9, 10, 11, 12, 13}, 5)
+      ->addAnimation("death", {14, 15, 16, 17, 18});
   textures->add("Units-Abeizhul", "../images/Units/Abeizhul.png", 5, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9})
-      ->addAnimation("walk", {10, 11})
-      ->addAnimation("death", {12, 13, 14, 15, 16});
+      ->addAnimation("walk", {10, 11}, 4)
+      ->addAnimation("death", {12, 13, 14, 15, 16})
+      ->setFlip(SDL_FLIP_HORIZONTAL);
   textures->add("Units-Dreilay", "../images/Units/Dreilay.png", 5, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10})
-      ->addAnimation("walk", {11, 12, 13, 14})
+      ->addAnimation("walk", {11, 12, 13, 14}, 4)
       ->addAnimation("death", {15, 16, 17, 18, 19})
+      ->setFlip(SDL_FLIP_HORIZONTAL)
       ->setScale({1.5, 1.5});
   textures->add("Units-RedArcher", "../images/Units/RedArcher.png", 5, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10})
-      ->addAnimation("walk", {11, 12})
-      ->addAnimation("death", {13, 14, 15, 16, 17});
+      ->addAnimation("walk", {11, 12}, 4)
+      ->addAnimation("death", {13, 14, 15, 16, 17})
+      ->setFlip(SDL_FLIP_HORIZONTAL);
   textures->add("Units-RedKnight", "../images/Units/RedKnight.png", 5, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10})
-      ->addAnimation("walk", {11, 12, 13, 14})
+      ->addAnimation("walk", {11, 12, 13, 14}, 4)
       ->addAnimation("death", {15, 16, 17, 18, 19})
+      ->setFlip(SDL_FLIP_HORIZONTAL)
       ->setScale({1.5, 1.5});
   textures->add("Units-RedMage", "../images/Units/RedMage.png", 4, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8})
-      ->addAnimation("walk", {9, 10})
+      ->addAnimation("walk", {9, 10}, 4)
       ->addAnimation("death", {11, 12, 13, 14, 15})
       ->setFlip(SDL_FLIP_HORIZONTAL);
   textures->add("Units-RedMonster", "../images/Units/RedMonster.png", 4, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8})
-      ->addAnimation("walk", {9, 10})
+      ->addAnimation("walk", {9, 10}, 4)
       ->addAnimation("death", {11, 12, 13, 14, 15})
       ->setFlip(SDL_FLIP_HORIZONTAL);
   textures->add("Units-RedSoldier", "../images/Units/RedSoldier.png", 4, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8})
-      ->addAnimation("walk", {9, 10})
-      ->addAnimation("death", {11, 12, 13, 14, 15});
+      ->addAnimation("walk", {9, 10}, 4)
+      ->addAnimation("death", {11, 12, 13, 14, 15})
+      ->setFlip(SDL_FLIP_HORIZONTAL);
   textures->add("Units-Sheissah", "../images/Units/Sheissah.png", 4, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8})
-      ->addAnimation("walk", {9, 10})
-      ->addAnimation("death", {11, 12, 13, 14, 15});
+      ->addAnimation("walk", {9, 10}, 4)
+      ->addAnimation("death", {11, 12, 13, 14, 15})
+      ->setFlip(SDL_FLIP_HORIZONTAL);
   textures->add("Units-BlueValar", "../images/Units/BlueValar.png", 5, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10})
-      ->addAnimation("walk", {11, 12})
-      ->addAnimation("death", {13, 14, 15, 16, 17});
+      ->addAnimation("walk", {11, 12}, 4)
+      ->addAnimation("death", {13, 14, 15, 16, 17})
+      ->setFlip(SDL_FLIP_HORIZONTAL);
   textures->add("Units-RedValar", "../images/Units/RedValar.png", 5, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10})
-      ->addAnimation("walk", {11, 12})
-      ->addAnimation("death", {13, 14, 15, 16, 17});
-  textures->add("Units-Zamdran", "../images/Units/Zamdran.png", 4, 4)
+      ->addAnimation("walk", {11, 12}, 4)
+      ->addAnimation("death", {13, 14, 15, 16, 17})
+      ->setFlip(SDL_FLIP_HORIZONTAL);
+  textures->add("Units-Zamdran", "../images/Units/Zamdran.png", 5, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12})
-      ->addAnimation("walk", {13, 14})
-      ->addAnimation("death", {15, 16, 17, 18, 19});
+      ->addAnimation("walk", {13, 14}, 4)
+      ->addAnimation("death", {15, 16, 17, 18, 19})
+      ->setFlip(SDL_FLIP_HORIZONTAL);
 
   // UI
   textures->add("UI-cellFrame", "../images/UI/cellFrame.png", 1, 1);
