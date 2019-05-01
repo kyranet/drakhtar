@@ -15,13 +15,13 @@ class GameScene final : public Scene {
   Board* board_ = nullptr;
   int battle_;
   int prize_ = 0;
+  int counter = 0;
 
  public:
   explicit GameScene(int battle);
   ~GameScene() override;
   void preload() override;
   void pause() override;
-  void loadRedTeam(UnitFactory& factory);
   void gameOver(bool victory);
   void addPrize(int prize);
   void saveStatus();
@@ -29,6 +29,10 @@ class GameScene final : public Scene {
 
   Board* getBoard() const;
   int getBattleInd();
+  bool tutorialIsOver();
+  bool introductionToDrakhtar();
+  bool firstTutorial();
+  bool secondTutorial();
 
   Team* getTeam1_() const { return team1_; }
   Team* getTeam2_() const { return team2_; }

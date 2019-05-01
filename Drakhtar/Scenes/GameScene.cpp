@@ -16,6 +16,7 @@
 #include "GameObjects/Pause.h"
 #include "GameObjects/SkillButton.h"
 #include "GameObjects/TurnBar.h"
+#include "GameObjects/TutorialLogic.h"
 #include "GameObjects/TutorialSequence.h"
 #include "Managers/GameManager.h"
 #include "Managers/SDLAudioManager.h"
@@ -153,11 +154,13 @@ void GameScene::preload() {
 }
 
 void GameScene::pause() {
-  if (!isPaused()) {
-    Scene::pause();
-    pauseInterface = new Pause(this);
-    addGameObject(pauseInterface);
-    audio->playChannel(7, 0, 0);
+  if (tutorialIsOver()) {
+    if (!isPaused()) {
+      Scene::pause();
+      pauseInterface = new Pause(this);
+      addGameObject(pauseInterface);
+      audio->playChannel(7, 0, 0);
+    }
   }
 }
 
@@ -251,4 +254,33 @@ Team* GameScene::getEnemyTeam(Unit* unit) {
   if (unit->getTeam() != team1_) return team1_;
   if (unit->getTeam() != team2_) return team2_;
   return nullptr;
+}
+
+bool GameScene::tutorialIsOver() {
+  if (counter == 10)
+    return true;
+  else
+    return false;
+  ;
+}
+
+bool GameScene::introductionToDrakhtar() {
+  if (counter <= 1)
+    return true;
+  else
+    return false;
+}
+
+bool GameScene::firstTutorial() {
+  if (counter <= 4 || counter >= 2)
+    return true;
+  else
+    return false;
+}
+
+bool GameScene::secondTutorial() {
+  if (counter >= 5 || counter <= 9)
+    return true;
+  else
+    return false;
 }
