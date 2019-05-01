@@ -100,7 +100,7 @@ void Unit::attack(Unit* enemy, const bool allowsCounter) {
   const auto scene = reinterpret_cast<GameScene*>(getScene());
   // If the attack allows a counter and the enemy is
   // alive and within attack range, counter-attack
-  if (allowsCounter && enemy->getStats().maxHealth > 0 &&
+  if (allowsCounter && enemy->getHealth() > 0 &&
       scene->getBoard()->isInRange(box_, enemy->getBox(),
                                    enemy->getStats().attackRange) &&
       !enemy->getHasCounterAttacked()) {
