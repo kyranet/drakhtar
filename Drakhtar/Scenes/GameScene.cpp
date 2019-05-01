@@ -154,11 +154,13 @@ void GameScene::preload() {
 }
 
 void GameScene::pause() {
-  if (!isPaused()) {
-    Scene::pause();
-    pauseInterface = new Pause(this);
-    addGameObject(pauseInterface);
-    audio->playChannel(7, 0, 0);
+  if (tutorialIsOver()) {
+    if (!isPaused()) {
+      Scene::pause();
+      pauseInterface = new Pause(this);
+      addGameObject(pauseInterface);
+      audio->playChannel(7, 0, 0);
+    }
   }
 }
 
@@ -259,6 +261,7 @@ bool GameScene::tutorialIsOver() {
     return true;
   else
     return false;
+  ;
 }
 
 bool GameScene::introductionToDrakhtar() {
