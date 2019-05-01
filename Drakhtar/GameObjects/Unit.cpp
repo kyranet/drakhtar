@@ -18,8 +18,8 @@ Unit::Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
     : GameObject(scene, texture,
                  Vector2D<int>(box->getRect().x + box->getRect().w / 2,
                                box->getRect().y + box->getRect().h / 2),
-                 Vector2D<int>(static_cast<int>(box->getRect().w * 1.25),
-                               static_cast<int>(box->getRect().h * 1.25))),
+                 Vector2D<int>(static_cast<int>(box->getRect().w * 1.4),
+                               static_cast<int>(box->getRect().h * 1.4))),
       boxPosition_(box->getPosition()),
       type_(type),
       box_(box),
@@ -34,8 +34,8 @@ Unit::Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
 
   if (type == "Thassa" || type == "Zamdran" || type == "Sheissah" ||
       type == "Abeizhul" || type == "Dreilay") {
-    size_.setX(static_cast<int>(box->getRect().w * 2));
-    size_.setY(static_cast<int>(box->getRect().h * 2));
+    size_.setX(static_cast<int>(box->getRect().w * 1.7));
+    size_.setY(static_cast<int>(box->getRect().h * 1.7));
   }
 
   healthText_ =
