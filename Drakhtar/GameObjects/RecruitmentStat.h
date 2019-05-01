@@ -11,8 +11,10 @@ class RecruitmentStat : public GameObject {
 
  public:
   RecruitmentStat(Scene *scene, StoreUnit *controller);
+  RecruitmentStat(Scene *scene);
   void render() const override;
   std::string fillText();
+  std::string infoFillText();
   void updateText();
   ~RecruitmentStat();
 };

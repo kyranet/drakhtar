@@ -38,7 +38,7 @@ void RecruitScene::preload() {
                             Vector2D<int>(static_cast<int>(WIN_WIDTH / 9.5),
                                           WIN_HEIGHT - WIN_HEIGHT / 13),
                             {0, 0, 0, 0}, "Total cost: 0", 500);
-  totalCostText_->setColor({255,255,255,0});
+  totalCostText_->setColor({255, 255, 255, 0});
   recruitmentPanel_ =
       new GameObject(this, TextureManager::get("Recruitment-Panel"),
                      Vector2D<int>(WIN_WIDTH / 4, WIN_HEIGHT / 2),
@@ -51,8 +51,7 @@ void RecruitScene::preload() {
   addUnit("Units-BlueSoldier", 1);
   addUnit("Units-BlueArcher", 2);
 
-  if (GameManager::getInstance()->getLevel() >= 2)
-    addUnit("Units-BlueMage", 3);
+  if (GameManager::getInstance()->getLevel() >= 2) addUnit("Units-BlueMage", 3);
 
   if (GameManager::getInstance()->getLevel() >= 3)
     addUnit("Units-BlueKnight", 4);
@@ -75,6 +74,7 @@ void RecruitScene::preload() {
             GameManager::getInstance()->addUnits(unit.type, unit.amount_);
             GameManager::getInstance()->loseMoney(unit.cost_ * unit.amount_);
             moneyText_->setText(moneyToString());
+            moneyText_->setColor({255, 255, 255, 0});
           }
         }
 
@@ -118,6 +118,7 @@ int RecruitScene::getCost(const std::string& type) { return costs_[type]; }
 void RecruitScene::updateTotalCost(const int amount) {
   totalCost_ += amount;
   totalCostText_->setText("Total cost: " + std::to_string(totalCost_));
+  totalCostText_->setColor({255, 255, 255, 0});
 }
 
 void RecruitScene::addUnit(std::string textureName, int position) {

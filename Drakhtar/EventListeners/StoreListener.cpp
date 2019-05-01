@@ -26,7 +26,8 @@ StoreListener::StoreListener(GameObject* gameObject, std::string type, int cost)
 
   auto minusButton = new Button(
       scene, TextureManager::get("Quantity-Button"), Vector2D<int>(nx, y),
-      Vector2D<int>(w, h), [this]() {
+      Vector2D<int>(w, h),
+      [this]() {
         if (storeUnit.amount_ > 0) {
           storeUnit.amount_--;
           storeUnit.amountText->setText(std::to_string(storeUnit.amount_));
@@ -34,30 +35,54 @@ StoreListener::StoreListener(GameObject* gameObject, std::string type, int cost)
               Game::getSceneMachine()->getCurrentScene())
               ->updateTotalCost(-storeUnit.cost_);
           storeUnit.amountText->setText(std::to_string(storeUnit.amount_));
+          storeUnit.amountText->setColor({255, 255, 255, 0});
         }
-      }, "-", "SkillButtonFont");
+      },
+      "-", "SkillButtonFont");
   minusButton->setColor({0, 0, 255, 0});
 
   gameObject->addChild(minusButton);
 
   auto plusButton = new Button(
       scene, TextureManager::get("Quantity-Button"), Vector2D<int>(px, y),
-      Vector2D<int>(w, h), [this]() {
+      Vector2D<int>(w, h),
+      [this]() {
         auto scene = reinterpret_cast<RecruitScene*>(
             Game::getSceneMachine()->getCurrentScene());
         auto army = GameManager::getInstance()->getArmy();
         auto capMap = GameManager::getInstance()->getCap();
         if (storeUnit.amount_ + army[storeUnit.type] < capMap[storeUnit.type] &&
-          GameManager::getInstance()->getMoney() >=
-            scene->getTotalCost() + storeUnit.cost_) {
+            GameManager::getInstance()->getMoney() >=
+                scene->getTotalCost() + storeUnit.cost_) {
           scene->updateTotalCost(storeUnit.cost_);
           storeUnit.amount_++;
           storeUnit.amountText->setText(std::to_string(storeUnit.amount_));
+          storeUnit.amountText->setColor({255, 255, 255, 0});
         }
-      }, "+", "SkillButtonFont");
+      },
+      "+", "SkillButtonFont");
   plusButton->setColor({255, 0, 0, 0});
   gameObject->addChild(plusButton);
 
+  auto infoBox =
+      new GameObject(scene, TextureManager::get("Reward-Panel"),
+                     Vector2D<int>(WIN_WIDTH * 0.68, WIN_HEIGHT * 0.66),
+                     Vector2D<int>(WIN_WIDTH * 0.4, WIN_HEIGHT * 0.36));
+  auto infoBoxText =
+      new Text(scene, FontManager::get("Retron2000"),
+               {infoBox->getPosition().getX(),
+                infoBox->getPosition().getY() - infoBox->getRect().h / 4},
+               {255, 255, 255, 0}, infoFillText(), infoBox->getRect().w * 0.85);
+  infoBox->addChild(infoBoxText);
+  infoBox->setRenderizable(false);
+  gameObject->addChild(infoBox);
+  auto infoIcon = new Button(
+      scene, TextureManager::get("Quantity-Button"),
+      Vector2D<int>(WIN_WIDTH * 0.69, WIN_HEIGHT * 0.9),
+      Vector2D<int>(static_cast<int>(WIN_WIDTH / 12), WIN_HEIGHT / 5),
+      [infoBox]() { infoBox->setRenderizable(!infoBox->getRenderizable()); },
+      "?", "SkillButtonFont");
+  gameObject->addChild(infoIcon);
   storeUnit.amountText =
       new Text(scene, FontManager::get("Retron2000"),
                Vector2D<int>(static_cast<int>(WIN_WIDTH / 3.47), y),
@@ -72,6 +97,19 @@ StoreListener::~StoreListener() {}
 void StoreListener::reset() {
   storeUnit.amount_ = 0;
   storeUnit.amountText->setText(std::to_string(storeUnit.amount_));
+  storeUnit.amountText->setColor({255, 255, 255, 0});
+}
+
+std::string StoreListener::infoFillText() {
+  std::string info =
+      "-The total amount you buy will be added to one single unit, giving it "
+      "more attack power and hp. \n";
+  info += "E.g: having 5 archers will multiply archers stats by 5 \n";
+  info +=
+      "-The higher the amount of one unit is, the higher the cost of the next "
+      "one will be. \n";
+
+  return info;
 }
 
 void StoreListener::onHoverStart() {
@@ -79,8 +117,7 @@ void StoreListener::onHoverStart() {
   if (Input::isMouseInside(&rectangle) && stats_ == nullptr) {
     const auto scene = reinterpret_cast<RecruitScene*>(
         Game::getSceneMachine()->getCurrentScene());
-    stats_ =
-        new RecruitmentStat(scene, &storeUnit);
+    stats_ = new RecruitmentStat(scene, &storeUnit);
     scene->addGameObject(stats_);
     return;
   }

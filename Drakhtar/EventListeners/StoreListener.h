@@ -11,7 +11,6 @@
 class Unit;
 class Text;
 class RecruitmentStat;
-
 struct StoreUnit {
   std::string type;
   GameObject* unit = nullptr;
@@ -29,7 +28,7 @@ class StoreListener final : public ListenerOnHover {
   StoreUnit* selectedUnit_ = nullptr;
   RecruitmentStat* stats_ = nullptr;
   int sizeToBuy;
-
+  //Button* infoIcon = nullptr;
  public:
   StoreListener(GameObject* gameObject, std::string type, int cost);
   ~StoreListener();
@@ -38,6 +37,7 @@ class StoreListener final : public ListenerOnHover {
   void onHoverStop() override;
 
   void reset();
+  std::string infoFillText();
 
   const StoreUnit& getStoreUnit() const { return storeUnit; }
 };
