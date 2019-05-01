@@ -1,22 +1,27 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-#include "EventListeners/StoreListener.h"
 #include "GameObject.h"
 
 class Scene;
 class Text;
 class Unit;
+class StatBoxListener;
+class Board;
 
 class UnitDescriptionBox final : public GameObject {
-  Unit* unit_;
-  Text* skillTextSprite_;
+  Text* unitStatsText_;
+  Text* unitDamageText_;
+  StatBoxListener* listener_;
 
  public:
-  UnitDescriptionBox(Scene* scene, Unit* unit);
+  UnitDescriptionBox(Scene* scene, Board* board);
   ~UnitDescriptionBox() = default;
 
   void render() const override;
-  std::string fillText() const;
-  void updateText() const;
+  //std::string fillText() const;
+  void updateText(Unit* unit) const;
+
+  void show();
+  void hide();
 };

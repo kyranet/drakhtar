@@ -12,7 +12,6 @@
 #include "Structures/Team.h"
 #include "Text.h"
 #include "Utils/Vector2D.h"
-#include "UnitDescriptionBox.h"
 #include "EventListeners/SkillButtonListener.h"
 
 Unit::Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
@@ -29,7 +28,7 @@ Unit::Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
       baseStats_(stats),
       stats_(stats) {
   // Units must be ignored in the mouse raycasts.
-  setTransparent(false);
+  setTransparent(true);
   box->setContent(this);
   const SDL_Color textColor = {255, 255, 255, 0};
   const auto rect = box_->getRect();
@@ -50,12 +49,6 @@ Unit::Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
 
   addChild(healthBar_);
   addChild(healthText_);
-
-  const auto unitDescriptionBox = new UnitDescriptionBox(scene, this);
-  addChild(unitDescriptionBox);
-
-  const auto hoverListener_ = new SkillButtonListener(this, unitDescriptionBox);
-  addEventListener(hoverListener_);
 }
 
 Unit::~Unit() = default;

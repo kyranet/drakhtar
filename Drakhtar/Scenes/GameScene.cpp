@@ -24,6 +24,7 @@
 #include "Structures/Team.h"
 #include "Structures/UnitFactory.h"
 #include "Utils/Constants.h"
+#include "GameObjects/UnitDescriptionBox.h"
 
 auto audio = SDLAudioManager::getInstance();
 
@@ -126,6 +127,9 @@ void GameScene::preload() {
                       Vector2D<int>(static_cast<int>(WIN_WIDTH / 12),
                                     static_cast<int>(WIN_HEIGHT / 8)),
                       team2_->getCommanders()[0], 0);
+
+  const auto unitDescriptionBox = new UnitDescriptionBox(this, board_);
+  addGameObject(unitDescriptionBox);
 
   if (battle_ == 1) {
     const auto tutorialSequence =
