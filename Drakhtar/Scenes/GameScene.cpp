@@ -129,7 +129,6 @@ void GameScene::preload() {
                       team2_->getCommanders()[0], 0);
 
   const auto unitDescriptionBox = new UnitDescriptionBox(this, board_);
-  addGameObject(unitDescriptionBox);
 
   if (battle_ == 1) {
     const auto tutorialSequence =
@@ -143,6 +142,7 @@ void GameScene::preload() {
   addGameObject(battleCryButton);
   addGameObject(heroicStrikeButton);
   addGameObject(enemySkillButton);
+  addGameObject(unitDescriptionBox);
 
   audio->haltMusic();
   if (audio->getDefault()) audio->setMusicVolume(10);

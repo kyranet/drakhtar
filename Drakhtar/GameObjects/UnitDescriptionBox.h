@@ -12,16 +12,13 @@ class Board;
 class UnitDescriptionBox final : public GameObject {
   Text* unitStatsText_;
   Text* unitDamageText_;
-  StatBoxListener* listener_;
+  Board* board_;
+  bool showDamage_;
 
  public:
   UnitDescriptionBox(Scene* scene, Board* board);
   ~UnitDescriptionBox() = default;
 
   void render() const override;
-  //std::string fillText() const;
-  void updateText(Unit* unit) const;
-
-  void show();
-  void hide();
+  void updateText(Unit* unit);
 };

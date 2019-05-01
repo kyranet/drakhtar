@@ -32,11 +32,11 @@ void StatBoxListener::run(const SDL_Event) {
 void StatBoxListener::onHoverStay() {
   Box* box = reinterpret_cast<Box*>(Input::screenMouseToRay());
   if (box->getContent() != nullptr) {
-    statsPanel_->show();
+    statsPanel_->setRenderizable(true);
     statsPanel_->updateText(box->getContent());
   } else {
-    statsPanel_->hide();
+    statsPanel_->setRenderizable(false);
   }
 }
 
-void StatBoxListener::onHoverStop() { statsPanel_->hide(); }
+void StatBoxListener::onHoverStop() { statsPanel_->setRenderizable(false); }

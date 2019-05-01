@@ -53,3 +53,5 @@ void TurnManager::sortUnits() {
     return a->getStats().speed > b->getStats().speed;
   });
 }
+
+Unit* TurnManager::getActiveUnit() { return units_.front(); }
