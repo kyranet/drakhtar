@@ -30,4 +30,7 @@ class PlayerController final : public UnitsController {
   void finish() override;
 
   bool getLocked() const;
+
+  bool canCastSkills();
+  void highlightCells();
 };

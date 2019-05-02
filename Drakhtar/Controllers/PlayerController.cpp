@@ -1,11 +1,14 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "PlayerController.h"
+
 #include <iostream>
+
 #include "Controllers/Handlers/PlayerHandler.h"
 #include "GameObjects/Board.h"
 #include "GameObjects/Box.h"
 #include "GameObjects/Button.h"
+#include "GameObjects/Commanders/Commander.h"
 #include "GameObjects/TurnBar.h"
 #include "GameObjects/Unit.h"
 #include "Managers/GameManager.h"
@@ -62,14 +65,11 @@ void PlayerController::onClickMove(Box* boxClicked) {
         // If there are enemies in range, highlight them, otherwise skip turn
         if (!hasAttacked_ &&
             board_->isEnemyInRange(boxClicked, unit->getStats().attackRange)) {
-          board_->resetCellsToBase();
-          unit->getBox()->setCurrentTexture(TextureInd::ACTIVE);
-          board_->highlightEnemiesInRange(unit->getBox(),
-                                          unit->getStats().attackRange);
+          highlightCells();
           SDLAudioManager::getInstance()->setChannelVolume(30, 0);
           SDLAudioManager::getInstance()->playChannel(4, 0, 0);
         } else {
-          finish();
+          if (!canCastSkills()) finish();
         }
       });
 }
@@ -107,18 +107,16 @@ void PlayerController::onClickAttack(Box* boxClicked) {
   } else if (activeUnit_->getHealth() <= 0) {
     // Unit dies to counter-attack
     currentBox->destroyContent();
-    finish();
+    if (!canCastSkills()) finish();
     return;
   }
 
   if (hasMoved_) {
     // If no actions left, reset and skip turn
-    finish();
+    if (!canCastSkills()) finish();
   } else {
     // Re-highlight board
-    board_->resetCellsToBase();
-    currentBox->setCurrentTexture(TextureInd::ACTIVE);
-    board_->highlightCellsInRange(currentBox, currentStats.moveRange);
+    highlightCells();
   }
 }
 
@@ -126,19 +124,14 @@ void PlayerController::start() {
   UnitsController::start();
   if (!activeUnit_) return UnitsController::finish();
 
-  skipTurnButton_ =
-      new Button(scene_, TextureManager::get("Button-SkipTurn"),
-                 Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT - WIN_HEIGHT / 8),
-                 Vector2D<int>(static_cast<int>(WIN_WIDTH / 10.5),
-                               static_cast<int>(WIN_HEIGHT / 6.75)),
-                 [this]() { finish(); }, " ", "ButtonFont");
+  skipTurnButton_ = new Button(
+      scene_, TextureManager::get("Button-SkipTurn"),
+      Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT - WIN_HEIGHT / 8),
+      Vector2D<int>(static_cast<int>(WIN_WIDTH / 10.5),
+                    static_cast<int>(WIN_HEIGHT / 6.75)),
+      [this]() { finish(); }, " ", "ButtonFont");
   scene_->addGameObject(skipTurnButton_);
-
-  activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
-  board_->highlightCellsInRange(activeUnit_->getBox(),
-                                activeUnit_->getStats().moveRange);
-  board_->highlightEnemiesInRange(activeUnit_->getBox(),
-                                  activeUnit_->getStats().attackRange);
+  highlightCells();
 }
 
 void PlayerController::finish() {
@@ -148,3 +141,34 @@ void PlayerController::finish() {
 }
 
 bool PlayerController::getLocked() const { return locked_; }
+
+bool PlayerController::canCastSkills() {
+  Commander* commander = dynamic_cast<Commander*>(activeUnit_);
+  if (commander != NULL) {
+    for (auto skill : commander->getSkills()) {
+      if (skill->getRemainingCooldown() == 0) {
+        highlightCells();
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+void PlayerController::highlightCells() {
+  // Reset board
+  board_->resetCellsToBase();
+
+  // Highlight active unit
+  activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
+
+  // Highlight movable cells
+  if (!hasMoved_)
+    board_->highlightCellsInRange(activeUnit_->getBox(),
+                                  activeUnit_->getStats().moveRange);
+
+  // Highlight attackable cells
+  if (!hasAttacked_)
+    board_->highlightEnemiesInRange(activeUnit_->getBox(),
+                                    activeUnit_->getStats().attackRange);
+}
