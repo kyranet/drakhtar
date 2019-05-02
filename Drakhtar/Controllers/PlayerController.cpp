@@ -69,6 +69,7 @@ void PlayerController::onClickMove(Box* boxClicked) {
           SDLAudioManager::getInstance()->setChannelVolume(30, 0);
           SDLAudioManager::getInstance()->playChannel(4, 0, 0);
         } else {
+          hasAttacked_ = true;
           if (!canCastSkills()) finish();
         }
       });

@@ -25,6 +25,16 @@ void Skill::cast(GameScene*) {
   active_ = true;
   remainingCooldown_ = cooldown_;
   remainingDuration_ = duration_;
+
+  // If the unit has moved and attacked, and has no other castable skills, end
+  // turn
+  if (caster_->getTeam()->getController()->hasMoved() &&
+      caster_->getTeam()->getController()->hasAttacked()) {
+    for (auto skill : caster_->getSkills()) {
+      if (skill->getRemainingCooldown() == 0) return;
+    }
+    caster_->getTeam()->getController()->finish();
+  }
 }
 
 void Skill::end(GameScene*) {}
