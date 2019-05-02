@@ -53,11 +53,6 @@ std::string RecruitmentStat::fillText() {
   return text;
 }
 
-std::string RecruitmentStat::infoFillText() {
-  std::string info = "-The total amount  you buy will be added to ONE unit";
-  return info;
-}
-
 void RecruitmentStat::updateText() { fillText(); }
 
 RecruitmentStat::~RecruitmentStat() {}

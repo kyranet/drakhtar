@@ -13,7 +13,6 @@ class RecruitmentStat : public GameObject {
   RecruitmentStat(Scene* scene, StoreUnit* controller);
   void render() const override;
   std::string fillText();
-  std::string infoFillText();
   void updateText();
   ~RecruitmentStat();
 };

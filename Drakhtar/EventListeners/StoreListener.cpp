@@ -71,7 +71,7 @@ StoreListener::StoreListener(GameObject* gameObject, std::string type, int cost)
   auto infoBoxText =
       new Text(scene, FontManager::get("Retron2000"),
                {infoBox->getPosition().getX(),
-                infoBox->getPosition().getY() - infoBox->getRect().h / 8},
+                infoBox->getPosition().getY() - infoBox->getRect().h / 15},
                {255, 255, 255, 0}, infoFillText(), infoBox->getRect().w * 0.85);
   infoBox->addChild(infoBoxText);
   infoBox->setRenderizable(false);
@@ -100,19 +100,19 @@ void StoreListener::reset() {
   storeUnit.amountText->setColor({255, 255, 255, 0});
 }
 
-std::string StoreListener::infoFillText() {
-  std::string info =
-      "-After each fight, the surviving units will be conserved, buying will "
-      "increase the number you currently have.\n";
-      "-The total amount you buy will be added to one single unit, giving it "
-      "more attack power and hp. \n";
-  info += "E.g: having 5 archers will multiply archers stats by 5 \n";
-  info +=
-      "-The higher the amount of one unit is, the higher the cost of the next "
-      "one will be. \n";
-  info += "-You can buy up to a certain number for each unit.";
-
-  return info;
+std::string StoreListener::infoFillText() const {
+  return "-After each fight, the surviving units will be conserved, buying "
+         "will "
+         "increase the number you currently have.\n"
+         "-The total amount you buy will be added to one single unit, giving "
+         "it "
+         "more attack power and hp. \n"
+         "E.g: having 5 archers will multiply archers stats by 5 \n"
+         "-The higher the amount of one unit is, the higher the cost of the "
+         "next "
+         "one will be. \n"
+         "-You can buy up to a certain number for each unit.";
+  ;
 }
 
 void StoreListener::onHoverStart() {
