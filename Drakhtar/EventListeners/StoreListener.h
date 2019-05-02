@@ -28,7 +28,7 @@ class StoreListener final : public ListenerOnHover {
   StoreUnit* selectedUnit_ = nullptr;
   RecruitmentStat* stats_ = nullptr;
   int sizeToBuy;
-  //Button* infoIcon = nullptr;
+  // Button* infoIcon = nullptr;
  public:
   StoreListener(GameObject* gameObject, std::string type, int cost);
   ~StoreListener();

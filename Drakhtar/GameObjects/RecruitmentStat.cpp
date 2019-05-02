@@ -31,19 +31,6 @@ RecruitmentStat::RecruitmentStat(Scene* scene, StoreUnit* controller)
   active_ = true;
 }
 
-RecruitmentStat::RecruitmentStat(Scene* scene)
-    : GameObject(scene, TextureManager::get("Reward-Panel"),
-                 Vector2D<int>(WIN_WIDTH * 0.68, WIN_HEIGHT * 0.3),
-                 Vector2D<int>(WIN_WIDTH * 0.38, WIN_HEIGHT * 0.55)) {
-  const auto infoTextSprite =
-      new Text(scene_, FontManager::get("StatsFont"),
-               Vector2D<int>(this->getPosition().getX() + WIN_WIDTH * 0.04,
-                             this->getPosition().getY()),
-               {0, 0, 0, 1}, infoFillText(), this->getRect().w * 0.9);
-  addChild(infoTextSprite);
-  active_ = true;
-}
-
 void RecruitmentStat::render() const {
   if (active_) {
     GameObject::render();
