@@ -11,6 +11,6 @@ Thassa::Thassa(Scene* scene, Texture* texture, Box* box,
 }
 
 void Thassa::attack(Unit* enemy, bool allowsCounter) {
-  Unit::attack(enemy, allowsCounter);
+  Commander::attack(enemy, allowsCounter);
   if (getUnstoppable()) SDLAudioManager::getInstance()->playChannel(9, 0, 1);
 }
