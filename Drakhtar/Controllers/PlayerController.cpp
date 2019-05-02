@@ -145,7 +145,7 @@ bool PlayerController::getLocked() const { return locked_; }
 
 bool PlayerController::canCastSkills() {
   Commander* commander = dynamic_cast<Commander*>(activeUnit_);
-  if (commander != NULL) {
+  if (commander != nullptr) {
     for (auto skill : commander->getSkills()) {
       if (skill->getRemainingCooldown() == 0) {
         highlightCells();
