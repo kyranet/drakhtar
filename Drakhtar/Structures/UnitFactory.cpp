@@ -6,6 +6,7 @@
 #include "GameObjects/Commanders/Sheissah.h"
 #include "GameObjects/Commanders/Thassa.h"
 #include "GameObjects/Commanders/Zamdran.h"
+#include "GameObjects/Commanders/Valar.h"
 #include "GameObjects/Unit.h"
 #include "Managers/TextureManager.h"
 #include "Scenes/Scene.h"
@@ -34,6 +35,10 @@ UnitFactory::UnitFactory(Scene* scene) : scene_(scene) {
   commanderMap["Sheissah"] = SHEISSAH_STATS;
 
   commanderSwitch["Sheissah"] = CommanderType::SHEISSAH;
+
+  commanderMap["BlueValar"] = VALAR_STATS;
+
+  commanderSwitch["BlueValar"] = CommanderType::VALAR;
 }
 
 UnitFactory::~UnitFactory() = default;
@@ -66,6 +71,10 @@ Commander* UnitFactory::newCommander(const std::string& type, Team* team,
     case CommanderType::SHEISSAH:
       commander = new Sheissah(scene_, TextureManager::get(textureName), box,
                                commanderMap[type]);
+      break;
+    case CommanderType::VALAR:
+      commander = new Valar(scene_, TextureManager::get(textureName), box,
+                             commanderMap[type]);
       break;
     default:
       return nullptr;
