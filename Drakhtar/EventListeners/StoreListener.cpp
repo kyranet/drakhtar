@@ -112,7 +112,6 @@ std::string StoreListener::infoFillText() const {
          "next "
          "one will be. \n"
          "-You can buy up to a certain number for each unit.";
-  ;
 }
 
 void StoreListener::onHoverStart() {
