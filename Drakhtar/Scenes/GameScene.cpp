@@ -61,6 +61,11 @@ void GameScene::preload() {
   team1_->addCommander(thassa);
   addGameObject(thassa);
 
+  const auto valar =
+      factory.newCommander("BlueValar", team1_, board_->getBoxAt(0, 6));
+  team1_->addCommander(valar);
+  addGameObject(valar);
+
   auto army = GameManager::getInstance()->getArmy();
   auto typeOrder = GameManager::getInstance()->getTypeOrder();
 

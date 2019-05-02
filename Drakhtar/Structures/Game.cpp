@@ -134,8 +134,7 @@ void Game::load() {
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10})
       ->addAnimation("walk", {11, 12}, 4)
-      ->addAnimation("death", {13, 14, 15, 16, 17})
-      ->setFlip(SDL_FLIP_HORIZONTAL);
+      ->addAnimation("death", {13, 14, 15, 16, 17});
   textures->add("Units-RedValar", "../images/Units/RedValar.png", 5, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10})
