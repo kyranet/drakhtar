@@ -81,7 +81,7 @@ void BattleCry::end(GameScene* scene) {
 ArrowRain::ArrowRain(Commander* caster) : Skill("ArrowRain", 4, 0, caster) {
   description_ =
       "Fire an volley of arrows that deal half damage to enemies in a " +
-      std::to_string(range) + "cells range.";
+      std::to_string(range) + " cells range.";
 }
 
 void ArrowRain::cast(GameScene* scene) {
