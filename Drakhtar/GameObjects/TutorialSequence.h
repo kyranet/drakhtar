@@ -10,6 +10,8 @@ class Font;
 
 class TutorialSequence final : public Sequence {
   std::queue<TutorialBox*> tutorials_;
+  int tutorialLenght = 0;
+  int counter = 0;
   void readFromFile(const std::string& filename, Font* textFont,
                     SDL_Rect tutorialArea, SDL_Rect dialogueBackground);
   static TutorialSequence* instance_;
@@ -22,4 +24,5 @@ class TutorialSequence final : public Sequence {
 
   void next() override;
   void skip() override;
+  void update() override;
 };

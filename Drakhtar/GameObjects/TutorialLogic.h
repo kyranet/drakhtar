@@ -6,5 +6,8 @@
 
 class TutorialLogic : public Sequence {
  public:
-  void changeToNextTutorial(int counter);
+  static bool tutorialEnded(int counter, int tutorialLenght);
+
+  static void changeToNextTutorial();
+  static void updateCounter(int counter, int tutorialLenght);
 };

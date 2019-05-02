@@ -5,6 +5,7 @@
 #include "Errors/DrakhtarError.h"
 #include "EventListeners/TutorialSceneOnClick.h"
 #include "GameObjects/Button.h"
+#include "GameObjects/TutorialLogic.h"
 #include "Managers/FontManager.h"
 #include "Managers/TextureManager.h"
 #include "Scenes/Scene.h"
@@ -66,6 +67,7 @@ void TutorialSequence::readFromFile(const std::string& filename, Font* textFont,
 
   size_t lines;
   file >> lines;
+  tutorialLenght = lines;
 
   for (size_t i = 0; i < lines && !file.eof(); i++) {
     tutorials_.push(new TutorialBox(scene_, file, textFont, tutorialArea,
@@ -86,6 +88,13 @@ void TutorialSequence::next() {
 
 void TutorialSequence::skip() {
   getScene()->processNextTick([this]() { destroy(); });
+}
+
+void TutorialSequence::update() {
+  /*GameObject::update();
+  TutorialLogic::updateCounter(counter, tutorialLenght);
+  if (TutorialLogic::tutorialEnded(counter, tutorialLenght))
+    TutorialLogic::changeToNextTutorial();*/
 }
 
 void TutorialSequence::render() const {
