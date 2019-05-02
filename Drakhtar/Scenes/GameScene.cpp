@@ -154,13 +154,11 @@ void GameScene::preload() {
 }
 
 void GameScene::pause() {
-  if (tutorialIsOver()) {
-    if (!isPaused()) {
-      Scene::pause();
-      pauseInterface = new Pause(this);
-      addGameObject(pauseInterface);
-      audio->playChannel(7, 0, 0);
-    }
+  if (!isPaused()) {
+    Scene::pause();
+    pauseInterface = new Pause(this);
+    addGameObject(pauseInterface);
+    audio->playChannel(7, 0, 0);
   }
 }
 
