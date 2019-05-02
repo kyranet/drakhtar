@@ -267,6 +267,8 @@ void Game::load() {
                 1);
   textures->add("Cancel-Button", "../images/Recruitment/cancel_Button.png", 1,
                 1);
+  textures->add("Coin-Anim", "../images/Recruitment/coin_rot_anim.png", 6,
+                1);
 
   auto fonts = FontManager::getInstance();
   textures->init();
@@ -328,6 +330,7 @@ void Game::load() {
   audio->loadSound(9, "../audio/sound/Unit-sounds/Heroes/Thassa/hittingwithHeroicStrike.mp3");
   audio->loadSound(10, "../audio/sound/Unit-sounds/Heroes/Thassa/battleCrySound.mp3");
   audio->loadSound(11, "../audio/sound/Unit-sounds/Heroes/Zamdran/ArrowRainSkill.mp3");
+  audio->loadSound(12, "../audio/sound/UI-sounds/coin.wav");
 
   sceneMachine_ = new SceneMachine();
   sceneMachine_->pushScene(new MenuScene());
