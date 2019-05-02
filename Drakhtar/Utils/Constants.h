@@ -14,106 +14,48 @@ const int GAME_FRAMERATE = 60;
  have
  * \ataque		10
         defensa		10
-        hp			10
+        Maxhp			10
         attackrange	1
         moverange	3
         speed		4
         Base price	20
  * \Mage: Squishy glass cannon that deals good damage but dies very fast
-   \Knight: Quick unit to burst through ranged units, fails to kill melee units fast
-   \Archer: Longest ranged unit, attacks to up to 3 cells of distance, can kite golems well
-   \Monster: A tank that hits hard if you step into his zone,defends key zones very well
+   \Knight: Quick unit to burst through ranged units, fails to kill melee units
+    fast
+   \Archer: Longest ranged unit, attacks to up to 3 cells of distance, can
+    kite golems well \Monster: A tank that hits hard if you step into his
+    zone,defends key zones very well
    \Soldier: A little good in everything, can serve for various purposes
  */
+struct UnitStats {
+  int attack;
+  int defense;
+  int maxHealth;
+  int attackRange;
+  int moveRange;
+  int speed;
+  int prize;
+};
 
 // Thassa
-const auto thassaAttack = 35;
-const auto thassaDefense = 35;  // Percent
-const auto thassaHealth = 180;
-const auto thassaAttackRange = 1;
-const auto thassaMoveRange = 3;  // 10;
-const auto thassaSpeed = 5;
-const auto thassaPrice = 100;
+const UnitStats THASSA_STATS = {35, 35, 150, 1, 3, 5, 100};
 // Zamdran
-const auto zamdranAttack = 35;
-const auto zamdranDefense = 10;  // Percent
-const auto zamdranHealth = 150;
-const auto zamdranAttackRange = 3;
-const auto zamdranMoveRange = 2;
-const auto zamdranSpeed = 6;
-const auto zamdranPrize = 100;
+const UnitStats ZAMDRAN_STATS = {50, 10, 200, 3, 2, 6, 100};
 // Sheissah
-const auto sheissahAttack = 60;
-const auto sheissahDefense = 10;  // Percent
-const auto sheissahHealth = 220;
-const auto sheissahAttackRange = 2;
-const auto sheissahMoveRange = 2;
-const auto sheissahSpeed = 5;
-const auto sheissahPrize = 100;
-// Dreilay
-const auto dreilayAttack = 60;
-const auto dreilayDefense = 10;  // Percent
-const auto dreilayHealth = 220;
-const auto dreilayAttackRange = 2;
-const auto dreilayMoveRange = 2;
-const auto dreilaySpeed = 5;
-const auto dreilayPrize = 100;
-// Abeizhul
-const auto abeizhulAttack = 60;
-const auto abeizhulDefense = 10;  // Percent
-const auto abeizhulHealth = 220;
-const auto abeizhulAttackRange = 2;
-const auto abeizhulMoveRange = 2;
-const auto abeizhulSpeed = 5;
-const auto abeizhulPrize = 100;
-// Valar
-const auto valarAttack = 60;
-const auto valarDefense = 10;  // Percent
-const auto valarHealth = 220;
-const auto valarAttackRange = 2;
-const auto valarMoveRange = 2;
-const auto valarSpeed = 5;
-const auto valarPrize = 100;
-// wizard
-const int wizardAttack = 20;
-const int wizardDefense = 0;  // Percent
-const int wizardHealth = 10;
-const int wizardAttackRange = 2;
-const int wizardMoveRange = 3;  // 3;
-const int wizardSpeed = 6;
-const int wizardPrice = 38/2;
+const UnitStats SHEISSAH_STATS = {60, 10, 220, 2, 2, 5, 100};
+// BlueValar
+const UnitStats VALAR_STATS = {35, 35, 150, 1, 3, 5, 100};
+
+// Mage
+const UnitStats MAGE_STATS = {20, 0, 10, 2, 3, 6, 38 / 2};
 // knight
-const auto knightAttack = 13;
-const auto knightDefense = 30;  // Percent
-const auto knightHealth = 30;
-const auto knightAttackRange = 1;
-const auto knightMoveRange = 5;  // 5;
-const auto knightSpeed = 8;
-const auto knightPrice = 55/2;
+const UnitStats KNIGHT_STATS = {13, 30, 30, 1, 5, 8, 55 / 2};
 // archer
-const auto archerAttack = 8;
-const auto archerDefense = 10;  // Percent
-const auto archerHealth = 10;
-const auto archerAttackRange = 3;
-const auto archerMoveRange = 2;  // 2;
-const auto archerSpeed = 4;
-const auto archerPrice = 26/2;
+const UnitStats ARCHER_STATS = {6, 10, 9, 3, 2, 4, 26 / 2};
 // soldier
-const auto soldierAttack = 8;
-const auto soldierDefense = 25;  // Percent
-const auto soldierHealth = 12;
-const auto soldierAttackRange = 1;
-const auto soldierMoveRange = 3;  // 3;
-const auto soldierSpeed = 5;
-const auto soldierPrice = 28/2;
+const UnitStats SOLDIER_STATS = {8, 25, 12, 1, 3, 5, 28 / 2};
 // monster
-const auto monsterAttack = 15;
-const auto monsterDefense = 50;  // Percent
-const auto monsterHealth = 85;
-const auto monsterAttackRange = 1;
-const auto monsterMoveRange = 2;  // 2;
-const auto monsterSpeed = 3;
-const auto monsterPrice = 125/2;
+const UnitStats MONSTER_STATS = {19, 50, 85, 1, 2, 3, 125 / 2};
 
 enum class KeyboardKey {
   UNKNOWN = SDL_SCANCODE_UNKNOWN,
