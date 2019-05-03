@@ -67,6 +67,9 @@ bool Board::isInRange(Box *from, Box *to, const int range) const {
 
 bool Board::isInMoveRange(Box *from, Box *to, const int range) const {
   auto path = findPath(from->getIndex(), to->getIndex());
+  if (path.size() == 1) {
+    return false;
+  }
   return range >= static_cast<const int>(path.size() - 1);
 }
 

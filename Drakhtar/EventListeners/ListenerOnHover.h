@@ -11,6 +11,7 @@
  * must be extended.
  */
 class ListenerOnHover : public EventListener {
+ protected:
   /**
    * \brief Whether or not the player is hovering a game object for this
    * instance.
