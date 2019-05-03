@@ -10,18 +10,9 @@
 #include "Structures/Game.h"
 #include "Structures/Team.h"
 
-Commander::Commander(const std::string& name, Scene* scene, Texture* texture,
-                     Box* box, const UnitStats commanderStats)
-    : Unit(scene, texture, box, commanderStats, name) {
-  const auto rect = box_->getRect();
-
-  commanderIcon_ =
-      new GameObject(scene, TextureManager::get("UI-commanderIcon"),
-                     Vector2D<int>(rect.x, rect.y - rect.h / 3),
-                     Vector2D<int>(rect.h / 1.5, rect.h / 1.5));
-
-  addChild(commanderIcon_);
-}
+Commander::Commander(std::string name, Scene* scene, Texture* texture, Box* box,
+                     const UnitStats commanderStats)
+    : Unit(scene, texture, box, commanderStats, name) {}
 
 Commander::~Commander() {
   for (auto skill : skills_) {
@@ -83,4 +74,16 @@ void Commander::attack(Unit* enemy, bool allowsCounter) {
     allowsCounter = false;
   }
   Unit::attack(enemy, allowsCounter);
+}
+
+void Commander::setHealthBar() {
+  Unit::setHealthBar();
+  const auto rect = box_->getRect();
+
+  commanderIcon_ =
+      new GameObject(scene_, TextureManager::get("UI-commanderIcon"),
+                     Vector2D<int>(rect.x, rect.y - rect.h / 3),
+                     Vector2D<int>(rect.h / 2, rect.h / 2));
+
+  addChild(commanderIcon_);
 }

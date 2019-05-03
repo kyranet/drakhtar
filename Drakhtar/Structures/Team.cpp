@@ -1,7 +1,9 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Team.h"
+
 #include <algorithm>
+
 #include "Controllers/UnitsController.h"
 #include "Errors/TeamedUnitError.h"
 #include "GameObjects/Commanders/Commander.h"
@@ -19,10 +21,8 @@ void Team::addUnit(Unit* unit) {
   }
   units_.push_back(unit);
   unit->setTeam(this);
-  if (color_ == Color::BLUE) {
-    unit->setAlliedHealthBar();
-  }
-  }
+  unit->setHealthBar();
+}
 
 void Team::removeUnit(Unit* unit) {
   for (auto it = units_.begin(), end = units_.end(); it != end; ++it) {

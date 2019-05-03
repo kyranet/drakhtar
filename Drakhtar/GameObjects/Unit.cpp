@@ -31,8 +31,25 @@ Unit::Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
   // Units must be ignored in the mouse raycasts.
   setTransparent(true);
   box->setContent(this);
-  const SDL_Color textColor = {255, 255, 255, 0};
+}
+
+Unit::~Unit() = default;
+
+void Unit::setHealthBar() {
   const auto rect = box_->getRect();
+  if (getTeam()->getColor() == Color::RED) {
+    healthBar_ = new HealthBar(
+        scene_, Vector2D<int>(rect.x + rect.w / 2, rect.y - rect.h / 3),
+        baseStats_.maxHealth, Color::RED);
+  } else {
+    healthBar_ = new HealthBar(
+        scene_, Vector2D<int>(rect.x + rect.w / 2, rect.y - rect.h / 3),
+        baseStats_.maxHealth, Color::BLUE);
+  }
+  healthBar_->setTransparent(true);
+  addChild(healthBar_);
+
+  const SDL_Color textColor = {255, 255, 255, 0};
 
   if (type == "Thassa" || type == "Zamdran" || type == "Sheissah" ||
       type == "Abeizhul" || type == "Dreilay") {
@@ -41,26 +58,15 @@ Unit::Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
   }
 
   healthText_ =
-      new Text(scene, FontManager::get("UnitFont"),
+      new Text(scene_, FontManager::get("UnitFont"),
                {rect.x + rect.w / 2 + rect.w / 14, rect.y - rect.h / 3},
                textColor, healthToString(), rect.w * 2);
-   healthBar_ = new HealthBar(
-        scene, Vector2D<int>(rect.x + rect.w / 2, rect.y - rect.h / 3),
-        baseStats_.maxHealth, Color::RED);
- 
+
   healthText_->setColor(textColor);
 
   healthText_->setTransparent(true);
-  healthBar_->setTransparent(true);
 
-  addChild(healthBar_);
   addChild(healthText_);
-}
-
-Unit::~Unit() = default;
-
-void Unit::setAlliedHealthBar() {
-  healthBar_->setTexture(TextureManager::get("UI-healthBar_blue"));
 }
 
 void Unit::moveToBox(Box* newBox) {

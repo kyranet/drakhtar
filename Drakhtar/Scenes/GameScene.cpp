@@ -60,6 +60,7 @@ void GameScene::preload() {
   const auto thassa =
       factory.newCommander("Thassa", team1_, board_->getBoxAt(0, 0));
   team1_->addCommander(thassa);
+  thassa->setHealthBar();
   addGameObject(thassa);
 
   if (battle_ == 1) {
@@ -211,6 +212,7 @@ void GameScene::readLevel(UnitFactory& factory) {
         "File is not a level file or the captain is not implemented");
 
   team2_->addCommander(commander);
+  commander->setHealthBar();
   addGameObject(commander);
   while (!file.eof()) {
     std::string unitType;

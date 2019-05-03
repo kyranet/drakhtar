@@ -2,6 +2,7 @@
 
 #pragma once
 #include <string>
+
 #include "Unit.h"
 
 class Scene;
@@ -22,6 +23,8 @@ class Battalion final : public Unit {
 
   int getBattalionSize() const { return battalionSize_; }
   void setBattalionSize(int battalionSize);
+
+  virtual void setHealthBar() override;
 
   int getAttack() const;
   int getDefense() const override;

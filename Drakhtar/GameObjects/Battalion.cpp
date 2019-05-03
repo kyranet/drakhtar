@@ -25,7 +25,11 @@ Battalion::Battalion(Scene* scene, Texture* texture, Box* box,
   stats_.prize = baseStats_.prize * battalionSize_;
   health_ = stats_.maxHealth;
   minDamage_ = battalionSize_;
+}
 
+void Battalion::setHealthBar() {
+  Unit::setHealthBar();
+  healthBar_->setMaxHP(baseStats_.maxHealth * battalionSize_);
   const SDL_Color textColor = {255, 255, 255, 0};
   const SDL_Color sizeColor = {0, 0, 255, 0};
 
@@ -33,7 +37,7 @@ Battalion::Battalion(Scene* scene, Texture* texture, Box* box,
 
   const auto rect = box_->getRect();
 
-  sizeText_ = new Text(scene, FontManager::get("TutorialFont"),
+  sizeText_ = new Text(scene_, FontManager::get("TutorialFont"),
                        {rect.x + rect.h / 6, rect.y - rect.h / 3}, textColor,
                        sizeToString(), rect.w * 2);
 
@@ -42,8 +46,6 @@ Battalion::Battalion(Scene* scene, Texture* texture, Box* box,
   healthText_->setColor(textColor);
 
   sizeText_->setColor(sizeColor);
-
-  healthBar_->setMaxHP(baseStats_.maxHealth * battalionSize);
 }
 
 Battalion::~Battalion() = default;
