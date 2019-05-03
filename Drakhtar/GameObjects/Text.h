@@ -21,4 +21,5 @@ class Text : public GameObject {
                int lineJumpLimit = 250);
   void setColor(const SDL_Color& color);
   void render() const override;
+  void render(SDL_Rect rect) const override;
 };
