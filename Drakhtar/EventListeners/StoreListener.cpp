@@ -39,8 +39,7 @@ StoreListener::StoreListener(GameObject* gameObject, std::string type, int cost)
         }
       },
       "-", "SkillButtonFont");
-  minusButton->setColor({0, 0, 255, 0});
-
+  minusButton->setColor({0, 0, 0, 0});
   gameObject->addChild(minusButton);
 
   auto plusButton = new Button(
@@ -61,7 +60,7 @@ StoreListener::StoreListener(GameObject* gameObject, std::string type, int cost)
         }
       },
       "+", "SkillButtonFont");
-  plusButton->setColor({255, 0, 0, 0});
+  plusButton->setColor({0, 0, 0, 0});
   gameObject->addChild(plusButton);
 
   auto infoBox =
@@ -71,7 +70,7 @@ StoreListener::StoreListener(GameObject* gameObject, std::string type, int cost)
   auto infoBoxText =
       new Text(scene, FontManager::get("Retron2000"),
                {infoBox->getPosition().getX(),
-                infoBox->getPosition().getY() - infoBox->getRect().h / 15},
+                infoBox->getPosition().getY() - infoBox->getRect().h / 50},
                {255, 255, 255, 0}, infoFillText(), infoBox->getRect().w * 0.85);
   infoBox->addChild(infoBoxText);
   infoBox->setRenderizable(false);
@@ -102,16 +101,15 @@ void StoreListener::reset() {
 
 std::string StoreListener::infoFillText() const {
   return "-After each fight, the surviving units will be conserved, buying "
-         "will "
-         "increase the number you currently have.\n"
+         "will increase the number you currently have.\n"
          "-The total amount you buy will be added to one single unit, giving "
-         "it "
-         "more attack power and hp. \n"
+         "it more attack power and hp. \n"
          "E.g: having 5 archers will multiply archers stats by 5 \n"
          "-The higher the amount of one unit is, the higher the cost of the "
-         "next "
-         "one will be. \n"
-         "-You can buy up to a certain number for each unit.";
+         "next one will be. \n"
+         "-You can buy up to a certain number for each unit. \n"
+         "-Matches are turn based, between ally and enemy units altogether, "
+         "higher the speed, higher turn priority.";
 }
 
 void StoreListener::onHoverStart() {
