@@ -14,10 +14,11 @@
 #include "Text.h"
 #include "Unit.h"
 
-UnitDescriptionBox::UnitDescriptionBox(Scene* scene, Board* board)
+UnitDescriptionBox::UnitDescriptionBox(Scene* scene, Board* board,
+                                       TurnManager* turnManager)
     : GameObject(scene, TextureManager::get("Reward-Panel"),
                  Vector2D<int>(0, 0), Vector2D<int>(0, 0)),
-      board_(board) {
+      board_(board), turnManager_(turnManager) {
   setTransparent(true);
   setRenderizable(false);
 
@@ -74,8 +75,7 @@ void UnitDescriptionBox::updateText(Unit* unit) {
 
   unitStatsText_->setText(text);
 
-  Unit* activeUnit =
-      unit->getTeam()->getController()->getTurnManager()->getActiveUnit();
+  Unit* activeUnit = turnManager_->getActiveUnit();
 
   showDamage_ = board_->isInRange(activeUnit->getBox(), unit->getBox(),
                                  activeUnit->getStats().attackRange) &&

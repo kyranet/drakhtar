@@ -54,4 +54,6 @@ void TurnManager::sortUnits() {
   });
 }
 
-Unit* TurnManager::getActiveUnit() { return units_.front(); }
+Unit* TurnManager::getActiveUnit() {
+  return units_[position_];
+}

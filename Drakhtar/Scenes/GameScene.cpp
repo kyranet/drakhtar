@@ -128,7 +128,7 @@ void GameScene::preload() {
                                     static_cast<int>(WIN_HEIGHT / 8)),
                       team2_->getCommanders()[0], 0);
 
-  const auto unitDescriptionBox = new UnitDescriptionBox(this, board_);
+  const auto unitDescriptionBox = new UnitDescriptionBox(this, board_, turnBar->getTurnManager());
 
   if (battle_ == 1) {
     const auto tutorialSequence =
