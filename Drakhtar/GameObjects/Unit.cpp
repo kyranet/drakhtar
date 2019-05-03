@@ -44,7 +44,7 @@ Unit::Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
 
   healthText_->setColor(textColor);
 
-  healthText_->setTransparent(false);
+  healthText_->setTransparent(true);
   healthBar_->setTransparent(true);
 
   addChild(healthBar_);
