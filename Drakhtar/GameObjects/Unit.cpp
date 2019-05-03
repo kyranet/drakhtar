@@ -12,6 +12,7 @@
 #include "Structures/Team.h"
 #include "Text.h"
 #include "Utils/Vector2D.h"
+#include "EventListeners/SkillButtonListener.h"
 
 Unit::Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
            const std::string& type)

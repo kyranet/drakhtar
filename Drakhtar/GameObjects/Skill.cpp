@@ -11,7 +11,6 @@
 #include "Commanders/Commander.h"
 #include "GameObjects/Board.h"
 #include "GameObjects/Box.h"
-#include "GameObjects/HealthBar.h"
 #include "Managers/SDLAudioManager.h"
 
 Skill::Skill(std::string id, int cooldown, int duration, Commander* caster)
@@ -59,6 +58,10 @@ void BattleCry::cast(GameScene* scene) {
     SDLAudioManager::getInstance()->playChannel(10, 0, 1);
     // Update turn priority
     caster_->getTeam()->getController()->getTurnManager()->sortUnits();
+    if (!caster_->getTeam()->getController()->hasMoved()) {
+      scene->getBoard()->highlightCellsInRange(caster_->getBox(),
+                                               caster_->getStats().moveRange);
+    }
   }
 }
 
