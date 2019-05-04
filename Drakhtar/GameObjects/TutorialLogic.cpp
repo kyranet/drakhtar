@@ -14,3 +14,10 @@ void TutorialLogic::updateCounter(int counter, int tutorialLenght) {
   else
     counter = 0;
 }
+
+bool TutorialLogic::firstTutorialEnded() {
+  if (TutorialSequence::getCounter() == 1)
+    return true;
+  else
+    return false;
+}

@@ -91,10 +91,10 @@ void TutorialSequence::skip() {
 }
 
 void TutorialSequence::update() {
-  /*GameObject::update();
+  GameObject::update();
   TutorialLogic::updateCounter(counter, tutorialLenght);
   if (TutorialLogic::tutorialEnded(counter, tutorialLenght))
-    TutorialLogic::changeToNextTutorial();*/
+    TutorialLogic::changeToNextTutorial();
 }
 
 void TutorialSequence::render() const {
@@ -103,3 +103,5 @@ void TutorialSequence::render() const {
     tutorials_.front()->render();
   }
 }
+
+int TutorialSequence::getCounter() { return counter; }

@@ -10,6 +10,7 @@
 #include "GameObjects/Button.h"
 #include "GameObjects/Commanders/Commander.h"
 #include "GameObjects/TurnBar.h"
+#include "GameObjects/TutorialLogic.h"
 #include "GameObjects/Unit.h"
 #include "Managers/GameManager.h"
 #include "Managers/Input.h"
@@ -136,12 +137,12 @@ void PlayerController::start() {
     UnitsController::start();
     if (!activeUnit_) return UnitsController::finish();
 
-    skipTurnButton_ = new Button(
-        scene_, TextureManager::get("Button-SkipTurn"),
-        Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT - WIN_HEIGHT / 8),
-        Vector2D<int>(static_cast<int>(WIN_WIDTH / 10.5),
-                      static_cast<int>(WIN_HEIGHT / 6.75)),
-        [this]() { finish(); }, " ", "ButtonFont");
+    skipTurnButton_ =
+        new Button(scene_, TextureManager::get("Button-SkipTurn"),
+                   Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT - WIN_HEIGHT / 8),
+                   Vector2D<int>(static_cast<int>(WIN_WIDTH / 10.5),
+                                 static_cast<int>(WIN_HEIGHT / 6.75)),
+                   [this]() { finish(); }, " ", "ButtonFont");
     scene_->addGameObject(skipTurnButton_);
     highlightCells();
   }
@@ -190,7 +191,7 @@ void PlayerController::highlightCells() {
 
 bool PlayerController::isFirstPlayGame() {
   Commander* commander = dynamic_cast<Commander*>(activeUnit_);
-  /*while (commander->getPosition() != Vector2D<int>(0, 1)) 
+  /*while (commander->getPosition() != Vector2D<int>(0, 1))
   {
     return true;
   }*/
@@ -198,7 +199,7 @@ bool PlayerController::isFirstPlayGame() {
 }
 
 bool PlayerController::isAllowedClick() {
-  if (isFirstPlayGame())
+  if (TutorialLogic::firstTutorialEnded())
     return true;
   else
     return false;
