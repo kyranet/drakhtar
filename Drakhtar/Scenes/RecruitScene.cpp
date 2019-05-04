@@ -149,14 +149,14 @@ void RecruitScene::addUnit(std::string textureName, int position) {
                      Vector2D<int>(WIN_HEIGHT / 6, WIN_HEIGHT / 6));
   const auto unitPrice =
       new Text(this, FontManager::get("DialogFont"),
-               {unit->getPosition().getX() + unit->getRect().w / 4,
+               {unit->getPosition().getX(),
                 unit->getPosition().getY() + unit->getRect().h / 4},
                {0, 0, 0, 0}, std::to_string(costs_[type]), unit->getRect().w);
   unitPrice->setColor({204, 255, 0, 0});
   unit->addChild(unitPrice);
   const auto unitGoldIcon = new GameObject(
       this, TextureManager::get("Coin-Anim"),
-      {unitPrice->getPosition().getX() - unit->getRect().w/2, unitPrice->getPosition().getY()},
+      {unitPrice->getPosition().getX() - unit->getRect().w/4, unitPrice->getPosition().getY()},
       Vector2D<int>(WIN_HEIGHT * 0.05, WIN_HEIGHT * 0.05));
   unit->addChild(unitGoldIcon);
   addGameObject(unit);
