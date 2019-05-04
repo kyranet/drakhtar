@@ -259,7 +259,6 @@ bool GameScene::tutorialIsOver() {
     return true;
   else
     return false;
-  ;
 }
 
 bool GameScene::introductionToDrakhtar() {
