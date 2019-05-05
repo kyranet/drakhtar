@@ -10,5 +10,5 @@ class TutorialLogic : public Sequence {
 
   static void changeToNextTutorial();
   static void updateCounter(int counter, int tutorialLenght);
-  static bool firstTutorialEnded();
+  static bool firstTutorialEnded(int counter);
 };
