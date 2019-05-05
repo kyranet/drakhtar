@@ -17,8 +17,7 @@
 #include "Utils/Constants.h"
 #include "Utils/Vector2D.h"
 
-
-RecruitScene::RecruitScene(int currentScene): currentScene_(currentScene) {}
+RecruitScene::RecruitScene(int currentScene) : currentScene_(currentScene) {}
 
 void RecruitScene::preload() {
   costs_["Soldier"] = 28;
@@ -55,14 +54,11 @@ void RecruitScene::preload() {
   addUnit("Units-BlueSoldier", 1);
   addUnit("Units-BlueArcher", 2);
 
-  if (currentScene_ >= 2)
-    addUnit("Units-BlueMage", 3);
+  if (currentScene_ >= 2) addUnit("Units-BlueMage", 3);
 
-  if (currentScene_ >= 3)
-    addUnit("Units-BlueKnight", 4);
+  if (currentScene_ >= 3) addUnit("Units-BlueKnight", 4);
 
-  if (currentScene_ >= 4)
-    addUnit("Units-BlueMonster", 5);
+  if (currentScene_ >= 4) addUnit("Units-BlueMonster", 5);
 
   addGameObject(totalCostText_);
   addGameObject(moneyText_);
@@ -108,8 +104,8 @@ void RecruitScene::preload() {
       Vector2D<int>(static_cast<int>(WIN_WIDTH / 4), WIN_HEIGHT / 6),
       [this]() {
         reset();
-                   Game::getSceneMachine()->changeScene(
-                       new TransitionScene(currentScene_));
+        Game::getSceneMachine()->changeScene(
+            new TransitionScene(currentScene_));
       },
       "Play", "ButtonFont");
 

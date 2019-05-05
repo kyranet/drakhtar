@@ -29,7 +29,7 @@ class RecruitScene final : public Scene {
   void reset();
 
  public:
-  RecruitScene(int currentScene);
+  explicit RecruitScene(int currentScene);
   void preload() override;
   int getCost(const std::string& type);
   int getTotalCost() const { return totalCost_; }
