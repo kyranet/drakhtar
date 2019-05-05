@@ -11,7 +11,6 @@
 class Unit;
 class Text;
 class RecruitmentStat;
-
 struct StoreUnit {
   std::string type;
   GameObject* unit = nullptr;
@@ -38,6 +37,7 @@ class StoreListener final : public ListenerOnHover {
   void onHoverStop() override;
 
   void reset();
+  std::string infoFillText() const;
 
   const StoreUnit& getStoreUnit() const { return storeUnit; }
 };

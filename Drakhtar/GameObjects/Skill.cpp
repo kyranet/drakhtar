@@ -9,9 +9,9 @@
 #include "../Managers/TurnManager.h"
 #include "../Structures/Team.h"
 #include "Commanders/Commander.h"
-#include "GameObjects/HealthBar.h"
-#include "Managers/SDLAudioManager.h"
+#include "GameObjects/Board.h"
 #include "GameObjects/Box.h"
+#include "Managers/SDLAudioManager.h"
 
 Skill::Skill(std::string id, int cooldown, int duration, Commander* caster)
     : id_(std::move(id)),
@@ -24,6 +24,16 @@ void Skill::cast(GameScene*) {
   active_ = true;
   remainingCooldown_ = cooldown_;
   remainingDuration_ = duration_;
+
+  // If the unit has moved and attacked, and has no other castable skills, end
+  // turn
+  if (caster_->getTeam()->getController()->hasMoved() &&
+      caster_->getTeam()->getController()->hasAttacked()) {
+    for (auto skill : caster_->getSkills()) {
+      if (skill->getRemainingCooldown() == 0) return;
+    }
+    caster_->getTeam()->getController()->finish();
+  }
 }
 
 void Skill::end(GameScene*) {}
@@ -48,6 +58,10 @@ void BattleCry::cast(GameScene* scene) {
     SDLAudioManager::getInstance()->playChannel(10, 0, 1);
     // Update turn priority
     caster_->getTeam()->getController()->getTurnManager()->sortUnits();
+    if (!caster_->getTeam()->getController()->hasMoved()) {
+      scene->getBoard()->highlightCellsInRange(caster_->getBox(),
+                                               caster_->getStats().moveRange);
+    }
   }
 }
 
@@ -69,19 +83,23 @@ void BattleCry::end(GameScene* scene) {
 // ---------- ARROW RAIN ----------
 ArrowRain::ArrowRain(Commander* caster) : Skill("ArrowRain", 4, 0, caster) {
   description_ =
-      "Fire an volley of arrows that deal half damage to ALL enemies in the "
-      "battlefield";
+      "Fire an volley of arrows that deal half damage to enemies in a " +
+      std::to_string(range) + " cells range.";
 }
 
 void ArrowRain::cast(GameScene* scene) {
   if (remainingCooldown_ == 0 && caster_->getMoving()) {
     Skill::cast(scene);
     SDLAudioManager::getInstance()->playChannel(11, 0, 1);
-    // Caster deals half damage to every enemy unit
+
+    // Caster deals half damage to every enemy unit in range
     for (auto unit : scene->getEnemyTeam(caster_)->getUnits()) {
-      unit->loseHealth(caster_->getStats().attack / 2, 1);
-      if (unit->getHealth() <= 0) {
-        unit->getBox()->destroyContent();
+      if (scene->getBoard()->isInRange(caster_->getBox(), unit->getBox(),
+                                       range)) {
+        unit->loseHealth(caster_->getStats().attack / 2, 1);
+        if (unit->getHealth() <= 0) {
+          unit->getBox()->destroyContent();
+        }
       }
     }
     end(scene);

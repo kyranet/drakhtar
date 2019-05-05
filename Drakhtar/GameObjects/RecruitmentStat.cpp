@@ -14,20 +14,19 @@
 #include "Structures/UnitFactory.h"
 #include "Text.h"
 
-RecruitmentStat::RecruitmentStat(Scene* scene,
-                                 StoreUnit* controller)
+RecruitmentStat::RecruitmentStat(Scene* scene, StoreUnit* controller)
     : GameObject(scene, TextureManager::get("Reward-Panel"),
-                 Vector2D<int>(WIN_WIDTH * 0.68, WIN_HEIGHT * 0.3),
-                 Vector2D<int>(WIN_WIDTH * 0.38, WIN_HEIGHT * 0.5)),
+                 Vector2D<int>(WIN_WIDTH * 0.68, WIN_HEIGHT * 0.25),
+                 Vector2D<int>(WIN_WIDTH * 0.40, WIN_HEIGHT * 0.45)),
       currentSelected_(controller) {
   auto pos = currentSelected_->unit->getPosition();
 
   std::string statText_ = fillText();
-  const auto statTextSprite = new Text(
-      scene_, FontManager::get("StatsFont"),
-      Vector2D<int>(this->getPosition().getX() + WIN_WIDTH * 0.04,
-                    this->getPosition().getY()),
-      {0, 0, 0, 1}, statText_, this->getRect().w * 0.9);
+  const auto statTextSprite =
+      new Text(scene_, FontManager::get("StatsFont"),
+               Vector2D<int>(this->getPosition().getX() + WIN_WIDTH * 0.04,
+                             this->getPosition().getY()),
+               {0, 0, 0, 1}, statText_, this->getRect().w * 0.9);
   addChild(statTextSprite);
   active_ = true;
 }
@@ -50,6 +49,7 @@ std::string RecruitmentStat::fillText() {
   text += "Speed-> " + std::to_string(stats.speed) + "\n";
   text += "Attack range-> " + std::to_string(stats.attackRange) + "\n";
   text += "Move range-> " + std::to_string(stats.moveRange) + "\n";
+  text += "Prize-> " + std::to_string(stats.prize * 2) + "\n";
   return text;
 }
 

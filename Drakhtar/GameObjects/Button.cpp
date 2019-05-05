@@ -14,7 +14,6 @@ Button::Button(Scene* scene, Texture* texture, const Vector2D<int>& pos,
   // Create the text
   const auto buttonText = new ButtonText(scene, text, fontFile, size, pos);
   buttonText->setTransparent(true);
-
   increSize_ = 15;
 
   addChild(buttonText);
@@ -35,6 +34,10 @@ void Button::update() {
   const auto area = getRect();
   hovered_ = Input::isMouseInside(&area);
   GameObject::update();
+}
+
+void Button::setColor(const SDL_Color& color) {
+  reinterpret_cast<ButtonText*>(children_[0])->setColor(color);
 }
 
 SDL_Rect Button::getRect() const {

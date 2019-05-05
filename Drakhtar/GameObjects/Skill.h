@@ -45,6 +45,7 @@ class BattleCry final : public Skill {
 };
 
 class ArrowRain final : public Skill {
+  int range = 5;
  public:
   explicit ArrowRain(Commander* caster);
   virtual ~ArrowRain() = default;

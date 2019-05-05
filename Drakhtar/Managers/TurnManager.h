@@ -19,6 +19,7 @@ class TurnManager final {
 
   Unit* getTurnFor() const;
   void sortUnits();
+  Unit* getActiveUnit();
 
   template<size_t N>
   std::array<Unit*, N> getNextUnits() const {

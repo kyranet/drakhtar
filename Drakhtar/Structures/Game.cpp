@@ -134,8 +134,7 @@ void Game::load() {
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10})
       ->addAnimation("walk", {11, 12}, 4)
-      ->addAnimation("death", {13, 14, 15, 16, 17})
-      ->setFlip(SDL_FLIP_HORIZONTAL);
+      ->addAnimation("death", {13, 14, 15, 16, 17});
   textures->add("Units-RedValar", "../images/Units/RedValar.png", 5, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10})
@@ -250,6 +249,10 @@ void Game::load() {
                 1);
   textures->add("Transition-Map3", "../images/Transition/GuerrillaSpecial.png",
                 1, 1);
+  textures->add("Transition-Map4", "../images/Transition/GuerrillaSpecial.png",
+                1, 1);
+  textures->add("Transition-Map5", "../images/Transition/GuerrillaSpecial.png",
+                1, 1);
   textures->add("Transition-Menu", "../images/Transition/Transition_1.png", 4,
                 1);
 
@@ -265,6 +268,8 @@ void Game::load() {
                 1);
   textures->add("Cancel-Button", "../images/Recruitment/cancel_Button.png", 1,
                 1);
+  textures->add("Coin-Anim", "../images/Recruitment/coin_rot_anim.png", 6,
+                1);
 
   auto fonts = FontManager::getInstance();
   textures->init();
@@ -279,7 +284,7 @@ void Game::load() {
   fonts->add("TutorialFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 100,
              WIN_WIDTH);
   fonts->add("UnitFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 120, WIN_WIDTH);
-  fonts->add("StatsFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 37, WIN_WIDTH);
+  fonts->add("StatsFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 45, WIN_WIDTH);
   fonts->add("ButtonFont", "../fonts/AURORA.ttf", WIN_WIDTH / 50, WIN_WIDTH);
   fonts->add("ButtonFontBig", "../fonts/AURORA.ttf", WIN_WIDTH / 20, WIN_WIDTH);
   fonts->init();
@@ -322,15 +327,11 @@ void Game::load() {
   audio->loadSound(5, "../audio/sound/UI-sounds/attackConfirm.mp3");
   audio->loadSound(6, "../audio/sound/UI-sounds/quitButton.mp3");
   audio->loadSound(7, "../audio/sound/UI-sounds/pauseButton.mp3");
-  audio->loadSound(
-      8, "../audio/sound/Unit-sounds/Heroes/Thassa/HeroicStrikeShout.mp3");
-  audio->loadSound(
-      9,
-      "../audio/sound/Unit-sounds/Heroes/Thassa/hittingwithHeroicStrike.mp3");
-  audio->loadSound(
-      10, "../audio/sound/Unit-sounds/Heroes/Thassa/battleCrySound.mp3");
-  audio->loadSound(
-      11, "../audio/sound/Unit-sounds/Heroes/Zamdran/ArrowRainSkill.mp3");
+  audio->loadSound(8, "../audio/sound/Unit-sounds/Heroes/Thassa/HeroicStrikeShout.mp3");
+  audio->loadSound(9, "../audio/sound/Unit-sounds/Heroes/Thassa/hittingwithHeroicStrike.mp3");
+  audio->loadSound(10, "../audio/sound/Unit-sounds/Heroes/Thassa/battleCrySound.mp3");
+  audio->loadSound(11, "../audio/sound/Unit-sounds/Heroes/Zamdran/ArrowRainSkill.mp3");
+  audio->loadSound(12, "../audio/sound/UI-sounds/coin.wav");
 
   sceneMachine_ = new SceneMachine();
   sceneMachine_->pushScene(new MenuScene());

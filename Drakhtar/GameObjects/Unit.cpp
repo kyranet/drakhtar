@@ -12,6 +12,7 @@
 #include "Structures/Team.h"
 #include "Text.h"
 #include "Utils/Vector2D.h"
+#include "EventListeners/SkillButtonListener.h"
 
 Unit::Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
            const std::string& type)
@@ -104,9 +105,16 @@ void Unit::attack(Unit* enemy, const bool allowsCounter) {
   enemy->loseHealth(getStats().attack, minDamage_);
 
   const auto scene = reinterpret_cast<GameScene*>(getScene());
+
+  // If the target is an archer and is in range 1, it can never counter-attack
+  if (enemy->getType() == "Archer" &&
+      scene->getBoard()->isInRange(box_, enemy->getBox(), 1)) {
+    return;
+  }
+
   // If the attack allows a counter and the enemy is
   // alive and within attack range, counter-attack
-  if (allowsCounter && enemy->getStats().maxHealth > 0 &&
+  if (allowsCounter && enemy->getHealth() > 0 &&
       scene->getBoard()->isInRange(box_, enemy->getBox(),
                                    enemy->getStats().attackRange) &&
       !enemy->getHasCounterAttacked()) {

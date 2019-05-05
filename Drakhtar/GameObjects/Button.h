@@ -22,6 +22,7 @@ class Button final : public GameObject {
   void call();
   void render() const override;
   void update() override;
+  void setColor(const SDL_Color& color);
   SDL_Rect getRect() const override;
   SDL_Rect changeRect() const;
 };
