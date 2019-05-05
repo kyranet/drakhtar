@@ -7,6 +7,7 @@ class Button;
 
 class PlayerController final : public UnitsController {
   bool locked_ = false;
+  int tutorial = 0;
   Button* skipTurnButton_ = nullptr;
 
  public:

@@ -82,11 +82,13 @@ void TutorialSequence::readFromFile(const std::string& filename, Font* textFont,
 void TutorialSequence::next() {
   delete tutorials_.front();
   tutorials_.pop();
+  counter++;
 
-  if (tutorials_.empty()) skip();
+  if (tutorials_.empty() || counter == tutorialLenght) skip();
 }
 
 void TutorialSequence::skip() {
+  counter == tutorialLenght;
   getScene()->processNextTick([this]() { destroy(); });
 }
 
