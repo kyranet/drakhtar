@@ -181,7 +181,8 @@ void Game::load() {
   textures->add("Button-BattleCry", "../images/UI/battlecry_icon.png", 1, 1);
   textures->add("Button-BattleCry-disabled",
                 "../images/UI/battlecry_icon_disabled.png", 1, 1);
-  textures->add("Button-HeroicStrike", "../images/UI/heroic_strike_icon.png", 1, 1);
+  textures->add("Button-HeroicStrike", "../images/UI/heroic_strike_icon.png", 1,
+                1);
   textures->add("Button-HeroicStrike-disabled",
                 "../images/UI/heroic_strike_icon_disabled.png", 1, 1);
   textures->add("Button-Enemy-Skill", "../images/UI/enemy_skill_icon.png", 1,
@@ -227,10 +228,11 @@ void Game::load() {
   textures->add("Maps-Test", "../images/Maps/TestMap.png", 1, 1);
   textures->add("Maps-1Battle", "../images/Maps/FirstBattle.png", 4, 1)
       ->addAnimation("default", {0, 1, 2, 3}, 1);
-  textures->add("Maps-2Battle", "../images/Maps/SecondBattle.png", 1, 1);
-  textures->add("Map-3Battle", "../images/Maps/ThirdBattle.png", 1, 1);
-  textures->add("Map-4Battle", "../images/Maps/ThirdBattle.png", 1, 1);
-  textures->add("Map-5Battle", "../images/Maps/ThirdBattle.png", 1, 1);
+  textures->add("Maps-2Battle", "../images/Maps/SecondBattle.png", 4, 1)
+      ->addAnimation("default", {0, 1, 2, 3}, 1);
+  textures->add("Maps-3Battle", "../images/Maps/ThirdBattle.png", 1, 1);
+  textures->add("Maps-4Battle", "../images/Maps/FourthBattle.png", 1, 1);
+  textures->add("Maps-5Battle", "../images/Maps/FifthBattle.png", 1, 1);
 
   // Tutorial images
   textures->add("tutorial-1", "../images/Tutorials/tutorial_1.png", 1, 1);
