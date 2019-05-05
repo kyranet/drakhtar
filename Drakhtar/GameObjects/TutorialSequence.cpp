@@ -20,11 +20,11 @@ TutorialSequence::TutorialSequence(Scene* scene, const std::string& filename,
                Vector2D<int>(1, 1)) {
   const auto tutorialArea_ = getRect();
 
-  auto dialogueBackground = new GameObject(
+  /*auto dialogueBackground = new GameObject(
       scene_, TextureManager::get("UI-tutorialBackground"),
       Vector2D<int>(tutorialArea_.x, tutorialArea_.y - WIN_HEIGHT / 10),
       Vector2D<int>(tutorialArea_.w * WIN_WIDTH / 2,
-                    tutorialArea_.h * WIN_HEIGHT / 1.5));
+                    tutorialArea_.h * WIN_HEIGHT / 1.5));*/
 
   const auto nextButton =
       new Button(scene_, TextureManager::get("Vanilla-Button"),
@@ -39,16 +39,15 @@ TutorialSequence::TutorialSequence(Scene* scene, const std::string& filename,
                                tutorialArea_.y + WIN_HEIGHT / 10),
                  Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT / 19),
                  [this]() { skip(); }, "Close", "ButtonFont");
-  addChild(dialogueBackground);
+
+  //addChild(dialogueBackground);
+  readFromFile("../tutorials/" + filename + ".txt", FontManager::get(fontFile));
+
   addChild(closeButton);
   addChild(nextButton);
 
-
-  readFromFile("../tutorials/" + filename + ".txt", FontManager::get(fontFile),
-               tutorialArea_, dialogueBackground->getRect());
-
-  dialogueBackground->addEventListener(
-      new TutorialSceneOnClick(dialogueBackground));
+  //dialogueBackground->addEventListener(
+    //  new TutorialSceneOnClick(dialogueBackground));
 }
 
 TutorialSequence::~TutorialSequence() {
@@ -58,20 +57,17 @@ TutorialSequence::~TutorialSequence() {
   }
 }
 
-void TutorialSequence::readFromFile(const std::string& filename, Font* textFont,
-                                    SDL_Rect tutorialArea,
-                                    SDL_Rect dialogueBackground) {
+void TutorialSequence::readFromFile(const std::string& filename, Font* textFont) {
   std::ifstream file;
   file.open(filename);
   if (!file.is_open()) throw DrakhtarError("Could not find file");
 
   size_t lines;
   file >> lines;
-  tutorialLenght = lines;
+  tutorialLength = lines;
 
   for (size_t i = 0; i < lines && !file.eof(); i++) {
-    tutorials_.push(new TutorialBox(scene_, file, textFont, tutorialArea,
-                                    dialogueBackground));
+    tutorials_.push(new TutorialBox(scene_, file, textFont));
   }
 
   file.close();
@@ -84,18 +80,18 @@ void TutorialSequence::next() {
   tutorials_.pop();
   counter++;
 
-  if (tutorials_.empty() || counter == tutorialLenght) skip();
+  if (tutorials_.empty() || counter == tutorialLength) skip();
 }
 
 void TutorialSequence::skip() {
-  counter == tutorialLenght;
+  counter == tutorialLength;
   getScene()->processNextTick([this]() { destroy(); });
 }
 
 void TutorialSequence::update() {
   GameObject::update();
-  TutorialLogic::updateCounter(counter, tutorialLenght);
-  if (TutorialLogic::tutorialEnded(counter, tutorialLenght))
+  TutorialLogic::updateCounter(counter, tutorialLength);
+  if (TutorialLogic::tutorialEnded(counter, tutorialLength))
     TutorialLogic::changeToNextTutorial();
 }
 

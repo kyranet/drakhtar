@@ -13,9 +13,11 @@ class TutorialSequence;
 class TutorialBox : public GameObject {
   std::string imageText_;
   std::string dialogText_;
+  std::string renderizable;
+  int posX, posY;
 
  public:
-  TutorialBox(Scene *scene, std::ifstream &file, Font *textFont,
-              SDL_Rect tutorialArea, SDL_Rect dialogueBackground);
+  TutorialBox(Scene *scene, std::ifstream &file, Font *textFont);
   void readFromFile(std::ifstream &file);
+  bool getVisible();
 };
