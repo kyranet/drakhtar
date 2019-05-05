@@ -32,7 +32,23 @@ TutorialBox::TutorialBox(Scene *scene, std::ifstream &file, Font *textFont)
       scene_, TextureManager::get("UI-tutorialBackground"),
       Vector2D<int>(posX, posY),
       Vector2D<int>(640, 480));
-  
+
+  const auto nextButton = new Button(
+      scene_, TextureManager::get("Vanilla-Button"),
+      Vector2D<int>(
+          dialogueBackgroundBox->getPosition().getX() - WIN_WIDTH / 10,
+          dialogueBackgroundBox->getPosition().getY() + WIN_HEIGHT / 6),
+      Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT / 19), [this]() { },
+      " ", "ButtonFont");
+
+  const auto closeButton = new Button(
+      scene_, TextureManager::get("Vanilla-Button"),
+      Vector2D<int>(
+          dialogueBackgroundBox->getPosition().getX() + WIN_WIDTH / 10,
+          dialogueBackgroundBox->getPosition().getY() + WIN_HEIGHT / 6),
+      Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT / 19), [this]() { },
+      " ", "ButtonFont");
+
   tutorialTextSprite->setColor(textColor);
   tutorialTextSprite->setText(dialogText_, textColor, lineJumpLimit);
   tutorialTextSprite->setPosition({posX, posY + 50});
@@ -40,6 +56,8 @@ TutorialBox::TutorialBox(Scene *scene, std::ifstream &file, Font *textFont)
   addChild(dialogueBackgroundBox);
   addChild(tutorialImage);
   addChild(tutorialTextSprite);
+  addChild(nextButton);
+  addChild(closeButton);
   dialogueBackgroundBox->addEventListener(
     new TutorialSceneOnClick(dialogueBackgroundBox));
 }
@@ -64,4 +82,3 @@ bool TutorialBox::getVisible() {
   if (renderizable == "renderizable") return true;
   else return false;
 }
-

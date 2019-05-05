@@ -131,12 +131,6 @@ void GameScene::preload() {
 
   const auto unitDescriptionBox = new UnitDescriptionBox(this, board_, turnBar->getTurnManager());
 
-  if (battle_ == 1) {
-    const auto tutorialSequence =
-        new TutorialSequence(this, "tutorials", "TutorialFont");
-    addGameObject(tutorialSequence);
-  }
-
   addGameObject(turnBar);
   addGameObject(dialog);
   addGameObject(pauseButton);
@@ -144,6 +138,12 @@ void GameScene::preload() {
   addGameObject(heroicStrikeButton);
   addGameObject(enemySkillButton);
   addGameObject(unitDescriptionBox);
+
+  if (battle_ == 1) {
+    const auto tutorialSequence =
+        new TutorialSequence(this, "tutorials", "TutorialFont");
+    addGameObject(tutorialSequence);
+  }
 
   audio->haltMusic();
   if (audio->getDefault()) audio->setMusicVolume(10);

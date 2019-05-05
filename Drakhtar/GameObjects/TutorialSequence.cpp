@@ -11,6 +11,7 @@
 #include "Scenes/Scene.h"
 #include "Structures/Font.h"
 #include "Structures/Game.h"
+#include "Text.h"
 #include "TutorialBox.h"
 #include "Utils/Constants.h"
 
@@ -20,34 +21,24 @@ TutorialSequence::TutorialSequence(Scene* scene, const std::string& filename,
                Vector2D<int>(1, 1)) {
   const auto tutorialArea_ = getRect();
 
-  /*auto dialogueBackground = new GameObject(
-      scene_, TextureManager::get("UI-tutorialBackground"),
-      Vector2D<int>(tutorialArea_.x, tutorialArea_.y - WIN_HEIGHT / 10),
-      Vector2D<int>(tutorialArea_.w * WIN_WIDTH / 2,
-                    tutorialArea_.h * WIN_HEIGHT / 1.5));*/
+  const auto nextButton = new Button(
+      scene_, TextureManager::get("Vanilla-Button"),
+      Vector2D<int>(tutorialArea_.x - WIN_WIDTH / 10,
+                    tutorialArea_.y + WIN_HEIGHT / 10),
+      Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT / 19), [this]() { next(); },
+      "Next", "ButtonFont");
 
-  const auto nextButton =
-      new Button(scene_, TextureManager::get("Vanilla-Button"),
-                 Vector2D<int>(tutorialArea_.x - WIN_WIDTH / 10,
-                               tutorialArea_.y + WIN_HEIGHT / 10),
-                 Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT / 19),
-                 [this]() { next(); }, "Next", "ButtonFont");
-
-  const auto closeButton =
-      new Button(scene_, TextureManager::get("Vanilla-Button"),
-                 Vector2D<int>(tutorialArea_.x + WIN_WIDTH / 10,
-                               tutorialArea_.y + WIN_HEIGHT / 10),
-                 Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT / 19),
-                 [this]() { skip(); }, "Close", "ButtonFont");
-
-  //addChild(dialogueBackground);
-  readFromFile("../tutorials/" + filename + ".txt", FontManager::get(fontFile));
+  const auto closeButton = new Button(
+      scene_, TextureManager::get("Vanilla-Button"),
+      Vector2D<int>(tutorialArea_.x + WIN_WIDTH / 10,
+                    tutorialArea_.y + WIN_HEIGHT / 10),
+      Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT / 19), [this]() { skip(); },
+      "Close", "ButtonFont");
 
   addChild(closeButton);
   addChild(nextButton);
 
-  //dialogueBackground->addEventListener(
-    //  new TutorialSceneOnClick(dialogueBackground));
+  readFromFile("../tutorials/" + filename + ".txt", FontManager::get(fontFile));
 }
 
 TutorialSequence::~TutorialSequence() {
@@ -103,3 +94,4 @@ void TutorialSequence::render() const {
 }
 
 int TutorialSequence::getCounter() { return counter; }
+
