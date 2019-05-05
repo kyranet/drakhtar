@@ -76,8 +76,7 @@ void Commander::attack(Unit* enemy, bool allowsCounter) {
   Unit::attack(enemy, allowsCounter);
 }
 
-void Commander::setHealthBar() {
-  Unit::setHealthBar();
+void Commander::setCommanderHealthBar() {
   const auto rect = box_->getRect();
 
   commanderIcon_ =
