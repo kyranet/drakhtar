@@ -6,9 +6,9 @@
 
 class TutorialLogic : public Sequence {
  public:
-  static bool tutorialEnded(int counter, int tutorialLenght);
+  static bool tutorialEnded(int counter, int tutorialLength);
 
   static void changeToNextTutorial();
-  static void updateCounter(int counter, int tutorialLenght);
+  static void updateCounter(int counter, int tutorialLength);
   static bool firstTutorialEnded(int counter);
 };

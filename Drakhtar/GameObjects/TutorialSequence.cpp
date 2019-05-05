@@ -39,10 +39,10 @@ TutorialSequence::TutorialSequence(Scene* scene, const std::string& filename,
                                tutorialArea_.y + WIN_HEIGHT / 10),
                  Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT / 19),
                  [this]() { skip(); }, "Close", "ButtonFont");
-
   addChild(dialogueBackground);
   addChild(closeButton);
   addChild(nextButton);
+
 
   readFromFile("../tutorials/" + filename + ".txt", FontManager::get(fontFile),
                tutorialArea_, dialogueBackground->getRect());

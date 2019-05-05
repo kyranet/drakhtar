@@ -2,14 +2,14 @@
 
 #include "TutorialLogic.h"
 
-bool TutorialLogic::tutorialEnded(int counter, int tutorialLenght) {
-  if (counter == tutorialLenght) return true;
+bool TutorialLogic::tutorialEnded(int counter, int tutorialLength) {
+  if (counter == tutorialLength) return true;
 }
 
 void TutorialLogic::changeToNextTutorial() {}
 
-void TutorialLogic::updateCounter(int counter, int tutorialLenght) {
-  if (counter <= tutorialLenght)
+void TutorialLogic::updateCounter(int counter, int tutorialLength) {
+  if (counter <= tutorialLength)
     counter++;
   else
     counter = 0;
