@@ -29,10 +29,10 @@ class GameScene final : public Scene {
 
   Board* getBoard() const;
   int getBattleInd();
-  bool tutorialIsOver();
+  /*bool tutorialIsOver();
   bool introductionToDrakhtar();
   bool firstTutorial();
-  bool secondTutorial();
+  bool secondTutorial();*/
 
   Team* getTeam1_() const { return team1_; }
   Team* getTeam2_() const { return team2_; }

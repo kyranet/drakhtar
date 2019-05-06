@@ -12,13 +12,8 @@ class TutorialSequence;
 class TutorialText;
 
 class TutorialBox : public GameObject {
-  std::string imageText_;
-  std::string dialogText_;
-  std::string renderizable;
 
-  TutorialText* tutorialText_ = nullptr;
-  ;
-  int posX, posY;
+  //TutorialText* tutorialText_ = nullptr;
 
  public:
   TutorialBox(Scene* scene,  std::string& filename);

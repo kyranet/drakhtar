@@ -4,5 +4,5 @@
 #include "GameObjects/TutorialSequence.h"
 
 void TutorialSceneOnClick::onClickStop() {
-  reinterpret_cast<TutorialSequence*>(getGameObject()->getParent())->next();
+  //reinterpret_cast<TutorialSequence*>(getGameObject()->getParent())->next();
 }

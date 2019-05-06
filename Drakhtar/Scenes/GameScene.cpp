@@ -254,7 +254,7 @@ Team* GameScene::getEnemyTeam(Unit* unit) {
   return nullptr;
 }
 
-bool GameScene::tutorialIsOver() {
+/*bool GameScene::tutorialIsOver() {
   if (counter == 10)
     return true;
   else
@@ -280,4 +280,4 @@ bool GameScene::secondTutorial() {
     return true;
   else
     return false;
-}
+}*/

@@ -7,7 +7,7 @@
 class TutorialBox;
 class Scene;
 class Font;
-
+/*
 class TutorialSequence final : public Sequence {
   std::queue<TutorialBox*> tutorials_;
   int counter = 0;
@@ -25,4 +25,4 @@ class TutorialSequence final : public Sequence {
   void skip() override;
   void update() override;
   int getCounter();
-};
+};*/

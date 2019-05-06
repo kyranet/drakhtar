@@ -133,7 +133,7 @@ void PlayerController::onClickAttack(Box* boxClicked) {
 }
 
 void PlayerController::start() {
-  if (isAllowedClick()) {
+
     UnitsController::start();
     if (!activeUnit_) return UnitsController::finish();
 
@@ -145,7 +145,7 @@ void PlayerController::start() {
         [this]() { finish(); }, " ", "ButtonFont");
     scene_->addGameObject(skipTurnButton_);
     highlightCells();
-  }
+  
 }
 
 void PlayerController::finish() {

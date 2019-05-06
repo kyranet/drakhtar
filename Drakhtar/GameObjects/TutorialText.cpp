@@ -1,6 +1,5 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
-#include "TutorialBox.h"
 #include "TutorialText.h"
 
 #include "../Managers/FontManager.h"
@@ -14,14 +13,20 @@
 #include "Structures/Game.h"
 #include "Structures/UnitFactory.h"
 #include "Text.h"
+#include "TutorialBox.h"
 
 TutorialText::TutorialText(Scene* scene, TutorialBox* box, std::string& file)
-    : GameObject(scene, TextureManager::get("Reward-Panel"),Vector2D<int>(1,1),
-                 Vector2D<int>(1,1)) 
-				 {
+    : GameObject(scene, TextureManager::get("Reward-Panel"),
+                 Vector2D<int>(400,400), Vector2D<int>(1000,1000)) {
   readFromFile(file);
-  std::cout << "s";
-				 }
+  auto text =
+      new Text(scene, FontManager::get("SkillButtonFont"),{400,400}, {0, 0, 0, 1},
+               returnTutorialText(), WIN_WIDTH * 0.9);
+  text->setRenderizable(true);
+	box->addChild(text);
+}
+
+TutorialText::~TutorialText() { texts.clear(); }
 
 void TutorialText::render() const {}
 
@@ -30,20 +35,33 @@ void TutorialText::readFromFile(std::string& filename) {
   file.open(filename);
   std::string text;  // full dialog text
   std::string word;  // word added to text each iteration
-  int limit = 0;  file >> limit;
+  int limit = 0;
+  file >> limit;
 
-  for (int i = 0; i < limit; i++)
-  {
-    while (word != ".") {
-      file >> word;
-      texts[i].dialogtexts_ += word;
-      if (word == "¡") {
-        texts[i].next_ = true;
-      } else
-        texts[i].next_ = false;
-
+  bool next = false;
+  int finished = false;
+  int i = 0;
+  while (!finished && i < limit) {
+    file >> word;
+    if ((word != "¡" && word != ".")) text += word + " ";
+    if (word == "¡") next = true;
+    if (word == ".") {
+      TutorialTexts TutorialFileText;
+      text.erase(0, 10);
+      TutorialFileText.dialogtexts_ = text;
+      TutorialFileText.next_ = next;
+      texts.push_back(TutorialFileText);
+      text = "";
+      next = false;
+      i++;
     }
   }
-  texts[1].next_ = false;
+
   file.close();
 }
+
+std::string TutorialText::returnTutorialText() {
+  return texts[cont].dialogtexts_;
+}
+
+void TutorialText::addCount() { cont++; }
