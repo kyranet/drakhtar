@@ -17,13 +17,13 @@
 
 TutorialText::TutorialText(Scene* scene, TutorialBox* box, std::string& file)
     : GameObject(scene, TextureManager::get("Reward-Panel"),
-                 Vector2D<int>(400,400), Vector2D<int>(1000,1000)) {
+                 Vector2D<int>(400, 400), Vector2D<int>(1000, 1000)) {
   readFromFile(file);
-  auto text =
-      new Text(scene, FontManager::get("SkillButtonFont"),{400,400}, {0, 0, 0, 1},
-               returnTutorialText(), WIN_WIDTH * 0.9);
+  auto text = new Text(scene, FontManager::get("SkillButtonFont"), {400, 400},
+                       {0, 0, 0, 1}, returnTutorialText(), WIN_WIDTH * 0.9);
   text->setRenderizable(true);
-	box->addChild(text);
+  box->addChild(text);
+  box->getChildren()[0]->setPosition({500,500});
 }
 
 TutorialText::~TutorialText() { texts.clear(); }
