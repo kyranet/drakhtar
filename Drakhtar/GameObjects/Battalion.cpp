@@ -8,6 +8,7 @@
 #include "HealthBar.h"
 #include "Managers/FontManager.h"
 #include "Managers/GameManager.h"
+#include "../Managers/TextureManager.h"
 #include "Scenes/GameScene.h"
 #include "Scenes/Scene.h"
 #include "Structures/Game.h"
@@ -37,15 +38,21 @@ void Battalion::setHealthBar() {
 
   const auto rect = box_->getRect();
 
+  unitBattalionCircle_ =
+      new GameObject(scene_, TextureManager::get("UI-BattalionCircle"),
+                     {rect.x, rect.y - rect.h / 3}, {rect.w/3, rect.h/3});
+
+  addChild(unitBattalionCircle_);
+
   sizeText_ = new Text(scene_, FontManager::get("TutorialFont"),
-                       {rect.x + rect.h / 6, rect.y - rect.h / 3}, textColor,
+                       {rect.x, rect.y - rect.h / 3}, textColor,
                        sizeToString(), rect.w * 2);
 
   addChild(sizeText_);
 
   healthText_->setColor(textColor);
 
-  sizeText_->setColor(sizeColor);
+  sizeText_->setColor(textColor);
 }
 
 Battalion::~Battalion() = default;
@@ -101,7 +108,10 @@ void Battalion::moveToBox(Box* box) {
 
   const auto rect = box_->getRect();
   sizeText_->setPosition(
-      Vector2D<int>(rect.x + rect.h / 6, rect.y - rect.h / 3));
+      Vector2D<int>(rect.x, rect.y - rect.h / 3));
+
+  unitBattalionCircle_->setPosition(
+      Vector2D<int>(rect.x, rect.y - rect.h / 3));
 }
 
 void Battalion::render() const {

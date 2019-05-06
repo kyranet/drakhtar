@@ -13,6 +13,7 @@ class HealthBar;
 class Battalion final : public Unit {
   int battalionSize_;
   Text* sizeText_ = nullptr;
+  GameObject* unitBattalionCircle_ = nullptr;
 
   std::string sizeToString() const;
 
