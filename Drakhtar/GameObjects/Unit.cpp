@@ -39,11 +39,12 @@ void Unit::setHealthBar() {
   const auto rect = box_->getRect();
   if (getTeam()->getColor() == Color::RED) {
     healthBar_ = new HealthBar(
-        scene_, Vector2D<int>(rect.x + rect.w / 2, rect.y - rect.h / 3),
+        scene_, Vector2D<int>(rect.x + rect.w / 2, static_cast<int>(rect.y + rect.h/1.2)),
         baseStats_.maxHealth, Color::RED);
   } else {
-    healthBar_ = new HealthBar(
-        scene_, Vector2D<int>(rect.x + rect.w / 2, rect.y - rect.h / 3),
+    healthBar_ = new HealthBar(scene_,
+                      Vector2D<int>(rect.x + rect.w / 2,
+                                    static_cast<int>(rect.y + rect.h / 1.2)),
         baseStats_.maxHealth, Color::BLUE);
   }
   healthBar_->setTransparent(true);
@@ -59,7 +60,8 @@ void Unit::setHealthBar() {
 
   healthText_ =
       new Text(scene_, FontManager::get("UnitFont"),
-               {rect.x + rect.w / 2 + rect.w / 14, rect.y - rect.h / 3},
+                         {rect.x + rect.w / 2 + rect.w / 14,
+                          static_cast<int>(rect.y + rect.h / 1.2)},
                textColor, healthToString(), rect.w * 2);
 
   healthText_->setColor(textColor);
@@ -76,9 +78,10 @@ void Unit::moveToBox(Box* newBox) {
   box_ = newBox;
   newBox->setContent(this);
   const auto rect = box_->getRect();
-  healthText_->setPosition(
-      {rect.x + rect.w / 2 + rect.w / 14, rect.y - rect.h / 3});
-  healthBar_->moveBar(Vector2D<int>(rect.x + rect.w / 2, rect.y - rect.h / 3));
+  healthText_->setPosition({rect.x + rect.w / 2 + rect.w / 14,
+                            static_cast<int>(rect.y + rect.h / 1.2)});
+  healthBar_->moveBar(Vector2D<int>(rect.x + rect.w / 2,
+                                    static_cast<int>(rect.y + rect.h / 1.2)));
   setMoved(true);
 }
 

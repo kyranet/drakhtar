@@ -64,7 +64,8 @@ void Commander::kill() {
 void Commander::moveToBox(Box* box) {
   Unit::moveToBox(box);
   const auto rect = box_->getRect();
-  commanderIcon_->setPosition(Vector2D<int>(rect.x, rect.y - rect.h / 3));
+  commanderIcon_->setPosition(
+      Vector2D<int>(rect.x, static_cast<int>(rect.y + rect.h / 1.31)));
 }
 
 void Commander::attack(Unit* enemy, bool allowsCounter) {
@@ -81,7 +82,7 @@ void Commander::setCommanderHealthBar() {
 
   commanderIcon_ =
       new GameObject(scene_, TextureManager::get("UI-commanderIcon"),
-                     Vector2D<int>(rect.x, rect.y - rect.h / 3),
+      Vector2D<int>(rect.x, static_cast<int>(rect.y + rect.h / 1.31)),
                      Vector2D<int>(rect.h / 2, rect.h / 2));
 
   addChild(commanderIcon_);
