@@ -31,6 +31,12 @@ Unit::Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
   // Units must be ignored in the mouse raycasts.
   setTransparent(true);
   box->setContent(this);
+
+  if (type == "Thassa" || type == "Zamdran" || type == "Sheissah" ||
+      type == "Abeizhul" || type == "Dreilay") {
+    size_.setX(static_cast<int>(box->getRect().w * 1.7));
+    size_.setY(static_cast<int>(box->getRect().h * 1.7));
+  }
 }
 
 Unit::~Unit() = default;
@@ -51,12 +57,6 @@ void Unit::setHealthBar() {
   addChild(healthBar_);
 
   const SDL_Color textColor = {255, 255, 255, 0};
-
-  if (type == "Thassa" || type == "Zamdran" || type == "Sheissah" ||
-      type == "Abeizhul" || type == "Dreilay") {
-    size_.setX(static_cast<int>(box->getRect().w * 1.7));
-    size_.setY(static_cast<int>(box->getRect().h * 1.7));
-  }
 
   healthText_ =
       new Text(scene_, FontManager::get("UnitFont"),

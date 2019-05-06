@@ -67,6 +67,7 @@ void GameScene::preload() {
     const auto valar =
         factory.newCommander("BlueValar", team1_, board_->getBoxAt(0, 4));
     team1_->addCommander(valar);
+    valar->setCommanderHealthBar();
     addGameObject(valar);
   }
 
