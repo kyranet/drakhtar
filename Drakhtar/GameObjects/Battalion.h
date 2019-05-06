@@ -25,7 +25,7 @@ class Battalion final : public Unit {
   int getBattalionSize() const { return battalionSize_; }
   void setBattalionSize(int battalionSize);
 
-  virtual void setHealthBar() override;
+  void setHealthBar() override;
 
   int getAttack() const;
   int getDefense() const override;

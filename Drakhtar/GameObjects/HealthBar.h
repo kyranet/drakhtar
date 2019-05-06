@@ -9,8 +9,8 @@ class Scene;
 
 class HealthBar : public GameObject {
  private:
-  GameObject *lifeBar = nullptr;
-  GameObject *damageBar = nullptr;
+  GameObject* lifeBar = nullptr;
+  GameObject* damageBar = nullptr;
   GameObject* statUp = nullptr;
   GameObject* statDown = nullptr;
 
@@ -25,7 +25,7 @@ class HealthBar : public GameObject {
   int originalWidth;
 
  public:
-  HealthBar(Scene *scene, Vector2D<int> pos, int maxHP,Color color);
+  HealthBar(Scene* scene, Vector2D<int> pos, int maxHP, Color color);
   virtual ~HealthBar();
   virtual void render() const;
   virtual void update();
