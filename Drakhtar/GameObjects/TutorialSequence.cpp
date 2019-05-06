@@ -53,13 +53,6 @@ void TutorialSequence::readFromFile(const std::string& filename, Font* textFont)
   file.open(filename);
   if (!file.is_open()) throw DrakhtarError("Could not find file");
 
-  size_t lines;
-  file >> lines;
-  tutorialLength = lines;
-
-  for (size_t i = 0; i < lines && !file.eof(); i++) {
-    tutorials_.push(new TutorialBox(scene_, file, textFont));
-  }
 
   file.close();
 

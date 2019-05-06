@@ -17,7 +17,7 @@
 #include "GameObjects/SkillButton.h"
 #include "GameObjects/TurnBar.h"
 #include "GameObjects/TutorialLogic.h"
-#include "GameObjects/TutorialSequence.h"
+#include "GameObjects/TutorialBox.h"
 #include "Managers/GameManager.h"
 #include "Managers/SDLAudioManager.h"
 #include "Managers/TextureManager.h"
@@ -140,9 +140,9 @@ void GameScene::preload() {
   addGameObject(unitDescriptionBox);
 
   if (battle_ == 1) {
-    const auto tutorialSequence =
-        new TutorialSequence(this, "tutorials", "TutorialFont");
-    addGameObject(tutorialSequence);
+    std::string x = "../tutorials/tutorials.txt";
+    const auto tutorialBox = new TutorialBox(this, x);
+    addGameObject(tutorialBox);
   }
 
   audio->haltMusic();

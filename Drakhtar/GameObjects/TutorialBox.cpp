@@ -4,18 +4,22 @@
 #include "EventListeners/TutorialSceneOnClick.h"
 #include "../GameObjects/Button.h"
 #include "../Managers/TextureManager.h"
+#include "../Managers/FontManager.h"
 #include "../Scenes/Scene.h"
 #include "../Structures/Font.h"
 #include "../Utils/Constants.h"
 #include "GameObject.h"
 #include "Text.h"
+#include "TutorialText.h"
 
-TutorialBox::TutorialBox(Scene *scene, std::ifstream &file, Font *textFont)
+TutorialBox::TutorialBox(Scene* scene,  std::string& filename)   
     : GameObject(scene, nullptr, Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
                  Vector2D<int>(1, 1)) {
-  readFromFile(file);
+  
+	
+	tutorialText_ = new TutorialText(scene, this, filename);
 
-  const auto lineJumpLimit = static_cast<int>(480 * 0.75);
+  const auto lineJumpLimit = static_cast<int>(WIN_WIDTH * 0.4);
 
   const auto tutorialImage =
       new GameObject(scene, TextureManager::get(imageText_),
@@ -24,8 +28,8 @@ TutorialBox::TutorialBox(Scene *scene, std::ifstream &file, Font *textFont)
 
   const SDL_Color textColor = {255, 255, 255, 255};
 
-  const auto tutorialTextSprite = new Text(
-      scene_, textFont, Vector2D<int>(posX, posY - WIN_HEIGHT / 10),
+  const auto tutorialTextSprite = new Text(scene_, FontManager::get("StatsFont"),
+               Vector2D<int>(posX, posY - WIN_HEIGHT / 10),
       textColor, dialogText_, lineJumpLimit);
 
   const auto dialogueBackgroundBox = new GameObject(
@@ -38,8 +42,8 @@ TutorialBox::TutorialBox(Scene *scene, std::ifstream &file, Font *textFont)
       Vector2D<int>(
           dialogueBackgroundBox->getPosition().getX() - WIN_WIDTH / 10,
           dialogueBackgroundBox->getPosition().getY() + WIN_HEIGHT / 6),
-      Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT / 19), [this]() { },
-      " ", "ButtonFont");
+      Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT / 19), [this]() { std::cout << "xd"; },
+      "next ", "ButtonFont");
 
   const auto closeButton = new Button(
       scene_, TextureManager::get("Vanilla-Button"),
@@ -47,7 +51,7 @@ TutorialBox::TutorialBox(Scene *scene, std::ifstream &file, Font *textFont)
           dialogueBackgroundBox->getPosition().getX() + WIN_WIDTH / 10,
           dialogueBackgroundBox->getPosition().getY() + WIN_HEIGHT / 6),
       Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT / 19), [this]() { },
-      " ", "ButtonFont");
+      "close", "ButtonFont");
 
   tutorialTextSprite->setColor(textColor);
   tutorialTextSprite->setText(dialogText_, textColor, lineJumpLimit);
@@ -62,7 +66,7 @@ TutorialBox::TutorialBox(Scene *scene, std::ifstream &file, Font *textFont)
     new TutorialSceneOnClick(dialogueBackgroundBox));
 }
 
-void TutorialBox::readFromFile(std::ifstream &file) {
+/*void TutorialBox::readFromFile(std::ifstream &file) {
   file >> posX;
   file >> posY;
   file >> renderizable;
@@ -76,9 +80,5 @@ void TutorialBox::readFromFile(std::ifstream &file) {
       text += word + " ";
   }
   dialogText_ = text;
-}
+}*/
 
-bool TutorialBox::getVisible() {
-  if (renderizable == "renderizable") return true;
-  else return false;
-}

@@ -36,6 +36,10 @@ struct UnitStats {
   int speed;
   int prize;
 };
+struct TutorialTexts {
+  std::string dialogtexts_;
+  bool next_;
+};
 
 // Thassa
 const UnitStats THASSA_STATS = {35, 35, 150, 1, 3, 5, 100};
