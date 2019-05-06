@@ -108,7 +108,7 @@ void PlayerController::onClickAttack(Box* boxClicked) {
   } else if (activeUnit_->getHealth() <= 0) {
     // Unit dies to counter-attack
     currentBox->destroyContent();
-    if (!canCastSkills()) finish();
+    finish();
     return;
   }
 
