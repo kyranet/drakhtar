@@ -252,7 +252,7 @@ void Game::load() {
   ->addAnimation("default", {0, 1, 2, 3}, 1);
   textures->add("Transition-Map4", "../images/Transition/Transition_4.png",
                 4, 1);
-  textures->add("Transition-Map5", "../images/Transition/GuerrillaSpecial.png",
+  textures->add("Transition-Map5", "../images/Transition/Transition_5.png",
                 1, 1);
   textures->add("Transition-Menu", "../images/Transition/Transition_1.png", 4,
                 1);
