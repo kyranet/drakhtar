@@ -21,10 +21,23 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename)
   const auto nextButton = new Button(
       scene_, TextureManager::get("Vanilla-Button"), {400, 400},
       Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT / 19),
-      [tutorialText_]() { std::cout << "xd"; }, "next ", "ButtonFont");
+                 [tutorialText_]() {
+                   if (!tutorialText_->addCount()) {
+                     tutorialText_->setRenderizable(false);
+                   }
+                 },
+                 "Next ", "ButtonFont");
+  const auto CloseButton =
+      new Button(scene_, TextureManager::get("Vanilla-Button"), {500, 400},
+                 Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT / 19),
+                 [tutorialText_]() { tutorialText_->closeAddCount();
+                   tutorialText_->setRenderizable(false);
+                 },
+                 "Close ", "ButtonFont");
   
   addChild(tutorialText_);
   addChild(nextButton);
+  addChild(CloseButton);
   // const auto lineJumpLimit = static_cast<int>(WIN_WIDTH * 0.4);
 
   /*const auto tutorialImage =

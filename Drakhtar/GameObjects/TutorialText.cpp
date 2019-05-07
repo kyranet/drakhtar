@@ -19,16 +19,16 @@ TutorialText::TutorialText(Scene* scene, TutorialBox* box, std::string& file)
     : GameObject(scene, TextureManager::get("Reward-Panel"),
                  Vector2D<int>(400, 400), Vector2D<int>(1000, 1000)) {
   readFromFile(file);
-  auto text = new Text(scene, FontManager::get("SkillButtonFont"), {400, 400},
-                       {0, 0, 0, 1}, returnTutorialText(), WIN_WIDTH * 0.9);
+  text = new Text(scene, FontManager::get("SkillButtonFont"), {400, 400},
+                       {0, 0, 0, 1}, texts[cont].dialogtexts_, WIN_WIDTH * 0.9);
   text->setRenderizable(true);
-  box->addChild(text);
-  box->getChildren()[0]->setPosition({500,500});
 }
 
 TutorialText::~TutorialText() { texts.clear(); }
 
-void TutorialText::render() const {}
+void TutorialText::render() const {
+text->render(); 
+}
 
 void TutorialText::readFromFile(std::string& filename) {
   std::ifstream file;
@@ -64,4 +64,20 @@ std::string TutorialText::returnTutorialText() {
   return texts[cont].dialogtexts_;
 }
 
-void TutorialText::addCount() { cont++; }
+bool TutorialText::addCount() {
+  int aux = cont;
+  if (aux++ == texts.size() - 1) {
+    return false;
+  } else {
+  cont++;
+  text->setText(texts[cont].dialogtexts_);
+  return true;
+  }
+}
+
+void TutorialText::closeAddCount() {
+  int aux = cont;
+  if (aux++ != texts.size() - 1) {	  
+    cont++;
+	}
+  }
