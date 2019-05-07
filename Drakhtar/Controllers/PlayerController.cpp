@@ -33,7 +33,6 @@ PlayerController::PlayerController(Board* board, TurnManager* turnManager,
 }
 
 void PlayerController::onClickMove(Box* boxClicked) {
-  if (isAllowedClick()) {
     if (locked_) return;
     // Checks if the box clicked is within movement range
     if (!board_->isInMoveRange(activeUnit_->getBox(), boxClicked,
@@ -75,11 +74,9 @@ void PlayerController::onClickMove(Box* boxClicked) {
             if (!canCastSkills()) finish();
           }
         });
-  }
 }
 
 void PlayerController::onClickAttack(Box* boxClicked) {
-  if (isAllowedClick()) {
     auto unit = boxClicked->getContent();
     // If the box clicked was empty, skip
     if (!unit) return;
@@ -170,7 +167,6 @@ bool PlayerController::canCastSkills() {
 }
 
 void PlayerController::highlightCells() {
-  if (isAllowedClick()) {
     // Reset board
     board_->resetCellsToBase();
 
@@ -186,7 +182,6 @@ void PlayerController::highlightCells() {
     if (!hasAttacked_)
       board_->highlightEnemiesInRange(activeUnit_->getBox(),
                                       activeUnit_->getStats().attackRange);
-  }
 }
 
 bool PlayerController::isFirstPlayGame() {
@@ -196,13 +191,4 @@ bool PlayerController::isFirstPlayGame() {
     return true;
   }
   return false;
-}
-
-bool PlayerController::isAllowedClick() {
-  if (TutorialLogic::firstTutorialEnded(tutorial))
-    return true;
-  else {
-    tutorial++;
-    return false;
-  }
 }

@@ -141,7 +141,8 @@ void GameScene::preload() {
 
   if (battle_ == 1) {
     std::string x = "../tutorials/tutorials.txt";
-    const auto tutorialBox = new TutorialBox(this, x);
+    const auto tutorialBox =
+        new TutorialBox(this, x, Vector2D<int>(WIN_WIDTH/3,WIN_HEIGHT/3), Vector2D<int>(WIN_WIDTH/5,WIN_HEIGHT/4));
     addGameObject(tutorialBox);
   }
 

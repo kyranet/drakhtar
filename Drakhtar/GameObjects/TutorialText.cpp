@@ -15,13 +15,15 @@
 #include "Text.h"
 #include "TutorialBox.h"
 
-TutorialText::TutorialText(Scene* scene, TutorialBox* box, std::string& file)
+TutorialText::TutorialText(Scene* scene, TutorialBox* box, std::string& file, SDL_Rect rect)
     : GameObject(scene, TextureManager::get("Reward-Panel"),
                  Vector2D<int>(400, 400), Vector2D<int>(1000, 1000)) {
   readFromFile(file);
-  text = new Text(scene, FontManager::get("SkillButtonFont"), {400, 400},
-                       {0, 0, 0, 1}, texts[cont].dialogtexts_, WIN_WIDTH * 0.9);
+  text = new Text(scene, FontManager::get("Retron2000"), {rect.x, rect.y},
+                       {255, 255, 255, 1}, texts[cont].dialogtexts_,250);
   text->setRenderizable(true);
+  text->setColor({255, 255, 255, 0});
+
 }
 
 TutorialText::~TutorialText() { texts.clear(); }
@@ -60,9 +62,6 @@ void TutorialText::readFromFile(std::string& filename) {
   file.close();
 }
 
-std::string TutorialText::returnTutorialText() {
-  return texts[cont].dialogtexts_;
-}
 
 bool TutorialText::addCount() {
   int aux = cont;
@@ -71,6 +70,7 @@ bool TutorialText::addCount() {
   } else {
   cont++;
   text->setText(texts[cont].dialogtexts_);
+  text->setColor({255, 255, 255, 0});
   return true;
   }
 }
@@ -80,4 +80,4 @@ void TutorialText::closeAddCount() {
   if (aux++ != texts.size() - 1) {	  
     cont++;
 	}
-  }
+}

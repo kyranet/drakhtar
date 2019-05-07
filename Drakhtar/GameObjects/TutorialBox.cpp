@@ -13,25 +13,46 @@
 #include "Text.h"
 #include "TutorialText.h"
 
-TutorialBox::TutorialBox(Scene* scene, std::string& filename)
+TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
+                         Vector2D<int> size)
     : GameObject(scene, nullptr, Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
                  Vector2D<int>(1, 1)) {
-  auto tutorialText_ = new TutorialText(scene, this, filename);
+  SDL_Rect rect = {pos.getX(),pos.getY(),size.getX(),size.getY()};
+  auto tutorialText_ = new TutorialText(scene, this, filename,rect);
 
+  const auto tutorialBackground = new GameObject(
+      scene, TextureManager::get("UI-tutorialBackground"),
+                     Vector2D<int>(rect.x,rect.y*1.1),
+     Vector2D<int>(rect.w * 1.3, rect.h * 1.2));
+  addChild(tutorialBackground);
   const auto nextButton = new Button(
-      scene_, TextureManager::get("Vanilla-Button"), {400, 400},
+      scene_, TextureManager::get("Vanilla-Button"),
+      Vector2D<int>(tutorialBackground->getRect().w +
+                        tutorialBackground->getPosition().getX() / 2.5,
+                    tutorialBackground->getPosition().getY() / 2.5 +
+                        tutorialBackground->getRect().h),
       Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT / 19),
-                 [tutorialText_]() {
+                 [tutorialText_,this]() {
                    if (!tutorialText_->addCount()) {
-                     tutorialText_->setRenderizable(false);
+          for (auto child : getChildren()) {
+                       child->setRenderizable(false);
+                       child->setTransparent(true);
+          }
                    }
                  },
                  "Next ", "ButtonFont");
-  const auto CloseButton =
-      new Button(scene_, TextureManager::get("Vanilla-Button"), {500, 400},
-                 Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT / 19),
-                 [tutorialText_]() { tutorialText_->closeAddCount();
-                   tutorialText_->setRenderizable(false);
+  const auto CloseButton = new Button(
+      scene_, TextureManager::get("Vanilla-Button"),
+                  Vector2D<int>(tutorialBackground->getRect().w +
+                      tutorialBackground->getPosition().getX() / 30,
+                  tutorialBackground->getPosition().getY() / 2.5 +
+                      tutorialBackground->getRect().h),
+                 Vector2D<int>(WIN_WIDTH / 14, WIN_HEIGHT / 20),
+                 [tutorialText_,this]() { tutorialText_->closeAddCount();
+        for (auto child : getChildren()) {
+      child->setRenderizable(false);
+          child->setTransparent(true);
+        }
                  },
                  "Close ", "ButtonFont");
   

@@ -16,5 +16,6 @@ class TutorialBox : public GameObject {
   //TutorialText* tutorialText_ = nullptr;
 
  public:
-  TutorialBox(Scene* scene,  std::string& filename);
+  TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
+              Vector2D<int> size);
 };

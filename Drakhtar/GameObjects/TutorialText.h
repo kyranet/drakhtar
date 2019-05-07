@@ -14,11 +14,10 @@ class TutorialText : public GameObject {
   int cont = 0;
   Text* text = nullptr;
  public:
-  TutorialText(Scene* scene, TutorialBox* box,std::string& file);
+  TutorialText(Scene* scene, TutorialBox* box,std::string& file, SDL_Rect rect);
   ~TutorialText();
   void render() const override;
   void readFromFile(std::string& filename);
-  std::string returnTutorialText();
   bool addCount();
   void closeAddCount();
 };
