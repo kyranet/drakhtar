@@ -15,22 +15,25 @@
 #include "Text.h"
 #include "TutorialBox.h"
 
-TutorialText::TutorialText(Scene* scene, TutorialBox* box, std::string& file, SDL_Rect rect)
+TutorialText::TutorialText(Scene* scene, TutorialBox* box, std::string& file,
+                           SDL_Rect rect)
     : GameObject(scene, TextureManager::get("Reward-Panel"),
                  Vector2D<int>(400, 400), Vector2D<int>(1000, 1000)) {
   readFromFile(file);
-  text = new Text(scene, FontManager::get("Retron2000"), {rect.x, rect.y},
-                       {255, 255, 255, 1}, texts[cont].dialogtexts_,250);
+  text = new Text(scene, FontManager::get("Retron2000"),
+                  Vector2D<int>(rect.x, rect.y), {255, 255, 255, 1},
+                  texts[cont].dialogtexts_, 250);
   text->setRenderizable(true);
   text->setColor({255, 255, 255, 0});
-
 }
 
-TutorialText::~TutorialText() { texts.clear(); }
-
-void TutorialText::render() const {
-text->render(); 
+TutorialText::~TutorialText() {
+  texts.clear();
+  delete text;
+  text = nullptr;
 }
+
+void TutorialText::render() const { text->render(); }
 
 void TutorialText::readFromFile(std::string& filename) {
   std::ifstream file;
@@ -62,22 +65,21 @@ void TutorialText::readFromFile(std::string& filename) {
   file.close();
 }
 
-
 bool TutorialText::addCount() {
   int aux = cont;
   if (aux++ == texts.size() - 1) {
     return false;
   } else {
-  cont++;
-  text->setText(texts[cont].dialogtexts_);
-  text->setColor({255, 255, 255, 0});
-  return true;
+    cont++;
+    text->setText(texts[cont].dialogtexts_);
+    text->setColor({255, 255, 255, 0});
+    return true;
   }
 }
 
 void TutorialText::closeAddCount() {
   int aux = cont;
-  if (aux++ != texts.size() - 1) {	  
+  if (aux++ != texts.size() - 1) {
     cont++;
-	}
+  }
 }

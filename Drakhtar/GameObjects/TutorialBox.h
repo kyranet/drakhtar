@@ -18,4 +18,5 @@ class TutorialBox : public GameObject {
  public:
   TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
               Vector2D<int> size);
+  void setBoxPosition(Vector2D<int> pos);
 };

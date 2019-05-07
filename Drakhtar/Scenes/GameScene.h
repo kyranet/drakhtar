@@ -8,11 +8,13 @@ class Board;
 class UnitFactory;
 class PlayerController;
 class Unit;
+class TutorialBox;
 
 class GameScene final : public Scene {
   Team* team1_ = nullptr;
   Team* team2_ = nullptr;
   Board* board_ = nullptr;
+  TutorialBox* tutorialBox = nullptr;
   int battle_;
   int prize_ = 0;
   int counter = 0;
@@ -29,10 +31,8 @@ class GameScene final : public Scene {
 
   Board* getBoard() const;
   int getBattleInd();
-  /*bool tutorialIsOver();
-  bool introductionToDrakhtar();
-  bool firstTutorial();
-  bool secondTutorial();*/
+
+  void setTutorial();
 
   Team* getTeam1_() const { return team1_; }
   Team* getTeam2_() const { return team2_; }
