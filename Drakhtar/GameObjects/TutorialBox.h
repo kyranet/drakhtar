@@ -18,7 +18,7 @@ class TutorialBox : public GameObject {
  public:
   TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
               Vector2D<int> size);
-  void setBoxPosition(Vector2D<int> pos);
   void setNextButtonRender(bool next);
   void setCloseButtonRender(bool close);
+  void setArrowPos(SDL_RendererFlip flip, Vector2D<int> pos);
 };

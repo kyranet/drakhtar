@@ -176,6 +176,7 @@ void Game::load() {
   textures->add("UI-greenTick", "../images/UI/green-check.png", 1, 1);
   textures->add("UI-statUp", "../images/UI/statUp.png", 1, 1);
   textures->add("UI-statDown", "../images/UI/statDown.png", 1, 1);
+  textures->add("UI-arrowAnim", "../images/UI/arrow_anim.png", 4, 5);
 
   // Button
   textures->add("Button-BattleCry", "../images/UI/battlecry_icon.png", 1, 1);
