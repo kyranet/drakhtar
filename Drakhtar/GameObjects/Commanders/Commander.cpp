@@ -10,8 +10,8 @@
 #include "Structures/Game.h"
 #include "Structures/Team.h"
 
-Commander::Commander(const std::string & name, Scene* scene, Texture* texture, Box* box,
-                     const UnitStats commanderStats)
+Commander::Commander(const std::string& name, Scene* scene, Texture* texture,
+                     Box* box, const UnitStats commanderStats)
     : Unit(scene, texture, box, commanderStats, name) {
   const auto rect = box_->getRect();
 

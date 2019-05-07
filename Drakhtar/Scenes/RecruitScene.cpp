@@ -97,15 +97,15 @@ void RecruitScene::preload() {
 
   recruitmentPanel_->addChild(cancelButton);
 
-  playButton = new Button(
-      this, TextureManager::get("Vanilla-Button"),
-      Vector2D<int>(WIN_WIDTH * 0.69, WIN_HEIGHT * 0.75),
-      Vector2D<int>(static_cast<int>(WIN_WIDTH / 4), WIN_HEIGHT / 6),
-      [this]() {
-        reset();
-        Game::getSceneMachine()->changeScene(new TransitionScene(1));
-      },
-      "Play", "ButtonFont");
+  playButton =
+      new Button(this, TextureManager::get("Vanilla-Button"),
+                 Vector2D<int>(WIN_WIDTH * 0.69, WIN_HEIGHT * 0.75),
+                 Vector2D<int>(static_cast<int>(WIN_WIDTH / 4), WIN_HEIGHT / 6),
+                 [this]() {
+                   reset();
+                   Game::getSceneMachine()->changeScene(new TransitionScene(1));
+                 },
+                 "Play", "ButtonFont");
 
   addGameObject(playButton);
   playButton->setTransparent(true);
@@ -122,7 +122,7 @@ void RecruitScene::updateTotalCost(const int amount) {
   totalCostText_->setColor({255, 255, 255, 0});
 }
 
-void RecruitScene::addUnit(const std::string & textureName, int position) {
+void RecruitScene::addUnit(const std::string& textureName, int position) {
   position -= 3;
 
   // 4.5 base distance
@@ -154,10 +154,11 @@ void RecruitScene::addUnit(const std::string & textureName, int position) {
                {0, 0, 0, 0}, std::to_string(costs_[type]), unit->getRect().w);
   unitPrice->setColor({204, 255, 0, 0});
   unit->addChild(unitPrice);
-  const auto unitGoldIcon = new GameObject(
-      this, TextureManager::get("Coin-Anim"),
-      {unitPrice->getPosition().getX() - unit->getRect().w/4, unitPrice->getPosition().getY()},
-      Vector2D<int>(WIN_HEIGHT * 0.05, WIN_HEIGHT * 0.05));
+  const auto unitGoldIcon =
+      new GameObject(this, TextureManager::get("Coin-Anim"),
+                     {unitPrice->getPosition().getX() - unit->getRect().w / 4,
+                      unitPrice->getPosition().getY()},
+                     Vector2D<int>(WIN_HEIGHT * 0.05, WIN_HEIGHT * 0.05));
   unit->addChild(unitGoldIcon);
   addGameObject(unit);
 
