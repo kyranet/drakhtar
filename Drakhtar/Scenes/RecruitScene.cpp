@@ -122,7 +122,7 @@ void RecruitScene::updateTotalCost(const int amount) {
   totalCostText_->setColor({255, 255, 255, 0});
 }
 
-void RecruitScene::addUnit(std::string textureName, int position) {
+void RecruitScene::addUnit(const std::string & textureName, int position) {
   position -= 3;
 
   // 4.5 base distance

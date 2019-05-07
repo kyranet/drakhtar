@@ -15,7 +15,7 @@ class Text : public GameObject {
 
  public:
   Text(Scene* scene, Font* font, Vector2D<int> position, SDL_Color color,
-       std::string text, int lineJumpLimit);
+       const std::string & text, int lineJumpLimit);
   ~Text();
   void setText(const std::string& text, const SDL_Color& color = {0, 0, 0, 255},
                int lineJumpLimit = 250);

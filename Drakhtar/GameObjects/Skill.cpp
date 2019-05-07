@@ -13,7 +13,7 @@
 #include "GameObjects/Box.h"
 #include "Managers/SDLAudioManager.h"
 
-Skill::Skill(std::string id, int cooldown, int duration, Commander* caster)
+Skill::Skill(const std::string & id, int cooldown, int duration, Commander* caster)
     : id_(std::move(id)),
       caster_(caster),
       cooldown_(cooldown),

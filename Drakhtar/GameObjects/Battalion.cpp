@@ -16,7 +16,7 @@
 #include "Text.h"
 
 Battalion::Battalion(Scene* scene, Texture* texture, Box* box,
-                     const UnitStats stats, const std::string type,
+                     const UnitStats stats, const std::string & type,
                      const int battalionSize)
     : Unit(scene, texture, box, stats, type), battalionSize_(battalionSize) {
   stats_.maxHealth = baseStats_.maxHealth * battalionSize_;

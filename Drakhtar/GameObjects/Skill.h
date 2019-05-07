@@ -20,7 +20,7 @@ class Skill {
   bool active_ = false;
 
  public:
-  Skill(std::string id, int cooldown, int duration, Commander* caster);
+  Skill(const std::string & id, int cooldown, int duration, Commander* caster);
   virtual ~Skill() = default;
 
   virtual void cast(GameScene* scene);

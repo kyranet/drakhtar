@@ -5,7 +5,7 @@
 #include "../Structures/Texture.h"
 
 Text::Text(Scene* scene, Font* font, Vector2D<int> pos, SDL_Color color,
-           std::string text, int lineJumpLimit)
+           const std::string & text, int lineJumpLimit)
     : GameObject(scene, new Texture(Game::getRenderer()), pos,
                  Vector2D<int>(0, 0)),
       font_(font),
