@@ -123,12 +123,13 @@ void Battalion::render() const {
     aux.y -= size_.getY() / 5;
     texture_->renderFrame(aux, texture_->getAnimation()[texture_->getFrame()]);
   }
-  Unit::render();
   if (battalionSize_ > 7) {
     auto aux = getRect();
-    aux.x += getTexture()->getFlip() == SDL_FLIP_HORIZONTAL ? -size_.getX() / 4
-                                                            : size_.getX() / 4;
-    aux.y += size_.getY() / 5;
     texture_->renderFrame(aux, texture_->getAnimation()[texture_->getFrame()]);
   }
+  auto aux = getRect();
+  aux.x += getTexture()->getFlip() == SDL_FLIP_HORIZONTAL ? -size_.getX() / 4
+                                                          : size_.getX() / 4;
+  aux.y += size_.getY() / 5;
+  Unit::render(aux);
 }
