@@ -9,6 +9,7 @@
 #include "../Managers/TurnManager.h"
 #include "../Structures/Team.h"
 #include "Commanders/Commander.h"
+#include "GameObjects/Battalion.h"
 #include "GameObjects/Board.h"
 #include "GameObjects/Box.h"
 #include "Managers/SDLAudioManager.h"
@@ -43,7 +44,8 @@ void Skill::end(GameScene*) {}
 BattleCry::BattleCry(Commander* caster) : Skill("BattleCry", 3, 1, caster) {
   description_ =
       "An inspiring command that increases every ally's attack by "
-      "20% and move range by 1 for 1 turn";
+      "20% and move range by 1 for 1 turn. (CD: " +
+      std::to_string(cooldown_) + " turns)";
 }
 
 void BattleCry::cast(GameScene* scene) {
@@ -57,8 +59,7 @@ void BattleCry::cast(GameScene* scene) {
       unit->setBuffed(true);
     }
     SDLAudioManager::getInstance()->playChannel(10, 0, 1);
-    // Update turn priority
-    caster_->getTeam()->getController()->getTurnManager()->sortUnits();
+
     if (!caster_->getTeam()->getController()->hasMoved()) {
       scene->getBoard()->highlightCellsInRange(caster_->getBox(),
                                                caster_->getStats().moveRange);
@@ -85,7 +86,8 @@ void BattleCry::end(GameScene* scene) {
 ArrowRain::ArrowRain(Commander* caster) : Skill("ArrowRain", 4, 0, caster) {
   description_ =
       "Fire an volley of arrows that deal half damage to enemies in a " +
-      std::to_string(range) + " cells range.";
+      std::to_string(range) +
+      " cells range. (CD: " + std::to_string(cooldown_) + " turns)";
 }
 
 void ArrowRain::cast(GameScene* scene) {
@@ -114,7 +116,8 @@ HeroicStrike::HeroicStrike(Commander* caster)
     : Skill("Heroic Strike", 2, 0, caster) {
   description_ =
       "The next attack this turn will deal 50% increased damage and will not "
-      "trigger a counter-attack";
+      "trigger a counter-attack. (CD: " +
+      std::to_string(cooldown_) + " turns)";
 }
 
 void HeroicStrike::cast(GameScene* scene) {
@@ -141,7 +144,8 @@ WitheringCurse::WitheringCurse(Commander* caster)
     : Skill("Withering Curse", 3, 1, caster) {
   description_ =
       "Casts a curse over the enemy team, lowering their attack by 20% and "
-      "their defense by 10.";
+      "their defense by 10. (CD: " +
+      std::to_string(cooldown_) + " turns)";
 }
 
 void WitheringCurse::cast(GameScene* scene) {
@@ -165,4 +169,114 @@ void WitheringCurse::end(GameScene* scene) {
     unit->setDefense(unit->getBaseStats().defense);
     unit->setDebuffed(false);
   }
+}
+
+// ---------- CHARGE ----------
+Charge::Charge(Commander* caster) : Skill("Charge", 0, 0, caster) {
+  description_ =
+      "Charges with unstoppable force, preventing the enemy from "
+      "counter-attacking. (CD: Passive skill)";
+}
+
+void Charge::cast(GameScene* scene) {
+  if (remainingCooldown_ == 0 && caster_->getMoving()) {
+    Skill::cast(scene);
+    caster_->setUnstoppable(true);
+  }
+}
+
+void Charge::end(GameScene* scene) {
+  std::cout << "<" + id_ + "> ended" << std::endl;
+  active_ = false;
+}
+
+// ---------- BERSERKER ----------
+Berserker::Berserker(Commander* caster) : Skill("Berserker", 4, 2, caster) {
+  description_ =
+      "Goes into a blood frenzy, doubling its attack but halving its defense "
+      "for 2 turns. (CD: " +
+      std::to_string(cooldown_) + " turns)";
+}
+
+void Berserker::cast(GameScene* scene) {
+  if (remainingCooldown_ == 0 && caster_->getMoving()) {
+    Skill::cast(scene);
+    caster_->setAttack(caster_->getStats().attack * 2);
+    caster_->setDefense(caster_->getStats().defense / 2);
+    caster_->setBuffed(true);
+    caster_->setDebuffed(true);
+  }
+}
+
+void Berserker::end(GameScene* scene) {
+  std::cout << "<" + id_ + "> ended" << std::endl;
+  caster_->setAttack(caster_->getBaseStats().attack);
+  caster_->setDefense(caster_->getBaseStats().defense);
+  active_ = false;
+}
+
+// ---------- DEATHRAY ----------
+DeathRay::DeathRay(Commander* caster) : Skill("Death Ray", 3, 0, caster) {
+  description_ =
+      "Throws a bolt of dark magic to the furthest enemy, dealing 20 damage "
+      "plus double the distance between the caster and the target. (CD: " +
+      std::to_string(cooldown_) + " turns)";
+}
+
+void DeathRay::cast(GameScene* scene) {
+  if (remainingCooldown_ == 0 && caster_->getMoving()) {
+    Skill::cast(scene);
+
+    // Searches for the furthest unit
+    Unit* furthestUnit;
+    int maxDistance = 0;
+    for (auto unit : scene->getEnemyTeam(caster_)->getUnits()) {
+      const auto distanceX = abs((caster_->getBox()->getIndex().getX() -
+                                  unit->getBox()->getIndex().getX()));
+      const auto distanceY = abs((caster_->getBox()->getIndex().getY() -
+                                  unit->getBox()->getIndex().getY()));
+      const auto totalDistance = distanceX + distanceY;
+      if (totalDistance > maxDistance) {
+        maxDistance = totalDistance;
+        furthestUnit = unit;
+      }
+    }
+
+    furthestUnit->loseHealth(20 + maxDistance * 2, 20 + maxDistance * 2);
+  }
+}
+
+void DeathRay::end(GameScene* scene) {
+  std::cout << "<" + id_ + "> ended" << std::endl;
+  active_ = false;
+}
+
+// ---------- REINFORCE ----------
+Reinforce::Reinforce(Commander* caster) : Skill("Death Ray", 1, 0, caster) {
+  description_ =
+      "Reinforces all soldiers, archers and mages in a 5-box radius, "
+      "increasing the size of the unit by 1. (CD: " +
+      std::to_string(cooldown_) + " turns)";
+}
+
+void Reinforce::cast(GameScene* scene) {
+  if (remainingCooldown_ == 0 && caster_->getMoving()) {
+    Skill::cast(scene);
+
+    for (auto unit : scene->getAlliedTeam(caster_)->getUnits()) {
+      if (scene->getBoard()->isInRange(caster_->getBox(), unit->getBox(),
+                                       range)) {
+        if (unit->getType() == "Soldier" || unit->getType() == "Archer" ||
+            unit->getType() == "Mage") {
+          const auto battalion = reinterpret_cast<Battalion*>(unit);
+          battalion->setBattalionSize(battalion->getBattalionSize() + 1);
+        }
+      }
+    }
+  }
+}
+
+void Reinforce::end(GameScene* scene) {
+  std::cout << "<" + id_ + "> ended" << std::endl;
+  active_ = false;
 }

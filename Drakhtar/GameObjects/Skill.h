@@ -74,3 +74,40 @@ class WitheringCurse final : public Skill {
   void cast(GameScene* scene) override;
   void end(GameScene* scene) override;
 };
+
+class Charge final : public Skill {
+ public:
+  explicit Charge(Commander* caster);
+  virtual ~Charge() = default;
+
+  void cast(GameScene* scene) override;
+  void end(GameScene* scene) override;
+};
+
+class Berserker final : public Skill {
+ public:
+  explicit Berserker(Commander* caster);
+  virtual ~Berserker() = default;
+
+  void cast(GameScene* scene) override;
+  void end(GameScene* scene) override;
+};
+
+class DeathRay final : public Skill {
+ public:
+  explicit DeathRay(Commander* caster);
+  virtual ~DeathRay() = default;
+
+  void cast(GameScene* scene) override;
+  void end(GameScene* scene) override;
+};
+
+class Reinforce final : public Skill {
+  int range = 5;
+ public:
+  explicit Reinforce(Commander* caster);
+  virtual ~Reinforce() = default;
+
+  void cast(GameScene* scene) override;
+  void end(GameScene* scene) override;
+};
