@@ -31,6 +31,8 @@ void Scene::setOnEndHandler(std::function<void()> callback) {
   onEndHandler_ = std::move(callback);
 }
 
+void Scene::setTutorialBox() {}
+
 bool Scene::isFinished() const { return finished_; }
 bool Scene::isRunning() const { return !paused_; }
 bool Scene::isPaused() const { return paused_; }

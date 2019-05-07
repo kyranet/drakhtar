@@ -244,7 +244,7 @@ Board* GameScene::getBoard() const { return board_; }
 
 int GameScene::getBattleInd() { return battle_; }
 
-void GameScene::setTutorial() { addGameObject(tutorialBox); }
+void GameScene::setTutorialBox() { addGameObject(tutorialBox); }
 
 Team* GameScene::getAlliedTeam(Unit* unit) {
   if (unit->getTeam() == team1_) return team1_;
