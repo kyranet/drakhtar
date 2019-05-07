@@ -21,7 +21,7 @@ class Commander : public Unit {
   GameObject* commanderIcon_ = nullptr;
 
  public:
-  Commander(std::string name, Scene* scene, Texture* texture, Box* box,
+  Commander(const std::string& name, Scene* scene, Texture* texture, Box* box,
             UnitStats commanderStats);
   virtual ~Commander();
 

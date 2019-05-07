@@ -13,7 +13,8 @@
 #include "Managers/TextureManager.h"
 #include "Utils/Constants.h"
 
-StoreListener::StoreListener(GameObject* gameObject, std::string type, int cost)
+StoreListener::StoreListener(GameObject* gameObject, const std::string& type,
+                             int cost)
     : ListenerOnHover(gameObject), storeUnit(type, gameObject, cost) {
   const auto scene = Game::getSceneMachine()->getCurrentScene();
 

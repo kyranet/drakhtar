@@ -27,7 +27,7 @@ class SDLAudioManager final : public AudioManager {
   bool init() override;
 
   // Sound effects
-  bool loadSound(int tag, std::string fileName) override;
+  bool loadSound(int tag, const std::string& fileName) override;
   int playChannel(int tag, int loops, int channel) override;
   int playChannelTimed(int tag, int loops, int channel, int ticks) override;
   void pauseChannel(int channel) override;
@@ -37,7 +37,7 @@ class SDLAudioManager final : public AudioManager {
   int channels() override;
 
   // Music
-  bool loadMusic(int tag, std::string fileName) override;
+  bool loadMusic(int tag, const std::string& fileName) override;
   void playMusic(int tag, int loops) override;
   int setMusicVolume(int volume) override;
   void haltMusic() override;

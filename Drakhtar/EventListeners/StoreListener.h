@@ -18,7 +18,7 @@ struct StoreUnit {
   int amount_ = 0;
   Text* amountText = nullptr;
 
-  StoreUnit(std::string type, GameObject* unit, int cost)
+  StoreUnit(const std::string& type, GameObject* unit, int cost)
       : type(std::move(type)), unit(unit), cost_(cost) {}
 };
 
@@ -30,7 +30,7 @@ class StoreListener final : public ListenerOnHover {
   int sizeToBuy;
 
  public:
-  StoreListener(GameObject* gameObject, std::string type, int cost);
+  StoreListener(GameObject* gameObject, const std::string& type, int cost);
   ~StoreListener();
 
   void onHoverStart() override;

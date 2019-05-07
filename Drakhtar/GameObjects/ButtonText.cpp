@@ -30,7 +30,7 @@ ButtonText::ButtonText(Scene* scene, const std::string& text,
   addChild(text_);
 }
 
-void ButtonText::setText(std::string text) {
+void ButtonText::setText(const std::string& text) {
   delete children_[0];
   removeChild(children_[0]);
   const auto text_ = new Text(getScene(), FontManager::get(fontFile_),

@@ -17,7 +17,7 @@ class Battalion final : public Unit {
 
  public:
   Battalion(Scene* scene, Texture* texture, Box* box, const UnitStats stats,
-            std::string type, int battalionSize);
+            const std::string& type, int battalionSize);
   virtual ~Battalion();
 
   int getBattalionSize() const { return battalionSize_; }

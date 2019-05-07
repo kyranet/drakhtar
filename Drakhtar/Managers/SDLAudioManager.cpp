@@ -58,7 +58,7 @@ bool SDLAudioManager::init() {
   return true;
 }
 
-bool SDLAudioManager::loadSound(const int tag, std::string fileName) {
+bool SDLAudioManager::loadSound(const int tag, const std::string& fileName) {
   if (!initialized_) return false;
 
   const auto mixChunk = Mix_LoadWAV(fileName.c_str());
@@ -106,7 +106,7 @@ int SDLAudioManager::setChannelVolume(const int volume, const int channel) {
 
 int SDLAudioManager::channels() { return channels_; }
 
-bool SDLAudioManager::loadMusic(const int tag, std::string fileName) {
+bool SDLAudioManager::loadMusic(const int tag, const std::string& fileName) {
   if (!initialized_) return false;
 
   const auto music = Mix_LoadMUS(fileName.c_str());

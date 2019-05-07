@@ -20,7 +20,7 @@ class Skill {
   bool active_ = false;
 
  public:
-  Skill(std::string id, int cooldown, int duration, Commander* caster);
+  Skill(const std::string& id, int cooldown, int duration, Commander* caster);
   virtual ~Skill() = default;
 
   virtual void cast(GameScene* scene);
@@ -46,6 +46,7 @@ class BattleCry final : public Skill {
 
 class ArrowRain final : public Skill {
   int range = 5;
+
  public:
   explicit ArrowRain(Commander* caster);
   virtual ~ArrowRain() = default;

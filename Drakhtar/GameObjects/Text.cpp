@@ -5,7 +5,7 @@
 #include "../Structures/Texture.h"
 
 Text::Text(Scene* scene, Font* font, Vector2D<int> pos, SDL_Color color,
-           std::string text, int lineJumpLimit)
+           const std::string& text, int lineJumpLimit)
     : GameObject(scene, new Texture(Game::getRenderer()), pos,
                  Vector2D<int>(0, 0)),
       font_(font),
@@ -32,9 +32,8 @@ void Text::setColor(const SDL_Color& color) {
 }
 
 void Text::render() const {
-    const auto rect = getRect();
-  SDL_RenderCopy(Game::getRenderer(), texture_->getTexture(), nullptr,
-                 &rect);
+  const auto rect = getRect();
+  SDL_RenderCopy(Game::getRenderer(), texture_->getTexture(), nullptr, &rect);
 }
 
 void Text::render(SDL_Rect rect) const {
