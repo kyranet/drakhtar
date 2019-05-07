@@ -32,7 +32,13 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
                         tutorialBackground->getRect().h / 4),
       Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT / 19),
       [tutorialText_, this]() {
+        if (!tutorialText_->getClosed(tutorialText_->getCont() + 1)) {
+          setNextButtonRender(false);
+          setCloseButtonRender(true);
+        }
         if (!tutorialText_->addCount()) {
+          this->setRenderizable(false);
+          this->setTransparent(true);
           for (auto child : getChildren()) {
             child->setRenderizable(false);
             child->setTransparent(true);
@@ -49,17 +55,29 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
       Vector2D<int>(WIN_WIDTH / 14, WIN_HEIGHT / 20),
       [tutorialText_, this]() {
         tutorialText_->closeAddCount();
+        this->setRenderizable(false);
+        this->setTransparent(true);
         for (auto child : getChildren()) {
           child->setRenderizable(false);
           child->setTransparent(true);
         }
       },
       "Close ", "ButtonFont");
-
   addChild(tutorialBackground);
   addChild(tutorialText_);
   addChild(nextButton);
   addChild(CloseButton);
+  setCloseButtonRender(false);
 }
 
 void TutorialBox::setBoxPosition(Vector2D<int> pos) {}
+
+void TutorialBox::setNextButtonRender(bool next) {
+  getChildren()[2]->setRenderizable(next);
+  getChildren()[2]->setTransparent(!next);
+}
+
+void TutorialBox::setCloseButtonRender(bool close) {
+  getChildren()[3]->setRenderizable(close);
+  getChildren()[3]->setTransparent(!close);
+}

@@ -8,6 +8,9 @@ class Button;
 class PlayerController final : public UnitsController {
   bool locked_ = false;
   Button* skipTurnButton_ = nullptr;
+  bool firstMoved_;
+  bool firstAttacked_;
+  bool firstSkill_;
 
  public:
   PlayerController(Board* board, TurnManager* turnManager, GameScene* scene,
@@ -30,7 +33,13 @@ class PlayerController final : public UnitsController {
   void finish() override;
 
   bool getLocked() const;
-  bool isFirstPlayGame();
+
+  void setMoved_(bool moved);
+  bool getMoved();
+  void setAttacked(bool attacked);
+  bool getAttacked();
+  void setFirstSkill(bool firstSkill);
+  bool getFirstSkill();
 
   bool canCastSkills();
   void highlightCells();

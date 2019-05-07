@@ -48,8 +48,8 @@ void TutorialText::readFromFile(std::string& filename) {
   int i = 0;
   while (!finished && i < limit) {
     file >> word;
-    if ((word != "ก" && word != ".")) text += word + " ";
-    if (word == "ก") next = true;
+    if ((word != "ยก" && word != ".")) text += word + " ";
+    if (word == "ยก") next = true;
     if (word == ".") {
       TutorialTexts TutorialFileText;
       text.erase(0, 10);
@@ -83,3 +83,7 @@ void TutorialText::closeAddCount() {
     cont++;
   }
 }
+
+bool TutorialText::getClosed(int x) { return texts[x].next_; }
+
+int TutorialText::getCont() const { return cont; }
