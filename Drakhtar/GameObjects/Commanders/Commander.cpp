@@ -80,10 +80,11 @@ void Commander::attack(Unit* enemy, bool allowsCounter) {
 void Commander::setCommanderHealthBar() {
   const auto rect = box_->getRect();
 
-  commanderIcon_ =
-      new GameObject(scene_, TextureManager::get("UI-commanderIcon"),
+  commanderIcon_ = new GameObject(
+      scene_, TextureManager::get("UI-commanderIcon"),
       Vector2D<int>(rect.x, static_cast<int>(rect.y + rect.h / 1.31)),
-                     Vector2D<int>(rect.h / 2, rect.h / 2));
+      Vector2D<int>(rect.h / 2, rect.h / 2));
 
+  commanderIcon_->setTransparent(true);
   addChild(commanderIcon_);
 }
