@@ -104,6 +104,7 @@ class DeathRay final : public Skill {
 
 class Reinforce final : public Skill {
   int range = 5;
+
  public:
   explicit Reinforce(Commander* caster);
   virtual ~Reinforce() = default;
