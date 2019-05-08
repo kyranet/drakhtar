@@ -185,7 +185,7 @@ void Charge::cast(GameScene* scene) {
   }
 }
 
-void Charge::end(GameScene* scene) {
+void Charge::end(GameScene*) {
   std::cout << "<" + id_ + "> ended" << std::endl;
   active_ = false;
 }
@@ -208,7 +208,7 @@ void Berserker::cast(GameScene* scene) {
   }
 }
 
-void Berserker::end(GameScene* scene) {
+void Berserker::end(GameScene*) {
   std::cout << "<" + id_ + "> ended" << std::endl;
   caster_->setAttack(caster_->getBaseStats().attack);
   caster_->setDefense(caster_->getBaseStats().defense);
@@ -248,7 +248,7 @@ void DeathRay::cast(GameScene* scene) {
   }
 }
 
-void DeathRay::end(GameScene* scene) {
+void DeathRay::end(GameScene*) {
   std::cout << "<" + id_ + "> ended" << std::endl;
   active_ = false;
 }
@@ -278,7 +278,7 @@ void Reinforce::cast(GameScene* scene) {
   }
 }
 
-void Reinforce::end(GameScene* scene) {
+void Reinforce::end(GameScene*) {
   std::cout << "<" + id_ + "> ended" << std::endl;
   active_ = false;
 }
