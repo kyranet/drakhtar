@@ -8,4 +8,6 @@ class Scene;
 class Abeizhul final : public Commander {
  public:
   Abeizhul(Scene* scene, Texture* texture, Box* box, UnitStats abeizhulstats);
+
+  int loseHealth(int enemyAttack, int minDamage) override;
 };

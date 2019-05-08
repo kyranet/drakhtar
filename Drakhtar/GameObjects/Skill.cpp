@@ -252,11 +252,11 @@ void DeathRay::end(GameScene* scene) {
 }
 
 // ---------- REINFORCE ----------
-Reinforce::Reinforce(Commander* caster) : Skill("Death Ray", 1, 0, caster) {
+Reinforce::Reinforce(Commander* caster) : Skill("Reinforce", 1, 0, caster) {
   description_ =
       "Reinforces all soldiers, archers and mages in a 5-box radius, "
       "increasing the size of the unit by 1. (CD: " +
-      std::to_string(cooldown_) + " turns)";
+      std::to_string(cooldown_) + " turn)";
 }
 
 void Reinforce::cast(GameScene* scene) {
