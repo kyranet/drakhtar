@@ -33,6 +33,7 @@ class GameScene final : public Scene {
   int getBattleInd();
 
   void setTutorialBox();
+  void tutorialCheckpoint(int counter);
 
   Team* getTeam1_() const { return team1_; }
   Team* getTeam2_() const { return team2_; }

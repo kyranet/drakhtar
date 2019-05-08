@@ -246,6 +246,22 @@ int GameScene::getBattleInd() { return battle_; }
 
 void GameScene::setTutorialBox() { addGameObject(tutorialBox); }
 
+void GameScene::tutorialCheckpoint(int counter) {
+  auto x = reinterpret_cast<PlayerController*>(team1_->getController());
+  switch (counter) {
+    case 1:
+      x->setMoved_(true);
+      break;
+    case 2:
+      x->setAttacked(true);
+      break;
+    case 3:
+      x->setFirstSkill(true);
+      break;
+  }
+
+}
+
 Team* GameScene::getAlliedTeam(Unit* unit) {
   if (unit->getTeam() == team1_) return team1_;
   if (unit->getTeam() == team2_) return team2_;

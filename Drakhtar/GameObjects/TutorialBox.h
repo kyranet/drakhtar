@@ -2,6 +2,7 @@
 
 #pragma once
 #include <fstream>
+
 #include "../EventListeners/ListenerOnClick.h"
 #include "GameObject.h"
 
@@ -12,8 +13,7 @@ class TutorialSequence;
 class TutorialText;
 
 class TutorialBox : public GameObject {
-
-  //TutorialText* tutorialText_ = nullptr;
+  // TutorialText* tutorialText_ = nullptr;
 
  public:
   TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
@@ -21,4 +21,5 @@ class TutorialBox : public GameObject {
   void setNextButtonRender(bool next);
   void setCloseButtonRender(bool close);
   void setArrowPos(SDL_RendererFlip flip, Vector2D<int> pos);
+  void setArrowRenderizable(bool renderizable);
 };

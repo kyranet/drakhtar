@@ -10,18 +10,22 @@
 #include "../Utils/Constants.h"
 #include "EventListeners/TutorialSceneOnClick.h"
 #include "GameObject.h"
+#include "Structures/Game.h"
 #include "Text.h"
 #include "TutorialText.h"
-
 TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
                          Vector2D<int> size)
     : GameObject(scene, nullptr, pos, size) {
   SDL_Rect rect = {pos.getX(), pos.getY(), size.getX(), size.getY()};
   auto tutorialText_ = new TutorialText(scene, this, filename, rect);
 
-  auto arrow = new GameObject(scene, TextureManager::get("UI-arrowAnim"),Vector2D<int>(400,400),Vector2D<int>(WIN_WIDTH/20, WIN_WIDTH/20));
+  auto arrow = new GameObject(scene, TextureManager::get("UI-arrowAnim"),
+                              Vector2D<int>(400, 400),
+                              Vector2D<int>(WIN_WIDTH / 20, WIN_WIDTH / 20));
 
   arrow->getTexture()->setFlip(SDL_FLIP_HORIZONTAL);
+
+  auto counter = 0;
   const auto tutorialBackground =
       new GameObject(scene, TextureManager::get("UI-tutorialBackground"),
                      Vector2D<int>(rect.x, rect.y * 1.1),
@@ -34,7 +38,16 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
                     tutorialBackground->getPosition().getY() +
                         tutorialBackground->getRect().h / 4),
       Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT / 19),
-      [tutorialText_, this]() {
+      [tutorialText_, this, counter,scene]() {
+        switch (counter) {
+          case 1:
+              
+            break;
+          case 2:
+            break;
+          case 3:
+            break;
+        }
         if (!tutorialText_->getClosed(tutorialText_->getCont() + 1)) {
           setNextButtonRender(false);
           setCloseButtonRender(true);
@@ -56,7 +69,10 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
                     tutorialBackground->getPosition().getY() +
                         tutorialBackground->getRect().h / 4),
       Vector2D<int>(WIN_WIDTH / 14, WIN_HEIGHT / 20),
-      [tutorialText_, this]() {
+      [tutorialText_, this, counter]() mutable {
+        if (counter == 0) {
+          counter++;
+        }
         tutorialText_->closeAddCount();
         this->setRenderizable(false);
         this->setTransparent(true);
@@ -72,6 +88,7 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
   addChild(CloseButton);
   setCloseButtonRender(false);
   addChild(arrow);
+  setArrowRenderizable(false);
 }
 
 void TutorialBox::setNextButtonRender(bool next) {
@@ -84,8 +101,11 @@ void TutorialBox::setCloseButtonRender(bool close) {
   getChildren()[3]->setTransparent(!close);
 }
 
-void TutorialBox::setArrowPos(SDL_RendererFlip flip, Vector2D<int> pos)
-{
+void TutorialBox::setArrowPos(SDL_RendererFlip flip, Vector2D<int> pos) {
   getChildren()[4]->setPosition(pos);
   getChildren()[4]->getTexture()->setFlip(flip);
+}
+
+void TutorialBox::setArrowRenderizable(bool renderizable) {
+  getChildren()[4]->setRenderizable(renderizable);
 }
