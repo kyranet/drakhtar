@@ -43,8 +43,12 @@ const UnitStats THASSA_STATS = {35, 35, 150, 1, 3, 5, 100};
 const UnitStats ZAMDRAN_STATS = {50, 10, 200, 3, 2, 6, 100};
 // Sheissah
 const UnitStats SHEISSAH_STATS = {60, 10, 220, 2, 2, 5, 100};
-// BlueValar
+// Valar
 const UnitStats VALAR_STATS = {35, 35, 150, 1, 3, 5, 100};
+// Dreilay
+const UnitStats DREILAY_STATS = {50, 35, 300, 1, 5, 8, 100};
+// Abeizul
+const UnitStats ABEIZHUL_STATS = {50, 20, 400, 3, 3, 6, 100};
 
 // Mage
 const UnitStats MAGE_STATS = {20, 0, 10, 2, 3, 6, 38 / 2};

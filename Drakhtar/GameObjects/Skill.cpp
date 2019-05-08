@@ -172,7 +172,7 @@ void WitheringCurse::end(GameScene* scene) {
 }
 
 // ---------- CHARGE ----------
-Charge::Charge(Commander* caster) : Skill("Charge", 0, 0, caster) {
+Charge::Charge(Commander* caster) : Skill("Charge", 1, 0, caster) {
   description_ =
       "Charges with unstoppable force, preventing the enemy from "
       "counter-attacking. (CD: Passive skill)";

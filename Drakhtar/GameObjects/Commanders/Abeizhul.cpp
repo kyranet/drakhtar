@@ -13,12 +13,13 @@ Abeizhul::Abeizhul(Scene* scene, Texture* texture, Box* box,
   skills_.push_back(new Reinforce(this));
 }
 
+// Move two boxes backwards when receiving damage
 int Abeizhul::loseHealth(int enemyAttack, int minDamage) {
-  Vector2D<int> newIndex = {box_->getIndex().getX() - 2,
+  Vector2D<int> newIndex = {box_->getIndex().getX() + 2,
                             box_->getIndex().getY()};
-  Box* newBox = reinterpret_cast<GameScene*>(scene_)->getBoard()->getBoxAt(
-      newIndex.getX(), newIndex.getY());
-  if (newBox != nullptr) {
+  Board* board = reinterpret_cast<GameScene*>(scene_)->getBoard();
+  if (box_->getIndex().getX() + 2 < board->getCols()) {
+    Box* newBox = board->getBoxAt(newIndex.getX(), newIndex.getY());
     if (newBox->getContent() == nullptr) {
       moveToBox(newBox);
     }
