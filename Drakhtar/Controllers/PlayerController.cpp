@@ -151,20 +151,18 @@ void PlayerController::setTutorialDone(bool done) { tutorialDone_ = done; }
 
 bool PlayerController::gettutorialDone() { return tutorialDone_; }
 
-
 bool PlayerController::canCastSkills() {
   if (tutorialDone_) {
-  
-  Commander* commander = dynamic_cast<Commander*>(activeUnit_);
-  if (commander != nullptr) {
-    for (auto skill : commander->getSkills()) {
-      if (skill->getRemainingCooldown() == 0) {
-        highlightCells();
-        return true;
+    Commander* commander = dynamic_cast<Commander*>(activeUnit_);
+    if (commander != nullptr) {
+      for (auto skill : commander->getSkills()) {
+        if (skill->getRemainingCooldown() == 0) {
+          highlightCells();
+          return true;
+        }
       }
     }
-  }
-  return false;
+    return false;
   }
 }
 
