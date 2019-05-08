@@ -151,6 +151,8 @@ void Game::load() {
   // UI
   textures->add("UI-cellFrame", "../images/UI/cellFrame.png", 1, 1);
   textures->add("UI-cellHover", "../images/UI/cellHover.png", 1, 1);
+  textures->add("UI-cellHoverBlue", "../images/UI/cellHoverBlue.png", 1, 1);
+  textures->add("UI-cellHoverRed", "../images/UI/cellHoverRed.png", 1, 1);
   textures->add("UI-cellInRange", "../images/UI/cellInRange.png", 1, 1);
   textures->add("UI-enemyInRange", "../images/UI/enemyInRange.png", 1, 1);
   textures->add("UI-activeUnit", "../images/UI/activeUnitCell.png", 1, 1);
