@@ -238,7 +238,7 @@ void DeathRay::cast(GameScene* scene) {
       const auto distanceY = abs((caster_->getBox()->getIndex().getY() -
                                   unit->getBox()->getIndex().getY()));
       const auto totalDistance = distanceX + distanceY;
-      if (totalDistance > maxDistance) {
+      if (totalDistance >= maxDistance) {
         maxDistance = totalDistance;
         furthestUnit = unit;
       }
