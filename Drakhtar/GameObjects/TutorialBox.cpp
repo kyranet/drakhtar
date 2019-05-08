@@ -26,7 +26,6 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
 
   arrow->getTexture()->setFlip(SDL_FLIP_HORIZONTAL);
 
-  auto counter = 0;
   const auto tutorialBackground =
       new GameObject(scene, TextureManager::get("UI-tutorialBackground"),
                      Vector2D<int>(rect.x, rect.y * 1.1),
@@ -77,9 +76,9 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
         if (x == 12) {
           auto image = new GameObject(
               scene, TextureManager::get("tutorial_"),
-              Vector2D<int>(tutorialBackground->getPosition().getX()*0.99,
+              Vector2D<int>(tutorialBackground->getPosition().getX() * 0.99,
                             tutorialBackground->getPosition().getY() +
-                                tutorialBackground->getRect().h*0.95),
+                                tutorialBackground->getRect().h * 0.95),
               Vector2D<int>(tutorialBackground->getRect().w * 0.8,
                             tutorialBackground->getRect().h * 0.8));
           auto imageBack = new GameObject(
@@ -92,7 +91,7 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
 
           addChild(imageBack);
           imageBack->addChild(image);
-          pos = Vector2D<int>(imageBack->getPosition().getX()*1.15,
+          pos = Vector2D<int>(imageBack->getPosition().getX() * 1.15,
                               imageBack->getPosition().getY());
           setArrowPos(SDL_FLIP_HORIZONTAL, pos);
         }
@@ -107,7 +106,7 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
   const auto CloseButton = new Button(
       scene_, TextureManager::get("Vanilla-Button"),
       Vector2D<int>(tutorialBackground->getRect().w / 4 +
-                        tutorialBackground->getPosition().getX()*0.9,
+                        tutorialBackground->getPosition().getX() * 0.9,
                     tutorialBackground->getPosition().getY() +
                         tutorialBackground->getRect().h / 4),
       Vector2D<int>(WIN_WIDTH / 8, WIN_HEIGHT / 20),
