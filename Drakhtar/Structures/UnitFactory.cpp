@@ -7,6 +7,7 @@
 #include "GameObjects/Commanders/Thassa.h"
 #include "GameObjects/Commanders/Zamdran.h"
 #include "GameObjects/Commanders/Valar.h"
+#include "GameObjects/Commanders/RedValar.h"
 #include "GameObjects/Commanders/Dreilay.h"
 #include "GameObjects/Commanders/Abeizhul.h"
 #include "GameObjects/Unit.h"
@@ -44,7 +45,7 @@ UnitFactory::UnitFactory(Scene* scene) : scene_(scene) {
 
   commanderMap["RedValar"] = VALAR_STATS;
 
-  commanderSwitch["RedValar"] = CommanderType::VALAR;
+  commanderSwitch["RedValar"] = CommanderType::REDVALAR;
 
   commanderMap["Dreilay"] = DREILAY_STATS;
 
@@ -89,6 +90,10 @@ Commander* UnitFactory::newCommander(const std::string& type, Team* team,
     case CommanderType::VALAR:
       commander = new Valar(scene_, TextureManager::get(textureName), box,
                              commanderMap[type]);
+      break;
+    case CommanderType::REDVALAR:
+      commander = new RedValar(scene_, TextureManager::get(textureName), box,
+                            commanderMap[type]);
       break;
     case CommanderType::DREILAY:
       commander = new Dreilay(scene_, TextureManager::get(textureName), box,

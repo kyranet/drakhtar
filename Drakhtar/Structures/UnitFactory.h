@@ -11,7 +11,7 @@ class Unit;
 class Commander;
 struct UnitStats;
 
-enum class CommanderType { THASSA, ZAMDRAN, SHEISSAH, VALAR, DREILAY, ABEIZHUL };
+enum class CommanderType { THASSA, ZAMDRAN, SHEISSAH, VALAR, REDVALAR, DREILAY, ABEIZHUL };
 
 class UnitFactory {
   Scene* scene_;
