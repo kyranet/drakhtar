@@ -8,9 +8,9 @@ class Button;
 class PlayerController final : public UnitsController {
   bool locked_ = false;
   Button* skipTurnButton_ = nullptr;
-  bool firstMoved_;
-  bool firstAttacked_;
-  bool firstSkill_;
+  bool firstMoved_ = false;
+  bool firstAttacked_ = false;
+  bool firstSkill_ = false;
 
  public:
   PlayerController(Board* board, TurnManager* turnManager, GameScene* scene,
