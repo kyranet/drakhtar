@@ -8,9 +8,7 @@ class Button;
 class PlayerController final : public UnitsController {
   bool locked_ = false;
   Button* skipTurnButton_ = nullptr;
-  bool firstMoved_ = false;
-  bool firstAttacked_ = false;
-  bool firstSkill_ = false;
+  bool tutorialDone_ = false;
 
  public:
   PlayerController(Board* board, TurnManager* turnManager, GameScene* scene,
@@ -34,12 +32,8 @@ class PlayerController final : public UnitsController {
 
   bool getLocked() const;
 
-  void setMoved_(bool moved);
-  bool getMoved();
-  void setAttacked(bool attacked);
-  bool getAttacked();
-  void setFirstSkill(bool firstSkill);
-  bool getFirstSkill();
+  void setTutorialDone(bool moved);
+  bool gettutorialDone();
 
   bool canCastSkills();
   void highlightCells();

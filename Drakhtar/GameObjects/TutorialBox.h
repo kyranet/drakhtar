@@ -11,13 +11,14 @@ class Font;
 class Scene;
 class TutorialSequence;
 class TutorialText;
+class PlayerController;
 
 class TutorialBox : public GameObject {
   // TutorialText* tutorialText_ = nullptr;
 
  public:
   TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
-              Vector2D<int> size);
+              Vector2D<int> size, PlayerController* controller);
   void setNextButtonRender(bool next);
   void setCloseButtonRender(bool close);
   void setArrowPos(SDL_RendererFlip flip, Vector2D<int> pos);

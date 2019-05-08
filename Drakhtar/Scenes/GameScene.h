@@ -32,8 +32,7 @@ class GameScene final : public Scene {
   Board* getBoard() const;
   int getBattleInd();
 
-  void setTutorialBox();
-  void tutorialCheckpoint(int counter);
+  void activateTutorialBox();
 
   Team* getTeam1_() const { return team1_; }
   Team* getTeam2_() const { return team2_; }

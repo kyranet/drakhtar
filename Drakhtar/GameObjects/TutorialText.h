@@ -19,7 +19,6 @@ class TutorialText : public GameObject {
   void render() const override;
   void readFromFile(std::string& filename);
   bool addCount();
-  void closeAddCount();
   bool getClosed(int x);
   int getCont() const;
 };

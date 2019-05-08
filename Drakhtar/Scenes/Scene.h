@@ -28,8 +28,7 @@ class Scene {
   Scene();
   virtual ~Scene();
 
-  virtual void setTutorialBox();
-  virtual void tutorialCheckpoint(int counter);
+  virtual void activateTutorialBox();
   bool isFinished() const;
   bool isRunning() const;
   bool isPaused() const;

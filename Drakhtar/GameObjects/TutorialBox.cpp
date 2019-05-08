@@ -8,13 +8,15 @@
 #include "../Scenes/Scene.h"
 #include "../Structures/Font.h"
 #include "../Utils/Constants.h"
+#include "Controllers/PlayerController.h"
 #include "EventListeners/TutorialSceneOnClick.h"
 #include "GameObject.h"
 #include "Structures/Game.h"
 #include "Text.h"
 #include "TutorialText.h"
+#include "Unit.h"
 TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
-                         Vector2D<int> size)
+                         Vector2D<int> size, PlayerController* controller)
     : GameObject(scene, nullptr, pos, size) {
   SDL_Rect rect = {pos.getX(), pos.getY(), size.getX(), size.getY()};
   auto tutorialText_ = new TutorialText(scene, this, filename, rect);
@@ -38,15 +40,7 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
                     tutorialBackground->getPosition().getY() +
                         tutorialBackground->getRect().h / 4),
       Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT / 19),
-      [tutorialText_, this, counter, scene]() mutable {
-        switch (counter) {
-          case 1:
-          case 2:
-          case 3:
-            scene->tutorialCheckpoint(counter);
-            counter++;
-            break;
-        }
+      [tutorialText_, this, tutorialBackground, scene, controller]() {
         if (!tutorialText_->getClosed(tutorialText_->getCont() + 1)) {
           setNextButtonRender(false);
           setCloseButtonRender(true);
@@ -59,6 +53,54 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
             child->setTransparent(true);
           }
         }
+        Vector2D<int> pos = {0, 0};
+        int x = tutorialText_->getCont();
+        if (x == 9) {
+          setArrowRenderizable(true);
+          pos = Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 1.8,
+                              WIN_HEIGHT - WIN_HEIGHT / 13);
+          setArrowPos(SDL_FLIP_NONE, pos);
+        }
+        if (x == 10) {
+          pos = controller->getActiveUnit()->getPosition();
+          if (pos.getX() < WIN_WIDTH / 2) {
+            pos.setX(pos.getX() - WIN_WIDTH / 15);
+            setArrowPos(SDL_FLIP_NONE, pos);
+          } else {
+            pos.setX(pos.getX() + WIN_WIDTH / 15);
+            setArrowPos(SDL_FLIP_HORIZONTAL, pos);
+          }
+        }
+        if (x == 11) {
+          pos = Vector2D<int>(WIN_WIDTH / 6.5, WIN_HEIGHT - WIN_HEIGHT / 7.5);
+          setArrowPos(SDL_FLIP_HORIZONTAL, pos);
+        }
+        if (x == 12) {
+          auto image = new GameObject(
+              scene, TextureManager::get("tutorial_"),
+              Vector2D<int>(tutorialBackground->getPosition().getX()*0.99,
+                            tutorialBackground->getPosition().getY() +
+                                tutorialBackground->getRect().h*0.95),
+              Vector2D<int>(tutorialBackground->getRect().w * 0.8,
+                            tutorialBackground->getRect().h * 0.8));
+          auto imageBack = new GameObject(
+              scene, TextureManager::get("UI-tutorialBackground"),
+              Vector2D<int>(tutorialBackground->getPosition().getX(),
+                            tutorialBackground->getPosition().getY() +
+                                tutorialBackground->getRect().h),
+              Vector2D<int>(tutorialBackground->getRect().w,
+                            tutorialBackground->getRect().h));
+
+          addChild(imageBack);
+          imageBack->addChild(image);
+          pos = Vector2D<int>(imageBack->getPosition().getX()*1.15,
+                              imageBack->getPosition().getY());
+          setArrowPos(SDL_FLIP_HORIZONTAL, pos);
+        }
+        if (x == 13) {
+          pos = Vector2D<int>(WIN_WIDTH / 7, WIN_HEIGHT / 6);
+          setArrowPos(SDL_FLIP_HORIZONTAL, pos);
+        }
       },
       "Next ", "ButtonFont");
   const auto CloseButton = new Button(
@@ -67,18 +109,15 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
                         tutorialBackground->getPosition().getX(),
                     tutorialBackground->getPosition().getY() +
                         tutorialBackground->getRect().h / 4),
-      Vector2D<int>(WIN_WIDTH / 14, WIN_HEIGHT / 20),
-      [tutorialText_, this, counter]() mutable {
-        if (counter == 0) {
-          counter++;
-        }
-        tutorialText_->closeAddCount();
+      Vector2D<int>(WIN_WIDTH / 8, WIN_HEIGHT / 20),
+      [tutorialText_, this, controller]() {
         this->setRenderizable(false);
         this->setTransparent(true);
         for (auto child : getChildren()) {
           child->setRenderizable(false);
           child->setTransparent(true);
         }
+        controller->setTutorialDone(true);
       },
       "Close ", "ButtonFont");
   addChild(tutorialBackground);

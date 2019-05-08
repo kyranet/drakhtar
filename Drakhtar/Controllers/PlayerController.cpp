@@ -34,7 +34,7 @@ PlayerController::PlayerController(Board* board, TurnManager* turnManager,
 void PlayerController::onClickMove(Box* boxClicked) {
   if (locked_) return;
   // Checks if the box clicked is within movement range
-  if (getMoved()) {
+  if (tutorialDone_) {
     if (!board_->isInMoveRange(activeUnit_->getBox(), boxClicked,
                                activeUnit_->getStats().moveRange)) {
       SDLAudioManager::getInstance()->playChannel(3, 0, 0);
@@ -79,7 +79,7 @@ void PlayerController::onClickMove(Box* boxClicked) {
 
 void PlayerController::onClickAttack(Box* boxClicked) {
   auto unit = boxClicked->getContent();
-  if (firstAttacked_) {
+  if (tutorialDone_) {
     // If the box clicked was empty, skip
     if (!unit) return;
 
@@ -147,25 +147,13 @@ void PlayerController::finish() {
 
 bool PlayerController::getLocked() const { return locked_; }
 
-void PlayerController::setMoved_(bool moved) { firstMoved_ = moved; }
+void PlayerController::setTutorialDone(bool done) { tutorialDone_ = done; }
 
-bool PlayerController::getMoved() { return firstMoved_; }
+bool PlayerController::gettutorialDone() { return tutorialDone_; }
 
-void PlayerController::setAttacked(bool attacked) { firstAttacked_ = attacked; }
-
-bool PlayerController::getAttacked() { return firstAttacked_; }
-
-void PlayerController::setFirstSkill(bool firstSkill) {
-  firstSkill_ = firstSkill;
-}
-
-bool PlayerController::getFirstSkill() {
-  return firstSkill_;
-  ;
-}
 
 bool PlayerController::canCastSkills() {
-  if (firstSkill_) {
+  if (tutorialDone_) {
   
   Commander* commander = dynamic_cast<Commander*>(activeUnit_);
   if (commander != nullptr) {

@@ -236,6 +236,7 @@ void Game::load() {
   textures->add("Maps-5Battle", "../images/Maps/FifthBattle.png", 1, 1);
 
   // Tutorial images
+  textures->add("tutorial_", "../images/Tutorials/tutorial_.png", 1, 1);
   textures->add("tutorial-1", "../images/Tutorials/tutorial_1.png", 1, 1);
   textures->add("tutorial-2", "../images/Tutorials/tutorial_2.png", 1, 1);
   textures->add("tutorial-3", "../images/Tutorials/tutorial_3.png", 1, 1);
