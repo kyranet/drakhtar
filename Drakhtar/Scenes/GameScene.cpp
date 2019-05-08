@@ -17,7 +17,6 @@
 #include "GameObjects/SkillButton.h"
 #include "GameObjects/TurnBar.h"
 #include "GameObjects/TutorialBox.h"
-#include "GameObjects/TutorialLogic.h"
 #include "GameObjects/UnitDescriptionBox.h"
 #include "Managers/GameManager.h"
 #include "Managers/SDLAudioManager.h"

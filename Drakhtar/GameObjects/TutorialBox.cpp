@@ -9,7 +9,6 @@
 #include "../Structures/Font.h"
 #include "../Utils/Constants.h"
 #include "Controllers/PlayerController.h"
-#include "EventListeners/TutorialSceneOnClick.h"
 #include "GameObject.h"
 #include "Structures/Game.h"
 #include "Text.h"
@@ -98,6 +97,8 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
           setArrowPos(SDL_FLIP_HORIZONTAL, pos);
         }
         if (x == 13) {
+          getChildren()[5]->setRenderizable(false);
+          getChildren()[5]->setTransparent(true);
           pos = Vector2D<int>(WIN_WIDTH / 7, WIN_HEIGHT / 6);
           setArrowPos(SDL_FLIP_HORIZONTAL, pos);
         }
@@ -106,7 +107,7 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
   const auto CloseButton = new Button(
       scene_, TextureManager::get("Vanilla-Button"),
       Vector2D<int>(tutorialBackground->getRect().w / 4 +
-                        tutorialBackground->getPosition().getX(),
+                        tutorialBackground->getPosition().getX()*0.9,
                     tutorialBackground->getPosition().getY() +
                         tutorialBackground->getRect().h / 4),
       Vector2D<int>(WIN_WIDTH / 8, WIN_HEIGHT / 20),
