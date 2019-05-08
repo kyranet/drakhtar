@@ -66,7 +66,7 @@ StoreListener::StoreListener(GameObject* gameObject, const std::string& type,
 
   auto infoBox =
       new GameObject(scene, TextureManager::get("Reward-Panel"),
-                     Vector2D<int>(WIN_WIDTH * 0.68, WIN_HEIGHT * 0.66),
+                     Vector2D<int>(WIN_WIDTH * 0.68, WIN_HEIGHT * 0.25),
                      Vector2D<int>(WIN_WIDTH * 0.4, WIN_HEIGHT * 0.36));
   auto infoBoxText =
       new Text(scene, FontManager::get("Retron2000"),
@@ -101,15 +101,15 @@ void StoreListener::reset() {
 }
 
 std::string StoreListener::infoFillText() const {
-  return "-After each fight, the surviving units will be conserved, buying "
+  return "- After each fight, the surviving units will be conserved. Buying "
          "will increase the number you currently have.\n"
-         "-The total amount you buy will be added to one single unit, giving "
+         "- The total amount you buy will be added to one single unit, giving "
          "it more attack power and hp. \n"
          "E.g: having 5 archers will multiply archers stats by 5 \n"
-         "-The higher the amount of one unit is, the higher the cost of the "
+         "- The higher the amount of one unit is, the higher the cost of the "
          "next one will be. \n"
-         "-You can buy up to a certain number for each unit. \n"
-         "-Matches are turn based, between ally and enemy units altogether, "
+         "- You can buy up to a certain number for each unit. \n"
+         "- Matches are turn based, between ally and enemy units altogether, "
          "higher the speed, higher turn priority.";
 }
 
