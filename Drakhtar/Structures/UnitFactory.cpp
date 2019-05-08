@@ -7,6 +7,8 @@
 #include "GameObjects/Commanders/Thassa.h"
 #include "GameObjects/Commanders/Zamdran.h"
 #include "GameObjects/Commanders/Valar.h"
+#include "GameObjects/Commanders/Dreilay.h"
+#include "GameObjects/Commanders/Abeizhul.h"
 #include "GameObjects/Unit.h"
 #include "Managers/TextureManager.h"
 #include "Scenes/Scene.h"
@@ -39,6 +41,18 @@ UnitFactory::UnitFactory(Scene* scene) : scene_(scene) {
   commanderMap["BlueValar"] = VALAR_STATS;
 
   commanderSwitch["BlueValar"] = CommanderType::VALAR;
+
+  commanderMap["RedValar"] = VALAR_STATS;
+
+  commanderSwitch["RedValar"] = CommanderType::VALAR;
+
+  commanderMap["Dreilay"] = DREILAY_STATS;
+
+  commanderSwitch["Dreilay"] = CommanderType::DREILAY;
+
+  commanderMap["Abeizhul"] = ABEIZHUL_STATS;
+
+  commanderSwitch["Abeizhul"] = CommanderType::ABEIZHUL;
 }
 
 UnitFactory::~UnitFactory() = default;
@@ -75,6 +89,14 @@ Commander* UnitFactory::newCommander(const std::string& type, Team* team,
     case CommanderType::VALAR:
       commander = new Valar(scene_, TextureManager::get(textureName), box,
                              commanderMap[type]);
+      break;
+    case CommanderType::DREILAY:
+      commander = new Dreilay(scene_, TextureManager::get(textureName), box,
+                            commanderMap[type]);
+      break;
+    case CommanderType::ABEIZHUL:
+      commander = new Abeizhul(scene_, TextureManager::get(textureName), box,
+                            commanderMap[type]);
       break;
     default:
       return nullptr;

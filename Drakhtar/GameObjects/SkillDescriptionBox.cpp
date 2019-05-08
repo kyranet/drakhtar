@@ -24,7 +24,7 @@ SkillDescriptionBox::SkillDescriptionBox(Scene* scene, SkillButton* skillButton)
   const auto skillTextSprite = new Text(
       scene_, FontManager::get("StatsFont"),
       Vector2D<int>(this->getPosition().getX(), this->getPosition().getY()),
-      {0, 0, 0, 1}, statText_, this->getRect().w * 0.9);
+      {0, 0, 0, 1}, statText_, this->getRect().w * 0.8);
   addChild(skillTextSprite);
   skillTextSprite->setTransparent(true);
   active_ = true;

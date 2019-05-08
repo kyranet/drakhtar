@@ -54,7 +54,11 @@ std::string Battalion::sizeToString() const {
 
 void Battalion::setBattalionSize(const int battalionSize) {
   battalionSize_ = battalionSize;
+  health_ = baseStats_.maxHealth * battalionSize_;
+  healthText_->setText(healthToString());
+  healthText_->setColor({255, 255, 255, 0});
   sizeText_->setText(sizeToString());
+  sizeText_->setColor({0, 0, 255, 0});
 }
 
 int Battalion::getAttack() const { return stats_.attack * battalionSize_; }
