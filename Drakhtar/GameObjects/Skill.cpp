@@ -212,6 +212,8 @@ void Berserker::end(GameScene* scene) {
   std::cout << "<" + id_ + "> ended" << std::endl;
   caster_->setAttack(caster_->getBaseStats().attack);
   caster_->setDefense(caster_->getBaseStats().defense);
+  caster_->setBuffed(false);
+  caster_->setDebuffed(false);
   active_ = false;
 }
 
