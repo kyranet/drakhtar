@@ -38,14 +38,13 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
                     tutorialBackground->getPosition().getY() +
                         tutorialBackground->getRect().h / 4),
       Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT / 19),
-      [tutorialText_, this, counter,scene]() {
+      [tutorialText_, this, counter, scene]() mutable {
         switch (counter) {
           case 1:
-              
-            break;
           case 2:
-            break;
           case 3:
+            scene->tutorialCheckpoint(counter);
+            counter++;
             break;
         }
         if (!tutorialText_->getClosed(tutorialText_->getCont() + 1)) {

@@ -33,6 +33,8 @@ void Scene::setOnEndHandler(std::function<void()> callback) {
 
 void Scene::setTutorialBox() {}
 
+void Scene::tutorialCheckpoint(int counter) {}
+
 bool Scene::isFinished() const { return finished_; }
 bool Scene::isRunning() const { return !paused_; }
 bool Scene::isPaused() const { return paused_; }
