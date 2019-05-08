@@ -28,6 +28,7 @@ class Unit : public GameObject {
   int health_;
   std::string healthToString() const;
   int minDamage_ = 1;
+  bool isCommander_ = false;
 
   const UnitStats baseStats_;
   UnitStats stats_;
@@ -47,6 +48,8 @@ class Unit : public GameObject {
   virtual int getHealth() const { return health_; }
   virtual int getPrize() const { return prize_; }
     int getSpeed() const { return speed_; }*/
+
+  bool isCommander() const;
 
   int getHealth() const { return health_; }
   virtual int getDefense() const { return stats_.defense; }

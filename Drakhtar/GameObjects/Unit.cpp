@@ -137,3 +137,5 @@ void Unit::kill() { getTeam()->removeUnit(this); }
 std::string Unit::healthToString() const {
   return std::to_string(health_) + " HP";
 }
+
+bool Unit::isCommander() const { return isCommander_; }
