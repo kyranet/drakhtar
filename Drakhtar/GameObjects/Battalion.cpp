@@ -118,14 +118,15 @@ void Battalion::render() const {
   std::string type = getType();
   int offsetX = 0;
   int offsetY = 0;
-  if (type == "Archer" || type == "Mage")
+  if (type == "Archer" || type == "Mage") {
     offsetX = size_.getX() / 6;
-  else if (type == "Knight")
+  } else if (type == "Knight") {
     offsetX = size_.getX() / 4;
-  else if (type == "Monster") {
+  } else if (type == "Monster") {
     offsetX = size_.getX() / 6;
     offsetY = size_.getY() / 8;
   }
+
   if (battalionSize_ > 3) {
     auto aux = getRect();
     aux.x += getTexture()->getFlip() == SDL_FLIP_HORIZONTAL
