@@ -6,6 +6,7 @@
 
 #include "Board.h"
 #include "Box.h"
+#include "EventListeners/SkillButtonListener.h"
 #include "HealthBar.h"
 #include "Managers/FontManager.h"
 #include "Managers/TextureManager.h"
@@ -13,15 +14,14 @@
 #include "Structures/Team.h"
 #include "Text.h"
 #include "Utils/Vector2D.h"
-#include "EventListeners/SkillButtonListener.h"
+#include "Utils/Constants.h"
 
 Unit::Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
            const std::string& type)
     : GameObject(scene, texture,
                  Vector2D<int>(box->getRect().x + box->getRect().w / 2,
                                box->getRect().y + box->getRect().h / 2),
-                 Vector2D<int>(static_cast<int>(box->getRect().w * 1.4),
-                               static_cast<int>(box->getRect().h * 1.4))),
+                 Vector2D<int>(WIN_HEIGHT / 5.625f, WIN_HEIGHT / 5.625f)),
       boxPosition_(box->getPosition()),
       type_(type),
       box_(box),
@@ -32,8 +32,12 @@ Unit::Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
   setTransparent(true);
   box->setContent(this);
 
+  if (type == "Valar"){
+    size_.setX(WIN_WIDTH / 6.4f);
+    size_.setY(WIN_HEIGHT / 3.6f);
+    }
   if (type == "Thassa" || type == "Zamdran" || type == "Sheissah" ||
-      type == "Abeizhul" || type == "Dreilay") {
+      type == "Abeizhul") {
     size_.setX(static_cast<int>(box->getRect().w * 1.7));
     size_.setY(static_cast<int>(box->getRect().h * 1.7));
   }

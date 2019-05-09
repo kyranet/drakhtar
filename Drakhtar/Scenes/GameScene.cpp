@@ -198,7 +198,7 @@ void GameScene::readLevel(UnitFactory& factory) {
   board_ = nullptr;
 
   board_ = new Board(this, rowSize, columnSize,
-                     static_cast<float>(WIN_HEIGHT / 10.0f));
+                     static_cast<float>(90));
   addGameObject(board_);
 
   file >> commanderName;
