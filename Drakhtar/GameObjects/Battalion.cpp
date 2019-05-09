@@ -4,11 +4,11 @@
 
 #include <algorithm>
 
+#include "../Managers/TextureManager.h"
 #include "Box.h"
 #include "HealthBar.h"
 #include "Managers/FontManager.h"
 #include "Managers/GameManager.h"
-#include "../Managers/TextureManager.h"
 #include "Scenes/GameScene.h"
 #include "Scenes/Scene.h"
 #include "Structures/Game.h"
@@ -39,15 +39,14 @@ void Battalion::setHealthBar() {
 
   unitBattalionCircle_ =
       new GameObject(scene_, TextureManager::get("UI-BattalionCircle2"),
-                     {rect.x, static_cast<int>(rect.y + rect.h /1.31)},
+                     {rect.x, static_cast<int>(rect.y + rect.h / 1.31)},
                      {rect.w / 3, rect.h / 3});
 
   addChild(unitBattalionCircle_);
 
   sizeText_ = new Text(scene_, FontManager::get("TutorialFont"),
-                       {rect.x, static_cast<int>(rect.y + rect.h /1.31)},
-                       textColor,
-                       sizeToString(), rect.w * 2);
+                       {rect.x, static_cast<int>(rect.y + rect.h / 1.31)},
+                       textColor, sizeToString(), rect.w * 2);
 
   addChild(sizeText_);
 
@@ -116,20 +115,36 @@ void Battalion::moveToBox(Box* box) {
 }
 
 void Battalion::render() const {
+  std::string type = getType();
+  int offsetX = 0;
+  int offsetY = 0;
+  if (type == "Archer" || type == "Mage")
+    offsetX = size_.getX() / 6;
+  else if (type == "Knight")
+    offsetX = size_.getX() / 4;
+  else if (type == "Monster") {
+    offsetX = size_.getX() / 6;
+    offsetY = size_.getY() / 8;
+  }
   if (battalionSize_ > 3) {
     auto aux = getRect();
-    aux.x += getTexture()->getFlip() == SDL_FLIP_HORIZONTAL ? -size_.getX() / 4
-                                                            : size_.getX() / 4;
-    aux.y -= size_.getY() / 5;
+    aux.x += getTexture()->getFlip() == SDL_FLIP_HORIZONTAL
+                 ? -size_.getX() / 4 + offsetX
+                 : size_.getX() / 4 - offsetX;
+    aux.y -= size_.getY() / 5 + offsetY;
     texture_->renderFrame(aux, texture_->getAnimation()[texture_->getFrame()]);
   }
   if (battalionSize_ > 7) {
     auto aux = getRect();
+    aux.x +=
+        getTexture()->getFlip() == SDL_FLIP_HORIZONTAL ? offsetX : -offsetX;
+    aux.y -= offsetY;
     texture_->renderFrame(aux, texture_->getAnimation()[texture_->getFrame()]);
   }
   auto aux = getRect();
-  aux.x += getTexture()->getFlip() == SDL_FLIP_HORIZONTAL ? -size_.getX() / 4
-                                                          : size_.getX() / 4;
-  aux.y += size_.getY() / 5;
+  aux.x += getTexture()->getFlip() == SDL_FLIP_HORIZONTAL
+               ? -size_.getX() / 4 + offsetX
+               : size_.getX() / 4 - offsetX;
+  aux.y += size_.getY() / 5 - offsetY;
   Unit::render(aux);
 }
