@@ -249,13 +249,13 @@ void Game::load() {
   textures->add("Transition-Map1", "../images/Maps/TestMap.png", 1, 1);
   textures->add("Transition-Map2", "../images/Transition/Transition_2.png", 1,
                 1);
-  textures->add("Transition-Map3", "../images/Transition/Transition_3.png", 4,
-                1)
-  ->addAnimation("default", {0, 1, 2, 3}, 1);
-  textures->add("Transition-Map4", "../images/Transition/Transition_4.png",
-                4, 1);
-  textures->add("Transition-Map5", "../images/Transition/Transition_5.png",
-                1, 1);
+  textures
+      ->add("Transition-Map3", "../images/Transition/Transition_3.png", 4, 1)
+      ->addAnimation("default", {0, 1, 2, 3}, 1);
+  textures->add("Transition-Map4", "../images/Transition/Transition_4.png", 4,
+                1);
+  textures->add("Transition-Map5", "../images/Transition/Transition_5.png", 1,
+                1);
   textures->add("Transition-Menu", "../images/Transition/Transition_1.png", 4,
                 1);
 
@@ -271,25 +271,25 @@ void Game::load() {
                 1);
   textures->add("Cancel-Button", "../images/Recruitment/cancel_Button.png", 1,
                 1);
-  textures->add("Coin-Anim", "../images/Recruitment/coin_rot_anim.png", 6,
-                1);
+  textures->add("Coin-Anim", "../images/Recruitment/coin_rot_anim.png", 6, 1);
 
   auto fonts = FontManager::getInstance();
   textures->init();
 
   // Fonts
-  fonts->add("DialogFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 66,
+  fonts->add("DialogFont", "../fonts/Greenscr.ttf", WIN_WIDTH / 66, WIN_WIDTH);
+  fonts->add("SkillButtonFont", "../fonts/Greenscr.ttf", WIN_WIDTH / 40,
              WIN_WIDTH);
-  fonts->add("SkillButtonFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 40,
+  fonts->add("Retron2000", "../fonts/Greenscr.ttf", WIN_WIDTH / 88, WIN_WIDTH);
+  fonts->add("TutorialFont", "../fonts/Greenscr.ttf", WIN_WIDTH / 100,
              WIN_WIDTH);
-  fonts->add("Retron2000", "../fonts/Retron2000.ttf", WIN_WIDTH / 88,
+  fonts->add("UnitFont", "../fonts/Greenscr.ttf", WIN_WIDTH / 120, WIN_WIDTH);
+  fonts->add("StatsFont", "../fonts/Greenscr.ttf", WIN_WIDTH / 45, WIN_WIDTH);
+  fonts->add("ButtonFont", "../fonts/Greenscr.ttf", WIN_WIDTH / 50, WIN_WIDTH);
+  fonts->add("ButtonFontQuantity", "../fonts/Retron2000.ttf", WIN_WIDTH / 50,
              WIN_WIDTH);
-  fonts->add("TutorialFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 100,
+  fonts->add("ButtonFontBig", "../fonts/Greenscr.ttf", WIN_WIDTH / 20,
              WIN_WIDTH);
-  fonts->add("UnitFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 120, WIN_WIDTH);
-  fonts->add("StatsFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 45, WIN_WIDTH);
-  fonts->add("ButtonFont", "../fonts/AURORA.ttf", WIN_WIDTH / 50, WIN_WIDTH);
-  fonts->add("ButtonFontBig", "../fonts/AURORA.ttf", WIN_WIDTH / 20, WIN_WIDTH);
   fonts->init();
 
   auto audio = SDLAudioManager::getInstance();
@@ -330,10 +330,15 @@ void Game::load() {
   audio->loadSound(5, "../audio/sound/UI-sounds/attackConfirm.mp3");
   audio->loadSound(6, "../audio/sound/UI-sounds/quitButton.mp3");
   audio->loadSound(7, "../audio/sound/UI-sounds/pauseButton.mp3");
-  audio->loadSound(8, "../audio/sound/Unit-sounds/Heroes/Thassa/HeroicStrikeShout.mp3");
-  audio->loadSound(9, "../audio/sound/Unit-sounds/Heroes/Thassa/hittingwithHeroicStrike.mp3");
-  audio->loadSound(10, "../audio/sound/Unit-sounds/Heroes/Thassa/battleCrySound.mp3");
-  audio->loadSound(11, "../audio/sound/Unit-sounds/Heroes/Zamdran/ArrowRainSkill.mp3");
+  audio->loadSound(
+      8, "../audio/sound/Unit-sounds/Heroes/Thassa/HeroicStrikeShout.mp3");
+  audio->loadSound(
+      9,
+      "../audio/sound/Unit-sounds/Heroes/Thassa/hittingwithHeroicStrike.mp3");
+  audio->loadSound(
+      10, "../audio/sound/Unit-sounds/Heroes/Thassa/battleCrySound.mp3");
+  audio->loadSound(
+      11, "../audio/sound/Unit-sounds/Heroes/Zamdran/ArrowRainSkill.mp3");
   audio->loadSound(12, "../audio/sound/UI-sounds/coin.wav");
 
   sceneMachine_ = new SceneMachine();
