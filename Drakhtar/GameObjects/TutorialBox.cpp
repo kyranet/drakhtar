@@ -15,7 +15,8 @@
 #include "TutorialText.h"
 #include "Unit.h"
 TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
-                         Vector2D<int> size, PlayerController* controller, PlayerController * temporalController)
+                         Vector2D<int> size, PlayerController* controller,
+                         PlayerController* temporalController)
     : GameObject(scene, nullptr, pos, size) {
   SDL_Rect rect = {pos.getX(), pos.getY(), size.getX(), size.getY()};
   auto tutorialText_ = new TutorialText(scene, this, filename, rect);
@@ -95,11 +96,13 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
                               imageBack->getPosition().getY());
           setArrowPos(SDL_FLIP_HORIZONTAL, pos);
         }
-        if (x == 13) {         
+        if (x == 13) {
           getChildren()[5]->setRenderizable(false);
           getChildren()[5]->setTransparent(true);
-          for (auto child : getChildren()[5]->getChildren()) 
-			  child->destroy();
+          for (auto child : getChildren()[5]->getChildren()) {
+            child->setTransparent(true);
+            child->destroy();
+          }
           pos = Vector2D<int>(WIN_WIDTH / 7, WIN_HEIGHT / 6);
           setArrowPos(SDL_FLIP_HORIZONTAL, pos);
         }

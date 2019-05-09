@@ -143,8 +143,9 @@ void GameScene::preload() {
     std::string x = "../tutorials/tutorials.txt";
     tutorialBox = new TutorialBox(
         this, x, Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 4),
-        Vector2D<int>(WIN_WIDTH / 5, WIN_HEIGHT / 4), reinterpret_cast<PlayerController*>(team1_->getController()),
-		reinterpret_cast<PlayerController*>(team2_->getController()));
+        Vector2D<int>(WIN_WIDTH / 5, WIN_HEIGHT / 4),
+        reinterpret_cast<PlayerController*>(team1_->getController()),
+        reinterpret_cast<PlayerController*>(team2_->getController()));
   }
 
   audio->haltMusic();
@@ -245,7 +246,6 @@ Board* GameScene::getBoard() const { return board_; }
 int GameScene::getBattleInd() { return battle_; }
 
 void GameScene::activateTutorialBox() { addGameObject(tutorialBox); }
-
 
 Team* GameScene::getAlliedTeam(Unit* unit) {
   if (unit->getTeam() == team1_) return team1_;

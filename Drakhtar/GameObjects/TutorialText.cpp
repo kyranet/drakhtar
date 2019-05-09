@@ -21,7 +21,7 @@ TutorialText::TutorialText(Scene* scene, TutorialBox* box, std::string& file,
                  Vector2D<int>(400, 400), Vector2D<int>(1000, 1000)) {
   readFromFile(file);
   text = new Text(scene, FontManager::get("Retron2000"),
-                  Vector2D<int>(rect.x, rect.y*0.9), {255, 255, 255, 1},
+                  Vector2D<int>(rect.x, rect.y * 0.9), {255, 255, 255, 1},
                   texts[cont].dialogtexts_, 250);
   text->setRenderizable(true);
   text->setColor({255, 255, 255, 0});
