@@ -19,13 +19,22 @@
 Battalion::Battalion(Scene* scene, Texture* texture, Box* box,
                      const UnitStats stats, const std::string& type,
                      const int battalionSize)
-    : Unit(scene, texture, box, stats, type), battalionSize_(battalionSize) {
+    : Unit(scene, texture, box, stats, type),
+      battalionSize_(battalionSize),
+      offset(0, 0) {
   stats_.maxHealth = baseStats_.maxHealth * battalionSize_;
   stats_.defense = baseStats_.defense;
   stats_.attack = baseStats_.attack * battalionSize_;
   stats_.prize = baseStats_.prize * battalionSize_;
   health_ = stats_.maxHealth;
   minDamage_ = battalionSize_;
+
+  if (type == "Archer" || type == "Mage")
+    offset.set(size_.getX() / 6, 0);
+  else if (type == "Knight")
+    offset.set(size_.getX() / 4, 0);
+  else if (type == "Monster")
+    offset.set(size_.getX() / 6, size_.getY() / 8);
 }
 
 void Battalion::setHealthBar() {
@@ -115,37 +124,25 @@ void Battalion::moveToBox(Box* box) {
 }
 
 void Battalion::render() const {
-  std::string type = getType();
-  int offsetX = 0;
-  int offsetY = 0;
-  if (type == "Archer" || type == "Mage") {
-    offsetX = size_.getX() / 6;
-  } else if (type == "Knight") {
-    offsetX = size_.getX() / 4;
-  } else if (type == "Monster") {
-    offsetX = size_.getX() / 6;
-    offsetY = size_.getY() / 8;
-  }
-
   if (battalionSize_ > 3) {
     auto aux = getRect();
     aux.x += getTexture()->getFlip() == SDL_FLIP_HORIZONTAL
-                 ? -size_.getX() / 4 + offsetX
-                 : size_.getX() / 4 - offsetX;
-    aux.y -= size_.getY() / 5 + offsetY;
+                 ? -size_.getX() / 4 + offset.getX()
+                 : size_.getX() / 4 - offset.getX();
+    aux.y -= size_.getY() / 5 + offset.getY();
     texture_->renderFrame(aux, texture_->getAnimation()[texture_->getFrame()]);
   }
   if (battalionSize_ > 7) {
     auto aux = getRect();
-    aux.x +=
-        getTexture()->getFlip() == SDL_FLIP_HORIZONTAL ? offsetX : -offsetX;
-    aux.y -= offsetY;
+    aux.x += getTexture()->getFlip() == SDL_FLIP_HORIZONTAL ? offset.getX()
+                                                            : -offset.getX();
+    aux.y -= offset.getY();
     texture_->renderFrame(aux, texture_->getAnimation()[texture_->getFrame()]);
   }
   auto aux = getRect();
   aux.x += getTexture()->getFlip() == SDL_FLIP_HORIZONTAL
-               ? -size_.getX() / 4 + offsetX
-               : size_.getX() / 4 - offsetX;
-  aux.y += size_.getY() / 5 - offsetY;
+               ? -size_.getX() / 4 + offset.getX()
+               : size_.getX() / 4 - offset.getX();
+  aux.y += size_.getY() / 5 - offset.getY();
   Unit::render(aux);
 }
