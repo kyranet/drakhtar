@@ -28,6 +28,10 @@ Box::Box(Scene* scene, const Vector2D<int>& pos, const Vector2D<int>& size,
       TextureManager::get("UI-enemyInRange");
   cellTextures_[static_cast<int>(TextureInd::ACTIVE)] =
       TextureManager::get("UI-activeUnit");
+  cellTextures_[static_cast<int>(TextureInd::HOVER_MOVABLE)] =
+      TextureManager::get("UI-cellHoverBlue");
+  cellTextures_[static_cast<int>(TextureInd::HOVER_ENEMY)] =
+      TextureManager::get("UI-cellHoverRed");
   cellTexture_ = TextureInd::BASE;
 }
 
@@ -39,8 +43,16 @@ SDL_Rect Box::getRect() const {
 void Box::render() const {
   const auto texture = cellTextures_[static_cast<int>(cellTexture_)];
   if (hovered_) {
-    cellTextures_[static_cast<int>(TextureInd::HOVER)]->render(
-        getRect(), texture->getAnimation()[texture->getFrame()]);
+    if (cellTexture_ == TextureInd::MOVABLE) {
+      cellTextures_[static_cast<int>(TextureInd::HOVER_MOVABLE)]->render(
+          getRect(), texture->getAnimation()[texture->getFrame()]);
+    } else if (cellTexture_ == TextureInd::ENEMY) {
+      cellTextures_[static_cast<int>(TextureInd::HOVER_ENEMY)]->render(
+          getRect(), texture->getAnimation()[texture->getFrame()]);
+    } else {
+      cellTextures_[static_cast<int>(TextureInd::HOVER)]->render(
+          getRect(), texture->getAnimation()[texture->getFrame()]);
+    }
   } else {
     texture->render(getRect(), texture->getAnimation()[texture->getFrame()]);
   }

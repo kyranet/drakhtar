@@ -13,7 +13,9 @@ enum class TextureInd {
   HOVER = 1,
   MOVABLE = 2,
   ENEMY = 3,
-  ACTIVE = 4
+  ACTIVE = 4,
+  HOVER_MOVABLE = 5,
+  HOVER_ENEMY = 6
 };
 
 class Box final : public GameObject {
@@ -41,7 +43,7 @@ class Box final : public GameObject {
   /**
    * \brief Array of all textures de box may render.
    */
-  Texture *cellTextures_[5]{};
+  Texture *cellTextures_[7]{};
 
   /**
    * \brief Vector2D of the width and height of the box.
