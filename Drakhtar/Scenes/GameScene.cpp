@@ -146,6 +146,11 @@ void GameScene::preload() {
         Vector2D<int>(WIN_WIDTH / 5, WIN_HEIGHT / 4),
         reinterpret_cast<PlayerController*>(team1_->getController()),
         reinterpret_cast<PlayerController*>(team2_->getController()));
+  } else if (battle_ > 1) {
+    reinterpret_cast<PlayerController*>(team1_->getController())
+        ->setTutorialDone(true);
+    reinterpret_cast<PlayerController*>(team2_->getController())
+        ->setTutorialDone(true);
   }
 
   audio->haltMusic();

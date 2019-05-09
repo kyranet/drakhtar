@@ -61,7 +61,8 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
           setArrowPos(SDL_FLIP_NONE, pos);
         }
         if (x == 10) {
-          pos = controller->getActiveUnit()->getPosition();
+          if (controller->getActiveUnit() != nullptr)
+            pos = controller->getActiveUnit()->getPosition();
           if (pos.getX() < WIN_WIDTH / 2) {
             pos.setX(pos.getX() - WIN_WIDTH / 15);
             setArrowPos(SDL_FLIP_NONE, pos);
