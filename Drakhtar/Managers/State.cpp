@@ -1,4 +1,5 @@
 #include "State.h"
+#include <third_party/AStar.h>
 #include <algorithm>
 #include "GameObjects/Battalion.h"
 #include "GameObjects/Commanders/Commander.h"
@@ -28,19 +29,16 @@ void State::setUnits(const std::vector<Unit*>& first,
   insert(second);
 
   std::sort(turns_.begin(), turns_.end(),
-            [](UnitState a, UnitState b) { return a.speed > b.speed; });
+            [](const UnitState& a, const UnitState& b) {
+              return a.speed_ > b.speed_;
+            });
 }
 
 void State::setBoard(int rows, int columns) {
+  board_.clear();
   board_.reserve(rows * columns);
   rows_ = rows;
   columns_ = columns;
-
-  for (int x = 0; x < columns; ++x) {
-    for (int y = 0; y < rows; ++y) {
-      board_[x * rows + y] = { nullptr, Color::BLUE, { x, y }, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
-    }
-  }
 }
 
 void State::insert(const std::vector<Unit*>& units) {
@@ -51,18 +49,19 @@ void State::insert(const std::vector<Unit*>& units) {
 
     // If it's a commander, calculate it wisely.
     if (unit->isCommander()) {
-      State::UnitState state {unit, color, boxPosition, base.attack, base.maxHealth,
-                        1, base.defense, base.maxHealth, base.attackRange,
-                        base.moveRange, base.speed, base.prize};
+      State::UnitState state(unit, color, boxPosition, base.attack,
+                             base.maxHealth, 1, base.defense, base.maxHealth,
+                             base.attackRange, base.moveRange, base.speed,
+                             base.prize, false);
       turns_.push_back(state);
       setAt(boxPosition, state);
     } else {
       const auto battalion = reinterpret_cast<Battalion*>(unit);
       const auto size = battalion->getBattalionSize();
-      State::UnitState state{unit, color, boxPosition, base.attack * size,
-                             base.maxHealth * size, size, base.defense,
-                             base.maxHealth * size, base.attackRange, base.moveRange,
-                             base.speed, base.prize * size};
+      State::UnitState state(
+          unit, color, boxPosition, base.attack * size, base.maxHealth * size,
+          size, base.defense, base.maxHealth * size, base.attackRange,
+          base.moveRange, base.speed, base.prize * size, false);
       turns_.push_back(state);
       setAt(boxPosition, state);
     }
@@ -77,14 +76,134 @@ State::UnitState State::getAt(Vector2D<int> position) const {
   return board_[position.getX() * rows_ + position.getY()];
 }
 
-void State::move(Vector2D<int> from, Vector2D<int> to) {
+bool State::move(const Vector2D<int>& from, const Vector2D<int>& to) {
   const auto previous = getAt(from);
-  if (previous.unit_ == nullptr) return;
+  if (previous.unit_ == nullptr) return false;
 
+  hasMoved_ = true;
   removeAt(from);
   setAt(to, previous);
+  return true;
+}
+
+bool State::attack(const Vector2D<int>& from, const Vector2D<int>& to) {
+  const auto previous = getAt(from);
+  if (previous.unit_ == nullptr) return false;
+
+  const auto enemy = getAt(to);
+  if (enemy.unit_ == nullptr) return false;
+
+  const auto damage = std::min(
+      std::max(
+          static_cast<int>(previous.attack_ * (1.0 - enemy.defense_ / 100.0)),
+          previous.minimumAttack_),
+      enemy.maxHealth_);
+  const auto health = std::max(enemy.health_ - damage, 0);
+
+  if (health == 0) {
+    removeAt(to);
+
+    // Remove from the turn vector
+    for (auto it = turns_.begin(); it != turns_.end(); ++it) {
+      if ((*it).unit_ == enemy.unit_) {
+        turns_.erase(it);
+        break;
+      }
+    }
+  } else {
+    auto counterAttacked = enemy.counterAttacked_;
+    if (!(enemy.unit_->getType() == "Archer" &&
+          isInRange(enemy.position_, previous.position_, 1)) &&
+        isInRange(enemy.position_, previous.position_, enemy.attackRange_) &&
+        !counterAttacked) {
+      counterAttacked = true;
+      attack(to, from);
+    }
+
+    const auto minimumAttack = enemy.minimumAttack_;
+    // TODO(kyranet): Add Battalion's logic
+
+    setAt(to,
+          {enemy.unit_, enemy.team_, enemy.position_, enemy.attack_, health,
+           minimumAttack, enemy.defense_, enemy.maxHealth_, enemy.attackRange_,
+           enemy.moveRange_, enemy.speed_, enemy.prize_, counterAttacked});
+  }
+
+  hasAttacked_ = true;
+  return true;
 }
 
 void State::removeAt(Vector2D<int> position) {
-  setAt(position, { nullptr, Color::BLUE, position, 0, 0, 0, 0, 0, 0, 0, 0, 0 });
+  setAt(position,
+        {nullptr, Color::BLUE, position, 0, 0, 0, 0, 0, 0, 0, 0, 0, false});
+}
+
+std::vector<Vector2D<int>> State::findPath(const Vector2D<int>& start,
+                                           const Vector2D<int>& end) const {
+  // Create path generator
+  AStar::Generator generator;
+  generator.setWorldSize({columns_, rows_});
+  generator.setHeuristic(AStar::Heuristic::euclidean);
+  generator.setDiagonalMovement(false);
+
+  // Load board obstacles
+  for (const auto& cell : board_) {
+    if (cell.unit_ != nullptr)
+      generator.addCollision({cell.position_.getX(), cell.position_.getY()});
+  }
+
+  // Remove itself as an obstacle
+  generator.removeCollision({start.getX(), start.getY()});
+
+  // Find path
+  auto path = generator.findPath({start.getX(), start.getY()},
+                                 {end.getX(), end.getY()});
+  // If it is only the first cell, return empty.
+  if (path.size() <= 1) return {};
+
+  std::vector<Vector2D<int>> pathList;
+  for (const auto& coordinate : path) {
+    pathList.insert(pathList.begin(), {coordinate.x, coordinate.y});
+  }
+
+  return pathList;
+}
+
+bool State::isInRange(const Vector2D<int>& from, const Vector2D<int>& to,
+                      int range) const {
+  const auto distanceX = abs((to.getX() - from.getX()));
+  const auto distanceY = abs((to.getY() - from.getY()));
+  const auto totalDistance = distanceX + distanceY;
+
+  return range >= totalDistance;
+}
+
+bool State::isInMoveRange(const Vector2D<int>& from, const Vector2D<int>& to,
+                          int range) const {
+  auto path = findPath(from, to);
+  if (path.empty()) {
+    return false;
+  }
+  return range >= static_cast<const int>(path.size() - 1);
+}
+
+std::vector<Vector2D<int>> State::getCellsInMovementRange(
+    const Vector2D<int>& from, int range) const {
+  std::vector<Vector2D<int>> cells;
+  for (const auto& cell : board_) {
+    if (isInMoveRange(from, cell.position_, range))
+      cells.push_back(cell.position_);
+  }
+  return cells;
+}
+
+std::vector<Vector2D<int>> State::getCellsInAttackRange(
+    const Vector2D<int>& from, Color color, int range) const {
+  std::vector<Vector2D<int>> cells;
+  for (const auto& cell : board_) {
+    if (cell.unit_ != nullptr && cell.team_ != color &&
+        isInRange(from, cell.position_, range))
+      cells.push_back(cell.position_);
+  }
+  return cells;
 }
