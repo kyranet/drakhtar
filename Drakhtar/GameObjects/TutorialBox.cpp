@@ -99,7 +99,9 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
          
           getChildren()[5]->setRenderizable(false);
           getChildren()[5]->setTransparent(true);
-          getChildren()[5]->removeChild(getChildren()[5]->getChildren()[0]);
+		  for (auto child : getChildren()[5]->getChildren()) {
+            child->destroy();
+          }
           pos = Vector2D<int>(WIN_WIDTH / 7, WIN_HEIGHT / 6);
           setArrowPos(SDL_FLIP_HORIZONTAL, pos);
         }
