@@ -31,6 +31,8 @@ void Scene::setOnEndHandler(std::function<void()> callback) {
   onEndHandler_ = std::move(callback);
 }
 
+void Scene::activateTutorialBox() {}
+
 bool Scene::isFinished() const { return finished_; }
 bool Scene::isRunning() const { return !paused_; }
 bool Scene::isPaused() const { return paused_; }
@@ -120,9 +122,6 @@ void Scene::handleEvents() {
       resume();
     }
   }
-
-  if (Input::isKeyDown(KeyboardKey::Q))
-    Game::getSceneMachine()->changeScene(new RecruitScene());
 
   // If the F key was pressed, toggle fullscreen
   if (Input::isKeyDown(KeyboardKey::F)) {

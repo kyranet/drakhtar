@@ -12,3 +12,5 @@ build/
 deps/
 bin/
 cmake-build-debug/
+
+images/UI/desktop\.ini

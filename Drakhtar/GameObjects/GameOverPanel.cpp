@@ -11,7 +11,7 @@
 #include "Structures/Game.h"
 #include "Text.h"
 #include "Utils/Constants.h"
-
+#include "Scenes/RecruitScene.h"
 GameOverPanel::GameOverPanel(Scene* scene, Texture* texture,
                              const Vector2D<int>& position,
                              const Vector2D<int>& size, bool victory)
@@ -24,8 +24,7 @@ GameOverPanel::GameOverPanel(Scene* scene, Texture* texture,
         int currentScene =
             reinterpret_cast<GameScene*>(getScene())->getBattleInd();
         if (victory) {
-          Game::getSceneMachine()->changeScene(
-              new TransitionScene(currentScene + 1));
+          Game::getSceneMachine()->changeScene(new RecruitScene(currentScene + 1));
         } else {
           Game::getSceneMachine()->changeScene(new GameScene(currentScene));
         }

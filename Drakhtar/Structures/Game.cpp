@@ -178,6 +178,7 @@ void Game::load() {
   textures->add("UI-greenTick", "../images/UI/green-check.png", 1, 1);
   textures->add("UI-statUp", "../images/UI/statUp.png", 1, 1);
   textures->add("UI-statDown", "../images/UI/statDown.png", 1, 1);
+  textures->add("UI-arrowAnim", "../images/UI/arrow_anim.png", 4, 5);
 
   // Button
   textures->add("Button-BattleCry", "../images/UI/battlecry_icon.png", 1, 1);
@@ -237,6 +238,7 @@ void Game::load() {
   textures->add("Maps-5Battle", "../images/Maps/FifthBattle.png", 1, 1);
 
   // Tutorial images
+  textures->add("tutorial_", "../images/Tutorials/tutorial_.png", 1, 1);
   textures->add("tutorial-1", "../images/Tutorials/tutorial_1.png", 1, 1);
   textures->add("tutorial-2", "../images/Tutorials/tutorial_2.png", 1, 1);
   textures->add("tutorial-3", "../images/Tutorials/tutorial_3.png", 1, 1);
