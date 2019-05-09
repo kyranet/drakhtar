@@ -31,17 +31,9 @@ Unit::Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
   // Units must be ignored in the mouse raycasts.
   setTransparent(true);
   box->setContent(this);
-
-  if (type == "Valar"){
-    size_.setX(WIN_WIDTH / 6.4f);
-    size_.setY(WIN_HEIGHT / 3.6f);
-    }
-  if (type == "Thassa" || type == "Zamdran" || type == "Sheissah" ||
-      type == "Abeizhul") {
-    size_.setX(static_cast<int>(box->getRect().w * 1.7));
-    size_.setY(static_cast<int>(box->getRect().h * 1.7));
-  }
 }
+
+
 
 Unit::~Unit() = default;
 
