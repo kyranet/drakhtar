@@ -15,7 +15,7 @@
 #include "TutorialText.h"
 #include "Unit.h"
 TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
-                         Vector2D<int> size, PlayerController* controller)
+                         Vector2D<int> size, PlayerController* controller, PlayerController * temporalController)
     : GameObject(scene, nullptr, pos, size) {
   SDL_Rect rect = {pos.getX(), pos.getY(), size.getX(), size.getY()};
   auto tutorialText_ = new TutorialText(scene, this, filename, rect);
@@ -96,8 +96,10 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
           setArrowPos(SDL_FLIP_HORIZONTAL, pos);
         }
         if (x == 13) {
+         
           getChildren()[5]->setRenderizable(false);
           getChildren()[5]->setTransparent(true);
+          getChildren()[5]->removeChild(getChildren()[5]->getChildren()[0]);
           pos = Vector2D<int>(WIN_WIDTH / 7, WIN_HEIGHT / 6);
           setArrowPos(SDL_FLIP_HORIZONTAL, pos);
         }
@@ -110,7 +112,7 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
                     tutorialBackground->getPosition().getY() +
                         tutorialBackground->getRect().h / 4),
       Vector2D<int>(WIN_WIDTH / 8, WIN_HEIGHT / 20),
-      [tutorialText_, this, controller]() {
+      [tutorialText_, this, controller, temporalController]() {
         this->setRenderizable(false);
         this->setTransparent(true);
         for (auto child : getChildren()) {
@@ -118,6 +120,7 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
           child->setTransparent(true);
         }
         controller->setTutorialDone(true);
+        temporalController->setTutorialDone(true);
       },
       "Close ", "ButtonFont");
   addChild(tutorialBackground);
