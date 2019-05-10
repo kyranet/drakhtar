@@ -72,10 +72,6 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
           }
         }
         if (x == 11) {
-          pos = Vector2D<int>(WIN_WIDTH / 6.5, WIN_HEIGHT - WIN_HEIGHT / 7.5);
-          setArrowPos(SDL_FLIP_HORIZONTAL, pos);
-        }
-        if (x == 12) {
           auto image = new GameObject(
               scene, TextureManager::get("tutorial_"),
               Vector2D<int>(tutorialBackground->getPosition().getX() * 0.99,
@@ -97,6 +93,10 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
                               imageBack->getPosition().getY());
           setArrowPos(SDL_FLIP_HORIZONTAL, pos);
         }
+        if (x == 12) {
+          pos = Vector2D<int>(WIN_WIDTH / 6.5, WIN_HEIGHT - WIN_HEIGHT / 7.5);
+          setArrowPos(SDL_FLIP_HORIZONTAL, pos);
+        }
         if (x == 13) {
           getChildren()[5]->setRenderizable(false);
           getChildren()[5]->setTransparent(true);
@@ -107,15 +107,19 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
           pos = Vector2D<int>(WIN_WIDTH / 7, WIN_HEIGHT / 6);
           setArrowPos(SDL_FLIP_HORIZONTAL, pos);
         }
+        if (x == 14) {
+          pos = Vector2D<int>(WIN_WIDTH / 7, WIN_HEIGHT / 2.5);
+          setArrowPos(SDL_FLIP_HORIZONTAL, pos);
+		}
       },
       "Next ", "ButtonFont");
   const auto CloseButton = new Button(
       scene_, TextureManager::get("Vanilla-Button"),
-      Vector2D<int>(tutorialBackground->getRect().w / 4 +
+      Vector2D<int>(tutorialBackground->getRect().w / 3 +
                         tutorialBackground->getPosition().getX() * 0.9,
                     tutorialBackground->getPosition().getY() +
                         tutorialBackground->getRect().h / 4),
-      Vector2D<int>(WIN_WIDTH / 8, WIN_HEIGHT / 20),
+      Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT / 19),
       [tutorialText_, this, controller, temporalController]() {
         this->setRenderizable(false);
         this->setTransparent(true);
@@ -131,7 +135,7 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
   addChild(tutorialText_);
   addChild(nextButton);
   addChild(CloseButton);
-  setCloseButtonRender(false);
+  setCloseButtonRender(true);
   addChild(arrow);
   setArrowRenderizable(false);
 }
