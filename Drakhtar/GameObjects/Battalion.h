@@ -15,8 +15,6 @@ class Battalion final : public Unit {
   Text* sizeText_ = nullptr;
   GameObject* unitBattalionCircle_ = nullptr;
 
-  Vector2D<int> offset;
-
   std::string sizeToString() const;
 
  public:
