@@ -20,7 +20,7 @@ int Abeizhul::loseHealth(int enemyAttack, int minDamage) {
   Board* board = reinterpret_cast<GameScene*>(scene_)->getBoard();
   if (box_->getIndex().getX() + 2 < board->getCols()) {
     Box* newBox = board->getBoxAt(newIndex.getX(), newIndex.getY());
-    if (newBox->getContent() == nullptr) {
+    if (newBox->getContent() == nullptr && this->health_ > 0) {
       moveToBox(newBox);
     }
   }

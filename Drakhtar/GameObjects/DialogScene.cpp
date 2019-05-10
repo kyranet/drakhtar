@@ -92,7 +92,7 @@ void DialogScene::skip() {
   if (Game::getSceneMachine()->getCurrentScene()->getTransition()) {
     int scene = reinterpret_cast<TransitionScene*>(getScene())->getBattleInd();
 
-    if (scene < numbBattles + 1) {
+    if (scene < 6) {
       Game::getSceneMachine()->changeScene(new GameScene(scene));
     } else {
       GameManager::getInstance()->reset();
