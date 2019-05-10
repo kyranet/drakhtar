@@ -20,6 +20,7 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
     : GameObject(scene, nullptr, pos, size) {
   SDL_Rect rect = {pos.getX(), pos.getY(), size.getX(), size.getY()};
   auto tutorialText_ = new TutorialText(scene, this, filename, rect);
+  tutorialText_->setTransparent(true);
 
   auto arrow = new GameObject(scene, TextureManager::get("UI-arrowAnim"),
                               Vector2D<int>(400, 400),
@@ -110,7 +111,7 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
         if (x == 14) {
           pos = Vector2D<int>(WIN_WIDTH / 7, WIN_HEIGHT / 2.5);
           setArrowPos(SDL_FLIP_HORIZONTAL, pos);
-		}
+        }
       },
       "Next ", "ButtonFont");
   const auto CloseButton = new Button(
@@ -131,6 +132,7 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
         temporalController->setTutorialDone(true);
       },
       "Close ", "ButtonFont");
+
   addChild(tutorialBackground);
   addChild(tutorialText_);
   addChild(nextButton);
