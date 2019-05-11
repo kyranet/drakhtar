@@ -61,7 +61,7 @@ void Game::load() {
       ->addAnimation("walk", {11, 12, 13, 14}, 4)
       ->addAnimation("death", {15, 16, 17, 18, 19})
       ->setScale({1.5, 1.5})
-      ->setOffset({-0.035,0});
+      ->setOffset({-0.035, 0});
   textures->add("Units-BlueMage", "../images/Units/BlueMage.png", 4, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6})
@@ -111,7 +111,7 @@ void Game::load() {
       ->addAnimation("death", {15, 16, 17, 18, 19})
       ->setFlip(SDL_FLIP_HORIZONTAL)
       ->setScale({1.5, 1.5})
-      ->setOffset({0.035,0});
+      ->setOffset({0.035, 0});
   textures->add("Units-RedMage", "../images/Units/RedMage.png", 4, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8})
