@@ -260,6 +260,8 @@ void Game::load() {
                 1, 1);
   textures->add("Transition-Menu", "../images/Transition/Transition_1.png", 4,
                 1);
+  textures->add("Transition-LastScene", "../images/Transition/Transition_6.png",
+                1, 1);
 
   // Recruitment
   textures->add("Recruitment-Background",
