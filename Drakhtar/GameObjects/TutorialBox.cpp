@@ -19,7 +19,7 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
                          PlayerController* temporalController)
     : GameObject(scene, nullptr, pos, size) {
   SDL_Rect rect = {pos.getX(), pos.getY(), size.getX(), size.getY()};
-  auto tutorialText_ = new TutorialText(scene, this, filename, rect);
+  auto tutorialText_ = new TutorialText(scene, filename, rect);
   tutorialText_->setTransparent(true);
 
   auto arrow = new GameObject(scene, TextureManager::get("UI-arrowAnim"),
