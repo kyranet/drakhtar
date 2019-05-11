@@ -1,2 +1,31 @@
-1
-Narrator Portraits-Narrator Continue .
+29
+Narrator Portraits-Narrator Thassa's forces fought fiercely and won the battle. The mortally wounded sorceress was interrogated by Thassa. Thassa landed multiple blows on Sheissah's body, but she did not loosen her mouth even one bit. .
+Thassa Portraits-Thassa Gods!... Who is commanding you? Why are your forces attacking the realm?! .
+Sorcerer Portraits-Sheissah Your grace... I am known throughout this land as Sheissah, the Bane of the Living. .
+Narrator Portraits-Narrator A malicious smile was hiding in Sheissah's visage. .
+Thassa Portraits-Thassa You did not answer what I asked. .
+Narrator Portraits-Narrator Another stroke, this time on her face. .
+Thassa Portraits-Thassa Who and where is your leader? .
+Narrator Portraits-Narrator No answer.Thassa, consumed by her anger, continued landing strokes all over Sheissah's half-dead body. She made sure Sheissah could not die by telling her soldiers to immobilize her and treating her bleeding wounds.
+Narrator Portraits-Narrator Sheissah, seeing she could not escape nor die, gave up. .
+Sheissah Portraits-Sheissah Stop... I cannot take this any longer... Please... Let me die in peace... .
+Sheissah Portraits-Sheissah ...I...I was requested to take Deiro's Gem for my lord... .
+Thassa Portraits-Thassa Who is your lord?! .
+Narrator Portraits-Narrator She was just about to speak, when Valar walked ahead of Thassa, drew his sword and sliced Sheissah's throat. Sheissah, agonizing, tried to murmure some words out but died before she could. .
+Thassa Portraits-Thassa Valar?! Why?! .
+Valar Portraits-Valar I am sorry, your Grace, I-I couldn't hold myself any longer. Just this pain, I can't, I am sorry. .
+Narrator Portraits-Narrator Thassa, astonished, verged the king's corpse wrapping it with her cap. .
+Thassa Portraits-Thassa Did you understand what she tried to say? .
+Valar Portraits-Valar I have no idea your majesty. .
+Narrator Portraits-Narrator She muttered some intelligible words and faced the other way .
+Narrator Portraits-Narrator Drakhtar's remaining forces managed to retake the city, without their sorcerer, the skeletons did not have someone to command them, causing them to retreat. .
+Narrator Portraits-Narrator Hopelessly, Thassa fell on her knees and collapsed in tears, facing the situation that concerned everyone. Valar approached and placed his hand soaked with Sheissah's blood on Thassa's shoulder. .
+Valar Portraits-Valar Your grace, we no longer have time for this. I have been concerned about the odd mist that is surrounding Crihendrath. As far as I am concerned, it may be caused by the dead horde. .
+Valar Portraits-Valar I would advise sending some of our scouts to fully investigate what is happening in our land. We cannot let the enemy have the tactical advantage any longer. .
+Narrator Portraits-Narrator Thassa agreed and ordered to fully secure the city and afterwards she would personally direct the retinue. .
+Narrator Portraits-Narrator The remnants of the battle were annihilated and the city began an exhaustive reparation while Thassa retinue prepared to depart in search of valuable information that may be useful against the enemies who attacked the reign’s peace and prosperity. .
+Narrator Portraits-Narrator Thassa gathered her army in the yard. She encouraged them and explained the whole situation. .
+Thassa Portraits-Thassa Drakhtarians!!! We will set out in search of the truth, to put an end to the threat that looms over us. We might need all of our soul and heart to find the answer, but I assure we will vanquish the dead army. For the realm and for our deceased king!! .
+Narrator Portraits-Narrator The whole army acclaimed Thassa as their leader. She was prepared for the adventure that would come next. .
+Knight Portraits-Knight Long live the Queen! Long live Drakhtar! .
+Narrator Portraits-Narrator The forces left the city with their queen, followed her footsteps and trusted she was the chosen one to save the kingdom. .
