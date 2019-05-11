@@ -79,22 +79,28 @@ void Game::load() {
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8})
       ->addAnimation("walk", {9, 10}, 4)
       ->addAnimation("death", {11, 12, 13, 14, 15});
-  textures->add("Units-Thassa", "../images/Units/Thassa.png", 5, 4)
+  textures->add("Units-Thassa", "../images/Units/Thassa.png", 7, 6)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8})
       ->addAnimation("walk", {9, 10, 11, 12, 13}, 5)
-      ->addAnimation("death", {14, 15, 16, 17, 18});
-  textures->add("Units-Abeizhul", "../images/Units/Abeizhul.png", 5, 4)
+      ->addAnimation("death", {14, 15, 16, 17, 18})
+      ->addAnimation("ability1", {19, 20, 21, 22, 23, 24, 25, 26, 27})
+      ->addAnimation("ability2", {28, 29, 30, 31, 32, 33, 34, 35, 36, 37});
+  textures->add("Units-Abeizhul", "../images/Units/Abeizhul.png", 7, 6)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9})
       ->addAnimation("walk", {10, 11}, 4)
       ->addAnimation("death", {12, 13, 14, 15, 16})
+      ->addAnimation("ability1", {17, 18, 19, 20, 21, 22, 23, 24, 25})
+      ->addAnimation("ability2", {26, 27, 28, 29, 30, 31})
+      ->addAnimation("ability3", {32, 33, 34, 35, 36, 37})
       ->setFlip(SDL_FLIP_HORIZONTAL);
-  textures->add("Units-Dreilay", "../images/Units/Dreilay.png", 5, 4)
+  textures->add("Units-Dreilay", "../images/Units/Dreilay.png", 6, 5)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10})
       ->addAnimation("walk", {11, 12, 13, 14}, 4)
       ->addAnimation("death", {15, 16, 17, 18, 19})
+      ->addAnimation("ability1", {20, 21, 22, 23, 24, 25, 26, 27, 28, 29})
       ->setFlip(SDL_FLIP_HORIZONTAL)
       ->setScale({1.5, 1.5});
   textures->add("Units-RedArcher", "../images/Units/RedArcher.png", 5, 4)
@@ -132,29 +138,48 @@ void Game::load() {
       ->addAnimation("walk", {9, 10}, 4)
       ->addAnimation("death", {11, 12, 13, 14, 15})
       ->setFlip(SDL_FLIP_HORIZONTAL);
-  textures->add("Units-Sheissah", "../images/Units/Sheissah.png", 4, 4)
+  textures->add("Units-Sheissah", "../images/Units/Sheissah.png", 5, 5)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8})
       ->addAnimation("walk", {9, 10}, 4)
       ->addAnimation("death", {11, 12, 13, 14, 15})
+      ->addAnimation("ability1", {16, 17, 18, 19, 20})
       ->setFlip(SDL_FLIP_HORIZONTAL);
   textures->add("Units-BlueValar", "../images/Units/BlueValar.png", 5, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10})
       ->addAnimation("walk", {11, 12}, 4)
       ->addAnimation("death", {13, 14, 15, 16, 17});
-  textures->add("Units-RedValar", "../images/Units/RedValar.png", 5, 4)
+  textures->add("Units-RedValar", "../images/Units/RedValar.png", 6, 5)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10})
-      ->addAnimation("walk", {11, 12}, 4)
-      ->addAnimation("death", {13, 14, 15, 16, 17})
+      ->addAnimation("walk", {11, 12, 13, 14, 15, 16}, 4)
+      ->addAnimation("death", {17, 18, 19, 20, 21})
+      ->addAnimation("ability1", {22, 23, 24, 25, 26, 27})
       ->setFlip(SDL_FLIP_HORIZONTAL);
-  textures->add("Units-Zamdran", "../images/Units/Zamdran.png", 5, 4)
+  textures->add("Units-Zamdran", "../images/Units/Zamdran.png", 6, 5)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12})
       ->addAnimation("walk", {13, 14}, 4)
       ->addAnimation("death", {15, 16, 17, 18, 19})
+      ->addAnimation("ability1", {20, 21, 22, 23, 24, 25, 26, 27})
       ->setFlip(SDL_FLIP_HORIZONTAL);
+
+  // Obstacles
+  textures->add("Obstacle-BottomTruck", "../images/Obstacles/BottomTruck.png", 1, 1)
+      ->addAnimation("default", {0});
+  textures->add("Obstacle-Box", "../images/Obstacles/Box.png", 1, 1)
+      ->addAnimation("default", {0});
+  textures->add("Obstacle-Fence", "../images/Obstacles/Fence.png", 1, 1)
+      ->addAnimation("default", {0});
+  textures->add("Obstacle-Rock", "../images/Obstacles/Rock.png", 1, 1)
+      ->addAnimation("default", {0});
+  textures->add("Obstacle-TopTruck", "../images/Obstacles/TopTruck.png", 1, 1)
+      ->addAnimation("default", {0});
+  textures->add("Obstacle-Torch", "../images/Obstacles/Torch.png", 1, 1)
+      ->addAnimation("default", {0});
+  textures->add("Obstacle-Trees", "../images/Obstacles/Trees.png", 1, 1)
+      ->addAnimation("default", {0});
 
   // UI
   textures->add("UI-cellFrame", "../images/UI/cellFrame.png", 1, 1);
