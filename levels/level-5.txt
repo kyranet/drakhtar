@@ -1,6 +1,6 @@
-6 12 5
+5 12 5
 Abeizhul 11 0
-Archer 5 11 1
+Archer 5 10 0
 Soldier 20 11 2
 Soldier 5 11 3
 Archer 5 11 4
