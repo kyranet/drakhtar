@@ -36,7 +36,7 @@ void Commander::onSelect() {
 
     // Ends skill if it was active and its duration finished
     if (skill->getActive() && skill->getRemainingDuration() == 0) {
-      skill->end(reinterpret_cast<GameScene*>(scene_));
+      skill->end();
     }
   }
 }
@@ -47,7 +47,7 @@ void Commander::onDeselect() {
   for (auto skill : skills_) {
     // Ends skill if it was active and its duration finished
     if (skill->getActive() && skill->getRemainingDuration() == 0) {
-      skill->end(reinterpret_cast<GameScene*>(scene_));
+      skill->end();
     }
   }
 }
