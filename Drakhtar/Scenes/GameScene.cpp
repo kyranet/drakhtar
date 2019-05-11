@@ -16,7 +16,8 @@
 #include "GameObjects/Pause.h"
 #include "GameObjects/SkillButton.h"
 #include "GameObjects/TurnBar.h"
-#include "GameObjects/TutorialSequence.h"
+#include "GameObjects/TutorialBox.h"
+#include "GameObjects/UnitDescriptionBox.h"
 #include "Managers/GameManager.h"
 #include "Managers/SDLAudioManager.h"
 #include "Managers/TextureManager.h"
@@ -24,7 +25,6 @@
 #include "Structures/Team.h"
 #include "Structures/UnitFactory.h"
 #include "Utils/Constants.h"
-#include "GameObjects/UnitDescriptionBox.h"
 
 auto audio = SDLAudioManager::getInstance();
 
@@ -60,12 +60,16 @@ void GameScene::preload() {
   const auto thassa =
       factory.newCommander("Thassa", team1_, board_->getBoxAt(0, 0));
   team1_->addCommander(thassa);
+  thassa->setCommanderHealthBar();
   addGameObject(thassa);
 
-  const auto valar =
-      factory.newCommander("BlueValar", team1_, board_->getBoxAt(0, 6));
-  team1_->addCommander(valar);
-  addGameObject(valar);
+  if (battle_ == 1) {
+    const auto valar =
+        factory.newCommander("BlueValar", team1_, board_->getBoxAt(0, 4));
+    team1_->addCommander(valar);
+    valar->setCommanderHealthBar();
+    addGameObject(valar);
+  }
 
   auto army = GameManager::getInstance()->getArmy();
   auto typeOrder = GameManager::getInstance()->getTypeOrder();
@@ -128,13 +132,8 @@ void GameScene::preload() {
                                     static_cast<int>(WIN_HEIGHT / 8)),
                       team2_->getCommanders()[0], 0);
 
-  const auto unitDescriptionBox = new UnitDescriptionBox(this, board_, turnBar->getTurnManager());
-
-  if (battle_ == 1) {
-    const auto tutorialSequence =
-        new TutorialSequence(this, "tutorials", "TutorialFont");
-    addGameObject(tutorialSequence);
-  }
+  const auto unitDescriptionBox =
+      new UnitDescriptionBox(this, board_, turnBar->getTurnManager());
 
   addGameObject(turnBar);
   addGameObject(dialog);
@@ -144,9 +143,19 @@ void GameScene::preload() {
   addGameObject(enemySkillButton);
   addGameObject(unitDescriptionBox);
 
-  audio->haltMusic();
-  if (audio->getDefault()) audio->setMusicVolume(10);
-  audio->playMusic(1, 999);
+  if (battle_ == 1) {
+    std::string x = "../tutorials/tutorials.txt";
+    tutorialBox = new TutorialBox(
+        this, x, Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 4),
+        Vector2D<int>(WIN_WIDTH / 5, WIN_HEIGHT / 4),
+        reinterpret_cast<PlayerController*>(team1_->getController()),
+        reinterpret_cast<PlayerController*>(team2_->getController()));
+  } else if (battle_ > 1) {
+    reinterpret_cast<PlayerController*>(team1_->getController())
+        ->setTutorialDone(true);
+    reinterpret_cast<PlayerController*>(team2_->getController())
+        ->setTutorialDone(true);
+  }
 
   setGame(true);
   team1_->getController()->start();
@@ -204,6 +213,7 @@ void GameScene::readLevel(UnitFactory& factory) {
         "File is not a level file or the captain is not implemented");
 
   team2_->addCommander(commander);
+  commander->setCommanderHealthBar();
   addGameObject(commander);
   while (!file.eof()) {
     std::string unitType;
@@ -240,6 +250,8 @@ void GameScene::saveStatus() {
 Board* GameScene::getBoard() const { return board_; }
 
 int GameScene::getBattleInd() { return battle_; }
+
+void GameScene::activateTutorialBox() { addGameObject(tutorialBox); }
 
 Team* GameScene::getAlliedTeam(Unit* unit) {
   if (unit->getTeam() == team1_) return team1_;

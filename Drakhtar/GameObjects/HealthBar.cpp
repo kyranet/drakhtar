@@ -7,11 +7,16 @@
 #include "../Utils/Constants.h"
 #include "Managers/SDLAudioManager.h"
 
-HealthBar::HealthBar(Scene* scene, Vector2D<int> pos, int maxHP)
+HealthBar::HealthBar(Scene* scene, Vector2D<int> pos, int maxHP, Color color)
     : GameObject(scene, TextureManager::get("UI-healthBar_background"), pos,
                  Vector2D<int>(WIN_WIDTH / 20, WIN_HEIGHT / 60)) {
-  lifeBar = new GameObject(scene, TextureManager::get("UI-healthBar_life"), pos,
-                           Vector2D<int>(getRect().w + 1, getRect().h));
+  if (color == Color::RED) {
+    lifeBar = new GameObject(scene, TextureManager::get("UI-healthBar_life"),
+                             pos, Vector2D<int>(getRect().w + 1, getRect().h));
+  } else {
+    lifeBar = new GameObject(scene, TextureManager::get("UI-healthBar_blue"),
+                             pos, Vector2D<int>(getRect().w + 1, getRect().h));
+  }
   damageBar = new GameObject(scene, TextureManager::get("UI-healthBar_damage"),
                              pos, Vector2D<int>(getRect().w, getRect().h));
   statUp =

@@ -1,7 +1,4 @@
-8 12 1
-Zamdran 11 0
-Soldier 9 11 2
-Archer 10 11 3
-Mage 6 11 4
-Knight 4 11 1
-Monster 2 11 6
+6 9 1
+Zamdran 8 3
+Soldier 8 7 2
+Archer 6 7 4

@@ -5,6 +5,7 @@
 #include <map>
 #include <string>
 #include <vector>
+
 #include "../Utils/Vector2D.h"
 #include "SDL.h"
 
@@ -33,6 +34,7 @@ class Texture final {
   AnimationTextureInfo animation_;
   Uint16 frame_ = 0;
   SDL_RendererFlip flip_ = SDL_FLIP_NONE;
+  Vector2D<int> offset_;
 
  public:
   Texture();
@@ -63,6 +65,10 @@ class Texture final {
   Vector2D<Uint16> getFramePosition(Uint16 frame) const;
 
   std::vector<Uint16> getAnimation() const;
+
+  Vector2D<int> getOffset() const;
+  // offset is set to size*percentage
+  void setOffset(Vector2D<double> percentage);
 
   SDL_Renderer* getRenderer() const;
   SDL_RendererFlip getFlip() const;

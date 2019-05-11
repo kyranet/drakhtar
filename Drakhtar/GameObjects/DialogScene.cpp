@@ -85,11 +85,14 @@ void DialogScene::next() {
 }
 
 void DialogScene::skip() {
-  getScene()->processNextTick([this]() { destroy(); });
+  getScene()->processNextTick([this]() {
+    destroy();
+    Game::getSceneMachine()->getCurrentScene()->activateTutorialBox();
+  });
   if (Game::getSceneMachine()->getCurrentScene()->getTransition()) {
     int scene = reinterpret_cast<TransitionScene*>(getScene())->getBattleInd();
 
-    if (scene < numbBattles + 1) {
+    if (scene < 6) {
       Game::getSceneMachine()->changeScene(new GameScene(scene));
     } else {
       GameManager::getInstance()->reset();

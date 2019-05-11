@@ -1,7 +1,8 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-
+#include <string>
+#include <SDL_scancode.h>
 // Window dimensions
 const int WIN_WIDTH = 1280;
 const int WIN_HEIGHT = 720;
@@ -36,11 +37,15 @@ struct UnitStats {
   int speed;
   int prize;
 };
+struct TutorialTexts {
+  std::string dialogtexts_;
+  bool next_;
+};
 
 // Thassa
 const UnitStats THASSA_STATS = {35, 35, 150, 1, 3, 5, 100};
 // Zamdran
-const UnitStats ZAMDRAN_STATS = {50, 10, 200, 3, 2, 6, 100};
+const UnitStats ZAMDRAN_STATS = {50, 10, 200, 3, 2, 5, 100};
 // Sheissah
 const UnitStats SHEISSAH_STATS = {60, 10, 220, 2, 2, 5, 100};
 // Valar

@@ -8,6 +8,7 @@ class Button;
 class PlayerController final : public UnitsController {
   bool locked_ = false;
   Button* skipTurnButton_ = nullptr;
+  bool tutorialDone_ = false;
 
  public:
   PlayerController(Board* board, TurnManager* turnManager, GameScene* scene,
@@ -30,6 +31,9 @@ class PlayerController final : public UnitsController {
   void finish() override;
 
   bool getLocked() const;
+
+  void setTutorialDone(bool moved);
+  bool gettutorialDone();
 
   bool canCastSkills();
   void highlightCells();

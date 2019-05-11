@@ -8,6 +8,7 @@
 #include "Box.h"
 #include "HealthBar.h"
 #include "Managers/FontManager.h"
+#include "Managers/TextureManager.h"
 #include "Scenes/GameScene.h"
 #include "Structures/Team.h"
 #include "Text.h"
@@ -30,34 +31,45 @@ Unit::Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
   // Units must be ignored in the mouse raycasts.
   setTransparent(true);
   box->setContent(this);
-  const SDL_Color textColor = {255, 255, 255, 0};
-  const auto rect = box_->getRect();
 
   if (type == "Thassa" || type == "Zamdran" || type == "Sheissah" ||
       type == "Abeizhul" || type == "Dreilay") {
     size_.setX(static_cast<int>(box->getRect().w * 1.7));
     size_.setY(static_cast<int>(box->getRect().h * 1.7));
   }
+}
+
+Unit::~Unit() = default;
+
+void Unit::setHealthBar() {
+  const auto rect = box_->getRect();
+  if (getTeam()->getColor() == Color::RED) {
+    healthBar_ = new HealthBar(
+        scene_, Vector2D<int>(rect.x + rect.w / 2, static_cast<int>(rect.y + rect.h/1.2)),
+        baseStats_.maxHealth, Color::RED);
+  } else {
+    healthBar_ = new HealthBar(scene_,
+                      Vector2D<int>(rect.x + rect.w / 2,
+                                    static_cast<int>(rect.y + rect.h / 1.2)),
+        baseStats_.maxHealth, Color::BLUE);
+  }
+  healthBar_->setTransparent(true);
+  addChild(healthBar_);
+
+  const SDL_Color textColor = {255, 255, 255, 0};
 
   healthText_ =
-      new Text(scene, FontManager::get("UnitFont"),
-               {rect.x + rect.w / 2 + rect.w / 14, rect.y - rect.h / 3},
+      new Text(scene_, FontManager::get("UnitFont"),
+                         {rect.x + rect.w / 2 + rect.w / 14,
+                          static_cast<int>(rect.y + rect.h / 1.2)},
                textColor, healthToString(), rect.w * 2);
-
-  healthBar_ = new HealthBar(
-      scene, Vector2D<int>(rect.x + rect.w / 2, rect.y - rect.h / 3),
-      baseStats_.maxHealth);
 
   healthText_->setColor(textColor);
 
   healthText_->setTransparent(true);
-  healthBar_->setTransparent(true);
 
-  addChild(healthBar_);
   addChild(healthText_);
 }
-
-Unit::~Unit() = default;
 
 void Unit::moveToBox(Box* newBox) {
   box_->setContent(nullptr);
@@ -66,9 +78,10 @@ void Unit::moveToBox(Box* newBox) {
   box_ = newBox;
   newBox->setContent(this);
   const auto rect = box_->getRect();
-  healthText_->setPosition(
-      {rect.x + rect.w / 2 + rect.w / 14, rect.y - rect.h / 3});
-  healthBar_->moveBar(Vector2D<int>(rect.x + rect.w / 2, rect.y - rect.h / 3));
+  healthText_->setPosition({rect.x + rect.w / 2 + rect.w / 14,
+                            static_cast<int>(rect.y + rect.h / 1.2)});
+  healthBar_->moveBar(Vector2D<int>(rect.x + rect.w / 2,
+                                    static_cast<int>(rect.y + rect.h / 1.2)));
   setMoved(true);
 }
 
