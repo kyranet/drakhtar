@@ -34,7 +34,7 @@ std::vector<Uint16> Texture::getAnimation() const { return animation_.frames; }
 
 Vector2D<int> Texture::getOffset() const { return offset_; }
 
-void Texture::calculateOffset(Vector2D<double> percentage) {
+void Texture::setOffset(Vector2D<double> percentage) {
   offset_ = Vector2D<int>(size_.getX() * percentage.getX(),
                           size_.getY() * percentage.getY());
 }

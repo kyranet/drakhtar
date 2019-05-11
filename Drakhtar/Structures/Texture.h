@@ -67,7 +67,7 @@ class Texture final {
 
   Vector2D<int> getOffset() const;
   // offset is set to size*percentage
-  void calculateOffset(Vector2D<double> percentage); 
+  void setOffset(Vector2D<double> percentage); 
 
   SDL_Renderer* getRenderer() const;
   SDL_RendererFlip getFlip() const;

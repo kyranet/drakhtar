@@ -54,26 +54,26 @@ void Game::load() {
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10})
       ->addAnimation("walk", {11, 12}, 4)
       ->addAnimation("death", {13, 14, 15, 16, 17})
-      ->calculateOffset({-0.05, 0});
+      ->setOffset({-0.05, 0});
   textures->add("Units-BlueKnight", "../images/Units/BlueKnight.png", 5, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10})
       ->addAnimation("walk", {11, 12, 13, 14}, 4)
       ->addAnimation("death", {15, 16, 17, 18, 19})
       ->setScale({1.5, 1.5})
-      ->calculateOffset({-0.035,0});
+      ->setOffset({-0.035,0});
   textures->add("Units-BlueMage", "../images/Units/BlueMage.png", 4, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6})
       ->addAnimation("walk", {7, 8}, 4)
       ->addAnimation("death", {9, 10, 11, 12})
-      ->calculateOffset({-0.05, 0});
+      ->setOffset({-0.05, 0});
   textures->add("Units-BlueMonster", "../images/Units/BlueMonster.png", 4, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8})
       ->addAnimation("walk", {9, 10}, 4)
       ->addAnimation("death", {11, 12, 13, 14, 15})
-      ->calculateOffset({-0.05, -0.05});
+      ->setOffset({-0.05, -0.05});
   textures->add("Units-BlueSoldier", "../images/Units/BlueSoldier.png", 4, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8})
@@ -103,7 +103,7 @@ void Game::load() {
       ->addAnimation("walk", {11, 12}, 4)
       ->addAnimation("death", {13, 14, 15, 16, 17})
       ->setFlip(SDL_FLIP_HORIZONTAL)
-      ->calculateOffset({0.05, 0});
+      ->setOffset({0.05, 0});
   textures->add("Units-RedKnight", "../images/Units/RedKnight.png", 5, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10})
@@ -111,21 +111,21 @@ void Game::load() {
       ->addAnimation("death", {15, 16, 17, 18, 19})
       ->setFlip(SDL_FLIP_HORIZONTAL)
       ->setScale({1.5, 1.5})
-      ->calculateOffset({0.035,0});
+      ->setOffset({0.035,0});
   textures->add("Units-RedMage", "../images/Units/RedMage.png", 4, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8})
       ->addAnimation("walk", {9, 10}, 4)
       ->addAnimation("death", {11, 12, 13, 14, 15})
       ->setFlip(SDL_FLIP_HORIZONTAL)
-      ->calculateOffset({0.05, 0});
+      ->setOffset({0.05, 0});
   textures->add("Units-RedMonster", "../images/Units/RedMonster.png", 4, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8})
       ->addAnimation("walk", {9, 10}, 4)
       ->addAnimation("death", {11, 12, 13, 14, 15})
       ->setFlip(SDL_FLIP_HORIZONTAL)
-      ->calculateOffset({0.05, -0.05});
+      ->setOffset({0.05, -0.05});
   textures->add("Units-RedSoldier", "../images/Units/RedSoldier.png", 4, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8})
