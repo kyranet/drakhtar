@@ -3,8 +3,8 @@ Narrator Portraits-Narrator Valar fell, his head hitting the ground before his b
 Narrator Portraits-Narrator A portal violently appeared from the broken gem, sending everyone flying. Thassa held her ground with stubborn resistance, in time to see what came next. .
 Narrator Portraits-Narrator A cloaked figure exited the portal. He raised a hand, and sucked the life out of the necromancer and any soldier of Valar's that wasn't dead. He revealed his face, being... a young, handsome man, with eyes red as blood and a pale hide. .
 Narrator Portraits-Narrator He turned his gaze at Thassa, eyes filled with wrath. .
-Abeizhul Portraits-Abeizhul I am Abeizhul, War, Famine, Death. I come to claim this as my kingdom. As for you... .
-Abeizhul Portraits-Abeizhul We will meet again soon, princess of Drakhtar. For now, I take my leave. .
+Abeizhul Portraits-SoldierEnemy I am Abeizhul, War, Famine, Death. I come to claim this as my kingdom. As for you... .
+Abeizhul Portraits-SoldierEnemy We will meet again soon, princess of Drakhtar. For now, I take my leave. .
 Narrator Portraits-Narrator The demon opened a sinister portal with his black magic, and in a flash of red and black, he was gone in an instant. Thassa chased after him, just for the portal to disappear right before her eyes. .
 Narrator Portraits-Narrator Thassa thought of what to do next. When she was a kid, she read in books about the circle of Aryassa, a group of magicians, masters in pretty much every type of magic. .
 Narrator Portraits-Narrator She was sure they had to know how to remove or avoid the strange fog that surrounded Crihendrath. They were her only hope. .
@@ -13,4 +13,4 @@ Narrator Portraits-Narrator Korvuk, the circle's leader, summoned strange lookin
 Narrator Portraits-Narrator When they arrived there, the mages created a defensive barrier that negated the effects of the deadly mist. Thassa and her army rushed to the castle's door to open it. .
 Narrator Portraits-Narrator Thassa and her men advanced through the halls of the fallen castle, not a sight of the living, or the dead, right to the throne room, where they found the demon Abeizhul sitting in his throne. .
 Narrator Portraits-Narrator Fingering a human skull with one hand, Abeizhul stood from his seat. .
-Abeizhul Portraits-Abeizhul You are brave, princess. But your skull will be mine. .
+Abeizhul Portraits-SoldierEnemy You are brave, princess. But your skull will be mine. .
