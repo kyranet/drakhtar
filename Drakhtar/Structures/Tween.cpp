@@ -228,18 +228,18 @@ void Tween::update() {
       x = (to_.getX() - from_.getX()) * progress_ + from_.getX();
       y = (to_.getY() - from_.getY()) * progress_ + from_.getY();
     } else {
-      const auto progress = route_.size() * progress_;
-      const auto node = std::floor(progress);
-      const auto next = std::ceil(progress);
-      const auto nodeRoute = route_[static_cast<int>(node)];
+      const auto progress = static_cast<double>(route_.size()) * progress_;
+      const auto node = static_cast<size_t>(std::floor(progress));
+      const auto next = static_cast<size_t>(std::ceil(progress));
+      const auto nodeRoute = route_[node];
 
       // Handle last frame
       if (next == route_.size()) {
         x = nodeRoute.getX();
         y = nodeRoute.getY();
       } else {
-        const auto nextRoute = route_[static_cast<int>(next)];
-        const auto transition = progress - node;
+        const auto nextRoute = route_[next];
+        const auto transition = progress - static_cast<double>(node);
         x = (nextRoute.getX() - nodeRoute.getX()) * transition +
             nodeRoute.getX();
         y = (nextRoute.getY() - nodeRoute.getY()) * transition +

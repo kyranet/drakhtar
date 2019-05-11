@@ -124,7 +124,7 @@ void HeroicStrike::cast(GameScene* scene) {
   if (remainingCooldown_ == 0 && caster_->getMoving()) {
     Skill::cast(scene);
     attackIncrement_ = caster_->getStats().attack * 0.5;
-    caster_->setAttack(caster_->getStats().attack + attackIncrement_);
+    caster_->setAttack(static_cast<int>(caster_->getStats().attack + attackIncrement_));
     caster_->setUnstoppable(true);
     caster_->setBuffed(true);
     SDLAudioManager::getInstance()->playChannel(8, 0, 1);
@@ -134,7 +134,7 @@ void HeroicStrike::cast(GameScene* scene) {
 void HeroicStrike::end(GameScene*) {
   active_ = false;
   std::cout << "<HeroicStrike> ended" << std::endl;
-  caster_->setAttack(caster_->getStats().attack - attackIncrement_);
+  caster_->setAttack(static_cast<int>(caster_->getStats().attack - attackIncrement_));
   caster_->setUnstoppable(false);
   caster_->setBuffed(false);
 }
@@ -230,7 +230,7 @@ void DeathRay::cast(GameScene* scene) {
     Skill::cast(scene);
 
     // Searches for the furthest unit
-    Unit* furthestUnit;
+    Unit* furthestUnit = nullptr;
     int maxDistance = 0;
     for (auto unit : scene->getEnemyTeam(caster_)->getUnits()) {
       const auto distanceX = abs((caster_->getBox()->getIndex().getX() -
@@ -244,7 +244,9 @@ void DeathRay::cast(GameScene* scene) {
       }
     }
 
-    furthestUnit->loseHealth(20 + maxDistance * 2, 20 + maxDistance * 2);
+    if (furthestUnit != nullptr) {
+      furthestUnit->loseHealth(20 + maxDistance * 2, 20 + maxDistance * 2);
+    }
   }
 }
 

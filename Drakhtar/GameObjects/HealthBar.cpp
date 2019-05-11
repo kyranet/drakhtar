@@ -61,8 +61,8 @@ void HealthBar::update() {
       int oldX = damageBar->getRect().x;
       int oldY = damageBar->getRect().y;
       damageBar->setSize(
-          Vector2D<int>(damageBar->getRect().w - damageAnimationSpeed,
-                        damageBar->getRect().h));
+          {static_cast<int>(damageBar->getRect().w - damageAnimationSpeed),
+           damageBar->getRect().h});
       damageBar->setPosition(
           Vector2D<int>(oldX + (damageBar->getRect().w / 2),
                         oldY + (damageBar->getRect().h / 2)));
@@ -82,13 +82,13 @@ void HealthBar::takeDamage(int newHealth) {
   int oldX = lifeBar->getRect().x;
   int oldY = lifeBar->getRect().y;
   lifeBar->setSize(
-      Vector2D<int>(originalWidth * lifeProportion, lifeBar->getRect().h));
+      {static_cast<int>(originalWidth * lifeProportion), lifeBar->getRect().h});
   lifeBar->setPosition(Vector2D<int>(oldX + (lifeBar->getRect().w / 2),
                                      oldY + (lifeBar->getRect().h / 2)));
 
   double damageProportion = static_cast<double>(damage) / maxHealth;
-  damageBar->setSize(
-      Vector2D<int>(originalWidth * damageProportion, damageBar->getRect().h));
+  damageBar->setSize({static_cast<int>(originalWidth * damageProportion),
+                      damageBar->getRect().h});
   damageBar->setPosition(
       Vector2D<int>(lifeBar->getRect().x + (lifeBar->getRect().w) +
                         (damageBar->getRect().w / 2),

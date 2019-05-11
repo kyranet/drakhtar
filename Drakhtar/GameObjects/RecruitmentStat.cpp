@@ -16,20 +16,22 @@
 
 RecruitmentStat::RecruitmentStat(Scene* scene, StoreUnit* controller)
     : GameObject(scene, TextureManager::get("Reward-Panel"),
-                 Vector2D<int>(WIN_WIDTH * 0.68, WIN_HEIGHT * 0.25),
-                 Vector2D<int>(WIN_WIDTH * 0.40, WIN_HEIGHT * 0.45)),
+                 {static_cast<int>(WIN_WIDTH * 0.68),
+                  static_cast<int>(WIN_HEIGHT * 0.25)},
+                 {static_cast<int>(WIN_WIDTH * 0.40),
+                  static_cast<int>(WIN_HEIGHT * 0.45)}),
       currentSelected_(controller) {
-  auto pos = currentSelected_->unit->getPosition();
-
   std::string statText_ = fillText();
   const auto statTextSprite =
       new Text(scene_, FontManager::get("StatsFont"),
-               Vector2D<int>(this->getPosition().getX() + WIN_WIDTH * 0.04,
-                             this->getPosition().getY()),
-               {0, 0, 0, 1}, statText_, this->getRect().w * 0.9);
+               {static_cast<int>(getPosition().getX() + WIN_WIDTH * 0.04),
+                static_cast<int>(getPosition().getY())},
+               {0, 0, 0, 1}, statText_, static_cast<int>(getRect().w * 0.9));
   addChild(statTextSprite);
   active_ = true;
 }
+
+RecruitmentStat::~RecruitmentStat() = default;
 
 void RecruitmentStat::render() const {
   if (active_) {
@@ -54,5 +56,3 @@ std::string RecruitmentStat::fillText() {
 }
 
 void RecruitmentStat::updateText() { fillText(); }
-
-RecruitmentStat::~RecruitmentStat() {}
