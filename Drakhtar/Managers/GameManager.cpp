@@ -58,6 +58,8 @@ void GameManager::reset() {
 }
 
 void GameManager::updateUnits(std::vector<Unit*>& units) {
+  for (const auto& pair : typeOrder) (*army_)[pair.second] = 0;
+
   for (auto unit : units) {
     if (army_->find(unit->getType()) != army_->end()) {
       (*army_)[unit->getType()] =

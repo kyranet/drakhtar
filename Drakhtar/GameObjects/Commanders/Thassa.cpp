@@ -6,6 +6,8 @@
 Thassa::Thassa(Scene* scene, Texture* texture, Box* box,
                const UnitStats thassaStats)
     : Commander("Thassa", scene, texture, box, thassaStats) {
+  size_.setX(WIN_WIDTH / 8);
+  size_.setY(WIN_HEIGHT / 4.5f);
   skills_.push_back(new BattleCry(this));
   skills_.push_back(new HeroicStrike(this));
 }
