@@ -64,22 +64,23 @@ StoreListener::StoreListener(GameObject* gameObject, const std::string& type,
   plusButton->setColor({0, 0, 0, 0});
   gameObject->addChild(plusButton);
 
-  auto infoBox =
-      new GameObject(scene, TextureManager::get("Reward-Panel"),
-                     Vector2D<int>(WIN_WIDTH * 0.68, WIN_HEIGHT * 0.25),
-                     Vector2D<int>(WIN_WIDTH * 0.4, WIN_HEIGHT * 0.36));
+  auto infoBox = new GameObject(
+      scene, TextureManager::get("Reward-Panel"),
+      {static_cast<int>(WIN_WIDTH * 0.68), static_cast<int>(WIN_HEIGHT * 0.25)},
+      {static_cast<int>(WIN_WIDTH * 0.4), static_cast<int>(WIN_HEIGHT * 0.36)});
   auto infoBoxText =
       new Text(scene, FontManager::get("Retron2000"),
                {infoBox->getPosition().getX(),
                 infoBox->getPosition().getY() - infoBox->getRect().h / 50},
-               {255, 255, 255, 0}, infoFillText(), infoBox->getRect().w * 0.85);
+               {255, 255, 255, 0}, infoFillText(),
+               static_cast<int>(infoBox->getRect().w * 0.85));
   infoBox->addChild(infoBoxText);
   infoBox->setRenderizable(false);
   gameObject->addChild(infoBox);
   auto infoIcon = new Button(
       scene, TextureManager::get("Quantity-Button"),
-      Vector2D<int>(WIN_WIDTH * 0.69, WIN_HEIGHT * 0.9),
-      Vector2D<int>(static_cast<int>(WIN_WIDTH / 12), WIN_HEIGHT / 5),
+      {static_cast<int>(WIN_WIDTH * 0.69), static_cast<int>(WIN_HEIGHT * 0.9)},
+      {static_cast<int>(WIN_WIDTH / 12), static_cast<int>(WIN_HEIGHT / 5)},
       [infoBox]() { infoBox->setRenderizable(!infoBox->getRenderizable()); },
       "?", "SkillButtonFont");
   gameObject->addChild(infoIcon);

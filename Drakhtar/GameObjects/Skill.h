@@ -38,7 +38,7 @@ class Skill {
 class BattleCry final : public Skill {
  public:
   explicit BattleCry(Commander* caster);
-  virtual ~BattleCry() = default;
+  ~BattleCry() = default;
 
   void cast(GameScene* scene) override;
   void end(GameScene* scene) override;
@@ -49,7 +49,7 @@ class ArrowRain final : public Skill {
 
  public:
   explicit ArrowRain(Commander* caster);
-  virtual ~ArrowRain() = default;
+  ~ArrowRain() = default;
 
   void cast(GameScene* scene) override;
   void end(GameScene* scene) override;
@@ -60,7 +60,7 @@ class HeroicStrike final : public Skill {
 
  public:
   explicit HeroicStrike(Commander* caster);
-  virtual ~HeroicStrike() = default;
+  ~HeroicStrike() = default;
 
   void cast(GameScene* scene) override;
   void end(GameScene* scene) override;
@@ -69,7 +69,7 @@ class HeroicStrike final : public Skill {
 class WitheringCurse final : public Skill {
  public:
   explicit WitheringCurse(Commander* caster);
-  virtual ~WitheringCurse() = default;
+  ~WitheringCurse() = default;
 
   void cast(GameScene* scene) override;
   void end(GameScene* scene) override;
@@ -78,7 +78,7 @@ class WitheringCurse final : public Skill {
 class Charge final : public Skill {
  public:
   explicit Charge(Commander* caster);
-  virtual ~Charge() = default;
+  ~Charge() = default;
 
   void cast(GameScene* scene) override;
   void end(GameScene* scene) override;
@@ -87,7 +87,7 @@ class Charge final : public Skill {
 class Berserker final : public Skill {
  public:
   explicit Berserker(Commander* caster);
-  virtual ~Berserker() = default;
+  ~Berserker() = default;
 
   void cast(GameScene* scene) override;
   void end(GameScene* scene) override;
@@ -96,7 +96,7 @@ class Berserker final : public Skill {
 class DeathRay final : public Skill {
  public:
   explicit DeathRay(Commander* caster);
-  virtual ~DeathRay() = default;
+  ~DeathRay() = default;
 
   void cast(GameScene* scene) override;
   void end(GameScene* scene) override;
@@ -107,7 +107,7 @@ class Reinforce final : public Skill {
 
  public:
   explicit Reinforce(Commander* caster);
-  virtual ~Reinforce() = default;
+  ~Reinforce() = default;
 
   void cast(GameScene* scene) override;
   void end(GameScene* scene) override;

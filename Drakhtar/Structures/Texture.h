@@ -27,8 +27,8 @@ class Texture final {
   Vector2D<Uint16> size_;
   Vector2D<double> scale_{1, 1};
   Vector2D<Uint16> frameSize_;
-  Uint32 columnAmount_ = 1;
-  Uint32 rowAmount_ = 1;
+  Uint16 columnAmount_ = 1;
+  Uint16 rowAmount_ = 1;
   std::map<std::string, AnimationTextureInfo> animations_;
   std::string previousAnimation_;
   AnimationTextureInfo animation_;

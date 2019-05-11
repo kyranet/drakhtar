@@ -7,25 +7,25 @@
 #include "Unit.h"
 
 Board::Board(Scene *scene, const int rows, const int columns,
-             const float cellSize)
+             const double cellSize)
     : GameObject(scene, nullptr, Vector2D<int>(0, 0), Vector2D<int>(0, 0)),
       rows_(rows),
       columns_(columns),
       cellSize_(cellSize) {
   // Calculates margins to center the board on screen
-  size_.set(static_cast<int>(floor(columns_ * cellSize_)),
-            static_cast<int>(floor(rows_ * cellSize_)));
-  position_.set(static_cast<int>(floor((WIN_WIDTH - size_.getX()) / 2)),
-                static_cast<int>(floor((WIN_HEIGHT - size_.getY()) / 2)));
+  size_.set(static_cast<int>(columns_ * cellSize_),
+            static_cast<int>(rows_ * cellSize_));
+  position_.set(static_cast<int>((WIN_WIDTH - size_.getX()) / 2),
+                static_cast<int>((WIN_HEIGHT - size_.getY()) / 2));
 
   // Fills the board with empty boxes
   for (auto x = 0; x < columns_; x++) {
     for (auto y = 0; y < rows_; y++) {
       auto pos = Vector2D<int>(
-          static_cast<int>(floor(position_.getX() + x * cellSize_)),
-          static_cast<int>(floor(position_.getY() + y * cellSize_)));
-      const auto size = Vector2D<int>(static_cast<int>(floor(cellSize_)),
-                                      static_cast<int>(floor(cellSize_)));
+          static_cast<int>(position_.getX() + x * cellSize_),
+          static_cast<int>(position_.getY() + y * cellSize_));
+      const auto size = Vector2D<int>(static_cast<int>(cellSize_),
+                                      static_cast<int>(cellSize_));
       const auto box = new Box(scene, pos, size, Vector2D<int>(x, y), nullptr);
       addChild(box);
     }
@@ -44,11 +44,11 @@ Box *Board::getBoxAt(const int x, const int y) const {
 
 Box *Board::getBoxAtCoordinates(const Vector2D<int>& point) const {
   const auto x =
-      static_cast<int>(floor((point.getX() - position_.getX()) / cellSize_));
+      static_cast<int>((point.getX() - position_.getX()) / cellSize_);
   if (x < 0 || x >= columns_) return nullptr;
 
   const auto y =
-      static_cast<int>(floor((point.getY() - position_.getY()) / cellSize_));
+      static_cast<int>((point.getY() - position_.getY()) / cellSize_);
   if (y < 0 || y >= rows_) return nullptr;
 
   return getBoxAt(x, y);

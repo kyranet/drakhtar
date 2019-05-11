@@ -5,7 +5,7 @@
 #include "SDL_ttf.h"
 
 class Font {
-  TTF_Font* font_;
+  TTF_Font* font_ = nullptr;
 
  public:
   Font();

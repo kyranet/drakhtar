@@ -9,13 +9,13 @@ class Text;
 class Font;
 class TutorialBox;
 
-class TutorialText : public GameObject {
+class TutorialText final : public GameObject {
   std::vector<TutorialTexts> texts;
-  int cont = 0;
-  Text* text = nullptr;
+  unsigned int cont = 0;
+  Text* text_ = nullptr;
 
  public:
-  TutorialText(Scene* scene, TutorialBox* box, std::string& file,
+  TutorialText(Scene* scene, std::string& file,
                SDL_Rect rect);
   ~TutorialText();
   void render() const override;

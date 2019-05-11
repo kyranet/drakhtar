@@ -19,7 +19,7 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
                          PlayerController* temporalController)
     : GameObject(scene, nullptr, pos, size) {
   SDL_Rect rect = {pos.getX(), pos.getY(), size.getX(), size.getY()};
-  auto tutorialText_ = new TutorialText(scene, this, filename, rect);
+  auto tutorialText_ = new TutorialText(scene, filename, rect);
   tutorialText_->setTransparent(true);
 
   auto arrow = new GameObject(scene, TextureManager::get("UI-arrowAnim"),
@@ -28,10 +28,10 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
 
   arrow->getTexture()->setFlip(SDL_FLIP_HORIZONTAL);
 
-  const auto tutorialBackground =
-      new GameObject(scene, TextureManager::get("UI-tutorialBackground"),
-                     Vector2D<int>(rect.x, rect.y * 1.1),
-                     Vector2D<int>(rect.w * 1.3, rect.h * 1.3));
+  const auto tutorialBackground = new GameObject(
+      scene, TextureManager::get("UI-tutorialBackground"),
+      {static_cast<int>(rect.x), static_cast<int>(rect.y * 1.1)},
+      {static_cast<int>(rect.w * 1.3), static_cast<int>(rect.h * 1.3)});
 
   const auto nextButton = new Button(
       scene_, TextureManager::get("Vanilla-Button"),
@@ -57,8 +57,8 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
         int x = tutorialText_->getCont();
         if (x == 9) {
           setArrowRenderizable(true);
-          pos = Vector2D<int>(WIN_WIDTH - WIN_WIDTH / 1.8,
-                              WIN_HEIGHT - WIN_HEIGHT / 13);
+          pos = {static_cast<int>(WIN_WIDTH - WIN_WIDTH / 1.8),
+                 static_cast<int>(WIN_HEIGHT - WIN_HEIGHT / 13)};
           setArrowPos(SDL_FLIP_NONE, pos);
         }
         if (x == 10) {
@@ -75,11 +75,12 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
         if (x == 11) {
           auto image = new GameObject(
               scene, TextureManager::get("tutorial_"),
-              Vector2D<int>(tutorialBackground->getPosition().getX() * 0.99,
-                            tutorialBackground->getPosition().getY() +
-                                tutorialBackground->getRect().h * 0.95),
-              Vector2D<int>(tutorialBackground->getRect().w * 0.8,
-                            tutorialBackground->getRect().h * 0.8));
+              {static_cast<int>(tutorialBackground->getPosition().getX() *
+                                0.99),
+               static_cast<int>(tutorialBackground->getPosition().getY() +
+                                tutorialBackground->getRect().h * 0.95)},
+              {static_cast<int>(tutorialBackground->getRect().w * 0.8),
+               static_cast<int>(tutorialBackground->getRect().h * 0.8)});
           auto imageBack = new GameObject(
               scene, TextureManager::get("UI-tutorialBackground"),
               Vector2D<int>(tutorialBackground->getPosition().getX(),
@@ -90,12 +91,13 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
 
           addChild(imageBack);
           imageBack->addChild(image);
-          pos = Vector2D<int>(imageBack->getPosition().getX() * 1.15,
-                              imageBack->getPosition().getY());
+          pos = {static_cast<int>(imageBack->getPosition().getX() * 1.15),
+                 imageBack->getPosition().getY()};
           setArrowPos(SDL_FLIP_HORIZONTAL, pos);
         }
         if (x == 12) {
-          pos = Vector2D<int>(WIN_WIDTH / 6.5, WIN_HEIGHT - WIN_HEIGHT / 7.5);
+          pos = {static_cast<int>(WIN_WIDTH / 6.5),
+                 static_cast<int>(WIN_HEIGHT - WIN_HEIGHT / 7.5)};
           setArrowPos(SDL_FLIP_HORIZONTAL, pos);
         }
         if (x == 13) {
@@ -105,11 +107,13 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
             child->setTransparent(true);
             child->destroy();
           }
-          pos = Vector2D<int>(WIN_WIDTH / 7, WIN_HEIGHT / 6);
+          pos = {static_cast<int>(WIN_WIDTH / 7),
+                 static_cast<int>(WIN_HEIGHT / 6)};
           setArrowPos(SDL_FLIP_HORIZONTAL, pos);
         }
         if (x == 14) {
-          pos = Vector2D<int>(WIN_WIDTH / 7, WIN_HEIGHT / 2.5);
+          pos = {static_cast<int>(WIN_WIDTH / 7),
+                 static_cast<int>(WIN_HEIGHT / 2.5)};
           setArrowPos(SDL_FLIP_HORIZONTAL, pos);
         }
       },

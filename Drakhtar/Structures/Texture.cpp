@@ -35,8 +35,8 @@ std::vector<Uint16> Texture::getAnimation() const { return animation_.frames; }
 Vector2D<int> Texture::getOffset() const { return offset_; }
 
 void Texture::setOffset(Vector2D<double> percentage) {
-  offset_ = Vector2D<int>(size_.getX() * percentage.getX(),
-                          size_.getY() * percentage.getY());
+  offset_ = {static_cast<int>(size_.getX() * percentage.getX()),
+             static_cast<int>(size_.getY() * percentage.getY())};
 }
 
 SDL_Texture* Texture::getTexture() const { return texture_; }
@@ -105,8 +105,9 @@ Texture* Texture::loadFromImage(const std::string& filename,
   close();
   texture_ = SDL_CreateTextureFromSurface(renderer_, surface);
   if (texture_ != nullptr) {
-    size_.set(surface->w, surface->h);
-    frameSize_.set(surface->w / columnAmount, surface->h / rowAmount);
+    size_.set(static_cast<Uint16>(surface->w), static_cast<Uint16>(surface->h));
+    frameSize_.set(static_cast<Uint16>(surface->w / columnAmount),
+                   static_cast<Uint16>(surface->h / rowAmount));
     columnAmount_ = columnAmount;
     rowAmount_ = rowAmount;
   }
@@ -126,8 +127,9 @@ Texture* Texture::loadFromText(Font* font, const std::string& text,
   close();
   texture_ = SDL_CreateTextureFromSurface(renderer_, surface);
   if (texture_ != nullptr) {
-    size_.set(surface->w, surface->h);
-    frameSize_.set(surface->w, surface->h);
+    size_.set(static_cast<Uint16>(surface->w), static_cast<Uint16>(surface->h));
+    frameSize_.set(static_cast<Uint16>(surface->w),
+                   static_cast<Uint16>(surface->h));
     columnAmount_ = 1;
     rowAmount_ = 1;
   }

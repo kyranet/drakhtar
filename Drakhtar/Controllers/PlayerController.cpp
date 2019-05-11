@@ -162,8 +162,8 @@ bool PlayerController::canCastSkills() {
         }
       }
     }
-    return false;
   }
+  return false;
 }
 
 void PlayerController::highlightCells() {
