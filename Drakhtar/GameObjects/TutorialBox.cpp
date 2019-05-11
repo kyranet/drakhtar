@@ -35,11 +35,11 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
 
   const auto nextButton = new Button(
       scene_, TextureManager::get("Vanilla-Button"),
-      Vector2D<int>(tutorialBackground->getPosition().getX() -
-                        tutorialBackground->getRect().w / 4,
+      Vector2D<int>(static_cast<int>(tutorialBackground->getPosition().getX() -
+                        tutorialBackground->getRect().w / 4.8),
                     tutorialBackground->getPosition().getY() +
                         tutorialBackground->getRect().h / 4),
-      Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT / 19),
+      Vector2D<int>(WIN_WIDTH / 10, WIN_HEIGHT / 16),
       [tutorialText_, this, tutorialBackground, scene, controller]() {
         if (!tutorialText_->getClosed(tutorialText_->getCont() + 1)) {
           setNextButtonRender(false);
@@ -120,12 +120,12 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
       "Next ", "ButtonFont");
   const auto CloseButton = new Button(
       scene_, TextureManager::get("Vanilla-Button"),
-      {static_cast<int>(tutorialBackground->getRect().w / 3.0 +
-                        tutorialBackground->getPosition().getX() * 0.9),
-       static_cast<int>(tutorialBackground->getPosition().getY() +
-                        tutorialBackground->getRect().h / 4)},
-      Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT / 19),
-      [this, controller, temporalController]() {
+      Vector2D<int>(static_cast<int>(tutorialBackground->getRect().w / 3 +
+                        tutorialBackground->getPosition().getX() * 0.93),
+                    tutorialBackground->getPosition().getY() +
+                        tutorialBackground->getRect().h / 4),
+      Vector2D<int>(WIN_WIDTH / 10, WIN_HEIGHT / 16),
+      [tutorialText_, this, controller, temporalController]() {
         this->setRenderizable(false);
         this->setTransparent(true);
         for (auto child : getChildren()) {

@@ -39,7 +39,7 @@ StoreListener::StoreListener(GameObject* gameObject, const std::string& type,
           storeUnit.amountText->setColor({255, 255, 255, 0});
         }
       },
-      "-", "SkillButtonFont");
+      "-", "ButtonFontQuantity");
   minusButton->setColor({0, 0, 0, 0});
   gameObject->addChild(minusButton);
 
@@ -60,7 +60,7 @@ StoreListener::StoreListener(GameObject* gameObject, const std::string& type,
           storeUnit.amountText->setColor({255, 255, 255, 0});
         }
       },
-      "+", "SkillButtonFont");
+      "+", "ButtonFontQuantity");
   plusButton->setColor({0, 0, 0, 0});
   gameObject->addChild(plusButton);
 

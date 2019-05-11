@@ -275,6 +275,10 @@ void Game::load() {
   textures->add("Maps-4Battle", "../images/Maps/FourthBattle.png", 1, 1);
   textures->add("Maps-5Battle", "../images/Maps/FifthBattle.png", 1, 1);
 
+  // Logos
+  textures->add("Logos-VG", "../images/Logos/VG.jpg", 1, 1);
+  textures->add("Logos-logo", "../images/Logos/Logo.png", 1, 1);
+
   // Tutorial images
   textures->add("tutorial_", "../images/Tutorials/tutorial_.png", 1, 1);
   textures->add("tutorial-1", "../images/Tutorials/tutorial_1.png", 1, 1);
@@ -319,18 +323,19 @@ void Game::load() {
   textures->init();
 
   // Fonts
-  fonts->add("DialogFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 66,
+  fonts->add("DialogFont", "../fonts/Greenscr.ttf", WIN_WIDTH / 66, WIN_WIDTH);
+  fonts->add("SkillButtonFont", "../fonts/Greenscr.ttf", WIN_WIDTH / 40,
              WIN_WIDTH);
-  fonts->add("SkillButtonFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 40,
+  fonts->add("Retron2000", "../fonts/Greenscr.ttf", WIN_WIDTH / 88, WIN_WIDTH);
+  fonts->add("TutorialFont", "../fonts/Greenscr.ttf", WIN_WIDTH / 100,
              WIN_WIDTH);
-  fonts->add("Retron2000", "../fonts/Retron2000.ttf", WIN_WIDTH / 88,
+  fonts->add("UnitFont", "../fonts/Greenscr.ttf", WIN_WIDTH / 120, WIN_WIDTH);
+  fonts->add("StatsFont", "../fonts/Greenscr.ttf", WIN_WIDTH / 45, WIN_WIDTH);
+  fonts->add("ButtonFont", "../fonts/Greenscr.ttf", WIN_WIDTH / 50, WIN_WIDTH);
+  fonts->add("ButtonFontQuantity", "../fonts/Retron2000.ttf", WIN_WIDTH / 50,
              WIN_WIDTH);
-  fonts->add("TutorialFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 100,
+  fonts->add("ButtonFontBig", "../fonts/Greenscr.ttf", WIN_WIDTH / 20,
              WIN_WIDTH);
-  fonts->add("UnitFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 120, WIN_WIDTH);
-  fonts->add("StatsFont", "../fonts/Retron2000.ttf", WIN_WIDTH / 45, WIN_WIDTH);
-  fonts->add("ButtonFont", "../fonts/AURORA.ttf", WIN_WIDTH / 50, WIN_WIDTH);
-  fonts->add("ButtonFontBig", "../fonts/AURORA.ttf", WIN_WIDTH / 20, WIN_WIDTH);
   fonts->init();
 
   auto audio = SDLAudioManager::getInstance();
