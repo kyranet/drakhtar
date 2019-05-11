@@ -25,9 +25,12 @@ GameOverPanel::GameOverPanel(Scene* scene, Texture* texture,
         int currentScene =
             reinterpret_cast<GameScene*>(getScene())->getBattleInd();
         if (victory) {
-          if (currentScene < 6) {  // 6 meaning five levels plus last scene before returning to main menu
+          if (currentScene < 5) {  // 5 meaning five levels plus last scene
+                                    // before returning to main menu
             Game::getSceneMachine()->changeScene(
                 new RecruitScene(currentScene + 1));
+          } else {
+            Game::getSceneMachine()->changeScene(new MenuScene());
           }
         } else {
           Game::getSceneMachine()->changeScene(new GameScene(currentScene));
