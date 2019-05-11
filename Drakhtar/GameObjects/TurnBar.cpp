@@ -51,8 +51,9 @@ void TurnBar::render() const {
   ++i;
   for (const auto max = calculated.size(); i < max; ++i) {
     if (calculated[i] == nullptr) continue;
-    position.set(WIN_WIDTH - WIN_WIDTH / 2 + (i + 1) * WIN_HEIGHT / 11,
-                 static_cast<int>(WIN_HEIGHT - WIN_HEIGHT / 12.5));
+    position.set(
+        static_cast<int>(WIN_WIDTH - WIN_WIDTH / 2 + (i + 1) * WIN_HEIGHT / 11),
+        static_cast<int>(WIN_HEIGHT - WIN_HEIGHT / 12.5));
     size.set(WIN_HEIGHT / 8, WIN_HEIGHT / 8);
     calculated[i]->render({position.getX() - size.getX() / 2,
                            position.getY() - size.getY() / 2, size.getX(),

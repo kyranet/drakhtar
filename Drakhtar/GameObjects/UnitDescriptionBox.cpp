@@ -18,24 +18,26 @@ UnitDescriptionBox::UnitDescriptionBox(Scene* scene, Board* board,
                                        TurnManager* turnManager)
     : GameObject(scene, TextureManager::get("Reward-Panel"),
                  Vector2D<int>(0, 0), Vector2D<int>(0, 0)),
-      board_(board), turnManager_(turnManager) {
+      board_(board),
+      showDamage_(false),
+      turnManager_(turnManager) {
   setTransparent(true);
   setRenderizable(false);
 
   const auto listener = new StatBoxListener(board, this);
   board->addEventListener(listener);
 
-  unitStatsText_ = new Text(
-      scene_, FontManager::get("TutorialFont"),
-      Vector2D<int>(this->getPosition().getX() + 5, this->getPosition().getY()),
-      {0, 0, 0, 1}, " ", this->getRect().w * 0.9);
+  unitStatsText_ =
+      new Text(scene_, FontManager::get("TutorialFont"),
+               Vector2D<int>(getPosition().getX() + 5, getPosition().getY()),
+               {0, 0, 0, 1}, " ", static_cast<int>(getRect().w * 0.9));
   addChild(unitStatsText_);
   unitStatsText_->setTransparent(true);
 
-  unitDamageText_ = new Text(scene_, FontManager::get("TutorialFont"),
-                             Vector2D<int>(this->getPosition().getX() + 5,
-                                           this->getPosition().getY() + 50),
-                             {255, 0, 0, 1}, " ", this->getRect().w * 0.9);
+  unitDamageText_ =
+      new Text(scene_, FontManager::get("TutorialFont"),
+               {getPosition().getX() + 5, getPosition().getY() + 50},
+               {255, 0, 0, 1}, " ", static_cast<int>(getRect().w * 0.9));
   addChild(unitDamageText_);
   unitDamageText_->setTransparent(true);
   active_ = true;
@@ -78,8 +80,8 @@ void UnitDescriptionBox::updateText(Unit* unit) {
   Unit* activeUnit = turnManager_->getActiveUnit();
 
   showDamage_ = board_->isInRange(activeUnit->getBox(), unit->getBox(),
-                                 activeUnit->getStats().attackRange) &&
-               unit->getTeam() != activeUnit->getTeam();
+                                  activeUnit->getStats().attackRange) &&
+                unit->getTeam() != activeUnit->getTeam();
 
   int damage = static_cast<int>(activeUnit->getStats().attack *
                                 (1.0 - unit->getStats().defense / 100.0));

@@ -91,17 +91,16 @@ void RecruitScene::preload() {
 
   auto cancelButton = new Button(
       this, TextureManager::get("Cancel-Button"),
-      Vector2D<int>(WIN_WIDTH / 4 - WIN_WIDTH / 20,
-                    WIN_HEIGHT - WIN_HEIGHT / 13),
-      Vector2D<int>(static_cast<int>(WIN_WIDTH / 26.6), WIN_HEIGHT / 15),
+      {WIN_WIDTH / 4 - WIN_WIDTH / 20, WIN_HEIGHT - WIN_HEIGHT / 13},
+      {static_cast<int>(WIN_WIDTH / 26.6), static_cast<int>(WIN_HEIGHT / 15)},
       [this]() { reset(); }, " ", "ButtonFont");
 
   recruitmentPanel_->addChild(cancelButton);
 
   playButton = new Button(
       this, TextureManager::get("Vanilla-Button"),
-      Vector2D<int>(WIN_WIDTH * 0.69, WIN_HEIGHT * 0.75),
-      Vector2D<int>(static_cast<int>(WIN_WIDTH / 4), WIN_HEIGHT / 6),
+      {static_cast<int>(WIN_WIDTH * 0.69), static_cast<int>(WIN_HEIGHT * 0.75)},
+      {static_cast<int>(WIN_WIDTH / 4), static_cast<int>(WIN_HEIGHT / 6)},
       [this]() {
         reset();
         Game::getSceneMachine()->changeScene(
@@ -160,7 +159,8 @@ void RecruitScene::addUnit(const std::string& textureName, int position) {
       new GameObject(this, TextureManager::get("Coin-Anim"),
                      {unitPrice->getPosition().getX() - unit->getRect().w / 4,
                       unitPrice->getPosition().getY()},
-                     Vector2D<int>(WIN_HEIGHT * 0.05, WIN_HEIGHT * 0.05));
+                     {static_cast<int>(WIN_HEIGHT * 0.05),
+                      static_cast<int>(WIN_HEIGHT * 0.05)});
   unit->addChild(unitGoldIcon);
   addGameObject(unit);
 

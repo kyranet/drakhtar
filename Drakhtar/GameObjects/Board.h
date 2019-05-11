@@ -30,7 +30,7 @@ class Board final : public GameObject {
    * \brief The size of each cell of the board (Applies to both width and
    * height).
    */
-  float cellSize_;
+  double cellSize_;
 
   /**
    * \brief Auxiliary matrix that saves the last search of cells near another
@@ -39,7 +39,7 @@ class Board final : public GameObject {
   Matrix<ObjectType> *objectTypeMatrix_ = nullptr;
 
  public:
-  Board(Scene *scene, int rows, int columns, float cellSize);
+  Board(Scene *scene, int rows, int columns, double cellSize);
   virtual ~Board();
 
   /**
