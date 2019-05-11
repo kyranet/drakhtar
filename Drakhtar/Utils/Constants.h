@@ -45,7 +45,7 @@ struct TutorialTexts {
 // Thassa
 const UnitStats THASSA_STATS = {35, 35, 150, 1, 3, 5, 100};
 // Zamdran
-const UnitStats ZAMDRAN_STATS = {50, 10, 200, 3, 2, 6, 100};
+const UnitStats ZAMDRAN_STATS = {50, 10, 200, 3, 2, 5, 100};
 // Sheissah
 const UnitStats SHEISSAH_STATS = {60, 10, 220, 2, 2, 5, 100};
 // Valar

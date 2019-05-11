@@ -12,7 +12,7 @@ class DialogScene final : virtual public Sequence {
   std::vector<Dialog*> dialogues_;
   size_t dialogueIndex_ = 0;  // index of the current position in vector
   int lineJumpLimit_ = 0;     // text line length
-  int numbBattles = 2;  // number of battles implemented in game
+  int numbBattles = 6;  // number of battles implemented in game + 1
 
   void readFromFile(const std::string& filename, Font* textFont, SDL_Rect rect);
 

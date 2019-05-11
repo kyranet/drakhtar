@@ -62,10 +62,12 @@ void GameScene::preload() {
   team1_->addCommander(thassa);
   addGameObject(thassa);
 
-  const auto valar =
-      factory.newCommander("BlueValar", team1_, board_->getBoxAt(0, 6));
-  team1_->addCommander(valar);
-  addGameObject(valar);
+  if (battle_ == 1) {
+    const auto valar =
+        factory.newCommander("BlueValar", team1_, board_->getBoxAt(0, 4));
+    team1_->addCommander(valar);
+    addGameObject(valar);
+  }
 
   auto army = GameManager::getInstance()->getArmy();
   auto typeOrder = GameManager::getInstance()->getTypeOrder();
@@ -152,10 +154,6 @@ void GameScene::preload() {
     reinterpret_cast<PlayerController*>(team2_->getController())
         ->setTutorialDone(true);
   }
-
-  audio->haltMusic();
-  if (audio->getDefault()) audio->setMusicVolume(10);
-  audio->playMusic(1, 999);
 
   setGame(true);
   team1_->getController()->start();
