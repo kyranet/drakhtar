@@ -48,7 +48,7 @@ void UnitDescriptionBox::render() const {
     if (getRenderizable() && texture_ != nullptr) {
       // Stats box
       texture_->renderFrame({Input::getMousePosition().getX(),
-                             Input::getMousePosition().getY(), 140, 130},
+                             Input::getMousePosition().getY(), 150, 130},
                             texture_->getAnimation()[texture_->getFrame()]);
       unitStatsText_->render({Input::getMousePosition().getX() + 15,
                               Input::getMousePosition().getY() + 10, 260, 110});
@@ -86,7 +86,7 @@ void UnitDescriptionBox::updateText(Unit* unit) {
   int damage = static_cast<int>(activeUnit->getStats().attack *
                                 (1.0 - unit->getStats().defense / 100.0));
   text =
-      "Unit's attack: " + std::to_string(activeUnit->getStats().attack) + ")\n";
+      "Unit's attack: " + std::to_string(activeUnit->getStats().attack) + "\n";
   text +=
       "Enemy's defense: " + std::to_string(unit->getStats().defense) + "%\n";
   text += "Final damage: " + std::to_string(damage);
