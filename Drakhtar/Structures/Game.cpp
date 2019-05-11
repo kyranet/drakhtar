@@ -53,23 +53,27 @@ void Game::load() {
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10})
       ->addAnimation("walk", {11, 12}, 4)
-      ->addAnimation("death", {13, 14, 15, 16, 17});
+      ->addAnimation("death", {13, 14, 15, 16, 17})
+      ->setOffset({-0.05, 0});
   textures->add("Units-BlueKnight", "../images/Units/BlueKnight.png", 5, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10})
       ->addAnimation("walk", {11, 12, 13, 14}, 4)
       ->addAnimation("death", {15, 16, 17, 18, 19})
-      ->setScale({1.5, 1.5});
+      ->setScale({1.5, 1.5})
+      ->setOffset({-0.035, 0});
   textures->add("Units-BlueMage", "../images/Units/BlueMage.png", 4, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6})
       ->addAnimation("walk", {7, 8}, 4)
-      ->addAnimation("death", {9, 10, 11, 12});
+      ->addAnimation("death", {9, 10, 11, 12})
+      ->setOffset({-0.05, 0});
   textures->add("Units-BlueMonster", "../images/Units/BlueMonster.png", 4, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8})
       ->addAnimation("walk", {9, 10}, 4)
-      ->addAnimation("death", {11, 12, 13, 14, 15});
+      ->addAnimation("death", {11, 12, 13, 14, 15})
+      ->setOffset({-0.05, -0.05});
   textures->add("Units-BlueSoldier", "../images/Units/BlueSoldier.png", 4, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8})
@@ -104,26 +108,30 @@ void Game::load() {
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10})
       ->addAnimation("walk", {11, 12}, 4)
       ->addAnimation("death", {13, 14, 15, 16, 17})
-      ->setFlip(SDL_FLIP_HORIZONTAL);
+      ->setFlip(SDL_FLIP_HORIZONTAL)
+      ->setOffset({0.05, 0});
   textures->add("Units-RedKnight", "../images/Units/RedKnight.png", 5, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10})
       ->addAnimation("walk", {11, 12, 13, 14}, 4)
       ->addAnimation("death", {15, 16, 17, 18, 19})
       ->setFlip(SDL_FLIP_HORIZONTAL)
-      ->setScale({1.5, 1.5});
+      ->setScale({1.5, 1.5})
+      ->setOffset({0.035, 0});
   textures->add("Units-RedMage", "../images/Units/RedMage.png", 4, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8})
       ->addAnimation("walk", {9, 10}, 4)
       ->addAnimation("death", {11, 12, 13, 14, 15})
-      ->setFlip(SDL_FLIP_HORIZONTAL);
+      ->setFlip(SDL_FLIP_HORIZONTAL)
+      ->setOffset({0.05, 0});
   textures->add("Units-RedMonster", "../images/Units/RedMonster.png", 4, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8})
       ->addAnimation("walk", {9, 10}, 4)
       ->addAnimation("death", {11, 12, 13, 14, 15})
-      ->setFlip(SDL_FLIP_HORIZONTAL);
+      ->setFlip(SDL_FLIP_HORIZONTAL)
+      ->setOffset({0.05, -0.05});
   textures->add("Units-RedSoldier", "../images/Units/RedSoldier.png", 4, 4)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8})
@@ -195,6 +203,11 @@ void Game::load() {
   textures->add("UI-healthBar_life", "../images/UI/healthBar_life.png", 1, 1);
   textures->add("UI-healthBar_damage", "../images/UI/healthBar_damage.png", 1,
                 1);
+  textures->add("UI-healthBar_blue", "../images/UI/healthBar_blue.png", 1, 1);
+  textures->add("UI-BattalionCircle", "../images/UI/unitBatallionCircle.png", 1,
+                1);
+  textures->add("UI-BattalionCircle2", "../images/UI/unitBatallionCircle2.png",
+                1, 1);
   textures->add("UI-commanderIcon", "../images/UI/goldskull.png", 1, 1);
   textures->add("UI-OptionsMenu", "../images/UI/OptionsMenu.png", 1, 1);
   textures->add("UI-ActiveSound", "../images/UI/ActiveSound.png", 1, 1);
@@ -276,13 +289,13 @@ void Game::load() {
   textures->add("Transition-Map1", "../images/Maps/TestMap.png", 1, 1);
   textures->add("Transition-Map2", "../images/Transition/Transition_2.png", 1,
                 1);
-  textures->add("Transition-Map3", "../images/Transition/Transition_3.png", 4,
-                1)
-  ->addAnimation("default", {0, 1, 2, 3}, 1);
-  textures->add("Transition-Map4", "../images/Transition/Transition_4.png",
-                4, 1);
-  textures->add("Transition-Map5", "../images/Transition/Transition_5.png",
-                1, 1);
+  textures
+      ->add("Transition-Map3", "../images/Transition/Transition_3.png", 4, 1)
+      ->addAnimation("default", {0, 1, 2, 3}, 1);
+  textures->add("Transition-Map4", "../images/Transition/Transition_4.png", 4,
+                1);
+  textures->add("Transition-Map5", "../images/Transition/Transition_5.png", 1,
+                1);
   textures->add("Transition-Menu", "../images/Transition/Transition_1.png", 4,
                 1);
   textures->add("Transition-LastScene", "../images/Transition/Transition_6.png",
@@ -300,8 +313,7 @@ void Game::load() {
                 1);
   textures->add("Cancel-Button", "../images/Recruitment/cancel_Button.png", 1,
                 1);
-  textures->add("Coin-Anim", "../images/Recruitment/coin_rot_anim.png", 6,
-                1);
+  textures->add("Coin-Anim", "../images/Recruitment/coin_rot_anim.png", 6, 1);
 
   auto fonts = FontManager::getInstance();
   textures->init();
@@ -359,10 +371,15 @@ void Game::load() {
   audio->loadSound(5, "../audio/sound/UI-sounds/attackConfirm.mp3");
   audio->loadSound(6, "../audio/sound/UI-sounds/quitButton.mp3");
   audio->loadSound(7, "../audio/sound/UI-sounds/pauseButton.mp3");
-  audio->loadSound(8, "../audio/sound/Unit-sounds/Heroes/Thassa/HeroicStrikeShout.mp3");
-  audio->loadSound(9, "../audio/sound/Unit-sounds/Heroes/Thassa/hittingwithHeroicStrike.mp3");
-  audio->loadSound(10, "../audio/sound/Unit-sounds/Heroes/Thassa/battleCrySound.mp3");
-  audio->loadSound(11, "../audio/sound/Unit-sounds/Heroes/Zamdran/ArrowRainSkill.mp3");
+  audio->loadSound(
+      8, "../audio/sound/Unit-sounds/Heroes/Thassa/HeroicStrikeShout.mp3");
+  audio->loadSound(
+      9,
+      "../audio/sound/Unit-sounds/Heroes/Thassa/hittingwithHeroicStrike.mp3");
+  audio->loadSound(
+      10, "../audio/sound/Unit-sounds/Heroes/Thassa/battleCrySound.mp3");
+  audio->loadSound(
+      11, "../audio/sound/Unit-sounds/Heroes/Zamdran/ArrowRainSkill.mp3");
   audio->loadSound(12, "../audio/sound/UI-sounds/coin.wav");
 
   sceneMachine_ = new SceneMachine();

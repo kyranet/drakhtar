@@ -2,6 +2,7 @@
 
 #pragma once
 #include <string>
+
 #include "Unit.h"
 
 class Scene;
@@ -12,6 +13,7 @@ class HealthBar;
 class Battalion final : public Unit {
   int battalionSize_;
   Text* sizeText_ = nullptr;
+  GameObject* unitBattalionCircle_ = nullptr;
 
   std::string sizeToString() const;
 
@@ -22,6 +24,8 @@ class Battalion final : public Unit {
 
   int getBattalionSize() const { return battalionSize_; }
   void setBattalionSize(int battalionSize);
+
+  void setHealthBar() override;
 
   int getAttack() const;
   int getDefense() const override;

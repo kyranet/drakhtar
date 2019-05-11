@@ -1,16 +1,17 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Texture.h"
+
 #include "Errors/SDLError.h"
 #include "Font.h"
 #include "Managers/TextureManager.h"
 #include "SDL_image.h"
 #include "Utils/TimePool.h"
 
-Texture::Texture() : size_(0, 0), frameSize_(0, 0) {}
+Texture::Texture() : size_(0, 0), frameSize_(0, 0), offset_(0, 0) {}
 
 Texture::Texture(SDL_Renderer* r)
-    : renderer_(r), size_(0, 0), frameSize_(0, 0) {}
+    : renderer_(r), size_(0, 0), frameSize_(0, 0), offset_(0, 0) {}
 
 Uint16 Texture::getColumnAmount() const { return columnAmount_; }
 
@@ -30,6 +31,13 @@ Vector2D<Uint16> Texture::getCalculatedSize() const {
 Vector2D<Uint16> Texture::getFrameSize() const { return frameSize_; }
 
 std::vector<Uint16> Texture::getAnimation() const { return animation_.frames; }
+
+Vector2D<int> Texture::getOffset() const { return offset_; }
+
+void Texture::setOffset(Vector2D<double> percentage) {
+  offset_ = Vector2D<int>(size_.getX() * percentage.getX(),
+                          size_.getY() * percentage.getY());
+}
 
 SDL_Texture* Texture::getTexture() const { return texture_; }
 
@@ -217,6 +225,8 @@ void Texture::renderFrame(const SDL_Rect& dest, const Uint16 frame,
     out.y = static_cast<int>(out.y - ((out.h * scale_.getY() - out.h) / 2.0));
     out.h = static_cast<int>(out.h * scale_.getY());
   }
+  out.x += offset_.getX();
+  out.y += offset_.getY();
   SDL_Rect src{width * framePosition.getX(), height * framePosition.getY(),
                width, height};
   SDL_RenderCopyEx(renderer_, texture_, &src, &out, angle, nullptr, flip_);
