@@ -24,13 +24,13 @@ void MenuScene::preload() {
       new GameObject(this, TextureManager::get("Transition-Menu"),
                      Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
                      Vector2D<int>(WIN_WIDTH, WIN_HEIGHT));
-  const auto vg =
-      new GameObject(this, TextureManager::get("Logos-VG"),
+  const auto vg = new GameObject(this, TextureManager::get("Logos-VG"),
                                  Vector2D<int>(WIN_WIDTH - 50, WIN_HEIGHT - 40),
-                     Vector2D<int>(100, 75));
-  const auto logo = new GameObject(this, TextureManager::get("Logos-logo"),
-                                 Vector2D<int>(WIN_WIDTH/2, (WIN_HEIGHT/2)-150),
-                                 Vector2D<int>(800, 400));
+                                 Vector2D<int>(100, 75));
+  const auto logo =
+      new GameObject(this, TextureManager::get("Logos-logo"),
+                     Vector2D<int>(WIN_WIDTH / 2, (WIN_HEIGHT / 2) - 150),
+                     Vector2D<int>(800, 400));
   const auto play = new Button(
       this, TextureManager::get("Vanilla-Button"),
       Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2 + WIN_HEIGHT / 60),
