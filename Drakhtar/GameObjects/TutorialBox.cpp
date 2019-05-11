@@ -38,7 +38,7 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
       Vector2D<int>(tutorialBackground->getPosition().getX() -
                         tutorialBackground->getRect().w / 4.8,
                     tutorialBackground->getPosition().getY() +
-                        tutorialBackground->getRect().h / 4),
+                        tutorialBackground->getRect().h / 4.0),
       Vector2D<int>(WIN_WIDTH / 10, WIN_HEIGHT / 16),
       [tutorialText_, this, tutorialBackground, scene, controller]() {
         if (!tutorialText_->getClosed(tutorialText_->getCont() + 1)) {
@@ -123,7 +123,7 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
       Vector2D<int>(tutorialBackground->getRect().w / 3 +
                         tutorialBackground->getPosition().getX() * 0.93,
                     tutorialBackground->getPosition().getY() +
-                        tutorialBackground->getRect().h / 4),
+                        tutorialBackground->getRect().h / 4.0),
       Vector2D<int>(WIN_WIDTH / 10, WIN_HEIGHT / 16),
       [tutorialText_, this, controller, temporalController]() {
         this->setRenderizable(false);
