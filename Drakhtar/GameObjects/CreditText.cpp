@@ -22,17 +22,18 @@ void CreditText::update() {
 }
 
 void CreditText::move() {
-  Vector2D<int>(getPosition().getX(), getPosition().getY() - speed_);
+  this->setPosition(
+      Vector2D<int>(getPosition().getX(), getPosition().getY() - speed_));
 }
 
 void CreditText::nextLine() {
   if (readCredits_ < creditsLength_) {
     std::string line = reinterpret_cast<CreditsScene*>(scene_)->getNextLine();
-    setText(line);
-    setPosition(Vector2D<int>(getPosition().getX(), WIN_HEIGHT));
+    this->setText(line);
+    this->setPosition(Vector2D<int>(getPosition().getX(), WIN_HEIGHT));
   }
   else
   {
-    //Game::getSceneMachine()->changeScene(new MenuScene());
+    Game::getSceneMachine()->changeScene(new MenuScene());
   }
 }

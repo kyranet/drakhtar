@@ -2,6 +2,7 @@
 
 #include "../Errors/DrakhtarError.h"
 #include "../GameObjects/Button.h"
+#include "../GameObjects/GameObject.h"
 #include "../Managers/FontManager.h"
 #include "../Managers/SDLAudioManager.h"
 #include "../Managers/TextureManager.h"
@@ -20,17 +21,10 @@ void CreditsScene::preload() {
 
   file_ >> creditsLength_;
 
-  const SDL_Color textColor = {255,255,255,0};
+  const SDL_Color textColor = {255, 255, 255, 0};
 
   std::string firstCredit = getNextLine();
   readCredits_++;
-
-  creditText_ =
-      new CreditText(this, FontManager::get("TutorialFont"),
-                     Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT/2), textColor,
-                     firstCredit, 500, 0, creditsLength_);
-
-  addGameObject(creditText_);
 
   const auto menuButton_ = new Button(
       this, TextureManager::get("Vanilla-Button"), Vector2D<int>(80, 80),
@@ -38,6 +32,11 @@ void CreditsScene::preload() {
       [this]() { Game::getSceneMachine()->changeScene(new MenuScene()); },
       "Menu", "ButtonFont");
 
+  creditText_ = new CreditText(this, FontManager::get("TutorialFont"),
+                               Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT),
+                               textColor, firstCredit, 500, 50, creditsLength_);
+
+  addGameObject(creditText_);
   addGameObject(menuButton_);
 
   auto audio = SDLAudioManager::getInstance();
