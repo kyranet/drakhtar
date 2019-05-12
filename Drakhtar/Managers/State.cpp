@@ -18,7 +18,7 @@ void State::next() {
   hasUsedSkills_ = false;
 }
 
-void State::remove(Vector2D<size_t>) {}
+void State::remove(Vector2D<byte>) {}
 
 Unit* State::getActiveUnit() const { return turns_.front().unit_; }
 
@@ -34,7 +34,7 @@ void State::setUnits(const std::vector<Unit*>& first,
             });
 }
 
-void State::setBoard(size_t rows, size_t columns) {
+void State::setBoard(byte rows, byte columns) {
   board_.clear();
   board_.reserve(rows * columns);
   rows_ = rows;
@@ -68,15 +68,15 @@ void State::insert(const std::vector<Unit*>& units) {
   }
 }
 
-void State::setAt(Vector2D<size_t> position, const State::UnitState& state) {
+void State::setAt(Vector2D<byte> position, const State::UnitState& state) {
   board_[position.getX() * rows_ + position.getY()] = state;
 }
 
-State::UnitState State::getAt(Vector2D<size_t> position) const {
+State::UnitState State::getAt(Vector2D<byte> position) const {
   return board_[position.getX() * rows_ + position.getY()];
 }
 
-bool State::move(const Vector2D<size_t>& from, const Vector2D<size_t>& to) {
+bool State::move(const Vector2D<byte>& from, const Vector2D<byte>& to) {
   const auto previous = getAt(from);
   if (previous.unit_ == nullptr) return false;
 
@@ -86,7 +86,7 @@ bool State::move(const Vector2D<size_t>& from, const Vector2D<size_t>& to) {
   return true;
 }
 
-bool State::attack(const Vector2D<size_t>& from, const Vector2D<size_t>& to) {
+bool State::attack(const Vector2D<byte>& from, const Vector2D<byte>& to) {
   const auto previous = getAt(from);
   if (previous.unit_ == nullptr) return false;
 
@@ -133,47 +133,47 @@ bool State::attack(const Vector2D<size_t>& from, const Vector2D<size_t>& to) {
   return true;
 }
 
-void State::removeAt(Vector2D<size_t> position) {
+void State::removeAt(Vector2D<byte> position) {
   setAt(position,
         {nullptr, Color::BLUE, position, 0, 0, 0, 0, 0, 0, 0, 0, 0, false});
 }
 
-std::vector<Vector2D<size_t>> State::findPath(
-    const Vector2D<size_t>& start, const Vector2D<size_t>& end) const {
+std::vector<Vector2D<byte>> State::findPath(
+    const Vector2D<byte>& start, const Vector2D<byte>& end) const {
   // Create path generator
   AStar::Generator generator;
-  generator.setWorldSize({static_cast<int>(columns_), static_cast<int>(rows_)});
+  generator.setWorldSize({columns_, rows_});
   generator.setHeuristic(AStar::Heuristic::euclidean);
   generator.setDiagonalMovement(false);
 
   // Load board obstacles
   for (const auto& cell : board_) {
     if (cell.unit_ != nullptr)
-      generator.addCollision({static_cast<int>(cell.position_.getX()),
-                              static_cast<int>(cell.position_.getY())});
+      generator.addCollision({cell.position_.getX(),
+                              cell.position_.getY()});
   }
 
   // Remove itself as an obstacle
   generator.removeCollision(
-      {static_cast<int>(start.getX()), static_cast<int>(start.getY())});
+      {start.getX(), start.getY()});
 
   // Find path
   auto path = generator.findPath(
-      {static_cast<int>(start.getX()), static_cast<int>(start.getY())},
-      {static_cast<int>(end.getX()), static_cast<int>(end.getY())});
+      {start.getX(), start.getY()},
+      {end.getX(), end.getY()});
   // If it is only the first cell, return empty.
   if (path.size() <= 1) return {};
 
-  std::vector<Vector2D<size_t>> pathList;
+  std::vector<Vector2D<byte>> pathList;
   for (const auto& coordinate : path) {
-    pathList.insert(pathList.begin(), {static_cast<size_t>(coordinate.x),
-                                       static_cast<size_t>(coordinate.y)});
+    pathList.insert(pathList.begin(), {static_cast<byte>(coordinate.x),
+                                       static_cast<byte>(coordinate.y)});
   }
 
   return pathList;
 }
 
-bool State::isInRange(const Vector2D<size_t>& from, const Vector2D<size_t>& to,
+bool State::isInRange(const Vector2D<byte>& from, const Vector2D<byte>& to,
                       int range) const {
   const auto distanceX = abs(static_cast<int>(to.getX() - from.getX()));
   const auto distanceY = abs(static_cast<int>(to.getY() - from.getY()));
@@ -182,8 +182,8 @@ bool State::isInRange(const Vector2D<size_t>& from, const Vector2D<size_t>& to,
   return range >= totalDistance;
 }
 
-bool State::isInMoveRange(const Vector2D<size_t>& from,
-                          const Vector2D<size_t>& to, int range) const {
+bool State::isInMoveRange(const Vector2D<byte>& from,
+                          const Vector2D<byte>& to, int range) const {
   auto path = findPath(from, to);
   if (path.empty()) {
     return false;
@@ -191,9 +191,9 @@ bool State::isInMoveRange(const Vector2D<size_t>& from,
   return range >= static_cast<const int>(path.size() - 1);
 }
 
-std::vector<Vector2D<size_t>> State::getCellsInMovementRange(
-    const Vector2D<size_t>& from, int range) const {
-  std::vector<Vector2D<size_t>> cells;
+std::vector<Vector2D<byte>> State::getCellsInMovementRange(
+    const Vector2D<byte>& from, int range) const {
+  std::vector<Vector2D<byte>> cells;
   for (const auto& cell : board_) {
     if (isInMoveRange(from, cell.position_, range))
       cells.push_back(cell.position_);
@@ -201,9 +201,9 @@ std::vector<Vector2D<size_t>> State::getCellsInMovementRange(
   return cells;
 }
 
-std::vector<Vector2D<size_t>> State::getCellsInAttackRange(
-    const Vector2D<size_t>& from, Color color, int range) const {
-  std::vector<Vector2D<size_t>> cells;
+std::vector<Vector2D<byte>> State::getCellsInAttackRange(
+    const Vector2D<byte>& from, Color color, int range) const {
+  std::vector<Vector2D<byte>> cells;
   for (const auto& cell : board_) {
     if (cell.unit_ != nullptr && cell.team_ != color &&
         isInRange(from, cell.position_, range))

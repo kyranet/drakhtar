@@ -17,7 +17,7 @@ class Unit : public GameObject {
   bool moving_ = false;
   bool hasCounterAttacked_ = false;
 
-  Vector2D<size_t> boxPosition_;
+  Vector2D<byte> boxPosition_;
   Team* team_ = nullptr;
   std::string type_;
 
@@ -59,7 +59,7 @@ class Unit : public GameObject {
   virtual bool getMoving() { return moving_; }
   Team* getTeam() const { return team_; }
   Box* getBox() const { return box_; }
-  Vector2D<size_t> getBoxPosition() const { return boxPosition_; }
+  Vector2D<byte> getBoxPosition() const { return boxPosition_; }
   std::string getType() const { return type_; }
 
   bool getHasCounterAttacked() const { return hasCounterAttacked_; }

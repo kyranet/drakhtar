@@ -1,12 +1,13 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-
 #include "SDL_stdinc.h"
 #include <cassert>
 #include <cmath>
 #include <iostream>
 #include <type_traits>
+
+typedef unsigned char byte;
 
 /**
  * \brief The Vector2D class that manages all vectors in the game.
