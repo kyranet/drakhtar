@@ -6,18 +6,14 @@
 #include "EventListeners/EventListener.h"
 #include "GameObjects/Board.h"
 #include "GameObjects/Unit.h"
-#include "Managers/TurnManager.h"
+#include "Managers/State.h"
+#include "Scenes/GameScene.h"
 #include "Scenes/Scene.h"
 #include "Structures/Team.h"
 
-UnitsController::UnitsController(Board* board, TurnManager* turnManager,
-                                 GameScene* scene, Team* team,
+UnitsController::UnitsController(Board* board, GameScene* scene, Team* team,
                                  Team* oppositeTeam)
-    : board_(board),
-      turnManager_(turnManager),
-      scene_(scene),
-      team_(team),
-      oppositeTeam_(oppositeTeam) {}
+    : board_(board), scene_(scene), team_(team), oppositeTeam_(oppositeTeam) {}
 
 UnitsController::~UnitsController() = default;
 
@@ -28,7 +24,7 @@ void UnitsController::start() {
 
   // Deactivate all listeners
   for (auto& listener : listeners_) listener->setActive(true);
-  activeUnit_ = turnManager_->getTurnFor();
+  activeUnit_ = getState()->getActiveUnit();
   activeUnit_->onSelect();
 }
 
@@ -40,9 +36,10 @@ void UnitsController::finish() {
   }
 
   // Update the turn bar
-  turnManager_->next();
+  const auto state = getState();
+  state->next();
 
-  if (turnManager_->getTurnFor()->getTeam() != oppositeTeam_) {
+  if (state->getActiveUnit()->getTeam() == team_) {
     getBoard()->getScene()->processNextTick([this]() { start(); });
   } else {
     // Once this controller is finished, start the controller of the opposite
@@ -53,7 +50,9 @@ void UnitsController::finish() {
 }
 
 Board* UnitsController::getBoard() const { return board_; }
-TurnManager* UnitsController::getTurnManager() const { return turnManager_; }
 Unit* UnitsController::getActiveUnit() const { return activeUnit_; }
+State* UnitsController::getState() const {
+  return reinterpret_cast<GameScene*>(getBoard()->getScene())->getState();
+}
 bool UnitsController::hasAttacked() const { return hasAttacked_; }
 bool UnitsController::hasMoved() const { return hasMoved_; }

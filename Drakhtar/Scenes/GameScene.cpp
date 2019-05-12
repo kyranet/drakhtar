@@ -20,6 +20,7 @@
 #include "GameObjects/UnitDescriptionBox.h"
 #include "Managers/GameManager.h"
 #include "Managers/SDLAudioManager.h"
+#include "Managers/State.h"
 #include "Managers/TextureManager.h"
 #include "Structures/Game.h"
 #include "Structures/Team.h"
@@ -96,10 +97,8 @@ void GameScene::preload() {
   const auto dialog =
       new DialogScene(this, "dialog" + std::to_string(battle_), "DialogFont");
 
-  team1_->setController(new PlayerController(board_, turnBar->getTurnManager(),
-                                             this, team1_, team2_));
-  team2_->setController(new PlayerController(board_, turnBar->getTurnManager(),
-                                             this, team2_, team1_));
+  team1_->setController(new PlayerController(board_, this, team1_, team2_));
+  team2_->setController(new PlayerController(board_, this, team2_, team1_));
 
   const auto pauseButton =
       new Button(this, TextureManager::get("Button-Pause"),
@@ -132,8 +131,7 @@ void GameScene::preload() {
                                     static_cast<int>(WIN_HEIGHT / 8)),
                       team2_->getCommanders()[0], 0);
 
-  const auto unitDescriptionBox =
-      new UnitDescriptionBox(this, board_, turnBar->getTurnManager());
+  const auto unitDescriptionBox = new UnitDescriptionBox(this, board_);
 
   addGameObject(turnBar);
   addGameObject(dialog);
@@ -197,8 +195,7 @@ void GameScene::readLevel(UnitFactory& factory) {
   delete board_;
   board_ = nullptr;
 
-  board_ = new Board(this, rowSize, columnSize,
-                     static_cast<float>(90));
+  board_ = new Board(this, rowSize, columnSize, static_cast<float>(90));
   addGameObject(board_);
 
   file >> commanderName;
@@ -252,6 +249,8 @@ Board* GameScene::getBoard() const { return board_; }
 int GameScene::getBattleInd() { return battle_; }
 
 void GameScene::activateTutorialBox() { addGameObject(tutorialBox); }
+
+State* GameScene::getState() const { return state_; }
 
 Team* GameScene::getAlliedTeam(Unit* unit) {
   if (unit->getTeam() == team1_) return team1_;

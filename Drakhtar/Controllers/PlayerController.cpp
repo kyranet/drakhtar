@@ -21,10 +21,9 @@
 #include "Structures/Tween.h"
 #include "Utils/Constants.h"
 
-PlayerController::PlayerController(Board* board, TurnManager* turnManager,
-                                   GameScene* scene, Team* team,
+PlayerController::PlayerController(Board* board, GameScene* scene, Team* team,
                                    Team* oppositeTeam)
-    : UnitsController(board, turnManager, scene, team, oppositeTeam) {
+    : UnitsController(board, scene, team, oppositeTeam) {
   const auto handler = new PlayerHandler(this);
   handler->setActive(false);
   listeners_.push_back(handler);
@@ -129,12 +128,12 @@ void PlayerController::start() {
   UnitsController::start();
   if (!activeUnit_) return UnitsController::finish();
 
-  skipTurnButton_ = new Button(
-      scene_, TextureManager::get("Button-SkipTurn"),
-      Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT - WIN_HEIGHT / 8),
-      Vector2D<int>(static_cast<int>(WIN_WIDTH / 10.5),
-                    static_cast<int>(WIN_HEIGHT / 6.75)),
-      [this]() { finish(); }, " ", "ButtonFont");
+  skipTurnButton_ =
+      new Button(scene_, TextureManager::get("Button-SkipTurn"),
+                 Vector2D<int>(WIN_WIDTH / 13, WIN_HEIGHT - WIN_HEIGHT / 8),
+                 Vector2D<int>(static_cast<int>(WIN_WIDTH / 10.5),
+                               static_cast<int>(WIN_HEIGHT / 6.75)),
+                 [this]() { finish(); }, " ", "ButtonFont");
   scene_->addGameObject(skipTurnButton_);
   highlightCells();
 }

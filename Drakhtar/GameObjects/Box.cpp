@@ -1,13 +1,11 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Box.h"
-
 #include "Board.h"
 #include "Controllers/UnitsController.h"
 #include "GameObjects/TurnBar.h"
 #include "Managers/Input.h"
 #include "Managers/TextureManager.h"
-#include "Managers/TurnManager.h"
 #include "Scenes/Scene.h"
 #include "Structures/Team.h"
 #include "Unit.h"
@@ -17,7 +15,7 @@ Box::Box(Scene* scene, const Vector2D<int>& pos, const Vector2D<int>& size,
     : GameObject(scene, nullptr, pos, size),
       boardIndex_(boardIndex),
       content_(unit),
-      size_(std::move(size)) {
+      size_(size) {
   cellTextures_[static_cast<int>(TextureInd::BASE)] =
       TextureManager::get("UI-cellFrame");
   cellTextures_[static_cast<int>(TextureInd::HOVER)] =
@@ -87,8 +85,9 @@ void Box::setCurrentTexture(TextureInd cellTexture) {
 
 void Box::destroyContent() {
   const auto unit = getContent();
-  unit->kill();
-  unit->getTeam()->getController()->getTurnManager()->remove(unit);
-  getScene()->removeGameObject(unit);
-  setContent(nullptr);
+
+  if (unit != nullptr) {
+    unit->kill();
+    setContent(nullptr);
+  }
 }

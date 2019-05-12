@@ -1,26 +1,25 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 #include "UnitDescriptionBox.h"
 
-#include "../Managers/FontManager.h"
-#include "../Managers/TextureManager.h"
-#include "../Utils/Constants.h"
 #include "Board.h"
 #include "Controllers/UnitsController.h"
 #include "EventListeners/StatBoxListener.h"
+#include "Managers/FontManager.h"
 #include "Managers/Input.h"
-#include "Managers/TurnManager.h"
+#include "Managers/State.h"
+#include "Managers/TextureManager.h"
+#include "Scenes/GameScene.h"
 #include "Skill.h"
 #include "Structures/Team.h"
 #include "Text.h"
 #include "Unit.h"
+#include "Utils/Constants.h"
 
-UnitDescriptionBox::UnitDescriptionBox(Scene* scene, Board* board,
-                                       TurnManager* turnManager)
+UnitDescriptionBox::UnitDescriptionBox(Scene* scene, Board* board)
     : GameObject(scene, TextureManager::get("Reward-Panel"),
                  Vector2D<int>(0, 0), Vector2D<int>(0, 0)),
       board_(board),
-      showDamage_(false),
-      turnManager_(turnManager) {
+      showDamage_(false) {
   setTransparent(true);
   setRenderizable(false);
 
@@ -77,7 +76,8 @@ void UnitDescriptionBox::updateText(Unit* unit) {
 
   unitStatsText_->setText(text);
 
-  Unit* activeUnit = turnManager_->getActiveUnit();
+  const auto scene = reinterpret_cast<GameScene*>(getScene());
+  Unit* activeUnit = scene->getState()->getActiveUnit();
 
   showDamage_ = board_->isInRange(activeUnit->getBox(), unit->getBox(),
                                   activeUnit->getStats().attackRange) &&

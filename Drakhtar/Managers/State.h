@@ -90,7 +90,7 @@ class State {
 
     auto it = turns_.begin();
     for (byte i = 0, max = units.size(); i < max; i++) {
-      units[i] = *it;
+      units[i] = (*it).unit_;
       if (++it == turns_.end()) it = turns_.begin();
     }
 

@@ -8,17 +8,15 @@ class Text;
 class Unit;
 class StatBoxListener;
 class Board;
-class TurnManager;
 
 class UnitDescriptionBox final : public GameObject {
   Text* unitStatsText_;
   Text* unitDamageText_;
   Board* board_;
   bool showDamage_;
-  TurnManager* turnManager_;
 
  public:
-  UnitDescriptionBox(Scene* scene, Board* board, TurnManager* turnManager);
+  UnitDescriptionBox(Scene* scene, Board* board);
   ~UnitDescriptionBox() = default;
 
   void render() const override;

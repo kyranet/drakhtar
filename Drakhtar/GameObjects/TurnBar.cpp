@@ -2,23 +2,21 @@
 
 #include "TurnBar.h"
 #include <utility>
+#include "Managers/State.h"
 #include "Managers/TextureManager.h"
-#include "Managers/TurnManager.h"
 #include "Scenes/GameScene.h"
 #include "Scenes/Scene.h"
 #include "Structures/Team.h"
 #include "Unit.h"
 #include "Utils/Constants.h"
 
-TurnBar::TurnBar(Scene* scene, std::vector<Unit*> team1,
-                 std::vector<Unit*> team2)
+TurnBar::TurnBar(Scene* scene, const std::vector<Unit*>& team1,
+                 const std::vector<Unit*>& team2)
     : GameObject(
           scene, TextureManager::get("UI-turnBar"),
           Vector2D<int>(static_cast<int>(WIN_WIDTH - WIN_WIDTH / 5.3),
                         WIN_HEIGHT - WIN_HEIGHT / 13),
           Vector2D<int>(WIN_WIDTH / 2, static_cast<int>(WIN_WIDTH / 16.44))) {
-  turnManager_ = new TurnManager(std::move(team1), std::move(team2));
-
   const auto circle =
       new GameObject(scene_, TextureManager::get("UI-circle"),
                      {static_cast<int>(WIN_WIDTH - WIN_WIDTH / 2.05),
@@ -26,12 +24,15 @@ TurnBar::TurnBar(Scene* scene, std::vector<Unit*> team1,
                      {WIN_WIDTH / 7, WIN_WIDTH / 7});
   circle->setTransparent(true);
   addChild(circle);
+
+  reinterpret_cast<GameScene*>(getScene())->getState()->setUnits(team1, team2);
 }
 
-TurnBar::~TurnBar() { delete turnManager_; }
+TurnBar::~TurnBar() = default;
 
 void TurnBar::render() const {
-  std::array<Unit*, 8> calculated = turnManager_->getNextUnits<8>();
+  const auto scene = reinterpret_cast<GameScene*>(getScene());
+  std::array<Unit*, 8> calculated = scene->getState()->getNextUnits<8>();
 
   // Do nothing if there are no calculated units.
   if (calculated.front() == nullptr) return;

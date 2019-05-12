@@ -11,8 +11,8 @@ class PlayerController final : public UnitsController {
   bool tutorialDone_ = false;
 
  public:
-  PlayerController(Board* board, TurnManager* turnManager, GameScene* scene,
-                   Team* team, Team* oppositeTeam);
+  PlayerController(Board* board, GameScene* scene, Team* team,
+                   Team* oppositeTeam);
 
   /**
    * \brief Moves active unit to an empty cell within range.

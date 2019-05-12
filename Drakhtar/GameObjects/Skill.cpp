@@ -6,7 +6,6 @@
 
 #include "../Controllers/UnitsController.h"
 #include "../Managers/TextureManager.h"
-#include "../Managers/TurnManager.h"
 #include "../Structures/Team.h"
 #include "Commanders/Commander.h"
 #include "GameObjects/Battalion.h"
@@ -65,7 +64,7 @@ void BattleCry::cast() {
 
     if (!caster_->getTeam()->getController()->hasMoved()) {
       scene_->getBoard()->highlightCellsInRange(caster_->getBox(),
-                                               caster_->getStats().moveRange);
+                                                caster_->getStats().moveRange);
     }
   }
 }
@@ -82,7 +81,8 @@ void BattleCry::end() {
   }
 
   // Update turn priority
-  caster_->getTeam()->getController()->getTurnManager()->sortUnits();
+  // TODO(kyranet): Re-add this
+  // caster_->getTeam()->getController()->getTurnManager()->sortUnits();
 }
 
 // ---------- ARROW RAIN ----------
@@ -101,7 +101,7 @@ void ArrowRain::cast() {
     // Caster deals half damage to every enemy unit in range
     for (auto unit : scene_->getEnemyTeam(caster_)->getUnits()) {
       if (scene_->getBoard()->isInRange(caster_->getBox(), unit->getBox(),
-                                       range)) {
+                                        range)) {
         unit->loseHealth(caster_->getStats().attack / 2, 1);
         if (unit->getHealth() <= 0) {
           unit->getBox()->destroyContent();
@@ -127,7 +127,8 @@ void HeroicStrike::cast() {
   if (remainingCooldown_ == 0 && caster_->getMoving()) {
     Skill::cast();
     attackIncrement_ = caster_->getStats().attack * 0.5;
-    caster_->setAttack(static_cast<int>(caster_->getStats().attack + attackIncrement_));
+    caster_->setAttack(
+        static_cast<int>(caster_->getStats().attack + attackIncrement_));
     caster_->setUnstoppable(true);
     caster_->setBuffed(true);
     SDLAudioManager::getInstance()->playChannel(8, 0, 1);
@@ -137,7 +138,8 @@ void HeroicStrike::cast() {
 void HeroicStrike::end() {
   active_ = false;
   std::cout << "<HeroicStrike> ended" << std::endl;
-  caster_->setAttack(static_cast<int>(caster_->getStats().attack - attackIncrement_));
+  caster_->setAttack(
+      static_cast<int>(caster_->getStats().attack - attackIncrement_));
   caster_->setUnstoppable(false);
   caster_->setBuffed(false);
 }
@@ -272,7 +274,7 @@ void Reinforce::cast() {
 
     for (auto unit : scene_->getAlliedTeam(caster_)->getUnits()) {
       if (scene_->getBoard()->isInRange(caster_->getBox(), unit->getBox(),
-                                       range)) {
+                                        range)) {
         if (unit->getType() == "Soldier" || unit->getType() == "Archer" ||
             unit->getType() == "Mage") {
           const auto battalion = reinterpret_cast<Battalion*>(unit);

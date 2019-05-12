@@ -9,15 +9,16 @@ class UnitFactory;
 class PlayerController;
 class Unit;
 class TutorialBox;
+class State;
 
 class GameScene final : public Scene {
   Team* team1_ = nullptr;
   Team* team2_ = nullptr;
   Board* board_ = nullptr;
   TutorialBox* tutorialBox = nullptr;
+  State* state_ = nullptr;
   int battle_;
   int prize_ = 0;
-  int counter = 0;
 
  public:
   explicit GameScene(int battle);
@@ -32,10 +33,10 @@ class GameScene final : public Scene {
   Board* getBoard() const;
   int getBattleInd();
 
-  void activateTutorialBox();
+  void activateTutorialBox() override;
 
-  Team* getTeam1_() const { return team1_; }
-  Team* getTeam2_() const { return team2_; }
+  State* getState() const;
+
   Team* getAlliedTeam(Unit* unit);
   Team* getEnemyTeam(Unit* unit);
 };
