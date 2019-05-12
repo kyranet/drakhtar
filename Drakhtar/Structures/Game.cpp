@@ -362,6 +362,8 @@ void Game::load() {
   audio->loadMusic(6,
                    "../audio/background/(Epic Pirate Battle Music) - Escaping "
                    "The Kraken -.ogg");
+  audio->loadMusic(7,
+                   "../audio/background/Glory by Whitesand.ogg");
 
   // Sound effects
   /*

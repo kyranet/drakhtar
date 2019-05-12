@@ -26,6 +26,9 @@ void RecruitScene::preload() {
   costs_["Knight"] = 55;
   costs_["Monster"] = 125;
 
+  SDLAudioManager::getInstance()->haltMusic();
+  SDLAudioManager::getInstance()->playMusic(7, 999);
+
   const auto background =
       new GameObject(this, TextureManager::get("Recruitment-Background"),
                      Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
