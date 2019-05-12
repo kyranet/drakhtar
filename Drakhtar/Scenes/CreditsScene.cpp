@@ -1,9 +1,13 @@
 #include "CreditsScene.h"
 
-
 #include "../Errors/DrakhtarError.h"
+#include "../GameObjects/Button.h"
 #include "../Managers/FontManager.h"
 #include "../Managers/SDLAudioManager.h"
+#include "../Managers/TextureManager.h"
+#include "../Scenes/MenuScene.h"
+#include "../Scenes/Scene.h"
+#include "../Structures/Game.h"
 #include "../Utils/Constants.h"
 
 auto audio = SDLAudioManager::getInstance();
@@ -27,6 +31,15 @@ void CreditsScene::preload() {
   creditText_ = new CreditText(this, FontManager::get("TutorialFont"),
                                Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT),
                                textColor, firstCredit, 500, 0.1);
+
+  const auto menuButton_ = new Button(
+      this, TextureManager::get("Vanilla-Button"), Vector2D<int>(80, 80),
+      Vector2D<int>(80, 80),
+      [this]() { Game::getSceneMachine()->changeScene(new MenuScene()); },
+      "Menu", "ButtonFont");
+
+  addGameObject(creditText_);
+  addGameObject(menuButton_);
 }
 
 void CreditsScene::readNextLine() {}

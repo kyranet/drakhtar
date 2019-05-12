@@ -5,6 +5,7 @@
 #include "Button.h"
 #include "Managers/FontManager.h"
 #include "Managers/TextureManager.h"
+#include "Scenes/CreditsScene.h"
 #include "Scenes/GameScene.h"
 #include "Scenes/MenuScene.h"
 #include "Scenes/RecruitScene.h"
@@ -26,11 +27,11 @@ GameOverPanel::GameOverPanel(Scene* scene, Texture* texture,
             reinterpret_cast<GameScene*>(getScene())->getBattleInd();
         if (victory) {
           if (currentScene < 5) {  // 5 meaning five levels plus last scene
-                                    // before returning to main menu
+                                   // before returning to main menu
             Game::getSceneMachine()->changeScene(
                 new RecruitScene(currentScene + 1));
           } else {
-            Game::getSceneMachine()->changeScene(new MenuScene());
+            Game::getSceneMachine()->changeScene(new CreditsScene());
           }
         } else {
           Game::getSceneMachine()->changeScene(new GameScene(currentScene));
