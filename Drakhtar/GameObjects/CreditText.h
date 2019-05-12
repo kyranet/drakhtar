@@ -6,15 +6,13 @@
 class CreditText : public Text {
  private:
   double speed_;
-  bool up_ = false;
+  int creditsLength_ = 0;
+  int readCredits_ = 1;
  public:
   CreditText(Scene* scene, Font* font, Vector2D<int> position, SDL_Color color,
-       const std::string& text, int lineJumpLimit, double speed);
+       const std::string& text, int lineJumpLimit, double speed, int creditsLength);
   virtual ~CreditText();
   void update() override;
   void move();
   void nextLine();
-
-  bool getUp();
-  void setUp(bool up);
 };

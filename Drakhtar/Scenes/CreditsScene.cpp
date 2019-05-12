@@ -10,28 +10,27 @@
 #include "../Structures/Game.h"
 #include "../Utils/Constants.h"
 
-
-auto audio = SDLAudioManager::getInstance();
-
 CreditsScene::CreditsScene() {}
 
-CreditsScene::~CreditsScene() { delete creditText_; }
+CreditsScene::~CreditsScene() = default;
 
 void CreditsScene::preload() {
-  std::ifstream file;
-  file.open("../levels/credits.txt");
-  if (!file.is_open()) throw DrakhtarError("Could not find file");
+  file_.open("../levels/credits.txt");
+  if (!file_.is_open()) throw DrakhtarError("Could not find file");
 
-  file >> creditsLength_;
+  file_ >> creditsLength_;
 
-  const SDL_Color textColor = {0, 0, 0, 255};
+  const SDL_Color textColor = {255,255,255,0};
 
-  std::string firstCredit = getNextLine(file);
+  std::string firstCredit = getNextLine();
   readCredits_++;
 
-  creditText_ = new CreditText(this, FontManager::get("TutorialFont"),
-                               Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT),
-                               textColor, firstCredit, 500, 0.1);
+  creditText_ =
+      new CreditText(this, FontManager::get("TutorialFont"),
+                     Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT/2), textColor,
+                     firstCredit, 500, 0, creditsLength_);
+
+  addGameObject(creditText_);
 
   const auto menuButton_ = new Button(
       this, TextureManager::get("Vanilla-Button"), Vector2D<int>(80, 80),
@@ -39,19 +38,17 @@ void CreditsScene::preload() {
       [this]() { Game::getSceneMachine()->changeScene(new MenuScene()); },
       "Menu", "ButtonFont");
 
-  addGameObject(creditText_);
   addGameObject(menuButton_);
+
+  auto audio = SDLAudioManager::getInstance();
+  audio->playMusic(6, -1);
 }
 
-void CreditsScene::readNextLine() {
-
-}
-
-std::string CreditsScene::getNextLine(std::ifstream file) {
+std::string CreditsScene::getNextLine() {
   std::string text;  // full dialog text
   std::string word;  // word added to text each iteration
   while (word != ".") {
-    file >> word;
+    file_ >> word;
     if (word != ".") text += word + " ";
   }
   return text;

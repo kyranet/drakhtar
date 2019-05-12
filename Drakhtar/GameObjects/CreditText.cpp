@@ -1,11 +1,16 @@
 #include "CreditText.h"
 
+#include "../Scenes/CreditsScene.h"
+#include "../Scenes/MenuScene.h"
+#include "../Structures/Game.h"
 #include "../Utils/Constants.h"
 
 CreditText::CreditText(Scene* scene, Font* font, Vector2D<int> position,
                        SDL_Color color, const std::string& text,
-                       int lineJumpLimit, double speed)
-    : Text(scene, font, position, color, text, lineJumpLimit), speed_(speed) {}
+                       int lineJumpLimit, double speed, int creditsLength)
+    : Text(scene, font, position, color, text, lineJumpLimit),
+      speed_(speed),
+      creditsLength_(creditsLength) {}
 
 CreditText::~CreditText() = default;
 
@@ -21,10 +26,13 @@ void CreditText::move() {
 }
 
 void CreditText::nextLine() {
-  up_ = true;
-  setPosition(Vector2D<int>(getPosition().getX(), WIN_HEIGHT));
+  if (readCredits_ < creditsLength_) {
+    std::string line = reinterpret_cast<CreditsScene*>(scene_)->getNextLine();
+    setText(line);
+    setPosition(Vector2D<int>(getPosition().getX(), WIN_HEIGHT));
+  }
+  else
+  {
+    //Game::getSceneMachine()->changeScene(new MenuScene());
+  }
 }
-
-bool CreditText::getUp() { return up_; }
-
-void CreditText::setUp(bool up) { up_ = up; }

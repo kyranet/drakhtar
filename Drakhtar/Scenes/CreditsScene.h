@@ -11,11 +11,12 @@ class CreditsScene : public Scene {
   int creditsLength_ = 0;
   int readCredits_ = 0;
 
+  std::ifstream file_;
+
  public:
   CreditsScene();
   ~CreditsScene() override;
   void preload() override;
-  void readNextLine();
 
-  std::string getNextLine(std::ifstream file);
+  std::string getNextLine();
 };
