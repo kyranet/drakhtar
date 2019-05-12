@@ -14,7 +14,7 @@ class State {
     UnitState()
         : unit_(nullptr),
           team_(Color::BLUE),
-          position_({0, 0}),
+          position_({0U, 0U}),
           attack_(0),
           health_(0),
           minimumAttack_(0),
@@ -25,7 +25,7 @@ class State {
           speed_(0),
           prize_(0),
           counterAttacked_(false) {}
-    UnitState(Unit* unit, Color team, Vector2D<int> position, int attack,
+    UnitState(Unit* unit, Color team, Vector2D<size_t> position, int attack,
               int health, int minimumAttack, int defense, int maxHealth,
               int attackRange, int moveRange, int speed, int prize,
               bool counterAttacked)
@@ -44,7 +44,7 @@ class State {
           counterAttacked_(counterAttacked) {}
     Unit* unit_;
     Color team_;
-    Vector2D<int> position_;
+    Vector2D<size_t> position_;
     int attack_;
     int health_;
     int minimumAttack_;
@@ -61,7 +61,7 @@ class State {
   bool hasAttacked_ = false;
   bool hasUsedSkills_ = false;
 
-  int rows_ = 0, columns_ = 0;
+  size_t rows_ = 0, columns_ = 0;
   std::vector<UnitState> turns_{};
   std::vector<UnitState> board_{};
 
@@ -70,17 +70,17 @@ class State {
  public:
   State();
   void setUnits(const std::vector<Unit*>&, const std::vector<Unit*>&);
-  void setBoard(int rows, int columns);
+  void setBoard(size_t rows, size_t columns);
 
   void next();
 
-  void setAt(Vector2D<int> position, const State::UnitState& state);
-  State::UnitState getAt(Vector2D<int> position) const;
-  bool move(const Vector2D<int>& from, const Vector2D<int>& to);
-  bool attack(const Vector2D<int>& from, const Vector2D<int>& to);
-  void removeAt(Vector2D<int> position);
+  void setAt(Vector2D<size_t> position, const State::UnitState& state);
+  State::UnitState getAt(Vector2D<size_t> position) const;
+  bool move(const Vector2D<size_t>& from, const Vector2D<size_t>& to);
+  bool attack(const Vector2D<size_t>& from, const Vector2D<size_t>& to);
+  void removeAt(Vector2D<size_t> position);
 
-  void remove(Vector2D<int> position);
+  void remove(Vector2D<size_t> position);
 
   Unit* getActiveUnit() const;
 
@@ -104,7 +104,7 @@ class State {
    * \param range: The number of boxes we can reach in any direction.
    * \return Whether or not the two boxes are "range" or less boxes away
    */
-  bool isInRange(const Vector2D<int>& from, const Vector2D<int>& to,
+  bool isInRange(const Vector2D<size_t>& from, const Vector2D<size_t>& to,
                  int range) const;
 
   /**
@@ -116,14 +116,13 @@ class State {
    * \return Whether or not the two boxes are "range" or less boxes away,
    * considering path-finding.
    */
-  bool isInMoveRange(const Vector2D<int>& from, const Vector2D<int>& to,
+  bool isInMoveRange(const Vector2D<size_t>& from, const Vector2D<size_t>& to,
                      int range) const;
 
-  std::vector<Vector2D<int>> getCellsInMovementRange(const Vector2D<int>& from,
-                                                     int range) const;
-  std::vector<Vector2D<int>> getCellsInAttackRange(const Vector2D<int>& from,
-                                                   Color color,
-                                                   int range) const;
-  std::vector<Vector2D<int>> findPath(const Vector2D<int>& start,
-                                      const Vector2D<int>& end) const;
+  std::vector<Vector2D<size_t>> getCellsInMovementRange(
+      const Vector2D<size_t>& from, int range) const;
+  std::vector<Vector2D<size_t>> getCellsInAttackRange(
+      const Vector2D<size_t>& from, Color color, int range) const;
+  std::vector<Vector2D<size_t>> findPath(const Vector2D<size_t>& start,
+                                         const Vector2D<size_t>& end) const;
 };
