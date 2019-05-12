@@ -121,8 +121,9 @@ class State {
 
   std::vector<Vector2D<byte>> getCellsInMovementRange(
       const Vector2D<byte>& from, int range) const;
-  std::vector<Vector2D<byte>> getCellsInAttackRange(
-      const Vector2D<byte>& from, Color color, int range) const;
+  std::vector<Vector2D<byte>> getCellsInAttackRange(const Vector2D<byte>& from,
+                                                    Color color,
+                                                    int range) const;
   std::vector<Vector2D<byte>> findPath(const Vector2D<byte>& start,
-                                         const Vector2D<byte>& end) const;
+                                       const Vector2D<byte>& end) const;
 };

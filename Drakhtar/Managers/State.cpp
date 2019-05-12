@@ -138,8 +138,8 @@ void State::removeAt(Vector2D<byte> position) {
         {nullptr, Color::BLUE, position, 0, 0, 0, 0, 0, 0, 0, 0, 0, false});
 }
 
-std::vector<Vector2D<byte>> State::findPath(
-    const Vector2D<byte>& start, const Vector2D<byte>& end) const {
+std::vector<Vector2D<byte>> State::findPath(const Vector2D<byte>& start,
+                                            const Vector2D<byte>& end) const {
   // Create path generator
   AStar::Generator generator;
   generator.setWorldSize({columns_, rows_});
@@ -149,18 +149,15 @@ std::vector<Vector2D<byte>> State::findPath(
   // Load board obstacles
   for (const auto& cell : board_) {
     if (cell.unit_ != nullptr)
-      generator.addCollision({cell.position_.getX(),
-                              cell.position_.getY()});
+      generator.addCollision({cell.position_.getX(), cell.position_.getY()});
   }
 
   // Remove itself as an obstacle
-  generator.removeCollision(
-      {start.getX(), start.getY()});
+  generator.removeCollision({start.getX(), start.getY()});
 
   // Find path
-  auto path = generator.findPath(
-      {start.getX(), start.getY()},
-      {end.getX(), end.getY()});
+  auto path = generator.findPath({start.getX(), start.getY()},
+                                 {end.getX(), end.getY()});
   // If it is only the first cell, return empty.
   if (path.size() <= 1) return {};
 
@@ -182,8 +179,8 @@ bool State::isInRange(const Vector2D<byte>& from, const Vector2D<byte>& to,
   return range >= totalDistance;
 }
 
-bool State::isInMoveRange(const Vector2D<byte>& from,
-                          const Vector2D<byte>& to, int range) const {
+bool State::isInMoveRange(const Vector2D<byte>& from, const Vector2D<byte>& to,
+                          int range) const {
   auto path = findPath(from, to);
   if (path.empty()) {
     return false;
