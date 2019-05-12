@@ -95,12 +95,12 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
                  imageBack->getPosition().getY()};
           setArrowPos(SDL_FLIP_HORIZONTAL, pos);
         }
-        if (x == 12) {
+        if (x == 13) {
           pos = {static_cast<int>(WIN_WIDTH / 6.5),
                  static_cast<int>(WIN_HEIGHT - WIN_HEIGHT / 7.5)};
           setArrowPos(SDL_FLIP_HORIZONTAL, pos);
         }
-        if (x == 13) {
+        if (x == 14) {
           getChildren()[5]->setRenderizable(false);
           getChildren()[5]->setTransparent(true);
           for (auto child : getChildren()[5]->getChildren()) {
@@ -111,7 +111,7 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
                  static_cast<int>(WIN_HEIGHT / 6)};
           setArrowPos(SDL_FLIP_HORIZONTAL, pos);
         }
-        if (x == 14) {
+        if (x == 15) {
           pos = {static_cast<int>(WIN_WIDTH / 7),
                  static_cast<int>(WIN_HEIGHT / 2.5)};
           setArrowPos(SDL_FLIP_HORIZONTAL, pos);

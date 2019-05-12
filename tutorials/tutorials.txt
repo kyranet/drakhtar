@@ -1,4 +1,4 @@
-16
+17
 tutorial-1 Welcome to the Fall of Drakhtar tutorial! Before embarking on your adventure, you should get acquainted with basic game mechanics! ¡ . 
 tutorial-2 All interactive objects and units are on the board, which will be clearly shown during the game.  ¡ . 
 tutorial-3 This is the battlefield, your units are blue  and those are who you will be able to play with. In order to win, you need to eliminate the enemy's hero. You lose if any of your heroes die. ¡ . 
@@ -11,7 +11,8 @@ tutorial-9 When two units fight, the attacker always strikes first, giving him a
 tutorial-1 There is a turn bar in the bottom of the screen where you can see the order in which units will act, the one in the circle being the current active unit. ¡ .
 tutorial-2 The active unit is highlighted in yellow, to move it, click on any of the boxes highlighted in blue. ¡ .
 tutorial-3 To attack, click on an enemy in a box highlighted in red, keep in mind, if the target survives the attack, it will counterattack. ¡ .
-tutorial-4 You can skip your current unit's turn whenever you want. ¡ . 
-tutorial-5 Commander skills can be used during the commander's turn, hover the buttons on the left to read about them. ¡ .
-tutorial-6 Enemy commanders can also use skills in their turn, you can read about them hovering the red button. ¡ .
-tutorial-7 Remember: Kill the enemy commander to win and don't let yours die, good luck. .
+tutorial-4 You will get gold for every enemy killed, you can use it later to recruit more troops and reinforce your army. ¡ . 
+tutorial-5 You can skip your current unit's turn whenever you want. ¡ . 
+tutorial-6 Commander skills can be used during the commander's turn, hover the buttons on the left to read about them. ¡ .
+tutorial-7 Enemy commanders can also use skills in their turn, you can read about them hovering the red button. ¡ .
+tutorial-8 Remember: Kill the enemy commander to win and don't let yours die, good luck. .
