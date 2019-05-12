@@ -10,6 +10,7 @@
 #include "../Structures/Game.h"
 #include "../Utils/Constants.h"
 
+
 auto audio = SDLAudioManager::getInstance();
 
 CreditsScene::CreditsScene() {}
@@ -42,7 +43,9 @@ void CreditsScene::preload() {
   addGameObject(menuButton_);
 }
 
-void CreditsScene::readNextLine() {}
+void CreditsScene::readNextLine() {
+
+}
 
 std::string CreditsScene::getNextLine(std::ifstream file) {
   std::string text;  // full dialog text

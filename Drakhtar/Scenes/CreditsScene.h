@@ -3,8 +3,6 @@
 #pragma once
 #include "Scene.h"
 #include "../GameObjects/CreditText.h"
-#include <iostream>
-#include <string>
 #include <fstream>
 
 class CreditsScene : public Scene {
