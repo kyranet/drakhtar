@@ -26,7 +26,7 @@ GameOverPanel::GameOverPanel(Scene* scene, Texture* texture,
         int currentScene =
             reinterpret_cast<GameScene*>(getScene())->getBattleInd();
         if (victory) {
-          if (currentScene < 1) {  // 6 meaning five levels plus last scene
+          if (currentScene < 6) {  // 6 meaning five levels plus last scene
                                    // before changing to credits
             Game::getSceneMachine()->changeScene(
                 new TransitionScene(currentScene + 1));
