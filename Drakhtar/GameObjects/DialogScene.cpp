@@ -93,7 +93,7 @@ void DialogScene::skip() {
   if (Game::getSceneMachine()->getCurrentScene()->getTransition()) {
     int scene = reinterpret_cast<TransitionScene*>(getScene())->getBattleInd();
 
-    if (scene < 6) {  // 6 meaning the 5 levels plus last transition
+    if (scene < 1) {  // 6 meaning the 5 levels plus last transition
       Game::getSceneMachine()->changeScene(new RecruitScene(scene));
     } else {
       GameManager::getInstance()->reset();

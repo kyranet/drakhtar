@@ -7,9 +7,11 @@
 
 class CreditsScene : public Scene {
  private:
-  CreditText* creditText_ = nullptr;
+  CreditText* creditText1_ = nullptr;
+  CreditText* creditText2_ = nullptr;
   int creditsLength_ = 0;
   int readCredits_ = 0;
+  bool lastCredit_ = false;
 
   std::ifstream file_;
 
@@ -22,4 +24,7 @@ class CreditsScene : public Scene {
 
   int getReadCredits();
   void setReadCredits(int readCredits);
+
+  bool getLastCredit();
+  void setLastCredit(bool lastCredit);
 };

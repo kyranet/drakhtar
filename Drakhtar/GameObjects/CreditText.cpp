@@ -19,15 +19,17 @@ CreditText::CreditText(Scene* scene, Font* font, Vector2D<int> position,
 CreditText::~CreditText() = default;
 
 void CreditText::update() {
-  if (getPosition().getY() > 0)
+  if (getPosition().getY() > -20) {
     move();
-  else
+  } else if(!lastCredit_) {
     nextLine();
+  }
 }
 
 void CreditText::move() {
   this->setPosition(
-      Vector2D<int>(static_cast<int>(getPosition().getX()), static_cast<int>(getPosition().getY() - speed_)));
+      Vector2D<int>(static_cast<int>(getPosition().getX()),
+                    static_cast<int>(getPosition().getY() - speed_)));
 }
 
 void CreditText::nextLine() {
@@ -40,6 +42,11 @@ void CreditText::nextLine() {
     setPosition(Vector2D<int>(getPosition().getX(), WIN_HEIGHT));
     scene->setReadCredits(scene->getReadCredits() + 1);
   } else {
-    Game::getSceneMachine()->changeScene(new MenuScene());
+    if (scene->getLastCredit()) {
+      Game::getSceneMachine()->changeScene(new MenuScene());
+    } else {
+      scene->setLastCredit(true);
+      lastCredit_ = true;
+    }
   }
 }
