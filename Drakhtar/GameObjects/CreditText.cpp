@@ -27,7 +27,7 @@ void CreditText::update() {
 
 void CreditText::move() {
   this->setPosition(
-      Vector2D<int>(getPosition().getX(), getPosition().getY() - speed_));
+      Vector2D<int>(static_cast<int>(getPosition().getX()), static_cast<int>(getPosition().getY() - speed_)));
 }
 
 void CreditText::nextLine() {
