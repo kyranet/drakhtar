@@ -20,8 +20,8 @@ void TransitionScene::preload() {
       break;
     case 2:
       SDLAudioManager::getInstance()->playMusic(9, 999);
-      break; 
-	case 3:
+      break;
+    case 3:
       SDLAudioManager::getInstance()->playMusic(10, 999);
       break;
     default:
