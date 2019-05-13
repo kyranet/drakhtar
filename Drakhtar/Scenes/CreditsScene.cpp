@@ -27,8 +27,8 @@ void CreditsScene::preload() {
   readCredits_++;
 
   const auto menuButton_ = new Button(
-      this, TextureManager::get("Vanilla-Button"), Vector2D<int>(80, 80),
-      Vector2D<int>(80, 80),
+      this, TextureManager::get("Vanilla-Button"), Vector2D<int>(WIN_WIDTH - 100, WIN_HEIGHT - 50),
+      Vector2D<int>(WIN_WIDTH/8, WIN_HEIGHT/8),
       [this]() { Game::getSceneMachine()->changeScene(new MenuScene()); },
       "Menu", "ButtonFont");
   addGameObject(menuButton_);
