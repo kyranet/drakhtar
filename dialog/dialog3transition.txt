@@ -17,7 +17,7 @@ Valar Portraits-Valar I am sorry, your Grace, I-I couldn't hold myself any longe
 Narrator Portraits-Narrator Thassa, astonished, verged the king's corpse wrapping it with her cap. .
 Thassa Portraits-Thassa Did you understand what she tried to say? .
 Valar Portraits-Valar I have no idea your majesty. .
-Narrator Portraits-Narrator She muttered some intelligible words and faced the other way .
+Narrator Portraits-Narrator She muttered some intelligible words and faced the other way. .
 Narrator Portraits-Narrator Drakhtar's remaining forces managed to retake the city, without their sorcerer, the skeletons did not have someone to command them, causing them to retreat. .
 Narrator Portraits-Narrator Hopelessly, Thassa fell on her knees and collapsed in tears, facing the situation that concerned everyone. Valar approached and placed his hand soaked with Sheissah's blood on Thassa's shoulder. .
 Valar Portraits-Valar Your grace, we no longer have time for this. I have been concerned about the odd mist that is surrounding Crihendrath. As far as I am concerned, it may be caused by the dead horde. .
