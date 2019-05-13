@@ -1,7 +1,6 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "UnitsController.h"
-
 #include "Errors/DrakhtarError.h"
 #include "EventListeners/EventListener.h"
 #include "GameObjects/Board.h"

@@ -18,8 +18,6 @@ void State::next() {
   hasUsedSkills_ = false;
 }
 
-void State::remove(Vector2D<byte>) {}
-
 Unit* State::getActiveUnit() const { return turns_.front().unit_; }
 
 void State::setUnits(const std::vector<Unit*>& first,
@@ -34,7 +32,7 @@ void State::setUnits(const std::vector<Unit*>& first,
             });
 }
 
-void State::setBoard(byte rows, byte columns) {
+void State::setBoard(const byte rows, const byte columns) {
   board_.clear();
   board_.reserve(rows * columns);
   rows_ = rows;
@@ -68,11 +66,12 @@ void State::insert(const std::vector<Unit*>& units) {
   }
 }
 
-void State::setAt(Vector2D<byte> position, const State::UnitState& state) {
+void State::setAt(const Vector2D<byte>& position,
+                  const State::UnitState& state) {
   board_[position.getX() * rows_ + position.getY()] = state;
 }
 
-State::UnitState State::getAt(Vector2D<byte> position) const {
+const State::UnitState State::getAt(const Vector2D<byte>& position) const {
   return board_[position.getX() * rows_ + position.getY()];
 }
 
@@ -133,7 +132,7 @@ bool State::attack(const Vector2D<byte>& from, const Vector2D<byte>& to) {
   return true;
 }
 
-void State::removeAt(Vector2D<byte> position) {
+void State::removeAt(const Vector2D<byte>& position) {
   setAt(position,
         {nullptr, Color::BLUE, position, 0, 0, 0, 0, 0, 0, 0, 0, 0, false});
 }
