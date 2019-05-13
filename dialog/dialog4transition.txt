@@ -1,6 +1,6 @@
 5
 Narrator Portraits-Narrator With Drakhtar's army retreating, Thassa realized something: The fog only affected her soldiers and not the undead. .
-Thassa Portraits-Thassa Shite... We can't stay in this mist any longer! We have to leave as soon as possible! Fall back! .
+Thassa Portraits-Thassa Oh no... We can't stay in this mist any longer! We have to leave as soon as possible! Fall back! .
 Narrator Portraits-Narrator Many of the men were lost that day, killed in battle against the undead, leaving a string of corpses decorating the grim valley, now turned into a sea of blood and death. .
 Narrator Portraits-Narrator Thassa's army escaped the mist in time to see, to their surprise, the city of Drakhtar back to its state of decline, the air cold in the horrifying situation. .
 Narrator Portraits-Narrator Thassa hurried through the empty streets and entered the castle just in time to find a necromancer and a cloaked figure trying to break the seal of the Gem of Deiros. .
