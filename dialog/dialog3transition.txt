@@ -1,4 +1,4 @@
-30
+﻿30
 Narrator Portraits-Narrator Thassa's forces fought fiercely and won the battle. The mortally wounded sorceress was interrogated by Thassa. Thassa landed multiple blows on Sheissah's body, but she did not loosen her mouth even one bit. .
 Thassa Portraits-Thassa Gods!... Who is commanding you? Why are your forces attacking the realm?! .
 Sorcerer Portraits-MageEnemy Your grace... I am known throughout this land as Sheissah, the Bane of the Living. .
@@ -23,7 +23,7 @@ Narrator Portraits-Narrator Hopelessly, Thassa fell on her knees and collapsed i
 Valar Portraits-Valar Your grace, we no longer have time for this. I have been concerned about the odd mist that is surrounding Crihendrath. As far as I am concerned, it may be caused by the dead horde. .
 Valar Portraits-Valar I would advise sending some of our scouts to fully investigate what is happening in our land. We cannot let the enemy have the tactical advantage any longer. .
 Narrator Portraits-Narrator Thassa agreed and ordered to fully secure the city and afterwards she would personally direct the retinue. .
-Narrator Portraits-Narrator The remnants of the battle were annihilated and the city began an exhaustive reparation while Thassa retinue prepared to depart in search of valuable information that may be useful against the enemies who attacked the reign’s peace and prosperity. .
+Narrator Portraits-Narrator The remnants of the battle were annihilated and the city began an exhaustive reparation while Thassa retinue prepared to depart in search of valuable information that may be useful against the enemies who attacked the reign's peace and prosperity. .
 Narrator Portraits-Narrator Thassa gathered her army in the yard. She encouraged them and explained the whole situation. .
 Thassa Portraits-Thassa Drakhtarians!!! We will set out in search of the truth, to put an end to the threat that looms over us. We might need all of our soul and heart to find the answer, but I assure we will vanquish the dead army. For the realm and for our deceased king!! .
 Narrator Portraits-Narrator The whole army acclaimed Thassa as their leader. She was prepared for the adventure that would come next. .
