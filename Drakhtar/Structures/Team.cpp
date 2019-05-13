@@ -1,7 +1,9 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Team.h"
+
 #include <algorithm>
+
 #include "Controllers/UnitsController.h"
 #include "Errors/TeamedUnitError.h"
 #include "GameObjects/Commanders/Commander.h"
@@ -19,6 +21,7 @@ void Team::addUnit(Unit* unit) {
   }
   units_.push_back(unit);
   unit->setTeam(this);
+  unit->setHealthBar();
 }
 
 void Team::removeUnit(Unit* unit) {

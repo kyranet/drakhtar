@@ -43,6 +43,8 @@ class Commander : public Unit {
 
   void attack(Unit* enemy, bool counter) override;
 
+  void setCommanderHealthBar();
+
   bool getUnstoppable() const { return unstoppable_; }
   void setUnstoppable(const bool unstoppable) { unstoppable_ = unstoppable; }
 };

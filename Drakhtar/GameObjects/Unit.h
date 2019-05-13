@@ -74,6 +74,7 @@ class Unit : public GameObject {
   void setTeam(Team* team) { team_ = team; }
 
   HealthBar* getHealthBar() const { return healthBar_; }
+  virtual void setHealthBar();
 
   virtual void moveToBox(Box* box);
   virtual int loseHealth(int enemyAttack, int minDamage);

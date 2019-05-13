@@ -3,7 +3,7 @@
 #include "Font.h"
 #include "../Errors/SDLError.h"
 
-Font::Font() : font_(nullptr) {}
+Font::Font() = default;
 
 Font::Font(const std::string& filename, const int size) { load(filename, size); }
 

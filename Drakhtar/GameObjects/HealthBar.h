@@ -3,18 +3,21 @@
 #pragma once
 #include "GameObject.h"
 #include "SDL.h"
+#include "Structures/Team.h"
 
 class Scene;
 
 class HealthBar : public GameObject {
  private:
-  GameObject *lifeBar = nullptr;
-  GameObject *damageBar = nullptr;
+  GameObject* lifeBar = nullptr;
+  GameObject* damageBar = nullptr;
   GameObject* statUp = nullptr;
   GameObject* statDown = nullptr;
 
   int maxHealth;
   int currentHealth;
+
+  Color color_;
 
   double damageAnimationSpeed = 0.5;
   bool damageAnimationPlaying = false;
@@ -22,7 +25,7 @@ class HealthBar : public GameObject {
   int originalWidth;
 
  public:
-  HealthBar(Scene *scene, Vector2D<int> pos, int maxHP);
+  HealthBar(Scene* scene, Vector2D<int> pos, int maxHP, Color color);
   virtual ~HealthBar();
   virtual void render() const;
   virtual void update();
