@@ -11,20 +11,19 @@
 SkillDescriptionBox::SkillDescriptionBox(Scene* scene, SkillButton* skillButton)
     : GameObject(
           scene, TextureManager::get("Reward-Panel"),
-          Vector2D<int>(skillButton->getPosition().getX() + WIN_WIDTH / 3.4,
-                        skillButton->getPosition().getY() + WIN_HEIGHT / 10),
-          Vector2D<int>(static_cast<int>(WIN_WIDTH / 2),
-                        static_cast<int>(WIN_HEIGHT / 3))),
+          {skillButton->getPosition().getX() + static_cast<int>(WIN_WIDTH / 3.4),
+           skillButton->getPosition().getY() + static_cast<int>(WIN_HEIGHT / 10)},
+          {static_cast<int>(WIN_WIDTH / 2),
+           static_cast<int>(WIN_HEIGHT / 3)}),
       skillButton_(skillButton) {
   setTransparent(true);
   setRenderizable(false);
-  Vector2D<int> pos = skillButton_->getPosition();
 
   std::string statText_ = fillText();
   const auto skillTextSprite = new Text(
       scene_, FontManager::get("StatsFont"),
       Vector2D<int>(this->getPosition().getX(), this->getPosition().getY()),
-      {0, 0, 0, 1}, statText_, this->getRect().w * 0.8);
+      {0, 0, 0, 1}, statText_, static_cast<int>(getRect().w * 0.8));
   addChild(skillTextSprite);
   skillTextSprite->setTransparent(true);
   active_ = true;

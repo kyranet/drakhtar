@@ -3,16 +3,16 @@
 #pragma once
 #include <string>
 
-#include "Scenes/GameScene.h"
-
 class Commander;
 class Texture;
+class GameScene;
 
 class Skill {
  protected:
   std::string id_;
   std::string description_ = " ";
   Commander* caster_;
+  GameScene* scene_;
   int cooldown_;
   int duration_;
   int remainingCooldown_ = 0;
@@ -23,8 +23,8 @@ class Skill {
   Skill(const std::string& id, int cooldown, int duration, Commander* caster);
   virtual ~Skill() = default;
 
-  virtual void cast(GameScene* scene);
-  virtual void end(GameScene* scene);
+  virtual void cast();
+  virtual void end();
 
   std::string getId() const { return id_; }
   std::string getDescription() const { return description_; }
@@ -38,10 +38,10 @@ class Skill {
 class BattleCry final : public Skill {
  public:
   explicit BattleCry(Commander* caster);
-  virtual ~BattleCry() = default;
+  ~BattleCry() = default;
 
-  void cast(GameScene* scene) override;
-  void end(GameScene* scene) override;
+  void cast() override;
+  void end() override;
 };
 
 class ArrowRain final : public Skill {
@@ -49,10 +49,10 @@ class ArrowRain final : public Skill {
 
  public:
   explicit ArrowRain(Commander* caster);
-  virtual ~ArrowRain() = default;
+  ~ArrowRain() = default;
 
-  void cast(GameScene* scene) override;
-  void end(GameScene* scene) override;
+  void cast() override;
+  void end() override;
 };
 
 class HeroicStrike final : public Skill {
@@ -60,46 +60,46 @@ class HeroicStrike final : public Skill {
 
  public:
   explicit HeroicStrike(Commander* caster);
-  virtual ~HeroicStrike() = default;
+  ~HeroicStrike() = default;
 
-  void cast(GameScene* scene) override;
-  void end(GameScene* scene) override;
+  void cast() override;
+  void end() override;
 };
 
 class WitheringCurse final : public Skill {
  public:
   explicit WitheringCurse(Commander* caster);
-  virtual ~WitheringCurse() = default;
+  ~WitheringCurse() = default;
 
-  void cast(GameScene* scene) override;
-  void end(GameScene* scene) override;
+  void cast() override;
+  void end() override;
 };
 
 class Charge final : public Skill {
  public:
   explicit Charge(Commander* caster);
-  virtual ~Charge() = default;
+  ~Charge() = default;
 
-  void cast(GameScene* scene) override;
-  void end(GameScene* scene) override;
+  void cast() override;
+  void end() override;
 };
 
 class Berserker final : public Skill {
  public:
   explicit Berserker(Commander* caster);
-  virtual ~Berserker() = default;
+  ~Berserker() = default;
 
-  void cast(GameScene* scene) override;
-  void end(GameScene* scene) override;
+  void cast() override;
+  void end() override;
 };
 
 class DeathRay final : public Skill {
  public:
   explicit DeathRay(Commander* caster);
-  virtual ~DeathRay() = default;
+  ~DeathRay() = default;
 
-  void cast(GameScene* scene) override;
-  void end(GameScene* scene) override;
+  void cast() override;
+  void end() override;
 };
 
 class Reinforce final : public Skill {
@@ -107,8 +107,8 @@ class Reinforce final : public Skill {
 
  public:
   explicit Reinforce(Commander* caster);
-  virtual ~Reinforce() = default;
+  ~Reinforce() = default;
 
-  void cast(GameScene* scene) override;
-  void end(GameScene* scene) override;
+  void cast() override;
+  void end() override;
 };

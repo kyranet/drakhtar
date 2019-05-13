@@ -10,18 +10,9 @@
 #include "Structures/Game.h"
 #include "Structures/Team.h"
 
-Commander::Commander(const std::string& name, Scene* scene, Texture* texture,
-                     Box* box, const UnitStats commanderStats)
-    : Unit(scene, texture, box, commanderStats, name) {
-  const auto rect = box_->getRect();
-
-  commanderIcon_ =
-      new GameObject(scene, TextureManager::get("UI-commanderIcon"),
-                     Vector2D<int>(rect.x, rect.y - rect.h / 3),
-                     Vector2D<int>(rect.h / 1.5, rect.h / 1.5));
-
-  addChild(commanderIcon_);
-}
+Commander::Commander(const std::string& name, Scene* scene, Texture* texture, Box* box,
+                     UnitStats commanderStats)
+    : Unit(scene, texture, box, commanderStats, name) {}
 
 Commander::~Commander() {
   for (auto skill : skills_) {
@@ -45,7 +36,7 @@ void Commander::onSelect() {
 
     // Ends skill if it was active and its duration finished
     if (skill->getActive() && skill->getRemainingDuration() == 0) {
-      skill->end(reinterpret_cast<GameScene*>(scene_));
+      skill->end();
     }
   }
 }
@@ -56,7 +47,7 @@ void Commander::onDeselect() {
   for (auto skill : skills_) {
     // Ends skill if it was active and its duration finished
     if (skill->getActive() && skill->getRemainingDuration() == 0) {
-      skill->end(reinterpret_cast<GameScene*>(scene_));
+      skill->end();
     }
   }
 }
@@ -73,7 +64,8 @@ void Commander::kill() {
 void Commander::moveToBox(Box* box) {
   Unit::moveToBox(box);
   const auto rect = box_->getRect();
-  commanderIcon_->setPosition(Vector2D<int>(rect.x, rect.y - rect.h / 3));
+  commanderIcon_->setPosition(
+      Vector2D<int>(rect.x, static_cast<int>(rect.y + rect.h / 1.31)));
 }
 
 void Commander::attack(Unit* enemy, bool allowsCounter) {
@@ -83,4 +75,16 @@ void Commander::attack(Unit* enemy, bool allowsCounter) {
     allowsCounter = false;
   }
   Unit::attack(enemy, allowsCounter);
+}
+
+void Commander::setCommanderHealthBar() {
+  const auto rect = box_->getRect();
+
+  commanderIcon_ = new GameObject(
+      scene_, TextureManager::get("UI-commanderIcon"),
+      Vector2D<int>(rect.x, static_cast<int>(rect.y + rect.h / 1.31)),
+      Vector2D<int>(rect.h / 2, rect.h / 2));
+
+  commanderIcon_->setTransparent(true);
+  addChild(commanderIcon_);
 }

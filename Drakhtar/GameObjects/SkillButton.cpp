@@ -7,6 +7,7 @@
 #include "GameObjects/ButtonText.h"
 #include "SkillDescriptionBox.h"
 #include "Managers/Input.h"
+#include "Scenes/GameScene.h"
 
 SkillButton::SkillButton(GameScene* scene, Texture* texture,
                          Texture* disabledText, Vector2D<int> pos,
@@ -37,7 +38,7 @@ void SkillButton::handleEvents(SDL_Event e) {
     SDL_Point p = {e.button.x, e.button.y};
     const auto rect = getRect();
     if (SDL_PointInRect(&p, &rect)) {
-      skill_->cast(gameScene_);
+      skill_->cast();
     }
   }
 
