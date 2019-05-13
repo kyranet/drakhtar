@@ -9,7 +9,7 @@ Thassa Portraits-Thassa Who and where is your leader? .
 Narrator Portraits-Narrator No answer. Thassa, consumed by her anger, continued landing strokes all over Sheissah's half-dead body. She made sure Sheissah could not die by telling her soldiers to immobilize her and treating her bleeding wounds. .
 Narrator Portraits-Narrator Sheissah, seeing she could not escape nor die, gave up. .
 Sheissah Portraits-MageEnemy Stop... I cannot take this any longer... Please... Let me die in peace... .
-Sheissah Portraits-MageEnemy ...I...I was requested to take Deiro's Gem for my lord... .
+Sheissah Portraits-MageEnemy I... I... was requested to take Deiro's Gem for my lord... .
 Thassa Portraits-Thassa Who is your lord?! .
 Narrator Portraits-Narrator She was just about to speak, when Valar walked ahead of Thassa, drew his sword and sliced Sheissah's throat. Sheissah, agonizing, tried to murmure some words out but died before she could. .
 Thassa Portraits-Thassa Valar?! Why?! .
