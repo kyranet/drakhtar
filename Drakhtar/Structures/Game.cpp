@@ -362,13 +362,16 @@ void Game::load() {
   audio->loadMusic(6,
                    "../audio/background/(Epic Pirate Battle Music) - Escaping "
                    "The Kraken -.ogg");
-  audio->loadMusic(7,
-                   "../audio/background/Glory by Whitesand.ogg");
+  audio->loadMusic(7, "../audio/background/Glory by Whitesand.ogg");
+  audio->loadMusic(8, "../audio/background/Guardians by Evan King.ogg");
+  audio->loadMusic(9, "../audio/background/Dark Man by egmusic16.ogg");
+  audio->loadMusic(10, "../audio/background/Singularity by Evan King.ogg");
 
   // Sound effects
   /*
              channel 0 = UI sounds
              channel 1 = unit sounds
+             channel 2 = dialogue
 
 */
   audio->loadSound(0, "../audio/sound/UI-sounds/basic_click.mp3");
@@ -389,6 +392,8 @@ void Game::load() {
   audio->loadSound(
       11, "../audio/sound/Unit-sounds/Heroes/Zamdran/ArrowRainSkill.mp3");
   audio->loadSound(12, "../audio/sound/UI-sounds/coin.wav");
+  audio->loadSound(13, "../audio/sound/UI-sounds/nextDialogue.wav");
+  audio->loadSound(14, "../audio/sound/UI-sounds/skipDialogue.wav");
 
   sceneMachine_ = new SceneMachine();
   sceneMachine_->pushScene(new MenuScene());

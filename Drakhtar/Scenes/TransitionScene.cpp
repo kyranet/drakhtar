@@ -14,6 +14,19 @@ TransitionScene::TransitionScene(const int battle) : battle_(battle) {}
 
 void TransitionScene::preload() {
   SDLAudioManager::getInstance()->haltMusic();
+  switch (battle_) {
+    case 1:
+      SDLAudioManager::getInstance()->playMusic(8, 999);
+      break;
+    case 2:
+      SDLAudioManager::getInstance()->playMusic(9, 999);
+      break; 
+	case 3:
+      SDLAudioManager::getInstance()->playMusic(10, 999);
+      break;
+    default:
+      break;
+  }
   const auto background = new GameObject(
       this, TextureManager::get("Transition-Map" + std::to_string(battle_)),
       Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),

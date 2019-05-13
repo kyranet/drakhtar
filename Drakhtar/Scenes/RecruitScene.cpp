@@ -27,7 +27,7 @@ void RecruitScene::preload() {
   costs_["Monster"] = 125;
 
   SDLAudioManager::getInstance()->haltMusic();
-  SDLAudioManager::getInstance()->playMusic(7, 999);
+  SDLAudioManager::getInstance()->playMusic(10, 999);
 
   const auto background =
       new GameObject(this, TextureManager::get("Recruitment-Background"),
