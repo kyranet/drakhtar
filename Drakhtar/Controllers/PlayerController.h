@@ -2,6 +2,7 @@
 
 #pragma once
 #include "UnitsController.h"
+#include "Utils/Vector2D.h"
 
 class Button;
 
@@ -9,6 +10,8 @@ class PlayerController final : public UnitsController {
   bool locked_ = false;
   Button* skipTurnButton_ = nullptr;
   bool tutorialDone_ = false;
+  std::vector<Vector2D<double>> pathToRoute(
+      const std::vector<Vector2D<byte>>& path) const;
 
  public:
   PlayerController(Board* board, GameScene* scene, Team* team,

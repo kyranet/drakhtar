@@ -18,9 +18,10 @@
 Unit::Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
            const std::string& type)
     : GameObject(scene, texture,
-                 Vector2D<int>(box->getRect().x + box->getRect().w / 2,
-                               box->getRect().y + box->getRect().h / 2),
-                 Vector2D<int>(WIN_HEIGHT / 5.625f, WIN_HEIGHT / 5.625f)),
+                 {box->getRect().x + box->getRect().w / 2,
+                  box->getRect().y + box->getRect().h / 2},
+                 {static_cast<int>(WIN_HEIGHT / 5.625f),
+                  static_cast<int>(WIN_HEIGHT / 5.625f)}),
       boxPosition_(box->getPosition().to<byte>()),
       type_(type),
       box_(box),
@@ -113,18 +114,19 @@ void Unit::attack(Unit* enemy, const bool allowsCounter) {
   enemy->loseHealth(getStats().attack, minDamage_);
 
   const auto scene = reinterpret_cast<GameScene*>(getScene());
+  const auto state = scene->getState();
 
   // If the target is an archer and is in range 1, it can never counter-attack
   if (enemy->getType() == "Archer" &&
-      scene->getBoard()->isInRange(box_, enemy->getBox(), 1)) {
+      state->isInRange(box_->getIndex(), enemy->getBox()->getIndex(), 1)) {
     return;
   }
 
   // If the attack allows a counter and the enemy is
   // alive and within attack range, counter-attack
   if (allowsCounter && enemy->getHealth() > 0 &&
-      scene->getBoard()->isInRange(box_, enemy->getBox(),
-                                   enemy->getStats().attackRange) &&
+      state->isInRange(box_->getIndex(), enemy->getBox()->getIndex(),
+                       enemy->getStats().attackRange) &&
       !enemy->getHasCounterAttacked()) {
     enemy->attack(this, false);
     enemy->setHasCounterAttacked(true);

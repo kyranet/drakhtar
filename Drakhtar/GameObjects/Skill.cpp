@@ -1,25 +1,21 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Skill.h"
-
 #include <algorithm>
-
-#include "../Controllers/UnitsController.h"
-#include "../Managers/TextureManager.h"
-#include "../Structures/Team.h"
 #include "Commanders/Commander.h"
+#include "Controllers/UnitsController.h"
 #include "GameObjects/Battalion.h"
 #include "GameObjects/Board.h"
 #include "GameObjects/Box.h"
 #include "Managers/SDLAudioManager.h"
+#include "Managers/State.h"
+#include "Managers/TextureManager.h"
 #include "Scenes/GameScene.h"
+#include "Structures/Team.h"
 
 Skill::Skill(const std::string& id, int cooldown, int duration,
              Commander* caster)
-    : id_(std::move(id)),
-      caster_(caster),
-      cooldown_(cooldown),
-      duration_(duration) {
+    : id_(id), caster_(caster), cooldown_(cooldown), duration_(duration) {
   scene_ = reinterpret_cast<GameScene*>(caster->getScene());
 }
 
@@ -63,8 +59,9 @@ void BattleCry::cast() {
     SDLAudioManager::getInstance()->playChannel(10, 0, 1);
 
     if (!caster_->getTeam()->getController()->hasMoved()) {
-      scene_->getBoard()->highlightCellsInRange(caster_->getBox(),
-                                                caster_->getStats().moveRange);
+      // TODO(kyranet): Add highlight hooks
+      // scene_->getBoard()->highlightCellsInRange(caster_->getBox(),
+      //                                           caster_->getStats().moveRange);
     }
   }
 }
@@ -99,9 +96,10 @@ void ArrowRain::cast() {
     SDLAudioManager::getInstance()->playChannel(11, 0, 1);
 
     // Caster deals half damage to every enemy unit in range
+    const auto state = scene_->getState();
     for (auto unit : scene_->getEnemyTeam(caster_)->getUnits()) {
-      if (scene_->getBoard()->isInRange(caster_->getBox(), unit->getBox(),
-                                        range)) {
+      if (state->isInRange(caster_->getBox()->getIndex(),
+                           unit->getBox()->getIndex(), range)) {
         unit->loseHealth(caster_->getStats().attack / 2, 1);
         if (unit->getHealth() <= 0) {
           unit->getBox()->destroyContent();
@@ -116,7 +114,7 @@ void ArrowRain::end() { active_ = false; }
 
 // ---------- HEROIC STRIKE ----------
 HeroicStrike::HeroicStrike(Commander* caster)
-    : Skill("Heroic Strike", 2, 0, caster) {
+    : Skill("Heroic Strike", 2, 0, caster), attackIncrement_(0) {
   description_ =
       "The next attack this turn will deal 50% increased damage and will not "
       "trigger a counter-attack. (CD: " +
@@ -272,9 +270,10 @@ void Reinforce::cast() {
   if (remainingCooldown_ == 0 && caster_->getMoving()) {
     Skill::cast();
 
+    const auto state = scene_->getState();
     for (auto unit : scene_->getAlliedTeam(caster_)->getUnits()) {
-      if (scene_->getBoard()->isInRange(caster_->getBox(), unit->getBox(),
-                                        range)) {
+      if (state->isInRange(caster_->getBox()->getIndex(),
+                           unit->getBox()->getIndex(), range)) {
         if (unit->getType() == "Soldier" || unit->getType() == "Archer" ||
             unit->getType() == "Mage") {
           const auto battalion = reinterpret_cast<Battalion*>(unit);

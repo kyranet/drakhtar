@@ -11,7 +11,7 @@
 #include "Unit.h"
 
 Box::Box(Scene* scene, const Vector2D<int>& pos, const Vector2D<int>& size,
-         const Vector2D<int>& boardIndex, Unit* unit)
+         const Vector2D<byte>& boardIndex, Unit* unit)
     : GameObject(scene, nullptr, pos, size),
       boardIndex_(boardIndex),
       content_(unit),
@@ -71,7 +71,7 @@ void Box::update() {
 // ---------- Getters and Setters ----------
 bool Box::isEmpty() const { return content_ == nullptr; }
 
-Vector2D<int> Box::getIndex() const { return boardIndex_; }
+Vector2D<byte> Box::getIndex() const { return boardIndex_; }
 
 Unit* Box::getContent() const { return content_; }
 

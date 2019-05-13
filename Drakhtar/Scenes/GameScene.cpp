@@ -55,7 +55,8 @@ void GameScene::preload() {
   auto factory = UnitFactory(this);
 
   // Red Team
-  this->readLevel(factory);
+  readLevel(factory);
+  state_->setBoard(board_->getRows(), board_->getCols());
 
   // Blue Team
   const auto thassa =
@@ -75,7 +76,7 @@ void GameScene::preload() {
   auto army = GameManager::getInstance()->getArmy();
   auto typeOrder = GameManager::getInstance()->getTypeOrder();
 
-  int y = 1;
+  byte y = 1;
   for (const auto& pair : typeOrder) {
     if (army[pair.second] > 0) {
       addGameObject(factory.newBattalion(
@@ -184,7 +185,7 @@ void GameScene::readLevel(UnitFactory& factory) {
 
   if (file.fail()) throw DrakhtarError("File is not a level file");
 
-  int rowSize, columnSize;
+  byte rowSize, columnSize;
 
   file >> rowSize >> columnSize;
 
@@ -200,7 +201,7 @@ void GameScene::readLevel(UnitFactory& factory) {
 
   file >> commanderName;
 
-  int row, col, size;
+  byte row, col, size;
 
   file >> row >> col;
   Commander* commander =

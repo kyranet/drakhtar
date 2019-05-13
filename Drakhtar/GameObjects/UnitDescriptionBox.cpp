@@ -77,18 +77,22 @@ void UnitDescriptionBox::updateText(Unit* unit) {
   unitStatsText_->setText(text);
 
   const auto scene = reinterpret_cast<GameScene*>(getScene());
-  Unit* activeUnit = scene->getState()->getActiveUnit();
+  const auto state = scene->getState();
+  Unit* activeUnit = state->getActiveUnit();
 
-  showDamage_ = board_->isInRange(activeUnit->getBox(), unit->getBox(),
-                                  activeUnit->getStats().attackRange) &&
-                unit->getTeam() != activeUnit->getTeam();
+  const auto stats = state->getAt(activeUnit->getBoxPosition());
+  const auto enemyStats = state->getAt(unit->getBoxPosition());
 
-  int damage = static_cast<int>(activeUnit->getStats().attack *
-                                (1.0 - unit->getStats().defense / 100.0));
-  text =
-      "Unit's attack: " + std::to_string(activeUnit->getStats().attack) + "\n";
-  text +=
-      "Enemy's defense: " + std::to_string(unit->getStats().defense) + "%\n";
+  showDamage_ = unit->getTeam() != activeUnit->getTeam() &&
+                state->isInRange(activeUnit->getBoxPosition(),
+                                 unit->getBoxPosition(), stats.attackRange_);
+
+  // TODO(kyranet): Use UnitState::getDefense and UnitState::getAttack for
+  //  calculated stats.
+  int damage =
+      static_cast<int>(stats.attack_ * (1.0 - enemyStats.defense_ / 100.0));
+  text = "Unit's attack: " + std::to_string(stats.attack_) + "\n";
+  text += "Enemy's defense: " + std::to_string(enemyStats.defense_) + "%\n";
   text += "Final damage: " + std::to_string(damage);
   unitDamageText_->setText(text);
 }
