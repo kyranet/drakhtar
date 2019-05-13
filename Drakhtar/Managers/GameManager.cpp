@@ -50,9 +50,13 @@ void GameManager::destroy() {
 }
 
 void GameManager::reset() {
-  for (auto pair : (*army_)) {
-    (*army_)[pair.first] = 0;
-  }
+
+  (*army_)["Soldier"] = 8;
+  (*army_)["Archer"] = 6;
+  (*army_)["Mage"] = 0;
+  (*army_)["Knight"] = 0;
+  (*army_)["Monster"] = 0;
+
   money_ = BASE_MONEY;
 }
 
