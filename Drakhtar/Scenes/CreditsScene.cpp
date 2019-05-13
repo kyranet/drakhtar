@@ -1,3 +1,5 @@
+// Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
+
 #include "CreditsScene.h"
 
 #include "../Errors/DrakhtarError.h"

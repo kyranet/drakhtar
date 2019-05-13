@@ -30,7 +30,7 @@ GameOverPanel::GameOverPanel(Scene* scene, Texture* texture,
                                    // before changing to credits
             Game::getSceneMachine()->changeScene(
                 new TransitionScene(currentScene + 1));
-          }          
+          }
         } else {
           Game::getSceneMachine()->changeScene(new GameScene(currentScene));
         }

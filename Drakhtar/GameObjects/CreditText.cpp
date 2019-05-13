@@ -1,3 +1,5 @@
+// Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
+
 #include "CreditText.h"
 
 #include "../Scenes/CreditsScene.h"
