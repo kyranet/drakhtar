@@ -1,9 +1,10 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-#include "Scene.h"
-#include "../GameObjects/CreditText.h"
 #include <fstream>
+
+#include "../GameObjects/CreditText.h"
+#include "Scene.h"
 
 class CreditsScene : public Scene {
  private:

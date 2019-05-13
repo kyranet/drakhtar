@@ -21,7 +21,7 @@ CreditText::~CreditText() = default;
 void CreditText::update() {
   if (getPosition().getY() > -20) {
     move();
-  } else if(!lastCredit_) {
+  } else if (!lastCredit_) {
     nextLine();
   }
 }

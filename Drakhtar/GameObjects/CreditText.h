@@ -11,7 +11,8 @@ class CreditText : public Text {
 
  public:
   CreditText(Scene* scene, Font* font, Vector2D<int> position, SDL_Color color,
-       const std::string& text, int lineJumpLimit, double speed, int creditsLength);
+             const std::string& text, int lineJumpLimit, double speed,
+             int creditsLength);
   virtual ~CreditText();
   void update() override;
   void move();
