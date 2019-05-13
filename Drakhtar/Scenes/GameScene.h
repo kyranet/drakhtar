@@ -28,7 +28,7 @@ class GameScene final : public Scene {
   void gameOver(bool victory);
   void addPrize(int prize);
   void saveStatus();
-  void readLevel(UnitFactory& factory);
+  void readLevel(UnitFactory& factory, std::vector<Unit*>& unitOrder);
 
   Board* getBoard() const;
   int getBattleInd();

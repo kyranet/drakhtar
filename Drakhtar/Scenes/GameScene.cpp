@@ -2,12 +2,14 @@
 
 #include "GameScene.h"
 
+#include <algorithm>
 #include <fstream>
 
 #include "Controllers/PlayerController.h"
 #include "Errors/DrakhtarError.h"
 #include "GameObjects/Battalion.h"
 #include "GameObjects/Board.h"
+#include "GameObjects/Box.h"
 #include "GameObjects/Button.h"
 #include "GameObjects/Commanders/Thassa.h"
 #include "GameObjects/Commanders/Zamdran.h"
@@ -52,11 +54,13 @@ void GameScene::preload() {
   team1_ = new Team(Color::BLUE);
   team2_ = new Team(Color::RED);
 
+  std::vector<Unit*> unitsInOrder;
+
   // Create a temporary factory to create the units easily.
   auto factory = UnitFactory(this);
 
   // Red Team
-  readLevel(factory);
+  this->readLevel(factory, unitsInOrder);
   state_ = new State();
   state_->setBoard(board_->getRows(), board_->getCols());
 
@@ -65,14 +69,14 @@ void GameScene::preload() {
       factory.newCommander("Thassa", team1_, board_->getBoxAt(0, 0));
   team1_->addCommander(thassa);
   thassa->setCommanderHealthBar();
-  addGameObject(thassa);
+  unitsInOrder.push_back(thassa);
 
   if (battle_ == 1) {
     const auto valar =
         factory.newCommander("BlueValar", team1_, board_->getBoxAt(0, 4));
     team1_->addCommander(valar);
     valar->setCommanderHealthBar();
-    addGameObject(valar);
+    unitsInOrder.push_back(valar);
   }
 
   auto army = GameManager::getInstance()->getArmy();
@@ -81,11 +85,26 @@ void GameScene::preload() {
   uint16_t y = 1;
   for (const auto& pair : typeOrder) {
     if (army[pair.second] > 0) {
-      addGameObject(factory.newBattalion(
+      unitsInOrder.push_back(factory.newBattalion(
           pair.second, team1_, board_->getBoxAt(0, y), army[pair.second]));
       y++;
     }
   }
+
+  std::sort(unitsInOrder.begin(), unitsInOrder.end(),
+            [](const Unit* a, const Unit* b) {
+              auto boxAIndex = a->getBox()->getIndex();
+              auto boxBIndex = b->getBox()->getIndex();
+              if (boxAIndex.getY() < boxBIndex.getY())
+                return true;
+              else if (boxAIndex.getY() == boxBIndex.getY() &&
+                       boxAIndex.getX() > boxBIndex.getX())
+                return true;
+              else
+                return false;
+            });
+
+  for (int i = 0; i < unitsInOrder.size(); i++) addGameObject(unitsInOrder[i]);
 
   // Sort both teams by their speeds
   team1_->sortUnits();
@@ -171,7 +190,7 @@ void GameScene::pause() {
   }
 }
 
-void GameScene::readLevel(UnitFactory& factory) {
+void GameScene::readLevel(UnitFactory& factory, std::vector<Unit*>& unitOrder) {
   std::ifstream file;
   file.open("../levels/level-" + std::to_string(battle_) + ".txt");
 
@@ -214,12 +233,12 @@ void GameScene::readLevel(UnitFactory& factory) {
 
   team2_->addCommander(commander);
   commander->setCommanderHealthBar();
-  addGameObject(commander);
+  unitOrder.push_back(commander);
   while (!file.eof()) {
     std::string unitType;
     file >> unitType >> size >> row >> col;
-    addGameObject(factory.newBattalion(unitType, team2_,
-                                       board_->getBoxAt(row, col), size));
+    unitOrder.push_back(factory.newBattalion(unitType, team2_,
+                                             board_->getBoxAt(row, col), size));
   }
 
   audio->haltMusic();
