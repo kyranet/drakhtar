@@ -51,3 +51,9 @@ std::string CreditsScene::getNextLine() {
   }
   return text;
 }
+
+int CreditsScene::getReadCredits() { return readCredits_; }
+
+void CreditsScene::setReadCredits(int readCredits) {
+  readCredits_ = readCredits;
+}

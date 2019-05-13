@@ -29,13 +29,14 @@ void CreditText::move() {
 }
 
 void CreditText::nextLine() {
-  if (readCredits_ < creditsLength_) {
-    std::string line = reinterpret_cast<CreditsScene*>(scene_)->getNextLine();
+  CreditsScene* scene = reinterpret_cast<CreditsScene*>(scene_);
+  if (scene->getReadCredits() < creditsLength_) {
+    std::string line = scene->getNextLine();
     setText(line);
     const SDL_Color textColor = {255, 255, 255, 0};
     setColor(textColor);
     setPosition(Vector2D<int>(getPosition().getX(), WIN_HEIGHT));
-    readCredits_++;
+    scene->setReadCredits(scene->getReadCredits() + 1);
   } else {
     Game::getSceneMachine()->changeScene(new MenuScene());
   }

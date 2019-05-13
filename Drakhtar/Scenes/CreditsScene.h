@@ -19,4 +19,7 @@ class CreditsScene : public Scene {
   void preload() override;
 
   std::string getNextLine();
+
+  int getReadCredits();
+  void setReadCredits(int readCredits);
 };
