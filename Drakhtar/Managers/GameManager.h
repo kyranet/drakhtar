@@ -7,7 +7,7 @@
 
 class Unit;
 
-#define BASE_MONEY 1250
+#define BASE_MONEY 0
 
 enum UnitType { SOLDIER, ARCHER, MAGE, KNIGHT, MONSTER };
 
