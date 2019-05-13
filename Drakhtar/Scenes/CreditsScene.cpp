@@ -31,13 +31,12 @@ void CreditsScene::preload() {
       Vector2D<int>(80, 80),
       [this]() { Game::getSceneMachine()->changeScene(new MenuScene()); },
       "Menu", "ButtonFont");
+  addGameObject(menuButton_);
 
   creditText_ = new CreditText(this, FontManager::get("TutorialFont"),
                                Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT),
-                               textColor, firstCredit, 500, 50, creditsLength_);
-
+                               textColor, firstCredit, 1000, 2, creditsLength_);
   addGameObject(creditText_);
-  addGameObject(menuButton_);
 
   auto audio = SDLAudioManager::getInstance();
   audio->playMusic(6, -1);

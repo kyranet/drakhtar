@@ -10,7 +10,9 @@ CreditText::CreditText(Scene* scene, Font* font, Vector2D<int> position,
                        int lineJumpLimit, double speed, int creditsLength)
     : Text(scene, font, position, color, text, lineJumpLimit),
       speed_(speed),
-      creditsLength_(creditsLength) {}
+      creditsLength_(creditsLength) {
+  setColor(color);
+}
 
 CreditText::~CreditText() = default;
 
@@ -29,11 +31,12 @@ void CreditText::move() {
 void CreditText::nextLine() {
   if (readCredits_ < creditsLength_) {
     std::string line = reinterpret_cast<CreditsScene*>(scene_)->getNextLine();
-    this->setText(line);
-    this->setPosition(Vector2D<int>(getPosition().getX(), WIN_HEIGHT));
-  }
-  else
-  {
+    setText(line);
+    const SDL_Color textColor = {255, 255, 255, 0};
+    setColor(textColor);
+    setPosition(Vector2D<int>(getPosition().getX(), WIN_HEIGHT));
+    readCredits_++;
+  } else {
     Game::getSceneMachine()->changeScene(new MenuScene());
   }
 }
