@@ -145,11 +145,11 @@ void Game::load() {
       ->addAnimation("death", {11, 12, 13, 14, 15})
       ->addAnimation("ability1", {16, 17, 18, 19, 20})
       ->setFlip(SDL_FLIP_HORIZONTAL);
-  textures->add("Units-BlueValar", "../images/Units/BlueValar.png", 5, 4)
+  textures->add("Units-BlueValar", "../images/Units/BlueValar.png", 5, 5)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10})
-      ->addAnimation("walk", {11, 12}, 4)
-      ->addAnimation("death", {13, 14, 15, 16, 17});
+      ->addAnimation("walk", {11, 12, 13, 14, 15, 16}, 4)
+      ->addAnimation("death", {17, 18, 19, 20, 21});
   textures->add("Units-RedValar", "../images/Units/RedValar.png", 6, 5)
       ->addAnimation("default", {0, 1})
       ->addAnimation("attack", {2, 3, 4, 5, 6, 7, 8, 9, 10})
