@@ -57,9 +57,9 @@ void RecruitScene::preload() {
   addUnit("Units-BlueSoldier", 1);
   addUnit("Units-BlueArcher", 2);
 
-  if (currentScene_ >= 3) addUnit("Units-BlueMage", 3);
+  if (currentScene_ >= 2) addUnit("Units-BlueMage", 3);
 
-  if (currentScene_ >= 4) addUnit("Units-BlueKnight", 4);
+  if (currentScene_ >= 3) addUnit("Units-BlueKnight", 4);
 
   if (currentScene_ >= 5) addUnit("Units-BlueMonster", 5);
 
@@ -106,8 +106,7 @@ void RecruitScene::preload() {
       {static_cast<int>(WIN_WIDTH / 4), static_cast<int>(WIN_HEIGHT / 6)},
       [this]() {
         reset();
-        Game::getSceneMachine()->changeScene(
-            new GameScene(currentScene_));
+        Game::getSceneMachine()->changeScene(new GameScene(currentScene_));
       },
       "Play", "ButtonFont");
 
