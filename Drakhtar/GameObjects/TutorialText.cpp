@@ -23,6 +23,7 @@ TutorialText::TutorialText(Scene* scene, std::string& file, SDL_Rect rect)
                    Vector2D<int>(rect.x, static_cast<int>(rect.y * 0.9)),
                    {255, 255, 255, 1}, texts[cont].dialogtexts_, 250);
   text_->setRenderizable(true);
+  text_->setTransparent(true);
   text_->setColor({255, 255, 255, 0});
   addChild(text_);
 }
