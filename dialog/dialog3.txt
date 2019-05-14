@@ -1,2 +1,9 @@
-1
-Narrator Portraits-Narrator Continue .
+8
+Narrator Portraits-Narrator The hosts of Drahktar's army were in their search for the harsh truth about what happened. .
+Narrator Portraits-Narrator When they were about to reach Duggabre's valley they terribly began to notice a strange atmosphere. .
+Narrator Portraits-Narrator An outpost of the enemy army came out of the scrubs catching Thassa and her army by surprise. .
+Narrator Portraits-Narrator A taller and ghostly figure riding an undead horse was commanding them. .
+Thassa Portraits-Narrator We are being ambushed! Everyone hold your position! Prepare to fight! .
+Narrator Portraits-Narrator When the battle was about to start, the atmosphere began to thicken, enveloping the army in a fog that asphyxiated them. .
+Narrator Portraits-Narrator Some of Thassa's soldiers started coughing and collapsing, while the ones still on foot prepared to repel the enemy. .
+Dreilay Portraits-ArcherEnemy Your head will not return in its place this time Thassa! Charge! .

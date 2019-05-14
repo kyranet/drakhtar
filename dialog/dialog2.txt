@@ -1,2 +1,16 @@
-1
-Narrator Portraits-Narrator Continue .
+15
+Narrator Portraits-Narrator Thassa's men inspected the castle. Finally, they stood up in front of the main hall door. .
+Valar Portraits-Valar Your majesty, we found where they are! .
+Narrator Portraits-Narrator Thassa ran through the passages guided by Valar. Behind her, a small group of her forces were following her. .
+Narrator Portraits-Narrator The first glance she had was petrifying. Behind the enemy line, a sorceress could be seen with a sharp dagger in the king's throat. .
+Thassa Portraits-Thassa FATHER! NOO! .
+Narrator Portraits-Narrator One clean move was enough to sink Thassa into despair. Blood was flowing through the killer hands. Her father, the King, was dead. .
+Narrator Portraits-Narrator Thassa, full of anger, went on her knees while her troops went on the attack to protect their dead king. .
+Thassa Portraits-Thassa ... No... My father is... argh... no... .
+Narrator Portraits-Narrator She mumbled a few curse words, and stood up again, although there were tears on her face, the looked fierce and ready to kill. .
+Thassa Portraits-Thassa If this is what you want, then war is what you shall have! .
+Narrator Portraits-Narrator Thassa pointed with the sword at the mysterious sorcerer. .
+Thassa Portraits-Thassa YOU WITCH! Your head will hang from the castle's ramparts for this! .
+Narrator Portraits-Narrator The sorceress had a smirk on her face, like it pleased her to kill the king. .
+Thassa Portraits-Thassa Soldiers!! For the reign and the King! This filth must be killed! Chaarge! .
+Narrator Portraits-Narrator The small Drakhtarian army was furious, Thassa's words threw even more wood into the fire. Without hesitation, they charged ahead with no fear in their blood. .

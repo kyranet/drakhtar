@@ -13,6 +13,7 @@
 #include "Managers/GameManager.h"
 #include "Managers/SDLAudioManager.h"
 #include "Managers/TextureManager.h"
+#include "Scenes/CreditsScene.h"
 #include "Scenes/GameScene.h"
 #include "Scenes/MenuScene.h"
 #include "Scenes/RecruitScene.h"
@@ -96,11 +97,11 @@ void DialogScene::skip() {
   if (Game::getSceneMachine()->getCurrentScene()->getTransition()) {
     int scene = reinterpret_cast<TransitionScene*>(getScene())->getBattleInd();
 
-    if (scene < 6) {
-      Game::getSceneMachine()->changeScene(new GameScene(scene));
+    if (scene < 6) {  // 6 meaning the 5 levels plus last transition
+      Game::getSceneMachine()->changeScene(new RecruitScene(scene));
     } else {
       GameManager::getInstance()->reset();
-      Game::getSceneMachine()->changeScene(new MenuScene());
+      Game::getSceneMachine()->changeScene(new CreditsScene());
     }
   }
 }
