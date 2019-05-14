@@ -15,11 +15,11 @@ struct StoreUnit {
   std::string type;
   GameObject* unit = nullptr;
   int cost_;
-  int amount_ = 0;
+  byte amount_ = 0;
   Text* amountText = nullptr;
 
   StoreUnit(const std::string& type, GameObject* unit, int cost)
-      : type(std::move(type)), unit(unit), cost_(cost) {}
+      : type(type), unit(unit), cost_(cost) {}
 };
 
 class StoreListener final : public ListenerOnHover {

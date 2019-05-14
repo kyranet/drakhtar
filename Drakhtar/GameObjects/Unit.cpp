@@ -22,12 +22,9 @@ Unit::Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
                   box->getRect().y + box->getRect().h / 2},
                  {static_cast<int>(WIN_HEIGHT / 5.625f),
                   static_cast<int>(WIN_HEIGHT / 5.625f)}),
-      boxPosition_(box->getPosition().to<byte>()),
       type_(type),
       box_(box),
-      health_(stats.maxHealth),
-      baseStats_(stats),
-      stats_(stats) {
+      baseStats_(stats) {
   // Units must be ignored in the mouse raycasts.
   setTransparent(true);
   box->setContent(this);
@@ -78,19 +75,18 @@ void Unit::moveToBox(Box* newBox) {
                             static_cast<int>(rect.y + rect.h / 1.2)});
   healthBar_->moveBar(Vector2D<int>(rect.x + rect.w / 2,
                                     static_cast<int>(rect.y + rect.h / 1.2)));
-  setMoved(true);
 }
 
-int Unit::loseHealth(int enemyAttack, int minDamage) {
-  enemyAttack = static_cast<int>(enemyAttack * (1.0 - stats_.defense / 100.0));
-  enemyAttack = std::min(std::max(enemyAttack, minDamage), stats_.maxHealth);
+int Unit::loseHealth(int enemyAttack, int) {
+  // enemyAttack = static_cast<int>(enemyAttack * (1.0 - stats_.defense / 100.0));
+  // enemyAttack = std::min(std::max(enemyAttack, minDamage), stats_.maxHealth);
 
-  health_ = std::max(health_ - enemyAttack, 0);
+  // health_ = std::max(health_ - enemyAttack, 0);
 
   healthText_->setText(healthToString());
   const SDL_Color textColor = {255, 255, 255, 0};
   healthText_->setColor(textColor);
-  healthBar_->takeDamage(health_);
+  // healthBar_->takeDamage(health_);
 
   return enemyAttack;
 }
@@ -98,11 +94,10 @@ int Unit::loseHealth(int enemyAttack, int minDamage) {
 void Unit::update() { healthBar_->update(); }
 
 void Unit::onSelect() {
-  setMoving(true);
   setHasCounterAttacked(false);
 }
 
-void Unit::onDeselect() { setMoving(false); }
+void Unit::onDeselect() { /* setMoving(false); */ }
 
 void Unit::setBuffed(bool buffed) { healthBar_->setStatUpRenderizable(buffed); }
 
@@ -110,8 +105,8 @@ void Unit::setDebuffed(bool debuffed) {
   healthBar_->setStatDownRenderizable(debuffed);
 }
 
-void Unit::attack(Unit* enemy, const bool allowsCounter) {
-  enemy->loseHealth(getStats().attack, minDamage_);
+void Unit::attack(Unit* enemy, const bool) {
+  // enemy->loseHealth(getStats().attack, minDamage_);
 
   const auto scene = reinterpret_cast<GameScene*>(getScene());
   const auto state = scene->getState();
@@ -124,25 +119,28 @@ void Unit::attack(Unit* enemy, const bool allowsCounter) {
 
   // If the attack allows a counter and the enemy is
   // alive and within attack range, counter-attack
-  if (allowsCounter && enemy->getHealth() > 0 &&
-      state->isInRange(box_->getIndex(), enemy->getBox()->getIndex(),
-                       enemy->getStats().attackRange) &&
-      !enemy->getHasCounterAttacked()) {
-    enemy->attack(this, false);
-    enemy->setHasCounterAttacked(true);
-  }
+  // if (allowsCounter && enemy->getHealth() > 0 &&
+  //     state->isInRange(box_->getIndex(), enemy->getBox()->getIndex(),
+  //                      enemy->getStats().attackRange) &&
+  //     !enemy->getHasCounterAttacked()) {
+  //   enemy->attack(this, false);
+  //   enemy->setHasCounterAttacked(true);
+  // }
 }
 
 void Unit::kill() {
   getTeam()->removeUnit(this);
 
   const auto scene = reinterpret_cast<GameScene*>(getScene());
-  scene->getState()->removeAt(getBoxPosition());
+  scene->getState()->removeAt(getBox()->getIndex());
   scene->removeGameObject(this);
 }
 
 std::string Unit::healthToString() const {
-  return std::to_string(health_) + " HP";
+  const auto scene = reinterpret_cast<GameScene*>(getScene());
+  const auto state = scene->getState();
+  const auto stats = state->getAt(getBox()->getIndex());
+  return std::to_string(stats.health_) + " HP";
 }
 
 bool Unit::isCommander() const { return isCommander_; }

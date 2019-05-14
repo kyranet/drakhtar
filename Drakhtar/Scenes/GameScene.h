@@ -16,7 +16,7 @@ class GameScene final : public Scene {
   Team* team2_ = nullptr;
   Board* board_ = nullptr;
   TutorialBox* tutorialBox = nullptr;
-  State* state_ = nullptr;
+  State* state_;
   int battle_;
   int prize_ = 0;
 

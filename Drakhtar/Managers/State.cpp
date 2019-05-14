@@ -4,6 +4,7 @@
 #include <third_party/AStar.h>
 #include <algorithm>
 #include "GameObjects/Battalion.h"
+#include "GameObjects/Box.h"
 #include "GameObjects/Commanders/Commander.h"
 #include "GameObjects/Unit.h"
 
@@ -14,10 +15,6 @@ void State::next() {
   const auto unit = *it;
   turns_.erase(it);
   turns_.push_back(unit);
-
-  hasMoved_ = false;
-  hasAttacked_ = false;
-  hasUsedSkills_ = false;
 }
 
 Unit* State::getActiveUnit() const { return turns_.front().unit_; }
@@ -35,8 +32,7 @@ void State::setUnits(const std::vector<Unit*>& first,
 }
 
 void State::setBoard(const byte rows, const byte columns) {
-  board_.clear();
-  board_.reserve(rows * columns);
+  board_.capacity();
   rows_ = rows;
   columns_ = columns;
 }
@@ -45,7 +41,7 @@ void State::insert(const std::vector<Unit*>& units) {
   for (const auto& unit : units) {
     const auto base = unit->getBaseStats();
     const auto color = unit->getTeam()->getColor();
-    const auto boxPosition = unit->getBoxPosition();
+    const auto boxPosition = unit->getBox()->getIndex();
 
     // If it's a commander, calculate it wisely.
     if (unit->isCommander()) {
@@ -59,9 +55,11 @@ void State::insert(const std::vector<Unit*>& units) {
       const auto battalion = reinterpret_cast<Battalion*>(unit);
       const auto size = battalion->getBattalionSize();
       State::UnitState state(
-          unit, color, boxPosition, base.attack * size, base.maxHealth * size,
-          size, base.defense, base.maxHealth * size, base.attackRange,
-          base.moveRange, base.speed, base.prize * size, false);
+          unit, color, boxPosition, static_cast<byte>(base.attack * size),
+          static_cast<byte>(base.maxHealth * size), size, base.defense,
+          static_cast<byte>(base.maxHealth * size), base.attackRange,
+          base.moveRange, base.speed, static_cast<byte>(base.prize * size),
+          false);
       turns_.push_back(state);
       setAt(boxPosition, state);
     }
@@ -81,7 +79,6 @@ bool State::move(const Vector2D<byte>& from, const Vector2D<byte>& to) {
   const auto previous = getAt(from);
   if (previous.unit_ == nullptr) return false;
 
-  hasMoved_ = true;
   removeAt(from);
   setAt(to, previous);
   return true;
@@ -97,8 +94,8 @@ bool State::attack(const Vector2D<byte>& from, const Vector2D<byte>& to) {
   const auto damage = std::min(
       std::max(
           static_cast<int>(previous.attack_ * (1.0 - enemy.defense_ / 100.0)),
-          previous.minimumAttack_),
-      enemy.maxHealth_);
+          static_cast<int>(previous.minimumAttack_)),
+      static_cast<int>(enemy.maxHealth_));
   const auto health = std::max(enemy.health_ - damage, 0);
 
   if (health == 0) {
@@ -124,13 +121,12 @@ bool State::attack(const Vector2D<byte>& from, const Vector2D<byte>& to) {
     const auto minimumAttack = enemy.minimumAttack_;
     // TODO(kyranet): Add Battalion's logic
 
-    setAt(to,
-          {enemy.unit_, enemy.team_, enemy.position_, enemy.attack_, health,
-           minimumAttack, enemy.defense_, enemy.maxHealth_, enemy.attackRange_,
-           enemy.moveRange_, enemy.speed_, enemy.prize_, counterAttacked});
+    setAt(to, {enemy.unit_, enemy.team_, enemy.position_, enemy.attack_,
+               static_cast<byte>(health), minimumAttack, enemy.defense_,
+               enemy.maxHealth_, enemy.attackRange_, enemy.moveRange_,
+               enemy.speed_, enemy.prize_, counterAttacked});
   }
 
-  hasAttacked_ = true;
   return true;
 }
 

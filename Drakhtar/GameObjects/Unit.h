@@ -13,11 +13,8 @@ class HealthBar;
 class Scene;
 
 class Unit : public GameObject {
-  bool moved_ = false;
-  bool moving_ = false;
   bool hasCounterAttacked_ = false;
 
-  Vector2D<byte> boxPosition_;
   Team* team_ = nullptr;
   std::string type_;
 
@@ -25,41 +22,21 @@ class Unit : public GameObject {
   Box* box_ = nullptr;
   Text* healthText_ = nullptr;
   HealthBar* healthBar_ = nullptr;
-  int health_;
   std::string healthToString() const;
-  int minDamage_ = 1;
   bool isCommander_ = false;
 
   const UnitStats baseStats_;
-  UnitStats stats_;
 
  public:
   Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
        const std::string& type);
   virtual ~Unit();
 
-  /*int getBaseAttack() const { return baseAttack_; }
-  int getBaseSpeed() const { return baseSpeed_; }
-  virtual int getAttack() const { return attack_; }
-  int getIndividualAttack() const { return attack_; }
-  int getStats().attackRange const { return attackRange_; }
-  int getStats().moveRange const { return moveRange_; }
-  virtual int getMaxHealth() const { return maxHealth_; }
-  virtual int getHealth() const { return health_; }
-  virtual int getPrize() const { return prize_; }
-    int getSpeed() const { return speed_; }*/
-
   bool isCommander() const;
 
-  int getHealth() const { return health_; }
-  virtual int getDefense() const { return stats_.defense; }
   UnitStats getBaseStats() const { return baseStats_; }
-  UnitStats getStats() const { return stats_; }
-  virtual bool getMoved() { return moved_; }
-  virtual bool getMoving() { return moving_; }
   Team* getTeam() const { return team_; }
   Box* getBox() const { return box_; }
-  Vector2D<byte> getBoxPosition() const { return boxPosition_; }
   std::string getType() const { return type_; }
 
   bool getHasCounterAttacked() const { return hasCounterAttacked_; }
@@ -67,13 +44,6 @@ class Unit : public GameObject {
     hasCounterAttacked_ = counter;
   }
 
-  virtual void setAttack(const int attack) { stats_.attack = attack; }
-  void setSpeed(const int speed) { stats_.speed = speed; }
-  void setDefense(const int defense) { stats_.defense = defense; }
-  void setMoveRange(const int range) { stats_.moveRange = range; }
-
-  void setMoving(const bool moving) { moving_ = moving; }
-  void setMoved(const bool moved) { moved_ = moved; }
   void setTeam(Team* team) { team_ = team; }
 
   HealthBar* getHealthBar() const { return healthBar_; }

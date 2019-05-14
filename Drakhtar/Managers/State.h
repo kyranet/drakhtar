@@ -15,19 +15,19 @@ class State {
         : unit_(nullptr),
           team_(Color::BLUE),
           position_({0U, 0U}),
-          attack_(0),
-          health_(0),
-          minimumAttack_(0),
-          defense_(0),
-          maxHealth_(0),
-          attackRange_(0),
-          moveRange_(0),
-          speed_(0),
-          prize_(0),
+          attack_(0U),
+          health_(0U),
+          minimumAttack_(0U),
+          defense_(0U),
+          maxHealth_(0U),
+          attackRange_(0U),
+          moveRange_(0U),
+          speed_(0U),
+          prize_(0U),
           counterAttacked_(false) {}
-    UnitState(Unit* unit, Color team, Vector2D<byte> position, int attack,
-              int health, int minimumAttack, int defense, int maxHealth,
-              int attackRange, int moveRange, int speed, int prize,
+    UnitState(Unit* unit, Color team, Vector2D<byte> position, byte attack,
+              byte health, byte minimumAttack, byte defense, byte maxHealth,
+              byte attackRange, byte moveRange, byte speed, byte prize,
               bool counterAttacked)
         : unit_(unit),
           team_(team),
@@ -45,25 +45,21 @@ class State {
     Unit* unit_;
     Color team_;
     Vector2D<byte> position_;
-    int attack_;
-    int health_;
-    int minimumAttack_;
-    int defense_;
-    int maxHealth_;
-    int attackRange_;
-    int moveRange_;
-    int speed_;
-    int prize_;
+    byte attack_;
+    byte health_;
+    byte minimumAttack_;
+    byte defense_;
+    byte maxHealth_;
+    byte attackRange_;
+    byte moveRange_;
+    byte speed_;
+    byte prize_;
     bool counterAttacked_;
   };
 
-  bool hasMoved_ = false;
-  bool hasAttacked_ = false;
-  bool hasUsedSkills_ = false;
-
   byte rows_ = 0, columns_ = 0;
-  std::vector<UnitState> turns_{};
-  std::vector<UnitState> board_{};
+  std::vector<UnitState> turns_;
+  std::vector<UnitState> board_;
 
   void insert(const std::vector<Unit*>& units);
 

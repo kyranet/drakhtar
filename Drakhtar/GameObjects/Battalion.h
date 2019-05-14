@@ -11,7 +11,7 @@ class Text;
 class HealthBar;
 
 class Battalion final : public Unit {
-  int battalionSize_;
+  byte battalionSize_;
   Text* sizeText_ = nullptr;
   GameObject* unitBattalionCircle_ = nullptr;
 
@@ -19,21 +19,13 @@ class Battalion final : public Unit {
 
  public:
   Battalion(Scene* scene, Texture* texture, Box* box, const UnitStats stats,
-            const std::string& type, int battalionSize);
+            const std::string& type, byte battalionSize);
   virtual ~Battalion();
 
-  int getBattalionSize() const { return battalionSize_; }
-  void setBattalionSize(int battalionSize);
+  byte getBattalionSize() const { return battalionSize_; }
+  void setBattalionSize(byte battalionSize);
 
   void setHealthBar() override;
-
-  int getAttack() const;
-  int getDefense() const override;
-  int getMaxHealth() const;
-
-  void setAttack(int attack) override;
-
-  int loseHealth(int enemyAttack, int minDamage) override;
 
   void moveToBox(Box* box) override;
   void render() const override;

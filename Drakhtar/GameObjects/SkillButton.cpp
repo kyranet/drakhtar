@@ -8,6 +8,7 @@
 #include "SkillDescriptionBox.h"
 #include "Managers/Input.h"
 #include "Scenes/GameScene.h"
+#include "Managers/State.h"
 
 SkillButton::SkillButton(GameScene* scene, Texture* texture,
                          Texture* disabledText, Vector2D<int> pos,
@@ -16,7 +17,7 @@ SkillButton::SkillButton(GameScene* scene, Texture* texture,
       commander_(commander),
       gameScene_(scene),
       disabledText_(disabledText) {
-  skill_ = commander_->getSkills().at(skill);
+  skill_ = commander_->getSkills().at(static_cast<byte>(skill));
 
   skillDescriptionBox_ = new SkillDescriptionBox(scene, this);
   addChild(skillDescriptionBox_);
@@ -68,8 +69,11 @@ void SkillButton::render(SDL_Rect rect) const {
     disabledText_->renderFrame(rect,
                                texture_->getAnimation()[texture_->getFrame()]);
   } else {
+    const auto scene = reinterpret_cast<GameScene*>(getScene());
+    const auto state = scene->getState();
+
     // Disable button if the skill is in CD or its not the unit's turn
-    if (!commander_->getMoving() || skill_->getRemainingCooldown() != 0) {
+    if (state->getActiveUnit() == commander_ || skill_->getRemainingCooldown() != 0) {
       if (getRenderizable() && disabledText_ != nullptr) {
         disabledText_->renderFrame(
             rect, texture_->getAnimation()[texture_->getFrame()]);

@@ -4,6 +4,7 @@
 #include "Board.h"
 #include "Controllers/UnitsController.h"
 #include "EventListeners/StatBoxListener.h"
+#include "GameObjects/Box.h"
 #include "Managers/FontManager.h"
 #include "Managers/Input.h"
 #include "Managers/State.h"
@@ -66,29 +67,29 @@ void UnitDescriptionBox::render() const {
 }
 
 void UnitDescriptionBox::updateText(Unit* unit) {
+  const auto scene = reinterpret_cast<GameScene*>(getScene());
+  const auto state = scene->getState();
+  const auto stats = state->getAt(unit->getBox()->getIndex());
+
   std::string text = "<" + unit->getType() + ">\n";
   text += "Attack: " + std::to_string(unit->getBaseStats().attack) + " (" +
-          std::to_string(unit->getStats().attack) + ")\n";
-  text += "Defense: " + std::to_string(unit->getStats().defense) + "%\n";
-  text += "Range: " + std::to_string(unit->getStats().attackRange) + "\n";
-  text += "Move: " + std::to_string(unit->getStats().moveRange) + "\n";
-  text += "Speed: " + std::to_string(unit->getStats().speed) + "\n";
+          std::to_string(stats.attack_) + ")\n";
+  text += "Defense: " + std::to_string(stats.defense_) + "%\n";
+  text += "Range: " + std::to_string(stats.attackRange_) + "\n";
+  text += "Move: " + std::to_string(stats.moveRange_) + "\n";
+  text += "Speed: " + std::to_string(stats.speed_) + "\n";
 
   unitStatsText_->setText(text);
 
-  const auto scene = reinterpret_cast<GameScene*>(getScene());
-  const auto state = scene->getState();
   Unit* activeUnit = state->getActiveUnit();
 
-  const auto stats = state->getAt(activeUnit->getBoxPosition());
-  const auto enemyStats = state->getAt(unit->getBoxPosition());
+  const auto enemyStats = state->getAt(unit->getBox()->getIndex());
 
-  showDamage_ = unit->getTeam() != activeUnit->getTeam() &&
-                state->isInRange(activeUnit->getBoxPosition(),
-                                 unit->getBoxPosition(), stats.attackRange_);
+  showDamage_ =
+      unit->getTeam() != activeUnit->getTeam() &&
+      state->isInRange(activeUnit->getBox()->getIndex(),
+                       unit->getBox()->getIndex(), stats.attackRange_);
 
-  // TODO(kyranet): Use UnitState::getDefense and UnitState::getAttack for
-  //  calculated stats.
   int damage =
       static_cast<int>(stats.attack_ * (1.0 - enemyStats.defense_ / 100.0));
   text = "Unit's attack: " + std::to_string(stats.attack_) + "\n";

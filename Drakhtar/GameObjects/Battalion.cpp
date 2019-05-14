@@ -18,15 +18,8 @@
 
 Battalion::Battalion(Scene* scene, Texture* texture, Box* box,
                      const UnitStats stats, const std::string& type,
-                     const int battalionSize)
-    : Unit(scene, texture, box, stats, type), battalionSize_(battalionSize) {
-  stats_.maxHealth = baseStats_.maxHealth * battalionSize_;
-  stats_.defense = baseStats_.defense;
-  stats_.attack = baseStats_.attack * battalionSize_;
-  stats_.prize = baseStats_.prize * battalionSize_;
-  health_ = stats_.maxHealth;
-  minDamage_ = battalionSize_;
-}
+                     const byte battalionSize)
+    : Unit(scene, texture, box, stats, type), battalionSize_(battalionSize) {}
 
 void Battalion::setHealthBar() {
   Unit::setHealthBar();
@@ -61,46 +54,12 @@ std::string Battalion::sizeToString() const {
   return std::to_string(battalionSize_);
 }
 
-void Battalion::setBattalionSize(const int battalionSize) {
+void Battalion::setBattalionSize(const byte battalionSize) {
   battalionSize_ = battalionSize;
-  health_ = baseStats_.maxHealth * battalionSize_;
   healthText_->setText(healthToString());
   healthText_->setColor({255, 255, 255, 0});
   sizeText_->setText(sizeToString());
   sizeText_->setColor({0, 0, 255, 0});
-}
-
-int Battalion::getAttack() const { return stats_.attack * battalionSize_; }
-
-int Battalion::getDefense() const { return stats_.defense; }
-
-int Battalion::getMaxHealth() const {
-  return baseStats_.maxHealth * battalionSize_;
-}
-
-void Battalion::setAttack(const int attack) {
-  stats_.attack = attack * battalionSize_;
-}
-
-int Battalion::loseHealth(const int enemyAttack, int minDamage) {
-  const auto health = Unit::loseHealth(enemyAttack, minDamage);
-  if (baseStats_.maxHealth * (battalionSize_ - 1) >= health_) {
-    int lostUnits = 1;
-    while (baseStats_.maxHealth * (battalionSize_ - lostUnits - 1) >= health_)
-      lostUnits++;
-    battalionSize_ -= lostUnits;
-    if (this->getTeam()->getColor() == Color::RED)
-      reinterpret_cast<GameScene*>(Game::getSceneMachine()->getCurrentScene())
-          ->addPrize(lostUnits * baseStats_.prize);
-
-    stats_.attack = baseStats_.attack * battalionSize_;
-    if (battalionSize_ < 0) battalionSize_ = 0;
-    minDamage_ = battalionSize_;
-    sizeText_->setText(sizeToString());
-    const SDL_Color sizeColor = {255, 255, 255, 0};
-    sizeText_->setColor(sizeColor);
-  }
-  return health;
 }
 
 void Battalion::moveToBox(Box* box) {

@@ -33,10 +33,10 @@ void PlayerController::onClickMove(Box* boxClicked) {
   if (locked_ || !tutorialDone_) return;
   // Checks if the box clicked is within movement range
   const auto state = getState();
+  const auto stats = state->getAt(activeUnit_->getBox()->getIndex());
 
-  if (!state->isInMoveRange(activeUnit_->getBox()->getIndex(),
-                            boxClicked->getIndex(),
-                            activeUnit_->getStats().moveRange)) {
+  if (!state->isInMoveRange(stats.position_, boxClicked->getIndex(),
+                            stats.moveRange_)) {
     SDLAudioManager::getInstance()->playChannel(3, 0, 0);
     return;
   }
@@ -64,7 +64,7 @@ void PlayerController::onClickMove(Box* boxClicked) {
         hasMoved_ = true;
         locked_ = false;
 
-        const auto stats = state->getAt(unit->getBoxPosition());
+        const auto stats = state->getAt(unit->getBox()->getIndex());
         // If there are enemies in range, highlight them, otherwise skip turn
         if (!hasAttacked_ &&
             state->isInRange(boxClicked->getIndex(), stats.position_,
@@ -89,10 +89,10 @@ void PlayerController::onClickAttack(Box* boxClicked) {
     if (unit->getTeam() == team_) return;
 
     const auto state = getState();
-    const auto stats = state->getAt(unit->getBoxPosition());
+    const auto stats = state->getAt(unit->getBox()->getIndex());
 
     // If the selected unit is not in the attack range, skip
-    if (!state->isInRange(unit->getBoxPosition(), boxClicked->getIndex(),
+    if (!state->isInRange(unit->getBox()->getIndex(), boxClicked->getIndex(),
                           stats.attackRange_))
       return;
 
@@ -102,16 +102,14 @@ void PlayerController::onClickAttack(Box* boxClicked) {
     activeUnit_->attack(unit, true);
     SDLAudioManager::getInstance()->playChannel(5, 0, 0);
 
-    const auto unitStats = unit->getStats();
-
     // Enemy dies
-    if (unit->getHealth() <= 0) {
+    if (stats.health_ <= 0) {
       // Unit dies to attack
-      if (unit->getTeam()->getColor() == Color::RED) {
-        GameManager::getInstance()->addMoney(unitStats.prize);
+      if (stats.team_ == Color::RED) {
+        GameManager::getInstance()->addMoney(stats.prize_);
       }
       boxClicked->destroyContent();
-    } else if (activeUnit_->getHealth() <= 0) {
+    } else if (state->getAt(activeUnit_->getBox()->getIndex()).health_ <= 0) {
       // Unit dies to counter-attack
       unit->getBox()->destroyContent();
       finish();

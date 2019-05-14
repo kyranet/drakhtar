@@ -3,6 +3,9 @@
 #pragma once
 #include <string>
 #include <SDL_scancode.h>
+
+using byte = uint16_t;
+
 // Window dimensions
 const int WIN_WIDTH = 1280;
 const int WIN_HEIGHT = 720;
@@ -29,13 +32,13 @@ const int GAME_FRAMERATE = 60;
    \Soldier: A little good in everything, can serve for various purposes
  */
 struct UnitStats {
-  int attack;
-  int defense;
-  int maxHealth;
-  int attackRange;
-  int moveRange;
-  int speed;
-  int prize;
+  byte attack;
+  byte defense;
+  byte maxHealth;
+  byte attackRange;
+  byte moveRange;
+  byte speed;
+  byte prize;
 };
 struct TutorialTexts {
   std::string dialogtexts_;
