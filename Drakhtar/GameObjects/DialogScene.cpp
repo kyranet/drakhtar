@@ -11,6 +11,7 @@
 #include "GameObjects/Button.h"
 #include "Managers/FontManager.h"
 #include "Managers/GameManager.h"
+#include "Managers/SDLAudioManager.h"
 #include "Managers/TextureManager.h"
 #include "Scenes/CreditsScene.h"
 #include "Scenes/GameScene.h"
@@ -86,6 +87,9 @@ void DialogScene::next() {
 }
 
 void DialogScene::skip() {
+  SDLAudioManager::getInstance()->setChannelVolume(20, 2);
+
+  SDLAudioManager::getInstance()->playChannel(14, 0, 2);
   getScene()->processNextTick([this]() {
     destroy();
     Game::getSceneMachine()->getCurrentScene()->activateTutorialBox();
