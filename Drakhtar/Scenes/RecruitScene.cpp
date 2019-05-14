@@ -57,9 +57,9 @@ void RecruitScene::preload() {
   addUnit("Units-BlueSoldier", 1);
   addUnit("Units-BlueArcher", 2);
 
-  if (currentScene_ >= 3) addUnit("Units-BlueMage", 3);
+  if (currentScene_ >= 2) addUnit("Units-BlueMage", 3);
 
-  if (currentScene_ >= 4) addUnit("Units-BlueKnight", 4);
+  if (currentScene_ >= 3) addUnit("Units-BlueKnight", 4);
 
   if (currentScene_ >= 5) addUnit("Units-BlueMonster", 5);
 
