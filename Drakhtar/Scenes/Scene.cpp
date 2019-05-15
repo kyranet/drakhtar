@@ -51,8 +51,6 @@ void Scene::run() {
   // Set current status to resume
   resume();
 
-  // Awake all objects
-
   const auto textureManager = TextureManager::getInstance();
   auto poolFrameRate = new TimePool(1000 / GAME_FRAMERATE, SDL_GetTicks());
 
