@@ -37,8 +37,7 @@ void PlayerController::onClickMove(Box* boxClicked) {
   const auto state = getState();
   const auto stats = state->getAt(activeUnit_->getBox()->getIndex());
 
-  if (!state->isInMoveRange(stats.position_, to,
-                            stats.moveRange_)) {
+  if (!state->isInMoveRange(stats.position_, to, stats.moveRange_)) {
     SDLAudioManager::getInstance()->playChannel(3, 0, 0);
     return;
   }
@@ -94,10 +93,11 @@ void PlayerController::onClickAttack(Box* boxClicked) {
   if (unit->getTeam() == team_) return;
 
   const auto state = getState();
-  const auto stats = state->getAt(unit->getBox()->getIndex());
+  const auto stats = state->getAt(activeUnit_->getBox()->getIndex());
+  const auto enemyStats = state->getAt(boxClicked->getIndex());
 
   // If the selected unit is not in the attack range, skip
-  if (!state->isInRange(unit->getBox()->getIndex(), boxClicked->getIndex(),
+  if (!state->isInRange(stats.position_, enemyStats.position_,
                         stats.attackRange_))
     return;
 
@@ -109,10 +109,10 @@ void PlayerController::onClickAttack(Box* boxClicked) {
   SDLAudioManager::getInstance()->playChannel(5, 0, 0);
 
   // Enemy dies
-  if (stats.health_ <= 0) {
+  if (enemyStats.health_ <= 0) {
     // Unit dies to attack
-    if (stats.team_ == Color::RED) {
-      GameManager::getInstance()->addMoney(stats.prize_);
+    if (enemyStats.team_ == Color::RED) {
+      GameManager::getInstance()->addMoney(enemyStats.prize_);
     }
     boxClicked->destroyContent();
   } else if (state->getAt(activeUnit_->getBox()->getIndex()).health_ <= 0) {
@@ -192,7 +192,8 @@ void PlayerController::highlightCells() {
     if (!cells.empty()) {
       canMove_ = true;
       for (const auto& cell : cells) {
-        board_->getBoxAt(cell.getX(), cell.getY())->setCurrentTexture(TextureInd::MOVABLE);
+        board_->getBoxAt(cell.getX(), cell.getY())
+            ->setCurrentTexture(TextureInd::MOVABLE);
       }
     } else {
       canMove_ = false;
@@ -200,11 +201,13 @@ void PlayerController::highlightCells() {
   }
 
   if (!hasAttacked_) {
-    const auto cells = state->getCellsInAttackRange(from, stats.team_, stats.attackRange_);
+    const auto cells =
+        state->getCellsInAttackRange(from, stats.team_, stats.attackRange_);
     if (!cells.empty()) {
       canAttack_ = true;
       for (const auto& cell : cells) {
-        board_->getBoxAt(cell.getX(), cell.getY())->setCurrentTexture(TextureInd::ENEMY);
+        board_->getBoxAt(cell.getX(), cell.getY())
+            ->setCurrentTexture(TextureInd::ENEMY);
       }
     } else {
       canAttack_ = false;

@@ -87,7 +87,13 @@ bool State::move(const Vector2D<byte>& from, const Vector2D<byte>& to) {
   if (previous.unit_ == nullptr) return false;
 
   removeAt(from);
-  setAt(to, previous);
+
+  State::UnitState state(
+      previous.unit_, previous.team_, to, previous.attack_, previous.health_,
+      previous.minimumAttack_, previous.defense_, previous.maxHealth_, previous.attackRange_,
+      previous.moveRange_, previous.speed_, previous.prize_, previous.counterAttacked_);
+
+  setAt(to, state);
   return true;
 }
 
