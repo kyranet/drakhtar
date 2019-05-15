@@ -4,7 +4,10 @@
 #include "Errors/DrakhtarError.h"
 #include "EventListeners/EventListener.h"
 #include "GameObjects/Board.h"
+#include "GameObjects/HealthBar.h"
+#include "GameObjects/Text.h"
 #include "GameObjects/Unit.h"
+#include "Managers/GameManager.h"
 #include "Managers/State.h"
 #include "Scenes/GameScene.h"
 #include "Scenes/Scene.h"
@@ -17,6 +20,8 @@ UnitsController::UnitsController(Board* board, GameScene* scene, Team* team,
 UnitsController::~UnitsController() = default;
 
 void UnitsController::start() {
+  getState()->setController(this);
+
   // Reset this controller's state
   hasAttacked_ = false;
   hasMoved_ = false;
@@ -55,3 +60,24 @@ State* UnitsController::getState() const {
 }
 bool UnitsController::hasAttacked() const { return hasAttacked_; }
 bool UnitsController::hasMoved() const { return hasMoved_; }
+
+void UnitsController::onDamage(const UnitState& stats) {
+  stats.unit_->getHealthBar()->takeDamage(stats.health_);
+  stats.unit_->getHealthText()->setText(stats.unit_->healthToString());
+  stats.unit_->getHealthText()->setColor({255, 255, 255, 0});
+}
+
+void UnitsController::onKill(const UnitState& stats) {
+  if (stats.unit_ == activeUnit_) {
+    // Clean up to signal the controller to finish the turn
+    activeUnit_ = nullptr;
+
+    // Unit dies to counter-attack
+    finish();
+  }
+
+  stats.unit_->kill();
+  if (stats.unit_->getTeam()->getColor() == Color::RED) {
+    GameManager::getInstance()->addMoney(stats.prize_);
+  }
+}

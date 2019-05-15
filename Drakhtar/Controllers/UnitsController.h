@@ -4,6 +4,8 @@
 #include <vector>
 #include "SDL.h"
 
+using byte = unsigned short;
+
 class Unit;
 class GameScene;
 class Board;
@@ -11,6 +13,7 @@ class Box;
 class EventListener;
 class Team;
 class State;
+struct UnitState;
 
 class UnitsController {
  protected:
@@ -84,4 +87,7 @@ class UnitsController {
   State* getState() const;
   bool hasMoved() const;
   bool hasAttacked() const;
+
+  virtual void onDamage(const UnitState& stats);
+  virtual void onKill(const UnitState& stats);
 };

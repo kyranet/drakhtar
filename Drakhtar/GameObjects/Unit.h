@@ -22,7 +22,6 @@ class Unit : public GameObject {
   Box* box_ = nullptr;
   Text* healthText_ = nullptr;
   HealthBar* healthBar_ = nullptr;
-  std::string healthToString() const;
   bool isCommander_ = false;
 
   const UnitStats baseStats_;
@@ -50,6 +49,8 @@ class Unit : public GameObject {
   HealthBar* getHealthBar() const { return healthBar_; }
   virtual void setHealthBar();
 
+  Text* getHealthText() const { return healthText_; }
+
   virtual void moveToBox(Box* box);
   virtual int loseHealth(int enemyAttack, int minDamage);
   void update() override;
@@ -61,4 +62,6 @@ class Unit : public GameObject {
 
   virtual void setBuffed(bool buffed);
   virtual void setDebuffed(bool debuffed);
+
+  std::string healthToString() const;
 };

@@ -3,6 +3,7 @@
 #include "State.h"
 #include <third_party/AStar.h>
 #include <algorithm>
+#include "Controllers/UnitsController.h"
 #include "GameObjects/Battalion.h"
 #include "GameObjects/Box.h"
 #include "GameObjects/Commanders/Commander.h"
@@ -10,11 +11,16 @@
 
 State::State() = default;
 
+void State::setController(UnitsController* controller) {
+  controller_ = controller;
+}
+
 void State::next() {
   const auto it = turns_.begin();
   const auto unit = *it;
   turns_.erase(it);
   turns_.push_back(unit);
+  controller_ = nullptr;
 }
 
 Unit* State::getActiveUnit() const { return turns_.front().unit_; }
@@ -52,33 +58,31 @@ void State::insert(const std::vector<Unit*>& units) {
 
     // If it's a commander, calculate it wisely.
     if (unit->isCommander()) {
-      State::UnitState state(unit, color, boxPosition, base.attack,
-                             base.maxHealth, 1, base.defense, base.maxHealth,
-                             base.attackRange, base.moveRange, base.speed,
-                             base.prize, false);
+      UnitState state(unit, color, boxPosition, base.attack, base.maxHealth, 1,
+                      base.defense, base.maxHealth, base.attackRange,
+                      base.moveRange, base.speed, base.prize, false);
       turns_.push_back(state);
       setAt(boxPosition, state);
     } else {
       const auto battalion = reinterpret_cast<Battalion*>(unit);
       const auto size = battalion->getBattalionSize();
-      State::UnitState state(
-          unit, color, boxPosition, static_cast<byte>(base.attack * size),
-          static_cast<byte>(base.maxHealth * size), size, base.defense,
-          static_cast<byte>(base.maxHealth * size), base.attackRange,
-          base.moveRange, base.speed, static_cast<byte>(base.prize * size),
-          false);
+      UnitState state(unit, color, boxPosition,
+                      static_cast<byte>(base.attack * size),
+                      static_cast<byte>(base.maxHealth * size), size,
+                      base.defense, static_cast<byte>(base.maxHealth * size),
+                      base.attackRange, base.moveRange, base.speed,
+                      static_cast<byte>(base.prize * size), false);
       turns_.push_back(state);
       setAt(boxPosition, state);
     }
   }
 }
 
-void State::setAt(const Vector2D<byte>& position,
-                  const State::UnitState& state) {
+void State::setAt(const Vector2D<byte>& position, const UnitState& state) {
   board_[position.getX() * rows_ + position.getY()] = state;
 }
 
-const State::UnitState State::getAt(const Vector2D<byte>& position) const {
+const UnitState State::getAt(const Vector2D<byte>& position) const {
   return board_[position.getX() * rows_ + position.getY()];
 }
 
@@ -92,11 +96,11 @@ bool State::move(const Vector2D<byte>& from, const Vector2D<byte>& to) {
 
   removeAt(from);
 
-  State::UnitState state(
-      previous.unit_, previous.team_, to, previous.attack_, previous.health_,
-      previous.minimumAttack_, previous.defense_, previous.maxHealth_,
-      previous.attackRange_, previous.moveRange_, previous.speed_,
-      previous.prize_, previous.counterAttacked_);
+  UnitState state(previous.unit_, previous.team_, to, previous.attack_,
+                  previous.health_, previous.minimumAttack_, previous.defense_,
+                  previous.maxHealth_, previous.attackRange_,
+                  previous.moveRange_, previous.speed_, previous.prize_,
+                  previous.counterAttacked_);
 
   setAt(to, state);
   return true;
@@ -104,9 +108,6 @@ bool State::move(const Vector2D<byte>& from, const Vector2D<byte>& to) {
 
 bool State::attack(const Vector2D<byte>& from, const Vector2D<byte>& to,
                    const bool counterAttack) {
-  // Clear the kill stack
-  if (!counterAttack) killed_.clear();
-
   const auto previous = getAt(from);
   if (previous.unit_ == nullptr) return false;
 
@@ -122,7 +123,7 @@ bool State::attack(const Vector2D<byte>& from, const Vector2D<byte>& to,
 
   if (health == 0) {
     removeAt(to);
-    killed_.push_back(enemy.unit_);
+    if (controller_) controller_->onKill(enemy);
 
     // Remove from the turn vector
     for (auto it = turns_.begin(); it != turns_.end(); ++it) {
@@ -144,16 +145,17 @@ bool State::attack(const Vector2D<byte>& from, const Vector2D<byte>& to,
     const auto minimumAttack = enemy.minimumAttack_;
     // TODO(kyranet): Add Battalion's logic
 
-    setAt(to, {enemy.unit_, enemy.team_, enemy.position_, enemy.attack_,
-               static_cast<byte>(health), minimumAttack, enemy.defense_,
-               enemy.maxHealth_, enemy.attackRange_, enemy.moveRange_,
-               enemy.speed_, enemy.prize_, counterAttacked});
+    UnitState updated(enemy.unit_, enemy.team_, enemy.position_, enemy.attack_,
+                      static_cast<byte>(health), minimumAttack, enemy.defense_,
+                      enemy.maxHealth_, enemy.attackRange_, enemy.moveRange_,
+                      enemy.speed_, enemy.prize_, counterAttacked);
+
+    setAt(to, updated);
+    if (controller_) controller_->onDamage(updated);
   }
 
   return true;
 }
-
-std::vector<Unit*> State::getKilled() const { return killed_; }
 
 void State::removeAt(const Vector2D<byte>& position) {
   setAt(position,
