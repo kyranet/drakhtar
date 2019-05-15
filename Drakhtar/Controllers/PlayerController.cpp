@@ -33,10 +33,11 @@ void PlayerController::onClickMove(Box* boxClicked) {
   if (locked_ || !tutorialDone_) return;
 
   // Checks if the box clicked is within movement range
+  const auto to = boxClicked->getIndex();
   const auto state = getState();
   const auto stats = state->getAt(activeUnit_->getBox()->getIndex());
 
-  if (!state->isInMoveRange(stats.position_, boxClicked->getIndex(),
+  if (!state->isInMoveRange(stats.position_, to,
                             stats.moveRange_)) {
     SDLAudioManager::getInstance()->playChannel(3, 0, 0);
     return;
@@ -49,6 +50,7 @@ void PlayerController::onClickMove(Box* boxClicked) {
   SDLAudioManager::getInstance()->playChannel(0, 0, 0);
   const auto unit = activeUnit_;
   unit->moveToBox(boxClicked);
+  state->move(stats.position_, to);
 
   scene_->getTweenManager()
       ->create()
@@ -116,6 +118,7 @@ void PlayerController::onClickAttack(Box* boxClicked) {
   } else if (state->getAt(activeUnit_->getBox()->getIndex()).health_ <= 0) {
     // Unit dies to counter-attack
     unit->getBox()->destroyContent();
+    state->removeAt(unit->getBox()->getIndex());
     finish();
     return;
   }
@@ -142,7 +145,7 @@ void PlayerController::start() {
   scene_->addGameObject(skipTurnButton_);
   highlightCells();
 
-  if (!canAttack_ && !canMove_) finish();
+  if (!canAttack_ && !canMove_ && !canCastSkills()) finish();
 }
 
 void PlayerController::finish() {
@@ -214,14 +217,13 @@ std::vector<Vector2D<double>> PlayerController::pathToRoute(
   std::vector<Vector2D<double>> vector;
   vector.reserve(path.size());
 
-  // TODO(kyranet): Add hooks to Box. Maybe store Box instead of Unit in
-  //  StateUnit?
-  // for (const auto& element : path) {
-  //   const auto box = getBoxAt(element.getX(), element.getY());
-  //   const auto pos = box->getPosition();
-  //   const auto size = box->getSize();
-  //   vector.emplace_back(pos.getX() + size.getX() / 2.0,
-  //                       pos.getY() + size.getY() / 2.0);
-  // }
+  const auto board = getBoard();
+  for (const auto& element : path) {
+    const auto box = board->getBoxAt(element.getX(), element.getY());
+    const auto pos = box->getPosition();
+    const auto size = box->getSize();
+    vector.emplace_back(pos.getX() + size.getX() / 2.0,
+                        pos.getY() + size.getY() / 2.0);
+  }
   return vector;
 }
