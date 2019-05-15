@@ -32,6 +32,7 @@ class Unit : public GameObject {
        const std::string& type);
   virtual ~Unit();
 
+  void awake() override;
   bool isCommander() const;
 
   UnitStats getBaseStats() const { return baseStats_; }

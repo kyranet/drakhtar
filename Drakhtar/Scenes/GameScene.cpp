@@ -34,6 +34,7 @@ GameScene::GameScene(int battle) : battle_(battle) {}
 GameScene::~GameScene() {
   delete team1_;
   delete team2_;
+  delete state_;
 }
 
 void buttonPause() { Game::getSceneMachine()->getCurrentScene()->pause(); }
@@ -56,6 +57,7 @@ void GameScene::preload() {
 
   // Red Team
   readLevel(factory);
+  state_ = new State();
   state_->setBoard(board_->getRows(), board_->getCols());
 
   // Blue Team

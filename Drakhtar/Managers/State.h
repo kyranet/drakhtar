@@ -58,8 +58,8 @@ class State {
   };
 
   byte rows_ = 0, columns_ = 0;
-  std::vector<UnitState> turns_;
-  std::vector<UnitState> board_;
+  std::vector<UnitState> turns_{};
+  std::vector<UnitState> board_{};
 
   void insert(const std::vector<Unit*>& units);
 

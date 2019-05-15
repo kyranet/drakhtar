@@ -32,6 +32,11 @@ Unit::Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
 
 Unit::~Unit() = default;
 
+void Unit::awake() {
+  GameObject::awake();
+  setHealthBar();
+}
+
 void Unit::setHealthBar() {
   const auto rect = box_->getRect();
   if (getTeam()->getColor() == Color::RED) {

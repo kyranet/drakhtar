@@ -12,6 +12,7 @@ class EventListener;
 
 class GameObject {
  protected:
+  bool awakened_ = false;
   bool active_ = true;
   bool transparent_ = false;
   bool renderizable_ = true;
@@ -28,6 +29,7 @@ class GameObject {
   GameObject(Scene *scene, Texture *texture, const Vector2D<int> &position,
              const Vector2D<int> &size);
   virtual ~GameObject();
+  virtual void awake();
   virtual void render(SDL_Rect) const;
   virtual void render() const;
   virtual void update();

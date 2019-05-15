@@ -51,6 +51,8 @@ void Scene::run() {
   // Set current status to resume
   resume();
 
+  // Awake all objects
+
   const auto textureManager = TextureManager::getInstance();
   auto poolFrameRate = new TimePool(1000 / GAME_FRAMERATE, SDL_GetTicks());
 
@@ -83,7 +85,7 @@ void Scene::preload() {
 void Scene::tick() {
   if (nextTick_.empty()) return;
 
-  for (auto callback : nextTick_) {
+  for (const auto& callback : nextTick_) {
     callback();
   }
   nextTick_.clear();
@@ -94,6 +96,7 @@ void Scene::create() {
     // If the gameObject was removed early, skip
     if (gameObject == nullptr) continue;
     gameObjects_.push_back(gameObject);
+    if (gameObject->getActive()) gameObject->awake();
   }
 
   pendingOnCreate_.clear();

@@ -21,6 +21,12 @@ GameObject::~GameObject() {
   children_.clear();
 }
 
+void GameObject::awake() {
+  awakened_ = true;
+  for (auto child : children_)
+    if (child->getActive()) child->awake();
+}
+
 void GameObject::render(SDL_Rect rect) const {
   if (getRenderizable() && texture_ != nullptr) {
     texture_->renderFrame(rect, texture_->getAnimation()[texture_->getFrame()]);
@@ -62,7 +68,10 @@ GameObject* GameObject::getParent() const { return parent_; }
 void GameObject::setTexture(Texture* texture) { texture_ = texture; }
 Texture* GameObject::getTexture() const { return texture_; }
 
-void GameObject::setActive(const bool active) { active_ = active; }
+void GameObject::setActive(const bool active) {
+  active_ = active;
+  if (!awakened_) awake();
+}
 bool GameObject::getActive() const { return active_; }
 
 void GameObject::setTransparent(const bool transparent) {

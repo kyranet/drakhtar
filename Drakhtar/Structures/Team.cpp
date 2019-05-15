@@ -21,7 +21,6 @@ void Team::addUnit(Unit* unit) {
   }
   units_.push_back(unit);
   unit->setTeam(this);
-  unit->setHealthBar();
 }
 
 void Team::removeUnit(Unit* unit) {

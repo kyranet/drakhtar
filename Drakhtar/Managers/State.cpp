@@ -32,9 +32,9 @@ void State::setUnits(const std::vector<Unit*>& first,
 }
 
 void State::setBoard(const byte rows, const byte columns) {
-  board_.capacity();
   rows_ = rows;
   columns_ = columns;
+  board_.reserve(rows_ * columns_);
 }
 
 void State::insert(const std::vector<Unit*>& units) {
