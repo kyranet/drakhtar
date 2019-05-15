@@ -85,7 +85,7 @@ void Box::setCurrentTexture(TextureInd cellTexture) {
 void Box::destroyContent() {
   const auto scene = reinterpret_cast<GameScene*>(getScene());
   const auto state = scene->getState();
-  const auto unit = state->getAt(getIndex()).unit_;
+  const auto unit = state->getUnitAt(getIndex());
 
   if (unit != nullptr) {
     unit->kill();
@@ -95,6 +95,6 @@ void Box::destroyContent() {
 Unit* Box::getContent() const {
   const auto scene = reinterpret_cast<GameScene*>(getScene());
   const auto state = scene->getState();
-  const auto unit = state->getAt(getIndex()).unit_;
+  const auto unit = state->getUnitAt(getIndex());
   return unit;
 }

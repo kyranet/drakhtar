@@ -82,6 +82,10 @@ const State::UnitState State::getAt(const Vector2D<byte>& position) const {
   return board_[position.getX() * rows_ + position.getY()];
 }
 
+Unit* State::getUnitAt(const Vector2D<byte>& position) const {
+  return board_[position.getX() * rows_ + position.getY()].unit_;
+}
+
 bool State::move(const Vector2D<byte>& from, const Vector2D<byte>& to) {
   const auto previous = getAt(from);
   if (previous.unit_ == nullptr) return false;
