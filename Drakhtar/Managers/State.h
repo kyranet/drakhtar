@@ -60,6 +60,7 @@ class State {
   byte rows_ = 0, columns_ = 0;
   std::vector<UnitState> turns_{};
   std::vector<UnitState> board_{};
+  std::vector<Unit*> killed_{};
 
   void insert(const std::vector<Unit*>& units);
 
@@ -72,10 +73,13 @@ class State {
 
   void setAt(const Vector2D<byte>& position, const State::UnitState& state);
   const State::UnitState getAt(const Vector2D<byte>& position) const;
+
   Unit* getUnitAt(const Vector2D<byte>& position) const;
+
   bool move(const Vector2D<byte>& from, const Vector2D<byte>& to);
   bool attack(const Vector2D<byte>& from, const Vector2D<byte>& to,
               bool counterAttack = false);
+  std::vector<Unit*> getKilled() const;
   void removeAt(const Vector2D<byte>& position);
 
   Unit* getActiveUnit() const;

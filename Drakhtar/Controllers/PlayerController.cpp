@@ -102,17 +102,17 @@ void PlayerController::onClickAttack(Box* boxClicked) {
 
   SDLAudioManager::getInstance()->playChannel(5, 0, 0);
 
-  // Enemy dies
-  if (enemyStats.health_ <= 0) {
-    // Unit dies to attack
-    if (enemyStats.team_ == Color::RED) {
+  auto activeUnitKilled = false;
+  for (const auto& killed : state->getKilled()) {
+    if (killed->getTeam()->getColor() == Color::RED) {
       GameManager::getInstance()->addMoney(enemyStats.prize_);
     }
-    boxClicked->destroyContent();
-  } else if (state->getAt(activeUnit_->getBox()->getIndex()).health_ <= 0) {
+    if (killed == activeUnit_) activeUnitKilled = true;
+    killed->kill();
+  }
+
+  if (activeUnitKilled) {
     // Unit dies to counter-attack
-    unit->getBox()->destroyContent();
-    state->removeAt(unit->getBox()->getIndex());
     finish();
     return;
   }

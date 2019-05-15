@@ -104,6 +104,9 @@ bool State::move(const Vector2D<byte>& from, const Vector2D<byte>& to) {
 
 bool State::attack(const Vector2D<byte>& from, const Vector2D<byte>& to,
                    const bool counterAttack) {
+  // Clear the kill stack
+  if (!counterAttack) killed_.clear();
+
   const auto previous = getAt(from);
   if (previous.unit_ == nullptr) return false;
 
@@ -119,6 +122,7 @@ bool State::attack(const Vector2D<byte>& from, const Vector2D<byte>& to,
 
   if (health == 0) {
     removeAt(to);
+    killed_.push_back(enemy.unit_);
 
     // Remove from the turn vector
     for (auto it = turns_.begin(); it != turns_.end(); ++it) {
@@ -148,6 +152,8 @@ bool State::attack(const Vector2D<byte>& from, const Vector2D<byte>& to,
 
   return true;
 }
+
+std::vector<Unit*> State::getKilled() const { return killed_; }
 
 void State::removeAt(const Vector2D<byte>& position) {
   setAt(position,
