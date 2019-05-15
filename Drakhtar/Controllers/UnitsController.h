@@ -4,7 +4,7 @@
 #include <vector>
 #include "SDL.h"
 
-using byte = unsigned short;
+using byte = uint16_t;
 
 class Unit;
 class GameScene;
