@@ -61,22 +61,19 @@ void PlayerController::onClickMove(Box* boxClicked) {
         unit->setPosition({static_cast<int>(std::floor(updated.getX())),
                            static_cast<int>(std::floor(updated.getY()))});
       })
-      ->setOnComplete([this, unit, boxClicked, state]() {
+      ->setOnComplete([this, unit]() {
         unit->getTexture()->setAnimation("default");
         hasMoved_ = true;
         canMove_ = false;
         locked_ = false;
 
-        const auto stats = state->getAt(unit->getBox()->getIndex());
         // If there are enemies in range, highlight them, otherwise skip turn
-        if (!hasAttacked_ &&
-            state->isInRange(boxClicked->getIndex(), stats.position_,
-                             stats.attackRange_)) {
-          highlightCells();
+        highlightCells();
+        if (canAttack_) {
           SDLAudioManager::getInstance()->setChannelVolume(30, 0);
           SDLAudioManager::getInstance()->playChannel(4, 0, 0);
-        } else {
-          if (!canCastSkills()) finish();
+        } else if (!canCastSkills()) {
+          finish();
         }
       });
 }
@@ -120,12 +117,10 @@ void PlayerController::onClickAttack(Box* boxClicked) {
     return;
   }
 
-  if (!canMove_) {
+  highlightCells();
+  if (!canMove_ && !canCastSkills()) {
     // If no actions left, reset and skip turn
-    if (!canCastSkills()) finish();
-  } else {
-    // Re-highlight board
-    highlightCells();
+    finish();
   }
 }
 
@@ -148,6 +143,10 @@ void PlayerController::start() {
 void PlayerController::finish() {
   // board_->resetCellsToBase();
   scene_->removeGameObject(skipTurnButton_);
+  for (const auto box : board_->getChildren()) {
+    reinterpret_cast<Box*>(box)->setCurrentTexture(TextureInd::BASE);
+  }
+
   UnitsController::finish();
 }
 
