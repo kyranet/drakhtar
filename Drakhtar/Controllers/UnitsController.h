@@ -55,6 +55,9 @@ class UnitsController {
    */
   bool hasAttacked_ = false;
 
+  bool canMove_ = false;
+  bool canAttack_ = false;
+
  public:
   UnitsController(Board* board, GameScene* scene, Team* team,
                   Team* oppositeTeam);

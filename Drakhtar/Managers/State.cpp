@@ -32,9 +32,16 @@ void State::setUnits(const std::vector<Unit*>& first,
 }
 
 void State::setBoard(const byte rows, const byte columns) {
+  board_.clear();
   rows_ = rows;
   columns_ = columns;
-  board_.reserve(rows_ * columns_);
+  board_.resize(rows_ * columns_);
+
+  for (byte x = 0U; x < columns; ++x) {
+    for (byte y = 0U; y < rows; ++y) {
+      removeAt({x, y});
+    }
+  }
 }
 
 void State::insert(const std::vector<Unit*>& units) {
