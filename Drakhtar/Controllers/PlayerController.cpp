@@ -86,26 +86,23 @@ void PlayerController::onClickAttack(Box* boxClicked) {
 
   auto unit = boxClicked->getContent();
 
-  // If the box clicked was empty, skip
-  if (!unit) return;
-
-  // If the unit is from the same team, skip
-  if (unit->getTeam() == team_) return;
+  // If the box clicked was empty, or if the unit is from the same team, skip
+  if (!unit || unit->getTeam() == team_) return;
 
   const auto state = getState();
   const auto stats = state->getAt(activeUnit_->getBox()->getIndex());
   const auto enemyStats = state->getAt(boxClicked->getIndex());
 
-  // If the selected unit is not in the attack range, skip
+  // If the selected unit is not in the attack range, or the attack was not
+  // successful, skip
   if (!state->isInRange(stats.position_, enemyStats.position_,
-                        stats.attackRange_))
+                        stats.attackRange_) ||
+      !state->attack(stats.position_, enemyStats.position_))
     return;
 
   hasAttacked_ = true;
   canAttack_ = false;
 
-  activeUnit_->getTexture()->setAnimationOnce("attack");
-  activeUnit_->attack(unit, true);
   SDLAudioManager::getInstance()->playChannel(5, 0, 0);
 
   // Enemy dies

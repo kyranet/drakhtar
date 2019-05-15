@@ -73,7 +73,8 @@ class State {
   void setAt(const Vector2D<byte>& position, const State::UnitState& state);
   const State::UnitState getAt(const Vector2D<byte>& position) const;
   bool move(const Vector2D<byte>& from, const Vector2D<byte>& to);
-  bool attack(const Vector2D<byte>& from, const Vector2D<byte>& to);
+  bool attack(const Vector2D<byte>& from, const Vector2D<byte>& to,
+              bool counterAttack = false);
   void removeAt(const Vector2D<byte>& position);
 
   Unit* getActiveUnit() const;

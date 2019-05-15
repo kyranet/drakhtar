@@ -98,7 +98,8 @@ bool State::move(const Vector2D<byte>& from, const Vector2D<byte>& to) {
   return true;
 }
 
-bool State::attack(const Vector2D<byte>& from, const Vector2D<byte>& to) {
+bool State::attack(const Vector2D<byte>& from, const Vector2D<byte>& to,
+                   const bool counterAttack) {
   const auto previous = getAt(from);
   if (previous.unit_ == nullptr) return false;
 
@@ -129,7 +130,7 @@ bool State::attack(const Vector2D<byte>& from, const Vector2D<byte>& to) {
         isInRange(enemy.position_, previous.position_, enemy.attackRange_) &&
         !counterAttacked) {
       counterAttacked = true;
-      attack(to, from);
+      if (!counterAttack) attack(to, from, true);
     }
 
     const auto minimumAttack = enemy.minimumAttack_;

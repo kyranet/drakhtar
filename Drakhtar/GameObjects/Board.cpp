@@ -26,7 +26,7 @@ Board::Board(Scene* scene, const byte rows, const byte columns,
                         static_cast<int>(position_.getY() + y * cellSize_));
       const auto size = Vector2D<int>(static_cast<int>(cellSize_),
                                       static_cast<int>(cellSize_));
-      const auto box = new Box(scene, pos, size, Vector2D<byte>(x, y), nullptr);
+      const auto box = new Box(scene, pos, size, Vector2D<byte>(x, y));
       addChild(box);
     }
   }

@@ -12,7 +12,9 @@
 
 Commander::Commander(const std::string& name, Scene* scene, Texture* texture, Box* box,
                      UnitStats commanderStats)
-    : Unit(scene, texture, box, commanderStats, name) {}
+    : Unit(scene, texture, box, commanderStats, name) {
+  isCommander_ = true;
+}
 
 Commander::~Commander() {
   for (auto skill : skills_) {
@@ -54,11 +56,8 @@ void Commander::onDeselect() {
 
 void Commander::kill() {
   Unit::kill();
-  if (getTeam()->getColor() == Color::BLUE) {
-    reinterpret_cast<GameScene*>(getScene())->gameOver(false);
-  } else {
-    reinterpret_cast<GameScene*>(getScene())->gameOver(true);
-  }
+  reinterpret_cast<GameScene*>(getScene())
+      ->gameOver(!(getTeam()->getColor() == Color::BLUE));
 }
 
 void Commander::moveToBox(Box* box) {

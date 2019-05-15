@@ -5,16 +5,17 @@
 #include "Controllers/UnitsController.h"
 #include "GameObjects/TurnBar.h"
 #include "Managers/Input.h"
+#include "Managers/State.h"
 #include "Managers/TextureManager.h"
+#include "Scenes/GameScene.h"
 #include "Scenes/Scene.h"
 #include "Structures/Team.h"
 #include "Unit.h"
 
 Box::Box(Scene* scene, const Vector2D<int>& pos, const Vector2D<int>& size,
-         const Vector2D<byte>& boardIndex, Unit* unit)
+         const Vector2D<byte>& boardIndex)
     : GameObject(scene, nullptr, pos, size),
       boardIndex_(boardIndex),
-      content_(unit),
       size_(size) {
   cellTextures_[static_cast<int>(TextureInd::BASE)] =
       TextureManager::get("UI-cellFrame");
@@ -54,28 +55,26 @@ void Box::render() const {
   } else {
     texture->render(getRect(), texture->getAnimation()[texture->getFrame()]);
   }
-  if (!isEmpty()) {
-    getContent()->render();
-  }
+
+  const auto unit = getContent();
+  if (unit) unit->render();
 }
 
 void Box::update() {
   const auto area = getRect();
   hovered_ = Input::isMouseInside(&area);
 
-  if (!isEmpty()) {
-    getContent()->update();
+  const auto unit = getContent();
+  if (unit) {
+    // TODO(kyranet): Don't use this. Stop this. Get some help.
+    unit->update();
   }
 }
 
 // ---------- Getters and Setters ----------
-bool Box::isEmpty() const { return content_ == nullptr; }
+bool Box::isEmpty() const { return getContent() == nullptr; }
 
 Vector2D<byte> Box::getIndex() const { return boardIndex_; }
-
-Unit* Box::getContent() const { return content_; }
-
-void Box::setContent(Unit* content) { content_ = content; }
 
 TextureInd Box::getCurrentTexture() const { return cellTexture_; }
 
@@ -84,10 +83,18 @@ void Box::setCurrentTexture(TextureInd cellTexture) {
 }
 
 void Box::destroyContent() {
-  const auto unit = getContent();
+  const auto scene = reinterpret_cast<GameScene*>(getScene());
+  const auto state = scene->getState();
+  const auto unit = state->getAt(getIndex()).unit_;
 
   if (unit != nullptr) {
     unit->kill();
-    setContent(nullptr);
   }
+}
+
+Unit* Box::getContent() const {
+  const auto scene = reinterpret_cast<GameScene*>(getScene());
+  const auto state = scene->getState();
+  const auto unit = state->getAt(getIndex()).unit_;
+  return unit;
 }

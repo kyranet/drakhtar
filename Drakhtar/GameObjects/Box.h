@@ -26,11 +26,6 @@ class Box final : public GameObject {
   Vector2D<byte> boardIndex_;
 
   /**
-   * \brief The unit currently placed in the box.
-   */
-  Unit* content_;
-
-  /**
    * \brief The index of current texture in the box texture array.
    */
   TextureInd cellTexture_;
@@ -52,7 +47,7 @@ class Box final : public GameObject {
 
  public:
   Box(Scene* scene, const Vector2D<int>& pos, const Vector2D<int>& size,
-      const Vector2D<byte>& boardIndex, Unit* unit);
+      const Vector2D<byte>& boardIndex);
 
   /**
    * \return The SDL_Rect of the box, being its position, width and height.
@@ -60,7 +55,7 @@ class Box final : public GameObject {
   SDL_Rect getRect() const override;
 
   /**
-   * \brief Renders the appropiate texture for the box and its content.
+   * \brief Renders the appropriated texture for the box and its content.
    */
   void render() const override;
 
@@ -81,20 +76,14 @@ class Box final : public GameObject {
   Vector2D<byte> getIndex() const;
 
   /**
-   * \return A pointer to the unit placed on this box.
-   */
-  Unit* getContent() const;
-
-  /**
-   * \brief Changes the unit currently placed on this box.
-   * \param content: A pointer to the new Unit to occupy the box.
-   */
-  void setContent(Unit* content);
-
-  /**
    * \return An enum of the current texture being rendered by this box.
    */
   TextureInd getCurrentTexture() const;
+
+  /**
+   * \return A pointer to the unit placed on this box.
+   */
+  Unit* getContent() const;
 
   /**
    * \brief Changes the texture the box renders.

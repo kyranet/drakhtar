@@ -27,7 +27,6 @@ Unit::Unit(Scene* scene, Texture* texture, Box* box, UnitStats stats,
       baseStats_(stats) {
   // Units must be ignored in the mouse raycasts.
   setTransparent(true);
-  box->setContent(this);
 }
 
 Unit::~Unit() = default;
@@ -70,11 +69,9 @@ void Unit::setHealthBar() {
 }
 
 void Unit::moveToBox(Box* newBox) {
-  box_->setContent(nullptr);
   setPosition(Vector2D<int>(newBox->getRect().x + newBox->getRect().w / 2,
                             newBox->getRect().y + newBox->getRect().h / 2));
   box_ = newBox;
-  newBox->setContent(this);
   const auto rect = box_->getRect();
   healthText_->setPosition({rect.x + rect.w / 2 + rect.w / 14,
                             static_cast<int>(rect.y + rect.h / 1.2)});
@@ -83,8 +80,9 @@ void Unit::moveToBox(Box* newBox) {
 }
 
 int Unit::loseHealth(int enemyAttack, int) {
-  // enemyAttack = static_cast<int>(enemyAttack * (1.0 - stats_.defense / 100.0));
-  // enemyAttack = std::min(std::max(enemyAttack, minDamage), stats_.maxHealth);
+  // enemyAttack = static_cast<int>(enemyAttack * (1.0 - stats_.defense /
+  // 100.0)); enemyAttack = std::min(std::max(enemyAttack, minDamage),
+  // stats_.maxHealth);
 
   // health_ = std::max(health_ - enemyAttack, 0);
 
@@ -98,11 +96,10 @@ int Unit::loseHealth(int enemyAttack, int) {
 
 void Unit::update() { healthBar_->update(); }
 
-void Unit::onSelect() {
-  setHasCounterAttacked(false);
-}
+void Unit::onSelect() { setHasCounterAttacked(false); }
 
-void Unit::onDeselect() { /* setMoving(false); */ }
+void Unit::onDeselect() { /* setMoving(false); */
+}
 
 void Unit::setBuffed(bool buffed) { healthBar_->setStatUpRenderizable(buffed); }
 
