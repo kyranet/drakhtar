@@ -61,9 +61,9 @@ void Scene::run() {
     create();
     handleEvents();
     update();
-    render();
-    destroy();
     tick();
+    destroy();
+    render();
 
     if (poolFrameRate->next(SDL_GetTicks())) {
       SDL_Delay(poolFrameRate->getRemaining());
