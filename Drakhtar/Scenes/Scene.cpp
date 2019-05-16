@@ -128,7 +128,8 @@ void Scene::handleEvents() {
   if (Input::isKeyDown(KeyboardKey::F)) {
     SDL_Window* window_ = Game::getWindow();
     const auto flags = SDL_GetWindowFlags(window_);
-    const auto flag = flags & SDL_WINDOW_FULLSCREEN ? 0 : SDL_WINDOW_FULLSCREEN;
+    const auto flag = static_cast<Uint32>(
+        flags & SDL_WINDOW_FULLSCREEN ? 0 : SDL_WINDOW_FULLSCREEN);
     if (SDL_SetWindowFullscreen(window_, flag) != 0) {
       throw SDLError("Failed to change full screen: " +
                      std::string(SDL_GetError()));
