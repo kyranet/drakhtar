@@ -2,6 +2,8 @@
 
 #pragma once
 #include <string>
+#include <vector>
+#include "Utils/Vector2D.h"
 
 class Commander;
 class Texture;
@@ -13,26 +15,23 @@ class Skill {
   std::string description_ = " ";
   Commander* caster_;
   GameScene* scene_;
-  int cooldown_;
-  int duration_;
-  int remainingCooldown_ = 0;
-  int remainingDuration_ = 0;
-  bool active_ = false;
+  int16_t cooldown_;
+  int16_t duration_;
 
  public:
-  Skill(const std::string& id, int cooldown, int duration, Commander* caster);
+  Skill(const std::string& id, int16_t cooldown, int16_t duration,
+        Commander* caster);
   virtual ~Skill() = default;
 
   virtual void cast();
-  virtual void end();
 
   std::string getId() const { return id_; }
   std::string getDescription() const { return description_; }
-  bool getActive() const { return active_; }
-  int getRemainingCooldown() const { return remainingCooldown_; }
-  int getRemainingDuration() const { return remainingDuration_; }
-  void setRemainingCooldown(const int turns) { remainingCooldown_ = turns; }
-  void setRemainingDuration(const int turns) { remainingDuration_ = turns; }
+  int16_t getRemainingCooldown() const;
+
+  std::vector<Vector2D<uint16_t>> getAllUnitPositions() const;
+  std::vector<Vector2D<uint16_t>> getAllAlliesPositions() const;
+  std::vector<Vector2D<uint16_t>> getAllEnemiesPositions() const;
 };
 
 class BattleCry final : public Skill {
@@ -41,7 +40,6 @@ class BattleCry final : public Skill {
   ~BattleCry() = default;
 
   void cast() override;
-  void end() override;
 };
 
 class ArrowRain final : public Skill {
@@ -52,7 +50,6 @@ class ArrowRain final : public Skill {
   ~ArrowRain() = default;
 
   void cast() override;
-  void end() override;
 };
 
 class HeroicStrike final : public Skill {
@@ -63,7 +60,6 @@ class HeroicStrike final : public Skill {
   ~HeroicStrike() = default;
 
   void cast() override;
-  void end() override;
 };
 
 class WitheringCurse final : public Skill {
@@ -72,7 +68,6 @@ class WitheringCurse final : public Skill {
   ~WitheringCurse() = default;
 
   void cast() override;
-  void end() override;
 };
 
 class Charge final : public Skill {
@@ -81,7 +76,6 @@ class Charge final : public Skill {
   ~Charge() = default;
 
   void cast() override;
-  void end() override;
 };
 
 class Berserker final : public Skill {
@@ -90,7 +84,6 @@ class Berserker final : public Skill {
   ~Berserker() = default;
 
   void cast() override;
-  void end() override;
 };
 
 class DeathRay final : public Skill {
@@ -99,7 +92,6 @@ class DeathRay final : public Skill {
   ~DeathRay() = default;
 
   void cast() override;
-  void end() override;
 };
 
 class Reinforce final : public Skill {
@@ -110,5 +102,4 @@ class Reinforce final : public Skill {
   ~Reinforce() = default;
 
   void cast() override;
-  void end() override;
 };

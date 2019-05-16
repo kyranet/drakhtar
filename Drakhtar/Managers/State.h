@@ -2,6 +2,9 @@
 
 #pragma once
 #include <array>
+#include <functional>
+#include <map>
+#include <utility>
 #include <vector>
 #include "Structures/Team.h"
 #include "Utils/Vector2D.h"
@@ -9,6 +12,8 @@
 class Unit;
 class Team;
 class UnitsController;
+
+struct Modifier;
 
 struct UnitState {
   UnitState()
@@ -30,7 +35,8 @@ struct UnitState {
             uint16_t attack, uint16_t health, uint16_t minimumAttack,
             uint16_t defense, uint16_t maxHealth, uint16_t attackRange,
             uint16_t moveRange, uint16_t speed, uint16_t prize,
-            uint16_t battalionSize, bool counterAttacked)
+            uint16_t battalionSize, bool counterAttacked,
+            std::vector<Modifier> modifiers)
       : unit_(unit),
         team_(team),
         position_(position),
@@ -44,7 +50,8 @@ struct UnitState {
         speed_(speed),
         prize_(prize),
         battalionSize_(battalionSize),
-        counterAttacked_(counterAttacked) {}
+        counterAttacked_(counterAttacked),
+        modifiers_(std::move(modifiers)) {}
   Unit* unit_;
   Color team_;
   Vector2D<uint16_t> position_;
@@ -59,12 +66,28 @@ struct UnitState {
   uint16_t prize_;
   uint16_t battalionSize_;
   bool counterAttacked_;
+  std::vector<Modifier> modifiers_;
+};
+
+class State;
+
+struct Modifier {
+  Unit* caster_;
+  std::function<UnitState(const UnitState&)> run_;
+  int16_t duration_;
+};
+
+struct SkillState {
+  Unit* caster_;
+  int16_t duration_;
+  int16_t cooldown_;
 };
 
 class State {
   uint16_t rows_ = 0, columns_ = 0;
   std::vector<UnitState> turns_{};
   std::vector<UnitState> board_{};
+  std::map<std::string, SkillState> skillsUsed_{};
   UnitsController* controller_ = nullptr;
 
   void insert(const std::vector<Unit*>& units);
@@ -74,12 +97,21 @@ class State {
   void setUnits(const std::vector<Unit*>&, const std::vector<Unit*>&);
   void setBoard(uint16_t rows, uint16_t columns);
 
+  std::vector<UnitState> getBoard() const;
+
   void setController(UnitsController* controller);
 
   void next();
 
+  int16_t getRemainingSkillCooldown(const std::string& skillId);
+  void castSkill(Unit* caster, const std::string& skillId, int16_t duration,
+                 int16_t cooldown);
+
   void setAt(const Vector2D<uint16_t>& position, const UnitState& state);
   const UnitState getAt(const Vector2D<uint16_t>& position) const;
+  const UnitState getModifiedAt(const Vector2D<uint16_t>& position) const;
+  void addModifierAt(const Vector2D<uint16_t>& position,
+                     const Modifier& modifier);
 
   Unit* getUnitAt(const Vector2D<uint16_t>& position) const;
 

@@ -13,7 +13,7 @@
 #include "Scenes/GameScene.h"
 #include "Structures/Team.h"
 
-Skill::Skill(const std::string& id, int cooldown, int duration,
+Skill::Skill(const std::string& id, int16_t cooldown, int16_t duration,
              Commander* caster)
     : id_(id), caster_(caster), cooldown_(cooldown), duration_(duration) {
   scene_ = reinterpret_cast<GameScene*>(caster->getScene());
@@ -21,24 +21,44 @@ Skill::Skill(const std::string& id, int cooldown, int duration,
 
 void Skill::cast() {
   std::cout << "Casted <" + id_ + "> by " + caster_->getType() << std::endl;
-  active_ = true;
-  remainingCooldown_ = cooldown_;
-  remainingDuration_ = duration_;
-
-  // If the unit has moved and attacked, and has no other castable skills, end
-  // turn
-  if (caster_->getTeam()->getController()->hasMoved() &&
-      caster_->getTeam()->getController()->hasAttacked()) {
-    for (auto skill : caster_->getSkills()) {
-      if (skill->getRemainingCooldown() == 0) return;
-    }
-    caster_->getTeam()->getController()->finish();
-  }
+  scene_->getState()->castSkill(caster_, id_, duration_, cooldown_);
 }
 
-void Skill::end() {}
+int16_t Skill::getRemainingCooldown() const {
+  return scene_->getState()->getRemainingSkillCooldown(id_);
+}
+
+std::vector<Vector2D<uint16_t>> Skill::getAllUnitPositions() const {
+  const auto state = *scene_->getState();
+  std::vector<Vector2D<uint16_t>> output;
+  for (const auto& stats : state.getBoard()) {
+    if (stats.unit_ != nullptr) output.push_back(stats.position_);
+  }
+  return output;
+}
+
+std::vector<Vector2D<uint16_t>> Skill::getAllAlliesPositions() const {
+  const auto state = *scene_->getState();
+  std::vector<Vector2D<uint16_t>> output;
+  for (const auto& stats : state.getBoard()) {
+    if (stats.unit_ != nullptr && stats.team_ == caster_->getTeam()->getColor())
+      output.push_back(stats.position_);
+  }
+  return output;
+}
+
+std::vector<Vector2D<uint16_t>> Skill::getAllEnemiesPositions() const {
+  const auto state = *scene_->getState();
+  std::vector<Vector2D<uint16_t>> output;
+  for (const auto& stats : state.getBoard()) {
+    if (stats.unit_ != nullptr && stats.team_ != caster_->getTeam()->getColor())
+      output.push_back(stats.position_);
+  }
+  return output;
+}
 
 // ---------- BATTLECRY ----------
+
 BattleCry::BattleCry(Commander* caster) : Skill("BattleCry", 3, 1, caster) {
   description_ =
       "An inspiring command that increases every ally's attack by "
@@ -47,38 +67,33 @@ BattleCry::BattleCry(Commander* caster) : Skill("BattleCry", 3, 1, caster) {
 }
 
 void BattleCry::cast() {
-  // if (remainingCooldown_ == 0 && caster_->getMoving()) {
-  //   Skill::cast();
-  //   // Boost attack and movement range of every unit in the same team
-  //   for (auto unit : scene_->getAlliedTeam(caster_)->getUnits()) {
-  //     unit->Unit::setAttack(
-  //         static_cast<int>(floor(unit->getStats().attack * 1.2)));
-  //     unit->setMoveRange(unit->getStats().moveRange + 1);
-  //     unit->setBuffed(true);
-  //   }
-  //   SDLAudioManager::getInstance()->playChannel(10, 0, 1);
-  //   if (!caster_->getTeam()->getController()->hasMoved()) {
-  //     // TODO(kyranet): Add highlight hooks
-  //     // scene_->getBoard()->highlightCellsInRange(caster_->getBox(),
-  //     //                                           caster_->getStats().moveRange);
-  //   }
-  // }
-}
+  Skill::cast();
 
-void BattleCry::end() {
-  std::cout << "<Battle Cry> ended" << std::endl;
-  active_ = false;
-
-  // Reset every unit's attack and move range to base
-  for (auto unit : scene_->getAlliedTeam(caster_)->getUnits()) {
-    // unit->setAttack(unit->getBaseStats().attack);
-    // unit->setMoveRange(unit->getStats().moveRange - 1);
-    unit->setBuffed(false);
+  auto state = scene_->getState();
+  for (const auto& position : getAllAlliesPositions()) {
+    state->addModifierAt(
+        position,
+        {caster_,
+         [](const UnitState& state) {
+           return UnitState{
+               state.unit_,
+               state.team_,
+               state.position_,
+               static_cast<uint16_t>(state.attack_ + state.attack_ * 0.20),
+               state.health_,
+               state.minimumAttack_,
+               state.defense_,
+               state.maxHealth_,
+               state.attackRange_,
+               static_cast<uint16_t>(state.moveRange_ + 1U),
+               state.speed_,
+               state.prize_,
+               state.battalionSize_,
+               false,
+               state.modifiers_};
+         },
+         cooldown_});
   }
-
-  // Update turn priority
-  // TODO(kyranet): Re-add this
-  // caster_->getTeam()->getController()->getTurnManager()->sortUnits();
 }
 
 // ---------- ARROW RAIN ----------
@@ -108,8 +123,6 @@ void ArrowRain::cast() {
   // }
 }
 
-void ArrowRain::end() { active_ = false; }
-
 // ---------- HEROIC STRIKE ----------
 HeroicStrike::HeroicStrike(Commander* caster)
     : Skill("Heroic Strike", 2, 0, caster), attackIncrement_(0) {
@@ -129,15 +142,6 @@ void HeroicStrike::cast() {
   //   caster_->setBuffed(true);
   //   SDLAudioManager::getInstance()->playChannel(8, 0, 1);
   // }
-}
-
-void HeroicStrike::end() {
-  // active_ = false;
-  // std::cout << "<HeroicStrike> ended" << std::endl;
-  // caster_->setAttack(
-  //     static_cast<int>(caster_->getStats().attack - attackIncrement_));
-  // caster_->setUnstoppable(false);
-  // caster_->setBuffed(false);
 }
 
 // ---------- WITHERING CURSE ----------
@@ -161,16 +165,6 @@ void WitheringCurse::cast() {
   // }
 }
 
-void WitheringCurse::end() {
-  std::cout << "<" + id_ + "> ended" << std::endl;
-  active_ = false;
-  for (auto unit : scene_->getEnemyTeam(caster_)->getUnits()) {
-  //  unit->setAttack(unit->getBaseStats().attack);
-  //  unit->setDefense(unit->getBaseStats().defense);
-    unit->setDebuffed(false);
-  }
-}
-
 // ---------- CHARGE ----------
 Charge::Charge(Commander* caster) : Skill("Charge", 1, 0, caster) {
   description_ =
@@ -183,11 +177,6 @@ void Charge::cast() {
   //   Skill::cast();
   //   caster_->setUnstoppable(true);
   // }
-}
-
-void Charge::end() {
-  std::cout << "<" + id_ + "> ended" << std::endl;
-  active_ = false;
 }
 
 // ---------- BERSERKER ----------
@@ -206,15 +195,6 @@ void Berserker::cast() {
   //   caster_->setBuffed(true);
   //   caster_->setDebuffed(true);
   // }
-}
-
-void Berserker::end() {
-  std::cout << "<" + id_ + "> ended" << std::endl;
-  // caster_->setAttack(caster_->getBaseStats().attack);
-  // caster_->setDefense(caster_->getBaseStats().defense);
-  caster_->setBuffed(false);
-  caster_->setDebuffed(false);
-  active_ = false;
 }
 
 // ---------- DEATHRAY ----------
@@ -248,11 +228,6 @@ void DeathRay::cast() {
   // }
 }
 
-void DeathRay::end() {
-  std::cout << "<" + id_ + "> ended" << std::endl;
-  active_ = false;
-}
-
 // ---------- REINFORCE ----------
 Reinforce::Reinforce(Commander* caster) : Skill("Reinforce", 1, 0, caster) {
   description_ =
@@ -276,9 +251,4 @@ void Reinforce::cast() {
   //     }
   //   }
   // }
-}
-
-void Reinforce::end() {
-  std::cout << "<" + id_ + "> ended" << std::endl;
-  active_ = false;
 }

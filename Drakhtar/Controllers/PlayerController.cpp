@@ -35,7 +35,7 @@ void PlayerController::onClickMove(Box* boxClicked) {
   // Checks if the box clicked is within movement range
   const auto to = boxClicked->getIndex();
   const auto state = getState();
-  const auto stats = state->getAt(activeUnit_->getBox()->getIndex());
+  const auto stats = state->getModifiedAt(activeUnit_->getBox()->getIndex());
 
   if (!state->isInMoveRange(stats.position_, to, stats.moveRange_)) {
     SDLAudioManager::getInstance()->playChannel(3, 0, 0);
@@ -87,8 +87,8 @@ void PlayerController::onClickAttack(Box* boxClicked) {
   if (!unit || unit->getTeam() == team_) return;
 
   const auto state = getState();
-  const auto stats = state->getAt(activeUnit_->getBox()->getIndex());
-  const auto enemyStats = state->getAt(boxClicked->getIndex());
+  const auto stats = state->getModifiedAt(activeUnit_->getBox()->getIndex());
+  const auto enemyStats = state->getModifiedAt(boxClicked->getIndex());
 
   // If the selected unit is not in the attack range, or the attack was not
   // successful, skip
@@ -133,7 +133,6 @@ void PlayerController::start() {
 }
 
 void PlayerController::finish() {
-  // board_->resetCellsToBase();
   scene_->removeGameObject(skipTurnButton_);
   for (const auto box : board_->getChildren()) {
     reinterpret_cast<Box*>(box)->setCurrentTexture(TextureInd::BASE);
@@ -146,21 +145,15 @@ bool PlayerController::getLocked() const { return locked_; }
 
 void PlayerController::setTutorialDone(bool done) { tutorialDone_ = done; }
 
-bool PlayerController::gettutorialDone() { return tutorialDone_; }
-
 bool PlayerController::canCastSkills() {
-  // TODO(kyranet): Fix this
-  // if (tutorialDone_) {
-  //   Commander* commander = dynamic_cast<Commander*>(activeUnit_);
-  //   if (commander != nullptr) {
-  //     for (auto skill : commander->getSkills()) {
-  //       if (skill->getRemainingCooldown() == 0) {
-  //         highlightCells();
-  //         return true;
-  //       }
-  //     }
-  //   }
-  // }
+  if (tutorialDone_ && activeUnit_->isCommander()) {
+    for (auto skill : reinterpret_cast<Commander*>(activeUnit_)->getSkills()) {
+      if (skill->getRemainingCooldown() == 0) {
+        highlightCells();
+        return true;
+      }
+    }
+  }
   return false;
 }
 
@@ -174,7 +167,7 @@ void PlayerController::highlightCells() {
   activeUnit_->getBox()->setCurrentTexture(TextureInd::ACTIVE);
   const auto from = activeUnit_->getBox()->getIndex();
   const auto state = getState();
-  const auto stats = state->getAt(from);
+  const auto stats = state->getModifiedAt(from);
   if (!hasMoved_) {
     const auto cells = state->getCellsInMovementRange(from, stats.moveRange_);
     if (!cells.empty()) {

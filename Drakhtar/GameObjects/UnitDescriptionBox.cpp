@@ -69,7 +69,7 @@ void UnitDescriptionBox::render() const {
 void UnitDescriptionBox::updateText(Unit* unit) {
   const auto scene = reinterpret_cast<GameScene*>(getScene());
   const auto state = scene->getState();
-  const auto stats = state->getAt(unit->getBox()->getIndex());
+  const auto stats = state->getModifiedAt(unit->getBox()->getIndex());
 
   std::string text = "<" + unit->getType() + ">\n";
   text += "Attack: " + std::to_string(unit->getBaseStats().attack) + " (" +
@@ -83,7 +83,7 @@ void UnitDescriptionBox::updateText(Unit* unit) {
 
   Unit* activeUnit = state->getActiveUnit();
 
-  const auto enemyStats = state->getAt(unit->getBox()->getIndex());
+  const auto enemyStats = state->getModifiedAt(unit->getBox()->getIndex());
 
   showDamage_ =
       unit->getTeam() != activeUnit->getTeam() &&

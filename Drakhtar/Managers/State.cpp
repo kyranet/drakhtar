@@ -7,9 +7,12 @@
 #include "GameObjects/Battalion.h"
 #include "GameObjects/Box.h"
 #include "GameObjects/Commanders/Commander.h"
+#include "GameObjects/Skill.h"
 #include "GameObjects/Unit.h"
 
 State::State() = default;
+
+std::vector<UnitState> State::getBoard() const { return board_; }
 
 void State::setController(UnitsController* controller) {
   controller_ = controller;
@@ -22,14 +25,58 @@ void State::next() {
   turns_.push_back(unit);
   controller_ = nullptr;
 
+  // If it's a commander,
+  if (getActiveUnit()->isCommander()) {
+    // Update all skills across the board
+    for (auto& stats : board_) {
+      if (stats.modifiers_.empty()) continue;
+      size_t i = 0;
+      while (i < stats.modifiers_.size()) {
+        if ((stats.modifiers_[i].caster_ == getActiveUnit()) &&
+            (--stats.modifiers_[i].duration_ == 0)) {
+          stats.modifiers_.erase(stats.modifiers_.begin() +
+                                 static_cast<int64_t>(i));
+        } else {
+          ++i;
+        }
+      }
+    }
+
+    // Update all skills
+    for (auto sIt = skillsUsed_.begin(); sIt != skillsUsed_.end(); ++sIt) {
+      auto& pair = *sIt;
+      if (pair.second.caster_ != getActiveUnit()) continue;
+      if (pair.second.duration_ != 0) {
+        --pair.second.duration_;
+      } else if (pair.second.cooldown_ != 0) {
+        --pair.second.cooldown_;
+      } else {
+        skillsUsed_.erase(pair.first);
+        sIt = skillsUsed_.begin();
+      }
+    }
+  }
+
   // Clone the state but with the counterAttacked value set to false
   const auto previous = getAt(getActiveUnit()->getBox()->getIndex());
+
   UnitState updated(previous.unit_, previous.team_, previous.position_,
                     previous.attack_, previous.health_, previous.minimumAttack_,
                     previous.defense_, previous.maxHealth_,
                     previous.attackRange_, previous.moveRange_, previous.speed_,
-                    previous.prize_, previous.battalionSize_, false);
+                    previous.prize_, previous.battalionSize_, false,
+                    previous.modifiers_);
   setAt(updated.position_, updated);
+}
+
+int16_t State::getRemainingSkillCooldown(const std::string& skillId) {
+  if (skillsUsed_.count(skillId) == 0) return 0;
+  return skillsUsed_[skillId].cooldown_;
+}
+
+void State::castSkill(Unit* caster, const std::string& skillId,
+                      int16_t duration, int16_t cooldown) {
+  skillsUsed_[skillId] = {caster, duration, cooldown};
 }
 
 Unit* State::getActiveUnit() const { return turns_.front().unit_; }
@@ -69,7 +116,7 @@ void State::insert(const std::vector<Unit*>& units) {
     if (unit->isCommander()) {
       UnitState state(unit, color, boxPosition, base.attack, base.maxHealth, 1,
                       base.defense, base.maxHealth, base.attackRange,
-                      base.moveRange, base.speed, base.prize, 0, false);
+                      base.moveRange, base.speed, base.prize, 0, false, {});
       turns_.push_back(state);
       setAt(boxPosition, state);
     } else {
@@ -80,7 +127,7 @@ void State::insert(const std::vector<Unit*>& units) {
           static_cast<uint16_t>(base.maxHealth * size), size, base.defense,
           static_cast<uint16_t>(base.maxHealth * size), base.attackRange,
           base.moveRange, base.speed, static_cast<uint16_t>(base.prize * size),
-          size, false);
+          size, false, {});
       turns_.push_back(state);
       setAt(boxPosition, state);
     }
@@ -91,8 +138,20 @@ void State::setAt(const Vector2D<uint16_t>& position, const UnitState& state) {
   board_[position.getX() * rows_ + position.getY()] = state;
 }
 
+void State::addModifierAt(const Vector2D<uint16_t>& position,
+                          const Modifier& modifier) {
+  auto& stats = board_[position.getX() * rows_ + position.getY()];
+  stats.modifiers_.push_back(modifier);
+}
+
 const UnitState State::getAt(const Vector2D<uint16_t>& position) const {
   return board_[position.getX() * rows_ + position.getY()];
+}
+
+const UnitState State::getModifiedAt(const Vector2D<uint16_t>& position) const {
+  auto stats = board_[position.getX() * rows_ + position.getY()];
+  for (const auto& modifier : stats.modifiers_) stats = modifier.run_(stats);
+  return stats;
 }
 
 Unit* State::getUnitAt(const Vector2D<uint16_t>& position) const {
@@ -109,7 +168,8 @@ bool State::move(const Vector2D<uint16_t>& from, const Vector2D<uint16_t>& to) {
                   previous.health_, previous.minimumAttack_, previous.defense_,
                   previous.maxHealth_, previous.attackRange_,
                   previous.moveRange_, previous.speed_, previous.prize_,
-                  previous.battalionSize_, previous.counterAttacked_);
+                  previous.battalionSize_, previous.counterAttacked_,
+                  previous.modifiers_);
 
   setAt(to, state);
   return true;
@@ -123,13 +183,16 @@ bool State::attack(const Vector2D<uint16_t>& from, const Vector2D<uint16_t>& to,
   const auto enemy = getAt(to);
   if (enemy.unit_ == nullptr) return false;
 
+  const auto modifiedPrevious = getModifiedAt(from);
+  const auto modifiedEnemy = getModifiedAt(to);
+
   const auto damage = std::min(
-      std::max(
-          static_cast<int>(previous.attack_ * (1.0 - enemy.defense_ / 100.0)),
-          static_cast<int>(previous.minimumAttack_)),
-      static_cast<int>(enemy.maxHealth_));
+      std::max(static_cast<int>(modifiedPrevious.attack_ *
+                                (1.0 - modifiedEnemy.defense_ / 100.0)),
+               static_cast<int>(modifiedPrevious.minimumAttack_)),
+      static_cast<int>(modifiedEnemy.maxHealth_));
   const auto health =
-      static_cast<uint16_t>(std::max(enemy.health_ - damage, 0));
+      static_cast<uint16_t>(std::max(modifiedEnemy.health_ - damage, 0));
 
   if (health == 0) {
     removeAt(to);
@@ -146,7 +209,8 @@ bool State::attack(const Vector2D<uint16_t>& from, const Vector2D<uint16_t>& to,
     auto counterAttacked = enemy.counterAttacked_;
     if (!(enemy.unit_->getType() == "Archer" &&
           isInRange(enemy.position_, previous.position_, 1)) &&
-        isInRange(enemy.position_, previous.position_, enemy.attackRange_) &&
+        isInRange(enemy.position_, previous.position_,
+                  modifiedEnemy.attackRange_) &&
         !counterAttacked) {
       counterAttacked = true;
       if (!counterAttack) attack(to, from, true);
@@ -165,16 +229,16 @@ bool State::attack(const Vector2D<uint16_t>& from, const Vector2D<uint16_t>& to,
                               health, minimumDamage, enemy.defense_,
                               enemy.maxHealth_, enemy.attackRange_,
                               enemy.moveRange_, enemy.speed_, enemy.prize_,
-                              battalionSize, counterAttacked);
+                              battalionSize, counterAttacked, enemy.modifiers_);
       setAt(to, updated);
       if (controller_) controller_->onDamage(updated);
     } else {
       // Update commander size
-      const UnitState updated(enemy.unit_, enemy.team_, enemy.position_,
-                              enemy.attack_, health, enemy.minimumAttack_,
-                              enemy.defense_, enemy.maxHealth_,
-                              enemy.attackRange_, enemy.moveRange_,
-                              enemy.speed_, enemy.prize_, 0, counterAttacked);
+      const UnitState updated(
+          enemy.unit_, enemy.team_, enemy.position_, enemy.attack_, health,
+          enemy.minimumAttack_, enemy.defense_, enemy.maxHealth_,
+          enemy.attackRange_, enemy.moveRange_, enemy.speed_, enemy.prize_, 0,
+          counterAttacked, enemy.modifiers_);
       setAt(to, updated);
       if (controller_) controller_->onDamage(updated);
     }
@@ -184,8 +248,21 @@ bool State::attack(const Vector2D<uint16_t>& from, const Vector2D<uint16_t>& to,
 }
 
 void State::removeAt(const Vector2D<uint16_t>& position) {
-  setAt(position,
-        {nullptr, Color::BLUE, position, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, false});
+  setAt(position, {nullptr,
+                   Color::BLUE,
+                   position,
+                   0,
+                   0,
+                   0,
+                   0,
+                   0,
+                   0,
+                   0,
+                   0,
+                   0,
+                   0,
+                   false,
+                   {}});
 }
 
 std::vector<Vector2D<uint16_t>> State::findPath(

@@ -98,7 +98,7 @@ void Unit::kill() {
 std::string Unit::healthToString() const {
   const auto scene = reinterpret_cast<GameScene*>(getScene());
   const auto state = scene->getState();
-  const auto stats = state->getAt(getBox()->getIndex());
+  const auto stats = state->getModifiedAt(getBox()->getIndex());
   return std::to_string(stats.health_) + " HP";
 }
 
