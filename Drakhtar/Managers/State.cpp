@@ -21,6 +21,15 @@ void State::next() {
   turns_.erase(it);
   turns_.push_back(unit);
   controller_ = nullptr;
+
+  // Clone the state but with the counterAttacked value set to false
+  const auto previous = getAt(getActiveUnit()->getBox()->getIndex());
+  UnitState updated(previous.unit_, previous.team_, previous.position_,
+                    previous.attack_, previous.health_, previous.minimumAttack_,
+                    previous.defense_, previous.maxHealth_,
+                    previous.attackRange_, previous.moveRange_, previous.speed_,
+                    previous.prize_, false);
+  setAt(updated.position_, updated);
 }
 
 Unit* State::getActiveUnit() const { return turns_.front().unit_; }
