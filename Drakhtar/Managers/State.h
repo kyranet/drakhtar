@@ -79,7 +79,6 @@ struct Modifier {
 
 struct SkillState {
   Unit* caster_;
-  int16_t duration_;
   int16_t cooldown_;
 };
 
@@ -105,8 +104,7 @@ class State {
   void next();
 
   int16_t getRemainingSkillCooldown(const std::string& skillId);
-  void castSkill(Unit* caster, const std::string& skillId, int16_t duration,
-                 int16_t cooldown);
+  void castSkill(Unit* caster, const std::string& skillId, int16_t cooldown);
 
   void setAt(const Vector2D<uint16_t>& position, const UnitState& state);
   const UnitState getAt(const Vector2D<uint16_t>& position) const;

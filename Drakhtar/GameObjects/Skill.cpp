@@ -21,7 +21,7 @@ Skill::Skill(const std::string& id, int16_t cooldown, int16_t duration,
 
 void Skill::cast() {
   std::cout << "Casted <" + id_ + "> by " + caster_->getType() << std::endl;
-  scene_->getState()->castSkill(caster_, id_, duration_, cooldown_);
+  scene_->getState()->castSkill(caster_, id_, cooldown_);
 }
 
 int16_t Skill::getRemainingCooldown() const {

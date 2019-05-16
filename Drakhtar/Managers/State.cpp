@@ -70,9 +70,8 @@ int16_t State::getRemainingSkillCooldown(const std::string& skillId) {
   return skillsUsed_[skillId].cooldown_;
 }
 
-void State::castSkill(Unit* caster, const std::string& skillId,
-                      int16_t duration, int16_t cooldown) {
-  skillsUsed_[skillId] = {caster, duration, cooldown};
+void State::castSkill(Unit* caster, const std::string& skillId, int16_t cooldown) {
+  skillsUsed_[skillId] = {caster, cooldown};
 }
 
 Unit* State::getActiveUnit() const { return turns_.front().unit_; }
