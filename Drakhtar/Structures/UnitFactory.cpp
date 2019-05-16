@@ -59,7 +59,7 @@ UnitFactory::UnitFactory(Scene* scene) : scene_(scene) {
 UnitFactory::~UnitFactory() = default;
 
 Unit* UnitFactory::newBattalion(const std::string& type, Team* team, Box* box,
-                                byte size) {
+                                uint16_t size) {
   if (statMap.find(type) == statMap.end()) return nullptr;
   const auto textureName =
       (team->getColor() == Color::BLUE ? "Units-Blue" : "Units-Red") + type;

@@ -6,7 +6,7 @@
 GameManager* GameManager::instance_ = nullptr;
 
 GameManager::GameManager() {
-  army_ = new std::map<std::string, byte>();
+  army_ = new std::map<std::string, uint16_t>();
   typeOrder[SOLDIER] = "Soldier";
   (*army_)["Soldier"] = 8;
   typeOrder[ARCHER] = "Archer";
@@ -18,7 +18,7 @@ GameManager::GameManager() {
   typeOrder[MONSTER] = "Monster";
   (*army_)["Monster"] = 0;
 
-  buyingCap_ = new std::map<std::string, byte>();
+  buyingCap_ = new std::map<std::string, uint16_t>();
   (*buyingCap_)["Soldier"] = 20;
   (*buyingCap_)["Archer"] = 18;
   (*buyingCap_)["Mage"] = 12;
@@ -69,11 +69,11 @@ void GameManager::updateUnits(std::vector<Unit*>& units) {
 
 int GameManager::getMoney() const { return money_; }
 
-const std::map<std::string, byte>& GameManager::getArmy() const {
+const std::map<std::string, uint16_t>& GameManager::getArmy() const {
   return (*army_);
 }
 
-const std::map<std::string, byte>& GameManager::getCap() const {
+const std::map<std::string, uint16_t>& GameManager::getCap() const {
   return (*buyingCap_);
 }
 
@@ -89,6 +89,6 @@ void GameManager::loseMoney(const int money) { money_ -= money; }
 
 void GameManager::addMoney(const int money) { money_ += money; }
 
-void GameManager::addUnits(const std::string& type, const byte size) const {
-  (*army_)[type] = static_cast<byte>((*army_)[type] + size);
+void GameManager::addUnits(const std::string& type, const uint16_t size) const {
+  (*army_)[type] = static_cast<uint16_t>((*army_)[type] + size);
 }

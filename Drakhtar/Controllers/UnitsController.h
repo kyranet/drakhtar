@@ -4,8 +4,6 @@
 #include <vector>
 #include "SDL.h"
 
-using byte = uint16_t;
-
 class Unit;
 class GameScene;
 class Board;

@@ -46,14 +46,14 @@ void State::setUnits(const std::vector<Unit*>& first,
             });
 }
 
-void State::setBoard(const byte rows, const byte columns) {
+void State::setBoard(const uint16_t rows, const uint16_t columns) {
   board_.clear();
   rows_ = rows;
   columns_ = columns;
   board_.resize(rows_ * columns_);
 
-  for (byte x = 0U; x < columns; ++x) {
-    for (byte y = 0U; y < rows; ++y) {
+  for (uint16_t x = 0U; x < columns; ++x) {
+    for (uint16_t y = 0U; y < rows; ++y) {
       removeAt({x, y});
     }
   }
@@ -76,30 +76,30 @@ void State::insert(const std::vector<Unit*>& units) {
       const auto battalion = reinterpret_cast<Battalion*>(unit);
       const auto size = battalion->getBattalionSize();
       UnitState state(unit, color, boxPosition,
-                      static_cast<byte>(base.attack * size),
-                      static_cast<byte>(base.maxHealth * size), size,
-                      base.defense, static_cast<byte>(base.maxHealth * size),
+                      static_cast<uint16_t>(base.attack * size),
+                      static_cast<uint16_t>(base.maxHealth * size), size,
+                      base.defense, static_cast<uint16_t>(base.maxHealth * size),
                       base.attackRange, base.moveRange, base.speed,
-                      static_cast<byte>(base.prize * size), size, false);
+                      static_cast<uint16_t>(base.prize * size), size, false);
       turns_.push_back(state);
       setAt(boxPosition, state);
     }
   }
 }
 
-void State::setAt(const Vector2D<byte>& position, const UnitState& state) {
+void State::setAt(const Vector2D<uint16_t>& position, const UnitState& state) {
   board_[position.getX() * rows_ + position.getY()] = state;
 }
 
-const UnitState State::getAt(const Vector2D<byte>& position) const {
+const UnitState State::getAt(const Vector2D<uint16_t>& position) const {
   return board_[position.getX() * rows_ + position.getY()];
 }
 
-Unit* State::getUnitAt(const Vector2D<byte>& position) const {
+Unit* State::getUnitAt(const Vector2D<uint16_t>& position) const {
   return board_[position.getX() * rows_ + position.getY()].unit_;
 }
 
-bool State::move(const Vector2D<byte>& from, const Vector2D<byte>& to) {
+bool State::move(const Vector2D<uint16_t>& from, const Vector2D<uint16_t>& to) {
   const auto previous = getAt(from);
   if (previous.unit_ == nullptr) return false;
 
@@ -115,7 +115,7 @@ bool State::move(const Vector2D<byte>& from, const Vector2D<byte>& to) {
   return true;
 }
 
-bool State::attack(const Vector2D<byte>& from, const Vector2D<byte>& to,
+bool State::attack(const Vector2D<uint16_t>& from, const Vector2D<uint16_t>& to,
                    const bool counterAttack) {
   const auto previous = getAt(from);
   if (previous.unit_ == nullptr) return false;
@@ -128,7 +128,7 @@ bool State::attack(const Vector2D<byte>& from, const Vector2D<byte>& to,
           static_cast<int>(previous.attack_ * (1.0 - enemy.defense_ / 100.0)),
           static_cast<int>(previous.minimumAttack_)),
       static_cast<int>(enemy.maxHealth_));
-  const auto health = static_cast<byte>(std::max(enemy.health_ - damage, 0));
+  const auto health = static_cast<uint16_t>(std::max(enemy.health_ - damage, 0));
 
   if (health == 0) {
     removeAt(to);
@@ -153,12 +153,12 @@ bool State::attack(const Vector2D<byte>& from, const Vector2D<byte>& to,
 
     if (enemy.battalionSize_ != 0) {
       // Update battalion size
-      const auto battalionSize = static_cast<byte>(
+      const auto battalionSize = static_cast<uint16_t>(
           std::ceil(static_cast<float>(health * enemy.battalionSize_) /
                     static_cast<float>(enemy.maxHealth_)));
       const auto attack =
-          static_cast<byte>(enemy.unit_->getBaseStats().attack * battalionSize);
-      const auto minimumDamage = static_cast<byte>(battalionSize);
+          static_cast<uint16_t>(enemy.unit_->getBaseStats().attack * battalionSize);
+      const auto minimumDamage = static_cast<uint16_t>(battalionSize);
 
       const UnitState updated(enemy.unit_, enemy.team_, enemy.position_, attack,
                               health, minimumDamage, enemy.defense_,
@@ -182,13 +182,13 @@ bool State::attack(const Vector2D<byte>& from, const Vector2D<byte>& to,
   return true;
 }
 
-void State::removeAt(const Vector2D<byte>& position) {
+void State::removeAt(const Vector2D<uint16_t>& position) {
   setAt(position,
         {nullptr, Color::BLUE, position, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, false});
 }
 
-std::vector<Vector2D<byte>> State::findPath(const Vector2D<byte>& start,
-                                            const Vector2D<byte>& end) const {
+std::vector<Vector2D<uint16_t>> State::findPath(const Vector2D<uint16_t>& start,
+                                            const Vector2D<uint16_t>& end) const {
   // Create path generator
   AStar::Generator generator;
   generator.setWorldSize({columns_, rows_});
@@ -210,16 +210,16 @@ std::vector<Vector2D<byte>> State::findPath(const Vector2D<byte>& start,
   // If it is only the first cell, return empty.
   if (path.size() <= 1) return {};
 
-  std::vector<Vector2D<byte>> pathList;
+  std::vector<Vector2D<uint16_t>> pathList;
   for (const auto& coordinate : path) {
-    pathList.insert(pathList.begin(), {static_cast<byte>(coordinate.x),
-                                       static_cast<byte>(coordinate.y)});
+    pathList.insert(pathList.begin(), {static_cast<uint16_t>(coordinate.x),
+                                       static_cast<uint16_t>(coordinate.y)});
   }
 
   return pathList;
 }
 
-bool State::isInRange(const Vector2D<byte>& from, const Vector2D<byte>& to,
+bool State::isInRange(const Vector2D<uint16_t>& from, const Vector2D<uint16_t>& to,
                       int range) const {
   const auto distanceX = abs(static_cast<int>(to.getX() - from.getX()));
   const auto distanceY = abs(static_cast<int>(to.getY() - from.getY()));
@@ -228,7 +228,7 @@ bool State::isInRange(const Vector2D<byte>& from, const Vector2D<byte>& to,
   return range >= totalDistance;
 }
 
-bool State::isInMoveRange(const Vector2D<byte>& from, const Vector2D<byte>& to,
+bool State::isInMoveRange(const Vector2D<uint16_t>& from, const Vector2D<uint16_t>& to,
                           int range) const {
   auto path = findPath(from, to);
   if (path.empty()) {
@@ -237,9 +237,9 @@ bool State::isInMoveRange(const Vector2D<byte>& from, const Vector2D<byte>& to,
   return range >= static_cast<const int>(path.size() - 1);
 }
 
-std::vector<Vector2D<byte>> State::getCellsInMovementRange(
-    const Vector2D<byte>& from, int range) const {
-  std::vector<Vector2D<byte>> cells;
+std::vector<Vector2D<uint16_t>> State::getCellsInMovementRange(
+    const Vector2D<uint16_t>& from, int range) const {
+  std::vector<Vector2D<uint16_t>> cells;
   for (const auto& cell : board_) {
     if (isInMoveRange(from, cell.position_, range))
       cells.push_back(cell.position_);
@@ -247,9 +247,9 @@ std::vector<Vector2D<byte>> State::getCellsInMovementRange(
   return cells;
 }
 
-std::vector<Vector2D<byte>> State::getCellsInAttackRange(
-    const Vector2D<byte>& from, Color color, int range) const {
-  std::vector<Vector2D<byte>> cells;
+std::vector<Vector2D<uint16_t>> State::getCellsInAttackRange(
+    const Vector2D<uint16_t>& from, Color color, int range) const {
+  std::vector<Vector2D<uint16_t>> cells;
   for (const auto& cell : board_) {
     if (cell.unit_ != nullptr && cell.team_ != color &&
         isInRange(from, cell.position_, range))
