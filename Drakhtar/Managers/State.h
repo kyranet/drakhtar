@@ -24,11 +24,12 @@ struct UnitState {
         moveRange_(0U),
         speed_(0U),
         prize_(0U),
+        battalionSize_(0U),
         counterAttacked_(false) {}
   UnitState(Unit* unit, Color team, Vector2D<byte> position, byte attack,
             byte health, byte minimumAttack, byte defense, byte maxHealth,
             byte attackRange, byte moveRange, byte speed, byte prize,
-            bool counterAttacked)
+            byte battalionSize, bool counterAttacked)
       : unit_(unit),
         team_(team),
         position_(position),
@@ -41,6 +42,7 @@ struct UnitState {
         moveRange_(moveRange),
         speed_(speed),
         prize_(prize),
+        battalionSize_(battalionSize),
         counterAttacked_(counterAttacked) {}
   Unit* unit_;
   Color team_;
@@ -54,6 +56,7 @@ struct UnitState {
   byte moveRange_;
   byte speed_;
   byte prize_;
+  byte battalionSize_;
   bool counterAttacked_;
 };
 

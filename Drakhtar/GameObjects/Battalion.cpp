@@ -59,7 +59,7 @@ void Battalion::setBattalionSize(const byte battalionSize) {
   healthText_->setText(healthToString());
   healthText_->setColor({255, 255, 255, 0});
   sizeText_->setText(sizeToString());
-  sizeText_->setColor({0, 0, 255, 0});
+  sizeText_->setColor({255, 255, 255, 0});
 }
 
 void Battalion::moveToBox(Box* box) {

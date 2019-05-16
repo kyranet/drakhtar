@@ -3,6 +3,7 @@
 #include "UnitsController.h"
 #include "Errors/DrakhtarError.h"
 #include "EventListeners/EventListener.h"
+#include "GameObjects/Battalion.h"
 #include "GameObjects/Board.h"
 #include "GameObjects/HealthBar.h"
 #include "GameObjects/Text.h"
@@ -68,6 +69,11 @@ void UnitsController::onDamage(const UnitState& stats) {
   stats.unit_->getHealthBar()->takeDamage(stats.health_);
   stats.unit_->getHealthText()->setText(stats.unit_->healthToString());
   stats.unit_->getHealthText()->setColor({255, 255, 255, 0});
+
+  if (!stats.unit_->isCommander()) {
+    reinterpret_cast<Battalion*>(stats.unit_)
+        ->setBattalionSize(stats.battalionSize_);
+  }
 }
 
 void UnitsController::onKill(const UnitState& stats) {
@@ -88,6 +94,9 @@ void UnitsController::onKill(const UnitState& stats) {
       reinterpret_cast<GameScene*>(Game::getSceneMachine()->getCurrentScene())
           ->gameOver(stats.team_ != Color::BLUE);
       return;
+    } else {
+      reinterpret_cast<Battalion*>(stats.unit_)
+          ->setBattalionSize(stats.battalionSize_);
     }
 
     // This is in the case the unit dies on counter-attack, skip turn
