@@ -18,6 +18,9 @@ void State::setController(UnitsController* controller) {
   controller_ = controller;
 }
 
+void State::save() {}
+void State::restore() {}
+
 UnitsController* State::getController() const { return controller_; }
 
 void State::next() {
@@ -70,7 +73,8 @@ int16_t State::getRemainingSkillCooldown(const std::string& skillId) {
   return skillsUsed_[skillId].cooldown_;
 }
 
-void State::castSkill(Unit* caster, const std::string& skillId, int16_t cooldown) {
+void State::castSkill(Unit* caster, const std::string& skillId,
+                      int16_t cooldown) {
   skillsUsed_[skillId] = {caster, cooldown};
 }
 

@@ -96,6 +96,9 @@ class State {
   void setUnits(const std::vector<Unit*>&, const std::vector<Unit*>&);
   void setBoard(uint16_t rows, uint16_t columns);
 
+  void save();
+  void restore();
+
   std::vector<UnitState> getBoard() const;
 
   void setController(UnitsController* controller);
