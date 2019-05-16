@@ -11,6 +11,8 @@
 #include "Managers/State.h"
 #include "Scenes/GameScene.h"
 #include "Scenes/Scene.h"
+#include "Structures/Game.h"
+#include "Structures/SceneMachine.h"
 #include "Structures/Team.h"
 #include "Structures/Texture.h"
 
@@ -83,7 +85,7 @@ void UnitsController::onKill(const UnitState& stats) {
 
     // If the unit who got killed is the commander, it should finish the scene
     if (stats.unit_->isCommander()) {
-      reinterpret_cast<GameScene*>(getActiveUnit()->getScene())
+      reinterpret_cast<GameScene*>(Game::getSceneMachine()->getCurrentScene())
           ->gameOver(stats.team_ != Color::BLUE);
       return;
     }
