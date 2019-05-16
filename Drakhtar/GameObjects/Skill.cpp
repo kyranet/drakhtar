@@ -105,6 +105,7 @@ ArrowRain::ArrowRain(Commander* caster) : Skill("ArrowRain", 4, 0, caster) {
 }
 
 void ArrowRain::cast() {
+  Skill::cast();
   // if (remainingCooldown_ == 0 && caster_->getMoving()) {
   //   Skill::cast();
   //   SDLAudioManager::getInstance()->playChannel(11, 0, 1);
@@ -133,6 +134,7 @@ HeroicStrike::HeroicStrike(Commander* caster)
 }
 
 void HeroicStrike::cast() {
+  Skill::cast();
   // if (remainingCooldown_ == 0 && caster_->getMoving()) {
   //   Skill::cast();
   //   attackIncrement_ = caster_->getStats().attack * 0.5;
@@ -154,6 +156,7 @@ WitheringCurse::WitheringCurse(Commander* caster)
 }
 
 void WitheringCurse::cast() {
+  Skill::cast();
   // if (remainingCooldown_ == 0 && caster_->getMoving()) {
   //   Skill::cast();
   //   for (auto unit : scene_->getEnemyTeam(caster_)->getUnits()) {
@@ -173,6 +176,7 @@ Charge::Charge(Commander* caster) : Skill("Charge", 1, 0, caster) {
 }
 
 void Charge::cast() {
+  Skill::cast();
   // if (remainingCooldown_ == 0 && caster_->getMoving()) {
   //   Skill::cast();
   //   caster_->setUnstoppable(true);
@@ -188,6 +192,7 @@ Berserker::Berserker(Commander* caster) : Skill("Berserker", 4, 2, caster) {
 }
 
 void Berserker::cast() {
+  Skill::cast();
   // if (remainingCooldown_ == 0 && caster_->getMoving()) {
   //   Skill::cast();
   //   caster_->setAttack(caster_->getStats().attack * 2);
@@ -206,6 +211,7 @@ DeathRay::DeathRay(Commander* caster) : Skill("Death Ray", 3, 0, caster) {
 }
 
 void DeathRay::cast() {
+  Skill::cast();
   // if (remainingCooldown_ == 0 && caster_->getMoving()) {
   //   Skill::cast();
   //   // Searches for the furthest unit
@@ -237,6 +243,7 @@ Reinforce::Reinforce(Commander* caster) : Skill("Reinforce", 1, 0, caster) {
 }
 
 void Reinforce::cast() {
+  Skill::cast();
   // if (remainingCooldown_ == 0 && caster_->getMoving()) {
   //   Skill::cast();
   //   const auto state = scene_->getState();

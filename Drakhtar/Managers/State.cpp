@@ -18,6 +18,8 @@ void State::setController(UnitsController* controller) {
   controller_ = controller;
 }
 
+UnitsController* State::getController() const { return controller_; }
+
 void State::next() {
   const auto it = turns_.begin();
   const auto unit = *it;
@@ -43,16 +45,10 @@ void State::next() {
     }
 
     // Update all skills
-    for (auto sIt = skillsUsed_.begin(); sIt != skillsUsed_.end(); ++sIt) {
-      auto& pair = *sIt;
+    for (auto& pair : skillsUsed_) {
       if (pair.second.caster_ != getActiveUnit()) continue;
-      if (pair.second.duration_ != 0) {
-        --pair.second.duration_;
-      } else if (pair.second.cooldown_ != 0) {
+      if (pair.second.cooldown_ != 0) {
         --pair.second.cooldown_;
-      } else {
-        skillsUsed_.erase(pair.first);
-        sIt = skillsUsed_.begin();
       }
     }
   }

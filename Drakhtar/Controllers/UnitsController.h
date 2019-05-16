@@ -70,6 +70,9 @@ class UnitsController {
    */
   virtual void start();
 
+  bool canMove() const { return canMove_; }
+  bool canAttack() const { return canAttack_; }
+
   /**
    * \brief Is called when this controller has finished processing this turn.
    */

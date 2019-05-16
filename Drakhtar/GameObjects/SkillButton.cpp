@@ -2,6 +2,7 @@
 
 #include "SkillButton.h"
 #include "Commanders/Commander.h"
+#include "Controllers/PlayerController.h"
 #include "EventListeners/SkillButtonListener.h"
 #include "GameObjects/ButtonText.h"
 #include "Managers/Input.h"
@@ -31,15 +32,31 @@ SkillButton::SkillButton(GameScene* scene, Texture* texture,
   addChild(buttonText_);
 }
 
+bool SkillButton::isActive() const {
+  const auto state = reinterpret_cast<GameScene*>(getScene())->getState();
+  return state->getActiveUnit() == commander_ &&
+         skill_->getRemainingCooldown() == 0;
+}
+
 void SkillButton::handleEvents(SDL_Event e) {
   hoverListener_->run(e);
 
   // Only handle when it's a left click
-  if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT) {
+  if (isActive() && e.type == SDL_MOUSEBUTTONDOWN &&
+      e.button.button == SDL_BUTTON_LEFT) {
     SDL_Point p = {e.button.x, e.button.y};
     const auto rect = getRect();
     if (SDL_PointInRect(&p, &rect)) {
       skill_->cast();
+
+      const auto player = dynamic_cast<PlayerController*>(
+          gameScene_->getState()->getController());
+      if (player) {
+        player->highlightCells();
+        if (!player->canAttack() && player->canMove() &&
+            !player->canCastSkills())
+          player->finish();
+      }
     }
   }
 
@@ -69,12 +86,8 @@ void SkillButton::render(SDL_Rect rect) const {
     disabledText_->renderFrame(rect,
                                texture_->getAnimation()[texture_->getFrame()]);
   } else {
-    const auto scene = reinterpret_cast<GameScene*>(getScene());
-    const auto state = scene->getState();
-
     // Disable button if the skill is in CD or its not the unit's turn
-    if (state->getActiveUnit() == commander_ ||
-        skill_->getRemainingCooldown() != 0) {
+    if (!isActive()) {
       if (getRenderizable() && disabledText_ != nullptr) {
         disabledText_->renderFrame(
             rect, texture_->getAnimation()[texture_->getFrame()]);

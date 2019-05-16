@@ -100,6 +100,7 @@ class State {
   std::vector<UnitState> getBoard() const;
 
   void setController(UnitsController* controller);
+  UnitsController* getController() const;
 
   void next();
 
