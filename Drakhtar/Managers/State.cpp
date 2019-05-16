@@ -10,6 +10,8 @@
 #include "GameObjects/Skill.h"
 #include "GameObjects/Unit.h"
 
+std::stack<State> State::stack_ = {};
+
 State::State() = default;
 
 std::vector<UnitState> State::getBoard() const { return board_; }
@@ -18,8 +20,20 @@ void State::setController(UnitsController* controller) {
   controller_ = controller;
 }
 
-void State::save() {}
-void State::restore() {}
+void State::save() {
+  stack_.push(*this);
+}
+void State::restore() {
+  if (stack_.empty()) return;
+  const auto old = stack_.top();
+  rows_ = old.rows_;
+  columns_ = old.columns_;
+  turns_ = old.turns_;
+  board_ = old.board_;
+  skillsUsed_ = old.skillsUsed_;
+  controller_ = old.controller_;
+  stack_.pop();
+}
 
 UnitsController* State::getController() const { return controller_; }
 

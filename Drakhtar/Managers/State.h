@@ -6,6 +6,7 @@
 #include <map>
 #include <utility>
 #include <vector>
+#include <stack>
 #include "Structures/Team.h"
 #include "Utils/Vector2D.h"
 
@@ -90,6 +91,8 @@ class State {
   UnitsController* controller_ = nullptr;
 
   void insert(const std::vector<Unit*>& units);
+
+  static std::stack<State> stack_;
 
  public:
   State();

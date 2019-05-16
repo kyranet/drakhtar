@@ -10,7 +10,7 @@ AIController::AIController(Board* board, GameScene* scene, Team* team,
                            Team* oppositeTeam)
     : UnitsController(board, scene, team, oppositeTeam) {}
 
-int AIController::minimax(uint16_t depth, int alpha, int beta,
+int AIController::minimax(int depth, int alpha, int beta,
                           bool isMaximisingPlayer) const {
   if (depth == 0) {
     return -evaluateBoard();
@@ -22,10 +22,10 @@ int AIController::minimax(uint16_t depth, int alpha, int beta,
   const auto stats = state->getModifiedAt(position);
   if (isMaximisingPlayer) {
     int bestMove = -9999;
-    // TODO(kyranet): Use this
     for (const auto& move :
          state->getCellsInMovementRange(position, stats.moveRange_)) {
       state->save();
+      state->move(position, move);
       bestMove = std::max(bestMove,
                           minimax(depth - 1, alpha, beta, !isMaximisingPlayer));
       state->restore();
@@ -34,11 +34,13 @@ int AIController::minimax(uint16_t depth, int alpha, int beta,
         return bestMove;
       }
     }
+    return bestMove;
   } else {
     int bestMove = 9999;
     for (const auto& move :
          state->getCellsInMovementRange(position, stats.moveRange_)) {
       state->save();
+      state->move(position, move);
       bestMove = std::min(bestMove,
                           minimax(depth - 1, alpha, beta, !isMaximisingPlayer));
       state->restore();
@@ -47,6 +49,7 @@ int AIController::minimax(uint16_t depth, int alpha, int beta,
         return bestMove;
       }
     }
+    return bestMove;
   }
 }
 

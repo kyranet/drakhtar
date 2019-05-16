@@ -4,8 +4,7 @@
 #include "UnitsController.h"
 
 class AIController final : public UnitsController {
-  int minimax(uint16_t depth, int alpha, int beta,
-              bool isMaximisingPlayer) const;
+  int minimax(int depth, int alpha, int beta, bool isMaximisingPlayer) const;
   int evaluateBoard() const;
 
  public:
