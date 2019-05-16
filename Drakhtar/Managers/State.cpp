@@ -10,7 +10,7 @@
 #include "GameObjects/Skill.h"
 #include "GameObjects/Unit.h"
 
-std::stack<State> State::stack_ = {};
+std::stack<State> State::stack_; // NOLINT(cert-err58-cpp)
 
 State::State() = default;
 
