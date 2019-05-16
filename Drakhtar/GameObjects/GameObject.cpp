@@ -80,6 +80,7 @@ void GameObject::setTransparent(const bool transparent) {
 
 bool GameObject::getTransparent() const { return transparent_; }
 
+// TODO(kyranet): Call this, renderable. Please.
 void GameObject::setRenderizable(bool renderizable) {
   renderizable_ = renderizable;
 }

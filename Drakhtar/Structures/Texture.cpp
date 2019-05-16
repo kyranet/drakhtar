@@ -168,6 +168,10 @@ void Texture::setAnimationOnce(const std::string& name) {
   setAnimation(name);
 }
 
+void Texture::setAnimationOnEnd(std::function<void()> listener) {
+  animationOnEndHandler_ = listener;
+}
+
 bool Texture::hasAnimation(const std::string& name) const {
   return animations_.count(name) != 0;
 }
@@ -189,6 +193,10 @@ void Texture::tick() {
       const auto nextAnimation = previousAnimation_;
       previousAnimation_ = "";
       setAnimation(nextAnimation);
+      if (animationOnEndHandler_) {
+        animationOnEndHandler_();
+        setAnimationOnEnd(nullptr);
+      }
     }
   }
 }

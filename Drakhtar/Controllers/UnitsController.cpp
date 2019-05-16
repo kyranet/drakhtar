@@ -12,6 +12,7 @@
 #include "Scenes/GameScene.h"
 #include "Scenes/Scene.h"
 #include "Structures/Team.h"
+#include "Structures/Texture.h"
 
 UnitsController::UnitsController(Board* board, GameScene* scene, Team* team,
                                  Team* oppositeTeam)
@@ -73,22 +74,28 @@ void UnitsController::onKill(const UnitState& stats) {
     GameManager::getInstance()->addMoney(stats.prize_);
   }
 
-  // If the unit who got killed is the commander, it should finish the scene
-  if (stats.unit_->isCommander()) {
-    reinterpret_cast<GameScene*>(getActiveUnit()->getScene())
-        ->gameOver(stats.team_ != Color::BLUE);
-    return;
-  }
+  stats.unit_->getTexture()->setAnimationOnce("death");
+  stats.unit_->getTexture()->setAnimationOnEnd([this, stats]() {
+    // Don't make it renderable after dying.
+    stats.unit_->setRenderizable(false);
 
-  // This is in the case the unit dies on counter-attack, skip turn
-  if (stats.unit_ == activeUnit_) {
-    // Clean up to signal the controller to finish the turn
-    activeUnit_ = nullptr;
+    // If the unit who got killed is the commander, it should finish the scene
+    if (stats.unit_->isCommander()) {
+      reinterpret_cast<GameScene*>(getActiveUnit()->getScene())
+          ->gameOver(stats.team_ != Color::BLUE);
+      return;
+    }
 
-    // Unit dies to counter-attack
-    finish();
-  }
+    // This is in the case the unit dies on counter-attack, skip turn
+    if (stats.unit_ == activeUnit_) {
+      // Clean up to signal the controller to finish the turn
+      activeUnit_ = nullptr;
 
-  // Clean up
-  stats.unit_->kill();
+      // Unit dies to counter-attack
+      finish();
+    }
+
+    // Clean up
+    stats.unit_->kill();
+  });
 }

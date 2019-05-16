@@ -5,8 +5,8 @@
 #include <map>
 #include <string>
 #include <vector>
-
-#include "../Utils/Vector2D.h"
+#include <functional>
+#include "Utils/Vector2D.h"
 #include "SDL.h"
 
 class Font;
@@ -32,6 +32,7 @@ class Texture final {
   std::map<std::string, AnimationTextureInfo> animations_;
   std::string previousAnimation_;
   AnimationTextureInfo animation_;
+  std::function<void()> animationOnEndHandler_ = nullptr;
   Uint16 frame_ = 0;
   SDL_RendererFlip flip_ = SDL_FLIP_NONE;
   Vector2D<int> offset_;
@@ -84,6 +85,7 @@ class Texture final {
                         Uint16 frameRate = 0);
   void setAnimation(const std::string& name);
   void setAnimationOnce(const std::string& name);
+  void setAnimationOnEnd(std::function<void()>);
   bool hasAnimation(const std::string& name) const;
 
   void tick();

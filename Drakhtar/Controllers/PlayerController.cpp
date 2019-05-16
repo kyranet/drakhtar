@@ -97,6 +97,7 @@ void PlayerController::onClickAttack(Box* boxClicked) {
       !state->attack(stats.position_, enemyStats.position_))
     return;
 
+  activeUnit_->getTexture()->setAnimationOnce("attack");
   hasAttacked_ = true;
   canAttack_ = false;
 
