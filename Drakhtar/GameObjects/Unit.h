@@ -13,8 +13,6 @@ class HealthBar;
 class Scene;
 
 class Unit : public GameObject {
-  bool hasCounterAttacked_ = false;
-
   Team* team_ = nullptr;
   std::string type_;
 
@@ -39,11 +37,6 @@ class Unit : public GameObject {
   Box* getBox() const { return box_; }
   std::string getType() const { return type_; }
 
-  bool getHasCounterAttacked() const { return hasCounterAttacked_; }
-  void setHasCounterAttacked(const bool counter) {
-    hasCounterAttacked_ = counter;
-  }
-
   void setTeam(Team* team) { team_ = team; }
 
   HealthBar* getHealthBar() const { return healthBar_; }
@@ -52,13 +45,8 @@ class Unit : public GameObject {
   Text* getHealthText() const { return healthText_; }
 
   virtual void moveToBox(Box* box);
-  virtual int loseHealth(int enemyAttack, int minDamage);
   void update() override;
-  virtual void attack(Unit* enemy, bool allowsCounter);
   virtual void kill();
-
-  virtual void onSelect();
-  virtual void onDeselect();
 
   virtual void setBuffed(bool buffed);
   virtual void setDebuffed(bool debuffed);

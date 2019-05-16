@@ -33,12 +33,10 @@ void UnitsController::start() {
   // Deactivate all listeners
   for (auto& listener : listeners_) listener->setActive(true);
   activeUnit_ = getState()->getActiveUnit();
-  activeUnit_->onSelect();
 }
 
 void UnitsController::finish() {
   if (activeUnit_ != nullptr) {
-    activeUnit_->onDeselect();
     for (auto& listener : listeners_) listener->setActive(false);
     activeUnit_ = nullptr;
   }

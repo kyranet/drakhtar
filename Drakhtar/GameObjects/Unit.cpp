@@ -79,55 +79,12 @@ void Unit::moveToBox(Box* newBox) {
                                     static_cast<int>(rect.y + rect.h / 1.2)));
 }
 
-int Unit::loseHealth(int enemyAttack, int) {
-  // enemyAttack = static_cast<int>(enemyAttack * (1.0 - stats_.defense /
-  // 100.0)); enemyAttack = std::min(std::max(enemyAttack, minDamage),
-  // stats_.maxHealth);
-
-  // health_ = std::max(health_ - enemyAttack, 0);
-
-  healthText_->setText(healthToString());
-  const SDL_Color textColor = {255, 255, 255, 0};
-  healthText_->setColor(textColor);
-  // healthBar_->takeDamage(health_);
-
-  return enemyAttack;
-}
-
 void Unit::update() { healthBar_->update(); }
-
-void Unit::onSelect() { setHasCounterAttacked(false); }
-
-void Unit::onDeselect() { /* setMoving(false); */
-}
 
 void Unit::setBuffed(bool buffed) { healthBar_->setStatUpRenderizable(buffed); }
 
 void Unit::setDebuffed(bool debuffed) {
   healthBar_->setStatDownRenderizable(debuffed);
-}
-
-void Unit::attack(Unit* enemy, const bool) {
-  // enemy->loseHealth(getStats().attack, minDamage_);
-
-  const auto scene = reinterpret_cast<GameScene*>(getScene());
-  const auto state = scene->getState();
-
-  // If the target is an archer and is in range 1, it can never counter-attack
-  if (enemy->getType() == "Archer" &&
-      state->isInRange(box_->getIndex(), enemy->getBox()->getIndex(), 1)) {
-    return;
-  }
-
-  // If the attack allows a counter and the enemy is
-  // alive and within attack range, counter-attack
-  // if (allowsCounter && enemy->getHealth() > 0 &&
-  //     state->isInRange(box_->getIndex(), enemy->getBox()->getIndex(),
-  //                      enemy->getStats().attackRange) &&
-  //     !enemy->getHasCounterAttacked()) {
-  //   enemy->attack(this, false);
-  //   enemy->setHasCounterAttacked(true);
-  // }
 }
 
 void Unit::kill() {

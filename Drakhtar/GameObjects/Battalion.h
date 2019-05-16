@@ -18,9 +18,9 @@ class Battalion final : public Unit {
   std::string sizeToString() const;
 
  public:
-  Battalion(Scene* scene, Texture* texture, Box* box, const UnitStats stats,
+  Battalion(Scene* scene, Texture* texture, Box* box, UnitStats stats,
             const std::string& type, uint16_t battalionSize);
-  virtual ~Battalion();
+  ~Battalion() override;
 
   uint16_t getBattalionSize() const { return battalionSize_; }
   void setBattalionSize(uint16_t battalionSize);
