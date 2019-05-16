@@ -98,7 +98,7 @@ void GameScene::preload() {
               if (boxAIndex.getY() < boxBIndex.getY())
                 return true;
               else if (boxAIndex.getY() == boxBIndex.getY() &&
-                       boxAIndex.getX() > boxBIndex.getX())
+                       boxAIndex.getX() < boxBIndex.getX())
                 return true;
               else
                 return false;
