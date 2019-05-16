@@ -204,7 +204,7 @@ void PlayerController::highlightCells() {
 }
 
 std::vector<Vector2D<double>> PlayerController::pathToRoute(
-    const std::vector<Vector2D<byte>>& path) const {
+    const std::vector<Vector2D<uint16_t>>& path) const {
   std::vector<Vector2D<double>> vector;
   vector.reserve(path.size());
 

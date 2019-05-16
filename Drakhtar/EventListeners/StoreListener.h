@@ -15,7 +15,7 @@ struct StoreUnit {
   std::string type;
   GameObject* unit = nullptr;
   int cost_;
-  byte amount_ = 0;
+  uint16_t amount_ = 0;
   Text* amountText = nullptr;
 
   StoreUnit(const std::string& type, GameObject* unit, int cost)

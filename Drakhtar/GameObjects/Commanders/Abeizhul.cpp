@@ -20,7 +20,7 @@ int Abeizhul::loseHealth(int enemyAttack, int minDamage) {
   const auto stats = state->getAt(getBox()->getIndex());
 
   if (stats.health_ - enemyAttack > 0) {
-    Vector2D<byte> newIndex{static_cast<byte>(box_->getIndex().getX() + 2),
+    Vector2D<uint16_t> newIndex{static_cast<uint16_t>(box_->getIndex().getX() + 2),
                             box_->getIndex().getY()};
     const auto board = reinterpret_cast<GameScene*>(scene_)->getBoard();
     if (box_->getIndex().getX() + 2 < board->getCols()) {

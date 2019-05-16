@@ -7,8 +7,6 @@
 #include <type_traits>
 #include "SDL_stdinc.h"
 
-using byte = uint16_t;
-
 /**
  * \brief The Vector2D class that manages all vectors in the game.
  * \tparam T The value type this instance will hold and use.

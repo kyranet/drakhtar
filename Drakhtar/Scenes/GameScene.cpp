@@ -78,7 +78,7 @@ void GameScene::preload() {
   auto army = GameManager::getInstance()->getArmy();
   auto typeOrder = GameManager::getInstance()->getTypeOrder();
 
-  byte y = 1;
+  uint16_t y = 1;
   for (const auto& pair : typeOrder) {
     if (army[pair.second] > 0) {
       addGameObject(factory.newBattalion(
@@ -187,7 +187,7 @@ void GameScene::readLevel(UnitFactory& factory) {
 
   if (file.fail()) throw DrakhtarError("File is not a level file");
 
-  byte rowSize, columnSize;
+  uint16_t rowSize, columnSize;
 
   file >> rowSize >> columnSize;
 
@@ -203,7 +203,7 @@ void GameScene::readLevel(UnitFactory& factory) {
 
   file >> commanderName;
 
-  byte row, col, size;
+  uint16_t row, col, size;
 
   file >> row >> col;
   Commander* commander =

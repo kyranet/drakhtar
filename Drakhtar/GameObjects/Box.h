@@ -23,7 +23,7 @@ class Box final : public GameObject {
   /**
    * \brief The row and column this box occupies in the board matrix.
    */
-  Vector2D<byte> boardIndex_;
+  Vector2D<uint16_t> boardIndex_;
 
   /**
    * \brief The index of current texture in the box texture array.
@@ -47,7 +47,7 @@ class Box final : public GameObject {
 
  public:
   Box(Scene* scene, const Vector2D<int>& pos, const Vector2D<int>& size,
-      const Vector2D<byte>& boardIndex);
+      const Vector2D<uint16_t>& boardIndex);
 
   /**
    * \return The SDL_Rect of the box, being its position, width and height.
@@ -73,7 +73,7 @@ class Box final : public GameObject {
   /**
    * \return A vector2D of the row and column this box occupies in the board.
    */
-  Vector2D<byte> getIndex() const;
+  Vector2D<uint16_t> getIndex() const;
 
   /**
    * \return An enum of the current texture being rendered by this box.

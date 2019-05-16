@@ -75,12 +75,12 @@ void State::insert(const std::vector<Unit*>& units) {
     } else {
       const auto battalion = reinterpret_cast<Battalion*>(unit);
       const auto size = battalion->getBattalionSize();
-      UnitState state(unit, color, boxPosition,
-                      static_cast<uint16_t>(base.attack * size),
-                      static_cast<uint16_t>(base.maxHealth * size), size,
-                      base.defense, static_cast<uint16_t>(base.maxHealth * size),
-                      base.attackRange, base.moveRange, base.speed,
-                      static_cast<uint16_t>(base.prize * size), size, false);
+      UnitState state(
+          unit, color, boxPosition, static_cast<uint16_t>(base.attack * size),
+          static_cast<uint16_t>(base.maxHealth * size), size, base.defense,
+          static_cast<uint16_t>(base.maxHealth * size), base.attackRange,
+          base.moveRange, base.speed, static_cast<uint16_t>(base.prize * size),
+          size, false);
       turns_.push_back(state);
       setAt(boxPosition, state);
     }
@@ -128,7 +128,8 @@ bool State::attack(const Vector2D<uint16_t>& from, const Vector2D<uint16_t>& to,
           static_cast<int>(previous.attack_ * (1.0 - enemy.defense_ / 100.0)),
           static_cast<int>(previous.minimumAttack_)),
       static_cast<int>(enemy.maxHealth_));
-  const auto health = static_cast<uint16_t>(std::max(enemy.health_ - damage, 0));
+  const auto health =
+      static_cast<uint16_t>(std::max(enemy.health_ - damage, 0));
 
   if (health == 0) {
     removeAt(to);
@@ -156,8 +157,8 @@ bool State::attack(const Vector2D<uint16_t>& from, const Vector2D<uint16_t>& to,
       const auto battalionSize = static_cast<uint16_t>(
           std::ceil(static_cast<float>(health * enemy.battalionSize_) /
                     static_cast<float>(enemy.maxHealth_)));
-      const auto attack =
-          static_cast<uint16_t>(enemy.unit_->getBaseStats().attack * battalionSize);
+      const auto attack = static_cast<uint16_t>(
+          enemy.unit_->getBaseStats().attack * battalionSize);
       const auto minimumDamage = static_cast<uint16_t>(battalionSize);
 
       const UnitState updated(enemy.unit_, enemy.team_, enemy.position_, attack,
@@ -187,8 +188,8 @@ void State::removeAt(const Vector2D<uint16_t>& position) {
         {nullptr, Color::BLUE, position, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, false});
 }
 
-std::vector<Vector2D<uint16_t>> State::findPath(const Vector2D<uint16_t>& start,
-                                            const Vector2D<uint16_t>& end) const {
+std::vector<Vector2D<uint16_t>> State::findPath(
+    const Vector2D<uint16_t>& start, const Vector2D<uint16_t>& end) const {
   // Create path generator
   AStar::Generator generator;
   generator.setWorldSize({columns_, rows_});
@@ -219,8 +220,8 @@ std::vector<Vector2D<uint16_t>> State::findPath(const Vector2D<uint16_t>& start,
   return pathList;
 }
 
-bool State::isInRange(const Vector2D<uint16_t>& from, const Vector2D<uint16_t>& to,
-                      int range) const {
+bool State::isInRange(const Vector2D<uint16_t>& from,
+                      const Vector2D<uint16_t>& to, int range) const {
   const auto distanceX = abs(static_cast<int>(to.getX() - from.getX()));
   const auto distanceY = abs(static_cast<int>(to.getY() - from.getY()));
   const auto totalDistance = distanceX + distanceY;
@@ -228,8 +229,8 @@ bool State::isInRange(const Vector2D<uint16_t>& from, const Vector2D<uint16_t>& 
   return range >= totalDistance;
 }
 
-bool State::isInMoveRange(const Vector2D<uint16_t>& from, const Vector2D<uint16_t>& to,
-                          int range) const {
+bool State::isInMoveRange(const Vector2D<uint16_t>& from,
+                          const Vector2D<uint16_t>& to, int range) const {
   auto path = findPath(from, to);
   if (path.empty()) {
     return false;

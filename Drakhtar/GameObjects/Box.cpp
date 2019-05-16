@@ -13,7 +13,7 @@
 #include "Unit.h"
 
 Box::Box(Scene* scene, const Vector2D<int>& pos, const Vector2D<int>& size,
-         const Vector2D<byte>& boardIndex)
+         const Vector2D<uint16_t>& boardIndex)
     : GameObject(scene, nullptr, pos, size),
       boardIndex_(boardIndex),
       size_(size) {
@@ -74,7 +74,7 @@ void Box::update() {
 // ---------- Getters and Setters ----------
 bool Box::isEmpty() const { return getContent() == nullptr; }
 
-Vector2D<byte> Box::getIndex() const { return boardIndex_; }
+Vector2D<uint16_t> Box::getIndex() const { return boardIndex_; }
 
 TextureInd Box::getCurrentTexture() const { return cellTexture_; }
 

@@ -1,14 +1,14 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "SkillButton.h"
-#include "Structures/Texture.h"
 #include "Commanders/Commander.h"
 #include "EventListeners/SkillButtonListener.h"
 #include "GameObjects/ButtonText.h"
-#include "SkillDescriptionBox.h"
 #include "Managers/Input.h"
-#include "Scenes/GameScene.h"
 #include "Managers/State.h"
+#include "Scenes/GameScene.h"
+#include "SkillDescriptionBox.h"
+#include "Structures/Texture.h"
 
 SkillButton::SkillButton(GameScene* scene, Texture* texture,
                          Texture* disabledText, Vector2D<int> pos,
@@ -17,7 +17,7 @@ SkillButton::SkillButton(GameScene* scene, Texture* texture,
       commander_(commander),
       gameScene_(scene),
       disabledText_(disabledText) {
-  skill_ = commander_->getSkills().at(static_cast<byte>(skill));
+  skill_ = commander_->getSkills().at(static_cast<uint16_t>(skill));
 
   skillDescriptionBox_ = new SkillDescriptionBox(scene, this);
   addChild(skillDescriptionBox_);
@@ -73,7 +73,8 @@ void SkillButton::render(SDL_Rect rect) const {
     const auto state = scene->getState();
 
     // Disable button if the skill is in CD or its not the unit's turn
-    if (state->getActiveUnit() == commander_ || skill_->getRemainingCooldown() != 0) {
+    if (state->getActiveUnit() == commander_ ||
+        skill_->getRemainingCooldown() != 0) {
       if (getRenderizable() && disabledText_ != nullptr) {
         disabledText_->renderFrame(
             rect, texture_->getAnimation()[texture_->getFrame()]);

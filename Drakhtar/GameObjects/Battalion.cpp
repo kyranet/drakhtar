@@ -18,7 +18,7 @@
 
 Battalion::Battalion(Scene* scene, Texture* texture, Box* box,
                      const UnitStats stats, const std::string& type,
-                     const byte battalionSize)
+                     const uint16_t battalionSize)
     : Unit(scene, texture, box, stats, type), battalionSize_(battalionSize) {}
 
 void Battalion::setHealthBar() {
@@ -54,7 +54,7 @@ std::string Battalion::sizeToString() const {
   return std::to_string(battalionSize_);
 }
 
-void Battalion::setBattalionSize(const byte battalionSize) {
+void Battalion::setBattalionSize(const uint16_t battalionSize) {
   battalionSize_ = battalionSize;
   healthText_->setText(healthToString());
   healthText_->setColor({255, 255, 255, 0});
@@ -76,9 +76,8 @@ void Battalion::moveToBox(Box* box) {
 void Battalion::render() const {
   if (battalionSize_ > 3) {
     auto aux = getRect();
-    aux.x += getTexture()->getFlip() == SDL_FLIP_HORIZONTAL
-                 ? -size_.getX() / 4
-                 : size_.getX() / 4;
+    aux.x += getTexture()->getFlip() == SDL_FLIP_HORIZONTAL ? -size_.getX() / 4
+                                                            : size_.getX() / 4;
     aux.y -= size_.getY() / 5;
     texture_->renderFrame(aux, texture_->getAnimation()[texture_->getFrame()]);
   }
@@ -87,9 +86,8 @@ void Battalion::render() const {
     texture_->renderFrame(aux, texture_->getAnimation()[texture_->getFrame()]);
   }
   auto aux = getRect();
-  aux.x += getTexture()->getFlip() == SDL_FLIP_HORIZONTAL
-               ? -size_.getX() / 4
-               : size_.getX() / 4;
+  aux.x += getTexture()->getFlip() == SDL_FLIP_HORIZONTAL ? -size_.getX() / 4
+                                                          : size_.getX() / 4;
   aux.y += size_.getY() / 5;
   Unit::render(aux);
 }

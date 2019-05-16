@@ -24,7 +24,7 @@ class Board final : public GameObject {
   /**
    * \brief The number of rows and columns this board is composed of.
    */
-  byte rows_, columns_;
+  uint16_t rows_, columns_;
 
   /**
    * \brief The size of each cell of the board (Applies to both width and
@@ -33,7 +33,7 @@ class Board final : public GameObject {
   double cellSize_;
 
  public:
-  Board(Scene* scene, byte rows, byte columns, double cellSize);
+  Board(Scene* scene, uint16_t rows, uint16_t columns, double cellSize);
   virtual ~Board();
 
   /**
@@ -45,17 +45,17 @@ class Board final : public GameObject {
   /**
    * \return The number of rows of the board.
    */
-  byte getRows() const { return rows_; }
+  uint16_t getRows() const { return rows_; }
 
   /**
    * \return The number of columns of the board.
    */
-  byte getCols() const { return columns_; }
+  uint16_t getCols() const { return columns_; }
 
   /**
    * \param x: The row the box is placed in.
    * \param y: The column the box is placed in.
    * \return A pointer to de box in row "x" and column "y".
    */
-  Box* getBoxAt(byte x, byte y) const;
+  Box* getBoxAt(uint16_t x, uint16_t y) const;
 };

@@ -26,10 +26,11 @@ struct UnitState {
         prize_(0U),
         battalionSize_(0U),
         counterAttacked_(false) {}
-  UnitState(Unit* unit, Color team, Vector2D<byte> position, byte attack,
-            byte health, byte minimumAttack, byte defense, byte maxHealth,
-            byte attackRange, byte moveRange, byte speed, byte prize,
-            byte battalionSize, bool counterAttacked)
+  UnitState(Unit* unit, Color team, Vector2D<uint16_t> position,
+            uint16_t attack, uint16_t health, uint16_t minimumAttack,
+            uint16_t defense, uint16_t maxHealth, uint16_t attackRange,
+            uint16_t moveRange, uint16_t speed, uint16_t prize,
+            uint16_t battalionSize, bool counterAttacked)
       : unit_(unit),
         team_(team),
         position_(position),
@@ -46,22 +47,22 @@ struct UnitState {
         counterAttacked_(counterAttacked) {}
   Unit* unit_;
   Color team_;
-  Vector2D<byte> position_;
-  byte attack_;
-  byte health_;
-  byte minimumAttack_;
-  byte defense_;
-  byte maxHealth_;
-  byte attackRange_;
-  byte moveRange_;
-  byte speed_;
-  byte prize_;
-  byte battalionSize_;
+  Vector2D<uint16_t> position_;
+  uint16_t attack_;
+  uint16_t health_;
+  uint16_t minimumAttack_;
+  uint16_t defense_;
+  uint16_t maxHealth_;
+  uint16_t attackRange_;
+  uint16_t moveRange_;
+  uint16_t speed_;
+  uint16_t prize_;
+  uint16_t battalionSize_;
   bool counterAttacked_;
 };
 
 class State {
-  byte rows_ = 0, columns_ = 0;
+  uint16_t rows_ = 0, columns_ = 0;
   std::vector<UnitState> turns_{};
   std::vector<UnitState> board_{};
   UnitsController* controller_ = nullptr;
@@ -71,21 +72,21 @@ class State {
  public:
   State();
   void setUnits(const std::vector<Unit*>&, const std::vector<Unit*>&);
-  void setBoard(byte rows, byte columns);
+  void setBoard(uint16_t rows, uint16_t columns);
 
   void setController(UnitsController* controller);
 
   void next();
 
-  void setAt(const Vector2D<byte>& position, const UnitState& state);
-  const UnitState getAt(const Vector2D<byte>& position) const;
+  void setAt(const Vector2D<uint16_t>& position, const UnitState& state);
+  const UnitState getAt(const Vector2D<uint16_t>& position) const;
 
-  Unit* getUnitAt(const Vector2D<byte>& position) const;
+  Unit* getUnitAt(const Vector2D<uint16_t>& position) const;
 
-  bool move(const Vector2D<byte>& from, const Vector2D<byte>& to);
-  bool attack(const Vector2D<byte>& from, const Vector2D<byte>& to,
+  bool move(const Vector2D<uint16_t>& from, const Vector2D<uint16_t>& to);
+  bool attack(const Vector2D<uint16_t>& from, const Vector2D<uint16_t>& to,
               bool counterAttack = false);
-  void removeAt(const Vector2D<byte>& position);
+  void removeAt(const Vector2D<uint16_t>& position);
 
   Unit* getActiveUnit() const;
 
@@ -94,7 +95,7 @@ class State {
     std::array<Unit*, N> units;
 
     auto it = turns_.begin();
-    for (byte i = 0, max = units.size(); i < max; i++) {
+    for (uint16_t i = 0, max = units.size(); i < max; i++) {
       units[i] = (*it).unit_;
       if (++it == turns_.end()) it = turns_.begin();
     }
@@ -109,7 +110,7 @@ class State {
    * \param range: The number of boxes we can reach in any direction.
    * \return Whether or not the two boxes are "range" or less boxes away
    */
-  bool isInRange(const Vector2D<byte>& from, const Vector2D<byte>& to,
+  bool isInRange(const Vector2D<uint16_t>& from, const Vector2D<uint16_t>& to,
                  int range) const;
 
   /**
@@ -121,14 +122,13 @@ class State {
    * \return Whether or not the two boxes are "range" or less boxes away,
    * considering path-finding.
    */
-  bool isInMoveRange(const Vector2D<byte>& from, const Vector2D<byte>& to,
-                     int range) const;
+  bool isInMoveRange(const Vector2D<uint16_t>& from,
+                     const Vector2D<uint16_t>& to, int range) const;
 
-  std::vector<Vector2D<byte>> getCellsInMovementRange(
-      const Vector2D<byte>& from, int range) const;
-  std::vector<Vector2D<byte>> getCellsInAttackRange(const Vector2D<byte>& from,
-                                                    Color color,
-                                                    int range) const;
-  std::vector<Vector2D<byte>> findPath(const Vector2D<byte>& start,
-                                       const Vector2D<byte>& end) const;
+  std::vector<Vector2D<uint16_t>> getCellsInMovementRange(
+      const Vector2D<uint16_t>& from, int range) const;
+  std::vector<Vector2D<uint16_t>> getCellsInAttackRange(
+      const Vector2D<uint16_t>& from, Color color, int range) const;
+  std::vector<Vector2D<uint16_t>> findPath(const Vector2D<uint16_t>& start,
+                                           const Vector2D<uint16_t>& end) const;
 };
