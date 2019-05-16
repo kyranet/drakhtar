@@ -69,6 +69,8 @@ void UnitsController::onDamage(const UnitState& stats) {
 }
 
 void UnitsController::onKill(const UnitState& stats) {
+  onDamage(stats);
+
   // Add the money
   if (stats.team_ == Color::RED) {
     GameManager::getInstance()->addMoney(stats.prize_);
