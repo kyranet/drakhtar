@@ -68,6 +68,19 @@ void UnitsController::onDamage(const UnitState& stats) {
 }
 
 void UnitsController::onKill(const UnitState& stats) {
+  // Add the money
+  if (stats.team_ == Color::RED) {
+    GameManager::getInstance()->addMoney(stats.prize_);
+  }
+
+  // If the unit who got killed is the commander, it should finish the scene
+  if (stats.unit_->isCommander()) {
+    reinterpret_cast<GameScene*>(getActiveUnit()->getScene())
+        ->gameOver(stats.team_ != Color::BLUE);
+    return;
+  }
+
+  // This is in the case the unit dies on counter-attack, skip turn
   if (stats.unit_ == activeUnit_) {
     // Clean up to signal the controller to finish the turn
     activeUnit_ = nullptr;
@@ -76,8 +89,6 @@ void UnitsController::onKill(const UnitState& stats) {
     finish();
   }
 
+  // Clean up
   stats.unit_->kill();
-  if (stats.unit_->getTeam()->getColor() == Color::RED) {
-    GameManager::getInstance()->addMoney(stats.prize_);
-  }
 }
