@@ -28,15 +28,6 @@ int16_t Skill::getRemainingCooldown() const {
   return scene_->getState()->getRemainingSkillCooldown(id_);
 }
 
-std::vector<Vector2D<uint16_t>> Skill::getAllUnitPositions() const {
-  const auto state = *scene_->getState();
-  std::vector<Vector2D<uint16_t>> output;
-  for (const auto& stats : state.getBoard()) {
-    if (stats.unit_ != nullptr) output.push_back(stats.position_);
-  }
-  return output;
-}
-
 std::vector<Vector2D<uint16_t>> Skill::getAllAlliesPositions() const {
   const auto state = *scene_->getState();
   std::vector<Vector2D<uint16_t>> output;
@@ -110,10 +101,11 @@ void ArrowRain::cast() {
 
   auto state = scene_->getState();
   const auto from = caster_->getBox()->getIndex();
+  const auto stats = state->getModifiedAt(from);
+  const auto damage = static_cast<uint16_t>(stats.attack_ * 0.5);
   for (const auto& position : getAllEnemiesPositions()) {
     if (!state->isInRange(from, position, range_)) continue;
-    // TODO(kyranet): Only deal the half of damage
-    state->attack(from, position, true);
+    state->attack(position, damage);
   }
   SDLAudioManager::getInstance()->playChannel(10, 0, 1);
 }
@@ -132,26 +124,29 @@ void HeroicStrike::cast() {
 
   auto state = scene_->getState();
   for (const auto& position : getAllAlliesPositions()) {
-    state->addModifierAt(position, {caster_,
-                                    [](const UnitState& state) {
-                                      return UnitState{state.unit_,
-                                                       state.team_,
-                                                       state.position_,
-                                                       state.attack_,
-                                                       state.health_,
-                                                       state.minimumAttack_,
-                                                       state.defense_,
-                                                       state.maxHealth_,
-                                                       state.attackRange_,
-                                                       state.moveRange_,
-                                                       state.speed_,
-                                                       state.prize_,
-                                                       state.battalionSize_,
-                                                       state.counterAttacked_,
-                                                       false,
-                                                       state.modifiers_};
-                                    },
-                                    cooldown_});
+    state->addModifierAt(
+        position,
+        {caster_,
+         [](const UnitState& state) {
+           return UnitState{
+               state.unit_,
+               state.team_,
+               state.position_,
+               static_cast<uint16_t>(state.attack_ + (state.attack_ * 0.5)),
+               state.health_,
+               state.minimumAttack_,
+               state.defense_,
+               state.maxHealth_,
+               state.attackRange_,
+               state.moveRange_,
+               state.speed_,
+               state.prize_,
+               state.battalionSize_,
+               state.counterAttacked_,
+               false,
+               state.modifiers_};
+         },
+         cooldown_});
   }
   SDLAudioManager::getInstance()->playChannel(8, 0, 1);
 }
@@ -178,7 +173,7 @@ void WitheringCurse::cast() {
                state.unit_,
                state.team_,
                state.position_,
-               static_cast<uint16_t>(state.attack_ - (state.attack_ * 0.8)),
+               static_cast<uint16_t>(state.attack_ - (state.attack_ * 0.2)),
                state.health_,
                state.minimumAttack_,
                static_cast<uint16_t>(
@@ -289,8 +284,8 @@ void DeathRay::cast() {
   }
 
   if (furthestUnit) {
-    // TODO(kyranet): This should deal `20 + distance * 2` damage.
-    state->attack(from, furthestUnit->getBox()->getIndex(), true);
+    state->attack(furthestUnit->getBox()->getIndex(),
+                  static_cast<uint16_t>(20 + distance * 2));
   }
 }
 
@@ -304,19 +299,21 @@ Reinforce::Reinforce(Commander* caster) : Skill("Reinforce", 1, 0, caster) {
 
 void Reinforce::cast() {
   Skill::cast();
-  // TODO(kyranet): Finish this
-  // if (remainingCooldown_ == 0 && caster_->getMoving()) {
-  //   Skill::cast();
-  //   const auto state = scene_->getState();
-  //   for (auto unit : scene_->getAlliedTeam(caster_)->getUnits()) {
-  //     if (state->isInRange(caster_->getBox()->getIndex(),
-  //                          unit->getBox()->getIndex(), range)) {
-  //       if (unit->getType() == "Soldier" || unit->getType() == "Archer" ||
-  //           unit->getType() == "Mage") {
-  //         const auto battalion = reinterpret_cast<Battalion*>(unit);
-  //         battalion->setBattalionSize(battalion->getBattalionSize() + 1);
-  //       }
-  //     }
-  //   }
-  // }
+
+  auto state = scene_->getState();
+  const auto from = caster_->getBox()->getIndex();
+  for (const auto& position : getAllAlliesPositions()) {
+    if (!state->isInRange(from, position, range_)) continue;
+    const auto& type = state->getUnitAt(position)->getType();
+    if (type == "Soldier" || type == "Archer" || type == "Mage") {
+      auto stats = state->getAt(position);
+      auto base = stats.unit_->getBaseStats();
+      ++stats.battalionSize_;
+      ++stats.minimumAttack_;
+      stats.attack_ = static_cast<uint16_t>(stats.attack_ + base.attack);
+      stats.maxHealth_ =
+          static_cast<uint16_t>(stats.maxHealth_ + base.maxHealth);
+      state->setAt(position, stats);
+    }
+  }
 }

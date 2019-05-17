@@ -260,6 +260,58 @@ bool State::attack(const Vector2D<uint16_t>& from, const Vector2D<uint16_t>& to,
   return true;
 }
 
+bool State::attack(const Vector2D<uint16_t>& to, uint16_t damage) {
+  const auto enemy = getAt(to);
+  if (enemy.unit_ == nullptr) return false;
+
+  const auto modifiedEnemy = getModifiedAt(to);
+
+  const auto health = static_cast<uint16_t>(
+      damage >= modifiedEnemy.health_ ? 0 : modifiedEnemy.health_ - damage);
+
+  if (health == 0) {
+    removeAt(to);
+    if (controller_) controller_->onKill(enemy);
+
+    // Remove from the turn vector
+    for (auto it = turns_.begin(); it != turns_.end(); ++it) {
+      if ((*it).unit_ == enemy.unit_) {
+        turns_.erase(it);
+        break;
+      }
+    }
+  } else {
+    if (enemy.battalionSize_ != 0) {
+      // Update battalion size
+      const auto battalionSize = static_cast<uint16_t>(
+          std::ceil(static_cast<float>(health * enemy.battalionSize_) /
+                    static_cast<float>(modifiedEnemy.maxHealth_)));
+      const auto attack = static_cast<uint16_t>(
+          enemy.unit_->getBaseStats().attack * battalionSize);
+      const auto minimumDamage = static_cast<uint16_t>(battalionSize);
+
+      const UnitState updated(
+          enemy.unit_, enemy.team_, enemy.position_, attack, health,
+          minimumDamage, enemy.defense_, enemy.maxHealth_, enemy.attackRange_,
+          enemy.moveRange_, enemy.speed_, enemy.prize_, battalionSize,
+          enemy.counterAttacked_, enemy.counterAttackable_, enemy.modifiers_);
+      setAt(to, updated);
+      if (controller_) controller_->onDamage(updated);
+    } else {
+      // Update commander size
+      const UnitState updated(
+          enemy.unit_, enemy.team_, enemy.position_, enemy.attack_, health,
+          enemy.minimumAttack_, enemy.defense_, enemy.maxHealth_,
+          enemy.attackRange_, enemy.moveRange_, enemy.speed_, enemy.prize_, 0,
+          enemy.counterAttacked_, enemy.counterAttackable_, enemy.modifiers_);
+      setAt(to, updated);
+      if (controller_) controller_->onDamage(updated);
+    }
+  }
+
+  return true;
+}
+
 void State::removeAt(const Vector2D<uint16_t>& position) {
   setAt(position, {nullptr,
                    Color::BLUE,

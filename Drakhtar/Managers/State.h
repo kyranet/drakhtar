@@ -126,6 +126,7 @@ class State {
   bool move(const Vector2D<uint16_t>& from, const Vector2D<uint16_t>& to);
   bool attack(const Vector2D<uint16_t>& from, const Vector2D<uint16_t>& to,
               bool counterAttack = false);
+  bool attack(const Vector2D<uint16_t>& to, uint16_t damage);
   void removeAt(const Vector2D<uint16_t>& position);
 
   Unit* getActiveUnit() const;
