@@ -94,7 +94,8 @@ void GameScene::preload() {
   std::sort(unitsInOrder.begin(), unitsInOrder.end(),
             [](const Unit* a, const Unit* b) { return (*a) < (*b); });
 
-  for (int i = 0; i < unitsInOrder.size(); i++) addGameObject(unitsInOrder[i]);
+  for (unsigned int i = 0; i < unitsInOrder.size(); i++)
+    addGameObject(unitsInOrder[i]);
   firstUnit_ = unitsInOrder.front();
   lastUnit_ = unitsInOrder.back();
 
