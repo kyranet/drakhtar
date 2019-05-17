@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "GameManager.h"
+
 #include "GameObjects/Battalion.h"
 
 GameManager* GameManager::instance_ = nullptr;
@@ -50,7 +51,6 @@ void GameManager::destroy() {
 }
 
 void GameManager::reset() {
-
   (*army_)["Soldier"] = 8;
   (*army_)["Archer"] = 6;
   (*army_)["Mage"] = 0;
