@@ -49,9 +49,9 @@ void State::next() {
       if (stats.modifiers_.empty()) continue;
       size_t i = 0;
       while (i < stats.modifiers_.size()) {
-        if (stats.modifiers_[i].duration_ == -1) continue;
-        if ((stats.modifiers_[i].caster_ == getActiveUnit()) &&
-            (--stats.modifiers_[i].duration_ == 0)) {
+        if (stats.modifiers_[i].duration_ != -1 &&
+            (stats.modifiers_[i].caster_ == getActiveUnit()) &&
+            (--stats.modifiers_[i].duration_ <= 0)) {
           stats.modifiers_.erase(stats.modifiers_.begin() +
                                  static_cast<int64_t>(i));
         } else {
