@@ -1,7 +1,9 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Unit.h"
+
 #include <algorithm>
+
 #include "Board.h"
 #include "Box.h"
 #include "EventListeners/SkillButtonListener.h"
@@ -10,6 +12,7 @@
 #include "Managers/State.h"
 #include "Managers/TextureManager.h"
 #include "Scenes/GameScene.h"
+#include "Structures/Game.h"
 #include "Structures/Team.h"
 #include "Text.h"
 #include "Utils/Constants.h"
@@ -77,6 +80,9 @@ void Unit::moveToBox(Box* newBox) {
                             static_cast<int>(rect.y + rect.h / 1.2)});
   healthBar_->moveBar(Vector2D<int>(rect.x + rect.w / 2,
                                     static_cast<int>(rect.y + rect.h / 1.2)));
+
+  // reinterpret_cast<GameScene*>(Game::getSceneMachine()->getCurrentScene())
+  //    ->updateRenderOrder(this);
 }
 
 void Unit::update() {
@@ -120,4 +126,16 @@ bool Unit::isNerfed() const {
     if (modifier.nerf_) return true;
   }
   return false;
+}
+
+bool Unit::operator<(const Unit& unit) const {
+  auto boxAIndex = getBox()->getIndex();
+  auto boxBIndex = unit.getBox()->getIndex();
+  if (boxAIndex.getY() < boxBIndex.getY())
+    return true;
+  else if (boxAIndex.getY() == boxBIndex.getY() &&
+           boxAIndex.getX() < boxBIndex.getX())
+    return true;
+  else
+    return false;
 }

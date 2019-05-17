@@ -19,6 +19,8 @@ class GameScene final : public Scene {
   State* state_ = nullptr;
   int battle_;
   int prize_ = 0;
+  Unit* firstUnit_ = nullptr;
+  Unit* lastUnit_ = nullptr;
 
  public:
   explicit GameScene(int battle);
@@ -29,6 +31,8 @@ class GameScene final : public Scene {
   void addPrize(int prize);
   void saveStatus();
   void readLevel(UnitFactory& factory, std::vector<Unit*>& unitOrder);
+
+  void updateRenderOrder(Unit* unit);
 
   Board* getBoard() const;
   int getBattleInd();

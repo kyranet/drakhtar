@@ -52,4 +52,6 @@ class Unit : public GameObject {
   bool isNerfed() const;
 
   std::string healthToString() const;
+
+  bool operator<(const Unit& unit) const;
 };

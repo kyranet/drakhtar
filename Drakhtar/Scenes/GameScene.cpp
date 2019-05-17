@@ -92,19 +92,11 @@ void GameScene::preload() {
   }
 
   std::sort(unitsInOrder.begin(), unitsInOrder.end(),
-            [](const Unit* a, const Unit* b) {
-              auto boxAIndex = a->getBox()->getIndex();
-              auto boxBIndex = b->getBox()->getIndex();
-              if (boxAIndex.getY() < boxBIndex.getY())
-                return true;
-              else if (boxAIndex.getY() == boxBIndex.getY() &&
-                       boxAIndex.getX() < boxBIndex.getX())
-                return true;
-              else
-                return false;
-            });
+            [](const Unit* a, const Unit* b) { return (*a) < (*b); });
 
   for (int i = 0; i < unitsInOrder.size(); i++) addGameObject(unitsInOrder[i]);
+  firstUnit_ = unitsInOrder.front();
+  lastUnit_ = unitsInOrder.back();
 
   // Sort both teams by their speeds
   team1_->sortUnits();
@@ -246,6 +238,55 @@ void GameScene::readLevel(UnitFactory& factory, std::vector<Unit*>& unitOrder) {
   audio->playMusic(trackNumber, 999);
 
   file.close();
+}
+
+void GameScene::updateRenderOrder(Unit* unit) {
+  auto it = gameObjects_.begin();
+  while ((*it) != unit && it != gameObjects_.end()) it++;
+
+  if (firstUnit_ == lastUnit_) {
+    return;
+  }
+  bool sorted = false;
+  bool sortToLeft = false;
+
+  if ((*it) == lastUnit_)
+    sortToLeft = true;
+  else {
+    auto next = it;
+    next++;
+    if ((*reinterpret_cast<Unit*>(*it)) < (*reinterpret_cast<Unit*>(*next)))
+      sortToLeft = true;
+  }
+
+  while (!sorted) {
+    auto next = it;
+    if (sortToLeft) {
+      next--;
+      if ((*reinterpret_cast<Unit*>(*next)) < (*reinterpret_cast<Unit*>(*it)))
+        sorted = true;
+      else {
+        if ((*next) == firstUnit_) {
+          firstUnit_ = reinterpret_cast<Unit*>(*it);
+          sorted = true;
+        }
+        std::swap((*it), (*next));
+        it--;
+      }
+    } else {
+      next++;
+      if ((*reinterpret_cast<Unit*>(*it)) < (*reinterpret_cast<Unit*>(*next)))
+        sorted = true;
+      else {
+        if ((*next) == lastUnit_) {
+          lastUnit_ = reinterpret_cast<Unit*>(*it);
+          sorted = true;
+        }
+        std::swap((*it), (*next));
+        it++;
+      }
+    }
+  }
 }
 
 void GameScene::gameOver(bool victory) {
