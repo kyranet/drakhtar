@@ -235,6 +235,7 @@ void GameScene::gameOver(bool victory) {
       new GameOverPanel(this, TextureManager::get("UI-OptionsMenu"),
                         {WIN_WIDTH / 2, WIN_HEIGHT / 2},
                         {WIN_WIDTH / 2, WIN_HEIGHT / 2}, victory);
+  if (victory) saveStatus();
   addGameObject(gameOverPanel_);
 }
 
