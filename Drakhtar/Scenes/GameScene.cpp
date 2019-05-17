@@ -112,7 +112,7 @@ void GameScene::preload() {
       new DialogScene(this, "dialog" + std::to_string(battle_), "DialogFont");
 
   team1_->setController(new PlayerController(board_, this, team1_, team2_));
-  team2_->setController(new AIController(board_, this, team2_, team1_));
+  team2_->setController(new PlayerController(board_, this, team2_, team1_));
 
   const auto pauseButton =
       new Button(this, TextureManager::get("Button-Pause"),

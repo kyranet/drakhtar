@@ -168,7 +168,7 @@ void AIController::tryAttack() {
            position, team_->getColor(), stats.attackRange_)) {
     state->save();
     state->move(position, move);
-    const auto value = minimax(5, -9999999, 9999999, true, hasMoved_, false);
+    const auto value = minimax(5, -9999999, 9999999, false, hasMoved_, false);
     state->restore();
     if (value >= bestAttack) {
       bestAttack = value;

@@ -137,8 +137,9 @@ void UnitsController::move(Vector2D<uint16_t> from, Vector2D<uint16_t> to) {
   const auto state = getState();
   const auto path = state->findPath(from, to);
   const auto stats = state->getAt(from);
-  state->move(stats.position_, to);
-  unit->moveToBox(getBoard()->getBoxAt(to.getX(), to.getY()));
+  const auto box = getBoard()->getBoxAt(to.getX(), to.getY());
+  unit->moveToBox(box);
+  state->move(from, to);
 
   scene_->getTweenManager()
       ->create()
