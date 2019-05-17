@@ -2,12 +2,14 @@
 
 #include "GameScene.h"
 
+#include <algorithm>
 #include <fstream>
 
 #include "Controllers/PlayerController.h"
 #include "Errors/DrakhtarError.h"
 #include "GameObjects/Battalion.h"
 #include "GameObjects/Board.h"
+#include "GameObjects/Box.h"
 #include "GameObjects/Button.h"
 #include "GameObjects/Commanders/Thassa.h"
 #include "GameObjects/Commanders/Zamdran.h"
@@ -52,11 +54,13 @@ void GameScene::preload() {
   team1_ = new Team(Color::BLUE);
   team2_ = new Team(Color::RED);
 
+  std::vector<Unit*> unitsInOrder;
+
   // Create a temporary factory to create the units easily.
   auto factory = UnitFactory(this);
 
   // Red Team
-  readLevel(factory);
+  this->readLevel(factory, unitsInOrder);
   state_ = new State();
   state_->setBoard(board_->getRows(), board_->getCols());
 
@@ -65,14 +69,14 @@ void GameScene::preload() {
       factory.newCommander("Thassa", team1_, board_->getBoxAt(0, 0));
   team1_->addCommander(thassa);
   thassa->setCommanderHealthBar();
-  addGameObject(thassa);
+  unitsInOrder.push_back(thassa);
 
   if (battle_ == 1) {
     const auto valar =
         factory.newCommander("BlueValar", team1_, board_->getBoxAt(0, 4));
     team1_->addCommander(valar);
     valar->setCommanderHealthBar();
-    addGameObject(valar);
+    unitsInOrder.push_back(valar);
   }
 
   auto army = GameManager::getInstance()->getArmy();
@@ -81,11 +85,19 @@ void GameScene::preload() {
   uint16_t y = 1;
   for (const auto& pair : typeOrder) {
     if (army[pair.second] > 0) {
-      addGameObject(factory.newBattalion(
+      unitsInOrder.push_back(factory.newBattalion(
           pair.second, team1_, board_->getBoxAt(0, y), army[pair.second]));
       y++;
     }
   }
+
+  std::sort(unitsInOrder.begin(), unitsInOrder.end(),
+            [](const Unit* a, const Unit* b) { return (*a) < (*b); });
+
+  for (unsigned int i = 0; i < unitsInOrder.size(); i++)
+    addGameObject(unitsInOrder[i]);
+  firstUnit_ = unitsInOrder.front();
+  lastUnit_ = unitsInOrder.back();
 
   // Sort both teams by their speeds
   team1_->sortUnits();
@@ -171,7 +183,7 @@ void GameScene::pause() {
   }
 }
 
-void GameScene::readLevel(UnitFactory& factory) {
+void GameScene::readLevel(UnitFactory& factory, std::vector<Unit*>& unitOrder) {
   std::ifstream file;
   file.open("../levels/level-" + std::to_string(battle_) + ".txt");
 
@@ -214,12 +226,12 @@ void GameScene::readLevel(UnitFactory& factory) {
 
   team2_->addCommander(commander);
   commander->setCommanderHealthBar();
-  addGameObject(commander);
+  unitOrder.push_back(commander);
   while (!file.eof()) {
     std::string unitType;
     file >> unitType >> size >> row >> col;
-    addGameObject(factory.newBattalion(unitType, team2_,
-                                       board_->getBoxAt(row, col), size));
+    unitOrder.push_back(factory.newBattalion(unitType, team2_,
+                                             board_->getBoxAt(row, col), size));
   }
 
   audio->haltMusic();
@@ -227,6 +239,55 @@ void GameScene::readLevel(UnitFactory& factory) {
   audio->playMusic(trackNumber, 999);
 
   file.close();
+}
+
+void GameScene::updateRenderOrder(Unit* unit) {
+  auto it = gameObjects_.begin();
+  while ((*it) != unit && it != gameObjects_.end()) it++;
+
+  if (firstUnit_ == lastUnit_) {
+    return;
+  }
+  bool sorted = false;
+  bool sortToLeft = false;
+
+  if ((*it) == lastUnit_) {
+    sortToLeft = true;
+  } else {
+    auto next = it;
+    next++;
+    if ((*reinterpret_cast<Unit*>(*it)) < (*reinterpret_cast<Unit*>(*next)))
+      sortToLeft = true;
+  }
+
+  while (!sorted) {
+    auto next = it;
+    if (sortToLeft) {
+      next--;
+      if ((*reinterpret_cast<Unit*>(*next)) < (*reinterpret_cast<Unit*>(*it))) {
+        sorted = true;
+      } else {
+        if ((*next) == firstUnit_) {
+          firstUnit_ = reinterpret_cast<Unit*>(*it);
+          sorted = true;
+        }
+        std::swap((*it), (*next));
+        it--;
+      }
+    } else {
+      next++;
+      if ((*reinterpret_cast<Unit*>(*it)) < (*reinterpret_cast<Unit*>(*next))) {
+        sorted = true;
+      } else {
+        if ((*next) == lastUnit_) {
+          lastUnit_ = reinterpret_cast<Unit*>(*it);
+          sorted = true;
+        }
+        std::swap((*it), (*next));
+        it++;
+      }
+    }
+  }
 }
 
 void GameScene::gameOver(bool victory) {
