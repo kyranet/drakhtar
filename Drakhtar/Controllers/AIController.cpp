@@ -128,4 +128,28 @@ void AIController::start() {
 
   // Set this controller
   getState()->setController(this);
+
+  const auto state = getState();
+  const auto position = activeUnit_->getBox()->getIndex();
+  const auto stats = state->getModifiedAt(position);
+
+  auto bestMove = -9999999;
+  Vector2D<uint16_t> bestMoveFound(1000, 1000);
+  for (const auto& move :
+       state->getCellsInMovementRange(position, stats.moveRange_)) {
+    state->save();
+    state->move(position, move);
+    const auto value = minimax(3, -9999999, 9999999, true, true, false);
+    state->restore();
+    if (value >= bestMove) {
+      bestMove = value;
+      bestMoveFound.set(move);
+    }
+  }
+
+  if (bestMoveFound.getX() != 1000) {
+    move(position, bestMoveFound);
+  }
+
+  finish();
 }
