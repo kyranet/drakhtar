@@ -143,6 +143,9 @@ class State {
     return units;
   }
 
+  int getDistance(const Vector2D<uint16_t>& from,
+                  const Vector2D<uint16_t>& to) const;
+
   /**
    * \brief Checks if two cells are within a certain range of each other.
    * \param from: The box from which distances will be calculated.

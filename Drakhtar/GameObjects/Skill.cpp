@@ -132,29 +132,26 @@ void HeroicStrike::cast() {
 
   auto state = scene_->getState();
   for (const auto& position : getAllAlliesPositions()) {
-    state->addModifierAt(
-        position,
-        {caster_,
-         [](const UnitState& state) {
-           return UnitState{
-               state.unit_,
-               state.team_,
-               state.position_,
-               state.attack_,
-               state.health_,
-               state.minimumAttack_,
-               state.defense_,
-               state.maxHealth_,
-               state.attackRange_,
-               state.moveRange_,
-               state.speed_,
-               state.prize_,
-               state.battalionSize_,
-               state.counterAttacked_,
-               false,
-               state.modifiers_};
-         },
-         cooldown_});
+    state->addModifierAt(position, {caster_,
+                                    [](const UnitState& state) {
+                                      return UnitState{state.unit_,
+                                                       state.team_,
+                                                       state.position_,
+                                                       state.attack_,
+                                                       state.health_,
+                                                       state.minimumAttack_,
+                                                       state.defense_,
+                                                       state.maxHealth_,
+                                                       state.attackRange_,
+                                                       state.moveRange_,
+                                                       state.speed_,
+                                                       state.prize_,
+                                                       state.battalionSize_,
+                                                       state.counterAttacked_,
+                                                       false,
+                                                       state.modifiers_};
+                                    },
+                                    cooldown_});
   }
   SDLAudioManager::getInstance()->playChannel(8, 0, 1);
 }
@@ -170,15 +167,34 @@ WitheringCurse::WitheringCurse(Commander* caster)
 
 void WitheringCurse::cast() {
   Skill::cast();
-  // if (remainingCooldown_ == 0 && caster_->getMoving()) {
-  //   Skill::cast();
-  //   for (auto unit : scene_->getEnemyTeam(caster_)->getUnits()) {
-  //     unit->Unit::setAttack(
-  //         static_cast<int>(floor(unit->getStats().attack * 0.8)));
-  //     unit->setDefense(std::max(unit->getStats().defense - 10, 0));
-  //     unit->setDebuffed(true);
-  //   }
-  // }
+
+  const auto state = scene_->getState();
+  for (const auto& position : getAllEnemiesPositions()) {
+    state->addModifierAt(
+        position,
+        {caster_,
+         [](const UnitState& state) {
+           return UnitState{
+               state.unit_,
+               state.team_,
+               state.position_,
+               static_cast<uint16_t>(state.attack_ - (state.attack_ * 0.8)),
+               state.health_,
+               state.minimumAttack_,
+               static_cast<uint16_t>(
+                   state.defense_ <= 10 ? 0 : state.defense_ - 10),
+               state.maxHealth_,
+               state.attackRange_,
+               state.moveRange_,
+               state.speed_,
+               state.prize_,
+               state.battalionSize_,
+               state.counterAttacked_,
+               state.counterAttackable_,
+               state.modifiers_};
+         },
+         cooldown_});
+  }
 }
 
 // ---------- CHARGE ----------
@@ -190,10 +206,28 @@ Charge::Charge(Commander* caster) : Skill("Charge", 1, 0, caster) {
 
 void Charge::cast() {
   Skill::cast();
-  // if (remainingCooldown_ == 0 && caster_->getMoving()) {
-  //   Skill::cast();
-  //   caster_->setUnstoppable(true);
-  // }
+  const auto state = scene_->getState();
+  state->addModifierAt(caster_->getBox()->getIndex(),
+                       {caster_,
+                        [](const UnitState& state) {
+                          return UnitState{state.unit_,
+                                           state.team_,
+                                           state.position_,
+                                           state.attack_,
+                                           state.health_,
+                                           state.minimumAttack_,
+                                           state.defense_,
+                                           state.maxHealth_,
+                                           state.attackRange_,
+                                           state.moveRange_,
+                                           state.speed_,
+                                           state.prize_,
+                                           state.battalionSize_,
+                                           state.counterAttacked_,
+                                           false,
+                                           state.modifiers_};
+                        },
+                        cooldown_});
 }
 
 // ---------- BERSERKER ----------
@@ -206,13 +240,29 @@ Berserker::Berserker(Commander* caster) : Skill("Berserker", 4, 2, caster) {
 
 void Berserker::cast() {
   Skill::cast();
-  // if (remainingCooldown_ == 0 && caster_->getMoving()) {
-  //   Skill::cast();
-  //   caster_->setAttack(caster_->getStats().attack * 2);
-  //   caster_->setDefense(caster_->getStats().defense / 2);
-  //   caster_->setBuffed(true);
-  //   caster_->setDebuffed(true);
-  // }
+  const auto state = scene_->getState();
+  state->addModifierAt(caster_->getBox()->getIndex(),
+                       {caster_,
+                        [](const UnitState& state) {
+                          return UnitState{
+                              state.unit_,
+                              state.team_,
+                              state.position_,
+                              static_cast<uint16_t>(state.attack_ * 2),
+                              state.health_,
+                              state.minimumAttack_,
+                              static_cast<uint16_t>(state.defense_ / 2),
+                              state.maxHealth_,
+                              state.attackRange_,
+                              state.moveRange_,
+                              state.speed_,
+                              state.prize_,
+                              state.battalionSize_,
+                              state.counterAttacked_,
+                              state.counterAttackable_,
+                              state.modifiers_};
+                        },
+                        cooldown_});
 }
 
 // ---------- DEATHRAY ----------
@@ -225,26 +275,23 @@ DeathRay::DeathRay(Commander* caster) : Skill("Death Ray", 3, 0, caster) {
 
 void DeathRay::cast() {
   Skill::cast();
-  // if (remainingCooldown_ == 0 && caster_->getMoving()) {
-  //   Skill::cast();
-  //   // Searches for the furthest unit
-  //   Unit* furthestUnit = nullptr;
-  //   int maxDistance = 0;
-  //   for (auto unit : scene_->getEnemyTeam(caster_)->getUnits()) {
-  //     const auto distanceX = abs((caster_->getBox()->getIndex().getX() -
-  //                                 unit->getBox()->getIndex().getX()));
-  //     const auto distanceY = abs((caster_->getBox()->getIndex().getY() -
-  //                                 unit->getBox()->getIndex().getY()));
-  //     const auto totalDistance = distanceX + distanceY;
-  //     if (totalDistance >= maxDistance) {
-  //       maxDistance = totalDistance;
-  //       furthestUnit = unit;
-  //     }
-  //   }
-  //   if (furthestUnit != nullptr) {
-  //     furthestUnit->loseHealth(20 + maxDistance * 2, 20 + maxDistance * 2);
-  //   }
-  // }
+  Unit* furthestUnit = nullptr;
+  int distance = 0;
+
+  const auto state = scene_->getState();
+  const auto from = caster_->getBox()->getIndex();
+  for (const auto& position : getAllEnemiesPositions()) {
+    int aux = state->getDistance(from, position);
+    if (aux > distance) {
+      distance = aux;
+      furthestUnit = state->getUnitAt(position);
+    }
+  }
+
+  if (furthestUnit) {
+    // TODO(kyranet): This should deal `20 + distance * 2` damage.
+    state->attack(from, furthestUnit->getBox()->getIndex(), true);
+  }
 }
 
 // ---------- REINFORCE ----------
@@ -257,6 +304,7 @@ Reinforce::Reinforce(Commander* caster) : Skill("Reinforce", 1, 0, caster) {
 
 void Reinforce::cast() {
   Skill::cast();
+  // TODO(kyranet): Finish this
   // if (remainingCooldown_ == 0 && caster_->getMoving()) {
   //   Skill::cast();
   //   const auto state = scene_->getState();

@@ -311,13 +311,16 @@ std::vector<Vector2D<uint16_t>> State::findPath(
   return pathList;
 }
 
-bool State::isInRange(const Vector2D<uint16_t>& from,
-                      const Vector2D<uint16_t>& to, int range) const {
+int State::getDistance(const Vector2D<uint16_t>& from,
+                       const Vector2D<uint16_t>& to) const {
   const auto distanceX = abs(static_cast<int>(to.getX() - from.getX()));
   const auto distanceY = abs(static_cast<int>(to.getY() - from.getY()));
-  const auto totalDistance = distanceX + distanceY;
+  return distanceX + distanceY;
+}
 
-  return range >= totalDistance;
+bool State::isInRange(const Vector2D<uint16_t>& from,
+                      const Vector2D<uint16_t>& to, int range) const {
+  return range >= getDistance(from, to);
 }
 
 bool State::isInMoveRange(const Vector2D<uint16_t>& from,
