@@ -90,6 +90,7 @@ void BattleCry::cast() {
                state.prize_,
                state.battalionSize_,
                false,
+               state.counterAttackable_,
                state.modifiers_};
          },
          cooldown_});
@@ -100,28 +101,21 @@ void BattleCry::cast() {
 ArrowRain::ArrowRain(Commander* caster) : Skill("ArrowRain", 4, 0, caster) {
   description_ =
       "Fire an volley of arrows that deal half damage to enemies in a " +
-      std::to_string(range) +
+      std::to_string(range_) +
       " cells range. (CD: " + std::to_string(cooldown_) + " turns)";
 }
 
 void ArrowRain::cast() {
   Skill::cast();
-  // if (remainingCooldown_ == 0 && caster_->getMoving()) {
-  //   Skill::cast();
-  //   SDLAudioManager::getInstance()->playChannel(11, 0, 1);
-  //   // Caster deals half damage to every enemy unit in range
-  //   const auto state = scene_->getState();
-  //   for (auto unit : scene_->getEnemyTeam(caster_)->getUnits()) {
-  //     if (state->isInRange(caster_->getBox()->getIndex(),
-  //                          unit->getBox()->getIndex(), range)) {
-  //       unit->loseHealth(caster_->getStats().attack / 2, 1);
-  //       if (unit->getHealth() <= 0) {
-  //         unit->getBox()->destroyContent();
-  //       }
-  //     }
-  //   }
-  //   end();
-  // }
+
+  auto state = scene_->getState();
+  const auto from = caster_->getBox()->getIndex();
+  for (const auto& position : getAllEnemiesPositions()) {
+    if (!state->isInRange(from, position, range_)) continue;
+    // TODO(kyranet): Only deal the half of damage
+    state->attack(from, position, true);
+  }
+  SDLAudioManager::getInstance()->playChannel(10, 0, 1);
 }
 
 // ---------- HEROIC STRIKE ----------
@@ -135,15 +129,34 @@ HeroicStrike::HeroicStrike(Commander* caster)
 
 void HeroicStrike::cast() {
   Skill::cast();
-  // if (remainingCooldown_ == 0 && caster_->getMoving()) {
-  //   Skill::cast();
-  //   attackIncrement_ = caster_->getStats().attack * 0.5;
-  //   caster_->setAttack(
-  //       static_cast<int>(caster_->getStats().attack + attackIncrement_));
-  //   caster_->setUnstoppable(true);
-  //   caster_->setBuffed(true);
-  //   SDLAudioManager::getInstance()->playChannel(8, 0, 1);
-  // }
+
+  auto state = scene_->getState();
+  for (const auto& position : getAllAlliesPositions()) {
+    state->addModifierAt(
+        position,
+        {caster_,
+         [](const UnitState& state) {
+           return UnitState{
+               state.unit_,
+               state.team_,
+               state.position_,
+               state.attack_,
+               state.health_,
+               state.minimumAttack_,
+               state.defense_,
+               state.maxHealth_,
+               state.attackRange_,
+               state.moveRange_,
+               state.speed_,
+               state.prize_,
+               state.battalionSize_,
+               state.counterAttacked_,
+               false,
+               state.modifiers_};
+         },
+         cooldown_});
+  }
+  SDLAudioManager::getInstance()->playChannel(8, 0, 1);
 }
 
 // ---------- WITHERING CURSE ----------

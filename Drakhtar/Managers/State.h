@@ -4,9 +4,9 @@
 #include <array>
 #include <functional>
 #include <map>
+#include <stack>
 #include <utility>
 #include <vector>
-#include <stack>
 #include "Structures/Team.h"
 #include "Utils/Vector2D.h"
 
@@ -31,13 +31,14 @@ struct UnitState {
         speed_(0U),
         prize_(0U),
         battalionSize_(0U),
-        counterAttacked_(false) {}
+        counterAttacked_(false),
+        counterAttackable_(true) {}
   UnitState(Unit* unit, Color team, Vector2D<uint16_t> position,
             uint16_t attack, uint16_t health, uint16_t minimumAttack,
             uint16_t defense, uint16_t maxHealth, uint16_t attackRange,
             uint16_t moveRange, uint16_t speed, uint16_t prize,
             uint16_t battalionSize, bool counterAttacked,
-            std::vector<Modifier> modifiers)
+            bool counterAttackable, std::vector<Modifier> modifiers)
       : unit_(unit),
         team_(team),
         position_(position),
@@ -52,6 +53,7 @@ struct UnitState {
         prize_(prize),
         battalionSize_(battalionSize),
         counterAttacked_(counterAttacked),
+        counterAttackable_(counterAttackable),
         modifiers_(std::move(modifiers)) {}
   Unit* unit_;
   Color team_;
@@ -67,6 +69,7 @@ struct UnitState {
   uint16_t prize_;
   uint16_t battalionSize_;
   bool counterAttacked_;
+  bool counterAttackable_;
   std::vector<Modifier> modifiers_;
 };
 

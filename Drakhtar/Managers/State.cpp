@@ -10,7 +10,7 @@
 #include "GameObjects/Skill.h"
 #include "GameObjects/Unit.h"
 
-std::stack<State> State::stack_; //  NOLINT
+std::stack<State> State::stack_;  //  NOLINT
 
 State::State() = default;
 
@@ -20,9 +20,7 @@ void State::setController(UnitsController* controller) {
   controller_ = controller;
 }
 
-void State::save() {
-  stack_.push(*this);
-}
+void State::save() { stack_.push(*this); }
 void State::restore() {
   if (stack_.empty()) return;
   const auto old = stack_.top();
@@ -78,7 +76,7 @@ void State::next() {
                     previous.defense_, previous.maxHealth_,
                     previous.attackRange_, previous.moveRange_, previous.speed_,
                     previous.prize_, previous.battalionSize_, false,
-                    previous.modifiers_);
+                    previous.counterAttackable_, previous.modifiers_);
   setAt(updated.position_, updated);
 }
 
@@ -129,7 +127,8 @@ void State::insert(const std::vector<Unit*>& units) {
     if (unit->isCommander()) {
       UnitState state(unit, color, boxPosition, base.attack, base.maxHealth, 1,
                       base.defense, base.maxHealth, base.attackRange,
-                      base.moveRange, base.speed, base.prize, 0, false, {});
+                      base.moveRange, base.speed, base.prize, 0, false, true,
+                      {});
       turns_.push_back(state);
       setAt(boxPosition, state);
     } else {
@@ -140,7 +139,7 @@ void State::insert(const std::vector<Unit*>& units) {
           static_cast<uint16_t>(base.maxHealth * size), size, base.defense,
           static_cast<uint16_t>(base.maxHealth * size), base.attackRange,
           base.moveRange, base.speed, static_cast<uint16_t>(base.prize * size),
-          size, false, {});
+          size, false, true, {});
       turns_.push_back(state);
       setAt(boxPosition, state);
     }
@@ -182,7 +181,7 @@ bool State::move(const Vector2D<uint16_t>& from, const Vector2D<uint16_t>& to) {
                   previous.maxHealth_, previous.attackRange_,
                   previous.moveRange_, previous.speed_, previous.prize_,
                   previous.battalionSize_, previous.counterAttacked_,
-                  previous.modifiers_);
+                  previous.counterAttackable_, previous.modifiers_);
 
   setAt(to, state);
   return true;
@@ -204,8 +203,8 @@ bool State::attack(const Vector2D<uint16_t>& from, const Vector2D<uint16_t>& to,
                                 (1.0 - modifiedEnemy.defense_ / 100.0)),
                static_cast<int>(modifiedPrevious.minimumAttack_)),
       static_cast<int>(modifiedEnemy.maxHealth_));
-  const auto health =
-      static_cast<uint16_t>(std::max(modifiedEnemy.health_ - damage, 0));
+  const auto health = static_cast<uint16_t>(
+      damage > modifiedEnemy.health_ ? 0 : modifiedEnemy.health_ - damage);
 
   if (health == 0) {
     removeAt(to);
@@ -220,13 +219,14 @@ bool State::attack(const Vector2D<uint16_t>& from, const Vector2D<uint16_t>& to,
     }
   } else {
     auto counterAttacked = enemy.counterAttacked_;
-    if (!(enemy.unit_->getType() == "Archer" &&
+    if (modifiedPrevious.counterAttackable_ && !counterAttack &&
+        !(enemy.unit_->getType() == "Archer" &&
           isInRange(enemy.position_, previous.position_, 1)) &&
         isInRange(enemy.position_, previous.position_,
                   modifiedEnemy.attackRange_) &&
         !counterAttacked) {
       counterAttacked = true;
-      if (!counterAttack) attack(to, from, true);
+      attack(to, from, true);
     }
 
     if (enemy.battalionSize_ != 0) {
@@ -238,11 +238,11 @@ bool State::attack(const Vector2D<uint16_t>& from, const Vector2D<uint16_t>& to,
           enemy.unit_->getBaseStats().attack * battalionSize);
       const auto minimumDamage = static_cast<uint16_t>(battalionSize);
 
-      const UnitState updated(enemy.unit_, enemy.team_, enemy.position_, attack,
-                              health, minimumDamage, enemy.defense_,
-                              enemy.maxHealth_, enemy.attackRange_,
-                              enemy.moveRange_, enemy.speed_, enemy.prize_,
-                              battalionSize, counterAttacked, enemy.modifiers_);
+      const UnitState updated(
+          enemy.unit_, enemy.team_, enemy.position_, attack, health,
+          minimumDamage, enemy.defense_, enemy.maxHealth_, enemy.attackRange_,
+          enemy.moveRange_, enemy.speed_, enemy.prize_, battalionSize,
+          counterAttacked, enemy.counterAttackable_, enemy.modifiers_);
       setAt(to, updated);
       if (controller_) controller_->onDamage(updated);
     } else {
@@ -251,7 +251,7 @@ bool State::attack(const Vector2D<uint16_t>& from, const Vector2D<uint16_t>& to,
           enemy.unit_, enemy.team_, enemy.position_, enemy.attack_, health,
           enemy.minimumAttack_, enemy.defense_, enemy.maxHealth_,
           enemy.attackRange_, enemy.moveRange_, enemy.speed_, enemy.prize_, 0,
-          counterAttacked, enemy.modifiers_);
+          counterAttacked, enemy.counterAttackable_, enemy.modifiers_);
       setAt(to, updated);
       if (controller_) controller_->onDamage(updated);
     }
@@ -274,6 +274,7 @@ void State::removeAt(const Vector2D<uint16_t>& position) {
                    0,
                    0,
                    0,
+                   false,
                    false,
                    {}});
 }
