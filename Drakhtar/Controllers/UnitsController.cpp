@@ -85,7 +85,7 @@ void UnitsController::onKill(const UnitState& stats) {
   stats.unit_->getTexture()->setAnimationOnce("death");
   stats.unit_->getTexture()->setAnimationOnEnd([this, stats]() {
     // Don't make it renderable after dying.
-    stats.unit_->setRenderizable(false);
+    stats.unit_->setRenderable(false);
 
     // If the unit who got killed is the commander, it should finish the scene
     if (stats.unit_->isCommander()) {

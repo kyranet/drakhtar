@@ -15,7 +15,7 @@ class GameObject {
   bool awakened_ = false;
   bool active_ = true;
   bool transparent_ = false;
-  bool renderizable_ = true;
+  bool renderable_ = true;
   Scene *scene_ = nullptr;
   Vector2D<int> position_;
   Vector2D<int> size_;
@@ -45,8 +45,8 @@ class GameObject {
   void setTransparent(bool transparent);
   bool getTransparent() const;
 
-  void setRenderizable(bool renderizable);
-  bool getRenderizable() const;
+  void setRenderable(bool renderable);
+  bool getRenderable() const;
 
   void setSize(Vector2D<int> size);
   Vector2D<int> getSize() const;

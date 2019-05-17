@@ -28,11 +28,11 @@ void GameObject::awake() {
 }
 
 void GameObject::render(SDL_Rect rect) const {
-  if (getRenderizable() && texture_ != nullptr) {
+  if (getRenderable() && texture_ != nullptr) {
     texture_->renderFrame(rect, texture_->getAnimation()[texture_->getFrame()]);
   }
   for (auto child : children_)
-    if (child->getRenderizable()) child->render();
+    if (child->getRenderable()) child->render();
 }
 
 void GameObject::render() const { render(getRect()); }
@@ -80,12 +80,11 @@ void GameObject::setTransparent(const bool transparent) {
 
 bool GameObject::getTransparent() const { return transparent_; }
 
-// TODO(kyranet): Call this, renderable. Please.
-void GameObject::setRenderizable(bool renderizable) {
-  renderizable_ = renderizable;
+void GameObject::setRenderable(bool renderable) {
+  renderable_ = renderable;
 }
 
-bool GameObject::getRenderizable() const { return renderizable_; }
+bool GameObject::getRenderable() const { return renderable_; }
 
 void GameObject::setSize(Vector2D<int> size) { size_ = size; }
 Vector2D<int> GameObject::getSize() const { return size_; }

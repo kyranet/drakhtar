@@ -22,7 +22,7 @@ UnitDescriptionBox::UnitDescriptionBox(Scene* scene, Board* board)
       board_(board),
       showDamage_(false) {
   setTransparent(true);
-  setRenderizable(false);
+  setRenderable(false);
 
   const auto listener = new StatBoxListener(board, this);
   board->addEventListener(listener);
@@ -45,7 +45,7 @@ UnitDescriptionBox::UnitDescriptionBox(Scene* scene, Board* board)
 
 void UnitDescriptionBox::render() const {
   if (active_) {
-    if (getRenderizable() && texture_ != nullptr) {
+    if (getRenderable() && texture_ != nullptr) {
       // Stats box
       texture_->renderFrame({Input::getMousePosition().getX(),
                              Input::getMousePosition().getY(), 150, 130},

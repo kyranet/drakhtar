@@ -65,10 +65,7 @@ void Box::update() {
   hovered_ = Input::isMouseInside(&area);
 
   const auto unit = getContent();
-  if (unit) {
-    // TODO(kyranet): Don't use this. Stop this. Get some help.
-    unit->update();
-  }
+  if (unit) unit->update();
 }
 
 // ---------- Getters and Setters ----------

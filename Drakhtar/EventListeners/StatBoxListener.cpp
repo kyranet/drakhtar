@@ -33,11 +33,11 @@ void StatBoxListener::onHoverStay() {
   const auto box = reinterpret_cast<Box*>(Input::screenMouseToRay());
   const auto unit = box->getContent();
   if (unit) {
-    statsPanel_->setRenderizable(true);
+    statsPanel_->setRenderable(true);
     statsPanel_->updateText(box->getContent());
   } else {
-    statsPanel_->setRenderizable(false);
+    statsPanel_->setRenderable(false);
   }
 }
 
-void StatBoxListener::onHoverStop() { statsPanel_->setRenderizable(false); }
+void StatBoxListener::onHoverStop() { statsPanel_->setRenderable(false); }

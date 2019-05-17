@@ -39,9 +39,9 @@ OptionsMenu::OptionsMenu(Scene* scene) : GameObject(scene, nullptr) {
 
   const auto audio = SDLAudioManager::getInstance();
   greenTick->setTransparent(true);
-  greenTick->setRenderizable(audio->getDefault());
-  muteIcon->setRenderizable(audio->getMusicVolume() == 0);
-  soundIcon->setRenderizable(audio->getMusicVolume() != 0);
+  greenTick->setRenderable(audio->getDefault());
+  muteIcon->setRenderable(audio->getMusicVolume() == 0);
+  soundIcon->setRenderable(audio->getMusicVolume() != 0);
 
   const auto moreSoundBox = new Button(
       scene_, TextureManager::get("Quantity-Button"),
@@ -54,8 +54,8 @@ OptionsMenu::OptionsMenu(Scene* scene) : GameObject(scene, nullptr) {
           manager->setChannelVolume(manager->getChannelVolume() + 10, 1);
           manager->setMusicVolume(manager->getMusicVolume() + 10);
 
-          muteIcon->setRenderizable(manager->getMusicVolume() == 0);
-          soundIcon->setRenderizable(manager->getMusicVolume() != 0);
+          muteIcon->setRenderable(manager->getMusicVolume() == 0);
+          soundIcon->setRenderable(manager->getMusicVolume() != 0);
         }
       },
       "+", "StatsFont");
@@ -70,8 +70,8 @@ OptionsMenu::OptionsMenu(Scene* scene) : GameObject(scene, nullptr) {
           manager->setChannelVolume(manager->getChannelVolume() - 10, 1);
           manager->setMusicVolume(manager->getMusicVolume() - 10);
 
-          muteIcon->setRenderizable(manager->getMusicVolume() == 0);
-          soundIcon->setRenderizable(manager->getMusicVolume() != 0);
+          muteIcon->setRenderable(manager->getMusicVolume() == 0);
+          soundIcon->setRenderable(manager->getMusicVolume() != 0);
         }
       },
       "-", "StatsFont");
@@ -87,7 +87,7 @@ OptionsMenu::OptionsMenu(Scene* scene) : GameObject(scene, nullptr) {
       [greenTick]() {
         const auto manager = SDLAudioManager::getInstance();
         manager->setDefault(!manager->getDefault());
-        greenTick->setRenderizable(manager->getDefault());
+        greenTick->setRenderable(manager->getDefault());
       },
       " ", "ButtonFont");
 
