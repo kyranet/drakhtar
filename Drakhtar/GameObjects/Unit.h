@@ -48,8 +48,8 @@ class Unit : public GameObject {
   void update() override;
   virtual void kill();
 
-  virtual void setBuffed(bool buffed);
-  virtual void setDebuffed(bool debuffed);
+  bool isBuffed() const;
+  bool isNerfed() const;
 
   std::string healthToString() const;
 };

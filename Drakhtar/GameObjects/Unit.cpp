@@ -79,12 +79,10 @@ void Unit::moveToBox(Box* newBox) {
                                     static_cast<int>(rect.y + rect.h / 1.2)));
 }
 
-void Unit::update() { healthBar_->update(); }
-
-void Unit::setBuffed(bool buffed) { healthBar_->setStatUpRenderizable(buffed); }
-
-void Unit::setDebuffed(bool debuffed) {
-  healthBar_->setStatDownRenderizable(debuffed);
+void Unit::update() {
+  healthBar_->update();
+  healthBar_->setStatUpRenderizable(isBuffed());
+  healthBar_->setStatDownRenderizable(isNerfed());
 }
 
 void Unit::kill() {
@@ -103,3 +101,23 @@ std::string Unit::healthToString() const {
 }
 
 bool Unit::isCommander() const { return isCommander_; }
+
+bool Unit::isBuffed() const {
+  const auto scene = reinterpret_cast<GameScene*>(getScene());
+  const auto state = scene->getState();
+  const auto stats = state->getAt(getBox()->getIndex());
+  for (const auto& modifier : stats.modifiers_) {
+    if (modifier.buff_) return true;
+  }
+  return false;
+}
+
+bool Unit::isNerfed() const {
+  const auto scene = reinterpret_cast<GameScene*>(getScene());
+  const auto state = scene->getState();
+  const auto stats = state->getAt(getBox()->getIndex());
+  for (const auto& modifier : stats.modifiers_) {
+    if (modifier.nerf_) return true;
+  }
+  return false;
+}

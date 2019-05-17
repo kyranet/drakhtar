@@ -79,6 +79,8 @@ struct Modifier {
   Unit* caster_;
   std::function<UnitState(const UnitState&)> run_;
   int16_t duration_;
+  bool nerf_;
+  bool buff_;
 };
 
 struct SkillState {
