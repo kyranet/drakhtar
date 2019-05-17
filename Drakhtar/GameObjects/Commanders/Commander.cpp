@@ -41,7 +41,7 @@ void Commander::setCommanderHealthBar() {
 
   commanderIcon_ = new GameObject(
       scene_, TextureManager::get("UI-commanderIcon"),
-      Vector2D<int>(rect.x, static_cast<int>(rect.y + rect.h / 1.31)),
+      Vector2D<int>(rect.x, static_cast<int>(rect.y + rect.h / 1.15)),
       Vector2D<int>(rect.h / 2, rect.h / 2));
 
   commanderIcon_->setTransparent(true);
