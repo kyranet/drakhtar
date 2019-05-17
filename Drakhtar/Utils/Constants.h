@@ -57,7 +57,7 @@ const UnitStats DREILAY_STATS = {50, 35, 300, 1, 5, 8, 200};
 const UnitStats ABEIZHUL_STATS = {50, 20, 400, 3, 3, 6, 200};
 
 // Mage
-const UnitStats MAGE_STATS = {20, 0, 10, 2, 3, 6, 38 / 2};
+const UnitStats MAGE_STATS = {15, 0, 10, 2, 3, 6, 38 / 2};
 // knight
 const UnitStats KNIGHT_STATS = {13, 30, 30, 1, 5, 8, 55 / 2};
 // archer

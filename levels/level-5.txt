@@ -1,7 +1,7 @@
 5 12 5
 Abeizhul 11 0
-Archer 5 10 0
-Soldier 20 11 1
-Soldier 5 11 2
-Archer 5 11 3
-Monster 2 11 4
+Archer 10 11 1
+Soldier 10 10 1
+Monster 3 11 2
+Mage 5 11 3
+Knight 5 10 3
