@@ -149,7 +149,7 @@ void HeroicStrike::cast() {
          },
          duration_, false, true});
   }
-  SDLAudioManager::getInstance()->playChannel(8, 0, 1);
+  SDLAudioManager::getInstance()->playChannel(9, 0, 1);
 }
 
 // ---------- WITHERING CURSE ----------

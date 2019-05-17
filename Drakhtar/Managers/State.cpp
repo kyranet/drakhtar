@@ -379,6 +379,9 @@ bool State::isInRange(const Vector2D<uint16_t>& from,
 
 bool State::isInMoveRange(const Vector2D<uint16_t>& from,
                           const Vector2D<uint16_t>& to, int range) const {
+  // Absolute range will always be equal or larger than movement range
+  if (!isInRange(from, to, range)) return false;
+
   auto path = findPath(from, to);
   if (path.empty()) {
     return false;
