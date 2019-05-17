@@ -53,7 +53,7 @@ void SkillButton::handleEvents(SDL_Event e) {
           gameScene_->getState()->getController());
       if (player) {
         player->highlightCells();
-        if (!player->canAttack() && player->canMove() &&
+        if (!player->canAttack() && !player->canMove() &&
             !player->canCastSkills())
           player->finish();
       }
