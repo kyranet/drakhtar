@@ -1,7 +1,5 @@
 5 11 2
-Sheissah 10 0
-Archer 5 10 1
-Soldier 20 10 2
-Soldier 5 9 2
-Archer 5 10 3
-Monster 2 10 4
+Sheissah 9 2
+Soldier 10 10 1
+Archer 5 10 2
+Mage 5 10 3
