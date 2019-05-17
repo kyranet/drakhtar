@@ -5,6 +5,7 @@
 #include "EventListeners/EventListener.h"
 #include "GameObjects/Battalion.h"
 #include "GameObjects/Board.h"
+#include "GameObjects/Box.h"
 #include "GameObjects/HealthBar.h"
 #include "GameObjects/Text.h"
 #include "GameObjects/Unit.h"
@@ -16,6 +17,7 @@
 #include "Structures/SceneMachine.h"
 #include "Structures/Team.h"
 #include "Structures/Texture.h"
+#include "Structures/Tween.h"
 
 UnitsController::UnitsController(Board* board, GameScene* scene, Team* team,
                                  Team* oppositeTeam)
@@ -110,3 +112,51 @@ void UnitsController::onKill(const UnitState& stats) {
     stats.unit_->kill();
   });
 }
+
+std::vector<Vector2D<double>> UnitsController::pathToRoute(
+    const std::vector<Vector2D<uint16_t>>& path) const {
+  std::vector<Vector2D<double>> vector;
+  vector.reserve(path.size());
+
+  const auto board = getBoard();
+  for (const auto& element : path) {
+    const auto box = board->getBoxAt(element.getX(), element.getY());
+    const auto pos = box->getPosition();
+    const auto size = box->getSize();
+    vector.emplace_back(pos.getX() + size.getX() / 2.0,
+                        pos.getY() + size.getY() / 2.0);
+  }
+  return vector;
+}
+
+void UnitsController::setTutorialDone(bool done) { tutorialDone_ = done; }
+
+void UnitsController::move(Vector2D<uint16_t> from, Vector2D<uint16_t> to) {
+  const auto unit = activeUnit_;
+
+  const auto state = getState();
+  const auto path = state->findPath(from, to);
+  const auto stats = state->getAt(from);
+  state->move(stats.position_, to);
+  unit->moveToBox(getBoard()->getBoxAt(to.getX(), to.getY()));
+
+  scene_->getTweenManager()
+      ->create()
+      ->setRoute(pathToRoute(path))
+      ->setDuration(static_cast<int>(
+          floor(static_cast<double>(path.size()) * GAME_FRAMERATE * 0.25)))
+      ->setOnStart([unit]() { unit->getTexture()->setAnimation("walk"); })
+      ->setOnUpdate([unit](Vector2D<double> updated) {
+        unit->setPosition({static_cast<int>(std::floor(updated.getX())),
+                           static_cast<int>(std::floor(updated.getY()))});
+      })
+      ->setOnComplete([this, unit]() {
+        unit->getTexture()->setAnimation("default");
+        hasMoved_ = true;
+        canMove_ = false;
+
+        onComplete();
+      });
+}
+
+void UnitsController::onComplete() {}

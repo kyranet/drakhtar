@@ -3,6 +3,7 @@
 #pragma once
 #include <vector>
 #include "SDL.h"
+#include "Utils/Vector2D.h"
 
 class Unit;
 class GameScene;
@@ -59,6 +60,14 @@ class UnitsController {
   bool canMove_ = false;
   bool canAttack_ = false;
 
+  bool tutorialDone_ = false;
+  std::vector<Vector2D<double>> pathToRoute(
+      const std::vector<Vector2D<uint16_t>>& path) const;
+
+  void move(Vector2D<uint16_t> from, Vector2D<uint16_t> to);
+
+  virtual void onComplete();
+
  public:
   UnitsController(Board* board, GameScene* scene, Team* team,
                   Team* oppositeTeam);
@@ -88,6 +97,8 @@ class UnitsController {
   State* getState() const;
   bool hasMoved() const;
   bool hasAttacked() const;
+
+  void setTutorialDone(bool moved);
 
   virtual void onDamage(const UnitState& stats);
   virtual void onKill(const UnitState& stats);

@@ -17,7 +17,6 @@
 #include "Scenes/GameScene.h"
 #include "Structures/Team.h"
 #include "Structures/Texture.h"
-#include "Structures/Tween.h"
 #include "Utils/Constants.h"
 
 PlayerController::PlayerController(Board* board, GameScene* scene, Team* team,
@@ -42,40 +41,9 @@ void PlayerController::onClickMove(Box* boxClicked) {
     return;
   }
 
-  const auto path = state->findPath(activeUnit_->getBox()->getIndex(),
-                                    boxClicked->getIndex());
-
   locked_ = true;
   SDLAudioManager::getInstance()->playChannel(0, 0, 0);
-  const auto unit = activeUnit_;
-  unit->moveToBox(boxClicked);
-  state->move(stats.position_, to);
-
-  scene_->getTweenManager()
-      ->create()
-      ->setRoute(pathToRoute(path))
-      ->setDuration(static_cast<int>(
-          floor(static_cast<double>(path.size()) * GAME_FRAMERATE * 0.25)))
-      ->setOnStart([unit]() { unit->getTexture()->setAnimation("walk"); })
-      ->setOnUpdate([unit](Vector2D<double> updated) {
-        unit->setPosition({static_cast<int>(std::floor(updated.getX())),
-                           static_cast<int>(std::floor(updated.getY()))});
-      })
-      ->setOnComplete([this, unit]() {
-        unit->getTexture()->setAnimation("default");
-        hasMoved_ = true;
-        canMove_ = false;
-        locked_ = false;
-
-        // If there are enemies in range, highlight them, otherwise skip turn
-        highlightCells();
-        if (canAttack_) {
-          SDLAudioManager::getInstance()->setChannelVolume(30, 0);
-          SDLAudioManager::getInstance()->playChannel(4, 0, 0);
-        } else if (!canCastSkills()) {
-          finish();
-        }
-      });
+  move(activeUnit_->getBox()->getIndex(), boxClicked->getIndex());
 }
 
 void PlayerController::onClickAttack(Box* boxClicked) {
@@ -143,8 +111,6 @@ void PlayerController::finish() {
 
 bool PlayerController::getLocked() const { return locked_; }
 
-void PlayerController::setTutorialDone(bool done) { tutorialDone_ = done; }
-
 bool PlayerController::canCastSkills() {
   if (tutorialDone_ && activeUnit_->isCommander()) {
     for (auto skill : reinterpret_cast<Commander*>(activeUnit_)->getSkills()) {
@@ -195,19 +161,17 @@ void PlayerController::highlightCells() {
     }
   }
 }
+void PlayerController::onComplete() {
+  UnitsController::onComplete();
 
-std::vector<Vector2D<double>> PlayerController::pathToRoute(
-    const std::vector<Vector2D<uint16_t>>& path) const {
-  std::vector<Vector2D<double>> vector;
-  vector.reserve(path.size());
+  locked_ = false;
 
-  const auto board = getBoard();
-  for (const auto& element : path) {
-    const auto box = board->getBoxAt(element.getX(), element.getY());
-    const auto pos = box->getPosition();
-    const auto size = box->getSize();
-    vector.emplace_back(pos.getX() + size.getX() / 2.0,
-                        pos.getY() + size.getY() / 2.0);
+  // If there are enemies in range, highlight them, otherwise skip turn
+  highlightCells();
+  if (canAttack_) {
+    SDLAudioManager::getInstance()->setChannelVolume(30, 0);
+    SDLAudioManager::getInstance()->playChannel(4, 0, 0);
+  } else if (!canCastSkills()) {
+    finish();
   }
-  return vector;
 }
