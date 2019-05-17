@@ -314,6 +314,8 @@ void Reinforce::cast() {
       stats.attack_ = static_cast<uint16_t>(stats.attack_ + base.attack);
       stats.maxHealth_ =
           static_cast<uint16_t>(stats.maxHealth_ + base.maxHealth);
+      reinterpret_cast<Battalion*>(stats.unit_)
+          ->setBattalionSize(stats.battalionSize_);
       state->setAt(position, stats);
     }
   }
