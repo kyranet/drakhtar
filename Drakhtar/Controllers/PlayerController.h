@@ -9,9 +9,9 @@ class Button;
 class PlayerController final : public UnitsController {
   bool locked_ = false;
   Button* skipTurnButton_ = nullptr;
-  bool tutorialDone_ = false;
-  std::vector<Vector2D<double>> pathToRoute(
-      const std::vector<Vector2D<uint16_t>>& path) const;
+
+ protected:
+  void onComplete() override;
 
  public:
   PlayerController(Board* board, GameScene* scene, Team* team,
@@ -34,9 +34,6 @@ class PlayerController final : public UnitsController {
   void finish() override;
 
   bool getLocked() const;
-
-  void setTutorialDone(bool moved);
-  bool gettutorialDone();
 
   bool canCastSkills();
   void highlightCells();

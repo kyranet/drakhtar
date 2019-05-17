@@ -1,10 +1,9 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "GameScene.h"
-
 #include <algorithm>
 #include <fstream>
-
+#include "Controllers/AIController.h"
 #include "Controllers/PlayerController.h"
 #include "Errors/DrakhtarError.h"
 #include "GameObjects/Battalion.h"
