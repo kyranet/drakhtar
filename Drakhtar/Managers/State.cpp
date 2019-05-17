@@ -163,7 +163,8 @@ const UnitState State::getAt(const Vector2D<uint16_t>& position) const {
 
 const UnitState State::getModifiedAt(const Vector2D<uint16_t>& position) const {
   auto stats = board_[position.getX() * rows_ + position.getY()];
-  for (const auto& modifier : stats.modifiers_) stats = modifier.run_(stats);
+  const auto modifiers = stats.modifiers_;
+  for (const auto& modifier : modifiers) stats = modifier.run_(stats);
   return stats;
 }
 
