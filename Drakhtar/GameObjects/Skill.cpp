@@ -84,7 +84,7 @@ void BattleCry::cast() {
                state.counterAttackable_,
                state.modifiers_};
          },
-         cooldown_, false, true});
+         duration_, false, true});
   }
   SDLAudioManager::getInstance()->playChannel(10, 0, 1);
 }
@@ -147,7 +147,7 @@ void HeroicStrike::cast() {
                false,
                state.modifiers_};
          },
-         cooldown_, false, true});
+         duration_, false, true});
   }
   SDLAudioManager::getInstance()->playChannel(8, 0, 1);
 }
@@ -189,7 +189,7 @@ void WitheringCurse::cast() {
                state.counterAttackable_,
                state.modifiers_};
          },
-         cooldown_, true, false});
+         duration_, true, false});
   }
 }
 
@@ -223,7 +223,7 @@ void Charge::cast() {
                                            false,
                                            state.modifiers_};
                         },
-                        cooldown_, false, false});
+                        duration_, false, false});
 }
 
 // ---------- BERSERKER ----------
@@ -258,7 +258,7 @@ void Berserker::cast() {
                               state.counterAttackable_,
                               state.modifiers_};
                         },
-                        cooldown_, true, true});
+                        duration_, true, true});
 }
 
 // ---------- DEATHRAY ----------
