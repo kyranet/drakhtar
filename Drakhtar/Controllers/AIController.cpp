@@ -21,7 +21,7 @@ int AIController::minimax(int depth, int alpha, int beta,
   const auto position = unit->getBox()->getIndex();
   const auto stats = state->getModifiedAt(position);
   if (isMaximisingPlayer) {
-    int bestMove = -9999;
+    int bestMove = -9999999;
     for (const auto& move :
          state->getCellsInMovementRange(position, stats.moveRange_)) {
       state->save();
@@ -36,7 +36,7 @@ int AIController::minimax(int depth, int alpha, int beta,
     }
     return bestMove;
   } else {
-    int bestMove = 9999;
+    int bestMove = 9999999;
     for (const auto& move :
          state->getCellsInMovementRange(position, stats.moveRange_)) {
       state->save();
@@ -60,7 +60,8 @@ int AIController::evaluateBoard() const {
   int evaluation = 0;
   for (const auto& stats : state->getBoard()) {
     if (stats.unit_ == nullptr) continue;
-    evaluation += stats.team_ == team ? stats.prize_ : -stats.prize_;
+    evaluation += stats.team_ == team ? stats.prize_ * stats.health_
+                                      : -stats.prize_ * stats.health_;
   }
 
   return evaluation;
