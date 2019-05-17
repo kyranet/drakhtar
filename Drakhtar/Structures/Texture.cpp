@@ -188,15 +188,15 @@ void Texture::tick() {
 
   // If it is the last tick, set to 0, else add one
   if (++frame_ == size) {
-    frame_ = 0;
     if (!previousAnimation_.empty()) {
-      const auto nextAnimation = previousAnimation_;
+      setAnimation(previousAnimation_);
       previousAnimation_ = "";
-      setAnimation(nextAnimation);
       if (animationOnEndHandler_) {
         animationOnEndHandler_();
         setAnimationOnEnd(nullptr);
       }
+    } else {
+      frame_ = 0;
     }
   }
 }
