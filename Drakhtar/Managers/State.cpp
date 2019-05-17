@@ -49,6 +49,7 @@ void State::next() {
       if (stats.modifiers_.empty()) continue;
       size_t i = 0;
       while (i < stats.modifiers_.size()) {
+        if (stats.modifiers_[i].duration_ == -1) continue;
         if ((stats.modifiers_[i].caster_ == getActiveUnit()) &&
             (--stats.modifiers_[i].duration_ == 0)) {
           stats.modifiers_.erase(stats.modifiers_.begin() +
@@ -62,7 +63,7 @@ void State::next() {
     // Update all skills
     for (auto& pair : skillsUsed_) {
       if (pair.second.caster_ != getActiveUnit()) continue;
-      if (pair.second.cooldown_ != 0) {
+      if (pair.second.cooldown_ > 0) {
         --pair.second.cooldown_;
       }
     }

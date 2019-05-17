@@ -62,7 +62,7 @@ void SkillButton::handleEvents(SDL_Event e) {
 
   // Update button text
   int CD = skill_->getRemainingCooldown();
-  if (CD == 0) {
+  if (CD <= 0) {
     buttonText_->setText(" ");
   } else {
     buttonText_->setText(std::to_string(CD));
