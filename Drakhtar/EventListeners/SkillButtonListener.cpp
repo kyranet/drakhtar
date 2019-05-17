@@ -10,6 +10,6 @@ SkillButtonListener::SkillButtonListener(GameObject* hoveredObject,
 
 SkillButtonListener::~SkillButtonListener() {}
 
-void SkillButtonListener::onHoverStart() { panel_->setRenderizable(true); }
+void SkillButtonListener::onHoverStart() { panel_->setRenderable(true); }
 
-void SkillButtonListener::onHoverStop() { panel_->setRenderizable(false); }
+void SkillButtonListener::onHoverStop() { panel_->setRenderable(false); }

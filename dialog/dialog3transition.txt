@@ -4,9 +4,9 @@ Thassa Portraits-Thassa Gods!... Who is commanding you? Why are your forces atta
 Sorcerer Portraits-MageEnemy Your grace... I am known throughout this land as Sheissah, the Bane of the Living. .
 Narrator Portraits-Narrator A malicious smile was hiding in Sheissah's visage. .
 Thassa Portraits-Thassa You did not answer what I asked. .
-Narrator Portraits-Narrator Another stroke, this time on her face. .
+Narrator Portraits-Narrator Another strike, this time on her face. .
 Thassa Portraits-Thassa Who and where is your leader? .
-Narrator Portraits-Narrator No answer. Thassa, consumed by her anger, continued landing strokes all over Sheissah's half-dead body. She made sure Sheissah could not die by telling her soldiers to immobilize her and treating her bleeding wounds. .
+Narrator Portraits-Narrator No answer. Thassa, consumed by her anger, continued landing strikes all over Sheissah's half-dead body. She made sure Sheissah could not die by telling her soldiers to immobilize her and treating her bleeding wounds. .
 Narrator Portraits-Narrator Sheissah, seeing she could not escape nor die, gave up. .
 Sheissah Portraits-MageEnemy Stop... I cannot take this any longer... Please... Let me die in peace... .
 Sheissah Portraits-MageEnemy I... I... was requested to take Deiro's Gem for my lord... .

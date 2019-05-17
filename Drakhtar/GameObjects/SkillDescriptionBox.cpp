@@ -17,7 +17,7 @@ SkillDescriptionBox::SkillDescriptionBox(Scene* scene, SkillButton* skillButton)
            static_cast<int>(WIN_HEIGHT / 3)}),
       skillButton_(skillButton) {
   setTransparent(true);
-  setRenderizable(false);
+  setRenderable(false);
 
   std::string statText_ = fillText();
   const auto skillTextSprite = new Text(

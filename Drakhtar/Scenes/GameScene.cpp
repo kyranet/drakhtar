@@ -20,6 +20,7 @@
 #include "GameObjects/UnitDescriptionBox.h"
 #include "Managers/GameManager.h"
 #include "Managers/SDLAudioManager.h"
+#include "Managers/State.h"
 #include "Managers/TextureManager.h"
 #include "Structures/Game.h"
 #include "Structures/Team.h"
@@ -33,6 +34,7 @@ GameScene::GameScene(int battle) : battle_(battle) {}
 GameScene::~GameScene() {
   delete team1_;
   delete team2_;
+  delete state_;
 }
 
 void buttonPause() { Game::getSceneMachine()->getCurrentScene()->pause(); }
@@ -54,7 +56,9 @@ void GameScene::preload() {
   auto factory = UnitFactory(this);
 
   // Red Team
-  this->readLevel(factory);
+  readLevel(factory);
+  state_ = new State();
+  state_->setBoard(board_->getRows(), board_->getCols());
 
   // Blue Team
   const auto thassa =
@@ -74,7 +78,7 @@ void GameScene::preload() {
   auto army = GameManager::getInstance()->getArmy();
   auto typeOrder = GameManager::getInstance()->getTypeOrder();
 
-  int y = 1;
+  uint16_t y = 1;
   for (const auto& pair : typeOrder) {
     if (army[pair.second] > 0) {
       addGameObject(factory.newBattalion(
@@ -96,10 +100,8 @@ void GameScene::preload() {
   const auto dialog =
       new DialogScene(this, "dialog" + std::to_string(battle_), "DialogFont");
 
-  team1_->setController(new PlayerController(board_, turnBar->getTurnManager(),
-                                             this, team1_, team2_));
-  team2_->setController(new PlayerController(board_, turnBar->getTurnManager(),
-                                             this, team2_, team1_));
+  team1_->setController(new PlayerController(board_, this, team1_, team2_));
+  team2_->setController(new PlayerController(board_, this, team2_, team1_));
 
   const auto pauseButton =
       new Button(this, TextureManager::get("Button-Pause"),
@@ -132,8 +134,7 @@ void GameScene::preload() {
                                     static_cast<int>(WIN_HEIGHT / 8)),
                       team2_->getCommanders()[0], 0);
 
-  const auto unitDescriptionBox =
-      new UnitDescriptionBox(this, board_, turnBar->getTurnManager());
+  const auto unitDescriptionBox = new UnitDescriptionBox(this, board_);
 
   addGameObject(turnBar);
   addGameObject(dialog);
@@ -186,7 +187,7 @@ void GameScene::readLevel(UnitFactory& factory) {
 
   if (file.fail()) throw DrakhtarError("File is not a level file");
 
-  int rowSize, columnSize;
+  uint16_t rowSize, columnSize;
 
   file >> rowSize >> columnSize;
 
@@ -197,13 +198,12 @@ void GameScene::readLevel(UnitFactory& factory) {
   delete board_;
   board_ = nullptr;
 
-  board_ = new Board(this, rowSize, columnSize,
-                     static_cast<float>(90));
+  board_ = new Board(this, rowSize, columnSize, static_cast<float>(90));
   addGameObject(board_);
 
   file >> commanderName;
 
-  int row, col, size;
+  uint16_t row, col, size;
 
   file >> row >> col;
   Commander* commander =
@@ -235,6 +235,7 @@ void GameScene::gameOver(bool victory) {
       new GameOverPanel(this, TextureManager::get("UI-OptionsMenu"),
                         {WIN_WIDTH / 2, WIN_HEIGHT / 2},
                         {WIN_WIDTH / 2, WIN_HEIGHT / 2}, victory);
+  if (victory) saveStatus();
   addGameObject(gameOverPanel_);
 }
 
@@ -252,6 +253,8 @@ Board* GameScene::getBoard() const { return board_; }
 int GameScene::getBattleInd() { return battle_; }
 
 void GameScene::activateTutorialBox() { addGameObject(tutorialBox); }
+
+State* GameScene::getState() const { return state_; }
 
 Team* GameScene::getAlliedTeam(Unit* unit) {
   if (unit->getTeam() == team1_) return team1_;

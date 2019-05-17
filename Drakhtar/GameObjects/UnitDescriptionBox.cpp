@@ -1,28 +1,28 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 #include "UnitDescriptionBox.h"
 
-#include "../Managers/FontManager.h"
-#include "../Managers/TextureManager.h"
-#include "../Utils/Constants.h"
 #include "Board.h"
 #include "Controllers/UnitsController.h"
 #include "EventListeners/StatBoxListener.h"
+#include "GameObjects/Box.h"
+#include "Managers/FontManager.h"
 #include "Managers/Input.h"
-#include "Managers/TurnManager.h"
+#include "Managers/State.h"
+#include "Managers/TextureManager.h"
+#include "Scenes/GameScene.h"
 #include "Skill.h"
 #include "Structures/Team.h"
 #include "Text.h"
 #include "Unit.h"
+#include "Utils/Constants.h"
 
-UnitDescriptionBox::UnitDescriptionBox(Scene* scene, Board* board,
-                                       TurnManager* turnManager)
+UnitDescriptionBox::UnitDescriptionBox(Scene* scene, Board* board)
     : GameObject(scene, TextureManager::get("Reward-Panel"),
                  Vector2D<int>(0, 0), Vector2D<int>(0, 0)),
       board_(board),
-      showDamage_(false),
-      turnManager_(turnManager) {
+      showDamage_(false) {
   setTransparent(true);
-  setRenderizable(false);
+  setRenderable(false);
 
   const auto listener = new StatBoxListener(board, this);
   board->addEventListener(listener);
@@ -45,7 +45,7 @@ UnitDescriptionBox::UnitDescriptionBox(Scene* scene, Board* board,
 
 void UnitDescriptionBox::render() const {
   if (active_) {
-    if (getRenderizable() && texture_ != nullptr) {
+    if (getRenderable() && texture_ != nullptr) {
       // Stats box
       texture_->renderFrame({Input::getMousePosition().getX(),
                              Input::getMousePosition().getY(), 150, 130},
@@ -67,28 +67,33 @@ void UnitDescriptionBox::render() const {
 }
 
 void UnitDescriptionBox::updateText(Unit* unit) {
+  const auto scene = reinterpret_cast<GameScene*>(getScene());
+  const auto state = scene->getState();
+  const auto stats = state->getModifiedAt(unit->getBox()->getIndex());
+
   std::string text = "<" + unit->getType() + ">\n";
   text += "Attack: " + std::to_string(unit->getBaseStats().attack) + " (" +
-          std::to_string(unit->getStats().attack) + ")\n";
-  text += "Defense: " + std::to_string(unit->getStats().defense) + "%\n";
-  text += "Range: " + std::to_string(unit->getStats().attackRange) + "\n";
-  text += "Move: " + std::to_string(unit->getStats().moveRange) + "\n";
-  text += "Speed: " + std::to_string(unit->getStats().speed) + "\n";
+          std::to_string(stats.attack_) + ")\n";
+  text += "Defense: " + std::to_string(stats.defense_) + "%\n";
+  text += "Range: " + std::to_string(stats.attackRange_) + "\n";
+  text += "Move: " + std::to_string(stats.moveRange_) + "\n";
+  text += "Speed: " + std::to_string(stats.speed_) + "\n";
 
   unitStatsText_->setText(text);
 
-  Unit* activeUnit = turnManager_->getActiveUnit();
+  Unit* activeUnit = state->getActiveUnit();
 
-  showDamage_ = board_->isInRange(activeUnit->getBox(), unit->getBox(),
-                                  activeUnit->getStats().attackRange) &&
-                unit->getTeam() != activeUnit->getTeam();
+  const auto enemyStats = state->getModifiedAt(unit->getBox()->getIndex());
 
-  int damage = static_cast<int>(activeUnit->getStats().attack *
-                                (1.0 - unit->getStats().defense / 100.0));
-  text =
-      "Unit's attack: " + std::to_string(activeUnit->getStats().attack) + "\n";
-  text +=
-      "Enemy's defense: " + std::to_string(unit->getStats().defense) + "%\n";
+  showDamage_ =
+      unit->getTeam() != activeUnit->getTeam() &&
+      state->isInRange(activeUnit->getBox()->getIndex(),
+                       unit->getBox()->getIndex(), stats.attackRange_);
+
+  int damage =
+      static_cast<int>(stats.attack_ * (1.0 - enemyStats.defense_ / 100.0));
+  text = "Unit's attack: " + std::to_string(stats.attack_) + "\n";
+  text += "Enemy's defense: " + std::to_string(enemyStats.defense_) + "%\n";
   text += "Final damage: " + std::to_string(damage);
   unitDamageText_->setText(text);
 }

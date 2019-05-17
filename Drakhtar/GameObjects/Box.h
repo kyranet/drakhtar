@@ -23,12 +23,7 @@ class Box final : public GameObject {
   /**
    * \brief The row and column this box occupies in the board matrix.
    */
-  Vector2D<int> boardIndex_;
-
-  /**
-   * \brief The unit currently placed in the box.
-   */
-  Unit *content_;
+  Vector2D<uint16_t> boardIndex_;
 
   /**
    * \brief The index of current texture in the box texture array.
@@ -43,7 +38,7 @@ class Box final : public GameObject {
   /**
    * \brief Array of all textures de box may render.
    */
-  Texture *cellTextures_[7]{};
+  Texture* cellTextures_[7]{};
 
   /**
    * \brief Vector2D of the width and height of the box.
@@ -51,8 +46,8 @@ class Box final : public GameObject {
   const Vector2D<int> size_;
 
  public:
-  Box(Scene *scene, const Vector2D<int> &pos, const Vector2D<int> &size,
-      const Vector2D<int> &boardIndex, Unit *unit);
+  Box(Scene* scene, const Vector2D<int>& pos, const Vector2D<int>& size,
+      const Vector2D<uint16_t>& boardIndex);
 
   /**
    * \return The SDL_Rect of the box, being its position, width and height.
@@ -60,7 +55,7 @@ class Box final : public GameObject {
   SDL_Rect getRect() const override;
 
   /**
-   * \brief Renders the appropiate texture for the box and its content.
+   * \brief Renders the appropriated texture for the box and its content.
    */
   void render() const override;
 
@@ -78,23 +73,17 @@ class Box final : public GameObject {
   /**
    * \return A vector2D of the row and column this box occupies in the board.
    */
-  Vector2D<int> getIndex() const;
-
-  /**
-   * \return A pointer to the unit placed on this box.
-   */
-  Unit *getContent() const;
-
-  /**
-   * \brief Changes the unit currently placed on this box.
-   * \param content: A pointer to the new Unit to occupy the box.
-   */
-  void setContent(Unit *content);
+  Vector2D<uint16_t> getIndex() const;
 
   /**
    * \return An enum of the current texture being rendered by this box.
    */
   TextureInd getCurrentTexture() const;
+
+  /**
+   * \return A pointer to the unit placed on this box.
+   */
+  Unit* getContent() const;
 
   /**
    * \brief Changes the texture the box renders.

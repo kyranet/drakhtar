@@ -85,8 +85,8 @@ void RecruitScene::preload() {
 
         reset();
         playButton->setTransparent(false);
-        playButton->setRenderizable(true);
-        playButton->getChildren()[0]->setRenderizable(true);
+        playButton->setRenderable(true);
+        playButton->getChildren()[0]->setRenderable(true);
       },
       " ", "ButtonFont");
 
@@ -112,9 +112,9 @@ void RecruitScene::preload() {
 
   addGameObject(playButton);
   playButton->setTransparent(true);
-  playButton->setRenderizable(false);
+  playButton->setRenderable(false);
   playButton->getChildren()[0]->setTransparent(true);
-  playButton->getChildren()[0]->setRenderizable(false);
+  playButton->getChildren()[0]->setRenderable(false);
 }
 
 int RecruitScene::getCost(const std::string& type) { return costs_[type]; }

@@ -22,7 +22,7 @@ class UnitFactory {
  public:
   explicit UnitFactory(Scene* scene);
   ~UnitFactory();
-  Unit* newBattalion(const std::string& type, Team* team, Box* box, int size);
+  Unit* newBattalion(const std::string& type, Team* team, Box* box, uint16_t size);
   Commander* newCommander(const std::string& type, Team* team, Box* box);
 
   const UnitStats getStats(const std::string& type);

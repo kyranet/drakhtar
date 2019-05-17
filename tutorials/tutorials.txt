@@ -6,11 +6,11 @@ tutorial-4 Players alternate their turns depending on each of their unit's speed
 tutorial-5 The unit with the highest speed will start first, followed by the units with less speed. ¡ .
 tutorial-6 Each unit has it's own unique stats, you can check them by hovering over them. ¡ .
 tutorial-7 Units can attack and/or move on their turn. In their turn, their movement range is highlighted in blue, and if there is any enemy unit in range of its attack, it will be highlighted in red. ¡ .
-tutorial-8 You can order your units to move or attack by left-clicking on the target, as long as it is in range. ¡ .
-tutorial-9 When two units fight, the attacker always strikes first, giving him an advantage, and the defender can only counter-attack if the attacker is in range. ¡ .
+tutorial-8 You can order your units to move or attack by left-clicking on the target, and the attacker will always strike first, which gives him an advantage . ¡ .
+tutorial-9 Once per turn, the defender can counter-attack if he is in range (archers can't counter-attack in melee). ¡ .
 tutorial-1 There is a turn bar in the bottom of the screen where you can see the order in which units will act, the one in the circle being the current active unit. ¡ .
 tutorial-2 The active unit is highlighted in yellow, to move it, click on any of the boxes highlighted in blue. ¡ .
-tutorial-3 To attack, click on an enemy in a box highlighted in red, keep in mind, if the target survives the attack, it will counterattack. ¡ .
+tutorial-3 To attack, click on an enemy in a box highlighted in red, keep in mind, if the target survives the attack, it will counter-attack. ¡ .
 tutorial-4 You will get gold for every enemy killed, you can use it later to recruit more troops and reinforce your army. ¡ . 
 tutorial-5 You can skip your current unit's turn whenever you want. ¡ . 
 tutorial-6 Commander skills can be used during the commander's turn, hover the buttons on the left to read about them. ¡ .

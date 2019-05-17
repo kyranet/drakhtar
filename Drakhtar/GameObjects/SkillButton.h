@@ -45,10 +45,11 @@ class SkillButton : public GameObject {
 
   int increSize_ = 15;
 
+  bool isActive() const;
+
  public:
   SkillButton(GameScene* scene, Texture* texture, Texture* disabledText,
-              Vector2D<int> pos,
-              Vector2D<int> size, Commander* commander,
+              Vector2D<int> pos, Vector2D<int> size, Commander* commander,
               int skill);
 
   /**

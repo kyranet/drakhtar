@@ -61,9 +61,9 @@ void Scene::run() {
     create();
     handleEvents();
     update();
-    render();
-    destroy();
     tick();
+    destroy();
+    render();
 
     if (poolFrameRate->next(SDL_GetTicks())) {
       SDL_Delay(poolFrameRate->getRemaining());
@@ -83,7 +83,7 @@ void Scene::preload() {
 void Scene::tick() {
   if (nextTick_.empty()) return;
 
-  for (auto callback : nextTick_) {
+  for (const auto& callback : nextTick_) {
     callback();
   }
   nextTick_.clear();
@@ -94,6 +94,7 @@ void Scene::create() {
     // If the gameObject was removed early, skip
     if (gameObject == nullptr) continue;
     gameObjects_.push_back(gameObject);
+    if (gameObject->getActive()) gameObject->awake();
   }
 
   pendingOnCreate_.clear();
@@ -127,7 +128,8 @@ void Scene::handleEvents() {
   if (Input::isKeyDown(KeyboardKey::F)) {
     SDL_Window* window_ = Game::getWindow();
     const auto flags = SDL_GetWindowFlags(window_);
-    const auto flag = flags & SDL_WINDOW_FULLSCREEN ? 0 : SDL_WINDOW_FULLSCREEN;
+    const auto flag = static_cast<Uint32>(
+        flags & SDL_WINDOW_FULLSCREEN ? 0 : SDL_WINDOW_FULLSCREEN);
     if (SDL_SetWindowFullscreen(window_, flag) != 0) {
       throw SDLError("Failed to change full screen: " +
                      std::string(SDL_GetError()));

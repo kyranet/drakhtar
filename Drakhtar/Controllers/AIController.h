@@ -4,7 +4,9 @@
 #include "UnitsController.h"
 
 class AIController final : public UnitsController {
+  int minimax(int depth, int alpha, int beta, bool isMaximisingPlayer) const;
+  int evaluateBoard() const;
+
  public:
-  AIController(Board* board, TurnManager* turnManager, GameScene* scene,
-               Team* team, Team* oppositeTeam);
+  AIController(Board* board, GameScene* scene, Team* team, Team* oppositeTeam);
 };

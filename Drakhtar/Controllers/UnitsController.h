@@ -4,13 +4,14 @@
 #include <vector>
 #include "SDL.h"
 
-class TurnManager;
 class Unit;
 class GameScene;
 class Board;
 class Box;
 class EventListener;
 class Team;
+class State;
+struct UnitState;
 
 class UnitsController {
  protected:
@@ -18,11 +19,6 @@ class UnitsController {
    * \brief A pointer to the game board.
    */
   Board* board_;
-
-  /**
-   * \brief A pointer to the game's turn manager.
-   */
-  TurnManager* turnManager_;
 
   /**
    * \brief A pointer to the unit that has the turn.
@@ -60,9 +56,12 @@ class UnitsController {
    */
   bool hasAttacked_ = false;
 
+  bool canMove_ = false;
+  bool canAttack_ = false;
+
  public:
-  UnitsController(Board* board, TurnManager* turnManager, GameScene* scene,
-                  Team* team, Team* oppositeTeam);
+  UnitsController(Board* board, GameScene* scene, Team* team,
+                  Team* oppositeTeam);
 
   virtual ~UnitsController();
 
@@ -70,6 +69,9 @@ class UnitsController {
    * \brief Is called when this controller is ready to process data.
    */
   virtual void start();
+
+  bool canMove() const { return canMove_; }
+  bool canAttack() const { return canAttack_; }
 
   /**
    * \brief Is called when this controller has finished processing this turn.
@@ -82,8 +84,11 @@ class UnitsController {
   virtual void end() {}
 
   Board* getBoard() const;
-  TurnManager* getTurnManager() const;
   Unit* getActiveUnit() const;
+  State* getState() const;
   bool hasMoved() const;
   bool hasAttacked() const;
+
+  virtual void onDamage(const UnitState& stats);
+  virtual void onKill(const UnitState& stats);
 };

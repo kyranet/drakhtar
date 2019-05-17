@@ -15,7 +15,7 @@ StatBoxListener::StatBoxListener(Board* board, UnitDescriptionBox* statsPanel)
 StatBoxListener::~StatBoxListener() {}
 
 void StatBoxListener::run(const SDL_Event) {
-  const auto hovered = dynamic_cast<Box*>(Input::screenMouseToRay()) != NULL;
+  const auto hovered = dynamic_cast<Box*>(Input::screenMouseToRay()) != nullptr;
   if (hovered) {
     if (hovered_) {
       onHoverStay();
@@ -30,13 +30,14 @@ void StatBoxListener::run(const SDL_Event) {
 }
 
 void StatBoxListener::onHoverStay() {
-  Box* box = reinterpret_cast<Box*>(Input::screenMouseToRay());
-  if (box->getContent() != nullptr) {
-    statsPanel_->setRenderizable(true);
+  const auto box = reinterpret_cast<Box*>(Input::screenMouseToRay());
+  const auto unit = box->getContent();
+  if (unit) {
+    statsPanel_->setRenderable(true);
     statsPanel_->updateText(box->getContent());
   } else {
-    statsPanel_->setRenderizable(false);
+    statsPanel_->setRenderable(false);
   }
 }
 
-void StatBoxListener::onHoverStop() { statsPanel_->setRenderizable(false); }
+void StatBoxListener::onHoverStop() { statsPanel_->setRenderable(false); }

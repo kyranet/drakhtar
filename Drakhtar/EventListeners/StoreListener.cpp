@@ -75,13 +75,13 @@ StoreListener::StoreListener(GameObject* gameObject, const std::string& type,
                {255, 255, 255, 0}, infoFillText(),
                static_cast<int>(infoBox->getRect().w * 0.85));
   infoBox->addChild(infoBoxText);
-  infoBox->setRenderizable(false);
+  infoBox->setRenderable(false);
   gameObject->addChild(infoBox);
   auto infoIcon = new Button(
       scene, TextureManager::get("Quantity-Button"),
       {static_cast<int>(WIN_WIDTH * 0.69), static_cast<int>(WIN_HEIGHT * 0.9)},
       {static_cast<int>(WIN_WIDTH / 12), static_cast<int>(WIN_HEIGHT / 5)},
-      [infoBox]() { infoBox->setRenderizable(!infoBox->getRenderizable()); },
+      [infoBox]() { infoBox->setRenderable(!infoBox->getRenderable()); },
       "?", "SkillButtonFont");
   gameObject->addChild(infoIcon);
   storeUnit.amountText =

@@ -46,10 +46,10 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
           setCloseButtonRender(true);
         }
         if (!tutorialText_->addCount()) {
-          this->setRenderizable(false);
+          this->setRenderable(false);
           this->setTransparent(true);
           for (auto child : getChildren()) {
-            child->setRenderizable(false);
+            child->setRenderable(false);
             child->setTransparent(true);
           }
         }
@@ -101,7 +101,7 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
           setArrowPos(SDL_FLIP_HORIZONTAL, pos);
         }
         if (x == 14) {
-          getChildren()[5]->setRenderizable(false);
+          getChildren()[5]->setRenderable(false);
           getChildren()[5]->setTransparent(true);
           for (auto child : getChildren()[5]->getChildren()) {
             child->setTransparent(true);
@@ -126,10 +126,10 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
                         tutorialBackground->getRect().h / 4),
       Vector2D<int>(WIN_WIDTH / 10, WIN_HEIGHT / 16),
       [tutorialText_, this, controller, temporalController]() {
-        this->setRenderizable(false);
+        this->setRenderable(false);
         this->setTransparent(true);
         for (auto child : getChildren()) {
-          child->setRenderizable(false);
+          child->setRenderable(false);
           child->setTransparent(true);
         }
         controller->setTutorialDone(true);
@@ -147,12 +147,12 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
 }
 
 void TutorialBox::setNextButtonRender(bool next) {
-  getChildren()[2]->setRenderizable(next);
+  getChildren()[2]->setRenderable(next);
   getChildren()[2]->setTransparent(!next);
 }
 
 void TutorialBox::setCloseButtonRender(bool close) {
-  getChildren()[3]->setRenderizable(close);
+  getChildren()[3]->setRenderable(close);
   getChildren()[3]->setTransparent(!close);
 }
 
@@ -162,5 +162,5 @@ void TutorialBox::setArrowPos(SDL_RendererFlip flip, Vector2D<int> pos) {
 }
 
 void TutorialBox::setArrowRenderizable(bool renderizable) {
-  getChildren()[4]->setRenderizable(renderizable);
+  getChildren()[4]->setRenderable(renderizable);
 }

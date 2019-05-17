@@ -29,8 +29,8 @@ HealthBar::HealthBar(Scene* scene, Vector2D<int> pos, int maxHP, Color color)
                      Vector2D<int>(size_.getX() / 5, size_.getY()) * 2);
 
   damageBar->setActive(false);
-  statUp->setRenderizable(false);
-  statDown->setRenderizable(false);
+  statUp->setRenderable(false);
+  statDown->setRenderable(false);
 
   originalWidth = lifeBar->getRect().w;
   maxHealth = maxHP;
@@ -114,9 +114,9 @@ void HealthBar::setMaxHP(int hp) {
 }
 
 void HealthBar::setStatUpRenderizable(const bool active) const {
-  statUp->setRenderizable(active);
+  statUp->setRenderable(active);
 }
 
 void HealthBar::setStatDownRenderizable(const bool active) const {
-  statDown->setRenderizable(active);
+  statDown->setRenderable(active);
 }

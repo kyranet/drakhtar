@@ -21,12 +21,18 @@ GameObject::~GameObject() {
   children_.clear();
 }
 
+void GameObject::awake() {
+  awakened_ = true;
+  for (auto child : children_)
+    if (child->getActive()) child->awake();
+}
+
 void GameObject::render(SDL_Rect rect) const {
-  if (getRenderizable() && texture_ != nullptr) {
+  if (getRenderable() && texture_ != nullptr) {
     texture_->renderFrame(rect, texture_->getAnimation()[texture_->getFrame()]);
   }
   for (auto child : children_)
-    if (child->getRenderizable()) child->render();
+    if (child->getRenderable()) child->render();
 }
 
 void GameObject::render() const { render(getRect()); }
@@ -62,7 +68,10 @@ GameObject* GameObject::getParent() const { return parent_; }
 void GameObject::setTexture(Texture* texture) { texture_ = texture; }
 Texture* GameObject::getTexture() const { return texture_; }
 
-void GameObject::setActive(const bool active) { active_ = active; }
+void GameObject::setActive(const bool active) {
+  active_ = active;
+  if (!awakened_) awake();
+}
 bool GameObject::getActive() const { return active_; }
 
 void GameObject::setTransparent(const bool transparent) {
@@ -71,11 +80,11 @@ void GameObject::setTransparent(const bool transparent) {
 
 bool GameObject::getTransparent() const { return transparent_; }
 
-void GameObject::setRenderizable(bool renderizable) {
-  renderizable_ = renderizable;
+void GameObject::setRenderable(bool renderable) {
+  renderable_ = renderable;
 }
 
-bool GameObject::getRenderizable() const { return renderizable_; }
+bool GameObject::getRenderable() const { return renderable_; }
 
 void GameObject::setSize(Vector2D<int> size) { size_ = size; }
 Vector2D<int> GameObject::getSize() const { return size_; }

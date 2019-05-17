@@ -25,7 +25,10 @@ Pause::Pause(Scene* scene) : GameObject(scene, nullptr) {
       Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2),
       Vector2D<int>(static_cast<int>(WIN_WIDTH / 8.33),
                     static_cast<int>(WIN_HEIGHT / 11.25)),
-      []() { Game::getSceneMachine()->changeScene(new GameScene(1)); },
+      [scene]() {
+        Game::getSceneMachine()->changeScene(
+            new GameScene(reinterpret_cast<GameScene*>(scene)->getBattleInd()));
+      },
       "Restart", "ButtonFont");
   const auto exit = new Button(
       scene_, TextureManager::get("Vanilla-Button"),
