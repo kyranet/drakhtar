@@ -86,6 +86,7 @@ void BattleCry::cast() {
          },
          cooldown_, false, true});
   }
+  SDLAudioManager::getInstance()->playChannel(10, 0, 1);
 }
 
 // ---------- ARROW RAIN ----------
@@ -107,7 +108,7 @@ void ArrowRain::cast() {
     if (!state->isInRange(from, position, range_)) continue;
     state->attack(position, damage);
   }
-  SDLAudioManager::getInstance()->playChannel(10, 0, 1);
+  SDLAudioManager::getInstance()->playChannel(11, 0, 1);
 }
 
 // ---------- HEROIC STRIKE ----------
