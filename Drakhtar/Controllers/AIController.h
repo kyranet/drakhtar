@@ -7,6 +7,10 @@ class AIController final : public UnitsController {
   int minimax(int depth, int alpha, int beta, bool isMaximisingPlayer,
               bool hasMoved, bool hasAttacked) const;
   int evaluateBoard() const;
+  void tryAttack();
+
+ protected:
+  void onComplete() override;
 
  public:
   AIController(Board* board, GameScene* scene, Team* team, Team* oppositeTeam);

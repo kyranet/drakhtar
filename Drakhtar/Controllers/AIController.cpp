@@ -6,7 +6,9 @@
 #include "GameObjects/Skill.h"
 #include "GameObjects/TurnBar.h"
 #include "GameObjects/Unit.h"
+#include "Managers/SDLAudioManager.h"
 #include "Managers/State.h"
+#include "Structures/Texture.h"
 
 AIController::AIController(Board* board, GameScene* scene, Team* team,
                            Team* oppositeTeam)
@@ -139,7 +141,7 @@ void AIController::start() {
        state->getCellsInMovementRange(position, stats.moveRange_)) {
     state->save();
     state->move(position, move);
-    const auto value = minimax(3, -9999999, 9999999, true, true, false);
+    const auto value = minimax(8, -9999999, 9999999, true, true, false);
     state->restore();
     if (value >= bestMove) {
       bestMove = value;
@@ -147,9 +149,43 @@ void AIController::start() {
     }
   }
 
-  if (bestMoveFound.getX() != 1000) {
+  hasMoved_ = bestMoveFound.getX() != 1000;
+  if (hasMoved_) {
     move(position, bestMoveFound);
+  } else {
+    tryAttack();
+  }
+}
+
+void AIController::tryAttack() {
+  const auto state = getState();
+  const auto position = activeUnit_->getBox()->getIndex();
+  const auto stats = state->getModifiedAt(position);
+
+  auto bestAttack = -9999999;
+  Vector2D<uint16_t> bestAttackFound(1000, 1000);
+  for (const auto& move : state->getCellsInAttackRange(
+           position, team_->getColor(), stats.attackRange_)) {
+    state->save();
+    state->move(position, move);
+    const auto value = minimax(8, -9999999, 9999999, true, hasMoved_, false);
+    state->restore();
+    if (value >= bestAttack) {
+      bestAttack = value;
+      bestAttackFound.set(move);
+    }
+  }
+
+  if (bestAttackFound.getX() != 1000) {
+    activeUnit_->getTexture()->setAnimationOnce("attack");
+    SDLAudioManager::getInstance()->playChannel(5, 0, 0);
+    state->attack(position, bestAttackFound);
   }
 
   finish();
+}
+
+void AIController::onComplete() {
+  UnitsController::onComplete();
+  tryAttack();
 }
