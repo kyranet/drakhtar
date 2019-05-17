@@ -141,7 +141,7 @@ void AIController::start() {
        state->getCellsInMovementRange(position, stats.moveRange_)) {
     state->save();
     state->move(position, move);
-    const auto value = minimax(8, -9999999, 9999999, true, true, false);
+    const auto value = minimax(6, -9999999, 9999999, true, true, false);
     state->restore();
     if (value >= bestMove) {
       bestMove = value;
@@ -168,7 +168,7 @@ void AIController::tryAttack() {
            position, team_->getColor(), stats.attackRange_)) {
     state->save();
     state->move(position, move);
-    const auto value = minimax(8, -9999999, 9999999, true, hasMoved_, false);
+    const auto value = minimax(5, -9999999, 9999999, true, hasMoved_, false);
     state->restore();
     if (value >= bestAttack) {
       bestAttack = value;
