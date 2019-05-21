@@ -6,6 +6,12 @@ A game built on top of SDL2.
 
 ## Build Pre-requisites
 
+### Debian/Ubuntu
+
+```
+$ apt-get install libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev libsdl2-mixer-dev
+```
+
 ### FreeBSD
 
 ```shell
@@ -15,13 +21,7 @@ $ pkg install libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev libsdl2-mixer-dev
 ### OS X
 
 ```shell
-$ brew install libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev libsdl2-mixer-dev
-```
-
-### Debian/Ubuntu
-
-```
-$ apt-get install libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev libsdl2-mixer-dev
+$ brew install sdl2 sdl2-ttf sdl2-image sdl2-mixer
 ```
 
 ### Windows
