@@ -81,8 +81,8 @@ void Unit::moveToBox(Box* newBox) {
   healthBar_->moveBar(Vector2D<int>(rect.x + rect.w / 2,
                                     static_cast<int>(rect.y + rect.h / 1.2)));
 
-  // reinterpret_cast<GameScene*>(Game::getSceneMachine()->getCurrentScene())
-  //    ->updateRenderOrder(this);
+  reinterpret_cast<GameScene*>(Game::getSceneMachine()->getCurrentScene())
+      ->updateRenderOrder(this);
 }
 
 void Unit::update() {

@@ -262,11 +262,14 @@ void GameScene::updateRenderOrder(Unit* unit) {
   while (!sorted) {
     auto next = it;
     if (sortToLeft) {
+      if ((*it) == firstUnit_) return;
       next--;
       if ((*reinterpret_cast<Unit*>(*next)) < (*reinterpret_cast<Unit*>(*it))) {
         sorted = true;
       } else {
-        if ((*next) == firstUnit_) {
+        if ((*it) == lastUnit_) {
+          lastUnit_ = reinterpret_cast<Unit*>(*next);
+        } else if ((*next) == firstUnit_) {
           firstUnit_ = reinterpret_cast<Unit*>(*it);
           sorted = true;
         }
@@ -274,11 +277,14 @@ void GameScene::updateRenderOrder(Unit* unit) {
         it--;
       }
     } else {
+      if ((*it) == lastUnit_) return;
       next++;
       if ((*reinterpret_cast<Unit*>(*it)) < (*reinterpret_cast<Unit*>(*next))) {
         sorted = true;
       } else {
-        if ((*next) == lastUnit_) {
+        if ((*it) == firstUnit_) {
+          firstUnit_ = reinterpret_cast<Unit*>(*next);
+        } else if ((*next) == lastUnit_) {
           lastUnit_ = reinterpret_cast<Unit*>(*it);
           sorted = true;
         }
