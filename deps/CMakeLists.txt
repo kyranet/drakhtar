@@ -4,11 +4,13 @@
 if (MSVC)
   file(GLOB SDL2_DIR "${CMAKE_SOURCE_DIR}/deps/SDL2-*")
   file(GLOB SDL2_IMAGE_DIR "${CMAKE_SOURCE_DIR}/deps/SDL2_image-*")
+  file(GLOB SDL2_MIXER_DIR "${CMAKE_SOURCE_DIR}/deps/SDL2_mixer-*")
   file(GLOB SDL2_TTF_DIR "${CMAKE_SOURCE_DIR}/deps/SDL2_ttf-*")
   file(GLOB SDL2_NET_DIR "${CMAKE_SOURCE_DIR}/deps/SDL2_net-*")
 
   set(ENV{SDL2DIR} ${SDL2_DIR})
   set(ENV{SDL2IMAGEDIR} ${SDL2_IMAGE_DIR})
+  set(ENV{SDL2MIXERDIR} ${SDL2_MIXER_DIR})
   set(ENV{SDL2NETDIR} ${SDL2_NET_DIR})
   set(ENV{SDL2TTFDIR} ${SDL2_TTF_DIR})
 
@@ -17,6 +19,7 @@ if (MSVC)
   file(GLOB_RECURSE DEPENDENCY_DLLS
     "${SDL2_TTF_DIR}/lib/x64/*.dll"
     "${SDL2_IMAGE_DIR}/lib/x64/*.dll"
+	"${SDL2_MIXER_DIR}/lib/x64/*.dll"
     "${SDL2_NET_DIR}/lib/x64/*.dll"
     "${SDL2_DIR}/lib/x64/*.dll"
     )
