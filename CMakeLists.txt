@@ -1,4 +1,4 @@
-﻿cmake_minimum_required(VERSION 3.6)
+﻿cmake_minimum_required(VERSION 3.8)
 
 project(drakhtar)
 
@@ -7,6 +7,7 @@ if (NOT CMAKE_BUILD_TYPE)
 endif ()
 
 add_subdirectory(deps)
+add_subdirectory(assets)
 
 # Bump up warning levels appropriately for clang, gcc & msvc and build in debug mode
 message("CMAKE_CXX_COMPILER_ID = ${CMAKE_CXX_COMPILER_ID}")
@@ -33,7 +34,6 @@ message("CMAKE_CXX_FLAGS_RELEASE = ${CMAKE_CXX_FLAGS_RELEASE}")
 
 # Set the cmake module path.
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${drakhtar_SOURCE_DIR}/cmake/")
-set(BIN_DIR ${drakhtar_SOURCE_DIR}/bin)
 
 # Find all SDL2 libraries.
 find_package(SDL2 REQUIRED)
@@ -50,11 +50,14 @@ target_include_directories(drakhtar
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/deps/drakhtar-telemetry/include>)
 
 # Copy all assets.
-file(COPY audio DESTINATION .)
-file(COPY fonts DESTINATION .)
-file(COPY images DESTINATION .)
-file(COPY dialog DESTINATION .)
 include_directories(Drakhtar)
+
+add_custom_command(
+    TARGET drakhtar POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+    $<TARGET_FILE_DIR:Assets>
+    $<TARGET_FILE_DIR:drakhtar>
+)
 
 if (MSVC)
     add_custom_command(
@@ -67,4 +70,9 @@ endif ()
 
 # Link the libraries and install them.
 target_link_libraries(drakhtar ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES} ${SDL2_MIXER_LIBRARIES})
-install(TARGETS drakhtar RUNTIME DESTINATION ${BIN_DIR})
+install(TARGETS drakhtar
+    CONFIGURATIONS Debug
+    RUNTIME DESTINATION ${drakhtar_SOURCE_DIR}/bin/debug)
+install(TARGETS drakhtar
+    CONFIGURATIONS Release
+    RUNTIME DESTINATION ${drakhtar_SOURCE_DIR}/bin/release)
