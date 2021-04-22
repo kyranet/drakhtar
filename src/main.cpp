@@ -20,7 +20,7 @@ int main(int, char*[]) {
   try {
     const auto game = Game::getInstance();
     game->load();
-    game->run();
+    game->rn();
     SDLAudioManager::destroy();
     TextureManager::destroy();
     FontManager::destroy();
