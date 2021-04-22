@@ -18,7 +18,7 @@ CreditsScene::CreditsScene() {}
 CreditsScene::~CreditsScene() = default;
 
 void CreditsScene::preload() {
-  file_.open("../levels/credits.txt");
+  file_.open("levels/credits.txt");
   if (!file_.is_open()) throw DrakhtarError("Could not find file");
 
   file_ >> creditsLength_;

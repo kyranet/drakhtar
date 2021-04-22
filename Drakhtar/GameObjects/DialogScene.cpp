@@ -65,7 +65,7 @@ DialogScene::DialogScene(Scene* scene, const std::string& filename,
       new DialogSceneOnClick(dialogueBackground));
 
   lineJumpLimit_ = dialogueBackground->getRect().x + WIN_WIDTH / 2;
-  readFromFile("../dialog/" + filename + ".txt", FontManager::get(fontFile),
+  readFromFile("dialog/" + filename + ".txt", FontManager::get(fontFile),
                dialogueBackground->getRect());
 }
 

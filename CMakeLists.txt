@@ -49,7 +49,6 @@ target_include_directories(drakhtar
     PUBLIC
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/deps/drakhtar-telemetry/include>)
 
-# Copy all assets.
 include_directories(Drakhtar)
 
 add_custom_command(
