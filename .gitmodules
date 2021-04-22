@@ -1,0 +1,3 @@
+[submodule "deps/drakhtar-telemetry"]
+	path = deps/drakhtar-telemetry
+	url = https://github.com/kyranet/drakhtar-telemetry

@@ -9,7 +9,6 @@
 *.idb
 
 build/
-deps/
 bin/
 cmake-build-debug/
 
