@@ -40,10 +40,7 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install cmake ninja-build libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev libsdl2-mixer-dev
-          ninja --version
-          cmake --version
-          gcc --version
+          sudo apt-get install cmake libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev libsdl2-mixer-dev
       - name: Build Project
         run: |
           make
