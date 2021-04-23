@@ -6,25 +6,20 @@ A game built on top of SDL2.
 
 ## Build Pre-requisites
 
-### Debian/Ubuntu
-
-```
-$ apt-get install libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev libsdl2-mixer-dev
-```
-
-### FreeBSD
-
-```shell
-$ pkg install libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev libsdl2-mixer-dev
-```
-
-### OS X
-
-```shell
-$ brew install sdl2 sdl2-ttf sdl2-image sdl2-mixer
-```
-
 ### Windows
+
+#### Automatic
+
+Double click on the [`windows-setup.cmd`] and the [`windows-build.cmd`] files accordingly.
+
+That's all!
+
+[`windows-setup.cmd`]: https://github.com/kyranet/drakhtar/blob/main/scripts/windows-setup.cmd
+[`windows-build.cmd`]: https://github.com/kyranet/drakhtar/blob/main/scripts/windows-build.cmd
+
+Alternatively, you can run the PowerShell scripts, but extra steps might be required (specifying `-ExecutionPolicy`).
+
+#### Manual
 
 Please download the suitable dependencies for
 [SDL2](https://www.libsdl.org/download-2.0.php),
@@ -38,18 +33,20 @@ folder at the root of this project, this will allow the project to link and buil
 Additionally, you must remove the `zlib1.dll` from both binary directories of `SDL2_ttf`, they're older than `SDL2_image`'s
 and cause runtime errors when loading images, as `inflateValidate` does not exist in that version.
 
----
-
-## Lint
-
-### Linux or Mac
+### Debian/Ubuntu
 
 ```
-$ python ./tools/cpplint.py --quiet --recursive Drakhtar
+$ apt-get install cmake libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev libsdl2-mixer-dev
 ```
 
-### Windows
+### FreeBSD
 
 ```shell
-$ python .\\tools\\cpplint.py --quiet --recursive Drakhtar
+$ pkg install cmake libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev libsdl2-mixer-dev
+```
+
+### OS X
+
+```shell
+$ brew install cmake sdl2 sdl2-ttf sdl2-image sdl2-mixer
 ```
