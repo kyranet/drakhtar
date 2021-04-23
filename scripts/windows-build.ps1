@@ -177,9 +177,11 @@ function Step-VisualStudio {
 $private:CMake = Find-CMake
 $private:MsBuild = Find-MsBuild
 
+# Run CMake in the project:
 $local:RootFolder = Split-Path $PSScriptRoot
 Step-CMake -CMake $CMake -Path $RootFolder
 
+# Run Visual Studio to the built project:
 $local:BuildFolder = Join-Path -Path $RootFolder -ChildPath "build"
 $local:BuildSolution = Join-Path -Path $BuildFolder -ChildPath "drakhtar.sln"
 Step-VisualStudio -MsBuild $MsBuild -Path $BuildSolution

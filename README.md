@@ -10,14 +10,10 @@ A game built on top of SDL2.
 
 #### Automatic
 
-Double click on the [`windows-setup.cmd`] and the [`windows-build.cmd`] files accordingly.
+Double click on the [`windows-setup.cmd`] and the [`windows-build.cmd`] files accordingly. That's all!
 
-That's all!
-
-[`windows-setup.cmd`]: https://github.com/kyranet/drakhtar/blob/main/scripts/windows-setup.cmd
-[`windows-build.cmd`]: https://github.com/kyranet/drakhtar/blob/main/scripts/windows-build.cmd
-
-Alternatively, you can run the PowerShell scripts, but extra steps might be required (specifying `-ExecutionPolicy`).
+> **Note**: You must download [Microsoft PowerShell](https://github.com/PowerShell/PowerShell) to run the scripts, the
+built-in Windows PowerShell does not work as it lacks of features needed for them to work.
 
 #### Manual
 
@@ -50,3 +46,6 @@ $ pkg install cmake libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev libsdl2-mixer-
 ```shell
 $ brew install cmake sdl2 sdl2-ttf sdl2-image sdl2-mixer
 ```
+
+[`windows-setup.cmd`]: https://github.com/kyranet/drakhtar/blob/main/scripts/windows-setup.cmd
+[`windows-build.cmd`]: https://github.com/kyranet/drakhtar/blob/main/scripts/windows-build.cmd

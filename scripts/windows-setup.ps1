@@ -1,3 +1,7 @@
+# Set up the submodule so Drakhtar Telemetry is properly included in the project:
+git submodule init
+git submodule update
+
 $local:DependencyFolder = Join-Path -Path $(Split-Path $PSScriptRoot) -ChildPath "deps"
 $local:BaseDomain = "https://www.libsdl.org/"
 
@@ -32,16 +36,6 @@ function Step-Download {
 	}
 }
 
-$private:Sdl2 = "SDL2-2.0.14"
-$private:Sdl2Ttf = "SDL2_ttf-2.0.15"
-$private:Sdl2Image = "SDL2_image-2.0.5"
-$private:Sdl2Mixer = "SDL2_mixer-2.0.4"
-
-Step-Download -Output $Sdl2      -UriPath "release/SDL2-devel-2.0.14-VC.zip"
-Step-Download -Output $Sdl2Ttf   -UriPath "projects/SDL_ttf/release/SDL2_ttf-devel-2.0.15-VC.zip"
-Step-Download -Output $Sdl2Image -UriPath "projects/SDL_image/release/SDL2_image-devel-2.0.5-VC.zip"
-Step-Download -Output $Sdl2Mixer -UriPath "projects/SDL_mixer/release/SDL2_mixer-devel-2.0.4-VC.zip"
-
 function Remove-SafeItem([string] $Path) {
 	if (Test-Path -Path $Path) {
 		Write-Host "Deleting [" -ForegroundColor DarkGray -NoNewline
@@ -52,5 +46,17 @@ function Remove-SafeItem([string] $Path) {
 	}
 }
 
+$private:Sdl2 = "SDL2-2.0.14"
+$private:Sdl2Ttf = "SDL2_ttf-2.0.15"
+$private:Sdl2Image = "SDL2_image-2.0.5"
+$private:Sdl2Mixer = "SDL2_mixer-2.0.4"
+
+# Download the dependencies:
+Step-Download -Output $Sdl2      -UriPath "release/SDL2-devel-2.0.14-VC.zip"
+Step-Download -Output $Sdl2Ttf   -UriPath "projects/SDL_ttf/release/SDL2_ttf-devel-2.0.15-VC.zip"
+Step-Download -Output $Sdl2Image -UriPath "projects/SDL_image/release/SDL2_image-devel-2.0.5-VC.zip"
+Step-Download -Output $Sdl2Mixer -UriPath "projects/SDL_mixer/release/SDL2_mixer-devel-2.0.4-VC.zip"
+
+# Remove SDL2 TTF's zlib1.dll, as they are already included in SDL2 Image:
 Remove-SafeItem $(Join-Path -Path $DependencyFolder -ChildPath "$Sdl2Ttf/lib/x64/zlib1.dll")
 Remove-SafeItem $(Join-Path -Path $DependencyFolder -ChildPath "$Sdl2Ttf/lib/x86/zlib1.dll")
