@@ -7,8 +7,8 @@ on:
   pull_request:
 
 jobs:
-  DrakhtarBuild:
-    name: Building Drakhtar
+  DrakhtarBuildUbuntu:
+    name: Building Drakhtar (Ubuntu)
     runs-on: ubuntu-latest
     if: "!contains(needs.pre_ci.outputs.commit_message, '[skip ci]')"
     steps:
@@ -23,3 +23,19 @@ jobs:
       - uses: ammaraskar/gcc-problem-matcher@master
       - name: Build Project
         run: make
+  DrakhtarBuildWindows:
+    name: Building Drakhtar (Windows)
+    runs-on: windows-latest
+    if: "!contains(needs.pre_ci.outputs.commit_message, '[skip ci]')"
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@v2
+        with:
+          submodules: 'true'
+      - name: Install Dependencies
+        run: pwsh -File .\scripts\windows-setup.ps1
+        shell: pwsh
+      - uses: ammaraskar/msvc-problem-matcher@master
+      - name: Build Project
+        run: pwsh -File .\scripts\windows-build.ps1
+        shell: pwsh
