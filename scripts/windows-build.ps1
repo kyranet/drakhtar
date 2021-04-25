@@ -141,8 +141,7 @@ function Step-VisualStudio {
 	param (
 		[string] $MsBuild,
 		[string] $Path,
-		[string] $Configuration = "Debug",
-		[bool] $ThrowOnError = $false
+		[string] $Configuration = "Debug"
 	)
 
 	Write-Host "# Now building '"     -ForegroundColor Blue -NoNewline
@@ -168,9 +167,7 @@ function Step-VisualStudio {
 		Write-Host "' with code $LastExitCode Took: " -ForegroundColor Red  -NoNewLine
 		Write-Host ("{0:g}" -f $duration)             -ForegroundColor Cyan -NoNewLine
 		Write-Host "."                                -ForegroundColor Red
-		if ($ThrowOnError) {
-			throw "Failed to build project project, please read the logs above.";
-		}
+		exit 1
 	}
 }
 
