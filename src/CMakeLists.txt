@@ -101,38 +101,10 @@ if (MSVC)
 		$<TARGET_FILE_DIR:Dependencies>/dll
 		$<TARGET_FILE_DIR:drakhtar>
 	)
-endif ()
 
-if (MSVC)
 	target_compile_options(drakhtar
 		PRIVATE
 		/W4
 	)
 	get_target_property(opts drakhtar COMPILE_OPTIONS)
-elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-	target_compile_options(drakhtar
-		PRIVATE
-		-pedantic
-		-pedantic-errors
-		-Wall
-		-Wextra
-		-Wno-float-equal
-		-Wno-padded
-		-luuid
-	)
-else ()
-	target_compile_options(drakhtar
-		PRIVATE
-		-pedantic
-		-pedantic-errors
-		-Wall
-		-Wextra
-		-Wconversion
-		-Wno-c++98-compat
-		-Wno-c++98-compat-pedantic
-		-Wno-float-equal
-		-Wno-padded
-		-Wno-reserved-id-macro
-		-luuid
-	)
 endif ()
