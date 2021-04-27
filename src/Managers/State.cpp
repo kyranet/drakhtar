@@ -386,7 +386,7 @@ bool State::isInMoveRange(const Vector2D<uint16_t>& from,
   if (path.empty()) {
     return false;
   }
-  return range >= static_cast<const int>(path.size() - 1);
+  return range >= static_cast<int>(path.size() - 1);
 }
 
 std::vector<Vector2D<uint16_t>> State::getCellsInMovementRange(
