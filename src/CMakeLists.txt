@@ -85,7 +85,7 @@ target_include_directories(drakhtar
 	$<INSTALL_INTERFACE:${CMAKE_SOURCE_DIR}>/src)
 
 # Link the libraries and install them.
-target_link_libraries(drakhtar ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES} ${SDL2_MIXER_LIBRARIES})
+target_link_libraries(drakhtar ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES} ${SDL2_MIXER_LIBRARIES} telemetry)
 
 add_custom_command(
 	TARGET drakhtar POST_BUILD
@@ -101,36 +101,10 @@ if (MSVC)
 		$<TARGET_FILE_DIR:Dependencies>/dll
 		$<TARGET_FILE_DIR:drakhtar>
 	)
-endif ()
 
-if (MSVC)
 	target_compile_options(drakhtar
 		PRIVATE
 		/W4
 	)
 	get_target_property(opts drakhtar COMPILE_OPTIONS)
-elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-	target_compile_options(drakhtar
-		PRIVATE
-		-pedantic
-		-pedantic-errors
-		-Wall
-		-Wextra
-		-Wno-float-equal
-		-Wno-padded
-	)
-else ()
-	target_compile_options(drakhtar
-		PRIVATE
-		-pedantic
-		-pedantic-errors
-		-Wall
-		-Wextra
-		-Wconversion
-		-Wno-c++98-compat
-		-Wno-c++98-compat-pedantic
-		-Wno-float-equal
-		-Wno-padded
-		-Wno-reserved-id-macro
-	)
 endif ()
