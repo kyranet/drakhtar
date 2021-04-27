@@ -85,7 +85,7 @@ target_include_directories(drakhtar
 	$<INSTALL_INTERFACE:${CMAKE_SOURCE_DIR}>/src)
 
 # Link the libraries and install them.
-target_link_libraries(drakhtar ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES} ${SDL2_MIXER_LIBRARIES})
+target_link_libraries(drakhtar ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES} ${SDL2_MIXER_LIBRARIES} telemetry)
 
 add_custom_command(
 	TARGET drakhtar POST_BUILD
