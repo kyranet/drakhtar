@@ -4,6 +4,7 @@
 
 #pragma once
 #include <functional>
+
 #include "Managers/TweenManager.h"
 #include "Utils/Vector2D.h"
 

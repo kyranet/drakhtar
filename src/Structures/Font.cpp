@@ -1,11 +1,14 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Font.h"
+
 #include "../Errors/SDLError.h"
 
 Font::Font() = default;
 
-Font::Font(const std::string& filename, const int size) { load(filename, size); }
+Font::Font(const std::string& filename, const int size) {
+  load(filename, size);
+}
 
 Font::~Font() { close(); }
 
@@ -19,7 +22,7 @@ void Font::close() {
 Font* Font::load(const std::string& filename, const int size) {
   font_ = TTF_OpenFont(filename.c_str(), size);
   if (font_ == nullptr) {
-      const auto message =
+    const auto message =
         "Error loading font from " + filename + "\nReason: " + TTF_GetError();
     throw SDLError(message);
   }

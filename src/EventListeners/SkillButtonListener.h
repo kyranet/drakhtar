@@ -8,6 +8,7 @@ class GameObject;
 
 class SkillButtonListener final : public ListenerOnHover {
   GameObject* panel_;
+
  public:
   SkillButtonListener(GameObject* hoveredObject, GameObject* panel);
   ~SkillButtonListener();

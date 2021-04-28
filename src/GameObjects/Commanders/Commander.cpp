@@ -10,8 +10,8 @@
 #include "Structures/Game.h"
 #include "Structures/Team.h"
 
-Commander::Commander(const std::string& name, Scene* scene, Texture* texture, Box* box,
-                     UnitStats commanderStats)
+Commander::Commander(const std::string& name, Scene* scene, Texture* texture,
+                     Box* box, UnitStats commanderStats)
     : Unit(scene, texture, box, commanderStats, name) {
   isCommander_ = true;
 }

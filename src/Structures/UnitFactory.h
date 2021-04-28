@@ -11,7 +11,15 @@ class Unit;
 class Commander;
 struct UnitStats;
 
-enum class CommanderType { THASSA, ZAMDRAN, SHEISSAH, VALAR, REDVALAR, DREILAY, ABEIZHUL };
+enum class CommanderType {
+  THASSA,
+  ZAMDRAN,
+  SHEISSAH,
+  VALAR,
+  REDVALAR,
+  DREILAY,
+  ABEIZHUL
+};
 
 class UnitFactory {
   Scene* scene_;
@@ -22,7 +30,8 @@ class UnitFactory {
  public:
   explicit UnitFactory(Scene* scene);
   ~UnitFactory();
-  Unit* newBattalion(const std::string& type, Team* team, Box* box, uint16_t size);
+  Unit* newBattalion(const std::string& type, Team* team, Box* box,
+                     uint16_t size);
   Commander* newCommander(const std::string& type, Team* team, Box* box);
 
   const UnitStats getStats(const std::string& type);

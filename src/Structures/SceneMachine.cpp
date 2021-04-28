@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "SceneMachine.h"
+
 #include "../Scenes/Scene.h"
 
 SceneMachine::SceneMachine() = default;

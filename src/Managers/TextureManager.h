@@ -3,6 +3,7 @@
 #pragma once
 #include <list>
 #include <map>
+
 #include "../Structures/Texture.h"
 #include "ResourceManager.h"
 
@@ -15,7 +16,7 @@ class TextureManager final : public ResourceManager<Texture*> {
 
  public:
   Texture* add(const std::string& name, const std::string& path, Uint16 columns,
-                   Uint16 rows);
+               Uint16 rows);
   void tick();
   void init();
 

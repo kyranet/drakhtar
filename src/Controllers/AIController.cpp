@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "AIController.h"
+
 #include "GameObjects/Box.h"
 #include "GameObjects/Commanders/Commander.h"
 #include "GameObjects/Skill.h"

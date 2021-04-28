@@ -12,6 +12,6 @@ class DrakhtarError : public std::logic_error {
    * \brief Create a Drakhtar Error instance.
    * \param message The error message description.
    */
-  explicit DrakhtarError(const std::string &message)
+  explicit DrakhtarError(const std::string& message)
       : std::logic_error("Drakhtar Error " + message) {}
 };

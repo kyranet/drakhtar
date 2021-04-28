@@ -1,14 +1,16 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Dialog.h"
+
+#include <fstream>
+#include <iostream>
+
 #include "../Managers/TextureManager.h"
 #include "../Structures/Font.h"
 #include "GameObject.h"
 #include "Text.h"
-#include <fstream>
-#include <iostream>
 
-Dialog::Dialog(Scene *scene, std::ifstream &file, Font *textFont,
+Dialog::Dialog(Scene* scene, std::ifstream& file, Font* textFont,
                const SDL_Rect dialogRect, const int lineJumpLimit)
     : GameObject(scene, nullptr), dialogueArea_(dialogRect) {
   readFromFile(file);
@@ -38,7 +40,7 @@ Dialog::Dialog(Scene *scene, std::ifstream &file, Font *textFont,
   addChild(dialogTextSprite);
 }
 
-void Dialog::readFromFile(std::ifstream &file) {
+void Dialog::readFromFile(std::ifstream& file) {
   file >> characterName_;
   file >> spriteText_;
 
@@ -46,8 +48,7 @@ void Dialog::readFromFile(std::ifstream &file) {
   std::string word;  // word added to text each iteration
   while (word != ".") {
     file >> word;
-    if (word != ".")
-      text += word + " ";
+    if (word != ".") text += word + " ";
   }
   dialogText_ = text;
 }

@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "FontManager.h"
+
 #include "../Structures/Font.h"
 
 FontManager* FontManager::instance_ = nullptr;
@@ -19,7 +20,9 @@ void FontManager::destroy() {
   }
 }
 
-Font* FontManager::get(const std::string& name) { return getInstance()->map_[name]; }
+Font* FontManager::get(const std::string& name) {
+  return getInstance()->map_[name];
+}
 
 FontInfo* FontManager::add(const std::string& name, const std::string& path,
                            const int size, const int lineJumpLimit) {

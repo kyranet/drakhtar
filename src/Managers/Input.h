@@ -2,6 +2,7 @@
 
 #pragma once
 #include <array>
+
 #include "SDL.h"
 #include "Utils/Constants.h"
 #include "Utils/Vector2D.h"

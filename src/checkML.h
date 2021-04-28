@@ -6,6 +6,7 @@
 #ifndef _CRTDBG_MAP_ALLOC
 #define _CRTDBG_MAP_ALLOC
 #include <crtdbg.h>
+
 #include <cstdlib>
 #ifndef DBG_NEW
 #define DBG_NEW new (_NORMAL_BLOCK, __FILE__, __LINE__)

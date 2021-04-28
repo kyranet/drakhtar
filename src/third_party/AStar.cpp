@@ -2,6 +2,7 @@
 // (https://github.com/daancode/a-star)
 
 #include "AStar.h"
+
 #include <algorithm>
 #include <cmath>
 
@@ -25,7 +26,7 @@ AStar::Generator::Generator() {
   setDiagonalMovement(false);
   setHeuristic(&Heuristic::manhattan);
   direction_ = {{0, 1},   {1, 0}, {0, -1}, {-1, 0},
-               {-1, -1}, {1, 1}, {-1, 1}, {1, -1}};
+                {-1, -1}, {1, 1}, {-1, 1}, {1, -1}};
 }
 
 void AStar::Generator::setWorldSize(const Vec2i worldSize) {
@@ -54,7 +55,8 @@ void AStar::Generator::removeCollision(const Vec2i coordinates) {
 
 void AStar::Generator::clearCollisions() { walls_.clear(); }
 
-AStar::CoordinateList AStar::Generator::findPath(const Vec2i source, const Vec2i target) {
+AStar::CoordinateList AStar::Generator::findPath(const Vec2i source,
+                                                 const Vec2i target) {
   Node* current = nullptr;
   NodeSet openSet, closedSet;
   openSet.insert(new Node(source));
@@ -131,21 +133,25 @@ bool AStar::Generator::detectCollision(const Vec2i coordinates) {
          std::find(walls_.begin(), walls_.end(), coordinates) != walls_.end();
 }
 
-AStar::Vec2i AStar::Heuristic::getDelta(const Vec2i source, const Vec2i target) {
+AStar::Vec2i AStar::Heuristic::getDelta(const Vec2i source,
+                                        const Vec2i target) {
   return {abs(source.x - target.x), abs(source.y - target.y)};
 }
 
-AStar::Uint AStar::Heuristic::manhattan(const Vec2i source, const Vec2i target) {
+AStar::Uint AStar::Heuristic::manhattan(const Vec2i source,
+                                        const Vec2i target) {
   const auto delta = getDelta(source, target);
   return static_cast<Uint>(10 * (delta.x + delta.y));
 }
 
-AStar::Uint AStar::Heuristic::euclidean(const Vec2i source, const Vec2i target) {
+AStar::Uint AStar::Heuristic::euclidean(const Vec2i source,
+                                        const Vec2i target) {
   const auto delta = getDelta(source, target);
   return static_cast<Uint>(10 * sqrt(pow(delta.x, 2) + pow(delta.y, 2)));
 }
 
-AStar::Uint AStar::Heuristic::octagonal(const Vec2i source, const Vec2i target) {
+AStar::Uint AStar::Heuristic::octagonal(const Vec2i source,
+                                        const Vec2i target) {
   const auto delta = getDelta(source, target);
   return 10 * (delta.x + delta.y) + (-6) * std::min(delta.x, delta.y);
 }

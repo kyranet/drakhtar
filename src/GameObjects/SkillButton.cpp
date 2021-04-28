@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "SkillButton.h"
+
 #include "Commanders/Commander.h"
 #include "Controllers/PlayerController.h"
 #include "EventListeners/SkillButtonListener.h"

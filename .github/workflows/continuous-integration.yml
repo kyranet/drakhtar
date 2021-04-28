@@ -16,13 +16,16 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: 'true'
+
       - name: Install Dependencies
         run: |
           sudo apt-get update
           sudo apt-get install cmake libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev libsdl2-mixer-dev
+
       - uses: ammaraskar/gcc-problem-matcher@master
       - name: Build Project
         run: make
+
   DrakhtarBuildWindows:
     name: Building Drakhtar (Windows)
     runs-on: windows-latest
@@ -32,10 +35,42 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: 'true'
+
       - name: Install Dependencies
         run: pwsh -File .\scripts\windows-setup.ps1
         shell: pwsh
+
       - uses: ammaraskar/msvc-problem-matcher@master
       - name: Build Project
         run: pwsh -File .\scripts\windows-build.ps1
         shell: pwsh
+
+  Formatting:
+    name: clang-format
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        id: checkout
+        uses: actions/checkout@v2
+
+      - name: Check Formatting
+        id: formatting
+        uses: DoozyX/clang-format-lint-action@v0.11
+        with:
+          source: 'src'
+          extensions: 'h,cpp,c,hpp'
+          clangFormatVersion: 10
+          inplace: True
+          style: file
+
+      - name: Confirm Results
+        id: results
+        run: scripts/ci-diff.sh
+
+      - name: Upload Patch
+        uses: actions/upload-artifact@v1
+        if: ${{ failure() }}
+        with:
+          name: clang-format-patch
+          path: artifacts/clang-format.patch

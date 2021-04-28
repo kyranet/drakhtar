@@ -11,10 +11,11 @@
 SkillDescriptionBox::SkillDescriptionBox(Scene* scene, SkillButton* skillButton)
     : GameObject(
           scene, TextureManager::get("Reward-Panel"),
-          {skillButton->getPosition().getX() + static_cast<int>(WIN_WIDTH / 3.4),
-           skillButton->getPosition().getY() + static_cast<int>(WIN_HEIGHT / 10)},
-          {static_cast<int>(WIN_WIDTH / 2),
-           static_cast<int>(WIN_HEIGHT / 3)}),
+          {skillButton->getPosition().getX() +
+               static_cast<int>(WIN_WIDTH / 3.4),
+           skillButton->getPosition().getY() +
+               static_cast<int>(WIN_HEIGHT / 10)},
+          {static_cast<int>(WIN_WIDTH / 2), static_cast<int>(WIN_HEIGHT / 3)}),
       skillButton_(skillButton) {
   setTransparent(true);
   setRenderable(false);

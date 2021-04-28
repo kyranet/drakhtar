@@ -1,6 +1,8 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include <iostream>
+
+#include "Configuration.h"
 #include "Managers/FontManager.h"
 #include "Managers/GameManager.h"
 #include "Managers/Input.h"
@@ -9,8 +11,6 @@
 #include "SDL.h"
 #include "Structures/Game.h"
 #include "checkML.h"
-
-#include "Configuration.h"
 
 #undef main
 

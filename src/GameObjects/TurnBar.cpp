@@ -1,7 +1,9 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "TurnBar.h"
+
 #include <utility>
+
 #include "Managers/State.h"
 #include "Managers/TextureManager.h"
 #include "Scenes/GameScene.h"

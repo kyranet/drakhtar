@@ -1,5 +1,6 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 #include "GameObject.h"
+
 #include "../EventListeners/EventListener.h"
 #include "../Scenes/Scene.h"
 #include "../Structures/Game.h"
@@ -80,9 +81,7 @@ void GameObject::setTransparent(const bool transparent) {
 
 bool GameObject::getTransparent() const { return transparent_; }
 
-void GameObject::setRenderable(bool renderable) {
-  renderable_ = renderable;
-}
+void GameObject::setRenderable(bool renderable) { renderable_ = renderable; }
 
 bool GameObject::getRenderable() const { return renderable_; }
 

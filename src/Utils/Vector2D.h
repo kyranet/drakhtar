@@ -5,6 +5,7 @@
 #include <cmath>
 #include <iostream>
 #include <type_traits>
+
 #include "SDL_stdinc.h"
 
 /**

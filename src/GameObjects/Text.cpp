@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Text.h"
+
 #include "../Structures/Game.h"
 #include "../Structures/Texture.h"
 

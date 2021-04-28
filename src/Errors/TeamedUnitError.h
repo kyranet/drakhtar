@@ -13,6 +13,6 @@ class TeamedUnitError final : public DrakhtarError {
    * \brief Create a Teamed Unit Error instance.
    * \param message The error message description.
    */
-  explicit TeamedUnitError(const std::string &message)
+  explicit TeamedUnitError(const std::string& message)
       : DrakhtarError(message) {}
 };

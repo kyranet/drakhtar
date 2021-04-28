@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "TextureManager.h"
+
 #include "../Errors/DrakhtarError.h"
 #include "Structures/Game.h"
 #include "Utils/TimePool.h"
@@ -31,7 +32,8 @@ void TextureManager::init() {
 
     // If there was no default animation override, add it
     if (!texture->hasAnimation("default")) {
-      const Uint16 frames = static_cast<Uint16>(texture->getColumnAmount() * texture->getRowAmount());
+      const Uint16 frames = static_cast<Uint16>(texture->getColumnAmount() *
+                                                texture->getRowAmount());
       std::vector<Uint16> animation(frames);
       for (Uint16 i = 0; i < frames; i++) animation[i] = i;
       texture->addAnimation("default", animation);

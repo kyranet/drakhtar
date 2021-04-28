@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Board.h"
+
 #include "Box.h"
 #include "Unit.h"
 #include "Utils/Constants.h"

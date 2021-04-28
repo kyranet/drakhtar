@@ -4,6 +4,7 @@
 
 #pragma once
 #include <list>
+
 #include "GameObjects/GameObject.h"
 
 class Scene;

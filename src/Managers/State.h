@@ -7,6 +7,7 @@
 #include <stack>
 #include <utility>
 #include <vector>
+
 #include "Structures/Team.h"
 #include "Utils/Vector2D.h"
 

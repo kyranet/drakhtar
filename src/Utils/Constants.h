@@ -1,8 +1,9 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
-#include <string>
 #include <SDL_scancode.h>
+
+#include <string>
 
 // Window dimensions
 const int WIN_WIDTH = 1280;
