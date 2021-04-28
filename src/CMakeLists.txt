@@ -127,7 +127,7 @@ if (MSVC)
 	)
 	get_target_property(opts drakhtar COMPILE_OPTIONS)
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-	target_compile_options(telemetry
+	target_compile_options(drakhtar
 		PRIVATE
 		-pedantic
 		-pedantic-errors
@@ -138,7 +138,7 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 		-luuid
 	)
 else ()
-	target_compile_options(telemetry
+	target_compile_options(drakhtar
 		PRIVATE
 		-pedantic
 		-pedantic-errors
