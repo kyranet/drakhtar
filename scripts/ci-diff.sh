@@ -1,5 +1,5 @@
 # Copyright 2020 Matt Jones and Contributors.
-# Recipe based on https://github.com/novelrt/NovelRT
+# Script taken from https://github.com/novelrt/NovelRT
 
 SOURCE="${BASH_SOURCE[0]}"
 while [ -h "$SOURCE" ]; do # resolve $SOURCE until the file is no longer a symlink
