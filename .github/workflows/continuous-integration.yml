@@ -7,8 +7,24 @@ on:
   pull_request:
 
 jobs:
-  DrakhtarBuild:
-    name: Building Drakhtar
+  DrakhtarBuildUbuntu:
+    name: Building Drakhtar (Ubuntu)
+    runs-on: ubuntu-latest
+    if: "!contains(needs.pre_ci.outputs.commit_message, '[skip ci]')"
+    steps:
+      - name: Checkout Project
+        uses: actions/checkout@v2
+        with:
+          submodules: 'true'
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install cmake libsdl2-dev libsdl2-ttf-dev libsdl2-image-dev libsdl2-mixer-dev
+      - uses: ammaraskar/gcc-problem-matcher@master
+      - name: Build Project
+        run: make
+  DrakhtarBuildWindows:
+    name: Building Drakhtar (Windows)
     runs-on: windows-latest
     if: "!contains(needs.pre_ci.outputs.commit_message, '[skip ci]')"
     steps:
