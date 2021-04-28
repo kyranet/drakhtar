@@ -7,12 +7,12 @@ files=$(git diff --cached --name-only --diff-filter=ACM -- '*.c' '*.cpp' '*.h' '
 
 if [ ! -z "$files" ]
 then
-	pwsh -NoLogo -NoProfile -ExecutionPolicy ByPass -Command "& """$root_dir/scripts/windows-format.ps1""" ${files/$'\n'/','}"
+	pwsh -NoLogo -NoProfile -ExecutionPolicy ByPass -Command "& """$root_dir/scripts/windows-format.ps1""" ${files//$'\n'/,}"
 	if [ $? -ne 0 ]; then
 		exit $?
 	fi
 
-	git add $files
+	git add ${files//$'\n'/ }
 fi
 
 exit 0
