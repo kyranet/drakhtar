@@ -81,8 +81,8 @@ StoreListener::StoreListener(GameObject* gameObject, const std::string& type,
       scene, TextureManager::get("Quantity-Button"),
       {static_cast<int>(WIN_WIDTH * 0.69), static_cast<int>(WIN_HEIGHT * 0.9)},
       {static_cast<int>(WIN_WIDTH / 12), static_cast<int>(WIN_HEIGHT / 5)},
-      [infoBox]() { infoBox->setRenderable(!infoBox->getRenderable()); },
-      "?", "SkillButtonFont");
+      [infoBox]() { infoBox->setRenderable(!infoBox->getRenderable()); }, "?",
+      "SkillButtonFont");
   gameObject->addChild(infoIcon);
   storeUnit.amountText =
       new Text(scene, FontManager::get("Retron2000"),

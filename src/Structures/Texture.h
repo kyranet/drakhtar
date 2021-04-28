@@ -2,12 +2,13 @@
 
 #pragma once
 
+#include <functional>
 #include <map>
 #include <string>
 #include <vector>
-#include <functional>
-#include "Utils/Vector2D.h"
+
 #include "SDL.h"
+#include "Utils/Vector2D.h"
 
 class Font;
 class TimePool;

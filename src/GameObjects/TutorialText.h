@@ -15,8 +15,7 @@ class TutorialText final : public GameObject {
   Text* text_ = nullptr;
 
  public:
-  TutorialText(Scene* scene, std::string& file,
-               SDL_Rect rect);
+  TutorialText(Scene* scene, std::string& file, SDL_Rect rect);
   ~TutorialText();
   void render() const override;
   void readFromFile(std::string& filename);

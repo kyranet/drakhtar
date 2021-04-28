@@ -13,6 +13,6 @@ class SDLError final : public DrakhtarError {
    * \brief Create a SDL Error instance.
    * \param message The error message description.
    */
-  explicit SDLError(const std::string &message)
+  explicit SDLError(const std::string& message)
       : DrakhtarError("[SDL]: " + message) {}
 };

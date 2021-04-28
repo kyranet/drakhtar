@@ -19,7 +19,7 @@ class Matrix {
   /**
    * \brief The internal dynamic 2D array.
    */
-  T **matrix_;
+  T** matrix_;
 
  public:
   /**
@@ -29,7 +29,7 @@ class Matrix {
    */
   Matrix<T>(const int columns, const int rows)
       : columns_(columns), rows_(rows) {
-    matrix_ = new T *[columns];
+    matrix_ = new T*[columns];
     for (auto x = 0; x < columns; x++) {
       matrix_[x] = new T[rows];
     }

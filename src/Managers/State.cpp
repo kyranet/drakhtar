@@ -1,8 +1,11 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "State.h"
+
 #include <third_party/AStar.h>
+
 #include <algorithm>
+
 #include "Controllers/UnitsController.h"
 #include "GameObjects/Battalion.h"
 #include "GameObjects/Box.h"

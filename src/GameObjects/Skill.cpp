@@ -1,7 +1,9 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Skill.h"
+
 #include <algorithm>
+
 #include "Commanders/Commander.h"
 #include "Controllers/UnitsController.h"
 #include "GameObjects/Battalion.h"

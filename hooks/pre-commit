@@ -1,0 +1,18 @@
+#!/bin/sh
+
+hooks_dir=$(dirname "$0")
+root_dir=$(dirname "$hooks_dir")
+
+files=$(git diff --cached --name-only --diff-filter=ACM -- '*.c' '*.cpp' '*.h' '*.hpp')
+
+if [ ! -z "$files" ]
+then
+	pwsh -NoLogo -NoProfile -ExecutionPolicy ByPass -Command "& """$root_dir/scripts/windows-format.ps1""" ${files/$'\n'/','}"
+	if [ $? -ne 0 ]; then
+		exit $?
+	fi
+
+	git add $files
+fi
+
+exit 0

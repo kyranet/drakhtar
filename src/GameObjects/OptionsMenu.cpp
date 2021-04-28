@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "OptionsMenu.h"
+
 #include "GameObjects/Button.h"
 #include "GameObjects/Text.h"
 #include "Managers/FontManager.h"

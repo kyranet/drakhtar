@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "ListenerOnHover.h"
+
 #include "Managers/Input.h"
 
 void ListenerOnHover::run(const SDL_Event) {

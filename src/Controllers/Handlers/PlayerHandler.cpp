@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "PlayerHandler.h"
+
 #include "Controllers/PlayerController.h"
 #include "GameObjects/Board.h"
 #include "GameObjects/Box.h"

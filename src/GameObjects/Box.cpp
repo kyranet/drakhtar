@@ -1,6 +1,7 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Box.h"
+
 #include "Board.h"
 #include "Controllers/UnitsController.h"
 #include "GameObjects/TurnBar.h"

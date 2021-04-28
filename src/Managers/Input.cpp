@@ -1,12 +1,13 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #include "Input.h"
+
 #include "GameObjects/GameObject.h"
 #include "SDL.h"
 #include "Scenes/Scene.h"
 #include "Structures/Game.h"
 
-Input::Input(): mousePosition_(0, 0) {}
+Input::Input() : mousePosition_(0, 0) {}
 Input::~Input() = default;
 
 Input* Input::instance_ = nullptr;

@@ -2,6 +2,9 @@
 git submodule init
 git submodule update
 
+# Define the hooks patch as $root/hooks over $root/.git/hooks so we can run our own hooks:
+git config core.hooksPath hooks
+
 $local:DependencyFolder = Join-Path -Path $(Split-Path $PSScriptRoot) -ChildPath "deps"
 $local:BaseDomain = "https://www.libsdl.org/"
 

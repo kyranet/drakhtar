@@ -2,6 +2,7 @@
 
 #pragma once
 #include <iostream>
+
 #include "GameObject.h"
 #include "SDL.h"
 

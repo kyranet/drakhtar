@@ -3,13 +3,13 @@
 #include "UnitFactory.h"
 
 #include "GameObjects/Battalion.h"
+#include "GameObjects/Commanders/Abeizhul.h"
+#include "GameObjects/Commanders/Dreilay.h"
+#include "GameObjects/Commanders/RedValar.h"
 #include "GameObjects/Commanders/Sheissah.h"
 #include "GameObjects/Commanders/Thassa.h"
-#include "GameObjects/Commanders/Zamdran.h"
 #include "GameObjects/Commanders/Valar.h"
-#include "GameObjects/Commanders/RedValar.h"
-#include "GameObjects/Commanders/Dreilay.h"
-#include "GameObjects/Commanders/Abeizhul.h"
+#include "GameObjects/Commanders/Zamdran.h"
 #include "GameObjects/Unit.h"
 #include "Managers/TextureManager.h"
 #include "Scenes/Scene.h"
@@ -89,19 +89,19 @@ Commander* UnitFactory::newCommander(const std::string& type, Team* team,
       break;
     case CommanderType::VALAR:
       commander = new Valar(scene_, TextureManager::get(textureName), box,
-                             commanderMap[type]);
+                            commanderMap[type]);
       break;
     case CommanderType::REDVALAR:
       commander = new RedValar(scene_, TextureManager::get(textureName), box,
-                            commanderMap[type]);
+                               commanderMap[type]);
       break;
     case CommanderType::DREILAY:
       commander = new Dreilay(scene_, TextureManager::get(textureName), box,
-                            commanderMap[type]);
+                              commanderMap[type]);
       break;
     case CommanderType::ABEIZHUL:
       commander = new Abeizhul(scene_, TextureManager::get(textureName), box,
-                            commanderMap[type]);
+                               commanderMap[type]);
       break;
     default:
       return nullptr;

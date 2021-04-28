@@ -11,10 +11,9 @@
 #include "../Utils/Constants.h"
 #include "SDL_mixer.h"
 #include "SDL_ttf.h"
-
 #include "Tracker.h"
-#include "TrackerEvents/SessionStartEvent.h"
 #include "TrackerEvents/SessionEndEvent.h"
+#include "TrackerEvents/SessionStartEvent.h"
 
 Game::Game() {
   if (SDL_Init(SDL_INIT_EVENTS | SDL_INIT_TIMER | SDL_INIT_AUDIO) != 0) {
@@ -194,25 +193,24 @@ void Game::load() {
   textures->add("UI-cellInRange", "images/UI/cellInRange.png", 1, 1);
   textures->add("UI-enemyInRange", "images/UI/enemyInRange.png", 1, 1);
   textures->add("UI-activeUnit", "images/UI/activeUnitCell.png", 1, 1);
-  textures->add("UI-dialogueBackground", "images/UI/dialogueBackground.png",
-                1, 1);
-  textures->add("UI-tutorialBackground", "images/UI/tutorialBackground.png",
-                1, 1);
+  textures->add("UI-dialogueBackground", "images/UI/dialogueBackground.png", 1,
+                1);
+  textures->add("UI-tutorialBackground", "images/UI/tutorialBackground.png", 1,
+                1);
   textures->add("UI-dialogueArrow", "images/UI/arrow_Dialog.png", 7, 1);
   textures->add("UI-dialoguePortrait", "images/UI/portrait.png", 1, 1);
 
   textures->add("UI-turnBar", "images/UI/rock_bar.png", 1, 1);
   textures->add("UI-circle", "images/UI/circle.png", 9, 1);
-  textures->add("UI-healthBar_background",
-                "images/UI/healthBar_background.png", 1, 1);
+  textures->add("UI-healthBar_background", "images/UI/healthBar_background.png",
+                1, 1);
   textures->add("UI-healthBar_life", "images/UI/healthBar_life.png", 1, 1);
-  textures->add("UI-healthBar_damage", "images/UI/healthBar_damage.png", 1,
-                1);
+  textures->add("UI-healthBar_damage", "images/UI/healthBar_damage.png", 1, 1);
   textures->add("UI-healthBar_blue", "images/UI/healthBar_blue.png", 1, 1);
   textures->add("UI-BattalionCircle", "images/UI/unitBatallionCircle.png", 1,
                 1);
-  textures->add("UI-BattalionCircle2", "images/UI/unitBatallionCircle2.png",
-                1, 1);
+  textures->add("UI-BattalionCircle2", "images/UI/unitBatallionCircle2.png", 1,
+                1);
   textures->add("UI-commanderIcon", "images/UI/goldskull.png", 1, 1);
   textures->add("UI-OptionsMenu", "images/UI/OptionsMenu.png", 1, 1);
   textures->add("UI-ActiveSound", "images/UI/ActiveSound.png", 1, 1);
@@ -231,8 +229,7 @@ void Game::load() {
                 1);
   textures->add("Button-HeroicStrike-disabled",
                 "images/UI/heroic_strike_icon_disabled.png", 1, 1);
-  textures->add("Button-Enemy-Skill", "images/UI/enemy_skill_icon.png", 1,
-                1);
+  textures->add("Button-Enemy-Skill", "images/UI/enemy_skill_icon.png", 1, 1);
   textures->add("Button-Enemy-Skill-disabled",
                 "images/UI/enemy_skill_disabled_icon.png", 1, 1);
   textures->add("Button-Pause", "images/Pause/Pause_Button.png", 1, 1);
@@ -246,21 +243,19 @@ void Game::load() {
 
   // Portraits
   textures->add("Portraits-Archer", "images/Portraits/Archer.png", 1, 1);
-  textures->add("Portraits-ArcherEnemy", "images/Portraits/ArcherEnemy.png",
-                1, 1);
-  textures->add("Portraits-Valar", "images/Portraits/Valar.png", 1, 1);
-  textures->add("Portraits-EvilValar", "images/Portraits/EvilValar.png", 1,
+  textures->add("Portraits-ArcherEnemy", "images/Portraits/ArcherEnemy.png", 1,
                 1);
+  textures->add("Portraits-Valar", "images/Portraits/Valar.png", 1, 1);
+  textures->add("Portraits-EvilValar", "images/Portraits/EvilValar.png", 1, 1);
 
   textures->add("Portraits-Knight", "images/Portraits/Knight.png", 1, 1);
-  textures->add("Portraits-KnightEnemy", "images/Portraits/KnightEnemy.png",
-                1, 1);
-  textures->add("Portraits-Mage", "images/Portraits/Mage.png", 1, 1);
-  textures->add("Portraits-MageEnemy", "images/Portraits/MageEnemy.png", 1,
+  textures->add("Portraits-KnightEnemy", "images/Portraits/KnightEnemy.png", 1,
                 1);
+  textures->add("Portraits-Mage", "images/Portraits/Mage.png", 1, 1);
+  textures->add("Portraits-MageEnemy", "images/Portraits/MageEnemy.png", 1, 1);
   textures->add("Portraits-Narrator", "images/Portraits/Narrator.png", 1, 1);
-  textures->add("Portraits-SoldierEnemy",
-                "images/Portraits/SoldierEnemy.png", 1, 1);
+  textures->add("Portraits-SoldierEnemy", "images/Portraits/SoldierEnemy.png",
+                1, 1);
   textures->add("Portraits-Thassa", "images/Portraits/Thassa.png", 3, 3)
       ->addAnimation("default", {0})
       ->addAnimation("angry", {1})
@@ -296,32 +291,24 @@ void Game::load() {
 
   // Transition
   textures->add("Transition-Map1", "images/Maps/TestMap.png", 1, 1);
-  textures->add("Transition-Map2", "images/Transition/Transition_2.png", 1,
-                1);
-  textures
-      ->add("Transition-Map3", "images/Transition/Transition_3.png", 4, 1)
+  textures->add("Transition-Map2", "images/Transition/Transition_2.png", 1, 1);
+  textures->add("Transition-Map3", "images/Transition/Transition_3.png", 4, 1)
       ->addAnimation("default", {0, 1, 2, 3}, 1);
-  textures->add("Transition-Map4", "images/Transition/Transition_4.png", 4,
-                1);
-  textures->add("Transition-Map5", "images/Transition/Transition_5.png", 1,
-                1);
-  textures->add("Transition-Menu", "images/Transition/Transition_1.png", 4,
-                1);
-  textures->add("Transition-Map6", "images/Transition/Transition_6.png",
-                1, 1);
+  textures->add("Transition-Map4", "images/Transition/Transition_4.png", 4, 1);
+  textures->add("Transition-Map5", "images/Transition/Transition_5.png", 1, 1);
+  textures->add("Transition-Menu", "images/Transition/Transition_1.png", 4, 1);
+  textures->add("Transition-Map6", "images/Transition/Transition_6.png", 1, 1);
 
   // Recruitment
-  textures->add("Recruitment-Background",
-                "images/Recruitment/recruitment.png", 1, 1);
-  textures->add("Recruitment-Panel",
-                "images/Recruitment/recruitment_Panel.png", 1, 1);
-  textures->add("Reward-Panel", "images/Recruitment/reward_Panel.png", 1, 1);
-  textures->add("Quantity-Button", "images/Recruitment/quantity_Button.png",
+  textures->add("Recruitment-Background", "images/Recruitment/recruitment.png",
                 1, 1);
-  textures->add("Accept-Button", "images/Recruitment/accept_Button.png", 1,
+  textures->add("Recruitment-Panel", "images/Recruitment/recruitment_Panel.png",
+                1, 1);
+  textures->add("Reward-Panel", "images/Recruitment/reward_Panel.png", 1, 1);
+  textures->add("Quantity-Button", "images/Recruitment/quantity_Button.png", 1,
                 1);
-  textures->add("Cancel-Button", "images/Recruitment/cancel_Button.png", 1,
-                1);
+  textures->add("Accept-Button", "images/Recruitment/accept_Button.png", 1, 1);
+  textures->add("Cancel-Button", "images/Recruitment/cancel_Button.png", 1, 1);
   textures->add("Coin-Anim", "images/Recruitment/coin_rot_anim.png", 6, 1);
 
   auto fonts = FontManager::getInstance();
@@ -332,22 +319,20 @@ void Game::load() {
   fonts->add("SkillButtonFont", "fonts/Greenscr.ttf", WIN_WIDTH / 40,
              WIN_WIDTH);
   fonts->add("Retron2000", "fonts/Greenscr.ttf", WIN_WIDTH / 88, WIN_WIDTH);
-  fonts->add("TutorialFont", "fonts/Greenscr.ttf", WIN_WIDTH / 100,
-             WIN_WIDTH);
+  fonts->add("TutorialFont", "fonts/Greenscr.ttf", WIN_WIDTH / 100, WIN_WIDTH);
   fonts->add("UnitFont", "fonts/Greenscr.ttf", WIN_WIDTH / 120, WIN_WIDTH);
   fonts->add("StatsFont", "fonts/Greenscr.ttf", WIN_WIDTH / 45, WIN_WIDTH);
   fonts->add("ButtonFont", "fonts/Greenscr.ttf", WIN_WIDTH / 50, WIN_WIDTH);
   fonts->add("ButtonFontQuantity", "fonts/Retron2000.ttf", WIN_WIDTH / 50,
              WIN_WIDTH);
-  fonts->add("ButtonFontBig", "fonts/Greenscr.ttf", WIN_WIDTH / 20,
-             WIN_WIDTH);
+  fonts->add("ButtonFontBig", "fonts/Greenscr.ttf", WIN_WIDTH / 20, WIN_WIDTH);
   fonts->init();
 
   auto audio = SDLAudioManager::getInstance();
   audio->init();
   // Background music
-  audio->loadMusic(
-      0, "audio/background/MenuSceneMusic - by AShamaluevMusic.ogg");
+  audio->loadMusic(0,
+                   "audio/background/MenuSceneMusic - by AShamaluevMusic.ogg");
   audio->loadMusic(
       1, "audio/background/FirstGameSceneMusic - by Always Music.ogg");
   audio->loadMusic(2,
@@ -389,12 +374,11 @@ void Game::load() {
   audio->loadSound(
       8, "audio/sound/Unit-sounds/Heroes/Thassa/HeroicStrikeShout.mp3");
   audio->loadSound(
-      9,
-      "audio/sound/Unit-sounds/Heroes/Thassa/hittingwithHeroicStrike.mp3");
-  audio->loadSound(
-      10, "audio/sound/Unit-sounds/Heroes/Thassa/battleCrySound.mp3");
-  audio->loadSound(
-      11, "audio/sound/Unit-sounds/Heroes/Zamdran/ArrowRainSkill.mp3");
+      9, "audio/sound/Unit-sounds/Heroes/Thassa/hittingwithHeroicStrike.mp3");
+  audio->loadSound(10,
+                   "audio/sound/Unit-sounds/Heroes/Thassa/battleCrySound.mp3");
+  audio->loadSound(11,
+                   "audio/sound/Unit-sounds/Heroes/Zamdran/ArrowRainSkill.mp3");
   audio->loadSound(12, "audio/sound/UI-sounds/coin.wav");
   audio->loadSound(13, "audio/sound/UI-sounds/nextDialogue.wav");
   audio->loadSound(14, "audio/sound/UI-sounds/skipDialogue.wav");
@@ -415,7 +399,7 @@ Game::~Game() {
 }
 
 void Game::run() const {
- // Tracker::getInstance().trackEvent(new SessionStartEvent());
+  // Tracker::getInstance().trackEvent(new SessionStartEvent());
   Tracker::getInstance().init();
   while (!sceneMachine_->isEmpty()) {
     sceneMachine_->getCurrentScene()->run();
