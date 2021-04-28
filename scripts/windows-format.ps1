@@ -132,7 +132,7 @@ function Test-Format([string[]] $Files) {
 
 try {
 	if ($PSBoundParameters.ContainsKey('Files')) {
-		Write-Host "Received   " -ForegroundColor Green -NoNewLine
+		Write-Host "Received "   -ForegroundColor Green -NoNewLine
 		Write-Host $Files.Length -ForegroundColor Cyan  -NoNewLine
 		Write-Host " file(s)."   -ForegroundColor Green
 	} else {
