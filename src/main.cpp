@@ -10,6 +10,8 @@
 #include "Structures/Game.h"
 #include "checkML.h"
 
+#include "Configuration.h"
+
 #undef main
 
 int main(int, char*[]) {
@@ -20,6 +22,7 @@ int main(int, char*[]) {
   try {
     const auto game = Game::getInstance();
     game->load();
+    TrackerConfiguration();
     game->run();
     SDLAudioManager::destroy();
     TextureManager::destroy();

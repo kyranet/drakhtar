@@ -3,6 +3,13 @@ find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)
 find_package(SDL2_ttf REQUIRED)
 find_package(SDL2_mixer REQUIRED)
+
+# If we're using Linux, we need another module for UUIDs.
+if (NOT WIN32)
+	find_package(PkgConfig REQUIRED)
+	pkg_search_module(UUID REQUIRED uuid)
+endif ()
+
 include_directories(drakhtar ${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIRS} ${SDL2_MIXER_INCLUDE_DIRS} ${DEPENDENCY_INCLUDES})
 
 # Add all .cpp source files to the drakhtar executable.
@@ -78,14 +85,26 @@ set(DRAKHTAR_SOURCES
 
 add_executable(drakhtar ${DRAKHTAR_SOURCES})
 target_compile_features(drakhtar PUBLIC cxx_std_17)
-target_include_directories(drakhtar
-	PUBLIC
-	$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src>
-	$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/deps/drakhtar-telemetry/include>
-	$<INSTALL_INTERFACE:${CMAKE_SOURCE_DIR}>/src)
 
 # Link the libraries and install them.
-target_link_libraries(drakhtar ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES} ${SDL2_MIXER_LIBRARIES})
+# Need to make sure we include the UUID library if it's not Windows.
+if (NOT WIN32)
+	target_include_directories(drakhtar
+		PUBLIC
+		$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src>
+		$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/deps/drakhtar-telemetry/include>
+		$<INSTALL_INTERFACE:${CMAKE_SOURCE_DIR}>/src
+		${UUID_INCLUDE_DIRS})
+	target_link_libraries(drakhtar ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES} ${SDL2_MIXER_LIBRARIES} telemetry ${UUID_LIBRARIES})
+else ()
+	target_include_directories(drakhtar
+		PUBLIC
+		$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src>
+		$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/deps/drakhtar-telemetry/include>
+		$<INSTALL_INTERFACE:${CMAKE_SOURCE_DIR}>/src)
+	target_link_libraries(drakhtar ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES} ${SDL2_MIXER_LIBRARIES} telemetry)
+endif ()
+
 
 add_custom_command(
 	TARGET drakhtar POST_BUILD
@@ -101,9 +120,7 @@ if (MSVC)
 		$<TARGET_FILE_DIR:Dependencies>/dll
 		$<TARGET_FILE_DIR:drakhtar>
 	)
-endif ()
 
-if (MSVC)
 	target_compile_options(drakhtar
 		PRIVATE
 		/W4
@@ -118,6 +135,7 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 		-Wextra
 		-Wno-float-equal
 		-Wno-padded
+		-luuid
 	)
 else ()
 	target_compile_options(drakhtar

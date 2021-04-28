@@ -12,6 +12,10 @@
 #include "SDL_mixer.h"
 #include "SDL_ttf.h"
 
+#include "Tracker.h"
+#include "TrackerEvents/SessionStartEvent.h"
+#include "TrackerEvents/SessionEndEvent.h"
+
 Game::Game() {
   if (SDL_Init(SDL_INIT_EVENTS | SDL_INIT_TIMER | SDL_INIT_AUDIO) != 0) {
     const auto message =
@@ -411,9 +415,12 @@ Game::~Game() {
 }
 
 void Game::run() const {
+ // Tracker::getInstance().trackEvent(new SessionStartEvent());
+  Tracker::getInstance().init();
   while (!sceneMachine_->isEmpty()) {
     sceneMachine_->getCurrentScene()->run();
   }
+  Tracker::getInstance().end();
 }
 
 SDL_Renderer* Game::getRenderer() { return getInstance()->renderer_; }
