@@ -113,6 +113,12 @@ add_custom_command(
 	$<TARGET_FILE_DIR:drakhtar>
 )
 
+add_custom_command(
+	TARGET drakhtar POST_BUILD
+	COMMAND ${CMAKE_COMMAND} -E make_directory
+	$<TARGET_FILE_DIR:drakhtar>/data
+)
+
 if (MSVC)
 	add_custom_command(
 		TARGET drakhtar POST_BUILD
