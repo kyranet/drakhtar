@@ -11,6 +11,9 @@
 #include "Scenes/RecruitScene.h"
 #include "Scenes/Scene.h"
 #include "Structures/Game.h"
+#include "Tracker.h"
+#include "TrackerEvents/LevelEndEvent.h"
+#include "TrackerEvents/PauseEndEvent.h"
 #include "Utils/Constants.h"
 #include "Utils/Vector2D.h"
 
@@ -26,8 +29,9 @@ Pause::Pause(Scene* scene) : GameObject(scene, nullptr) {
       Vector2D<int>(static_cast<int>(WIN_WIDTH / 8.33),
                     static_cast<int>(WIN_HEIGHT / 11.25)),
       [scene]() {
-        Game::getSceneMachine()->changeScene(
-            new GameScene(reinterpret_cast<GameScene*>(scene)->getBattleInd()));
+        int battleInd = reinterpret_cast<GameScene*>(scene)->getBattleInd();
+        Tracker::getInstance().trackEvent(new PauseEndEvent(battleInd));
+        Game::getSceneMachine()->changeScene(new GameScene(battleInd));
       },
       "Restart", "ButtonFont");
   const auto exit = new Button(
@@ -35,7 +39,15 @@ Pause::Pause(Scene* scene) : GameObject(scene, nullptr) {
       Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2 + 70),
       Vector2D<int>(static_cast<int>(WIN_WIDTH / 8.33),
                     static_cast<int>(WIN_HEIGHT / 11.25)),
-      []() {
+      [scene]() {
+        GameScene* gameScene = reinterpret_cast<GameScene*>(scene);
+
+        Tracker::getInstance().trackEvent(
+            new PauseEndEvent(gameScene->getBattleInd()));
+        Tracker::getInstance().trackEvent(
+            new LevelEndEvent(gameScene->getBattleInd(), LevelResult::QUIT,
+                              gameScene->getPlayerArmy()));
+
         GameManager::getInstance()->reset();
         Game::getSceneMachine()->changeScene(new MenuScene());
         SDLAudioManager::getInstance()->playChannel(6, 0, 0);
@@ -47,7 +59,15 @@ Pause::Pause(Scene* scene) : GameObject(scene, nullptr) {
       Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2 - 70),
       Vector2D<int>(static_cast<int>(WIN_WIDTH / 8.33),
                     static_cast<int>(WIN_HEIGHT / 11.25)),
-      [this]() {
+      [this, scene]() {
+        GameScene* gameScene = reinterpret_cast<GameScene*>(scene);
+
+        Tracker::getInstance().trackEvent(
+            new PauseEndEvent(gameScene->getBattleInd()));
+        Tracker::getInstance().trackEvent(
+            new LevelEndEvent(gameScene->getBattleInd(), LevelResult::QUIT,
+                              gameScene->getPlayerArmy()));
+
         destroy();
         scene_->resume();
       },

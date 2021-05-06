@@ -1,6 +1,8 @@
 // Copyright 2019 the Drakhtar authors. All rights reserved. MIT license.
 
 #pragma once
+#include <map>
+
 #include "Scene.h"
 
 class Team;
@@ -33,6 +35,8 @@ class GameScene final : public Scene {
   void readLevel(UnitFactory& factory, std::vector<Unit*>& unitOrder);
 
   void updateRenderOrder(Unit* unit);
+
+  std::map<std::string, uint16_t>* getPlayerArmy();
 
   Board* getBoard() const;
   int getBattleInd();

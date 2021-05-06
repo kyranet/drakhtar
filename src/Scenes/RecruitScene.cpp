@@ -13,6 +13,8 @@
 #include "Managers/SDLAudioManager.h"
 #include "Managers/TextureManager.h"
 #include "Structures/Game.h"
+#include "Tracker.h"
+#include "TrackerEvents/BuyUnitsEvent.h"
 #include "TransitionScene.h"
 #include "Utils/Constants.h"
 #include "Utils/Vector2D.h"
@@ -80,6 +82,9 @@ void RecruitScene::preload() {
             moneyText_->setText(moneyToString());
             moneyText_->setColor({255, 255, 255, 0});
             SDLAudioManager::getInstance()->playChannel(12, 0, 1);
+
+            // Tracker::getInstance().trackEvent(new BuyUnitsEvent(unit.type,
+            // unit.cost_, unit.amount_));
           }
         }
 
