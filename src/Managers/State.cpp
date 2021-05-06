@@ -214,9 +214,9 @@ bool State::attack(const Vector2D<uint16_t>& from, const Vector2D<uint16_t>& to,
   const auto health = static_cast<uint16_t>(
       damage > modifiedEnemy.health_ ? 0 : modifiedEnemy.health_ - damage);
 
-  // Tracker::getInstance().trackEvent(new AttackEvent(
-  //    modifiedPrevious.unit_->getType(), modifiedEnemy.unit_->getType(),
-  //    damage));
+  Tracker::getInstance().trackEvent(
+      new AttackEvent(modifiedPrevious.unit_->getType(),
+                      modifiedEnemy.unit_->getType(), damage));
 
   if (health == 0) {
     removeAt(to);
@@ -281,9 +281,8 @@ bool State::attack(const Vector2D<uint16_t>& to, uint16_t damage) {
   const auto health = static_cast<uint16_t>(
       damage >= modifiedEnemy.health_ ? 0 : modifiedEnemy.health_ - damage);
 
-  // Tracker::getInstance().trackEvent(
-  //    new AttackEvent("Unknown",
-  //                    modifiedEnemy.unit_->getType(), damage));
+  Tracker::getInstance().trackEvent(
+      new AttackEvent("Unknown", modifiedEnemy.unit_->getType(), damage));
 
   if (health == 0) {
     removeAt(to);
