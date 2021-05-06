@@ -400,7 +400,7 @@ Game::~Game() {
 
 void Game::run() const {
   // Tracker::getInstance().trackEvent(new SessionStartEvent());
-  Tracker::getInstance().init();
+  Tracker::getInstance().init("TODO: Replace with unique game ID");
   while (!sceneMachine_->isEmpty()) {
     sceneMachine_->getCurrentScene()->run();
   }
