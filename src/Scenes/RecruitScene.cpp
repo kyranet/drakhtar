@@ -83,8 +83,8 @@ void RecruitScene::preload() {
             moneyText_->setColor({255, 255, 255, 0});
             SDLAudioManager::getInstance()->playChannel(12, 0, 1);
 
-            // Tracker::getInstance().trackEvent(new BuyUnitsEvent(unit.type,
-            // unit.cost_, unit.amount_));
+            Tracker::getInstance().trackEvent(
+                new BuyUnitsEvent(unit.type, unit.cost_, unit.amount_));
           }
         }
 

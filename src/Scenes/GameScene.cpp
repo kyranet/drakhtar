@@ -332,7 +332,7 @@ void GameScene::saveStatus() {
 }
 
 std::map<std::string, uint16_t>* GameScene::getPlayerArmy() {
-  std::map<std::string, uint16_t>* army = new std::map<std::string, uint16_t>();
+  auto* army = new std::map<std::string, uint16_t>();
   for (Unit* unit : team1_->getUnits()) {
     if (unit->isCommander())
       army->insert(std::pair<std::string, uint16_t>(unit->getType(), 1));
