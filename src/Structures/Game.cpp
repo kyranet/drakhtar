@@ -400,7 +400,7 @@ Game::~Game() {
 
 void Game::run() const {
   // Tracker::getInstance().trackEvent(new SessionStartEvent());
-  Tracker::getInstance().init("TODO: Replace with unique game ID");
+  Tracker::getInstance().init("TheFallOfDrakhtar");
   while (!sceneMachine_->isEmpty()) {
     sceneMachine_->getCurrentScene()->run();
   }

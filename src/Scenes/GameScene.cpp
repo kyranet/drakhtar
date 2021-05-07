@@ -28,6 +28,11 @@
 #include "Structures/Game.h"
 #include "Structures/Team.h"
 #include "Structures/UnitFactory.h"
+#include "Tracker.h"
+#include "TrackerEvents/LevelEndEvent.h"
+#include "TrackerEvents/LevelStartEvent.h"
+#include "TrackerEvents/PauseEndEvent.h"
+#include "TrackerEvents/PauseStartEvent.h"
 #include "Utils/Constants.h"
 
 auto audio = SDLAudioManager::getInstance();
@@ -173,10 +178,13 @@ void GameScene::preload() {
 
   setGame(true);
   team1_->getController()->start();
+  Tracker::getInstance().trackEvent(
+      new LevelStartEvent(getBattleInd(), getPlayerArmy()));
 }
 
 void GameScene::pause() {
   if (!isPaused()) {
+    Tracker::getInstance().trackEvent(new PauseStartEvent(getBattleInd()));
     Scene::pause();
     pauseInterface = new Pause(this);
     addGameObject(pauseInterface);
@@ -303,7 +311,14 @@ void GameScene::gameOver(bool victory) {
       new GameOverPanel(this, TextureManager::get("UI-OptionsMenu"),
                         {WIN_WIDTH / 2, WIN_HEIGHT / 2},
                         {WIN_WIDTH / 2, WIN_HEIGHT / 2}, victory);
-  if (victory) saveStatus();
+  if (victory) {
+    saveStatus();
+    Tracker::getInstance().trackEvent(new LevelEndEvent(
+        getBattleInd(), LevelResult::VICTORY, getPlayerArmy()));
+  } else {
+    Tracker::getInstance().trackEvent(new LevelEndEvent(
+        getBattleInd(), LevelResult::DEFEAT, getPlayerArmy()));
+  }
   addGameObject(gameOverPanel_);
 }
 
@@ -314,6 +329,19 @@ void GameScene::saveStatus() {
   auto units = team1_->getUnits();
   GameManager::getInstance()->updateUnits(units);
   GameManager::getInstance()->addMoney(prize_);
+}
+
+std::map<std::string, uint16_t>* GameScene::getPlayerArmy() {
+  auto* army = new std::map<std::string, uint16_t>();
+  for (Unit* unit : team1_->getUnits()) {
+    if (unit->isCommander())
+      army->insert(std::pair<std::string, uint16_t>(unit->getType(), 1));
+    else
+      army->insert(std::pair<std::string, uint16_t>(
+          unit->getType(),
+          reinterpret_cast<Battalion*>(unit)->getBattalionSize()));
+  }
+  return army;
 }
 
 Board* GameScene::getBoard() const { return board_; }
