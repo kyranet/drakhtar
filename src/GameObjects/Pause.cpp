@@ -29,8 +29,12 @@ Pause::Pause(Scene* scene) : GameObject(scene, nullptr) {
       Vector2D<int>(static_cast<int>(WIN_WIDTH / 8.33),
                     static_cast<int>(WIN_HEIGHT / 11.25)),
       [scene]() {
+        GameScene* gameScene = reinterpret_cast<GameScene*>(scene);
         int battleInd = reinterpret_cast<GameScene*>(scene)->getBattleInd();
         Tracker::getInstance().trackEvent(new PauseEndEvent(battleInd));
+        Tracker::getInstance().trackEvent(
+            new LevelEndEvent(gameScene->getBattleInd(), LevelResult::RESTART,
+                              gameScene->getPlayerArmy()));
         Game::getSceneMachine()->changeScene(new GameScene(battleInd));
       },
       "Restart", "ButtonFont");
@@ -64,9 +68,6 @@ Pause::Pause(Scene* scene) : GameObject(scene, nullptr) {
 
         Tracker::getInstance().trackEvent(
             new PauseEndEvent(gameScene->getBattleInd()));
-        Tracker::getInstance().trackEvent(
-            new LevelEndEvent(gameScene->getBattleInd(), LevelResult::QUIT,
-                              gameScene->getPlayerArmy()));
 
         destroy();
         scene_->resume();
