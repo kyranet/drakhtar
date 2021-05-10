@@ -34,8 +34,9 @@ function Find-CMake() {
 	}
 
 	# Find from PATH environmental variables:
-	if (Get-Command "cmake.exe" -ErrorAction SilentlyContinue) {
-		$CMake = (Get-Command "cmake.exe").Path;
+	$local:PossibleCMake = Get-Command "cmake.exe" -ErrorAction SilentlyContinue
+	if ($PossibleCMake) {
+		$CMake = $PossibleCMake.Path;
 		Write-Host "CMake not provided, using '" -ForegroundColor Blue -NoNewline
 		Write-Host $CMake                        -ForegroundColor Cyan -NoNewline
 		Write-Host "' from PATH instead."        -ForegroundColor Blue
@@ -46,7 +47,7 @@ function Find-CMake() {
 	$local:PossibleCMake = Resolve-Path "${Env:ProgramFiles}\CMake\bin\cmake.exe" -ErrorAction SilentlyContinue
 	if (($PossibleCMake) -And ($PossibleCMake.Length -Ge 0)) {
 		$CMake = $PossibleCMake[0].Path
-		Write-Host "MsBuild not provided, using '" -ForegroundColor Blue -NoNewline
+		Write-Host "CMake not provided, using '" -ForegroundColor Blue -NoNewline
 		Write-Host $CMake                          -ForegroundColor Cyan -NoNewline
 		Write-Host "' instead."                    -ForegroundColor Blue
 		return Assert-CMakePath $CMake;
@@ -54,7 +55,7 @@ function Find-CMake() {
 }
 
 # Find and assert CMake
-function Step-CMake([string] $CMake, [string] $Path, [string[]] $Arguments) {
+function Step-CMakeConfigure([string] $CMake, [string] $Path, [string[]] $Arguments) {
 	Write-Host "# Generating CMake Project for '" -ForegroundColor Blue -NoNewline
 	Write-Host $Path                              -ForegroundColor Cyan -NoNewline
 	Write-Host "'."                               -ForegroundColor Blue
@@ -82,75 +83,15 @@ function Step-CMake([string] $CMake, [string] $Path, [string[]] $Arguments) {
 	}
 }
 
-# Asserts that the variable assigned to $MsBuild is a valid file path, discarding files that do not exist and folders.
-function Assert-MsBuildPath([string] $MsBuild) {
-	if (($MsBuild -Eq "") -Or !(Test-Path -LiteralPath $MsBuild -PathType Leaf)) {
-		Write-Host "I was not able to find MSBuild.exe, please check https://docs.microsoft.com/visualstudio/msbuild/msbuild?view=vs-2019 for more information." -ForegroundColor Red
-		Write-Host "  # Please specify the route to the MSBuild.exe by doing " -ForegroundColor Yellow -NoNewline
-		Write-Host ".\scripts\build.ps1 `"Path\To\MSBuild.exe`""               -ForegroundColor Cyan   -NoNewline
-		Write-Host " or "                                                      -ForegroundColor Yellow -NoNewline
-		Write-Host ".\scripts\build.ps1 -MsBuild `"Path\To\MSBuild.exe`""      -ForegroundColor Cyan   -NoNewline
-		Write-Host " to set the path."                                         -ForegroundColor Yellow
-		Write-Host "  # Alternatively, do "                                    -ForegroundColor Yellow -NoNewline
-		Write-Host "`$Env:MsBuild=`"Path\To\MSBuild.exe`""                     -ForegroundColor Cyan   -NoNewline
-		Write-Host ", afterwards you will be able to execute "                 -ForegroundColor Yellow -NoNewline
-		Write-Host ".\scripts\build.ps1"                                       -ForegroundColor Cyan   -NoNewline
-		Write-Host " normally."                                                -ForegroundColor Yellow
-		exit 1
-	}
-
-	return $MsBuild
-}
-
-# Finds MSBuild.exe from the user's input, falling back in the following order:
-#  - Environmental Variable
-#  - Get-Command (PATH)
-#  - Program Files typical installation path scan
-function Find-MsBuild() {
-	# Find from environmental variable:
-	if ($Env:MsBuild) {
-		$MsBuild = (Resolve-Path $Env:MsBuild)[0].Path
-		Write-Host "MsBuild not provided, using '"           -ForegroundColor Blue -NoNewline
-		Write-Host $MsBuild                                  -ForegroundColor Cyan -NoNewline
-		Write-Host "' from environmental variables instead." -ForegroundColor Blue
-		return Assert-MsBuildPath $MsBuild;
-	}
-
-	# Find from PATH environmental variables:
-	if (Get-Command "MSBuild.exe" -ErrorAction SilentlyContinue) {
-		$MsBuild = (Get-Command "MSBuild.exe").Path;
-		Write-Host "MsBuild not provided, using '" -ForegroundColor Blue -NoNewline
-		Write-Host $MsBuild                        -ForegroundColor Cyan -NoNewline
-		Write-Host "' from PATH instead."          -ForegroundColor Blue
-		return Assert-MsBuildPath $MsBuild;
-	}
-
-	# Find from ProgramFiles:
-	$local:PossibleMsBuild = Resolve-Path "${Env:ProgramFiles(x86)}\Microsoft Visual Studio\2019\*\MSBuild\*\Bin\MSBuild.exe" -ErrorAction SilentlyContinue
-	if (($PossibleMsBuild) -And ($PossibleMsBuild.Length -Ge 0)) {
-		$MsBuild = $PossibleMsBuild[0].Path;
-		Write-Host "MsBuild not provided, using '" -ForegroundColor Blue -NoNewline
-		Write-Host $MsBuild                        -ForegroundColor Cyan -NoNewline
-		Write-Host "' instead."                    -ForegroundColor Blue
-		return Assert-MsBuildPath $MsBuild;
-	}
-}
-
-# Build a MSVC project given a path and optional arguments
-function Step-VisualStudio {
-	param (
-		[string] $MsBuild,
-		[string] $Path,
-		[string] $Configuration = "Debug"
-	)
-
+# Build a CMake-generated project given a path and optional arguments
+function Step-CMakeBuild([string] $CMake, [string] $Path, [string] $Configuration = "Debug") {
 	Write-Host "# Now building '"     -ForegroundColor Blue -NoNewline
 	Write-Host $Path                  -ForegroundColor Cyan -NoNewline
 	Write-Host "' as $Configuration." -ForegroundColor Blue
 
 	# Run the process
 	$private:startTime = Get-Date
-	& $MsBuild $Path @("-p:Configuration=$Configuration", "-m", "-noLogo")
+	& $CMake @("--build", "$Path", "--config", "$Configuration", "-j", "--", "-m", "-noLogo")
 	$private:exitTime = Get-Date
 
 	# Print information to the screen
@@ -172,13 +113,11 @@ function Step-VisualStudio {
 }
 
 $private:CMake = Find-CMake
-$private:MsBuild = Find-MsBuild
 
 # Run CMake in the project:
 $local:RootFolder = Split-Path $PSScriptRoot
-Step-CMake -CMake $CMake -Path $RootFolder
+Step-CMakeConfigure -CMake $CMake -Path $RootFolder
 
-# Run Visual Studio to the built project:
+# Run CMake Build to the built project:
 $local:BuildFolder = Join-Path -Path $RootFolder -ChildPath "build"
-$local:BuildSolution = Join-Path -Path $BuildFolder -ChildPath "drakhtar.sln"
-Step-VisualStudio -MsBuild $MsBuild -Path $BuildSolution
+Step-CMakeBuild -CMake $CMake -Path $BuildFolder
