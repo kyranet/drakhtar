@@ -1,3 +1,22 @@
+set(SUPPORTED_LANGUAGES
+	"en"
+	"en-US"
+	"es"
+	"es-ES")
+
+foreach(language ${SUPPORTED_LANGUAGES})
+	# Convert the string to uppercase (en-US -> EN-US, es-ES -> ES-ES):
+	string(TOUPPER ${language} __DIRECTORY__)
+
+	# Replace "-" with "_" (EN-US -> EN_US, ES-ES -> ES_ES):
+	string(REPLACE "-" "_" __DIRECTORY__ ${__DIRECTORY__})
+
+	# Define the option:
+	set(I18N_LANGUAGE_${__DIRECTORY__} ON)
+endforeach()
+
+
+add_subdirectory(drakhtar-i18n)
 add_subdirectory(drakhtar-telemetry)
 
 # Workaround for MSVC development libraries in the University's laboratories, where access to
@@ -28,6 +47,9 @@ if (MSVC)
 		get_filename_component(dll_fn ${dll} NAME)
 		configure_file(${dll} dll/${dll_fn} COPYONLY)
 	endforeach ()
+
+	set_target_properties(i18n PROPERTIES RUNTIME_OUTPUT_DIRECTORY
+		${CMAKE_BINARY_DIR}/src)
 
 	set_target_properties(telemetry PROPERTIES RUNTIME_OUTPUT_DIRECTORY
 		${CMAKE_BINARY_DIR}/src)

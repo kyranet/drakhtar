@@ -1,0 +1,7 @@
+# First Scene
+LINE_1_1="Valar rode at the column's head. Once close to Drakhtar, his wary eye proved useful."
+LINE_1_2="Your Majesty! Something is besieging our realm!?"
+LINE_1_3="What! Who!?"
+LINE_1_4="I don't know... your majesty, some sort of skeletons?"
+LINE_1_5="Thassa barely care what she was facing, something was attacking her beloved home, and they were about to pay."
+LINE_1_6="We shall discuss that later, provided we survive. ATTACK!"

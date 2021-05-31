@@ -197,6 +197,7 @@ set(ASSET_FILES
 	"images/Units/Sheissah.png"
 	"images/Units/Thassa.png"
 	"images/Units/Zamdran.png"
+	"languages/en/dialogues.txt"
 	"levels/credits.txt"
 	"levels/level-1.txt"
 	"levels/level-2.txt"

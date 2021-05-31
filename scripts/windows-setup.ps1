@@ -1,4 +1,4 @@
-# Set up the submodule so Drakhtar Telemetry is properly included in the project:
+# Set up the submodule so Drakhtar i18n and Telemetry is properly included in the project:
 git submodule init
 git submodule update
 
