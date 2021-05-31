@@ -92,17 +92,19 @@ if (NOT WIN32)
 	target_include_directories(drakhtar
 		PUBLIC
 		$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src>
+		$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/deps/drakhtar-i18n/include>
 		$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/deps/drakhtar-telemetry/include>
 		$<INSTALL_INTERFACE:${CMAKE_SOURCE_DIR}>/src
 		${UUID_INCLUDE_DIRS})
-	target_link_libraries(drakhtar ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES} ${SDL2_MIXER_LIBRARIES} telemetry ${UUID_LIBRARIES})
+	target_link_libraries(drakhtar ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES} ${SDL2_MIXER_LIBRARIES} i18n telemetry ${UUID_LIBRARIES})
 else ()
 	target_include_directories(drakhtar
 		PUBLIC
 		$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/src>
+		$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/deps/drakhtar-i18n/include>
 		$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/deps/drakhtar-telemetry/include>
 		$<INSTALL_INTERFACE:${CMAKE_SOURCE_DIR}>/src)
-	target_link_libraries(drakhtar ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES} ${SDL2_MIXER_LIBRARIES} telemetry)
+	target_link_libraries(drakhtar ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES} ${SDL2_MIXER_LIBRARIES} i18n telemetry)
 endif ()
 
 
@@ -111,6 +113,13 @@ add_custom_command(
 	COMMAND ${CMAKE_COMMAND} -E copy_directory
 	$<TARGET_FILE_DIR:Assets>
 	$<TARGET_FILE_DIR:drakhtar>
+)
+
+add_custom_command(
+  TARGET drakhtar POST_BUILD
+  COMMAND ${CMAKE_COMMAND} -E copy_directory
+    $<TARGET_FILE_DIR:i18n_languages>
+    $<TARGET_FILE_DIR:drakhtar>/languages
 )
 
 add_custom_command(

@@ -1,3 +1,6 @@
 [submodule "deps/drakhtar-telemetry"]
 	path = deps/drakhtar-telemetry
 	url = https://github.com/kyranet/drakhtar-telemetry
+[submodule "deps/drakhtar-i18n"]
+	path = deps/drakhtar-i18n
+	url = https://github.com/kyranet/drakhtar-i18n
