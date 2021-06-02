@@ -51,6 +51,9 @@ void Game::load() {
   loaded_ = true;
   auto textures = TextureManager::getInstance();
 
+  locale_.init("en");
+  locale_.load();
+
   // Units
   textures->add("Units-BlueArcher", "images/Units/BlueArcher.png", 5, 4)
       ->addAnimation("default", {0, 1})
@@ -422,3 +425,5 @@ Game* Game::getInstance() {
 SceneMachine* Game::getSceneMachine() { return getInstance()->sceneMachine_; }
 
 SDL_Window* Game::getWindow() { return getInstance()->window_; }
+
+Locale* Game::getLocale() { return &locale_; }

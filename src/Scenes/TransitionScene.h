@@ -4,6 +4,8 @@
 #include "Scene.h"
 
 class TransitionScene final : public Scene {
+  size_t nLines[6] = {12, 8, 30, 5, 15, 10};
+
  public:
   explicit TransitionScene(int battle);
   void preload() override;

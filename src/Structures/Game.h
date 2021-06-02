@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "LocaleManager.h"
 #include "SDL.h"
 #include "SceneMachine.h"
 
@@ -13,6 +14,9 @@ class Game final {
   SDL_Window* window_ = nullptr;
   SDL_Renderer* renderer_ = nullptr;
   SceneMachine* sceneMachine_ = nullptr;
+  LocaleManager localeManager_{};
+  Locale locale_{localeManager_};
+
   Game();
 
   bool loaded_ = false;
@@ -29,4 +33,6 @@ class Game final {
   static SceneMachine* getSceneMachine();
   // Get the SDL_Window instance
   static SDL_Window* getWindow();
+  // Get the Locale instance
+  Locale* getLocale();
 };

@@ -14,6 +14,8 @@ class TutorialBox;
 class State;
 
 class GameScene final : public Scene {
+  size_t nLines[6] = {6, 15, 8, 11, 5, 0};
+
   Team* team1_ = nullptr;
   Team* team2_ = nullptr;
   Board* board_ = nullptr;

@@ -33,8 +33,11 @@ void TransitionScene::preload() {
       Vector2D<int>(WIN_WIDTH, WIN_HEIGHT));
   addGameObject(background);
 
-  const auto dialog = new DialogScene(
-      this, "dialog" + std::to_string(battle_) + "transition", "DialogFont");
+  /*const auto dialog = new DialogScene(
+      this, "dialog" + std::to_string(battle_) + "transition", "DialogFont");*/
+  const auto dialog =
+      new DialogScene(this, "TRANSITION_" + std::to_string(battle_),
+                      nLines[battle_], "DialogFont");
   addGameObject(dialog);
   setTransition(true);
 }

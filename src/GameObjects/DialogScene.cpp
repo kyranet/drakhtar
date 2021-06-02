@@ -69,6 +69,51 @@ DialogScene::DialogScene(Scene* scene, const std::string& filename,
                dialogueBackground->getRect());
 }
 
+DialogScene::DialogScene(Scene* scene, const std::string& dialogKey,
+                         size_t nLines, const std::string& fontFile)
+    : Sequence(scene, nullptr, Vector2D<int>(0, 0), Vector2D<int>(1, 1)) {
+  const auto area = GameObject::getRect();
+  auto dialogueBackground =
+      new GameObject(scene_, TextureManager::get("UI-dialogueBackground"),
+                     Vector2D<int>(area.x + WIN_WIDTH / 2,
+                                   WIN_HEIGHT - area.h * WIN_HEIGHT / 6),
+                     Vector2D<int>(static_cast<int>(area.w * WIN_WIDTH / 1.4),
+                                   area.h * WIN_HEIGHT / 4));
+  const auto nameBackground = new GameObject(
+      scene_, TextureManager::get("UI-dialogueBackground"),
+      Vector2D<int>(dialogueBackground->getRect().x +
+                        dialogueBackground->getRect().w - WIN_WIDTH / 12,
+                    dialogueBackground->getRect().y - WIN_WIDTH / 70),
+      Vector2D<int>(area.w * WIN_WIDTH / 8, area.h * WIN_HEIGHT / 20));
+  const auto arrow = new Button(
+      scene_, TextureManager::get("UI-dialogueArrow"),
+      Vector2D<int>(
+          dialogueBackground->getRect().x + dialogueBackground->getRect().w / 2,
+          dialogueBackground->getRect().y + 140),
+      Vector2D<int>(area.w * WIN_WIDTH / 8, area.h * WIN_HEIGHT / 10), {}, " ",
+      "ButtonFont");
+  arrow->setTransparent(true);
+  const auto skipButton = new Button(
+      scene_, TextureManager::get("Button-Skip"),
+      Vector2D<int>(static_cast<int>(dialogueBackground->getRect().x +
+                                     dialogueBackground->getRect().w / 1.05),
+                    dialogueBackground->getRect().y + 140),
+      Vector2D<int>(area.w * WIN_WIDTH / 30, area.h * WIN_HEIGHT / 24),
+      [this]() { skip(); }, " ", "ButtonFont");
+
+  addChild(nameBackground);
+  addChild(dialogueBackground);
+  addChild(arrow);
+  addChild(skipButton);
+
+  dialogueBackground->addEventListener(
+      new DialogSceneOnClick(dialogueBackground));
+
+  lineJumpLimit_ = dialogueBackground->getRect().x + WIN_WIDTH / 2;
+  readFromLocale(dialogKey, FontManager::get(fontFile),
+                 dialogueBackground->getRect(), nLines);
+}
+
 DialogScene::~DialogScene() {
   for (auto dialog : dialogues_) delete dialog;
 }
@@ -124,4 +169,13 @@ void DialogScene::readFromFile(const std::string& filename, Font* textFont,
   }
 
   file.close();
+}
+
+void DialogScene::readFromLocale(const std::string& dialogKey, Font* textFont,
+                                 const SDL_Rect rect, size_t nLines) {
+  dialogues_.resize(nLines);
+  for (size_t i = 1; i <= nLines; i++) {
+    std::string key = dialogKey + "_" + std::to_string(i);
+    dialogues_[i - 1] = new Dialog(scene_, key, textFont, rect, lineJumpLimit_);
+  }
 }
