@@ -115,11 +115,11 @@ void GameScene::preload() {
 
   turnBar->setTransparent(true);
 
-  const auto dialog =
-      new DialogScene(this, "dialog" + std::to_string(battle_), "DialogFont");
+  /*const auto dialog =
+      new DialogScene(this, "dialog" + std::to_string(battle_), "DialogFont");*/
 
-  /*const auto dialog = new DialogScene(this, "LINE_" + std::to_string(battle_),
-                                      nLines[battle_], "DialogFont");*/
+  const auto dialog = new DialogScene(this, "LINE_" + std::to_string(battle_),
+                                      nLines[battle_ - 1], "DialogFont");
 
   team1_->setController(new PlayerController(board_, this, team1_, team2_));
   team2_->setController(new PlayerController(board_, this, team2_, team1_));
