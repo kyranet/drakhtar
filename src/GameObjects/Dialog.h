@@ -16,8 +16,5 @@ class Dialog : public GameObject {
  public:
   Dialog(Scene* scene, std::ifstream& file, Font* textFont, SDL_Rect dialogRect,
          int lineJumpLimit);
-  Dialog(Scene* scene, std::string key, Font* textFont, SDL_Rect dialogRect,
-         int lineJumpLimit);
   void readFromFile(std::ifstream& file);
-  void readFromLocale(std::string key);
 };

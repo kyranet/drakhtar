@@ -16,8 +16,6 @@ class DialogScene final : virtual public Sequence {
   int numbBattles = 6;        // number of battles implemented in game + 1
 
   void readFromFile(const std::string& filename, Font* textFont, SDL_Rect rect);
-  void readFromLocale(const std::string& dialogKey, Font* textFont,
-                      const SDL_Rect rect, size_t nLines);
 
  public:
   DialogScene(
@@ -25,10 +23,6 @@ class DialogScene final : virtual public Sequence {
       const std::string& fontFile);  // we set the position of every component
                                      // of the dialog(text and background)
 
-  DialogScene(
-      Scene* scene, const std::string& dialogKey, size_t nLines,
-      const std::string& fontFile);  // we set the position of every component
-                                     // of the dialog(text and background)
   ~DialogScene();
   void next() override;
   void skip() override;
