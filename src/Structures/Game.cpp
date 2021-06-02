@@ -51,8 +51,9 @@ void Game::load() {
   loaded_ = true;
   auto textures = TextureManager::getInstance();
 
-  locale_.init("en");
+  locale_.init("es");
   locale_.load();
+  std::cout << locale_.size() << "\n";
 
   // Units
   textures->add("Units-BlueArcher", "images/Units/BlueArcher.png", 5, 4)
