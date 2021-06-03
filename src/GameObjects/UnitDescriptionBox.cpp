@@ -11,6 +11,7 @@
 #include "Managers/TextureManager.h"
 #include "Scenes/GameScene.h"
 #include "Skill.h"
+#include "Structures/Game.h"
 #include "Structures/Team.h"
 #include "Text.h"
 #include "Unit.h"
@@ -72,12 +73,17 @@ void UnitDescriptionBox::updateText(Unit* unit) {
   const auto stats = state->getModifiedAt(unit->getBox()->getIndex());
 
   std::string text = "<" + unit->getType() + ">\n";
-  text += "Attack: " + std::to_string(unit->getBaseStats().attack) + " (" +
+  text += Game::getInstance()->getLocale()->get("ATTACK").run({}) + ": " +
+          std::to_string(unit->getBaseStats().attack) + " (" +
           std::to_string(stats.attack_) + ")\n";
-  text += "Defense: " + std::to_string(stats.defense_) + "%\n";
-  text += "Range: " + std::to_string(stats.attackRange_) + "\n";
-  text += "Move: " + std::to_string(stats.moveRange_) + "\n";
-  text += "Speed: " + std::to_string(stats.speed_) + "\n";
+  text += Game::getInstance()->getLocale()->get("DEFENSE").run({}) + ": " +
+          std::to_string(stats.defense_) + "%\n";
+  text += Game::getInstance()->getLocale()->get("RANGE").run({}) + ": " +
+          std::to_string(stats.attackRange_) + "\n";
+  text += Game::getInstance()->getLocale()->get("MOVE").run({}) + ": " +
+          std::to_string(stats.moveRange_) + "\n";
+  text += Game::getInstance()->getLocale()->get("SPEED").run({}) + ": " +
+          std::to_string(stats.speed_) + "\n";
 
   unitStatsText_->setText(text);
 

@@ -15,13 +15,13 @@
 #include "Text.h"
 #include "TutorialBox.h"
 
-TutorialText::TutorialText(Scene* scene, std::string& file, SDL_Rect rect)
+TutorialText::TutorialText(Scene* scene, SDL_Rect rect)
     : GameObject(scene, TextureManager::get("Reward-Panel"),
                  Vector2D<int>(400, 400), Vector2D<int>(1000, 1000)) {
-  readFromFile(file);
+  readFromLocale();
   text_ = new Text(scene, FontManager::get("Retron2000"),
                    Vector2D<int>(rect.x, static_cast<int>(rect.y * 0.9)),
-                   {255, 255, 255, 1}, texts[cont].dialogtexts_, 250);
+                   {255, 255, 255, 1}, texts[cont], 250);
   text_->setRenderable(true);
   text_->setTransparent(true);
   text_->setColor({255, 255, 255, 0});
@@ -32,34 +32,13 @@ TutorialText::~TutorialText() { texts.clear(); }
 
 void TutorialText::render() const { text_->render(); }
 
-void TutorialText::readFromFile(std::string& filename) {
-  std::ifstream file;
-  file.open(filename);
-  std::string text;  // full dialog text
-  std::string word;  // word added to text each iteration
-  int limit = 0;
-  file >> limit;
-
-  bool next = false;
-  int finished = false;
-  int i = 0;
-  while (!finished && i < limit) {
-    file >> word;
-    if ((word != "¡" && word != ".")) text += word + " ";
-    if (word == "¡") next = true;
-    if (word == ".") {
-      TutorialTexts TutorialFileText;
-      text.erase(0, 10);
-      TutorialFileText.dialogtexts_ = text;
-      TutorialFileText.next_ = next;
-      texts.push_back(TutorialFileText);
-      text = "";
-      next = false;
-      i++;
-    }
+void TutorialText::readFromLocale() {
+  for (int i = 1; i <= 17; i++) {
+    texts.push_back(Game::getInstance()
+                        ->getLocale()
+                        ->get("tutorial" + std::to_string(i))
+                        .run({}));
   }
-
-  file.close();
 }
 
 bool TutorialText::addCount() {
@@ -67,12 +46,12 @@ bool TutorialText::addCount() {
     return false;
   } else {
     ++cont;
-    text_->setText(texts[cont].dialogtexts_);
+    text_->setText(texts[cont]);
     text_->setColor({255, 255, 255, 0});
     return true;
   }
 }
 
-bool TutorialText::getClosed(int x) { return texts[x].next_; }
+bool TutorialText::getClosed(int x) { return x != 16; }
 
 int TutorialText::getCont() const { return cont; }

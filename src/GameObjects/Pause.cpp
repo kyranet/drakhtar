@@ -37,7 +37,7 @@ Pause::Pause(Scene* scene) : GameObject(scene, nullptr) {
                               gameScene->getPlayerArmy()));
         Game::getSceneMachine()->changeScene(new GameScene(battleInd));
       },
-      "Restart", "ButtonFont");
+      Game::getInstance()->getLocale()->get("RESTART").run({}), "ButtonFont");
   const auto exit = new Button(
       scene_, TextureManager::get("Vanilla-Button"),
       Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2 + 70),
@@ -56,7 +56,7 @@ Pause::Pause(Scene* scene) : GameObject(scene, nullptr) {
         Game::getSceneMachine()->changeScene(new MenuScene());
         SDLAudioManager::getInstance()->playChannel(6, 0, 0);
       },
-      "Exit", "ButtonFont");
+      Game::getInstance()->getLocale()->get("EXIT").run({}), "ButtonFont");
 
   const auto resume = new Button(
       scene_, TextureManager::get("Vanilla-Button"),
@@ -72,7 +72,7 @@ Pause::Pause(Scene* scene) : GameObject(scene, nullptr) {
         destroy();
         scene_->resume();
       },
-      "Resume", "ButtonFont");
+      Game::getInstance()->getLocale()->get("RESUME").run({}), "ButtonFont");
 
   addChild(panel);
   addChild(restart);

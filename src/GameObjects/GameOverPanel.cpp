@@ -37,11 +37,12 @@ GameOverPanel::GameOverPanel(Scene* scene, Texture* texture,
       },
       "Continue", "ButtonFont");
 
-  const auto text_ =
-      new Text(scene_, FontManager::get("ButtonFontBig"), position,
-               {0, 0, 0, 1}, "VICTORY", this->getRect().w);
+  const auto text_ = new Text(
+      scene_, FontManager::get("ButtonFontBig"), position, {0, 0, 0, 1},
+      Game::getInstance()->getLocale()->get("VICTORY").run({}),
+      this->getRect().w);
   if (!victory) {
-    text_->setText("DEFEAT");
+    text_->setText(Game::getInstance()->getLocale()->get("VICTORY").run({}));
   }
 
   addChild(text_);
