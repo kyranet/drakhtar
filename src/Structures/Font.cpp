@@ -32,7 +32,6 @@ Font* Font::load(const std::string& filename, const int size) {
 SDL_Surface* Font::renderText(const std::string& text, const SDL_Color color,
                               const int lineJumpLimit) const {
   if (font_ == nullptr) return nullptr;
-  // return TTF_RenderText_Blended(font_, text.c_str(), color);
-  return TTF_RenderText_Blended_Wrapped(font_, text.c_str(), color,
+  return TTF_RenderUTF8_Blended_Wrapped(font_, text.c_str(), color,
                                         lineJumpLimit);
 }

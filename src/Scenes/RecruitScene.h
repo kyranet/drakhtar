@@ -15,12 +15,12 @@ class Button;
 class RecruitScene final : public Scene {
   GameObject* recruitmentPanel_ = nullptr;
   std::vector<StoreListener*> store;
-  std::map<std::string, int> costs_;
+  std::map<std::string, uint16_t> costs_;
   Text* moneyText_ = nullptr;
   Text* totalCostText_ = nullptr;
   Button* playButton;
 
-  int totalCost_ = 0;
+  uint16_t totalCost_ = 0;
   int currentScene_ = 1;
 
   void addUnit(const std::string& textureName, int position);
@@ -31,7 +31,7 @@ class RecruitScene final : public Scene {
  public:
   explicit RecruitScene(int currentScene);
   void preload() override;
-  int getCost(const std::string& type);
-  int getTotalCost() const { return totalCost_; }
-  void updateTotalCost(int amount);
+  uint16_t getCost(const std::string& type);
+  uint16_t getTotalCost() const { return totalCost_; }
+  void updateTotalCost(uint16_t amount);
 };

@@ -14,11 +14,11 @@ class RecruitmentStat;
 struct StoreUnit {
   std::string type;
   GameObject* unit = nullptr;
-  int cost_;
+  uint16_t cost_;
   uint16_t amount_ = 0;
   Text* amountText = nullptr;
 
-  StoreUnit(const std::string& type, GameObject* unit, int cost)
+  StoreUnit(const std::string& type, GameObject* unit, uint16_t cost)
       : type(type), unit(unit), cost_(cost) {}
 };
 
@@ -30,7 +30,7 @@ class StoreListener final : public ListenerOnHover {
   int sizeToBuy;
 
  public:
-  StoreListener(GameObject* gameObject, const std::string& type, int cost);
+  StoreListener(GameObject* gameObject, const std::string& type, uint16_t cost);
   ~StoreListener();
 
   void onHoverStart() override;

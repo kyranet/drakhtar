@@ -163,9 +163,8 @@ void GameScene::preload() {
   addGameObject(unitDescriptionBox);
 
   if (battle_ == 1) {
-    std::string x = "tutorials/tutorials.txt";
     tutorialBox = new TutorialBox(
-        this, x, Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 4),
+        this, Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 4),
         Vector2D<int>(WIN_WIDTH / 5, WIN_HEIGHT / 4),
         reinterpret_cast<PlayerController*>(team1_->getController()),
         reinterpret_cast<PlayerController*>(team2_->getController()));
@@ -194,7 +193,8 @@ void GameScene::pause() {
 
 void GameScene::readLevel(UnitFactory& factory, std::vector<Unit*>& unitOrder) {
   std::ifstream file;
-  file.open("levels/level-" + std::to_string(battle_) + ".txt");
+  file.open("levels/level-" + std::to_string(battle_) + ".txt",
+            std::ios_base::binary | std::ios_base::in);
 
   if (!file.is_open()) throw DrakhtarError("Could not find file");
 

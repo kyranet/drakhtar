@@ -17,8 +17,8 @@ class TutorialBox : public GameObject {
   // TutorialText* tutorialText_ = nullptr;
 
  public:
-  TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
-              Vector2D<int> size, PlayerController* controller,
+  TutorialBox(Scene* scene, Vector2D<int> pos, Vector2D<int> size,
+              PlayerController* controller,
               PlayerController* temporalController);
   void setNextButtonRender(bool next);
   void setCloseButtonRender(bool close);
