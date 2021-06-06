@@ -22,7 +22,7 @@ OptionsMenu::OptionsMenu(Scene* scene) : GameObject(scene, nullptr) {
       {static_cast<int>(WIN_WIDTH / 2.0), static_cast<int>(WIN_HEIGHT / 1.65)},
       {static_cast<int>(WIN_WIDTH / 10.0), static_cast<int>(WIN_HEIGHT / 8.0)},
       [this]() { destroy(); },
-      Game::getInstance()->getLocale()->get("RETURN").run({}), "ButtonFont");
+      Game::getInstance()->getLocale()->format("RETURN"), "ButtonFont");
   const auto soundIcon = new GameObject(
       scene_, TextureManager::get("UI-ActiveSound"),
       {static_cast<int>(WIN_WIDTH / 2.0), static_cast<int>(WIN_HEIGHT / 2.25)},
@@ -81,8 +81,7 @@ OptionsMenu::OptionsMenu(Scene* scene) : GameObject(scene, nullptr) {
   const auto DefaultText = new Text(
       scene_, FontManager::get("StatsFont"),
       {static_cast<int>(WIN_WIDTH / 1.9), static_cast<int>(WIN_HEIGHT / 1.9)},
-      {0, 0, 0, 0}, Game::getInstance()->getLocale()->get("DEFAULT").run({}),
-      10000);
+      {0, 0, 0, 0}, Game::getInstance()->getLocale()->format("DEFAULT"), 10000);
   const auto defaultButton = new Button(
       scene_, TextureManager::get("UI-cellFrame"),
       {static_cast<int>(WIN_WIDTH / 2.25), static_cast<int>(WIN_HEIGHT / 1.9)},

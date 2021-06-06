@@ -34,10 +34,8 @@ void TutorialText::render() const { text_->render(); }
 
 void TutorialText::readFromLocale() {
   for (int i = 1; i <= 17; i++) {
-    texts.push_back(Game::getInstance()
-                        ->getLocale()
-                        ->get("tutorial" + std::to_string(i))
-                        .run({}));
+    texts.push_back(Game::getInstance()->getLocale()->format(
+        "tutorial" + std::to_string(i)));
   }
 }
 

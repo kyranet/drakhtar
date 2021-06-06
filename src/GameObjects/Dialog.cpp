@@ -51,5 +51,5 @@ void Dialog::readFromFile(std::ifstream& file) {
     file >> word;
     if (word != ".") text += word;
   }
-  dialogText_ = Game::getInstance()->getLocale()->get(text).run({});
+  dialogText_ = Game::getInstance()->getLocale()->format(text);
 }
