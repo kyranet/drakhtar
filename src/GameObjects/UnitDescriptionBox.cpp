@@ -73,16 +73,16 @@ void UnitDescriptionBox::updateText(Unit* unit) {
   const auto stats = state->getModifiedAt(unit->getBox()->getIndex());
 
   std::string text = "<" + unit->getType() + ">\n";
-  text += Game::getInstance()->getLocale()->get("ATTACK").run({}) + ": " +
+  text += Game::getInstance()->getLocale()->format("ATTACK") + ": " +
           std::to_string(unit->getBaseStats().attack) + " (" +
           std::to_string(stats.attack_) + ")\n";
-  text += Game::getInstance()->getLocale()->get("DEFENSE").run({}) + ": " +
+  text += Game::getInstance()->getLocale()->format("DEFENSE") + ": " +
           std::to_string(stats.defense_) + "%\n";
-  text += Game::getInstance()->getLocale()->get("RANGE").run({}) + ": " +
+  text += Game::getInstance()->getLocale()->format("RANGE") + ": " +
           std::to_string(stats.attackRange_) + "\n";
-  text += Game::getInstance()->getLocale()->get("MOVE").run({}) + ": " +
+  text += Game::getInstance()->getLocale()->format("MOVE") + ": " +
           std::to_string(stats.moveRange_) + "\n";
-  text += Game::getInstance()->getLocale()->get("SPEED").run({}) + ": " +
+  text += Game::getInstance()->getLocale()->format("SPEED") + ": " +
           std::to_string(stats.speed_) + "\n";
 
   unitStatsText_->setText(text);
@@ -98,8 +98,11 @@ void UnitDescriptionBox::updateText(Unit* unit) {
 
   int damage =
       static_cast<int>(stats.attack_ * (1.0 - enemyStats.defense_ / 100.0));
-  text = "Unit's attack: " + std::to_string(stats.attack_) + "\n";
-  text += "Enemy's defense: " + std::to_string(enemyStats.defense_) + "%\n";
-  text += "Final damage: " + std::to_string(damage);
+  text = Game::getInstance()->getLocale()->format("UNITATTACK") +
+         std::to_string(stats.attack_) + "\n";
+  text += Game::getInstance()->getLocale()->format("ENEMYDEFENSE") +
+          std::to_string(enemyStats.defense_) + "%\n";
+  text += Game::getInstance()->getLocale()->format("FINALDAMAGE") +
+          std::to_string(damage);
   unitDamageText_->setText(text);
 }

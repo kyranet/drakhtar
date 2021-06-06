@@ -17,6 +17,9 @@ SPEED="Speed"
 NEXT="Next"
 CLOSE="Close"
 CONTINUE="Continue"
+UNITATTACK="Unit's attack: "
+ENEMYDEFENSE="Enemy's defense: "
+FINALDAMAGE="Final damage: "
 #Skills
 BATTLECRY="Battlecry"
 BATTLECRY_DESC="An inspiring command that increases every ally's attack by 20% and move range by 1 for 1 turn. (CD: 3 turns)
