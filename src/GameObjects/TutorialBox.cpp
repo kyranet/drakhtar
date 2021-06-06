@@ -117,7 +117,7 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
           setArrowPos(SDL_FLIP_HORIZONTAL, pos);
         }
       },
-      Game::getInstance()->getLocale()->get("NEXT").run({}), "ButtonFont");
+      Game::getInstance()->getLocale()->format("NEXT"), "ButtonFont");
   const auto CloseButton = new Button(
       scene_, TextureManager::get("Vanilla-Button"),
       Vector2D<int>(
@@ -136,7 +136,7 @@ TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
         controller->setTutorialDone(true);
         temporalController->setTutorialDone(true);
       },
-      Game::getInstance()->getLocale()->get("CLOSE").run({}), "ButtonFont");
+      Game::getInstance()->getLocale()->format("CLOSE"), "ButtonFont");
 
   addChild(tutorialBackground);
   addChild(tutorialText_);

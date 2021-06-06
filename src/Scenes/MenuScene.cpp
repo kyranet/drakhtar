@@ -35,20 +35,20 @@ void MenuScene::preload() {
       this, TextureManager::get("Vanilla-Button"),
       Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2 + WIN_HEIGHT / 60),
       Vector2D<int>(static_cast<int>(floor(WIN_WIDTH / 5.5)), WIN_HEIGHT / 10),
-      buttonPlay, Game::getInstance()->getLocale()->get("PLAY").run({}),
+      buttonPlay, Game::getInstance()->getLocale()->format("PLAY"),
       "ButtonFont");
   const auto options = new Button(
       this, TextureManager::get("Vanilla-Button"),
       Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2 + (WIN_HEIGHT / 60 + 80)),
       Vector2D<int>(static_cast<int>(floor(WIN_WIDTH / 5.5)), WIN_HEIGHT / 10),
       [this]() { this->addGameObject(new OptionsMenu(this)); },
-      Game::getInstance()->getLocale()->get("OPTIONS").run({}), "ButtonFont");
+      Game::getInstance()->getLocale()->format("OPTIONS"), "ButtonFont");
   const auto exitButton = new Button(
       this, TextureManager::get("Vanilla-Button"),
       Vector2D<int>(WIN_WIDTH / 2, WIN_HEIGHT / 2 + (WIN_HEIGHT / 60 + 160)),
       Vector2D<int>(static_cast<int>(floor(WIN_WIDTH / 5.5)), WIN_HEIGHT / 10),
       [this]() { finish(true); },
-      Game::getInstance()->getLocale()->get("EXITGAME").run({}), "ButtonFont");
+      Game::getInstance()->getLocale()->format("EXITGAME"), "ButtonFont");
 
   auto audio = SDLAudioManager::getInstance();
   audio->haltChannel(0);
