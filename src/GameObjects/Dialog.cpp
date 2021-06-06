@@ -8,6 +8,7 @@
 #include "../Managers/TextureManager.h"
 #include "../Structures/Font.h"
 #include "GameObject.h"
+#include "Structures/Game.h"
 #include "Text.h"
 
 Dialog::Dialog(Scene* scene, std::ifstream& file, Font* textFont,
@@ -48,7 +49,7 @@ void Dialog::readFromFile(std::ifstream& file) {
   std::string word;  // word added to text each iteration
   while (word != ".") {
     file >> word;
-    if (word != ".") text += word + " ";
+    if (word != ".") text += word;
   }
-  dialogText_ = text;
+  dialogText_ = Game::getInstance()->getLocale()->get(text).run({});
 }

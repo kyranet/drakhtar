@@ -10,15 +10,15 @@ class Font;
 class TutorialBox;
 
 class TutorialText final : public GameObject {
-  std::vector<TutorialTexts> texts;
+  std::vector<std::string> texts;
   unsigned int cont = 0;
   Text* text_ = nullptr;
 
  public:
-  TutorialText(Scene* scene, std::string& file, SDL_Rect rect);
+  TutorialText(Scene* scene, SDL_Rect rect);
   ~TutorialText();
   void render() const override;
-  void readFromFile(std::string& filename);
+  void readFromLocale();
   bool addCount();
   bool getClosed(int x);
   int getCont() const;

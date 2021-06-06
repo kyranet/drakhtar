@@ -13,6 +13,7 @@
 #include "Managers/State.h"
 #include "Managers/TextureManager.h"
 #include "Scenes/GameScene.h"
+#include "Structures/Game.h"
 #include "Structures/Team.h"
 
 Skill::Skill(const std::string& id, int16_t cooldown, int16_t duration,
@@ -52,11 +53,11 @@ std::vector<Vector2D<uint16_t>> Skill::getAllEnemiesPositions() const {
 
 // ---------- BATTLECRY ----------
 
-BattleCry::BattleCry(Commander* caster) : Skill("BattleCry", 3, 1, caster) {
+BattleCry::BattleCry(Commander* caster)
+    : Skill(Game::getInstance()->getLocale()->get("BATTLECRY").run({}), 3, 1,
+            caster) {
   description_ =
-      "An inspiring command that increases every ally's attack by "
-      "20% and move range by 1 for 1 turn. (CD: " +
-      std::to_string(cooldown_) + " turns)";
+      Game::getInstance()->getLocale()->get("BATTLECRY_DESC").run({});
 }
 
 void BattleCry::cast() {
@@ -92,11 +93,11 @@ void BattleCry::cast() {
 }
 
 // ---------- ARROW RAIN ----------
-ArrowRain::ArrowRain(Commander* caster) : Skill("ArrowRain", 4, 0, caster) {
+ArrowRain::ArrowRain(Commander* caster)
+    : Skill(Game::getInstance()->getLocale()->get("ARROWRAIN").run({}), 4, 0,
+            caster) {
   description_ =
-      "Fire an volley of arrows that deal half damage to enemies in a " +
-      std::to_string(range_) +
-      " cells range. (CD: " + std::to_string(cooldown_) + " turns)";
+      Game::getInstance()->getLocale()->get("ARROWRAIN_DESC").run({});
 }
 
 void ArrowRain::cast() {
@@ -115,11 +116,11 @@ void ArrowRain::cast() {
 
 // ---------- HEROIC STRIKE ----------
 HeroicStrike::HeroicStrike(Commander* caster)
-    : Skill("Heroic Strike", 2, 0, caster), attackIncrement_(0) {
+    : Skill(Game::getInstance()->getLocale()->get("HEROICSTRIKE").run({}), 2, 0,
+            caster),
+      attackIncrement_(0) {
   description_ =
-      "The next attack this turn will deal 50% increased damage and will not "
-      "trigger a counter-attack. (CD: " +
-      std::to_string(cooldown_) + " turns)";
+      Game::getInstance()->getLocale()->get("HEROICSTRIKE_DESC").run({});
 }
 
 void HeroicStrike::cast() {

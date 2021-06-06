@@ -35,6 +35,7 @@ void TransitionScene::preload() {
 
   const auto dialog = new DialogScene(
       this, "dialog" + std::to_string(battle_) + "transition", "DialogFont");
+
   addGameObject(dialog);
   setTransition(true);
 }

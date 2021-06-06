@@ -22,6 +22,7 @@ class DialogScene final : virtual public Sequence {
       Scene* scene, const std::string& filename,
       const std::string& fontFile);  // we set the position of every component
                                      // of the dialog(text and background)
+
   ~DialogScene();
   void next() override;
   void skip() override;

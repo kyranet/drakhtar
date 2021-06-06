@@ -51,6 +51,9 @@ void Game::load() {
   loaded_ = true;
   auto textures = TextureManager::getInstance();
 
+  locale_.init("es");
+  locale_.load();
+
   // Units
   textures->add("Units-BlueArcher", "images/Units/BlueArcher.png", 5, 4)
       ->addAnimation("default", {0, 1})
@@ -222,23 +225,25 @@ void Game::load() {
   textures->add("UI-arrowAnim", "images/UI/arrow_anim.png", 4, 5);
 
   // Button
-  textures->add("Button-BattleCry", "images/UI/battlecry_icon.png", 1, 1);
-  textures->add("Button-BattleCry-disabled",
-                "images/UI/battlecry_icon_disabled.png", 1, 1);
-  textures->add("Button-HeroicStrike", "images/UI/heroic_strike_icon.png", 1,
+  textures->add("Button-BattleCry", locale_.getAsset("battlecry_icon.png"), 1,
                 1);
+  textures->add("Button-BattleCry-disabled",
+                locale_.getAsset("battlecry_icon_disabled.png"), 1, 1);
+  textures->add("Button-HeroicStrike",
+                locale_.getAsset("heroic_strike_icon.png"), 1, 1);
   textures->add("Button-HeroicStrike-disabled",
-                "images/UI/heroic_strike_icon_disabled.png", 1, 1);
+                locale_.getAsset("heroic_strike_icon_disabled.png"), 1, 1);
   textures->add("Button-Enemy-Skill", "images/UI/enemy_skill_icon.png", 1, 1);
   textures->add("Button-Enemy-Skill-disabled",
                 "images/UI/enemy_skill_disabled_icon.png", 1, 1);
   textures->add("Button-Pause", "images/Pause/Pause_Button.png", 1, 1);
-  textures->add("Button-Skip", "images/UI/skipButton.png", 1, 1);
-  textures->add("Button-SkipTurn", "images/UI/skipTurnButton.png", 1, 1);
+  textures->add("Button-Skip", locale_.getAsset("skipButton.png"), 1, 1);
+  textures->add("Button-SkipTurn", locale_.getAsset("skipTurnButton.png"), 1,
+                1);
   textures->add("Vanilla-Button", "images/Pause/Button.png", 1, 1);
 
   // Pause
-  textures->add("Pause-Panel", "images/Pause/Panel.png", 1, 1);
+  textures->add("Pause-Panel", locale_.getAsset("Panel.png"), 1, 1);
   textures->add("Pause-Background", "images/Pause/Fondo.png", 1, 1);
 
   // Portraits
@@ -277,7 +282,7 @@ void Game::load() {
 
   // Logos
   textures->add("Logos-VG", "images/Logos/VG.jpg", 1, 1);
-  textures->add("Logos-logo", "images/Logos/Logo.png", 1, 1);
+  textures->add("Logos-logo", locale_.getAsset("Logo.png"), 1, 1);
 
   // Tutorial images
   textures->add("tutorial_", "images/Tutorials/tutorial_.png", 1, 1);
@@ -422,3 +427,5 @@ Game* Game::getInstance() {
 SceneMachine* Game::getSceneMachine() { return getInstance()->sceneMachine_; }
 
 SDL_Window* Game::getWindow() { return getInstance()->window_; }
+
+Locale* Game::getLocale() { return &locale_; }
