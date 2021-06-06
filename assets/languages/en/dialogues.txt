@@ -22,7 +22,7 @@ ENEMYDEFENSE="Enemy's defense: {0u16}%"
 FINALDAMAGE="Final damage: {0u16}"
 #Skills
 BATTLECRY="Battlecry"
-BATTLECRY_DESC="An inspiring command that increases every ally's attack by 20% and move range by 1 for 1 turn. (CD: {0u16} turns)
+BATTLECRY_DESC="An inspiring command that increases every ally's attack by 20% and move range by 1 for 1 turn. (CD: {0u16} turns)"
 ARROWRAIN="Arrow rain"
 ARROWRAIN_DESC="Fire an volley of arrows that deal half damage to enemies in a 5-cell range. (CD: {0u16} turns)"
 HEROICSTRIKE="Heroic strike"

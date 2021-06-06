@@ -51,7 +51,7 @@ void Game::load() {
   loaded_ = true;
   auto textures = TextureManager::getInstance();
 
-  locale_.init("es");
+  locale_.init("en");
   locale_.load();
 
   // Units
