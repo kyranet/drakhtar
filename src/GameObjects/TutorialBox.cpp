@@ -14,8 +14,8 @@
 #include "Text.h"
 #include "TutorialText.h"
 #include "Unit.h"
-TutorialBox::TutorialBox(Scene* scene, std::string& filename, Vector2D<int> pos,
-                         Vector2D<int> size, PlayerController* controller,
+TutorialBox::TutorialBox(Scene* scene, Vector2D<int> pos, Vector2D<int> size,
+                         PlayerController* controller,
                          PlayerController* temporalController)
     : GameObject(scene, nullptr, pos, size) {
   SDL_Rect rect = {pos.getX(), pos.getY(), size.getX(), size.getY()};

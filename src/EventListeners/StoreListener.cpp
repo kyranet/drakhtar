@@ -14,7 +14,7 @@
 #include "Utils/Constants.h"
 
 StoreListener::StoreListener(GameObject* gameObject, const std::string& type,
-                             int cost)
+                             uint16_t cost)
     : ListenerOnHover(gameObject), storeUnit(type, gameObject, cost) {
   const auto scene = Game::getSceneMachine()->getCurrentScene();
 

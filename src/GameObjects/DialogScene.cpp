@@ -112,7 +112,7 @@ void DialogScene::skip() {
 void DialogScene::readFromFile(const std::string& filename, Font* textFont,
                                const SDL_Rect rect) {
   std::ifstream file;
-  file.open(filename);
+  file.open(filename, std::ios_base::binary | std::ios_base::in);
 
   if (!file.is_open()) throw DrakhtarError("Could not find file");
 

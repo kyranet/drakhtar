@@ -122,9 +122,9 @@ void RecruitScene::preload() {
   playButton->getChildren()[0]->setRenderable(false);
 }
 
-int RecruitScene::getCost(const std::string& type) { return costs_[type]; }
+uint16_t RecruitScene::getCost(const std::string& type) { return costs_[type]; }
 
-void RecruitScene::updateTotalCost(const int amount) {
+void RecruitScene::updateTotalCost(const uint16_t amount) {
   totalCost_ += amount;
   totalCostText_->setText("Total cost: " + std::to_string(totalCost_));
   totalCostText_->setColor({255, 255, 255, 0});
