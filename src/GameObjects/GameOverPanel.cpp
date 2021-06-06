@@ -35,14 +35,14 @@ GameOverPanel::GameOverPanel(Scene* scene, Texture* texture,
           Game::getSceneMachine()->changeScene(new GameScene(currentScene));
         }
       },
-      "Continue", "ButtonFont");
+      Game::getInstance()->getLocale()->get("CONTINUE").run({}), "ButtonFont");
 
   const auto text_ = new Text(
       scene_, FontManager::get("ButtonFontBig"), position, {0, 0, 0, 1},
       Game::getInstance()->getLocale()->get("VICTORY").run({}),
       this->getRect().w);
   if (!victory) {
-    text_->setText(Game::getInstance()->getLocale()->get("VICTORY").run({}));
+    text_->setText(Game::getInstance()->getLocale()->get("DEFEAT").run({}));
   }
 
   addChild(text_);

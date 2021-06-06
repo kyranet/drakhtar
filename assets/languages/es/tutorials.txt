@@ -1,4 +1,4 @@
-tutorial1="¡Bienvenido al tutorial de Fall of Drakhtar! ¡Antes de embarcarte en tu aventura, deberías familiarizarte con la mecánica básica del juego!"
+tutorial1="Bienvenido al tutorial de Fall of Drakhtar. Antes de embarcarte en tu aventura, debes familiarizarte con la mecanica basica del juego"
 tutorial2="Todos los objetos y unidades interactivos están en el tablero, que se mostrarán claramente durante el juego."
 tutorial3="Este es el campo de batalla, tus unidades son azules y esas son con las que podrás jugar. Para ganar, debes eliminar al héroe del enemigo. Pierdes si alguno de tus héroes muere."
 tutorial4="Los jugadores alternan sus turnos dependiendo de la velocidad de cada una de sus unidades, que se muestra en la barra de turnos a continuación."

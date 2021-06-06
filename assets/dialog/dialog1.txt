@@ -1,7 +1,7 @@
 6
-Narrator Portraits-Narrator LINE_1_1 .
+??? Portraits-Narrator LINE_1_1 .
 Valar Portraits-Valar LINE_1_2 .
 Thassa Portraits-Thassa LINE_1_3 .
 Valar Portraits-Valar  LINE_1_4 .
-Narrator Portraits-Narrator LINE_1_5 .
+??? Portraits-Narrator LINE_1_5 .
 Thassa Portraits-Thassa LINE_1_6 .

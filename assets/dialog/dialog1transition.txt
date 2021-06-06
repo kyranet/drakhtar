@@ -1,9 +1,9 @@
 12
-Narrator Portraits-Narrator TRANSITION_1_1 .
-Narrator Portraits-Narrator TRANSITION_1_2 .
-Narrator Portraits-Narrator TRANSITION_1_3 .
-Narrator Portraits-Narrator TRANSITION_1_4 .
-Narrator Portraits-Narrator TRANSITION_1_5 .
+??? Portraits-Narrator TRANSITION_1_1 .
+??? Portraits-Narrator TRANSITION_1_2 .
+??? Portraits-Narrator TRANSITION_1_3 .
+??? Portraits-Narrator TRANSITION_1_4 .
+??? Portraits-Narrator TRANSITION_1_5 .
 Thassa Portraits-Thassa TRANSITION_1_6 .
 Valar Portraits-Valar TRANSITION_1_7 .
 Knight Portraits-Knight TRANSITION_1_8 .

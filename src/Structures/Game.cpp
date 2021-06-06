@@ -237,7 +237,7 @@ void Game::load() {
   textures->add("Button-Enemy-Skill-disabled",
                 "images/UI/enemy_skill_disabled_icon.png", 1, 1);
   textures->add("Button-Pause", "images/Pause/Pause_Button.png", 1, 1);
-  textures->add("Button-Skip", "images/UI/skipButton.png", 1, 1);
+  textures->add("Button-Skip", locale_.getAsset("skipButton.png"), 1, 1);
   textures->add("Button-SkipTurn", locale_.getAsset("skipTurnButton.png"), 1,
                 1);
   textures->add("Vanilla-Button", "images/Pause/Button.png", 1, 1);
