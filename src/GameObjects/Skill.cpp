@@ -54,10 +54,9 @@ std::vector<Vector2D<uint16_t>> Skill::getAllEnemiesPositions() const {
 // ---------- BATTLECRY ----------
 
 BattleCry::BattleCry(Commander* caster)
-    : Skill(Game::getInstance()->getLocale()->get("BATTLECRY").run({}), 3, 1,
+    : Skill(Game::getInstance()->getLocale()->format("BATTLECRY"), 3, 1,
             caster) {
-  description_ =
-      Game::getInstance()->getLocale()->get("BATTLECRY_DESC").run({});
+  description_ = Game::getInstance()->getLocale()->format("BATTLECRY_DESC");
 }
 
 void BattleCry::cast() {
@@ -94,10 +93,9 @@ void BattleCry::cast() {
 
 // ---------- ARROW RAIN ----------
 ArrowRain::ArrowRain(Commander* caster)
-    : Skill(Game::getInstance()->getLocale()->get("ARROWRAIN").run({}), 4, 0,
+    : Skill(Game::getInstance()->getLocale()->format("ARROWRAIN"), 4, 0,
             caster) {
-  description_ =
-      Game::getInstance()->getLocale()->get("ARROWRAIN_DESC").run({});
+  description_ = Game::getInstance()->getLocale()->format("ARROWRAIN_DESC");
 }
 
 void ArrowRain::cast() {
@@ -116,11 +114,10 @@ void ArrowRain::cast() {
 
 // ---------- HEROIC STRIKE ----------
 HeroicStrike::HeroicStrike(Commander* caster)
-    : Skill(Game::getInstance()->getLocale()->get("HEROICSTRIKE").run({}), 2, 0,
+    : Skill(Game::getInstance()->getLocale()->format("HEROICSTRIKE"), 2, 0,
             caster),
       attackIncrement_(0) {
-  description_ =
-      Game::getInstance()->getLocale()->get("HEROICSTRIKE_DESC").run({});
+  description_ = Game::getInstance()->getLocale()->format("HEROICSTRIKE_DESC");
 }
 
 void HeroicStrike::cast() {
