@@ -71,19 +71,15 @@ void UnitDescriptionBox::updateText(Unit* unit) {
   const auto scene = reinterpret_cast<GameScene*>(getScene());
   const auto state = scene->getState();
   const auto stats = state->getModifiedAt(unit->getBox()->getIndex());
+  const auto& locale = *Game::getInstance()->getLocale();
 
   std::string text = "<" + unit->getType() + ">\n";
-  text += Game::getInstance()->getLocale()->format("ATTACK") + ": " +
-          std::to_string(unit->getBaseStats().attack) + " (" +
-          std::to_string(stats.attack_) + ")\n";
-  text += Game::getInstance()->getLocale()->format("DEFENSE") + ": " +
-          std::to_string(stats.defense_) + "%\n";
-  text += Game::getInstance()->getLocale()->format("RANGE") + ": " +
-          std::to_string(stats.attackRange_) + "\n";
-  text += Game::getInstance()->getLocale()->format("MOVE") + ": " +
-          std::to_string(stats.moveRange_) + "\n";
-  text += Game::getInstance()->getLocale()->format("SPEED") + ": " +
-          std::to_string(stats.speed_) + "\n";
+  text += locale.format("ATTACK", unit->getBaseStats().attack, stats.attack_) +
+          '\n';
+  text += locale.format("DEFENSE", stats.defense_) + '\n';
+  text += locale.format("RANGE", stats.attackRange_) + '\n';
+  text += locale.format("MOVE", stats.moveRange_) + '\n';
+  text += locale.format("SPEED", stats.speed_) + '\n';
 
   unitStatsText_->setText(text);
 
@@ -96,13 +92,10 @@ void UnitDescriptionBox::updateText(Unit* unit) {
       state->isInRange(activeUnit->getBox()->getIndex(),
                        unit->getBox()->getIndex(), stats.attackRange_);
 
-  int damage =
-      static_cast<int>(stats.attack_ * (1.0 - enemyStats.defense_ / 100.0));
-  text = Game::getInstance()->getLocale()->format("UNITATTACK") +
-         std::to_string(stats.attack_) + "\n";
-  text += Game::getInstance()->getLocale()->format("ENEMYDEFENSE") +
-          std::to_string(enemyStats.defense_) + "%\n";
-  text += Game::getInstance()->getLocale()->format("FINALDAMAGE") +
-          std::to_string(damage);
+  const auto damage = static_cast<uint16_t>(
+      stats.attack_ * (1.0 - enemyStats.defense_ / 100.0));
+  text = locale.format("UNITATTACK", stats.attack_) + '\n';
+  text += locale.format("ENEMYDEFENSE", enemyStats.defense_) + '\n';
+  text += locale.format("FINALDAMAGE", damage);
   unitDamageText_->setText(text);
 }
