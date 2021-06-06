@@ -56,7 +56,8 @@ std::vector<Vector2D<uint16_t>> Skill::getAllEnemiesPositions() const {
 BattleCry::BattleCry(Commander* caster)
     : Skill(Game::getInstance()->getLocale()->format("BATTLECRY"), 3, 1,
             caster) {
-  description_ = Game::getInstance()->getLocale()->format("BATTLECRY_DESC");
+  description_ =
+      Game::getInstance()->getLocale()->format("BATTLECRY_DESC", cooldown_);
 }
 
 void BattleCry::cast() {
@@ -95,7 +96,8 @@ void BattleCry::cast() {
 ArrowRain::ArrowRain(Commander* caster)
     : Skill(Game::getInstance()->getLocale()->format("ARROWRAIN"), 4, 0,
             caster) {
-  description_ = Game::getInstance()->getLocale()->format("ARROWRAIN_DESC");
+  description_ =
+      Game::getInstance()->getLocale()->format("ARROWRAIN_DESC", cooldown_);
 }
 
 void ArrowRain::cast() {
@@ -117,7 +119,8 @@ HeroicStrike::HeroicStrike(Commander* caster)
     : Skill(Game::getInstance()->getLocale()->format("HEROICSTRIKE"), 2, 0,
             caster),
       attackIncrement_(0) {
-  description_ = Game::getInstance()->getLocale()->format("HEROICSTRIKE_DESC");
+  description_ =
+      Game::getInstance()->getLocale()->format("HEROICSTRIKE_DESC", cooldown_);
 }
 
 void HeroicStrike::cast() {
